@@ -93,8 +93,8 @@ export class ReportComponent implements OnInit {
         this.columnName = ["", "File Name"]
         this.columnsToDisplay = ['is_expand', 'file_name']
       } else {
-        this.columnName = ["Ref #","Transcriptionist", "File Name", "Action", "Rush Request?", "Document" + '\n' + "Lines", "Date Requested", "Date Received", "Download Submitted" + '\n' + "Items", "Download Compiled" + '\n' + "Document", "Further Information"]
-        this.columnsToDisplay = ['request_reference_id','transcriptionist', 'file_name', 'actions', 'service_priority', "document_lines", "date_of_request", "date_of_communication", 'download', 'download1', 'further_info']
+        this.columnName = ["Ref #", "Transcriptionist", "File Name", "Action", "Rush Request?", "Document" + '\n' + "Lines", "Date Requested", "Date Received", "Download Submitted" + '\n' + "Items", "Download Compiled" + '\n' + "Document", "Further Information"]
+        this.columnsToDisplay = ['request_reference_id', 'transcriptionist', 'file_name', 'actions', 'service_priority', "document_lines", "date_of_request", "date_of_communication", 'download', 'download1', 'further_info']
       }
     })
     // this.isHandset$.subscribe(res => {
@@ -120,10 +120,25 @@ export class ReportComponent implements OnInit {
     //   })
     //   this.documentType = 6;
     // })
+    this.styleElement = document.createElement("style");
+    this.changeColors("#cccccc");
+  }
+  styleElement: HTMLStyleElement;
+  changeColors(color) {
+    const head = document.getElementsByTagName("head")[0];
+    const css = `
+  .progress .mat-progress-bar-fill::after {
+    background-color: ${color} !important;
+  }  `;
+    this.styleElement.innerHTML = "";
+    this.styleElement.type = "text/css";
+    this.styleElement.appendChild(document.createTextNode(css));
+    head.appendChild(this.styleElement);
   }
   getReport() {
     this.onDemandService.getTranscription(this.paramsId.claim_id, this.paramsId.billId).subscribe(report => {
       this.reportData = report;
+      this.changeColors(report.on_demand_status_color_code);
       this.dataSource = new MatTableDataSource(report.documets)
       let inFile = [];
       let outFile = [];

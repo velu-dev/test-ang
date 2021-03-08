@@ -114,11 +114,25 @@ export class RecordsComponent implements OnInit {
     //this.onDemandService.getRecords().subscribe()
     this.getRecord();
 
+    this.styleElement = document.createElement("style");
+    this.changeColors("#cccccc");
   }
-
+  styleElement: HTMLStyleElement;
+  changeColors(color) {
+    const head = document.getElementsByTagName("head")[0];
+    const css = `
+  .progress .mat-progress-bar-fill::after {
+    background-color: ${color} !important;
+  }  `;
+    this.styleElement.innerHTML = "";
+    this.styleElement.type = "text/css";
+    this.styleElement.appendChild(document.createTextNode(css));
+    head.appendChild(this.styleElement);
+  }
   getRecord() {
     this.onDemandService.getRecords(this.paramsId.claim_id, this.paramsId.billId).subscribe(record => {
       this.recordData = record;
+      this.changeColors(record.on_demand_status_color_code)
       if (this.recordData.service_providers && this.recordData.service_providers.length) {
         this.service_provider_name = this.recordData.service_providers[0]
       }

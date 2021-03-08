@@ -368,6 +368,7 @@ export class AppointmentDetailsComponent implements OnInit {
           this.cookieService.set('claimNumber', response.data.claim_details.claim_number)
           this.intercom.setBillableItem(response.data.exam_procedure_name);
           this.cookieService.set('billableItem', response.data.exam_procedure_name)
+          this.appointmentId = response.data.appointments.id;
           if (response.data.appointments.examiner_id) {
             this.procedureTypeStatus[1].url = "/history/" + response.data.appointments.examiner_id;
             this.procedureTypeStatus[0].url = "/correspondence/" + response.data.appointments.examiner_id
@@ -463,6 +464,7 @@ export class AppointmentDetailsComponent implements OnInit {
   loadForms() {
 
   }
+  appointmentId: any;
   openCalendar() {
 
     if (this.examinerId == null) {
@@ -473,7 +475,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.alertService.openSnackBar("Examination Date & Time is not available!", "error");
       return
     }
-    this.router.navigate([this.router.url + "/appointment", this.examinerId]);
+    this.router.navigate([this.router.url + "/appointment", this.examinerId, this.appointmentId]);
   }
   changeDateType(date) {
     if (date) {

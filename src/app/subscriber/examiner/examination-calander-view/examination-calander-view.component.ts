@@ -85,6 +85,7 @@ export class ExaminationCalanderViewComponent implements OnInit {
   roleId: any;
   examinerId: any = 0;
   appointmentId: any;
+  billableItemId: any;
   calendar_examination_status = [];
   deposition_status = [];
   months = [];
@@ -140,10 +141,12 @@ export class ExaminationCalanderViewComponent implements OnInit {
       this.examinarService.getExaminerList().subscribe(res => {
         this.examinars = res.data;
         this.route.params.subscribe(param => {
+          console.log(param)
           if (param.examiner_id) {
+            this.billableItemId = param.billId;
             this.examinerId = param.examiner_id;
-            this.appointmentId = param.billId
-            if (this.examinerId)
+            this.appointmentId = param.appointment_id;
+            if (this.billableItemId)
               this.getSingleEvent();
           } else {
             this.loadAllEvents();
