@@ -1129,6 +1129,22 @@ input:-webkit-autofill {
     }
   }
 }
+.custom-dialog.second-bill-review {
+  .custom-select {
+    padding-left: 25px;
+    @media only screen and (max-width: 568px) {
+      padding-left: 10px;
+    }
+    // .select-1 {
+    // }
+  }
+  .filled-ternary {
+    margin-top: 20px;
+    @media only screen and (max-width: 568px) {
+      margin-top: 10px;
+    }
+  }
+}
 .dialog {
   mat-card-header {
     .content-wrapper-main-title {
