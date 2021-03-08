@@ -101,11 +101,25 @@ export class HistoryComponent implements OnInit {
   ngOnInit() {
     this.getHistory();
     this.getHistoryCallTracking();
+    this.styleElement = document.createElement("style");
+    this.changeColors("#cccccc");
   }
-
+  styleElement: HTMLStyleElement;
+  changeColors(color) {
+    const head = document.getElementsByTagName("head")[0];
+    const css = `
+  .progress .mat-progress-bar-fill::after {
+    background-color: ${color} !important;
+  }  `;
+    this.styleElement.innerHTML = "";
+    this.styleElement.type = "text/css";
+    this.styleElement.appendChild(document.createTextNode(css));
+    head.appendChild(this.styleElement);
+  }
   getHistory() {
     this.onDemandService.getHistory(this.paramsId.claim_id, this.paramsId.billId).subscribe(history => {
       this.historyData = history;
+      this.changeColors(history.on_demand_status_color_code);
       this.historyData.documets_sent_and_received.map(inFile => {
         if (inFile.transmission_direction == 'IN') {
           this.inFile.push(inFile)

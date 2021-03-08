@@ -297,6 +297,8 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.styleElement = document.createElement("style");
+    this.changeColors("#cccccc");
     this.claimService.getICD10('a').subscribe(icd => {
       this.filteredICD = icd[3];
     });
@@ -359,6 +361,19 @@ export class BilllableBillingComponent implements OnInit {
     });
 
   }
+  styleElement: HTMLStyleElement;
+  changeColors(color) {
+    console.log(color);
+    const head = document.getElementsByTagName("head")[0];
+    const css = `
+  .progress .mat-progress-bar-fill::after {
+    background-color: ${color} !important;
+  }  `;
+    this.styleElement.innerHTML = "";
+    this.styleElement.type = "text/css";
+    this.styleElement.appendChild(document.createTextNode(css));
+    head.appendChild(this.styleElement);
+  }
   statusBarValues = { value: null, status: '', class: '' }
   statusBarChanges(status) {
     switch (status) {
@@ -385,10 +400,10 @@ export class BilllableBillingComponent implements OnInit {
   getBillingDetails() {
 
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId).subscribe(billing => {
-      console.log("hihii", billing.data)
       if (billing.data) {
+        this.changeColors(billing.data.bill_status_color_code)
         this.billingData = billing.data;
-        this.statusBarChanges(this.billingData.on_demand_progress_status);
+        // this.statusBarChanges(this.billingData.on_demand_progress_status);
         if (!billing.data) {
           return;
         }
@@ -1094,7 +1109,7 @@ export class BilllableBillingComponent implements OnInit {
       this.deleteRow(i, group);
       return
     }
-    console.log(group,i)
+    console.log(group, i)
     console.log(this.billing_line_items)
     let data = [];
     data.push(this.billing_line_items[i])

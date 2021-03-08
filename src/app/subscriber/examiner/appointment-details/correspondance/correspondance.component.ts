@@ -135,7 +135,6 @@ export class BillingCorrespondanceComponent implements OnInit {
 
   styleElement: HTMLStyleElement;
   changeColors(color) {
-    console.log(this.styleElement)
     const head = document.getElementsByTagName("head")[0];
     const css = `
   .progress .mat-progress-bar-fill::after {
@@ -168,7 +167,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.selection1.clear();
       this.selection.clear();
       this.correspondData = res;
-      this.changeColors(res.on_demand_status_color_code)
+      this.changeColors(res.on_demand_status_color_code);
       this.statusOfAppointment = { isEmptyNoDate: !res.is_appointment_no_date_present, IsEmptyAppointmentDate: !res.is_appointment_date_time_present, isEmptyDuration: !res.is_appointment_duration_present, isEmptyLocation: !res.is_appointment_location_present }
       res.documets.map(doc => {
         if (doc.is_mandatory) {
