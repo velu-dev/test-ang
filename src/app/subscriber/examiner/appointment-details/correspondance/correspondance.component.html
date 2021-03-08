@@ -3,7 +3,7 @@
     <div fxFlex="100">
       <div class="main-title">Mail On Demand</div>
       <p class="description">View the progress of Correspondence Mail On Demand service here.</p>
-      <mat-progress-bar mode="determinate" value="{{statusBarValues?.value}}" [ngClass]="statusBarValues?.class">
+      <mat-progress-bar mode="determinate" class="p-l-0" value="{{statusBarValues?.value}}" class="progress">
       </mat-progress-bar>
       <div class="text-center">{{correspondData?.on_demand_status}}</div>
     </div>

@@ -132,7 +132,21 @@ export class BillingCorrespondanceComponent implements OnInit {
       }
     })
   }
-  tracingpopupData:any = [];
+
+  styleElement: HTMLStyleElement;
+  changeColors(color) {
+    console.log(this.styleElement)
+    const head = document.getElementsByTagName("head")[0];
+    const css = `
+  .progress .mat-progress-bar-fill::after {
+    background-color: ${color} !important;
+  }  `;
+    this.styleElement.innerHTML = "";
+    this.styleElement.type = "text/css";
+    this.styleElement.appendChild(document.createTextNode(css));
+    head.appendChild(this.styleElement);
+  }
+  tracingpopupData: any = [];
   openTracing(element) {
     this.tracingpopupData = [];
     this.onDemandService.getTracingPopUp(element.id, this.claim_id, this.billableId).subscribe(res => {
@@ -154,6 +168,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.selection1.clear();
       this.selection.clear();
       this.correspondData = res;
+      this.changeColors(res.on_demand_status_color_code)
       this.statusOfAppointment = { isEmptyNoDate: !res.is_appointment_no_date_present, IsEmptyAppointmentDate: !res.is_appointment_date_time_present, isEmptyDuration: !res.is_appointment_duration_present, isEmptyLocation: !res.is_appointment_location_present }
       res.documets.map(doc => {
         if (doc.is_mandatory) {
@@ -273,6 +288,8 @@ export class BillingCorrespondanceComponent implements OnInit {
     });
   }
   ngOnInit() {
+    this.styleElement = document.createElement("style");
+    this.changeColors("#cccccc");
   }
   downloadForms(sign) {
     if (!this.examinerId) {

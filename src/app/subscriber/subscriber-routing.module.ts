@@ -122,7 +122,7 @@ const routes: Routes = [{
             }, {
               path: "billable-item/:billId",
               children: [{
-                path: "appointment/:examiner_id",
+                path: "appointment/:examiner_id/:appointment_id",
                 component: AppointmentComponent,
                 data: { breadcrumb: "Calendar" }
               }, {
@@ -211,7 +211,7 @@ const routes: Routes = [{
       }, {
         path: "billable-item/:billId",
         children: [{
-          path: "appointment/:examiner_id",
+          path: "appointment/:examiner_id/:appointment_id",
           component: AppointmentComponent,
           data: { breadcrumb: "Calendar" }
         }, {
@@ -451,7 +451,7 @@ const routes: Routes = [{
         }, {
           path: "billable-item/:billId",
           children: [{
-            path: "appointment/:examiner_id",
+            path: "appointment/:examiner_id/:appointment_id",
             component: AppointmentComponent,
             data: { breadcrumb: "Calendar" }
           }, {
@@ -616,7 +616,7 @@ const routes: Routes = [{
       }, {
         path: "billable-item/:billId",
         children: [{
-          path: "appointment/:examiner_id",
+          path: "appointment/:examiner_id/:appointment_id",
           component: AppointmentComponent,
           data: { breadcrumb: "Calendar" }
         }, {
@@ -845,7 +845,7 @@ const routes: Routes = [{
                 }, {
                   path: "billable-item/:billId",
                   children: [{
-                    path: "appointment/:examiner_id",
+                    path: "appointment/:examiner_id/:appointment_id",
                     component: AppointmentComponent,
                     data: { breadcrumb: "Calendar" }
                   }, {
@@ -933,7 +933,7 @@ const routes: Routes = [{
           }, {
             path: "billable-item/:billId",
             children: [{
-              path: "appointment/:examiner_id",
+              path: "appointment/:examiner_id/:appointment_id",
               component: AppointmentComponent,
               data: { breadcrumb: "Calendar" }
             }, {
@@ -1095,7 +1095,7 @@ const routes: Routes = [{
             }, {
               path: "billable-item/:billId",
               children: [{
-                path: "appointment/:examiner_id",
+                path: "appointment/:examiner_id/:appointment_id",
                 component: AppointmentComponent,
                 data: { breadcrumb: "Calendar" }
               }, {
@@ -1235,7 +1235,7 @@ const routes: Routes = [{
           }, {
             path: "billable-item/:billId",
             children: [{
-              path: "appointment/:examiner_id",
+              path: "appointment/:examiner_id/:appointment_id",
               component: AppointmentComponent,
               data: { breadcrumb: "Calendar" }
             }, {
@@ -1400,7 +1400,7 @@ const routes: Routes = [{
                 }, {
                   path: "billable-item/:billId",
                   children: [{
-                    path: "appointment/:examiner_id",
+                    path: "appointment/:examiner_id/:appointment_id",
                     component: AppointmentComponent,
                     data: { breadcrumb: "Calendar" }
                   }, {
@@ -1488,7 +1488,7 @@ const routes: Routes = [{
           }, {
             path: "billable-item/:billId",
             children: [{
-              path: "appointment/:examiner_id",
+              path: "appointment/:examiner_id/:appointment_id",
               component: AppointmentComponent,
               data: { breadcrumb: "Calendar" }
             }, {
@@ -1730,7 +1730,7 @@ const routes: Routes = [{
             }, {
               path: "billable-item/:billId",
               children: [{
-                path: "appointment/:examiner_id",
+                path: "appointment/:examiner_id/:appointment_id",
                 component: AppointmentComponent,
                 data: { breadcrumb: "Calendar" }
               }, {
@@ -1849,7 +1849,7 @@ const routes: Routes = [{
         component: AddEditServiceLocationComponent,
         data: { breadcrumb: "Service Location" }
       }]
-    
+
     },
     {
       path: "billing",
@@ -1890,7 +1890,7 @@ const routes: Routes = [{
           }, {
             path: "billable-item/:billId",
             children: [{
-              path: "appointment/:examiner_id",
+              path: "appointment/:examiner_id/:appointment_id",
               component: AppointmentComponent,
               data: { breadcrumb: "Calendar" }
             }, {
@@ -2015,7 +2015,7 @@ const routes: Routes = [{
               }, {
                 path: "billable-item/:billId",
                 children: [{
-                  path: "appointment/:examiner_id",
+                  path: "appointment/:examiner_id/:appointment_id",
                   component: AppointmentComponent,
                   data: { breadcrumb: "Calendar" }
                 }, {
@@ -2086,7 +2086,7 @@ const routes: Routes = [{
       data: {
         breadcrumb: "Upcoming Appointments"
       }
-    },{
+    }, {
       path: "claimants",
       children: [
         {
@@ -2124,7 +2124,7 @@ const routes: Routes = [{
             }, {
               path: "billable-item/:billId",
               children: [{
-                path: "appointment/:examiner_id",
+                path: "appointment/:examiner_id/:appointment_id",
                 component: AppointmentComponent,
                 data: { breadcrumb: "Calendar" }
               }, {
@@ -2184,7 +2184,7 @@ const routes: Routes = [{
           component: NewClaimComponent,
           data: { breadcrumb: "New Claim" }
         }]
-      }]
+    }]
   },
   {
     path: "claim-awaiting",
@@ -2211,7 +2211,7 @@ const routes: Routes = [{
         }, {
           path: "billable-item/:billId",
           children: [{
-            path: "appointment/:examiner_id",
+            path: "appointment/:examiner_id/:appointment_id",
             component: AppointmentComponent,
             data: { breadcrumb: "Calendar" }
           }, {
@@ -2270,7 +2270,7 @@ const routes: Routes = [{
       path: "",
       component: BillingCollectionComponent,
       data: { breadcrumb: "Billing and Collections" }
-    },{
+    }, {
       path: "claimants",
       children: [
         {
@@ -2308,7 +2308,7 @@ const routes: Routes = [{
             }, {
               path: "billable-item/:billId",
               children: [{
-                path: "appointment/:examiner_id",
+                path: "appointment/:examiner_id/:appointment_id",
                 component: AppointmentComponent,
                 data: { breadcrumb: "Calendar" }
               }, {
@@ -2368,9 +2368,9 @@ const routes: Routes = [{
           component: NewClaimComponent,
           data: { breadcrumb: "New Claim" }
         }]
-      }]
-  
-},
+    }]
+
+  },
   {
     path: "billable-item-awaiting",
     children: [{
@@ -2416,7 +2416,7 @@ const routes: Routes = [{
             }, {
               path: "billable-item/:billId",
               children: [{
-                path: "appointment/:examiner_id",
+                path: "appointment/:examiner_id/:appointment_id",
                 component: AppointmentComponent,
                 data: { breadcrumb: "Calendar" }
               }, {
@@ -2476,8 +2476,8 @@ const routes: Routes = [{
           component: NewClaimComponent,
           data: { breadcrumb: "New Claim" }
         }]
-      }]
-    },
+    }]
+  },
   {
     path: "appointment",
     children: [{
@@ -2567,7 +2567,7 @@ const routes: Routes = [{
           }, {
             path: "billable-item/:billId",
             children: [{
-              path: "appointment/:examiner_id",
+              path: "appointment/:examiner_id/:appointment_id",
               component: AppointmentComponent,
               data: { breadcrumb: "Calendar" }
             }, {
@@ -2728,7 +2728,7 @@ const routes: Routes = [{
         }, {
           path: "billable-item/:billId",
           children: [{
-            path: "appointment/:examiner_id",
+            path: "appointment/:examiner_id/:appointment_id",
             component: AppointmentComponent,
             data: { breadcrumb: "Calendar" }
           }, {
