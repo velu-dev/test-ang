@@ -274,15 +274,20 @@ export class VoidPayment {
   }
 
 }
+export interface PeriodicElement2 {
+  name: string;
+  action: string;
+}
 @Component({
   selector: 'second-bill-review',
   templateUrl: '../second-bill-review.html',
 })
 export class SecondBillReview {
   displayedColumns: string[] = ['select', 'item', 'procedure_code_1', 'modifier_1', 'unit', 'charges', 'first_submission', 'balances'];
-  dataSource = new MatTableDataSource();
+  dataSource = new MatTableDataSource(ELEMENT_DATA1);
   selection = new SelectionModel(true, []);
-
+  displayedColumns1: string[] = ['name', 'action'];
+  dataSource1 = ELEMENT_DATA2;
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -314,11 +319,13 @@ export class SecondBillReview {
 
 }
 const ELEMENT_DATA1 = [
-  { "id": 132, "bill_id": "CMBN10009320", "submission": "First", "sent_date": "12-07-2020", "due_date": "12-05-2020", "charge": "$3516.00", "payment": "$100.00", "balance": "$3416.00", "status": "Partially Paid", "action ": "", },
-  { "id": 131, "bill_id": "CMBN10009480", "submission": "Second", "sent_date": "12-07-2020", "due_date": "12-05-2020", "charge": "$3516.00", "payment": "$100.00", "balance": "$3416.00", "status": "Partially Paid", "action ": "", },
+    {item: 'QME', procedure_code_1: 'ML201', modifier_1: '93', unit: '1', charges:'2200.00', first_submission:'0', balances:'2200.00'},
+    {item: 'Excess Report Pages', procedure_code_1: '', modifier_1: '', unit: '758', charges:'1516.00', first_submission:'0', balances:'1516.00'},
+  ];
 
-];
-
+  const ELEMENT_DATA2: PeriodicElement2[] = [
+    {action:'', name: 'Document_filename.pdf'},
+  ];
 
 
 @Component({
