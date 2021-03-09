@@ -456,7 +456,7 @@ export class EventdetailDialog {
       return
     }
     let data = {
-      id: this.event['appointment_id'],
+      id: this.event['billable_item_id'],
       examination_status: this.examination_status,
       notes: this.examination_notes.trim()
     }

@@ -151,4 +151,11 @@ export class ClaimService {
   getProcedureTypeAttoney(claim_id, exam_type): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getProcedureTypeAttoney + claim_id + '/' + exam_type);
   }
+
+
+  searchAddress(input): Observable<any> {
+    this.headers.append("access-control-allow-origin", 'http://localhost:4200/');
+    // this.headers = new HttpHeaders().set("Access-Control-Allow-Origin", "http://localhost:4200/");
+    return this.http.get("https://us-street.api.smartystreets.com/lookup?search=" + input + "&key=" + environment.smartyStreetsAPIKey, { headers: this.headers })
+  }
 }

@@ -482,7 +482,6 @@ export class NewClaimComponent implements OnInit {
     //     })
     //   }
     // })
-
     this.searchInput.valueChanges
       .pipe(
         debounceTime(300),
@@ -864,6 +863,11 @@ export class NewClaimComponent implements OnInit {
           })
         }
       }
+    })
+    this.claimant.get("street1").valueChanges.subscribe(key => {
+      this.claimService.searchAddress(key).subscribe(address => {
+        console.log(address)
+      })
     })
   }
   // private _filterAttroney(value: string, data) {
