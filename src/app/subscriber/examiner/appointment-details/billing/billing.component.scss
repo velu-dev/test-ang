@@ -2,22 +2,6 @@
 @import "table";
 @import "../appointment-details.component.scss";
 
-.not-sent ::ng-deep .mat-progress-bar-fill::after {
-    background-color: $progres-light-gray;
-}
-.sent ::ng-deep .mat-progress-bar-fill::after {
-    background-color: $warning-light;
-}
-.complete ::ng-deep .mat-progress-bar-fill::after {
-    background-color: $btn_success;
-}
-.error ::ng-deep .mat-progress-bar-fill::after {
-    background-color: $progress-error;
-}
-::ng-deep .mat-progress-bar-buffer {
-    background: $progres-light-gray;
-}
-
 .billing {
     .bill-status {
         .progress {
@@ -57,6 +41,13 @@
         text-align: right;
         span {
             font-weight: $font-weight-bold;
+        }
+    }
+    .incomplete-info {
+        .incomplete-modules {
+            .text-danger {
+             color: $error !important;
+            }
         }
     }
     .border-dashed-blue {
@@ -178,77 +169,6 @@
             }
         }
     }
-    .payment-response {
-        .vertical-fixed {
-            overflow: inherit !important;
-            // .pay-response {
-            //     width: 2000px;
-            //     thead {
-            //             th {
-            //                 &:first-child {
-            //                     position: sticky;
-            //                     left: 0;
-            //                     z-index: 99999;
-            //                 }
-            //                 &:last-child {
-            //                     position: sticky;
-            //                     right: 0;
-            //                     z-index: 99999;
-            //                 }
-            //             }
-            //     }
-            //     tbody {
-            //         tr {
-            //             th {
-            //                 &:first-child {
-            //                     position: sticky;
-            //                     left: 0;
-            //                     background-color: $white;
-            //                     z-index: 99999;
-            //                 }
-            //                 &:last-child {
-            //                     position: sticky;
-            //                     right: 0;
-            //                     z-index: 99999;
-            //                 }
-            //             }
-            //             td {
-            //                 &:first-child {
-            //                     position: sticky;
-            //                     left: 0;
-            //                     background-color: $white;
-            //                     z-index: 99999;
-            //                 }
-            //                 &:last-child {
-            //                     position: sticky;
-            //                     right: 0;
-            //                     background-color: $white;
-            //                     z-index: 99999;
-            //                 }
-            //             }
-            //         }
-            //     }
-            //     tfoot {
-            //         tr {
-            //             td {
-            //                 &:first-child {
-            //                     position: sticky;
-            //                     left: 0;
-            //                     background-color: $white;
-            //                     z-index: 99999;
-            //                 }
-            //                 &:last-child {
-            //                     position: sticky;
-            //                     right: 0;
-            //                     background-color: $white;
-            //                     z-index: 99999;
-            //                 }
-            //             }
-            //         }
-            //     }
-            // }
-        }
-    }
     .documents {
         // @extend .examiner-info;
         mat-card {
@@ -257,48 +177,6 @@
             box-shadow: none;
             padding: 0;
         }
-
-        // .document-file-upload {
-        //     mat-form-field {
-        //         padding: 0 10px 0 10px;
-        //     }
-        //     @media only screen and (max-width: 568px) {
-        //         margin-bottom: 20px;
-        //     }
-        //     .Upload_ {
-        //         button {
-        //             width: 120px;
-        //         }
-        //         mat-form-field {
-        //             width: calc(100% - 150px);
-        //             @media only screen and (max-width: 568px) {
-        //                 width: $width-100 !important;
-        //             }
-        //         }
-        //     }
-        //     div {
-        //         .filled-gray {
-        //             margin-top: 25px;
-        //             @media only screen and (max-width: 568px) {
-        //                 margin-top: 0px;
-        //             }
-        //         }
-        //         .add-btn {
-        //             @media screen and (max-width: 1024px) and (min-width: 768px) {
-        //                 margin-bottom: 10px !important;
-        //             }
-        //         }
-        //     }
-        //     .Upload_ {
-        //         .mat-hint {
-        //             width: 100%;
-        //             mat-error {
-        //                 float: right;
-        //             }
-        //         }
-        //     }
-        // }
-
         .add-custom {
             color: $ternary !important;
         }
@@ -344,45 +222,3 @@ th {
     top: 0; /* Don't forget this, required for the stickiness */
     box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
 }
-
-// .bill-line-mobile {
-//     table {
-//         width: 100%;
-//         tbody {
-//             tr {
-//                 &:nth-child(odd) {
-//                     background-color: $light-color;
-//                 }
-//                 td {
-//                     mat-accordion {
-//                         mat-expansion-panel {
-//                           mat-expansion-panel-header {
-//                             padding-left:0 !important;
-//                         }
-//                         }
-//                     }
-//                     mat-card {
-//                         padding: 5px;
-//                         div {
-//                             display: flex;
-//                             div {
-//                                 padding: 5px 2px;
-//                             }
-//                             div.bill-property {
-//                                 width: 35%;
-//                                 font-weight: bold;
-//                                 &::after {
-//                                     content: ":";
-//                                     text-align: right;
-//                                 }
-//                             }
-//                             div.value {
-//                                 width: 65%;
-//                             }
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }

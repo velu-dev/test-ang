@@ -624,15 +624,32 @@ image-cropper {
   height: 50vh;
 }
 
-// Billable item pages common styles
+// On-Demand pages common styles
+mat-progress-bar {
+  height: 20px !important;
+  color: $light-color;
+  .mat-progress-bar-buffer {
+    background: $progres-light-gray;
+  }
+}
 .billable-item-status,
 .billing {
+  .ondemand-status {
+    .container {
+      padding-left: 0px;
+    }
+  }
   .main-title {
     font-size: $font-size-10 !important;
     font-weight: $font-weight-medium;
     color: $black;
-    padding-left: 10px;
   }
+  .description {
+    margin-top: 5px;
+  }
+  .mh-auto {
+    min-height: auto !important;
+}
   .info-alert {
     padding: 10px 15px;
     color: $info;
@@ -641,37 +658,13 @@ image-cropper {
     width: fit-content;
     border-radius: 5px;
   }
-  .description {
-    margin-top: 5px;
-    padding-left: 10px;
-  }
-  mat-progress-bar {
-    height: 20px;
-    color: $light-color;
-    padding-left: 10px;
-    @media only screen and (max-width: 568px) {
-      padding-left: 0;
-    }
-  }
 }
-// // billable item exam type left side scroll bar
-// .ng-tns-c25-92.ng-trigger.ng-trigger-transformPanel.mat-select-panel,
-// .ng-tns-c20-12.ng-trigger.ng-trigger-transformPanel.mat-select-panel,
-// .ng-tns-c19-17.ng-trigger.ng-trigger-transformPanel.mat-select-panel {
-//   direction: rtl;
-//   &::-webkit-scrollbar {
-//     width: 8px !important;
-//   }
-// }
 
 // Correspondence and billing recipient custom css
 .recipient {
   .content-wrapper-main-title {
     color: $text-dark;
   }
-  // .main-title {
-  //   // font-weight: $font-weight-bold;
-  // }
   .info-alert {
     color: $info;
     font-size: $font-size-1;
@@ -945,8 +938,8 @@ image-cropper {
       width: 100%;
       // padding: 5px;
       mat-list {
-      max-height: 50vh;
-      overflow-y: auto;
+        max-height: 50vh;
+        overflow-y: auto;
         h3 {
           color: $text-dark;
           font-size: $font-size-11;
