@@ -52,7 +52,7 @@
                             </mat-tab-group>
                         </div>
                     </mat-card>
-                    <mat-card class="m-t-20 m-b-20">
+                    <mat-card class="m-t-20 m-b-20 w-100">
                         <div fxLayout="row wrap" fxFlex="100">
                             <div fxFlex="100" class="m-b-20">
                                 <div fxLayout="row wrap" class="w-100">
@@ -175,7 +175,7 @@
                                     <mat-error *ngIf="isClaimantSubmited">Please enter other language</mat-error>
                                 </mat-form-field>
                             </div>
-                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
+                            <!-- <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Phone</mat-label>
                                 <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000"
@@ -190,7 +190,39 @@
                                     formControlName="phone_no_2" placeholder="Alternate Phone" autocomplete="off">
                                 <mat-error *ngIf="isClaimantSubmited">Please enter valid alternative phone number
                                 </mat-error>
-                            </mat-form-field>
+                            </mat-form-field> -->
+                            <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-form-field appearance="outline" fxFlex="70" class="phone">
+                                    <mat-label>Phone</mat-label>
+                                    <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000"
+                                        formControlName="phone_no_1" placeholder="Phone" autocomplete="off">
+                                    <mat-error *ngIf="isClaimantSubmited">Please enter valid phone number</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                                    <mat-label>Ext</mat-label>
+                                    <input matInput type="text" placeholder="Ext" autocomplete="off">
+                                    <mat-error>Please enter valid Extension</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-form-field appearance="outline" fxFlex="70" class="phone">
+                                    <mat-label>Alternate Phone</mat-label>
+                                    <input matInput (keypress)="numberOnly($event)" type="text" mask="(000) 000-0000"
+                                        formControlName="phone_no_2" placeholder="Alternate Phone" autocomplete="off">
+                                    <mat-error *ngIf="isClaimantSubmited">Please enter valid alternative phone number
+                                    </mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                                    <mat-label>Ext</mat-label>
+                                    <input matInput type="text" placeholder="Ext" autocomplete="off">
+                                    <mat-error>Please enter valid Extension</mat-error>
+                                </mat-form-field>
+                            </div>
 
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
@@ -293,15 +325,20 @@
                                     (ngModelChange)="claimantDetails.date_of_birth = $event" disabled>
                                 <mat-error *ngIf="isClaimSubmited">Please enter valid claim number</mat-error>
                             </mat-form-field>
-
-                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                                fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Phone</mat-label>
-                                <input type="text" matInput placeholder="Enter Phone" autocomplete="off"
-                                    formControlName="phone_no_1" mask="(000) 000-0000">
-                                <mat-error *ngIf="isClaimSubmited">Please enter valid WCAB number</mat-error>
-                            </mat-form-field>
-
+                            <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50"
+                                fxFlex.xs="100">
+                                <mat-form-field appearance="outline" fxFlex="70" class="phone">
+                                    <mat-label>Phone</mat-label>
+                                    <input type="text" matInput placeholder="Enter Phone" autocomplete="off"
+                                        formControlName="phone_no_1" mask="(000) 000-0000">
+                                    <mat-error *ngIf="isClaimSubmited">Please enter valid WCAB number</mat-error>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                                    <mat-label>Ext</mat-label>
+                                    <input matInput type="text" placeholder="Ext" autocomplete="off">
+                                    <mat-error>Please enter valid Extension</mat-error>
+                                </mat-form-field>
+                            </div>
                         </div>
                     </mat-card-content>
                 </mat-card>
@@ -583,14 +620,20 @@
                                 <mat-error>Please enter valid zip code</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                                <mat-label>Adjuster Phone</mat-label>
-                                <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000"
-                                    placeholder="Phone" formControlName="phone" autocomplete="off">
-                                <mat-error>Please enter valid phone number</mat-error>
-                            </mat-form-field>
+                            <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-form-field appearance="outline" fxFlex="70" class="phone">
+                                    <mat-label>Adjuster Phone</mat-label>
+                                    <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000"
+                                        placeholder="Phone" formControlName="phone" autocomplete="off">
+                                    <mat-error>Please enter valid phone number</mat-error>
+                                </mat-form-field>
 
+                                <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                                    <mat-label>Ext</mat-label>
+                                    <input matInput type="text" placeholder="Ext" autocomplete="off">
+                                    <mat-error>Please enter valid Extension</mat-error>
+                                </mat-form-field>
+                            </div>
 
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -707,13 +750,20 @@
                                 <mat-error>Please enter valid zip code</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                                <mat-label>Phone</mat-label>
-                                <input matInput placeholder="Phone" type="text" (keypress)="numberOnly($event)"
-                                    mask="(000) 000-0000" formControlName="phone" autocomplete="off">
-                                <mat-error>Please enter valid phone number</mat-error>
-                            </mat-form-field>
+                            <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-form-field appearance="outline" fxFlex="70" class="phone">
+                                    <mat-label>Phone</mat-label>
+                                    <input matInput placeholder="Phone" type="text" (keypress)="numberOnly($event)"
+                                        mask="(000) 000-0000" formControlName="phone" autocomplete="off">
+                                    <mat-error>Please enter valid phone number</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                                    <mat-label>Ext</mat-label>
+                                    <input matInput type="text" placeholder="Ext" autocomplete="off">
+                                    <mat-error>Please enter valid Extension</mat-error>
+                                </mat-form-field>
+                            </div>
 
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -815,13 +865,21 @@
                                 <mat-error>Please enter valid zip code</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                                <mat-label>Phone</mat-label>
-                                <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000"
-                                    placeholder="Phone" formControlName="phone" autocomplete="off">
-                                <mat-error>Please enter valid phone number</mat-error>
-                            </mat-form-field>
+                            <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-form-field appearance="outline" fxFlex="70" class="phone">
+                                    <mat-label>Phone</mat-label>
+                                    <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000"
+                                        placeholder="Phone" formControlName="phone" autocomplete="off">
+                                    <mat-error>Please enter valid phone number</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                                    <mat-label>Ext</mat-label>
+                                    <input matInput type="text" placeholder="Ext" autocomplete="off">
+                                    <mat-error>Please enter valid Extension</mat-error>
+                                </mat-form-field>
+
+                            </div>
 
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -922,13 +980,20 @@
                                 <mat-error>Please enter valid zip code</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                                <mat-label>Phone</mat-label>
-                                <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000"
-                                    placeholder="Phone" formControlName="phone" autocomplete="off">
-                                <mat-error>Please enter valid phone number</mat-error>
-                            </mat-form-field>
+                            <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                                <mat-form-field appearance="outline" fxFlex="70" class="phone">
+                                    <mat-label>Phone</mat-label>
+                                    <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000"
+                                        placeholder="Phone" formControlName="phone" autocomplete="off">
+                                    <mat-error>Please enter valid phone number</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                                    <mat-label>Ext</mat-label>
+                                    <input matInput type="text" placeholder="Ext" autocomplete="off">
+                                    <mat-error>Please enter valid Extension</mat-error>
+                                </mat-form-field>
+                            </div>
 
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -1035,13 +1100,22 @@
                                 <mat-error>Please enter valid zip code</mat-error>
                             </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                fxFlex.xs="100">
-                                <mat-label>Phone</mat-label>
-                                <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000"
-                                    placeholder="Phone" formControlName="phone" autocomplete="off">
-                                <mat-error>Please enter valid phone number</mat-error>
-                            </mat-form-field>
+                            <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+
+                                <mat-form-field appearance="outline" fxFlex="70">
+                                    <mat-label>Phone</mat-label>
+                                    <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000"
+                                        placeholder="Phone" formControlName="phone" autocomplete="off">
+                                    <mat-error>Please enter valid phone number</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                                    <mat-label>Ext</mat-label>
+                                    <input matInput type="text" placeholder="Ext" autocomplete="off">
+                                    <mat-error>Please enter valid Extension</mat-error>
+                                </mat-form-field>
+
+                            </div>
 
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
@@ -1102,14 +1176,25 @@
                                     (ngModelChange)="claimantDetails.date_of_birth = $event" disabled>
                                 <mat-error>Please enter valid claim number</mat-error>
                             </mat-form-field>
+                            <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50"
+                                fxFlex.xs="100">
 
-                            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
-                                fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Phone</mat-label>
-                                <input type="text" matInput placeholder="Enter Phone" formControlName="phone_no_1"
-                                    mask="(000) 000-0000" disabled>
-                                <mat-error>Please enter valid WCAB number</mat-error>
-                            </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="70" class="phone">
+                                    <mat-label>Phone</mat-label>
+                                    <input type="text" matInput placeholder="Enter Phone" formControlName="phone_no_1"
+                                        mask="(000) 000-0000" disabled>
+                                    <mat-error>Please enter valid WCAB number</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                                    <mat-label>Ext</mat-label>
+                                    <input matInput type="text" placeholder="Ext" autocomplete="off">
+                                    <mat-error>Please enter valid Extension</mat-error>
+                                </mat-form-field>
+
+                            </div>
+
+
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3"
                                 fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Claim Number</mat-label>
@@ -1265,14 +1350,24 @@
                                         formControlName="conference_url" autocomplete="off">
                                     <mat-error>Please enter a valid Conference URL</mat-error>
                                 </mat-form-field>
-                                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                    fxFlex.xs="100" *ngIf="billable_item?.value?.appointment?.is_virtual_location">
-                                    <mat-label>Conference Phone</mat-label>
-                                    <input matInput (keypress)="numberOnly($event)" mask="(000) 000-0000"
-                                        placeholder="To be provided by the scheduling party"
-                                        formControlName="conference_phone" autocomplete="off">
-                                    <mat-error>Please enter a valid Conference Phone</mat-error>
-                                </mat-form-field>
+                                
+                                <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" *ngIf="billable_item?.value?.appointment?.is_virtual_location">
+
+                                    <mat-form-field appearance="outline" fxFlex="70" class="phone">
+                                        <mat-label>Conference Phone</mat-label>
+                                        <input matInput (keypress)="numberOnly($event)" mask="(000) 000-0000"
+                                            placeholder="To be provided by the scheduling party"
+                                            formControlName="conference_phone" autocomplete="off">
+                                        <mat-error>Please enter a valid Conference Phone</mat-error>
+                                    </mat-form-field>
+    
+                                    <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                                        <mat-label>Ext</mat-label>
+                                        <input matInput type="text" placeholder="Ext" autocomplete="off">
+                                        <mat-error>Please enter valid Extension</mat-error>
+                                    </mat-form-field>
+
+                                </div>
                             </div>
                             <div fxLayout="row wrap" fxFlex="100" formGroupName="intake_call">
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -1319,14 +1414,23 @@
                                             {{contactType.display_name}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
+                                <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" *ngIf="!isSuplimental">
 
-                                <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                    fxFlex.xs="100" *ngIf="!isSuplimental">
-                                    <mat-label>Intake Contact Phone</mat-label>
-                                    <input matInput placeholder="Intake Contact Phone" formControlName="caller_phone"
-                                        (keypress)="numberOnly($event)" mask="(000) 000-0000" autocomplete="off">
-                                    <mat-error *ngIf="isBillSubmited">Please enter valid phone</mat-error>
-                                </mat-form-field>
+                                    <mat-form-field appearance="outline" fxFlex="70" class="phone">
+                                        <mat-label>Intake Contact Phone</mat-label>
+                                        <input matInput placeholder="Intake Contact Phone" formControlName="caller_phone"
+                                            (keypress)="numberOnly($event)" mask="(000) 000-0000" autocomplete="off">
+                                        <mat-error *ngIf="isBillSubmited">Please enter valid phone</mat-error>
+                                    </mat-form-field>
+    
+        
+                                    <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                                        <mat-label>Ext</mat-label>
+                                        <input matInput type="text" placeholder="Ext" autocomplete="off">
+                                        <mat-error>Please enter valid Extension</mat-error>
+                                    </mat-form-field>
+
+                                </div>
 
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100" *ngIf="!isSuplimental">
