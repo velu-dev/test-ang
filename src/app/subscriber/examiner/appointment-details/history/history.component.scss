@@ -1,30 +1,6 @@
 @import 'variables';
 @import 'table';
-
-.not-sent ::ng-deep .mat-progress-bar-fill::after {
-    background-color: $progres-light-gray;
-}
-.sent ::ng-deep .mat-progress-bar-fill::after {
-    background-color: $warning-light;
-}
-.complete ::ng-deep .mat-progress-bar-fill::after {
-    background-color: $btn_success;
-}
-.error ::ng-deep .mat-progress-bar-fill::after {
-    background-color: $progress-error;
-}
-::ng-deep .mat-progress-bar-buffer {
-    background: $progres-light-gray;
-}
-.info-alert {
-    color: $info;
-    background-color: $info-bg;
-    border: 1px solid $info-border;
-    padding: 10px 15px;
-    width: fit-content;
-    margin: 0px auto;
-    border-radius: 4px;
-}
+@import '../correspondance/correspondance.component.scss';
 
 .action-btns {
     button {
@@ -33,29 +9,5 @@
             white-space: initial;
             height: auto;
         }
-    }
-}
-
-.billable-item-status {
-    .main-title {
-        margin-left: 0;
-        padding-left: 0;
-        @media only screen and (min-width: 320px) and (max-width: 580px) {
-            margin-left: 0;
-            padding-left: 0;
-        }
-    }
-    .description {
-        padding-left: 0;
-        @media only screen and (min-width: 320px) and (max-width: 580px) {
-            margin-left: 0;
-            padding-left: 0;
-        }
-    }
-    mat-progress-bar {
-        padding-left: 0;
-    }
-    .mh-auto {
-        min-height: auto !important;
     }
 }

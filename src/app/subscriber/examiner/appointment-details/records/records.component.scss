@@ -1,152 +1,69 @@
 @import "variables";
 @import "table";
+@import "../correspondance/correspondance.component.scss";
 
-.not-sent ::ng-deep .mat-progress-bar-fill::after {
-    background-color: $progres-light-gray;
-}
-.sent ::ng-deep .mat-progress-bar-fill::after {
-    background-color: $warning-light;
-}
-.complete ::ng-deep .mat-progress-bar-fill::after {
-    background-color: $btn_success;
-}
-.error ::ng-deep .mat-progress-bar-fill::after {
-    background-color: $progress-error;
-}
 
-::ng-deep .mat-progress-bar-buffer {
-    background: $progres-light-gray;
-}
-
-th {
-    ::ng-deep .mat-checkbox .mat-checkbox-frame {
-        border-color: $white;
-    }
-    #dropdown-list {
-        vertical-align: middle;
-        margin-top: 10px;
-        line-height: 0.5;
-        padding: 0 0 0 5px;
-    }
-}
-.basic-table {
-    margin-left: 10px;
-    @media only screen and (min-width: 320px) and (max-width: 580px) {
-        margin-left: 0;
-    }
-    .pages-count {
-        display: flex;
-        input {
-            width: 65px;
-            border: 1px solid $progres-light-gray;
-            padding: 5px;
-            margin-right: 5px;
-            border-radius: 5px;
-        }
-        .action-buttons {
-            display: flex;
-            button {
-                min-width: 10px !important;
-            }
-        }
-    }
-}
-.ondemand-status {
-    padding: 10px 0px;
-}
-
-.width-fixed {
-    width: 25px !important;
-    padding-right: 0px !important;
-}
-
-.upload-file {
-    button {
-        margin-top: 17px;
-        vertical-align: top;
-    }
-    .mat-form-field {
-        width: calc(100% - 125px);
-        mat-hint {
-            width: 100%;
-            mat-error {
-                float: right;
-            }
-        }
-    }
-}
-
-.ondemand_request {
-    .mat-form-field {
-        min-width: 295px;
-        max-width: 295px;
-    }
-    mat-checkbox {
-        display: block;
-        margin-bottom: 20px;
-    }
-    .outline-warning {
-        float: right;
-        margin-top: 45px;
-        @media only screen and (max-width: 568px) {
-            float: left;
-            margin-top: 20px;
-        }
-    }
-}
 .billable-item-status {
-    .main-title {
-        margin-left: 0;
-        @media only screen and (min-width: 320px) and (max-width: 580px) {
-            margin-left: 0;
-            padding-left: 0;
+    .upload-file {
+        button {
+            margin-top: 17px;
+            vertical-align: top;
+        }
+        .mat-form-field {
+            width: calc(100% - 125px);
+            mat-hint {
+                width: 100%;
+                mat-error {
+                    float: right;
+                }
+            }
         }
     }
-    .info-alert {
-        margin-left: 10px;
-        @media only screen and (min-width: 320px) and (max-width: 580px) {
-            margin-left: 0px;
+    .basic-table {
+        th {
+            ::ng-deep .mat-checkbox .mat-checkbox-frame {
+                border-color: $white;
+            }
+            #dropdown-list {
+                vertical-align: middle;
+                margin-top: 10px;
+                line-height: 0.5;
+                padding: 0 0 0 5px;
+            }
+        }
+        .pages-count {
+            display: flex;
+            input {
+                width: 65px;
+                border: 1px solid $progres-light-gray;
+                padding: 5px;
+                margin-right: 5px;
+                border-radius: 5px;
+            }
+            .action-buttons {
+                display: flex;
+                button {
+                    min-width: 10px !important;
+                }
+            }
         }
     }
-    .description {
-        @media only screen and (min-width: 320px) and (max-width: 580px) {
-            margin-left: 0;
-            padding-left: 0;
+    .ondemand_request {
+        .mat-form-field {
+            min-width: 295px;
+            max-width: 295px;
         }
-    }
-    .recipient {
-        .main-title {
+        mat-checkbox {
+            display: block;
+            margin-bottom: 20px;
+        }
+        .outline-warning {
+            float: right;
+            margin-top: 45px;
             @media only screen and (max-width: 568px) {
+                float: left;
                 margin-top: 20px;
             }
-        }
-    }
-    .upload-sec {
-        padding-left: 10px;
-        @media only screen and (max-width: 568px) {
-            padding-left: 0px;
-        }
-    }
-}
-
-.send-document {
-    .main-title {
-        margin-left: 0;
-        @media only screen and (min-width: 320px) and (max-width: 580px) {
-            margin-left: 0;
-            padding-left: 0;
-        }
-    }
-    .description {
-        @media only screen and (min-width: 320px) and (max-width: 580px) {
-            margin-left: 0;
-            padding-left: 0;
-        }
-    }
-    .user-detail {
-        margin-left: 10px;
-        @media only screen and (min-width: 320px) and (max-width: 580px) {
-            margin-left: 0;
         }
     }
 }

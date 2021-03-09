@@ -136,14 +136,14 @@
     <div class="incomplete-info" *ngIf="payerResponse.length">
         <mat-card>
             <mat-card-header>
-                <div class="content-wrapper-main-title text-danger">Claims Administrator Feedback</div>
+                <div class="content-wrapper-main-title text-danger m-t-10 m-b-10">Claims Administrator Feedback</div>
             </mat-card-header>
             <mat-divider class="border-red"></mat-divider>
             <mat-card-content>
                 <div fxLayout="row wrap" class="p-t-10">
                     <div class="incomplete-modules" fxFlex="100">
                         <ul>
-                            <li *ngFor="let payer of payerResponse">
+                            <li *ngFor="let payer of payerResponse" class="text-danger">
                                 <mat-icon>error</mat-icon>{{payer?.status_date | date:'MM-dd-yyyy' }} -
                                 {{payer?.MessageText}}
                             </li>
@@ -699,7 +699,7 @@
 
 
     <!-- ===== Payment Response ==== -->
-    <!-- <app-payment-response *ngIf="billingData" [billingData]="billingData"></app-payment-response> -->
+    <app-payment-response *ngIf="billingData" [billingData]="billingData"></app-payment-response>
 
     <!-- ===== Examination Submission Documents ==== -->
     <div fxlayout="row wrap" class="m-t-30 submission-document">
