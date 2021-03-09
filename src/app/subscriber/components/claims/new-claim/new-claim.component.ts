@@ -1538,9 +1538,9 @@ export class NewClaimComponent implements OnInit {
             });
           res.data.injuryInfodata.map(injury => {
             let inj = injury;
-            inj.date_of_injury = injury.date_of_injury ? moment(injury.date_of_injury) : null;
-            inj.continuous_trauma_start_date = injury.continuous_trauma_start_date ? moment(injury.continuous_trauma_start_date) : null;
-            inj.continuous_trauma_end_date = injury.continuous_trauma_end_date ? moment(injury.continuous_trauma_end_date) : null;
+            inj.date_of_injury = injury.date_of_injury ? injury.date_of_injury : null;
+            inj.continuous_trauma_start_date = injury.continuous_trauma_start_date ? injury.continuous_trauma_start_date : null;
+            inj.continuous_trauma_end_date = injury.continuous_trauma_end_date ? injury.continuous_trauma_end_date : null;
             this.injuryInfodata.push(inj)
           })
           // this.injuryInfodata = res.data.injuryInfodata;

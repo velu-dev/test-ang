@@ -235,8 +235,6 @@ export class AddEditServiceLocationComponent implements OnInit {
       })
 
     } else {
-
-
       this.subscriberService.updateLocation(this.locationForm.value).subscribe(location => {
         //console.log(location)
         if (this.locationForm.value.id) {
@@ -244,8 +242,8 @@ export class AddEditServiceLocationComponent implements OnInit {
         } else {
           this.alertService.openSnackBar('Service Location Created Successfully', 'success');
         }
-
-        this.router.navigate([this.baseUrl + '/location'])
+        this._location.back();
+        // this.router.navigate([this.baseUrl + '/location'])
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
@@ -386,8 +384,8 @@ export class AddEditServiceLocationComponent implements OnInit {
           } else {
             this.alertService.openSnackBar('Service Location Created Successfully', 'success');
           }
-
-          this.router.navigate([this.baseUrl + '/location'])
+          this._location.back();
+          // this.router.navigate([this.baseUrl + '/location']);
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');
         })
