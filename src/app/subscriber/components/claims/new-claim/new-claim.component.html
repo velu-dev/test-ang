@@ -234,10 +234,10 @@
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.lg="50"
                                 fxFlex.xl="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>Street Address 1</mat-label>
-                                <!-- <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"
+                                <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"
                                     placeholder="Street Address 1" formControlName="street1"
-                                    autocomplete="off"></textarea> -->
-                                <input matInput id="street-input" [matAutocomplete]="streetAutocomplete"
+                                    autocomplete="off"></textarea>
+                                <!-- <input matInput id="street-input" [matAutocomplete]="streetAutocomplete"
                                     #trigger="matAutocompleteTrigger" formControlName="street1" placeholder="Street Address 1"
                                     class="p-l-10">
                                 <mat-autocomplete #streetAutocomplete="matAutocomplete">
@@ -249,7 +249,7 @@
                                     </mat-option>
                                     <mat-option *ngIf="filteredClaimant?.data.length == 0">No Data
                                         Found</mat-option>
-                                </mat-autocomplete>
+                                </mat-autocomplete> -->
                                 <mat-error>Please enter valid address</mat-error>
                             </mat-form-field>
 
