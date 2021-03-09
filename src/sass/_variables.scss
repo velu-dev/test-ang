@@ -1135,6 +1135,9 @@ input:-webkit-autofill {
       border-radius: 10px;
       display: block !important;
       min-height: 180px;
+      @media only screen and (max-width: 568px) {
+        margin-top: 10px;
+      }
       .sub-title {
         border-bottom: 1px solid $active;
         margin-bottom: 10px;
@@ -1867,5 +1870,15 @@ input:-webkit-autofill {
       }
     }
     font-size: $font-size-3;
+  }
+}
+
+// Phone number extension custom style
+::ng-deep {
+  mat-form-field.phone-ext {
+    padding-left: 3px !important;
+  }
+  mat-form-field.phone {
+    padding-right: 3px !important;
   }
 }
