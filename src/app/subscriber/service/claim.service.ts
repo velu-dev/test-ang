@@ -154,10 +154,11 @@ export class ClaimService {
 
 
   searchAddress(input): Observable<any> {
-    this.headers.append("access-control-allow-origin", '*');
+    // this.headers.append("access-control-allow-origin", '*');
     // this.headers.append("referer", "https://myneatwebsite.com");
     // this.headers.append("access-control-allow-origin", 'http://localhost:4200/');
     // this.headers = new HttpHeaders().set("Access-Control-Allow-Origin", "http://localhost:4200/");
-    return this.http.get("https://us-street.api.smartystreets.com/lookup?key=" + environment.smartyStreetsAPIKey + "&search=" + input + "&max_results=10&include_only_cities=&include_only_states=&selected=", { headers: this.headers })
+    return this.http.get("https://us-street.api.smartystreets.com/street-address?key=" + environment.smartyStreetsAPIKey + "&street=1600+amphitheatre+pkwy&city=mountain+view&state=CA&candidates=10")
   }
 }
+// auth-id=7d0bd1ef-fca2-623b-6107-fcb5c32e8541&auth-token=B5EDdUC7xUP7Wo7jefv8
