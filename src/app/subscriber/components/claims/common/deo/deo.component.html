@@ -83,12 +83,21 @@
                 <mat-error>Please enter valid zip code</mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                <mat-label>Phone </mat-label>
-                <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000" placeholder="Phone"
-                    formControlName="phone" autocomplete="off">
-                <mat-error>Please enter valid phone number</mat-error>
-            </mat-form-field>
+            <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-form-field appearance="outline" fxFlex="70" class="phone">
+                    <mat-label>Phone </mat-label>
+                    <input matInput type="text" (keypress)="numberOnly($event)" mask="(000) 000-0000"
+                        placeholder="Phone" formControlName="phone" autocomplete="off">
+                    <mat-error>Please enter valid phone number</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                    <mat-label>Ext</mat-label>
+                    <input matInput type="text" placeholder="Ext" autocomplete="off">
+                    <mat-error>Please enter valid Extension</mat-error>
+                </mat-form-field>
+
+            </div>
 
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Fax</mat-label>

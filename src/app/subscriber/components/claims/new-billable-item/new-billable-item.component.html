@@ -21,12 +21,20 @@
                 <mat-error>Please enter valid claim number</mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
-                fxFlex.sm="50" fxFlex.xs="100">
-                <mat-label>Phone</mat-label>
-                <input type="text" matInput placeholder="Enter Phone"
-                    [value]="claimantDetails.phone_no_1| mask:'(000) 000-0000'" mask="(000) 000-0000" disabled>
-            </mat-form-field>
+            <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-form-field appearance="outline" class="phone" fxFlex="70">
+                    <mat-label>Phone</mat-label>
+                    <input type="text" matInput placeholder="Enter Phone"
+                        [value]="claimantDetails.phone_no_1| mask:'(000) 000-0000'" mask="(000) 000-0000" disabled>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                    <mat-label>Ext</mat-label>
+                    <input matInput type="text" placeholder="Ext" autocomplete="off">
+                    <mat-error>Please enter valid Extension</mat-error>
+                </mat-form-field>
+            </div>
+
             <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
                 fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Claim Number</mat-label>
@@ -116,7 +124,8 @@
                         <mat-select formControlName="examiner_id">
                             <mat-option *ngFor="let examinar of examinarList" (click)="examinarChange(examinar)"
                                 [value]="examinar.id">
-                                {{examinar.first_name}} {{examinar.middle_name}} {{examinar?.last_name}}{{examinar?.suffix ? (", "+ examinar.suffix) : ""}}
+                                {{examinar.first_name}} {{examinar.middle_name}}
+                                {{examinar?.last_name}}{{examinar?.suffix ? (", "+ examinar.suffix) : ""}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="isBillSubmited">Please select Examiner</mat-error>
@@ -127,8 +136,7 @@
                         <mat-label>Date & Time</mat-label>
                         <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" [min]="todayDate.appointment"
                             formControlName="appointment_scheduled_date_time" autocomplete="off"
-                            [owlDateTime]="appointment"
-                            [value]="appointment_scheduled_date_time"
+                            [owlDateTime]="appointment" [value]="appointment_scheduled_date_time"
                             (dateTimeChange)="changeDateType(billable_item?.value?.appointment?.appointment_scheduled_date_time)">
                         <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment">
                         </mat-datepicker-toggle>
@@ -178,17 +186,28 @@
                             formControlName="conference_url" autocomplete="off">
                         <mat-error>Please enter a valid Conference URL</mat-error>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+
+                    <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
                         *ngIf="billable_item?.value?.appointment?.is_virtual_location">
-                        <mat-label>Conference Phone</mat-label>
-                        <input matInput (keypress)="numberOnly($event)" mask="(000) 000-0000"
-                            placeholder="To be provided by the scheduling party" formControlName="conference_phone"
-                            autocomplete="off">
-                        <mat-error>Please enter a valid Conference Phone</mat-error>
-                    </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="70" class="phone">
+                            <mat-label>Conference Phone</mat-label>
+                            <input matInput (keypress)="numberOnly($event)" mask="(000) 000-0000"
+                                placeholder="To be provided by the scheduling party" formControlName="conference_phone"
+                                autocomplete="off">
+                            <mat-error>Please enter a valid Conference Phone</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                            <mat-label>Ext</mat-label>
+                            <input matInput type="text" placeholder="Ext" autocomplete="off">
+                            <mat-error>Please enter valid Extension</mat-error>
+                        </mat-form-field>
+                    </div>
                 </div>
-                <div fxLayout="row wrap" fxFlex="100" formGroupName="intake_call" >
-                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" *ngIf="!isSuplimental">
+
+                <div fxLayout="row wrap" fxFlex="100" formGroupName="intake_call">
+                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+                        *ngIf="!isSuplimental">
                         <mat-label>Intake Caller</mat-label>
                         <input matInput placeholder="Intake Caller" formControlName="caller_name" autocomplete="off">
                     </mat-form-field>
@@ -216,7 +235,8 @@
                         <mat-error *ngIf="isBillSubmited">Please enter valid date</mat-error>
                     </mat-form-field>
 
-                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" *ngIf="!isSuplimental">
+                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+                        *ngIf="!isSuplimental">
                         <mat-label>Communication Type</mat-label>
                         <mat-select formControlName="call_type">
                             <mat-option *ngFor="let contactType of contactTypes" [value]="contactType.id">
@@ -224,44 +244,61 @@
                         </mat-select>
                     </mat-form-field>
 
-                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" *ngIf="!isSuplimental">
-                        <mat-label>Intake Contact Phone</mat-label>
-                        <input matInput placeholder="Intake Contact Phone" formControlName="caller_phone"
-                            (keypress)="numberOnly($event)" mask="(000) 000-0000" autocomplete="off">
-                        <mat-error *ngIf="isBillSubmited">Please enter valid phone</mat-error>
-                    </mat-form-field>
+                    <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" *ngIf="!isSuplimental">
 
-                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" *ngIf="!isSuplimental">
+                        <mat-form-field appearance="outline" fxFlex="70" class="phone">
+                            <mat-label>Intake Contact Phone</mat-label>
+                            <input matInput placeholder="Intake Contact Phone" formControlName="caller_phone"
+                                (keypress)="numberOnly($event)" mask="(000) 000-0000" autocomplete="off">
+                            <mat-error *ngIf="isBillSubmited">Please enter valid phone</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                            <mat-label>Ext</mat-label>
+                            <input matInput type="text" placeholder="Ext" autocomplete="off">
+                            <mat-error>Please enter valid Extension</mat-error>
+                        </mat-form-field>
+
+                    </div>
+                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+                        *ngIf="!isSuplimental">
                         <mat-label>Intake Contact Fax</mat-label>
                         <input matInput placeholder="Intake Contact Fax" formControlName="caller_fax" autocomplete="off"
                             (keypress)="numberOnly($event)" mask="(000) 000-0000">
                         <mat-error *ngIf="isBillSubmited">Please enter valid fax</mat-error>
                     </mat-form-field>
 
-                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" *ngIf="!isSuplimental">
+                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+                        *ngIf="!isSuplimental">
                         <mat-label>Intake Contact Email</mat-label>
                         <input matInput placeholder="Intake Contact Email" formControlName="caller_email"
                             autocomplete="off">
                         <mat-error *ngIf="isBillSubmited">Please enter valid email</mat-error>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" *ngIf="!isSuplimental">
+                    <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+                        *ngIf="!isSuplimental">
                         <mat-label>Intake Notes</mat-label>
                         <input matInput placeholder="Intake Notes" formControlName="notes" autocomplete="off">
                     </mat-form-field>
                 </div>
-               <section class="supplemental-type" fxLayout="row wrap" fxFlex="100" *ngIf="isSuplimental && billable_item.get('documents_received')">
-                    <div fxFlex="50" fxFlex.sm="50" fxFlex.xs="100" class="supplemental-custom-check"> 
+                <section class="supplemental-type" fxLayout="row wrap" fxFlex="100"
+                    *ngIf="isSuplimental && billable_item.get('documents_received')">
+                    <div fxFlex="50" fxFlex.sm="50" fxFlex.xs="100" class="supplemental-custom-check">
                         <div class="m-b-10 label">Supplemental Items Received</div>
                         <span formArrayName="documents_received" *ngFor="let order of supplementalItems; let i = index">
-                           <mat-checkbox class="m-r-10" [formControlName]="i" (click)="supplementalCheck()">{{supplementalItems[i]?.name}}</mat-checkbox>
-                       </span>
+                            <mat-checkbox class="m-r-10" [formControlName]="i" (click)="supplementalCheck()">
+                                {{supplementalItems[i]?.name}}</mat-checkbox>
+                        </span>
                     </div>
-                    <mat-form-field fxFlex="50" fxFlex.sm="50" fxFlex.xs="100" formGroupName="intake_call" appearance="outline" fxFlex="50" *ngIf="isSuplimental && billable_item.get('documents_received') && billable_item.get('documents_received').value[supplementalOtherIndex]">
+                    <mat-form-field fxFlex="50" fxFlex.sm="50" fxFlex.xs="100" formGroupName="intake_call"
+                        appearance="outline" fxFlex="50"
+                        *ngIf="isSuplimental && billable_item.get('documents_received') && billable_item.get('documents_received').value[supplementalOtherIndex]">
                         <mat-label>Other description</mat-label>
-                        <textarea matInput placeholder="Other description" formControlName="notes" cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1" autocomplete="off" ></textarea>
+                        <textarea matInput placeholder="Other description" formControlName="notes" cdkTextareaAutosize
+                            cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1" autocomplete="off"></textarea>
                         <!-- <mat-error *ngIf="noteError">Please enter valid Other Description</mat-error> -->
                     </mat-form-field>
-               </section>
+                </section>
                 <div class="text-center w-100 m-t-10 m-b-10 action-button">
                     <button mat-stroked-button type="button" class="m-r-10 outline-danger"
                         (click)="cancel()">Cancel</button>

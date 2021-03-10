@@ -142,21 +142,35 @@
                             <mat-error *ngIf="mailingSubmit">Please enter valid zip code</mat-error>
                         </mat-form-field>
 
-                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
-                            fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Phone 1</mat-label>
-                            <input matInput placeholder="Phone 1" formControlName="phone_no1"
-                                (keypress)="numberOnly($event)" mask="(000) 000-0000" autocomplete="off">
-                            <mat-error *ngIf="mailingSubmit">Please enter valid phone</mat-error>
-                        </mat-form-field>
+                        <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-form-field appearance="outline" fxFlex="70" class="phone">
+                                <mat-label>Phone 1</mat-label>
+                                <input matInput placeholder="Phone 1" formControlName="phone_no1"
+                                    (keypress)="numberOnly($event)" mask="(000) 000-0000" autocomplete="off">
+                                <mat-error *ngIf="mailingSubmit">Please enter valid phone</mat-error>
+                            </mat-form-field>
 
-                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
-                            fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Phone 2</mat-label>
-                            <input matInput placeholder="Phone 2" formControlName="phone_no2"
-                                (keypress)="numberOnly($event)" mask="(000) 000-0000" autocomplete="off">
-                            <mat-error *ngIf="mailingSubmit">Please enter valid phone</mat-error>
-                        </mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                                <mat-label>Ext</mat-label>
+                                <input matInput type="text" placeholder="Ext" autocomplete="off">
+                                <mat-error>Please enter valid Extension</mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-form-field appearance="outline" fxFlex="70" class="phone">
+                                <mat-label>Phone 2</mat-label>
+                                <input matInput placeholder="Phone 2" formControlName="phone_no2"
+                                    (keypress)="numberOnly($event)" mask="(000) 000-0000" autocomplete="off">
+                                <mat-error *ngIf="mailingSubmit">Please enter valid phone</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                                <mat-label>Ext</mat-label>
+                                <input matInput type="text" placeholder="Ext" autocomplete="off">
+                                <mat-error>Please enter valid Extension</mat-error>
+                            </mat-form-field>
+                        </div>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
@@ -393,13 +407,20 @@
                             <mat-error *ngIf="billingSubmit">Please enter valid zip code</mat-error>
                         </mat-form-field>
 
-                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
-                            fxFlex.sm="50" fxFlex.xs="100">
-                            <mat-label>Phone*</mat-label>
-                            <input matInput placeholder="Phone" (keypress)="numberOnly($event)" mask="(000) 000-0000"
-                                formControlName="phone_no1" autocomplete="off">
-                            <mat-error *ngIf="billingSubmit">Phone number is required for Billing </mat-error>
-                        </mat-form-field>
+                        <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                            <mat-form-field appearance="outline" fxFlex="70" class="phone">
+                                <mat-label>Phone*</mat-label>
+                                <input matInput placeholder="Phone" (keypress)="numberOnly($event)"
+                                    mask="(000) 000-0000" formControlName="phone_no1" autocomplete="off">
+                                <mat-error *ngIf="billingSubmit">Phone number is required for Billing </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                                <mat-label>Ext</mat-label>
+                                <input matInput type="text" placeholder="Ext" autocomplete="off">
+                                <mat-error>Please enter valid Extension</mat-error>
+                            </mat-form-field>
+                        </div>
 
                         <div fxFlex="100">
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
@@ -568,7 +589,8 @@
                             <input type="text" matInput [formControl]="texonomySearch"
                                 [matAutocomplete]="examinerAutocomplete">
                             <button mat-button *ngIf="renderingForm.value.taxonomy_id" matSuffix mat-icon-button
-                                aria-label="Clear" (click)="clearAutoComplete()" matTooltip="Clear Code" matTooltipPosition="above">
+                                aria-label="Clear" (click)="clearAutoComplete()" matTooltip="Clear Code"
+                                matTooltipPosition="above">
                                 <mat-icon>close</mat-icon>
                             </button>
                             <mat-autocomplete #examinerAutocomplete="matAutocomplete"
