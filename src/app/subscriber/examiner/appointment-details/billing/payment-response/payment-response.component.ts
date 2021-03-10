@@ -10,7 +10,8 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { DialogData } from 'src/app/shared/components/dialogue/dialogue.component';
 import { AlertService } from 'src/app/shared/services/alert.service';
-
+import { BillingService } from 'src/app/subscriber/service/billing.service';
+import { saveAs } from 'file-saver';
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
@@ -65,12 +66,14 @@ export class PaymentResponseComponent implements OnInit {
   filterValue: string;
   paymentForm: FormGroup;
   @Input() billingData: any;
+  @Input() paramsId: any;
   paymentTypes: any = ["Paper Check", "EFT", "Virtual Credit Card"];
   currentDate = new Date();
   minimumDate = new Date(1900, 0, 1);
+  paymentRes: any;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   constructor(public dialog: MatDialog, private fb: FormBuilder, private breakpointObserver: BreakpointObserver,
-    private alertService: AlertService) {
+    private alertService: AlertService, public billingService: BillingService) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -84,11 +87,7 @@ export class PaymentResponseComponent implements OnInit {
     this.paymentForm = this.fb.group({
       payments: this.fb.array([]),
     })
-    for (var i in [0, 1]) {
-      this.addPayment();
-      this.payments().get(i).patchValue({ id: i, bill_id: i, submission: i, showStatus: false })
-      this.addReviews(+i)
-    }
+
   }
 
 
@@ -118,9 +117,46 @@ export class PaymentResponseComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.billingData)
+    this.getPaymentRes();
+  }
 
+  getPaymentRes() {
+    this.billingService.getPaymentResponse(this.billingData.bill_id, this.paramsId.claim_id, this.paramsId.billId).subscribe(payment => {
+      console.log(payment);
+      this.paymentRes = payment.data;
 
+      this.paymentRes.map((pay, i) => {
+        console.log(pay, i)
+        this.addPayment();
+        this.openElement(i)
+        let initPayment = {
+          bill_no: pay.bill_no,
+          id: i,
+          bill_submission_type: pay.bill_submission_type,
+          showStatus: false,
+          charge: pay.charge,
+          date_sent: pay.date_sent,
+          bill_due_date: pay.bill_due_date,
+          payment: '',
+          status: '',
+          balance: '',
+          reviews: pay.payment_response
+        }
+        this.payments().at(i).patchValue(initPayment);
+        pay.payment_response.map((review, ind) => {
+          console.log(ind, i)
+          this.addReviews(i);
+          review.file_name = review.eor_file_name;
+          review.file_url = review.eor_file_url;
+          if (ind > 0) review.void_reason_id = this.paymentReviews(i).at(ind - 1).get('id').value;
+          review.showStatus = false
+          this.paymentReviews(i).at(ind).patchValue(review);
+        })
 
+      })
+    }, error => {
+      console.log(error)
+    })
   }
   expandId: any;
   openElement(element) {
@@ -133,29 +169,48 @@ export class PaymentResponseComponent implements OnInit {
 
   newPayemntRes(): FormGroup {
     return this.fb.group({
-      bill_id: '',
+      bill_no: '',
       id: '',
-      submission: '',
-      showStatus: false,
+      bill_submission_type: '',
+      showStatus: true,
+      charge: '',
+      date_sent: '',
+      bill_due_date: '',
+      payment: '',
+      status: '',
+      balance: '',
       reviews: this.fb.array([])
     })
   }
 
   newReview(): FormGroup {
     return this.fb.group({
-      payment_amount: '',
-      reference_no: '',
-      effective_date: '',
-      payment_method: '',
-      post_date: '',
-      deposit_date: '',
-      penalty_charged: 0,
-      penalty_paid: 0,
-      interest_charged: 0,
-      interest_paid: 0,
+      id: [''],
+      payment_amount: ['', Validators.compose([Validators.required])],
+      reference_no: ['', Validators.compose([Validators.required])],
+      effective_date: ['', Validators.compose([Validators.required])],
+      payment_method: ['', Validators.compose([Validators.required])],
+      post_date: ['', Validators.compose([Validators.required])],
+      deposit_date: ['', Validators.compose([Validators.required])],
+      penalty_charged: '',
+      penalty_paid: '',
+      interest_charged: '',
+      interest_paid: '',
       void_type: '',
       void_reason: '',
-      paper_eor_document_id: null
+      paper_eor_document_id: '',
+      void_reason_id: '',
+      file: ['', Validators.compose([Validators.required])],
+      file_name: '',
+      file_url: '',
+      showStatus: true,
+      created_by_first_name: '',
+      created_by_last_name: '',
+      createdAt: '',
+      updatedAt: '',
+      updated_by_first_name: '',
+      updated_by_last_name: ''
+
     })
   }
 
@@ -164,8 +219,7 @@ export class PaymentResponseComponent implements OnInit {
   }
 
   paymentReviews(index: number): FormArray {
-    if (index != null)
-      return this.payments().at(index).get("reviews") as FormArray;
+    return this.payments().at(index).get("reviews") as FormArray;
   }
 
   addPayment() {
@@ -176,17 +230,65 @@ export class PaymentResponseComponent implements OnInit {
     this.paymentReviews(index).push(this.newReview());
   }
 
-  saveReview() {
-    console.log(this.paymentForm)
+  saveReview(payment: FormGroup, review: FormGroup, payIndex, reviewIndex) {
+    console.log(payment.value)
+    console.log(review.value)
+    if (reviewIndex > 0) {
+      review.get('void_type').setValidators([Validators.required])
+      review.get('void_reason').setValidators([Validators.required])
+      review.get('void_type').updateValueAndValidity();
+      review.get('void_reason').updateValueAndValidity();
+    }
+    let formData = new FormData();
+    Object.keys(review.controls).forEach((key) => {
+
+      if (review.get(key).value && typeof (review.get(key).value) == 'string')
+        review.get(key).setValue(review.get(key).value.trim())
+    });
+    if (review.status == "INVALID") {
+      review.markAllAsTouched();
+      return;
+    }
+    formData.append('post_date', review.get('post_date').value);
+    formData.append('effective_date', review.get('effective_date').value);
+    formData.append('deposit_date', review.get('deposit_date').value);
+    formData.append('payment_amount', review.get('payment_amount').value);
+    formData.append('payment_method', review.get("payment_method").value);
+    formData.append('penalty_charged', review.get('penalty_charged').value);
+    formData.append('penalty_paid', review.get('penalty_paid').value);
+    formData.append('reference_no', review.get('reference_no').value);
+    formData.append('interest_charged', review.get('interest_charged').value);
+    formData.append('interest_paid', review.get('interest_paid').value);
+    formData.append('void_reason_id', reviewIndex > 0 ? this.paymentReviews(payIndex).at(reviewIndex - 1).get('id').value : '');
+    formData.append('void_type', review.get('void_type').value);
+    formData.append('void_reason', review.get('void_reason').value);
+    formData.append('file', review.get('file').value);
+    this.billingService.postPaymentResponse(this.billingData.bill_id, this.paramsId.claim_id, this.paramsId.billId, formData).subscribe(pay => {
+      console.log(pay);
+      review.get('showStatus').patchValue(false);
+      review.get('void_type').patchValue('');
+      review.get('void_reason').patchValue('');
+      // this.getPaymentRes();
+    }, error => {
+
+    })
   }
 
   showReview() {
 
   }
 
-  selectedFile: File;
-  addEOR(event, group?) {
-    this.selectedFile = null;
+  removeReview(payI, reviewI) {
+    this.paymentReviews(payI).removeAt(reviewI)
+  }
+
+  editResponse(payement, review, payi, reviewi) {
+    console.log(payement, review, payi, reviewi)
+    this.addReviews(payi);
+    this.paymentReviews(payi).at(reviewi + 1).patchValue(review);
+  }
+
+  addEOR(event, review?) {
     let fileTypes = ['pdf', 'jpg', 'jpeg', 'png']
 
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
@@ -196,16 +298,22 @@ export class PaymentResponseComponent implements OnInit {
         return;
       }
 
-      this.selectedFile = event.target.files[0];
       let file = {
         file: event.target.files[0],
         file_name: event.target.files[0].name
       }
-      console.log(this.selectedFile)
+      review.get('file').patchValue(event.target.files[0]);
+      review.get('file_name').patchValue(event.target.files[0].name)
     } else {
-      this.selectedFile = null;
       this.alertService.openSnackBar(event.target.files[0].name + " file is not accepted", 'error');
     }
+  }
+
+  download(element) {
+    this.billingService.downloadOndemandDocuments({ file_url: element }).subscribe(res => {
+      this.alertService.openSnackBar("File downloaded successfully", "success");
+      saveAs(res.signed_file_url, element.file_name);
+    })
   }
 
   //Popup's list
@@ -319,13 +427,13 @@ export class SecondBillReview {
 
 }
 const ELEMENT_DATA1 = [
-    {item: 'QME', procedure_code_1: 'ML201', modifier_1: '93', unit: '1', charges:'2200.00', first_submission:'0', balances:'2200.00'},
-    {item: 'Excess Report Pages', procedure_code_1: '', modifier_1: '', unit: '758', charges:'1516.00', first_submission:'0', balances:'1516.00'},
-  ];
+  { item: 'QME', procedure_code_1: 'ML201', modifier_1: '93', unit: '1', charges: '2200.00', first_submission: '0', balances: '2200.00' },
+  { item: 'Excess Report Pages', procedure_code_1: '', modifier_1: '', unit: '758', charges: '1516.00', first_submission: '0', balances: '1516.00' },
+];
 
-  const ELEMENT_DATA2: PeriodicElement2[] = [
-    {action:'', name: 'Document_filename.pdf'},
-  ];
+const ELEMENT_DATA2: PeriodicElement2[] = [
+  { action: '', name: 'Document_filename.pdf' },
+];
 
 
 @Component({

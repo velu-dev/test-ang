@@ -131,4 +131,12 @@ export class BillingService {
   getBreadcrumbDetails(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.getBreadcrumbDetails, data)
   }
+
+  getPaymentResponse(billId, claim, billable): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getPayment + claim + '/' + billable + '/' + billId)
+  }
+
+  postPaymentResponse(billId, claim, billable, data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.postPayment + claim + '/' + billable + '/' + billId, data)
+  }
 }
