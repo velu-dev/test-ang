@@ -26,12 +26,20 @@
                     value="{{claimantDetailsclaimant.date_of_birth | date:'MM-dd-yyyy'}}" autocomplete="off" disabled>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" fxFlex="100" fxFlex.xl="33.3" fxFlex.lg="33.3" fxFlex.md="33.3"
-                fxFlex.sm="50" fxFlex.xs="100">
-                <mat-label>Phone</mat-label>
-                <input matInput placeholder="Phone"
-                    value="{{claimantDetailsclaimant.phone_no_1 | mask:'(000) 000-0000'}}" autocomplete="off" disabled>
-            </mat-form-field>
+            <div fxFlex="100" fxFlex.xl="33.3" fxFlex.lg="33.3" fxFlex.md="33.3" fxFlex.sm="50" fxFlex.xs="100">
+                <mat-form-field appearance="outline" fxFlex="70" class="phone">
+                    <mat-label>Phone</mat-label>
+                    <input matInput placeholder="Phone"
+                        value="{{claimantDetailsclaimant.phone_no_1 | mask:'(000) 000-0000'}}" autocomplete="off" disabled>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                    <mat-label>Ext</mat-label>
+                    <input matInput type="text" placeholder="Ext" autocomplete="off">
+                    <mat-error>Please enter valid Extension</mat-error>
+                </mat-form-field>
+
+            </div>
         </form>
     </mat-card-content>
 </mat-card>

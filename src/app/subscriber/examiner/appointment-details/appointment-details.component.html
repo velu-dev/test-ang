@@ -335,14 +335,25 @@
                                 formControlName="conference_url" autocomplete="off">
                             <mat-error>Please enter a valid Conference URL</mat-error>
                         </mat-form-field>
-                        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+
+                        <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
                             *ngIf="billable_item?.value?.appointment?.is_virtual_location">
-                            <mat-label>Conference Phone</mat-label>
-                            <input matInput (keypress)="numberOnly($event)" mask="(000) 000-0000"
-                                placeholder="To be provided by the scheduling party" formControlName="conference_phone"
-                                autocomplete="off">
-                            <mat-error>Please enter a valid Conference Phone</mat-error>
-                        </mat-form-field>
+
+                            <mat-form-field appearance="outline" fxFlex="70" class="phone">
+                                <mat-label>Conference Phone</mat-label>
+                                <input matInput (keypress)="numberOnly($event)" mask="(000) 000-0000"
+                                    placeholder="To be provided by the scheduling party"
+                                    formControlName="conference_phone" autocomplete="off">
+                                <mat-error>Please enter a valid Conference Phone</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                                <mat-label>Ext</mat-label>
+                                <input matInput type="text" placeholder="Ext" autocomplete="off">
+                                <mat-error>Please enter valid Extension</mat-error>
+                            </mat-form-field>
+
+                        </div>
+
                     </div>
                     <div fxLayout="row wrap" fxFlex="100" formGroupName="intake_call">
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
@@ -388,13 +399,22 @@
                             </mat-select>
                         </mat-form-field>
 
-                        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
-                            *ngIf="!isSuplimental">
-                            <mat-label>Intake Contact Phone</mat-label>
-                            <input matInput placeholder="Intake Contact Phone" formControlName="caller_phone"
-                                (keypress)="numberOnly($event)" mask="(000) 000-0000" autocomplete="off">
-                            <mat-error>Please enter valid phone</mat-error>
-                        </mat-form-field>
+                        <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" *ngIf="!isSuplimental">
+
+                            <mat-form-field appearance="outline" fxFlex="70" class="phone">
+                                <mat-label>Intake Contact Phone</mat-label>
+                                <input matInput placeholder="Intake Contact Phone" formControlName="caller_phone"
+                                    (keypress)="numberOnly($event)" mask="(000) 000-0000" autocomplete="off">
+                                <mat-error>Please enter valid phone</mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                                <mat-label>Ext</mat-label>
+                                <input matInput type="text" placeholder="Ext" autocomplete="off">
+                                <mat-error>Please enter valid Extension</mat-error>
+                            </mat-form-field>
+
+                        </div>
 
                         <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
                             *ngIf="!isSuplimental">

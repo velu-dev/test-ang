@@ -191,7 +191,7 @@
                 <span *ngIf="column == 'request_reference_id' && element?.action == 'SFTP'"
                   class="no-wrap-td">{{element?.request_reference_id }}</span>
                 <span *ngIf="column == 'actions'">{{element?.action == 'RD' ? 'Downloaded' : 'Record On-demand'}}</span>
-                <span *ngIf="column == 'summarizer'">{{element?.summarizer}}</span>
+                <span *ngIf="column == 'document_produced_by'">{{element?.document_produced_by}}</span>
                 <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                 <span *ngIf="column == 'no_of_pages'">{{element?.no_of_pages}}</span>
                 <span *ngIf="column == 'service_priority'" class="no-wrap-td">{{element?.service_priority == 'rush' ?
@@ -218,7 +218,7 @@
                 <div class="responsive-table">
                   <div class="no-wrap-td" *ngIf="element?.action == 'SFTP'"><span>Ref #</span><span>
                       {{element?.request_reference_id}} </span></div>
-                  <div><span>Summarizer</span><span>{{element?.summarizer}} </span></div>
+                  <div><span>Summarizer</span><span>{{element?.document_produced_by}} </span></div>
                   <div><span>File Name</span><span>{{element?.file_name}} </span></div>
                   <div><span>Action</span><span>{{element?.action == 'RD' ? 'Downloaded' : 'Record On-demand'}}</span>
                   </div>
