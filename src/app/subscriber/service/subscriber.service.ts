@@ -9,8 +9,8 @@ import { api_endpoint } from 'src/environments/api_endpoint';
 export class SubscriberService {
 
   constructor(private http: HttpClient) { }
-  getDashboardData(): Observable<any> {
-    return this.http.get(environment.baseUrl + api_endpoint.getDashboardData);
+  getDashboardData(status): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.getDashboardData, status);
   }
   getClaimantAwait(): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getClaimantAwait)

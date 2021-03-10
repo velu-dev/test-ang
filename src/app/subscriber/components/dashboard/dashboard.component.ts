@@ -52,12 +52,7 @@ export class DashboardComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private subscriberService: SubscriberService,
     private intercom: IntercomService) {
-    this.subscriberService.getDashboardData().subscribe(res => {
-      this.dataSource = new MatTableDataSource(res.data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
-    })
+    this.getDashboardData("awaiting_appointment_details");
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -69,7 +64,14 @@ export class DashboardComponent implements OnInit {
       }
     })
   }
-
+  getDashboardData(status?) {
+    this.subscriberService.getDashboardData({ filter: status }).subscribe(res => {
+      this.dataSource = new MatTableDataSource(res.data);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+    })
+  }
   ngOnInit() {
     this.role = this.cookieService.get('role_id')
     switch (this.role) {
