@@ -9,7 +9,7 @@ export const environment = {
   // baseUrl: 'http://192.168.1.231:3000/', //Natarajan-local
   // baseUrl: 'http://192.168.1.122:3000/', //Rajan-local
   // baseUrl: 'http://localhost:3000/', //local
-  smartyStreetsAPIKey: "74714131260891451",
+  smartyStreetsAPIKey: "75184436999002492",
   searchUrl: 'https://dev01esapi.simplexam.com/elastic/search',
   cookieSecure: false,
 
