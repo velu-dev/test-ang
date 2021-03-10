@@ -46,6 +46,7 @@ export class DashboardComponent implements OnInit {
   columnName = [];
   filterValue: string;
   procedureTypeStatus = []
+  selectedTile = "awaiting_appointment_details";
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   constructor(public router: Router, private logger: NGXLogger, private cookieService: CookieService,
@@ -66,6 +67,7 @@ export class DashboardComponent implements OnInit {
   }
   getDashboardData(status?) {
     this.subscriberService.getDashboardData({ filter: status }).subscribe(res => {
+      this.selectedTile = status;
       this.dataSource = new MatTableDataSource(res.data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
