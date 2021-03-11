@@ -71,6 +71,7 @@ export class PaymentResponseComponent implements OnInit {
   currentDate = new Date();
   minimumDate = new Date(1900, 0, 1);
   paymentRes: any;
+  voidType: any;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   constructor(public dialog: MatDialog, private fb: FormBuilder, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService, public billingService: BillingService) {
@@ -86,6 +87,11 @@ export class PaymentResponseComponent implements OnInit {
     })
     this.paymentForm = this.fb.group({
       payments: this.fb.array([]),
+    })
+
+    this.billingService.seedData('void_type_seed_data').subscribe(data => {
+      this.voidType = data.data;
+      console.log(this.voidType)
     })
 
   }
@@ -124,7 +130,6 @@ export class PaymentResponseComponent implements OnInit {
     this.billingService.getPaymentResponse(this.billingData.bill_id, this.paramsId.claim_id, this.paramsId.billId).subscribe(payment => {
       console.log(payment);
       this.paymentRes = payment.data;
-
       this.paymentRes.map((pay, i) => {
         console.log(pay, i)
         this.addPayment();
@@ -196,9 +201,10 @@ export class PaymentResponseComponent implements OnInit {
       penalty_paid: '',
       interest_charged: '',
       interest_paid: '',
-      void_type: '',
+      void_type_id: '',
       void_reason: '',
       paper_eor_document_id: '',
+      eor_file_id: '',
       void_reason_id: '',
       file: ['', Validators.compose([Validators.required])],
       file_name: '',
@@ -209,7 +215,9 @@ export class PaymentResponseComponent implements OnInit {
       createdAt: '',
       updatedAt: '',
       updated_by_first_name: '',
-      updated_by_last_name: ''
+      updated_by_last_name: '',
+      voidData: '',
+      void_type: ''
 
     })
   }
@@ -234,14 +242,22 @@ export class PaymentResponseComponent implements OnInit {
     console.log(payment.value)
     console.log(review.value)
     if (reviewIndex > 0) {
-      review.get('void_type').setValidators([Validators.required])
+      review.get('void_type_id').setValidators([Validators.required])
       review.get('void_reason').setValidators([Validators.required])
-      review.get('void_type').updateValueAndValidity();
+      review.get('void_type_id').updateValueAndValidity();
       review.get('void_reason').updateValueAndValidity();
+      
+      if(!review.get('file').value){
+        review.get('file').setValidators([])
+        review.get('file').updateValueAndValidity();
+        console.log(review.get('file').value);
+      }else{
+        review.get('eor_file_id').patchValue('')
+      }
     }
     let formData = new FormData();
     Object.keys(review.controls).forEach((key) => {
-
+      if (review.get(key).value == null) review.get(key).patchValue('');
       if (review.get(key).value && typeof (review.get(key).value) == 'string')
         review.get(key).setValue(review.get(key).value.trim())
     });
@@ -260,14 +276,46 @@ export class PaymentResponseComponent implements OnInit {
     formData.append('interest_charged', review.get('interest_charged').value);
     formData.append('interest_paid', review.get('interest_paid').value);
     formData.append('void_reason_id', reviewIndex > 0 ? this.paymentReviews(payIndex).at(reviewIndex - 1).get('id').value : '');
-    formData.append('void_type', review.get('void_type').value);
+    formData.append('void_type_id', review.get('void_type_id').value);
     formData.append('void_reason', review.get('void_reason').value);
+    formData.append('eor_file_id', review.get('eor_file_id').value);
+
     formData.append('file', review.get('file').value);
     this.billingService.postPaymentResponse(this.billingData.bill_id, this.paramsId.claim_id, this.paramsId.billId, formData).subscribe(pay => {
       console.log(pay);
-      review.get('showStatus').patchValue(false);
-      review.get('void_type').patchValue('');
-      review.get('void_reason').patchValue('');
+      this.paymentForm = this.fb.group({
+        payments: this.fb.array([]),
+      })
+      this.paymentRes = pay.data;
+      this.paymentRes.map((pay, i) => {
+        console.log(pay, i)
+        this.addPayment();
+        this.openElement(i)
+        let initPayment = {
+          bill_no: pay.bill_no,
+          id: i,
+          bill_submission_type: pay.bill_submission_type,
+          showStatus: false,
+          charge: pay.charge,
+          date_sent: pay.date_sent,
+          bill_due_date: pay.bill_due_date,
+          payment: '',
+          status: '',
+          balance: '',
+          reviews: pay.payment_response
+        }
+        this.payments().at(i).patchValue(initPayment);
+        pay.payment_response.map((review, ind) => {
+          console.log(ind, i)
+          this.addReviews(i);
+          review.file_name = review.eor_file_name;
+          review.file_url = review.eor_file_url;
+          if (ind > 0) review.void_reason_id = this.paymentReviews(i).at(ind - 1).get('id').value;
+          review.showStatus = false
+          this.paymentReviews(i).at(ind).patchValue(review);
+        })
+
+      })
       // this.getPaymentRes();
     }, error => {
 
@@ -283,9 +331,34 @@ export class PaymentResponseComponent implements OnInit {
   }
 
   editResponse(payement, review, payi, reviewi) {
-    console.log(payement, review, payi, reviewi)
+    console.log(this.voidType)
     this.addReviews(payi);
-    this.paymentReviews(payi).at(reviewi + 1).patchValue(review);
+    this.paymentReviews(payi).at(reviewi + 1).patchValue(review.value);
+    this.paymentReviews(payi).at(reviewi + 1).get('showStatus').patchValue(true);
+    this.paymentReviews(payi).at(reviewi + 1).get('voidData').patchValue(this.voidType)
+    this.paymentReviews(payi).at(reviewi + 1).get('void_reason_id').patchValue(review.value.id);
+    this.paymentReviews(payi).at(reviewi + 1).get('id').patchValue('');
+    this.paymentReviews(payi).at(reviewi + 1).disable();
+    this.paymentReviews(payi).at(reviewi + 1).get('void_type_id').enable();
+    this.paymentReviews(payi).at(reviewi + 1).get('void_reason').enable();
+    console.log(this.paymentReviews(payi).at(reviewi + 1))
+  }
+
+  changeVoidType(payment, review, payIndex, reviewIndex, event) {
+    console.log(event.value);
+    if (event.value == 3) { //Void Payment
+      review.get('payment_amount').patchValue(0);
+      review.disable();
+      review.get('void_type_id').enable();
+      review.get('void_reason').enable();
+    }
+    if (event.value == 2) { //Correction
+      review.enable();
+    }
+    if (event.value == 1) { //Change Payment
+      review.enable();
+    }
+    console.log(review)
   }
 
   addEOR(event, review?) {
