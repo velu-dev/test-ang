@@ -177,17 +177,17 @@ export class NewClaimantComponent implements OnInit {
       zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       other_language: [null]
     })
-    // this.claimantForm.get("street1").valueChanges
-    //   .pipe(
-    //     debounceTime(500),
-    //   ).subscribe(key => {
-    //     this.isAddressSearched = true;
-    //     this.claimService.searchAddress(key).subscribe(address => {
-    //       this.streetAddressList = address.suggestions;
-    //     }, error => {
-    //       this.streetAddressList = []
-    //     })
-    //   })
+    this.claimantForm.get("street1").valueChanges
+      .pipe(
+        debounceTime(500),
+      ).subscribe(key => {
+        this.isAddressSearched = true;
+        this.claimService.searchAddress(key).subscribe(address => {
+          this.streetAddressList = address.suggestions;
+        }, error => {
+          this.streetAddressList = []
+        })
+      })
     this.claimService.seedData('language').subscribe(response => {
       this.languageList = response['data'];
     }, error => {
