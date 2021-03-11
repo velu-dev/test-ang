@@ -238,16 +238,14 @@
                                     placeholder="Street Address 1" formControlName="street1"
                                     autocomplete="off"></textarea> -->
                                 <input matInput id="street-input" [matAutocomplete]="streetAutocomplete"
-                                    #trigger="matAutocompleteTrigger" formControlName="street1" placeholder="Street Address 1"
-                                    class="p-l-10">
+                                    #trigger="matAutocompleteTrigger" formControlName="street1"
+                                    placeholder="Street Address 1" class="p-l-10">
                                 <mat-autocomplete #streetAutocomplete="matAutocomplete">
-                                    <mat-option *ngFor="let option of filteredClaimant?.data"
-                                        (click)="selectClaimant(option)">
-                                        <span><strong>Full Name:</strong> {{option.first_name}}
-                                            {{option.middle_name}} {{option.last_name}} <strong>DOB:</strong>
-                                            {{option.date_of_birth | date:'MM-dd-yyyy' }}</span>
+                                    <mat-option *ngFor="let address of streetAddressList" [value]="address.street_line">
+                                        {{address?.street_line}} {{address?.city}} {{address?.state}}
+                                        {{address?.zipcode}}
                                     </mat-option>
-                                    <mat-option *ngIf="filteredClaimant?.data.length == 0">No Data
+                                    <mat-option *ngIf="isAddressSearched && streetAddressList?.length == 0">No Data
                                         Found</mat-option>
                                 </mat-autocomplete>
                                 <mat-error>Please enter valid address</mat-error>
@@ -1363,8 +1361,9 @@
                                         formControlName="conference_url" autocomplete="off">
                                     <mat-error>Please enter a valid Conference URL</mat-error>
                                 </mat-form-field>
-                                
-                                <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" *ngIf="billable_item?.value?.appointment?.is_virtual_location">
+
+                                <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+                                    *ngIf="billable_item?.value?.appointment?.is_virtual_location">
 
                                     <mat-form-field appearance="outline" fxFlex="70" class="phone">
                                         <mat-label>Conference Phone</mat-label>
@@ -1373,7 +1372,7 @@
                                             formControlName="conference_phone" autocomplete="off">
                                         <mat-error>Please enter a valid Conference Phone</mat-error>
                                     </mat-form-field>
-    
+
                                     <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
                                         <mat-label>Ext</mat-label>
                                         <input matInput type="text" placeholder="Ext" autocomplete="off">
@@ -1431,12 +1430,13 @@
 
                                     <mat-form-field appearance="outline" fxFlex="70" class="phone">
                                         <mat-label>Intake Contact Phone</mat-label>
-                                        <input matInput placeholder="Intake Contact Phone" formControlName="caller_phone"
-                                            (keypress)="numberOnly($event)" mask="(000) 000-0000" autocomplete="off">
+                                        <input matInput placeholder="Intake Contact Phone"
+                                            formControlName="caller_phone" (keypress)="numberOnly($event)"
+                                            mask="(000) 000-0000" autocomplete="off">
                                         <mat-error *ngIf="isBillSubmited">Please enter valid phone</mat-error>
                                     </mat-form-field>
-    
-        
+
+
                                     <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
                                         <mat-label>Ext</mat-label>
                                         <input matInput type="text" placeholder="Ext" autocomplete="off">
