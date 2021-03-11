@@ -202,6 +202,8 @@ export const api_endpoint = {
     generateBillingForm: 'billing/generate-form/',
     activityLog: 'action-log/action-list/',
     activityLogUpdate: 'billing/update-actionlog',
+    getPayment: 'billing/payment-response/',
+    postPayment: 'billing/payment-response-add/',
 
     //Calendar 
 

@@ -22,94 +22,91 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <thead *ngFor="let payemnt of payments().controls; let payIndex=index" [formGroupName]="payIndex">
+                    <thead *ngFor="let payment of payments().controls; let payIndex=index" [formGroupName]="payIndex">
                         <tr>
                             <td>
-                                <mat-icon class="text-success" (click)="openElement(payemnt.get('id').value)">{{expandId
-                                    == payemnt.get('id').value ? 'remove_circle' : 'add_circle'}}</mat-icon>
+                                <mat-icon class="text-success" (click)="openElement(payment.get('id').value)">{{expandId
+                                    == payment.get('id').value ? 'remove_circle' : 'add_circle'}}</mat-icon>
                             </td>
-                            <td>{{payemnt.get('bill_id').value}}</td>
-                            <td>First</td>
-                            <td>12-07-2020</td>
-                            <td>02-05-2021</td>
-                            <td>$3516.00</td>
-                            <td>$100.00</td>
-                            <td class="text-danger">$3416.00</td>
-                            <td class="text-success">Partially Paid</td>
-                            <td><button mat-raised-button class="mini-btn filled-gray"
-                                    (click)="paymentReviews(payIndex)?.controls?.length == 0 ? addReviews(payIndex) : ''">Add
+                            <td>{{payment.get('bill_no').value}}</td>
+                            <td>{{payment.get('bill_submission_type').value}}</td>
+                            <td>{{payment.get('date_sent').value | date:'MM-dd-yyyy'}}</td>
+                            <td>{{payment.get('bill_due_date').value | date:'MM-dd-yyyy'}}</td>
+                            <td>{{payment.get('charge').value}}</td>
+                            <td>{{payment.get('payment').value}}</td>
+                            <td class="text-danger">{{payment.get('balance').value}}</td>
+                            <td class="text-success">{{payment.get('status').value}}</td>
+                            <td><button type="button" *ngIf="paymentReviews(payIndex)?.controls?.length == 0" mat-raised-button class="mini-btn filled-gray"
+                                    (click)="openElement(payment.get('id').value);paymentReviews(payIndex)?.controls?.length == 0 ? addReviews(payIndex) : ''">Add
                                     Response</button></td>
                         </tr>
 
-                        <tr formArrayName="reviews" *ngIf="expandId == payemnt.get('id').value">
+                        <tr formArrayName="reviews" *ngIf="expandId == payment.get('id').value">
                             <td colspan="10">
                                 <div class="detail"
-                                    *ngFor="let review of paymentReviews(payIndex).controls; let reviewIndex=index">
+                                    *ngFor="let review of paymentReviews(payIndex).controls; let reviewIndex=index;let last = last">
                                     <div [formGroupName]="reviewIndex">
-                                        <div class="expand-details-list" fxLayout="row wrap">
-                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details strike">
+                                        <!-- HIde section  && !(paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length -1).get('showStatus').value && reviewIndex == paymentReviews(payIndex)?.controls?.length -2) -->
+                                        <div class="expand-details-list" fxLayout="row wrap" *ngIf="!review.get('showStatus').value">
+                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details" [ngClass]="{'strike' : !last}">
                                                 <div><span class="prp_">Explanation of Review</span><span
-                                                        class="prv_"><a class="text-ternary">EOR-12345678-person.pdf</a>
+                                                        class="prv_"><a class="text-ternary" (click)="download(review.get('file_url').value)">{{review.get('file_name').value}}</a>
                                                     </span>
                                                 </div>
                                                 <div><span class="prp_">Post Date</span><span
-                                                        class="prv_">29-01-2021</span></div>
+                                                        class="prv_">{{review.get('post_date').value | date:'MM-dd-yyyy'}}</span></div>
                                                 <div><span class="prp_">Effective Date</span><span
-                                                        class="prv_">06-02-2021</span></div>
+                                                        class="prv_">{{review.get('effective_date').value | date:'MM-dd-yyyy'}}</span></div>
                                                 <div><span class="prp_">Deposit Date</span><span
-                                                        class="prv_">30-01-2021</span></div>
-                                                <div><span class="prp_">Created By</span><span class="prv_">Venkatesan
-                                                        Mariyappan</span></div>
-                                                <div><span class="prp_">Created On</span><span
-                                                        class="prv_">30-01-2021</span></div>
+                                                        class="prv_">{{review.get('deposit_date').value | date:'MM-dd-yyyy'}}</span></div>
+                                                <div><span class="prp_">Created By</span><span class="prv_">{{review.get('created_by_first_name').value}} {{review.get('created_by_last_name').value}}</span></div>
+                                                <div><span class="prp_">Created On</span><span class="prv_">{{review.get('createdAt').value | date:'MM-dd-yyyy'}}</span></div>
                                             </div>
-                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details strike">
+                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details" [ngClass]="{'strike' : !last}">
                                                 <div><span class="prp_">Payment Amount</span><span
-                                                        class="prv_">$100.00</span></div>
+                                                        class="prv_">{{review.get('payment_amount').value}}</span></div>
                                                 <div><span class="prp_">Payment Method</span><span
-                                                        class="prv_">Check</span></div>
+                                                        class="prv_">{{review.get('payment_method').value}}</span></div>
                                                 <div><span class="prp_">Penalty Charged</span><span
-                                                        class="prv_">30-12-1899</span></div>
+                                                        class="prv_">{{review.get('penalty_charged').value}}</span></div>
                                                 <div><span class="prp_">Penalty Paid</span><span
-                                                        class="prv_">30-12-1899</span></div>
-                                                <div><span class="prp_">Updated By</span><span class="prv_">Rajan
-                                                        Mariyappan</span></div>
-                                                <div><span class="prp_">Updated On</span><span
-                                                        class="prv_">30-12-1899</span></div>
+                                                        class="prv_">{{review.get('penalty_paid').value}}</span></div>
+                                                <div><span class="prp_">Updated By</span><span class="prv_">{{review.get('updated_by_first_name').value}} {{review.get('updated_by_last_name').value}}</span></div>
+                                                <div><span class="prp_">Updated On</span><span class="prv_">{{review.get('updatedAt').value | date:'MM-dd-yyyy'}}</span></div>
                                             </div>
-                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details strike">
+                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details" [ngClass]="{'strike' : !last}">
                                                 <div><span class="prp_">Reference Number</span><span
-                                                        class="prv_">7863485435</span></div>
+                                                        class="prv_">{{review.get('reference_no').value}}</span></div>
                                                 <div><span class="prp_">Interest Charged</span><span
-                                                        class="prv_"></span></div>
-                                                <div><span class="prp_">Interest Paid</span><span class="prv_"></span>
+                                                        class="prv_">{{review.get('interest_charged').value}}</span></div>
+                                                <div><span class="prp_">Interest Paid</span><span class="prv_">{{review.get('interest_paid').value}}</span>
                                                 </div>
-                                                <div><span class="prp_">Void Reason</span><span class="prv_">Void Reason Comes Here</span>
+                                                <div><span class="prp_">Void Reason</span><span class="prv_">{{review.get('void_type').value}} - {{review.get('void_reason').value}}</span>
                                                 </div>
                                             </div>
                                             <div fxFlex="100">
-                                                <button mat-raised-button class="filled-gray m-t-15"
-                                                    (click)="openDialog()">Edit Response</button>
+                                                <button type="button" *ngIf="last" mat-raised-button class="filled-gray m-t-15" (click)="editResponse(payment,review,payIndex,reviewIndex)">Edit Response</button>
 
                                             </div>
                                         </div>
-                                        <div class="expand-details-list" fxLayout="row wrap">
-                                            <div fxFlex="100">
+                                        <div class="expand-details-list" fxLayout="row wrap" *ngIf="review.get('showStatus').value">
+                                            <div fxFlex="100" *ngIf="paymentReviews(payIndex)?.controls?.length > 1">
                                                 <div fxLayout="row wrap">
                                                     <div class="main-title p-l-0 p-b-10" fxFlex="100">First Bill Submission Edit
                                                         Reason</div>
                                                     <mat-radio-group aria-label="Select an option" fxFlex="100"
-                                                        fxFlex.sm="100" fxFlex.xs="100">
-                                                        <mat-radio-button value="1" class="m-r-15">Void Payment
+                                                        fxFlex.sm="100" fxFlex.xs="100"  formControlName="void_type">
+                                                        <mat-radio-button value="Change Payment" class="m-r-15">Change Payment
                                                         </mat-radio-button>
-                                                        <mat-radio-button value="2" class="m-r-15">Adjust Payment
+                                                        <mat-radio-button value="Correction">Correction 
                                                         </mat-radio-button>
-                                                        <mat-radio-button value="3">Correction</mat-radio-button>
+                                                        <mat-radio-button value="Void Payment" class="m-r-15">Void Payment
+                                                        </mat-radio-button>
                                                     </mat-radio-group>
                                                     <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
                                                         <mat-form-field appearance="outline" class="w-100 m-t-10">
-                                                            <mat-label>Reason</mat-label>
-                                                            <input matInput placeholder="Reason">
+                                                            <mat-label>Reason *</mat-label>
+                                                            <input formControlName="void_reason" matInput placeholder="Reason">
                                                             <mat-error>Error message comes here...</mat-error>
                                                         </mat-form-field>
                                                     </div>
@@ -121,8 +118,9 @@
                                                 <div>
                                                     <span class="prp_">Explanation of Review *</span>
                                                     <span class="prv_">
-                                                        <button class="filled-gray mini-btn"
-                                                            mat-raised-button (click)="uploader.click()">Upload</button>
+                                                        <div *ngIf="review.get('file_name').value">{{review.get('file_name').value}}</div>
+                                                        <button type="button" class="filled-gray mini-btn"
+                                                            mat-raised-button (click)="uploader.click()">{{!review.get('file_name').value ? 'Upload' : 'Reupload'}}</button>
                                                             <input type="file" #uploader hidden
                                                             (change)="addEOR($event,review)"
                                                             accept=".pdf, .jpg, .jpeg, .png" required>
@@ -235,8 +233,8 @@
                                                 </div>
                                             </div>
                                             <div class="w-100 text-center p-t-10">
-                                                <button class="outline-danger m-r-10" mat-stroked-button>Cancel</button>
-                                                <button class="outline-success" (click)="saveReview()"
+                                                <button type="button" class="outline-danger m-r-10" (click)="removeReview(payIndex,reviewIndex)" mat-stroked-button>Cancel</button>
+                                                <button class="outline-success" (click)="saveReview(payment,review,payIndex,reviewIndex)"
                                                     mat-stroked-button>Save</button>
                                             </div>
                                         </div>
