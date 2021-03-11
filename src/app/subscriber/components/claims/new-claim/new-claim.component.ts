@@ -915,14 +915,20 @@ export class NewClaimComponent implements OnInit {
     this.iseams_entry = false;
   }
   selectAddress(street) {
+    let state_id: any;
+    this.states.map(state => {
+      if (state.state_code == street.state) {
+        state_id = state.id;
+      }
+    })
     this.claimant.patchValue({
       street1: street.street_line,
       street2: "",
       city: street.city,
-      state: street.state,
+      state: state_id,
       zip_code: street.zipcode
     })
-    this.changeState(street.state, 'claimant')
+    this.changeState("", 'claimant', street.state)
   }
 
   advanceSearchSubmit(auto) {

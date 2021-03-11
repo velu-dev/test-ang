@@ -178,8 +178,6 @@
               {{address?.state}}
               {{address?.zipcode}}
             </mat-option>
-            <mat-option *ngIf="isAddressSearched && streetAddressList?.length == 0">No Data
-              Found</mat-option>
           </mat-autocomplete>
           <mat-error *ngIf="isClaimantSubmited">Please enter valid address</mat-error>
         </mat-form-field>
