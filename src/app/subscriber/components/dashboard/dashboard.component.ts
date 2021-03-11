@@ -77,11 +77,24 @@ export class DashboardComponent implements OnInit {
       }
     })
   }
+  getCount(status) {
+    this.dashboardData.map(res => {
+      if (status == 'awaiting_appointment_details') {
+        return res.data.length
+      }
+    })
+
+  }
   getDashboardData(status?) {
     this.selectedTile = status;
     this.dashboardData.map(res => {
       if (res.type == status) {
         this.dataSource = new MatTableDataSource(res.data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+      } else {
+        this.dataSource = new MatTableDataSource([]);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();

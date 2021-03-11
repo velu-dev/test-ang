@@ -241,8 +241,10 @@
                                     #trigger="matAutocompleteTrigger" formControlName="street1"
                                     placeholder="Street Address 1" class="p-l-10">
                                 <mat-autocomplete #streetAutocomplete="matAutocomplete">
-                                    <mat-option *ngFor="let address of streetAddressList" [value]="address.street_line">
-                                        {{address?.street_line}} {{address?.city}} {{address?.state}}
+                                    <mat-option *ngFor="let address of streetAddressList" [value]="address.street_line"
+                                        (click)="selectAddress(address)">
+                                        {{address?.street_line}} {{address?.secondary}} {{address?.city}}
+                                        {{address?.state}}
                                         {{address?.zipcode}}
                                     </mat-option>
                                     <mat-option *ngIf="isAddressSearched && streetAddressList?.length == 0">No Data

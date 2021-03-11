@@ -914,6 +914,16 @@ export class NewClaimComponent implements OnInit {
     this.claim.reset();
     this.iseams_entry = false;
   }
+  selectAddress(street) {
+    this.claimant.patchValue({
+      street1: street.street_line,
+      street2: "",
+      city: street.city,
+      state: street.state,
+      zip_code: street.zipcode
+    })
+    this.changeState(street.state, 'claimant')
+  }
 
   advanceSearchSubmit(auto) {
     this.logger.log("advanceSearch", this.advanceSearch.value)
