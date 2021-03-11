@@ -155,10 +155,8 @@ export class ClaimService {
 
   searchAddress(input): Observable<any> {
     // this.headers.append("access-control-allow-origin", '*');
-    // this.headers.append("referer", "https://myneatwebsite.com");
-    // this.headers.append("access-control-allow-origin", 'http://localhost:4200/');
+    // this.headers.append("referer", 'https://dev01app.simplexam.com');
     // this.headers = new HttpHeaders().set("Access-Control-Allow-Origin", "http://localhost:4200/");
-    return this.http.get("https://us-street.api.smartystreets.com/street-address?key=" + environment.smartyStreetsAPIKey + "&street=1600+amphitheatre+pkwy&city=mountain+view&state=CA&candidates=10")
+    return this.http.get('https://us-autocomplete-pro.api.smartystreets.com/lookup?key=75184436999002492&search=' + input + '&include_only_cities=chicago%2Cil&include_only_states=mi&prefer_states=il', { headers: this.headers })
   }
 }
-// auth-id=7d0bd1ef-fca2-623b-6107-fcb5c32e8541&auth-token=B5EDdUC7xUP7Wo7jefv8
