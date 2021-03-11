@@ -242,7 +242,8 @@
                                     placeholder="Street Address 1" class="p-l-10">
                                 <mat-autocomplete #streetAutocomplete="matAutocomplete">
                                     <mat-option *ngFor="let address of streetAddressList" [value]="address.street_line">
-                                        {{address}}
+                                        {{address?.street_line}} {{address?.city}} {{address?.state}}
+                                        {{address?.zipcode}}
                                     </mat-option>
                                     <mat-option *ngIf="isAddressSearched && streetAddressList?.length == 0">No Data
                                         Found</mat-option>
