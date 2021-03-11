@@ -870,8 +870,8 @@ export class NewClaimComponent implements OnInit {
       .pipe(
         debounceTime(500),
       ).subscribe(key => {
+        this.isAddressSearched = true;
         this.claimService.searchAddress(key).subscribe(address => {
-          this.isAddressSearched = true;
           this.streetAddressList = address.suggestions;
         }, error => {
           this.streetAddressList = []
