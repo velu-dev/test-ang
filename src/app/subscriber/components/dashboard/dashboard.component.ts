@@ -46,14 +46,26 @@ export class DashboardComponent implements OnInit {
   columnName = [];
   filterValue: string;
   procedureTypeStatus = []
-  selectedTile = "awaiting_appointment_details";
+  selectedTile = "";
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
+  dashboardData = [];
   constructor(public router: Router, private logger: NGXLogger, private cookieService: CookieService,
     private breakpointObserver: BreakpointObserver,
     private subscriberService: SubscriberService,
     private intercom: IntercomService) {
-    this.getDashboardData("awaiting_appointment_details");
+    this.subscriberService.getDashboardData({}).subscribe(res => {
+      this.dashboardData = res.data;
+      this.selectedTile = status;
+      let data = [];
+      res.data.map(typeData => {
+        data = data.concat(typeData.data)
+      })
+      this.dataSource = new MatTableDataSource(data);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+    })
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -65,13 +77,28 @@ export class DashboardComponent implements OnInit {
       }
     })
   }
+  getCount(status) {
+    this.dashboardData.map(res => {
+      if (status == 'awaiting_appointment_details') {
+        return res.data.length
+      }
+    })
+
+  }
   getDashboardData(status?) {
-    this.subscriberService.getDashboardData({ filter: status }).subscribe(res => {
-      this.selectedTile = status;
-      this.dataSource = new MatTableDataSource(res.data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-      this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+    this.selectedTile = status;
+    this.dashboardData.map(res => {
+      if (res.type == status) {
+        this.dataSource = new MatTableDataSource(res.data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+      } else {
+        this.dataSource = new MatTableDataSource([]);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+      }
     })
   }
   ngOnInit() {

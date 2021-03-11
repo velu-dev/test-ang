@@ -3,7 +3,7 @@ export const environment = {
   baseUrl: 'https://dev01api.simplexam.com/', //dev
   searchUrl: 'https://dev01esapi.simplexam.com/elastic/search',
   cookieSecure : true,
-  smartyStreetsAPIKey: "74714131260891451",
+  smartyStreetsAPIKey: "75184436999002492",
   Amplify: {
     Auth: {
       identityPoolId: 'us-west-2:e5dd97f0-5920-4932-bd14-c26fa8f988c0',

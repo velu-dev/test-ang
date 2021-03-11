@@ -140,7 +140,7 @@
                     <ul>
                         <li>3</li>
                         <li></li>
-                        <li>9</li>
+                        <li>{{getCount('awaiting_appointment_details')}}</li>
                     </ul>
                 </mat-card-content>
             </mat-card>
@@ -160,9 +160,9 @@
         </div>
 
         <div fxFlex="20" fxFlex.xl="20" fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
-            <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'confirm_appointment'}" (click)="getDashboardData('confirm_appointment')">
+            <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'awaiting_appointment'}" (click)="getDashboardData('awaiting_appointment')">
                 <mat-card-content>
-                    <h4>Confirm Appointment</h4>
+                    <h4>Awaiting Appointment</h4>
                     <ul>
                         <li>3</li>
                         <li></li>

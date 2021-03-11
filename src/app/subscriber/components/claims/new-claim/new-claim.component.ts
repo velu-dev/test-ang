@@ -227,6 +227,8 @@ export class NewClaimComponent implements OnInit {
   supplementalItems: any;
   supplementalOtherIndex: number;
   pastTwoYearDate = moment().subtract(2, 'year');
+  streetAddressList = [];
+  isAddressSearched = false;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -864,11 +866,17 @@ export class NewClaimComponent implements OnInit {
         }
       }
     })
-    this.claimant.get("street1").valueChanges.subscribe(key => {
-      this.claimService.searchAddress(key).subscribe(address => {
-        console.log(address)
+    this.claimant.get("street1").valueChanges
+      .pipe(
+        debounceTime(500),
+      ).subscribe(key => {
+        this.isAddressSearched = true;
+        this.claimService.searchAddress(key).subscribe(address => {
+          this.streetAddressList = address.suggestions;
+        }, error => {
+          this.streetAddressList = []
+        })
       })
-    })
   }
   // private _filterAttroney(value: string, data) {
   //   console.log(value)
@@ -905,6 +913,16 @@ export class NewClaimComponent implements OnInit {
     this.claimant.reset();
     this.claim.reset();
     this.iseams_entry = false;
+  }
+  selectAddress(street) {
+    this.claimant.patchValue({
+      street1: street.street_line,
+      street2: "",
+      city: street.city,
+      state: street.state,
+      zip_code: street.zipcode
+    })
+    this.changeState(street.state, 'claimant')
   }
 
   advanceSearchSubmit(auto) {

@@ -11,7 +11,7 @@ import { formatDate } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { User } from 'src/app/shared/model/user.model';
 import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { debounceTime, map, shareReplay } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { BreadcrumbService } from 'xng-breadcrumb';
@@ -85,6 +85,8 @@ export class NewClaimantComponent implements OnInit {
   claimantChanges: boolean = false;
   claimantInfo: any;
   minimumDate = new Date(1900, 0, 1);
+  streetAddressList = [];
+  isAddressSearched = false;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private claimService: ClaimService,
@@ -175,7 +177,17 @@ export class NewClaimantComponent implements OnInit {
       zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       other_language: [null]
     })
-
+    this.claimantForm.get("street1").valueChanges
+      .pipe(
+        debounceTime(500),
+      ).subscribe(key => {
+        this.isAddressSearched = true;
+        this.claimService.searchAddress(key).subscribe(address => {
+          this.streetAddressList = address.suggestions;
+        }, error => {
+          this.streetAddressList = []
+        })
+      })
     this.claimService.seedData('language').subscribe(response => {
       this.languageList = response['data'];
     }, error => {
@@ -191,6 +203,16 @@ export class NewClaimantComponent implements OnInit {
       this.claimantChanges = true;
     });
 
+  }
+  selectAddress(street) {
+    this.claimantForm.patchValue({
+      street1: street.street_line,
+      street2: "",
+      city: street.city,
+      state: street.state,
+      zip_code: street.zipcode
+    })
+    this.changeState(street.state, 'claimant')
   }
   getSingleClaimant() {
     this.claimService.getSingleClaimant(this.claimantId).subscribe(res => {
