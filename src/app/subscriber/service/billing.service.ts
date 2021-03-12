@@ -139,4 +139,8 @@ export class BillingService {
   postPaymentResponse(billId, claim, billable, data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.postPayment + claim + '/' + billable + '/' + billId, data)
   }
+
+  closeBill(billId, claim, billable, data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.closeBill + claim + '/' + billable + '/' + billId, data)
+  }
 }

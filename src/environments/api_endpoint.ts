@@ -204,6 +204,7 @@ export const api_endpoint = {
     activityLogUpdate: 'billing/update-actionlog',
     getPayment: 'billing/payment-response/',
     postPayment: 'billing/payment-response-add/',
+    closeBill: 'billing/close-bill/',
 
     //Calendar 
 
