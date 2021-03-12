@@ -275,7 +275,7 @@ export class PaymentResponseComponent implements OnInit {
     formData.append('reference_no', review.get('reference_no').value);
     formData.append('interest_charged', review.get('interest_charged').value);
     formData.append('interest_paid', review.get('interest_paid').value);
-    formData.append('void_reason_id', reviewIndex > 0 ? this.paymentReviews(payIndex).at(reviewIndex - 1).get('id').value : '');
+    formData.append('void_reason_id', reviewIndex > 0 && this.paymentReviews(payIndex).at(this.paymentReviews(payIndex).controls.length - 2).get('void_type_id').value != 3 ? this.paymentReviews(payIndex).at(reviewIndex - 1).get('id').value : '');
     formData.append('void_type_id', review.get('void_type_id').value);
     formData.append('void_reason', review.get('void_reason').value);
     formData.append('eor_file_id', review.get('eor_file_id').value);
