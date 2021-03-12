@@ -36,8 +36,8 @@
                             <td>{{payment.get('payment').value}}</td>
                             <td class="text-danger">{{payment.get('balance').value}}</td>
                             <td class="text-success">{{payment.get('status').value}}</td>
-                            <td><button type="button" *ngIf="paymentReviews(payIndex)?.controls?.length == 0" mat-raised-button class="mini-btn filled-gray"
-                                    (click)="openElement(payment.get('id').value);paymentReviews(payIndex)?.controls?.length == 0 ? addReviews(payIndex) : ''">Add
+                            <td><button type="button" *ngIf="paymentReviews(payIndex)?.controls?.length == 0 || paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length -1).get('void_type_id').value == 3" mat-raised-button class="mini-btn filled-gray"
+                                    (click)="addReviews(payIndex)">Add
                                     Response</button></td>
                         </tr>
 
@@ -48,7 +48,7 @@
                                     <div [formGroupName]="reviewIndex">
                                         <!-- HIde section  && !(paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length -1).get('showStatus').value && reviewIndex == paymentReviews(payIndex)?.controls?.length -2) -->
                                         <div class="expand-details-list" fxLayout="row wrap" *ngIf="!review.get('showStatus').value">
-                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details" [ngClass]="{'strike' : !last}">
+                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details" [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
                                                 <div><span class="prp_">Explanation of Review</span><span
                                                         class="prv_"><a class="text-ternary" (click)="download(review.get('file_url').value)">{{review.get('file_name').value}}</a>
                                                     </span>
@@ -62,7 +62,7 @@
                                                 <div><span class="prp_">Created By</span><span class="prv_">{{review.get('created_by_first_name').value}} {{review.get('created_by_last_name').value}}</span></div>
                                                 <div><span class="prp_">Created On</span><span class="prv_">{{review.get('createdAt').value | date:'MM-dd-yyyy'}}</span></div>
                                             </div>
-                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details" [ngClass]="{'strike' : !last}">
+                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details" [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
                                                 <div><span class="prp_">Payment Amount</span><span
                                                         class="prv_">{{review.get('payment_amount').value}}</span></div>
                                                 <div><span class="prp_">Payment Method</span><span
@@ -74,7 +74,7 @@
                                                 <div><span class="prp_">Updated By</span><span class="prv_">{{review.get('updated_by_first_name').value}} {{review.get('updated_by_last_name').value}}</span></div>
                                                 <div><span class="prp_">Updated On</span><span class="prv_">{{review.get('updatedAt').value | date:'MM-dd-yyyy'}}</span></div>
                                             </div>
-                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details" [ngClass]="{'strike' : !last}">
+                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details" [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
                                                 <div><span class="prp_">Reference Number</span><span
                                                         class="prv_">{{review.get('reference_no').value}}</span></div>
                                                 <div><span class="prp_">Interest Charged</span><span
@@ -90,7 +90,7 @@
                                             </div>
                                         </div>
                                         <div class="expand-details-list" fxLayout="row wrap" *ngIf="review.get('showStatus').value">
-                                            <div fxFlex="100" *ngIf="paymentReviews(payIndex)?.controls?.length > 1">
+                                            <div fxFlex="100" *ngIf="paymentReviews(payIndex)?.controls?.length > 1 && paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length - 2).get('void_type_id').value != 3">
                                                 <div fxLayout="row wrap">
                                                     <div class="main-title p-l-0 p-b-10" fxFlex="100">First Bill Submission Edit
                                                         Reason</div>
@@ -98,10 +98,6 @@
                                                         fxFlex.sm="100" fxFlex.xs="100" (change)="changeVoidType(payment,review,payIndex,reviewIndex,$event)"  formControlName="void_type_id">
                                                         <mat-radio-button *ngFor="let type of review.get('voidData').value" [value]="type?.id" class="m-r-15">{{type?.name}}
                                                         </mat-radio-button>
-                                                        <!-- <mat-radio-button value="Correction">Correction 
-                                                        </mat-radio-button>
-                                                        <mat-radio-button value="Void Payment" class="m-r-15">Void Payment
-                                                        </mat-radio-button> -->
                                                     </mat-radio-group>
                                                     <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
                                                         <mat-form-field appearance="outline" class="w-100 m-t-10">
