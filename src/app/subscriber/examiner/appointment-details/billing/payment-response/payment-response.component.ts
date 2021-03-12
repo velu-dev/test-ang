@@ -73,6 +73,7 @@ export class PaymentResponseComponent implements OnInit {
   paymentRes: any;
   voidType: any;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
+
   constructor(public dialog: MatDialog, private fb: FormBuilder, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService, public billingService: BillingService) {
     this.isHandset$.subscribe(res => {
@@ -142,9 +143,9 @@ export class PaymentResponseComponent implements OnInit {
           charge: pay.charge,
           date_sent: pay.date_sent,
           bill_due_date: pay.bill_due_date,
-          payment: '',
+          payment: pay.payment,
           status: '',
-          balance: '',
+          balance: pay.balance,
           reviews: pay.payment_response
         }
         this.payments().at(i).patchValue(initPayment);
@@ -246,12 +247,12 @@ export class PaymentResponseComponent implements OnInit {
       review.get('void_reason').setValidators([Validators.required])
       review.get('void_type_id').updateValueAndValidity();
       review.get('void_reason').updateValueAndValidity();
-      
-      if(!review.get('file').value){
+
+      if (!review.get('file').value) {
         review.get('file').setValidators([])
         review.get('file').updateValueAndValidity();
         console.log(review.get('file').value);
-      }else{
+      } else {
         review.get('eor_file_id').patchValue('')
       }
     }
@@ -389,6 +390,8 @@ export class PaymentResponseComponent implements OnInit {
     })
   }
 
+
+
   //Popup's list
   openVoidDialog(): void {
     const dialogRef = this.dialog.open(VoidPayment, {
@@ -403,6 +406,7 @@ export class PaymentResponseComponent implements OnInit {
   openCloseBillDialog(): void {
     const dialogRef = this.dialog.open(CloseBill, {
       width: '800px',
+      data: { bill_id: this.billingData.bill_id, claim_id: this.paramsId.claim_id, billable_item_id: this.paramsId.billId }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -428,10 +432,35 @@ export class PaymentResponseComponent implements OnInit {
   templateUrl: '../close-bill.html',
 })
 export class CloseBill {
+  closeBillForm: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<CloseBill>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, public billingService: BillingService,
+    private alertService: AlertService) {
+
+    this.closeBillForm = this.fb.group({
+      close_bill_reason: ['', Validators.compose([Validators.required])],
+    })
+  }
+
+  closeBill() {
+    console.log(this.closeBillForm.value)
+    Object.keys(this.closeBillForm.controls).forEach((key) => {
+      if (this.closeBillForm.get(key).value && typeof (this.closeBillForm.get(key).value) == 'string')
+        this.closeBillForm.get(key).setValue(this.closeBillForm.get(key).value.trim())
+    });
+    if (this.closeBillForm.invalid) {
+      return;
+    }
+    this.billingService.closeBill(this.data.bill_id, this.data.claim_id, this.data.billable_item_id, this.closeBillForm.value).subscribe(close => {
+      console.log(close)
+      this.alertService.openSnackBar(close.message, "success");
+      this.dialogRef.close();
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, "error");
+    })
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -448,7 +477,7 @@ export class VoidPayment {
 
   constructor(
     public dialogRef: MatDialogRef<VoidPayment>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   onNoClick(): void {
     this.dialogRef.close();

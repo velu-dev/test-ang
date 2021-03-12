@@ -4,22 +4,26 @@
         <span class="spacer"></span>
         <button class="close-model" color="warn" (click)="onNoClick()"> <i class="fa fa-close"></i> close </button>
     </mat-card-header>
-   <mat-divider></mat-divider>
+    <mat-divider></mat-divider>
     <mat-card-content>
-        <div fxLayout="row wrap" class="p-t-20">
-            <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
-                <div class="main-title p-b-3">Reason for bill close</div>
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Bill Close Reason</mat-label>
-                    <input matInput placeholder="Bill Close Reason">
-                    <mat-error>Error message comes here...</mat-error>
-                </mat-form-field>
-            </div>
-            <div fxFlex="100" class="m-t-20 text-center">
-                <button mat-stroked-button type="button" (click)="onNoClick()" class="outline-danger">Cancel</button>
-                <button mat-stroked-button class="outline-success text-center m-l-10">Save</button>
-            </div>
+        <form [formGroup]="closeBillForm">
+            <div fxLayout="row wrap" class="p-t-20">
+                <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
+                    <div class="main-title p-b-3">Reason for bill close</div>
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Bill Close Reason *</mat-label>
+                        <input matInput formControlName="close_bill_reason" placeholder="Bill Close Reason">
+                        <mat-error>Please enter Bill Close Reason</mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxFlex="100" class="m-t-20 text-center">
+                    <button mat-stroked-button type="button" (click)="onNoClick()"
+                        class="outline-danger">Cancel</button>
+                    <button mat-stroked-button (click)="closeBill()"
+                        class="outline-success text-center m-l-10">Save</button>
+                </div>
 
-        </div>
+            </div>
+        </form>
     </mat-card-content>
 </div>
