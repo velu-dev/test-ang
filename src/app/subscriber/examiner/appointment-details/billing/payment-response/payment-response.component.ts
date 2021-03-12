@@ -300,9 +300,9 @@ export class PaymentResponseComponent implements OnInit {
           charge: pay.charge,
           date_sent: pay.date_sent,
           bill_due_date: pay.bill_due_date,
-          payment: '',
+          payment: pay.payment,
           status: '',
-          balance: '',
+          balance: pay.balance,
           reviews: pay.payment_response
         }
         this.payments().at(i).patchValue(initPayment);
