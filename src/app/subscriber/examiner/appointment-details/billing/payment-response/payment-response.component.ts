@@ -128,10 +128,10 @@ export class PaymentResponseComponent implements OnInit {
 
   getPaymentRes() {
     this.billingService.getPaymentResponse(this.billingData.bill_id, this.paramsId.claim_id, this.paramsId.billId).subscribe(payment => {
-     // console.log(payment);
+      // console.log(payment);
       this.paymentRes = payment.data;
       this.paymentRes.map((pay, i) => {
-       // console.log(pay, i)
+        // console.log(pay, i)
         this.addPayment();
         this.openElement(i)
         let initPayment = {
@@ -149,7 +149,7 @@ export class PaymentResponseComponent implements OnInit {
         }
         this.payments().at(i).patchValue(initPayment);
         pay.payment_response.map((review, ind) => {
-        //  console.log(ind, i)
+          //  console.log(ind, i)
           this.addReviews(i);
           review.file_name = review.eor_file_name;
           review.file_url = review.eor_file_url;
@@ -239,13 +239,11 @@ export class PaymentResponseComponent implements OnInit {
   }
 
   saveReview(payment: FormGroup, review: FormGroup, payIndex, reviewIndex) {
-   // console.log(payment.value)
-   // console.log(review.value)
+    // console.log(payment.value)
+    // console.log(review.value)
     if (reviewIndex > 0 && this.paymentReviews(payIndex).at(this.paymentReviews(payIndex).controls.length - 2).get('void_type_id').value != 3) {
       review.get('void_type_id').setValidators([Validators.required])
       review.get('void_reason').setValidators([Validators.required])
-      review.get('void_type_id').patchValue('');
-      review.get('void_reason').patchValue('');
       review.get('void_type_id').updateValueAndValidity();
       review.get('void_reason').updateValueAndValidity();
 
@@ -259,7 +257,7 @@ export class PaymentResponseComponent implements OnInit {
     }
     let formData = new FormData();
     Object.keys(review.controls).forEach((key) => {
-      if (review.get(key).value == null) review.get(key).patchValue('');
+      if (review.get(key).value == null || review.get(key).value == undefined) review.get(key).patchValue('');
       if (review.get(key).value && typeof (review.get(key).value) == 'string')
         review.get(key).setValue(review.get(key).value.trim())
     });
@@ -284,13 +282,13 @@ export class PaymentResponseComponent implements OnInit {
 
     formData.append('file', review.get('file').value);
     this.billingService.postPaymentResponse(this.billingData.bill_id, this.paramsId.claim_id, this.paramsId.billId, formData).subscribe(pay => {
-     // console.log(pay);
+      // console.log(pay);
       this.paymentForm = this.fb.group({
         payments: this.fb.array([]),
       })
       this.paymentRes = pay.data;
       this.paymentRes.map((pay, i) => {
-       // console.log(pay, i)
+        // console.log(pay, i)
         this.addPayment();
         this.openElement(i)
         let initPayment = {
@@ -308,7 +306,7 @@ export class PaymentResponseComponent implements OnInit {
         }
         this.payments().at(i).patchValue(initPayment);
         pay.payment_response.map((review, ind) => {
-         // console.log(ind, i)
+          // console.log(ind, i)
           this.addReviews(i);
           review.file_name = review.eor_file_name;
           review.file_url = review.eor_file_url;
@@ -333,7 +331,7 @@ export class PaymentResponseComponent implements OnInit {
   }
 
   editResponse(payement, review, payi, reviewi) {
-   // console.log(this.voidType)
+    // console.log(this.voidType)
     this.addReviews(payi);
     this.paymentReviews(payi).at(reviewi + 1).patchValue(review.value);
     this.paymentReviews(payi).at(reviewi + 1).get('showStatus').patchValue(true);
@@ -347,7 +345,7 @@ export class PaymentResponseComponent implements OnInit {
   }
 
   changeVoidType(payment, review, payIndex, reviewIndex, event) {
-   // console.log(event.value);
+    // console.log(event.value);
     if (event.value == 3) { //Void Payment
       review.get('payment_amount').patchValue(0);
       review.disable();
@@ -360,7 +358,7 @@ export class PaymentResponseComponent implements OnInit {
     if (event.value == 1) { //Change Payment
       review.enable();
     }
-   // console.log(review)
+    // console.log(review)
   }
 
   addEOR(event, review?) {
@@ -446,7 +444,7 @@ export class CloseBill {
   }
 
   closeBill() {
-   // console.log(this.closeBillForm.value)
+    // console.log(this.closeBillForm.value)
     Object.keys(this.closeBillForm.controls).forEach((key) => {
       if (this.closeBillForm.get(key).value && typeof (this.closeBillForm.get(key).value) == 'string')
         this.closeBillForm.get(key).setValue(this.closeBillForm.get(key).value.trim())
