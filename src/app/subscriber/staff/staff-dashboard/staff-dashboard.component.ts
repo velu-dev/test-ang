@@ -34,12 +34,26 @@ export class StaffDashboardComponent implements OnInit {
   columnName = [];
   filterValue: string;
   role: any;
-  procedureTypeStatus = []
+  procedureTypeStatus = [];
+  dashboardData = [];
+  selectedTile = "";
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   constructor(public router: Router, private breakpointObserver: BreakpointObserver, private subscriberService: SubscriberService, private intercom: IntercomService, private cookieService: CookieService) {
-    this.subscriberService.getDashboardData().subscribe(res => {
-      this.dataSource = new MatTableDataSource(res.data);
+    // this.subscriberService.getDashboardData().subscribe(res => {
+    //   this.dataSource = new MatTableDataSource(res.data);
+    //   this.dataSource.paginator = this.paginator;
+    //   this.dataSource.sort = this.sort;
+    //   this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+    // })
+    this.subscriberService.getDashboardData({}).subscribe(res => {
+      this.dashboardData = res.data;
+      this.selectedTile = status;
+      let data = [];
+      res.data.map(typeData => {
+        data = data.concat(typeData.data)
+      })
+      this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();

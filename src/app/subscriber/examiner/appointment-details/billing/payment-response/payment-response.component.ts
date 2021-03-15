@@ -73,6 +73,7 @@ export class PaymentResponseComponent implements OnInit {
   paymentRes: any;
   voidType: any;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
+
   constructor(public dialog: MatDialog, private fb: FormBuilder, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService, public billingService: BillingService) {
     this.isHandset$.subscribe(res => {
@@ -91,7 +92,6 @@ export class PaymentResponseComponent implements OnInit {
 
     this.billingService.seedData('void_type_seed_data').subscribe(data => {
       this.voidType = data.data;
-      console.log(this.voidType)
     })
 
   }
@@ -128,10 +128,10 @@ export class PaymentResponseComponent implements OnInit {
 
   getPaymentRes() {
     this.billingService.getPaymentResponse(this.billingData.bill_id, this.paramsId.claim_id, this.paramsId.billId).subscribe(payment => {
-      console.log(payment);
+      // console.log(payment);
       this.paymentRes = payment.data;
       this.paymentRes.map((pay, i) => {
-        console.log(pay, i)
+        // console.log(pay, i)
         this.addPayment();
         this.openElement(i)
         let initPayment = {
@@ -142,14 +142,14 @@ export class PaymentResponseComponent implements OnInit {
           charge: pay.charge,
           date_sent: pay.date_sent,
           bill_due_date: pay.bill_due_date,
-          payment: '',
+          payment: pay.payment,
           status: '',
-          balance: '',
+          balance: pay.balance,
           reviews: pay.payment_response
         }
         this.payments().at(i).patchValue(initPayment);
         pay.payment_response.map((review, ind) => {
-          console.log(ind, i)
+          //  console.log(ind, i)
           this.addReviews(i);
           review.file_name = review.eor_file_name;
           review.file_url = review.eor_file_url;
@@ -191,16 +191,16 @@ export class PaymentResponseComponent implements OnInit {
   newReview(): FormGroup {
     return this.fb.group({
       id: [''],
-      payment_amount: ['', Validators.compose([Validators.required])],
+      payment_amount: ['', Validators.compose([Validators.required, Validators.min(0)])],
       reference_no: ['', Validators.compose([Validators.required])],
       effective_date: ['', Validators.compose([Validators.required])],
       payment_method: ['', Validators.compose([Validators.required])],
       post_date: ['', Validators.compose([Validators.required])],
       deposit_date: ['', Validators.compose([Validators.required])],
-      penalty_charged: '',
-      penalty_paid: '',
-      interest_charged: '',
-      interest_paid: '',
+      penalty_charged: ['', Validators.min(0)],
+      penalty_paid: ['', Validators.min(0)],
+      interest_charged: ['', Validators.min(0)],
+      interest_paid: ['', Validators.min(0)],
       void_type_id: '',
       void_reason: '',
       paper_eor_document_id: '',
@@ -239,25 +239,25 @@ export class PaymentResponseComponent implements OnInit {
   }
 
   saveReview(payment: FormGroup, review: FormGroup, payIndex, reviewIndex) {
-    console.log(payment.value)
-    console.log(review.value)
-    if (reviewIndex > 0) {
+    // console.log(payment.value)
+    // console.log(review.value)
+    if (reviewIndex > 0 && this.paymentReviews(payIndex).at(this.paymentReviews(payIndex).controls.length - 2).get('void_type_id').value != 3) {
       review.get('void_type_id').setValidators([Validators.required])
       review.get('void_reason').setValidators([Validators.required])
       review.get('void_type_id').updateValueAndValidity();
       review.get('void_reason').updateValueAndValidity();
-      
-      if(!review.get('file').value){
+
+      if (!review.get('file').value) {
         review.get('file').setValidators([])
         review.get('file').updateValueAndValidity();
-        console.log(review.get('file').value);
-      }else{
+        //console.log(review.get('file').value);
+      } else {
         review.get('eor_file_id').patchValue('')
       }
     }
     let formData = new FormData();
     Object.keys(review.controls).forEach((key) => {
-      if (review.get(key).value == null) review.get(key).patchValue('');
+      if (review.get(key).value == null || review.get(key).value == undefined) review.get(key).patchValue('');
       if (review.get(key).value && typeof (review.get(key).value) == 'string')
         review.get(key).setValue(review.get(key).value.trim())
     });
@@ -275,20 +275,20 @@ export class PaymentResponseComponent implements OnInit {
     formData.append('reference_no', review.get('reference_no').value);
     formData.append('interest_charged', review.get('interest_charged').value);
     formData.append('interest_paid', review.get('interest_paid').value);
-    formData.append('void_reason_id', reviewIndex > 0 ? this.paymentReviews(payIndex).at(reviewIndex - 1).get('id').value : '');
+    formData.append('void_reason_id', reviewIndex > 0 && this.paymentReviews(payIndex).at(this.paymentReviews(payIndex).controls.length - 2).get('void_type_id').value != 3 ? this.paymentReviews(payIndex).at(reviewIndex - 1).get('id').value : '');
     formData.append('void_type_id', review.get('void_type_id').value);
     formData.append('void_reason', review.get('void_reason').value);
     formData.append('eor_file_id', review.get('eor_file_id').value);
 
     formData.append('file', review.get('file').value);
     this.billingService.postPaymentResponse(this.billingData.bill_id, this.paramsId.claim_id, this.paramsId.billId, formData).subscribe(pay => {
-      console.log(pay);
+      // console.log(pay);
       this.paymentForm = this.fb.group({
         payments: this.fb.array([]),
       })
       this.paymentRes = pay.data;
       this.paymentRes.map((pay, i) => {
-        console.log(pay, i)
+        // console.log(pay, i)
         this.addPayment();
         this.openElement(i)
         let initPayment = {
@@ -299,14 +299,14 @@ export class PaymentResponseComponent implements OnInit {
           charge: pay.charge,
           date_sent: pay.date_sent,
           bill_due_date: pay.bill_due_date,
-          payment: '',
+          payment: pay.payment,
           status: '',
-          balance: '',
+          balance: pay.balance,
           reviews: pay.payment_response
         }
         this.payments().at(i).patchValue(initPayment);
         pay.payment_response.map((review, ind) => {
-          console.log(ind, i)
+          // console.log(ind, i)
           this.addReviews(i);
           review.file_name = review.eor_file_name;
           review.file_url = review.eor_file_url;
@@ -331,7 +331,7 @@ export class PaymentResponseComponent implements OnInit {
   }
 
   editResponse(payement, review, payi, reviewi) {
-    console.log(this.voidType)
+    // console.log(this.voidType)
     this.addReviews(payi);
     this.paymentReviews(payi).at(reviewi + 1).patchValue(review.value);
     this.paymentReviews(payi).at(reviewi + 1).get('showStatus').patchValue(true);
@@ -345,7 +345,7 @@ export class PaymentResponseComponent implements OnInit {
   }
 
   changeVoidType(payment, review, payIndex, reviewIndex, event) {
-    console.log(event.value);
+    // console.log(event.value);
     if (event.value == 3) { //Void Payment
       review.get('payment_amount').patchValue(0);
       review.disable();
@@ -358,7 +358,7 @@ export class PaymentResponseComponent implements OnInit {
     if (event.value == 1) { //Change Payment
       review.enable();
     }
-    console.log(review)
+    // console.log(review)
   }
 
   addEOR(event, review?) {
@@ -389,6 +389,8 @@ export class PaymentResponseComponent implements OnInit {
     })
   }
 
+
+
   //Popup's list
   openVoidDialog(): void {
     const dialogRef = this.dialog.open(VoidPayment, {
@@ -403,6 +405,7 @@ export class PaymentResponseComponent implements OnInit {
   openCloseBillDialog(): void {
     const dialogRef = this.dialog.open(CloseBill, {
       width: '800px',
+      data: { bill_id: this.billingData.bill_id, claim_id: this.paramsId.claim_id, billable_item_id: this.paramsId.billId }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -428,10 +431,35 @@ export class PaymentResponseComponent implements OnInit {
   templateUrl: '../close-bill.html',
 })
 export class CloseBill {
+  closeBillForm: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<CloseBill>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder, public billingService: BillingService,
+    private alertService: AlertService) {
+
+    this.closeBillForm = this.fb.group({
+      close_bill_reason: ['', Validators.compose([Validators.required])],
+    })
+  }
+
+  closeBill() {
+    // console.log(this.closeBillForm.value)
+    Object.keys(this.closeBillForm.controls).forEach((key) => {
+      if (this.closeBillForm.get(key).value && typeof (this.closeBillForm.get(key).value) == 'string')
+        this.closeBillForm.get(key).setValue(this.closeBillForm.get(key).value.trim())
+    });
+    if (this.closeBillForm.invalid) {
+      return;
+    }
+    this.billingService.closeBill(this.data.bill_id, this.data.claim_id, this.data.billable_item_id, this.closeBillForm.value).subscribe(close => {
+      //console.log(close)
+      this.alertService.openSnackBar(close.message, "success");
+      this.dialogRef.close();
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, "error");
+    })
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -448,7 +476,7 @@ export class VoidPayment {
 
   constructor(
     public dialogRef: MatDialogRef<VoidPayment>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   onNoClick(): void {
     this.dialogRef.close();

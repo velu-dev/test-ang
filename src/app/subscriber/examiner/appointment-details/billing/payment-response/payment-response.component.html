@@ -36,8 +36,8 @@
                             <td>{{payment.get('payment').value}}</td>
                             <td class="text-danger">{{payment.get('balance').value}}</td>
                             <td class="text-success">{{payment.get('status').value}}</td>
-                            <td><button type="button" *ngIf="paymentReviews(payIndex)?.controls?.length == 0" mat-raised-button class="mini-btn filled-gray"
-                                    (click)="openElement(payment.get('id').value);paymentReviews(payIndex)?.controls?.length == 0 ? addReviews(payIndex) : ''">Add
+                            <td><button type="button" *ngIf="paymentReviews(payIndex)?.controls?.length == 0 || paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length -1).get('void_type_id').value == 3" mat-raised-button class="mini-btn filled-gray"
+                                    (click)="addReviews(payIndex)">Add
                                     Response</button></td>
                         </tr>
 
@@ -47,8 +47,8 @@
                                     *ngFor="let review of paymentReviews(payIndex).controls; let reviewIndex=index;let last = last">
                                     <div [formGroupName]="reviewIndex">
                                         <!-- HIde section  && !(paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length -1).get('showStatus').value && reviewIndex == paymentReviews(payIndex)?.controls?.length -2) -->
-                                        <div class="expand-details-list" fxLayout="row wrap" *ngIf="!review.get('showStatus').value">
-                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details" [ngClass]="{'strike' : !last}">
+                                        <div class="expand-details-list list-level list-level-{{reviewIndex}}" fxLayout="row wrap" *ngIf="!review.get('showStatus').value">
+                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details" [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
                                                 <div><span class="prp_">Explanation of Review</span><span
                                                         class="prv_"><a class="text-ternary" (click)="download(review.get('file_url').value)">{{review.get('file_name').value}}</a>
                                                     </span>
@@ -62,7 +62,7 @@
                                                 <div><span class="prp_">Created By</span><span class="prv_">{{review.get('created_by_first_name').value}} {{review.get('created_by_last_name').value}}</span></div>
                                                 <div><span class="prp_">Created On</span><span class="prv_">{{review.get('createdAt').value | date:'MM-dd-yyyy'}}</span></div>
                                             </div>
-                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details" [ngClass]="{'strike' : !last}">
+                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details" [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
                                                 <div><span class="prp_">Payment Amount</span><span
                                                         class="prv_">{{review.get('payment_amount').value}}</span></div>
                                                 <div><span class="prp_">Payment Method</span><span
@@ -74,7 +74,7 @@
                                                 <div><span class="prp_">Updated By</span><span class="prv_">{{review.get('updated_by_first_name').value}} {{review.get('updated_by_last_name').value}}</span></div>
                                                 <div><span class="prp_">Updated On</span><span class="prv_">{{review.get('updatedAt').value | date:'MM-dd-yyyy'}}</span></div>
                                             </div>
-                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details" [ngClass]="{'strike' : !last}">
+                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details" [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
                                                 <div><span class="prp_">Reference Number</span><span
                                                         class="prv_">{{review.get('reference_no').value}}</span></div>
                                                 <div><span class="prp_">Interest Charged</span><span
@@ -85,12 +85,12 @@
                                                 </div>
                                             </div>
                                             <div fxFlex="100">
-                                                <button type="button" *ngIf="last" mat-raised-button class="filled-gray m-t-15" (click)="editResponse(payment,review,payIndex,reviewIndex)">Copy & Edit Response</button>
+                                                <button type="button" *ngIf="last && review.get('void_type_id').value != 3" mat-raised-button class="filled-gray m-t-15" (click)="editResponse(payment,review,payIndex,reviewIndex)">Copy & Edit Response</button>
 
                                             </div>
                                         </div>
-                                        <div class="expand-details-list" fxLayout="row wrap" *ngIf="review.get('showStatus').value">
-                                            <div fxFlex="100" *ngIf="paymentReviews(payIndex)?.controls?.length > 1">
+                                        <div [ngClass]="{'void_': review.get('void_type_id').value == 3, ' response_': paymentReviews(payIndex)?.controls?.length == 1}" class="expand-details-list form-level" fxLayout="row wrap" *ngIf="review.get('showStatus').value">
+                                            <div fxFlex="100" *ngIf="paymentReviews(payIndex)?.controls?.length > 1 && paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length - 2).get('void_type_id').value != 3">
                                                 <div fxLayout="row wrap">
                                                     <div class="main-title p-l-0 p-b-10" fxFlex="100">First Bill Submission Edit
                                                         Reason</div>
@@ -98,10 +98,6 @@
                                                         fxFlex.sm="100" fxFlex.xs="100" (change)="changeVoidType(payment,review,payIndex,reviewIndex,$event)"  formControlName="void_type_id">
                                                         <mat-radio-button *ngFor="let type of review.get('voidData').value" [value]="type?.id" class="m-r-15">{{type?.name}}
                                                         </mat-radio-button>
-                                                        <!-- <mat-radio-button value="Correction">Correction 
-                                                        </mat-radio-button>
-                                                        <mat-radio-button value="Void Payment" class="m-r-15">Void Payment
-                                                        </mat-radio-button> -->
                                                     </mat-radio-group>
                                                     <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
                                                         <mat-form-field appearance="outline" class="w-100 m-t-10">
@@ -110,11 +106,11 @@
                                                             <!-- <mat-error>Error message comes here...</mat-error> -->
                                                         </mat-form-field>
                                                     </div>
-                                                    <div class="main-title m-t-10 p-l-0 p-b-10">Add new response</div>
+                                                    <div *ngIf="review.get('void_type_id').value != 3" class="main-title m-t-10 p-l-0 p-b-10">Add new response</div>
                                                 </div>
                                             </div>
                                             <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100"
-                                                class="expand-details editable">
+                                                class="expand-details editable" *ngIf="review.get('void_type_id').value != 3">
                                                 <div>
                                                     <span class="prp_">Explanation of Review *</span>
                                                     <span class="prv_">
@@ -131,7 +127,7 @@
                                                     <span class="prv_">
                                                         <mat-form-field appearance="outline" class="w-100">
                                                             <input formControlName="post_date" matInput type="text"
-                                                                placeholder="" autocomplete="off" [min]="minimumDate" [matDatepicker]="post_date">
+                                                                placeholder="Post Date" autocomplete="off" [min]="minimumDate" [matDatepicker]="post_date">
                                                                 <mat-datepicker-toggle matSuffix [for]="post_date"></mat-datepicker-toggle>
                                                                 <mat-datepicker #post_date></mat-datepicker>    
                                                         </mat-form-field>
@@ -142,7 +138,7 @@
                                                     <span class="prv_">
                                                         <mat-form-field appearance="outline" class="w-100">
                                                             <input formControlName="effective_date" matInput type="text"
-                                                                autocomplete="off" placeholder="" [min]="minimumDate" [matDatepicker]="effective">
+                                                                autocomplete="off" placeholder="Effective Date" [min]="minimumDate" [matDatepicker]="effective">
                                                                 <mat-datepicker-toggle matSuffix [for]="effective"></mat-datepicker-toggle>
                                                                 <mat-datepicker #effective></mat-datepicker>
                                                         </mat-form-field>
@@ -152,7 +148,7 @@
                                                     <span class="prp_">Deposit Date *</span>
                                                     <span class="prv_">
                                                         <mat-form-field appearance="outline" class="w-100">
-                                                            <input formControlName="deposit_date" matInput type="text" placeholder=""
+                                                            <input formControlName="deposit_date" matInput type="text" placeholder="Deposit Date"
                                                                 autocomplete="off" [min]="minimumDate" [max]="currentDate" [matDatepicker]="deposited">
                                                                 <mat-datepicker-toggle matSuffix [for]="deposited"></mat-datepicker-toggle>
                                                                 <mat-datepicker #deposited></mat-datepicker>
@@ -161,12 +157,12 @@
                                                 </div>
                                             </div>
                                             <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100"
-                                                class="expand-details editable">
+                                                class="expand-details editable" *ngIf="review.get('void_type_id').value != 3">
                                                 <div>
                                                     <span class="prp_">Payment Amount *</span>
                                                     <span class="prv_">
                                                         <mat-form-field appearance="outline" class="w-100">
-                                                            <input formControlName="payment_amount" matInput type="number" placeholder=""
+                                                            <input formControlName="payment_amount" min="0" matInput type="number" placeholder="Payment Amount"
                                                                 autocomplete="off">
                                                         </mat-form-field>
                                                     </span>
@@ -187,7 +183,7 @@
                                                     <span class="prp_">Penalty Charged</span>
                                                     <span class="prv_">
                                                         <mat-form-field appearance="outline" class="w-100">
-                                                            <input formControlName="penalty_charged" matInput type="number" placeholder=""
+                                                            <input formControlName="penalty_charged" min="0" matInput type="number" placeholder="Penalty Charged"
                                                                 autocomplete="off">
                                                         </mat-form-field>
                                                     </span>
@@ -196,19 +192,19 @@
                                                     <span class="prp_">Penalty Paid</span>
                                                     <span class="prv_">
                                                         <mat-form-field appearance="outline" class="w-100">
-                                                            <input formControlName="penalty_paid" matInput type="number" placeholder=""
+                                                            <input formControlName="penalty_paid" min="0" matInput type="number" placeholder="Penalty Paid"
                                                                 autocomplete="off">
                                                         </mat-form-field>
                                                     </span>
                                                 </div>
                                             </div>
                                             <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100"
-                                                class="expand-details editable">
+                                                class="expand-details editable" *ngIf="review.get('void_type_id').value != 3">
                                                 <div>
                                                     <span class="prp_">Reference Number *</span>
                                                     <span class="prv_">
                                                         <mat-form-field appearance="outline" class="w-100">
-                                                            <input formControlName="reference_no" matInput type="text" placeholder=""
+                                                            <input formControlName="reference_no" matInput type="text" placeholder="Reference Number"
                                                                 autocomplete="off">
                                                         </mat-form-field>
                                                     </span>
@@ -217,7 +213,7 @@
                                                     <span class="prp_">Interest Charged</span>
                                                     <span class="prv_">
                                                         <mat-form-field appearance="outline" class="w-100">
-                                                            <input formControlName="interest_charged" matInput type="number" placeholder=""
+                                                            <input formControlName="interest_charged" min="0" matInput type="number" placeholder="Interest Charged"
                                                                 autocomplete="off">
                                                         </mat-form-field>
                                                     </span>
@@ -226,8 +222,20 @@
                                                     <span class="prp_">Interest Paid</span>
                                                     <span class="prv_">
                                                         <mat-form-field appearance="outline" class="w-100">
-                                                            <input formControlName="interest_paid" matInput type="number" placeholder=""
+                                                            <input formControlName="interest_paid" min="0" matInput type="number" placeholder="Interest Paid"
                                                                 autocomplete="off">
+                                                        </mat-form-field>
+                                                    </span>
+                                                </div>
+                                                <div>
+                                                    <span class="prp_">Status</span>
+                                                    <span class="prv_">
+                                                        <mat-form-field appearance="outline" class="w-100">
+                                                            <mat-select>
+                                                                <mat-option value="1">
+                                                                   Status Comes Here...
+                                                                </mat-option>
+                                                            </mat-select>
                                                         </mat-form-field>
                                                     </span>
                                                 </div>

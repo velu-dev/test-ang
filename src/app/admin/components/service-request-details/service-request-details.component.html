@@ -277,7 +277,7 @@
             <table mat-table [dataSource]="receivedDocuments" class="user-table striped_ w-100">
                 <!-- Document Name Column -->
                 <ng-container matColumnDef="file_name">
-                    <th mat-header-cell *matHeaderCellDef>Document Name</th>
+                    <th mat-header-cell *matHeaderCellDef>{{ (serviceRequestDetails?.service_request_type == 'Record Review') ? 'Summarized' : '' }}{{ (serviceRequestDetails?.service_request_type == 'Transcription') ? 'Transcribed' : '' }} Document Name</th>
                     <td mat-cell *matCellDef="let element">{{element.file_name}}</td>
                 </ng-container>
                 <!-- Document Lines Column -->
