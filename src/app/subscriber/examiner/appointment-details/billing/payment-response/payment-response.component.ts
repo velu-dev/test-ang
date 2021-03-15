@@ -262,6 +262,7 @@ export class PaymentResponseComponent implements OnInit {
         review.get(key).setValue(review.get(key).value.trim())
     });
     if (review.status == "INVALID") {
+      this.alertService.openSnackBar("Please fill in the required (*) fields", 'error')
       review.markAllAsTouched();
       return;
     }
