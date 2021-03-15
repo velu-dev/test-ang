@@ -451,6 +451,11 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button {
     display: inherit !important;
   }
+  .mat-form-field {
+    button {
+      padding-top: 10px;
+    }
+  }
 }
 
 // custom calender css

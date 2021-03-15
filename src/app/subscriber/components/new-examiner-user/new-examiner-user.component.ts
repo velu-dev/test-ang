@@ -728,10 +728,10 @@ export class NewExaminerUserComponent implements OnInit {
       if (this.billingProviderForm.touched)
         this.billingPrviderSubmit();
     } else if (this.tab == 3) {
-      if (this.renderingForm.touched || this.licenseChangeStatus){
+      if (this.renderingForm.touched || this.licenseChangeStatus) {
         this.renderingFormSubmit();
       }
-      if(this.texonomySearch.touched){
+      if (this.texonomySearch.touched) {
         this.renderingFormSubmit();
       }
     } else if (this.tab == 4) {
@@ -936,10 +936,10 @@ export class NewExaminerUserComponent implements OnInit {
   editStatus: boolean = false;
   licenseChangeStatus: boolean = false;
   openLicense(data?: any, index?) {
-    this.editStatus = index || index == 0 ? true : false;
+    this.editStatus = this.editStatus;
     const dialogRef = this.dialog.open(LicenseDialog, {
       width: '800px',
-      data: { states: this.states, details: data, editStatus: data && data.id ? true : false }
+      data: { states: this.states, details: data, editStatus: this.editStatus }
     });
 
     dialogRef.afterClosed().subscribe(result => {

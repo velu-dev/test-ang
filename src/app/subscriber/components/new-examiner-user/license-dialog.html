@@ -1,7 +1,7 @@
 <div class="dialog">
     <mat-card-header class="model-header">
-        <div class="content-wrapper-main-title">
-            {{ licenseForm.value.id || data?.editStatus ? 'Edit License' : 'Add License'}}</div>
+        <div class="content-wrapper-main-title">{{ data?.editStatus ? 'Edit
+            License' : 'Add License'}}</div>
         <span class="spacer"></span>
         <button class="close-model" (click)="onNoClick()" color="warn"> <i class="fa fa-close"></i> close </button>
     </mat-card-header>
@@ -35,8 +35,8 @@
                 <div fxFlex="100" class="p-t-10 text-center">
                     <button mat-stroked-button (click)="onNoClick()" type="button"
                         class="outline-danger m-r-10">Cancel</button>
-                    <button mat-stroked-button class="outline-success text-center m-r-5"
-                        (click)="addLicense()">{{ licenseForm.value.id || data?.editStatus ? 'Save' : 'Add'}}</button>
+                    <button mat-stroked-button class="outline-success text-center m-r-5" (click)="addLicense()">{{
+                        data?.editStatus ? 'Save' : 'Add'}}</button>
                 </div>
 
             </div>
