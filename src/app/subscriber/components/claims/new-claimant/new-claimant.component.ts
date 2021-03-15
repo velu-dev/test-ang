@@ -86,6 +86,7 @@ export class NewClaimantComponent implements OnInit {
   claimantInfo: any;
   minimumDate = new Date(1900, 0, 1);
   streetAddressList = [];
+  isAddressError = false;
   isAddressSearched = false;
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -185,6 +186,7 @@ export class NewClaimantComponent implements OnInit {
         this.claimService.searchAddress(key).subscribe(address => {
           this.streetAddressList = address.suggestions;
         }, error => {
+          this.isAddressError = true;
           this.streetAddressList = []
         })
       })

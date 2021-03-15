@@ -179,7 +179,8 @@
               {{address?.zipcode}}
             </mat-option>
           </mat-autocomplete>
-          <mat-error *ngIf="isClaimantSubmited">Please enter valid address</mat-error>
+          <mat-hint *ngIf="isAddressError">Street Search Temporarily is not available. Team is
+            aware of this.</mat-hint>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" fxFlex.sm="50"
