@@ -872,13 +872,14 @@ export class NewClaimComponent implements OnInit {
         debounceTime(500),
       ).subscribe(key => {
         this.isAddressSearched = true;
-        this.claimService.searchAddress(key).subscribe(address => {
-          this.streetAddressList = address.suggestions;
-        }, error => {
-          console.log(error)
-          this.isAddressError = true;
-          this.streetAddressList = [];
-        })
+        if (key)
+          this.claimService.searchAddress(key).subscribe(address => {
+            this.streetAddressList = address.suggestions;
+          }, error => {
+            console.log(error)
+            this.isAddressError = true;
+            this.streetAddressList = [];
+          })
       })
   }
   // private _filterAttroney(value: string, data) {

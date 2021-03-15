@@ -58,9 +58,9 @@ export class DashboardComponent implements OnInit {
       this.dashboardData = res.data;
       this.selectedTile = status;
       let data = [];
-      res.data.map(typeData => {
-        data = data.concat(typeData.data)
-      })
+      this.dashboardData.map(typeData => {
+        data = data.concat(typeData.data);
+      });
       this.dataSource = new MatTableDataSource(data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -87,20 +87,19 @@ export class DashboardComponent implements OnInit {
   }
   getDashboardData(status?) {
     this.selectedTile = status;
-    this.dashboardData.map(res => {
+
+    console.log(this.dashboardData)
+    let filteredData = [];
+    let test = this.dashboardData.map(res => {
       if (res.type == status) {
-        console.log(res)
-        this.dataSource = new MatTableDataSource(res.data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
-      } else {
-        this.dataSource = new MatTableDataSource([]);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+        filteredData = res.data;
+        return true
       }
     })
+    this.dataSource = new MatTableDataSource(filteredData);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
   }
   ngOnInit() {
     this.role = this.cookieService.get('role_id')
