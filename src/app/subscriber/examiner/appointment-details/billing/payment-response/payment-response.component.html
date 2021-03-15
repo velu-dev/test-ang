@@ -35,7 +35,7 @@
                             <td>{{payment.get('charge').value}}</td>
                             <td>{{payment.get('payment').value}}</td>
                             <td class="text-danger">{{payment.get('balance').value}}</td>
-                            <td class="text-success">{{payment.get('status').value}}</td>
+                            <td class="text-success">{{payment.get('bill_paid_status').value}}</td>
                             <td><button type="button" *ngIf="paymentReviews(payIndex)?.controls?.length == 0 || paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length -1).get('void_type_id').value == 3" mat-raised-button class="mini-btn filled-gray"
                                     (click)="addReviews(payIndex)">Add
                                     Response</button></td>
@@ -228,12 +228,12 @@
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <span class="prp_">Status</span>
+                                                    <span class="prp_">Status *</span>
                                                     <span class="prv_">
                                                         <mat-form-field appearance="outline" class="w-100">
-                                                            <mat-select>
-                                                                <mat-option value="1">
-                                                                   Status Comes Here...
+                                                            <mat-select formControlName="bill_paid_status_id">
+                                                                <mat-option *ngFor="let paidStatus of paidStatusData" [value]="paidStatus?.id">
+                                                                    {{paidStatus?.name}}
                                                                 </mat-option>
                                                             </mat-select>
                                                         </mat-form-field>

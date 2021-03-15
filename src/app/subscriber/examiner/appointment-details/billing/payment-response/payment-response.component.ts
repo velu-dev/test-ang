@@ -72,6 +72,7 @@ export class PaymentResponseComponent implements OnInit {
   minimumDate = new Date(1900, 0, 1);
   paymentRes: any;
   voidType: any;
+  paidStatusData: any;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, private breakpointObserver: BreakpointObserver,
@@ -92,6 +93,10 @@ export class PaymentResponseComponent implements OnInit {
 
     this.billingService.seedData('void_type_seed_data').subscribe(data => {
       this.voidType = data.data;
+    })
+
+    this.billingService.seedData('bill_paid_status_seed_data').subscribe(data => {
+      this.paidStatusData = data.data;
     })
 
   }
@@ -133,10 +138,10 @@ export class PaymentResponseComponent implements OnInit {
       this.paymentRes.map((pay, i) => {
         // console.log(pay, i)
         this.addPayment();
-        this.openElement(i)
+        this.openElement(pay.id)
         let initPayment = {
           bill_no: pay.bill_no,
-          id: i,
+          id: pay.id,
           bill_submission_type: pay.bill_submission_type,
           showStatus: false,
           charge: pay.charge,
@@ -145,6 +150,8 @@ export class PaymentResponseComponent implements OnInit {
           payment: pay.payment,
           status: '',
           balance: pay.balance,
+          bill_paid_status: pay.bill_paid_status,
+          is_bill_closed: pay.is_bill_closed,
           reviews: pay.payment_response
         }
         this.payments().at(i).patchValue(initPayment);
@@ -165,6 +172,7 @@ export class PaymentResponseComponent implements OnInit {
   }
   expandId: any;
   openElement(element) {
+    console.log(element, this.expandId)
     if (this.expandId && this.expandId == element) {
       this.expandId = null;
     } else {
@@ -184,6 +192,8 @@ export class PaymentResponseComponent implements OnInit {
       payment: '',
       status: '',
       balance: '',
+      bill_paid_status: '',
+      is_bill_closed: '',
       reviews: this.fb.array([])
     })
   }
@@ -217,7 +227,8 @@ export class PaymentResponseComponent implements OnInit {
       updated_by_first_name: '',
       updated_by_last_name: '',
       voidData: '',
-      void_type: ''
+      void_type: '',
+      bill_paid_status_id: ['', Validators.compose([Validators.required])]
 
     })
   }
@@ -280,6 +291,8 @@ export class PaymentResponseComponent implements OnInit {
     formData.append('void_type_id', review.get('void_type_id').value);
     formData.append('void_reason', review.get('void_reason').value);
     formData.append('eor_file_id', review.get('eor_file_id').value);
+    formData.append('bill_paid_status_id', review.get('bill_paid_status_id').value);
+
 
     formData.append('file', review.get('file').value);
     this.billingService.postPaymentResponse(this.billingData.bill_id, this.paramsId.claim_id, this.paramsId.billId, formData).subscribe(pay => {
@@ -291,10 +304,10 @@ export class PaymentResponseComponent implements OnInit {
       this.paymentRes.map((pay, i) => {
         // console.log(pay, i)
         this.addPayment();
-        this.openElement(i)
+        //this.openElement(i)
         let initPayment = {
           bill_no: pay.bill_no,
-          id: i,
+          id: pay.id,
           bill_submission_type: pay.bill_submission_type,
           showStatus: false,
           charge: pay.charge,
@@ -303,6 +316,8 @@ export class PaymentResponseComponent implements OnInit {
           payment: pay.payment,
           status: '',
           balance: pay.balance,
+          bill_paid_status: pay.bill_paid_status,
+          is_bill_closed: pay.is_bill_closed,
           reviews: pay.payment_response
         }
         this.payments().at(i).patchValue(initPayment);
