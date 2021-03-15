@@ -172,7 +172,6 @@ export class PaymentResponseComponent implements OnInit {
   }
   expandId: any;
   openElement(element) {
-    console.log(element, this.expandId)
     if (this.expandId && this.expandId == element) {
       this.expandId = null;
     } else {
@@ -228,7 +227,8 @@ export class PaymentResponseComponent implements OnInit {
       updated_by_last_name: '',
       voidData: '',
       void_type: '',
-      bill_paid_status_id: ['', Validators.compose([Validators.required])]
+      bill_paid_status_id: ['', Validators.compose([Validators.required])],
+      bill_paid_status: ['']
 
     })
   }
