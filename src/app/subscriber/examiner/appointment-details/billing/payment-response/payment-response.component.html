@@ -25,7 +25,7 @@
                     <thead *ngFor="let payment of payments().controls; let payIndex=index" [formGroupName]="payIndex">
                         <tr>
                             <td>
-                                <mat-icon class="text-success" (click)="openElement(payment.get('id').value)">{{expandId
+                                <mat-icon [ngClass]="{'text-success': expandId != payment.get('id').value, 'text-danger' : expandId == payment.get('id').value}" (click)="openElement(payment.get('id').value)">{{expandId
                                     == payment.get('id').value ? 'remove_circle' : 'add_circle'}}</mat-icon>
                             </td>
                             <td>{{payment.get('bill_no').value}}</td>
@@ -35,7 +35,7 @@
                             <td>{{payment.get('charge').value}}</td>
                             <td>{{payment.get('payment').value}}</td>
                             <td class="text-danger">{{payment.get('balance').value}}</td>
-                            <td class="text-success">{{payment.get('status').value}}</td>
+                            <td class="text-success">{{payment.get('bill_paid_status').value}}</td>
                             <td><button type="button" *ngIf="paymentReviews(payIndex)?.controls?.length == 0 || paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length -1).get('void_type_id').value == 3" mat-raised-button class="mini-btn filled-gray"
                                     (click)="addReviews(payIndex)">Add
                                     Response</button></td>
@@ -80,6 +80,8 @@
                                                 <div><span class="prp_">Interest Charged</span><span
                                                         class="prv_">{{review.get('interest_charged').value}}</span></div>
                                                 <div><span class="prp_">Interest Paid</span><span class="prv_">{{review.get('interest_paid').value}}</span>
+                                                </div>
+                                                <div><span class="prp_">Status</span><span class="prv_">{{review.get('bill_paid_status').value}}</span>
                                                 </div>
                                                 <div><span class="prp_">Void Reason</span><span class="prv_">{{review.get('void_type').value}} - {{review.get('void_reason').value}}</span>
                                                 </div>
@@ -228,12 +230,12 @@
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <span class="prp_">Status</span>
+                                                    <span class="prp_">Status *</span>
                                                     <span class="prv_">
                                                         <mat-form-field appearance="outline" class="w-100">
-                                                            <mat-select>
-                                                                <mat-option value="1">
-                                                                   Status Comes Here...
+                                                            <mat-select formControlName="bill_paid_status_id">
+                                                                <mat-option *ngFor="let paidStatus of paidStatusData" [value]="paidStatus?.id">
+                                                                    {{paidStatus?.name}}
                                                                 </mat-option>
                                                             </mat-select>
                                                         </mat-form-field>
