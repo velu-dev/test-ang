@@ -89,6 +89,7 @@ export class DashboardComponent implements OnInit {
     this.selectedTile = status;
     this.dashboardData.map(res => {
       if (res.type == status) {
+        console.log(res)
         this.dataSource = new MatTableDataSource(res.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

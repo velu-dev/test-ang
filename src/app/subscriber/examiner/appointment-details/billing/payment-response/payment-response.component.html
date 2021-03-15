@@ -71,8 +71,8 @@
                                                         class="prv_">{{review.get('penalty_charged').value}}</span></div>
                                                 <div><span class="prp_">Penalty Paid</span><span
                                                         class="prv_">{{review.get('penalty_paid').value}}</span></div>
-                                                <div><span class="prp_">Updated By</span><span class="prv_">{{review.get('updated_by_first_name').value}} {{review.get('updated_by_last_name').value}}</span></div>
-                                                <div><span class="prp_">Updated On</span><span class="prv_">{{review.get('updatedAt').value | date:'MM-dd-yyyy'}}</span></div>
+                                                <div><span class="prp_">Updated By</span><span class="prv_" >{{review.get('updated_by_first_name').value}} {{review.get('updated_by_last_name').value}}</span></div>
+                                                <div><span class="prp_">Updated On</span><span class="prv_" *ngIf="review.get('updated_by_first_name').value">{{review.get('updatedAt').value | date:'MM-dd-yyyy'}}</span></div>
                                             </div>
                                             <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details" [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
                                                 <div><span class="prp_">Reference Number</span><span
