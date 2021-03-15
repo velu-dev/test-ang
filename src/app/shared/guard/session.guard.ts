@@ -18,6 +18,13 @@ export class SessionGuard implements CanActivate {
       let role = this.cookieService.get('role_id')
       if (role) {
         console.log('session', role)
+        let url = location.href.split('/').pop();
+        console.log(url)
+        if (url == 'verification' || url == 'forgotpassword' || url == 'register') {
+          this.cookieService.deleteAll()
+          this.router.navigate(['/', url]);
+          return true;
+        }
         switch (role) {
           case '1':
             this.router.navigate(["/admin"]);
@@ -56,6 +63,7 @@ export class SessionGuard implements CanActivate {
             this.router.navigate(["/subscriber/staff"]);
             break;
           default:
+
             this.cookieService.deleteAll()
             return true;
         }
@@ -66,7 +74,7 @@ export class SessionGuard implements CanActivate {
 
     }, error => {
       console.log(error);
-      this.cookieService.deleteAll()
+      //this.cookieService.deleteAll()
       return true;
     })
 
