@@ -228,6 +228,7 @@ export class NewClaimComponent implements OnInit {
   supplementalOtherIndex: number;
   pastTwoYearDate = moment().subtract(2, 'year');
   streetAddressList = [];
+  isAddressError = false;
   isAddressSearched = false;
   constructor(
     private formBuilder: FormBuilder,
@@ -874,7 +875,9 @@ export class NewClaimComponent implements OnInit {
         this.claimService.searchAddress(key).subscribe(address => {
           this.streetAddressList = address.suggestions;
         }, error => {
-          this.streetAddressList = []
+          console.log(error)
+          this.isAddressError = true;
+          this.streetAddressList = [];
         })
       })
   }
