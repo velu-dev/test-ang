@@ -517,7 +517,8 @@ export class AppointmentDetailsComponent implements OnInit {
         examiner_service_location_id: [{ value: null, disable: true }],
         is_virtual_location: [false],
         conference_url: [null],
-        conference_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])]
+        conference_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        conference_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       }),
       intake_call: this.formBuilder.group({
         caller_affiliation: [{ value: '', disable: true }],
@@ -527,6 +528,7 @@ export class AppointmentDetailsComponent implements OnInit {
         call_type_detail: [{ value: '', disable: true }],
         notes: [{ value: '', disable: true }],
         caller_phone: [{ value: '', disable: true }, Validators.compose([Validators.pattern('[0-9]+')])],
+        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
         caller_email: [{ value: null, disable: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
         caller_fax: [{ value: '', disable: true }, Validators.compose([Validators.pattern('[0-9]+')])]
       }),
@@ -1055,7 +1057,8 @@ export class AppointmentDetailsComponent implements OnInit {
         is_virtual_location: false,
         examiner_service_location_id: address.address_id,
         conference_url: null,
-        conference_phone: null
+        conference_phone: null,
+        phone_ext: null
       }
     })
   }
@@ -1283,7 +1286,8 @@ export class AppointmentDetailsComponent implements OnInit {
             examiner_service_location_id: null,
             is_virtual_location: false,
             conference_url: null,
-            conference_phone: null
+            conference_phone: null,
+            phone_ext: null
           }
         })
         const controlArray = Array(this.supplementalItems.length).fill(false);
@@ -1307,7 +1311,8 @@ export class AppointmentDetailsComponent implements OnInit {
             examiner_service_location_id: null,
             is_virtual_location: false,
             conference_url: null,
-            conference_phone: null
+            conference_phone: null,
+            phone_ext: null
           },
           intake_call: {
             caller_affiliation: null,
@@ -1317,6 +1322,7 @@ export class AppointmentDetailsComponent implements OnInit {
             call_type_detail: null,
             notes: null,
             caller_phone: null,
+            phone_ext: null,
             caller_email: null,
             caller_fax: null,
           }

@@ -5,7 +5,8 @@
                 <div class="content-wrapper-main-title p-t-10 m-b-10"> Claimant</div>
             </div>
             <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="50" class="reference_no">
-                <div class="content-wrapper-main-title p-t-10 m-b-10 text-center" *ngIf="claimantDetailsclaimant?.internal_reference">Ref #:
+                <div class="content-wrapper-main-title p-t-10 m-b-10 text-center"
+                    *ngIf="claimantDetailsclaimant?.internal_reference">Ref #:
                     {{claimantDetailsclaimant?.internal_reference}}</div>
             </div>
         </div>
@@ -30,12 +31,14 @@
                 <mat-form-field appearance="outline" fxFlex="70" class="phone">
                     <mat-label>Phone</mat-label>
                     <input matInput placeholder="Phone"
-                        value="{{claimantDetailsclaimant.phone_no_1 | mask:'(000) 000-0000'}}" autocomplete="off" disabled>
+                        value="{{claimantDetailsclaimant.phone_no_1 | mask:'(000) 000-0000'}}" autocomplete="off"
+                        disabled>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
                     <mat-label>Ext</mat-label>
-                    <input matInput type="text" placeholder="Ext" autocomplete="off">
+                    <input matInput type="text" placeholder="Ext" autocomplete="off"
+                        value="{{claimantDetailsclaimant.phone_ext1}}" disabled>
                     <mat-error>Please enter valid Extension</mat-error>
                 </mat-form-field>
 

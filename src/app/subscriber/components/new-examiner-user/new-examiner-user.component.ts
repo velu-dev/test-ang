@@ -313,7 +313,9 @@ export class NewExaminerUserComponent implements OnInit {
         state_code: res.mailing_address.state_code,
         zip_code: res.mailing_address.zip_code,
         phone_no1: res.mailing_address.phone_no1,
+        phone_ext1: res.mailing_address.phone_ext1,
         phone_no2: res.mailing_address.phone_no2,
+        phone_ext2: res.mailing_address.phone_ext2,
         fax_no: res.mailing_address.fax_no,
         email: res.mailing_address.email,
         contact_person: res.mailing_address.contact_person,
@@ -336,6 +338,7 @@ export class NewExaminerUserComponent implements OnInit {
         state_code: res.billing_provider.state_code,
         zip_code: res.billing_provider.zip_code,
         phone_no1: res.billing_provider.phone_no1,
+        phone_ext1: res.billing_provider.phone_ext1,
         first_name: res.billing_provider.first_name,
         last_name: res.billing_provider.last_name,
         middle_name: res.billing_provider.middle_name,
@@ -439,7 +442,9 @@ export class NewExaminerUserComponent implements OnInit {
       state: [null],
       zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       phone_no1: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      phone_ext1: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       phone_no2: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      phone_ext2: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       fax_no: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       email: ["", Validators.compose([Validators.email])],
       contact_person: [""],
@@ -463,6 +468,7 @@ export class NewExaminerUserComponent implements OnInit {
       state: [null],
       zip_code: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       phone_no1: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
+      phone_ext1: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       billing_provider_name: ['', Validators.compose([Validators.maxLength(100)])],
       fax_no: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       file: [''],
@@ -1251,6 +1257,7 @@ export class NewExaminerUserComponent implements OnInit {
         state: this.mailingAddressForm.value.state,
         zip_code: this.mailingAddressForm.value.zip_code,
         phone_no1: this.mailingAddressForm.value.phone_no1,
+        phone_ext1: this.mailingAddressForm.value.phone_ext1,
         fax_no: this.mailingAddressForm.value.fax_no
       }
       this.billingProviderForm.patchValue(addAddress)
@@ -1263,6 +1270,7 @@ export class NewExaminerUserComponent implements OnInit {
         state: null,
         zip_code: null,
         phone_no1: null,
+        phone_ext1: null,
         fax_no: null
       }
       this.billingProviderForm.patchValue(addresEmpty);

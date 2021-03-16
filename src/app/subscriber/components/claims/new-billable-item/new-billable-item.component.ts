@@ -74,7 +74,7 @@ export class NewBillableItemComponent implements OnInit {
   contactType: any;
   languageList: any = [];
   primary_language_spoken: boolean = false;
-  claimantDetails = { claimant_name: "", date_of_birth: "", phone_no_1: "" };
+  claimantDetails = { claimant_name: "", date_of_birth: "", phone_no_1: "", phone_ext1: "" };
   claimDetails = { claim_number: "", wcab_number: "", exam_type_id: "", exam_type_code: "", exam_name: "" };
   examTypes: any;
   isLoading = false;
@@ -111,7 +111,7 @@ export class NewBillableItemComponent implements OnInit {
           this.claimService.getSingleClaimant(this.claimantId).subscribe(claimant => {
             console.log(claimant)
             this.claimant = claimant.data[0]
-            this.claimantDetails = { claimant_name: claimant.data[0].first_name + " " + claimant.data[0].last_name, date_of_birth: claimant.data[0].date_of_birth, phone_no_1: claimant.data[0].phone_no_1 };
+            this.claimantDetails = { claimant_name: claimant.data[0].first_name + " " + claimant.data[0].last_name, date_of_birth: claimant.data[0].date_of_birth, phone_no_1: claimant.data[0].phone_no_1, phone_ext1: claimant.data[0].phone_ext1 };
           })
           // this.claimService.getProcedureType(claim.data.claim_details.exam_type_id).subscribe(res => {
           //   this.procuderalCodes = res.data;
@@ -178,7 +178,8 @@ export class NewBillableItemComponent implements OnInit {
         examiner_service_location_id: [null],
         is_virtual_location: [false],
         conference_url: [null],
-        conference_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])]
+        conference_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       }),
       intake_call: this.formBuilder.group({
         caller_affiliation: [null],
@@ -189,6 +190,7 @@ export class NewBillableItemComponent implements OnInit {
         notes: [null],
         caller_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         caller_email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
         caller_fax: [null, Validators.compose([Validators.pattern('[0-9]+')])]
       }),
       //documents_received:[]

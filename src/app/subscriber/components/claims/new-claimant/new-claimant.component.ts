@@ -168,8 +168,10 @@ export class NewClaimantComponent implements OnInit {
       certified_interpreter_required: [null],
       ssn: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       phone_no_1: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      phone_ext1: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       organization_id: [null],
       phone_no_2: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      phone_ext2: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       street1: [null],
       street2: [null],
       salutation: [null, Validators.compose([Validators.maxLength(4)])],
@@ -183,12 +185,13 @@ export class NewClaimantComponent implements OnInit {
         debounceTime(500),
       ).subscribe(key => {
         this.isAddressSearched = true;
-        this.claimService.searchAddress(key).subscribe(address => {
-          this.streetAddressList = address.suggestions;
-        }, error => {
-          this.isAddressError = true;
-          this.streetAddressList = []
-        })
+        if (key)
+          this.claimService.searchAddress(key).subscribe(address => {
+            this.streetAddressList = address.suggestions;
+          }, error => {
+            this.isAddressError = true;
+            this.streetAddressList = []
+          })
       })
     this.claimService.seedData('language').subscribe(response => {
       this.languageList = response['data'];

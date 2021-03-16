@@ -308,7 +308,7 @@ export class NewClaimComponent implements OnInit {
             this.searchStatus = false;
             this.isClaimantEdit = true;
             this.addNewClaimant = true;
-            this.claimantDetails = { claimant_name: claimant.data[0].first_name + " " + claimant.data[0].last_name, date_of_birth: claimant.data[0].date_of_birth, phone_no_1: claimant.data[0].phone_no_1 };
+            this.claimantDetails = { claimant_name: claimant.data[0].first_name + " " + claimant.data[0].last_name, date_of_birth: claimant.data[0].date_of_birth, phone_no_1: claimant.data[0].phone_no_1, phone_ext1: claimant.data[0].phone_ext1 };
             this.languageStatus = claimant['data'][0].certified_interpreter_required;
             this.primary_language_spoken = claimant.data[0].primary_language_spoken ? true : false;
             this.changeState(claimant.data[0].state, 'claimant', claimant.data[0].state_code);
@@ -321,7 +321,8 @@ export class NewClaimComponent implements OnInit {
                 claimant_id: this.claimant_id,
                 claimant_name: this.claimantDetails.claimant_name,
                 date_of_birth: claimant['data'][0].date_of_birth,
-                phone_no_1: claimant['data'][0].phone_no_1
+                phone_no_1: claimant['data'][0].phone_no_1,
+                phone_ext1: claimant['data'][0].phone_ext1
               }
             })
             this.billable_item.patchValue({
@@ -332,6 +333,7 @@ export class NewClaimComponent implements OnInit {
                 appointment: claimant['data'][0].appointments,
                 claimant_name: this.claimantDetails.claimant_name,
                 phone_no_1: claimant['data'][0].phone_no_1,
+                phone_ext1: claimant['data'][0].phone_ext1,
                 date_of_birth: claimant['data'][0].date_of_birth
               }
             })
@@ -353,7 +355,7 @@ export class NewClaimComponent implements OnInit {
           this.claimant.patchValue(res.data.claimant_details)
           this.intercom.setClaimant(res.data.first_name + ' ' + res.data.last_name);
           this.cookieService.set('claimDetails', res.data.first_name + ' ' + res.data.last_name)
-          this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
+          this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1, phone_ext1: res.data.phone_ext1 };
           this.claim.patchValue({
             claim_details: {
               claimant_name: this.claimantDetails.claimant_name
@@ -534,6 +536,7 @@ export class NewClaimComponent implements OnInit {
   }
   isClaimantEdit = false;
   selectClaimant(option) {
+    console.log(option)
     this.isSearchClaimantError = false;
     this.claimant_id = option.id;
     this.isClaimantEdit = true;
@@ -543,13 +546,14 @@ export class NewClaimComponent implements OnInit {
     this.languageStatus = option.certified_interpreter_required;
     this.isClaimantCreated = true;
     this.claimantDateOfBirth = option.date_of_birth;
-    this.claimantDetails = { claimant_name: option.first_name + " " + option.last_name, date_of_birth: option.date_of_birth, phone_no_1: option.phone_no_1 };
+    this.claimantDetails = { claimant_name: option.first_name + " " + option.last_name, date_of_birth: option.date_of_birth, phone_no_1: option.phone_no_1, phone_ext1: option.phone_ext1 };
     this.claim.patchValue({
       claim_details: {
         claimant_id: option.id,
         claimant_name: this.claimantDetails.claimant_name,
         date_of_birth: option.date_of_birth,
-        phone_no_1: option.phone_no_1
+        phone_no_1: option.phone_no_1,
+        phone_ext1: option.phone_ext1
       }
     });
     this.billable_item.patchValue({
@@ -557,6 +561,7 @@ export class NewClaimComponent implements OnInit {
       claim_details: {
         claimant_name: this.claimantDetails.claimant_name,
         phone_no_1: option.phone_no_1,
+        phone_ext1: option.phone_ext1,
         date_of_birth: option.date_of_birth
       }
     })
@@ -648,8 +653,10 @@ export class NewClaimComponent implements OnInit {
       certified_interpreter_required: [null],
       ssn: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       phone_no_1: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      phone_ext1: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       organization_id: [null],
       phone_no_2: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      phone_ext2: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       street1: [null],
       street2: [null],
       city: [null],
@@ -662,6 +669,7 @@ export class NewClaimComponent implements OnInit {
         id: [null],
         claimant_name: [{ value: "", disabled: true }],
         phone_no_1: [{ value: "", disabled: true }],
+        phone_ext1: [{ value: "", disabled: true }],
         date_of_birth: [{ value: "", disabled: true }],
         wcab_number: [null, Validators.compose([Validators.maxLength(18), Validators.pattern('^[a-zA-Z]{3}[0-9]{1,15}$')])],
         claim_number: [null, Validators.compose([Validators.maxLength(50), Validators.pattern('^(?!.*[-_]})(?=.*[a-zA-Z0-9]$)[a-zA-Z0-9][a-zA-Z0-9-]*$')])],
@@ -681,6 +689,7 @@ export class NewClaimComponent implements OnInit {
         state: [null],
         zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
         fax: [null],
         email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
       }),
@@ -693,6 +702,7 @@ export class NewClaimComponent implements OnInit {
         state: [null],
         zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
         fax: [null],
         email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
 
@@ -707,6 +717,7 @@ export class NewClaimComponent implements OnInit {
         state: [null],
         zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
         email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
         fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       }),
@@ -721,6 +732,7 @@ export class NewClaimComponent implements OnInit {
         state: [null],
         zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
         fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       }),
       DEU: this.formBuilder.group({
@@ -732,6 +744,7 @@ export class NewClaimComponent implements OnInit {
         state: [null],
         zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
         email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
         fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       })
@@ -740,6 +753,7 @@ export class NewClaimComponent implements OnInit {
       claim_details: this.formBuilder.group({
         claimant_name: [{ value: "", disabled: true }],
         phone_no_1: [{ value: "", disabled: true }],
+        phone_ext1: [{ value: "", disabled: true }],
         date_of_birth: [{ value: "", disabled: true }],
         claim_number: [{ value: "", disabled: true }],
         wcab_number: [{ value: "", disabled: true }],
@@ -760,7 +774,8 @@ export class NewClaimComponent implements OnInit {
         examiner_service_location_id: [null],
         is_virtual_location: [false],
         conference_url: [null],
-        conference_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])]
+        conference_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       }),
       intake_call: this.formBuilder.group({
         caller_affiliation: [null],
@@ -770,6 +785,7 @@ export class NewClaimComponent implements OnInit {
         call_type_detail: [null],
         notes: [null],
         caller_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
         caller_email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
         caller_fax: [null, Validators.compose([Validators.pattern('[0-9]+')])]
       })
@@ -1263,7 +1279,7 @@ export class NewClaimComponent implements OnInit {
       this.procuderalCodes = procedure.data;
     })
   }
-  claimantDetails = { claimant_name: "", date_of_birth: "", phone_no_1: "" }
+  claimantDetails = { claimant_name: "", date_of_birth: "", phone_no_1: "", phone_ext1: "" }
   claimDetails = { claim_number: "", exam_type_id: "", wcab_number: "" }
   isClaimantCreated = false;
   createClaimant(status) {
@@ -1305,7 +1321,7 @@ export class NewClaimComponent implements OnInit {
         this.claimService.createClaimant(this.claimant.value).subscribe(res => {
           this.claimant_id = res.data.id;
           this.alertService.openSnackBar(res.message, "success");
-          this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
+          this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1, phone_ext1: res.data.phone_ext1 };
           // this.claimant.patchValue({
           //   id: res.data.id
           // })
@@ -1314,7 +1330,8 @@ export class NewClaimComponent implements OnInit {
               claimant_id: res.data.id,
               claimant_name: this.claimantDetails.claimant_name,
               date_of_birth: res.data.date_of_birth,
-              phone_no_1: res.data.phone_no_1
+              phone_no_1: res.data.phone_no_1,
+              phone_ext1: res.data.phone_ext1
             }
           });
           this.billable_item.patchValue({
@@ -1323,7 +1340,8 @@ export class NewClaimComponent implements OnInit {
               claimant_id: res.data.id,
               claimant_name: this.claimantDetails.claimant_name,
               date_of_birth: res.data.date_of_birth,
-              phone_no_1: res.data.phone_no_1
+              phone_no_1: res.data.phone_no_1,
+              phone_ext1: res.data.phone_ext1
             }
           })
           this.isClaimantCreated = true;
@@ -1354,14 +1372,15 @@ export class NewClaimComponent implements OnInit {
           this.alertService.openSnackBar(res.message, "success");
           this.intercom.setClaimant(res.data.first_name + ' ' + res.data.last_name);
           this.cookieService.set('claimDetails', res.data.first_name + ' ' + res.data.last_name)
-          this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1 };
+          this.claimantDetails = { claimant_name: res.data.first_name + " " + res.data.last_name, date_of_birth: res.data.date_of_birth, phone_no_1: res.data.phone_no_1, phone_ext1: res.data.phone_ext1 };
           this.claimantChanges = false;
           this.claim.patchValue({
             claim_details: {
               claimant_id: this.claimant_id,
               claimant_name: this.claimantDetails.claimant_name,
               date_of_birth: res.data.date_of_birth,
-              phone_no_1: res.data.phone_no_1
+              phone_no_1: res.data.phone_no_1,
+              phone_ext1: res.data.phone_ext1
             }
           });
           this.billable_item.patchValue({
@@ -1370,7 +1389,8 @@ export class NewClaimComponent implements OnInit {
               claimant_id: res.data.id,
               claimant_name: this.claimantDetails.claimant_name,
               date_of_birth: res.data.date_of_birth,
-              phone_no_1: res.data.phone_no_1
+              phone_no_1: res.data.phone_no_1,
+              phone_ext1: res.data.phone_ext1
             }
           })
           if (status == 'next') {
