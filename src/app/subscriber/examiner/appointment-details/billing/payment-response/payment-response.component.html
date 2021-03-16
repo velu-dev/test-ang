@@ -25,19 +25,22 @@
                     <thead *ngFor="let payment of payments().controls; let payIndex=index" [formGroupName]="payIndex">
                         <tr>
                             <td>
-                                <mat-icon [ngClass]="{'text-success': expandId != payment.get('id').value, 'text-danger' : expandId == payment.get('id').value}" (click)="openElement(payment.get('id').value)">{{expandId
+                                <mat-icon
+                                    [ngClass]="{'text-success': expandId != payment.get('id').value, 'text-danger' : expandId == payment.get('id').value}"
+                                    (click)="openElement(payment.get('id').value)">{{expandId
                                     == payment.get('id').value ? 'remove_circle' : 'add_circle'}}</mat-icon>
                             </td>
                             <td>{{payment.get('bill_no').value}}</td>
                             <td>{{payment.get('bill_submission_type').value}}</td>
                             <td>{{payment.get('date_sent').value | date:'MM-dd-yyyy'}}</td>
                             <td>{{payment.get('bill_due_date').value | date:'MM-dd-yyyy'}}</td>
-                            <td>{{payment.get('charge').value}}</td>
-                            <td>{{payment.get('payment').value}}</td>
-                            <td class="text-danger">{{payment.get('balance').value}}</td>
+                            <td>$ {{payment.get('charge').value}}</td>
+                            <td>$ {{payment.get('payment').value}}</td>
+                            <td class="text-danger">$ {{payment.get('balance').value}}</td>
                             <td class="text-success">{{payment.get('bill_paid_status').value}}</td>
-                            <td><button type="button" *ngIf="paymentReviews(payIndex)?.controls?.length == 0 || paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length -1).get('void_type_id').value == 3" mat-raised-button class="mini-btn filled-gray"
-                                    (click)="addReviews(payIndex)">Add
+                            <td><button type="button"
+                                    *ngIf="paymentReviews(payIndex)?.controls?.length == 0 || paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length -1).get('void_type_id').value == 3"
+                                    mat-raised-button class="mini-btn filled-gray" (click)="addReviews(payIndex)">Add
                                     Response</button></td>
                         </tr>
 
@@ -48,42 +51,94 @@
                                     <div [formGroupName]="reviewIndex">
                                         <!-- HIde section  && !(paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length -1).get('showStatus').value && reviewIndex == paymentReviews(payIndex)?.controls?.length -2) -->
                                         <div class="expand-details-list list-level list-level-{{reviewIndex}}" fxLayout="row wrap" *ngIf="!review.get('showStatus').value">
-                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details" [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
-                                                <div><span class="prp_">Explanation of Review</span><span
-                                                        class="prv_"><a class="text-ternary" (click)="download(review.get('file_url').value)">{{review.get('file_name').value}}</a>
-                                                    </span>
+                                            <div fxFlex="100">
+                                                <div class="grid-list">
+                                                    <div>Response Type</div>
+                                                    <div>Other - Other response description comes here</div>
                                                 </div>
-                                                <div><span class="prp_">Post Date</span><span
-                                                        class="prv_">{{review.get('post_date').value | date:'MM-dd-yyyy'}}</span></div>
-                                                <div><span class="prp_">Effective Date</span><span
-                                                        class="prv_">{{review.get('effective_date').value | date:'MM-dd-yyyy'}}</span></div>
-                                                <div><span class="prp_">Deposit Date</span><span
-                                                        class="prv_">{{review.get('deposit_date').value | date:'MM-dd-yyyy'}}</span></div>
-                                                <div><span class="prp_">Created By</span><span class="prv_">{{review.get('created_by_first_name').value}} {{review.get('created_by_last_name').value}}</span></div>
-                                                <div><span class="prp_">Created On</span><span class="prv_">{{review.get('createdAt').value | date:'MM-dd-yyyy'}}</span></div>
                                             </div>
-                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details" [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
-                                                <div><span class="prp_">Payment Amount</span><span
-                                                        class="prv_">{{review.get('payment_amount').value}}</span></div>
-                                                <div><span class="prp_">Payment Method</span><span
-                                                        class="prv_">{{review.get('payment_method').value}}</span></div>
-                                                <div><span class="prp_">Penalty Charged</span><span
-                                                        class="prv_">{{review.get('penalty_charged').value}}</span></div>
-                                                <div><span class="prp_">Penalty Paid</span><span
-                                                        class="prv_">{{review.get('penalty_paid').value}}</span></div>
-                                                <div><span class="prp_">Updated By</span><span class="prv_" >{{review.get('updated_by_first_name').value}} {{review.get('updated_by_last_name').value}}</span></div>
-                                                <div><span class="prp_">Updated On</span><span class="prv_" *ngIf="review.get('updated_by_first_name').value">{{review.get('updatedAt').value | date:'MM-dd-yyyy'}}</span></div>
+                                            <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100" class="expand-details"
+                                                [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
+                                                <div class="grid-list">
+                                                    <div>Explanation of Review</div>
+                                                    <div><a class="text-ternary"
+                                                            (click)="download(review.get('file_url').value)">{{review.get('file_name').value}}</a>
+                                                    </div>
+                                                </div>
+                                                <div class="grid-list">
+                                                    <div>Post Date</div>
+                                                    <div>{{review.get('post_date').value | date:'MM-dd-yyyy'}}</div>
+                                                </div>
+                                                <div class="grid-list">
+                                                    <div>Effective Date</div>
+                                                    <div>{{review.get('effective_date').value | date:'MM-dd-yyyy'}}
+                                                    </div>
+                                                </div>
+                                                <div class="grid-list">
+                                                    <div>Deposit Date</div>
+                                                    <div>{{review.get('deposit_date').value | date:'MM-dd-yyyy'}}</div>
+                                                </div>
+                                                <div class="grid-list">
+                                                    <div>Created By</div>
+                                                    <div>{{review.get('created_by_first_name').value}}
+                                                        {{review.get('created_by_last_name').value}}</div>
+                                                </div>
+                                                <div class="grid-list">
+                                                    <div>Created On</div>
+                                                    <div>{{review.get('createdAt').value | date:'MM-dd-yyyy'}}</div>
+                                                </div>
                                             </div>
-                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" class="expand-details" [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
-                                                <div><span class="prp_">Reference Number</span><span
-                                                        class="prv_">{{review.get('reference_no').value}}</span></div>
-                                                <div><span class="prp_">Interest Charged</span><span
-                                                        class="prv_">{{review.get('interest_charged').value}}</span></div>
-                                                <div><span class="prp_">Interest Paid</span><span class="prv_">{{review.get('interest_paid').value}}</span>
+                                            <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100" class="expand-details"
+                                                [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
+                                                <div class="grid-list">
+                                                    <div>Payment Amount</div>
+                                                    <div>$ {{review.get('payment_amount').value}}</div>
                                                 </div>
-                                                <div><span class="prp_">Status</span><span class="prv_">{{review.get('bill_paid_status').value}}</span>
+                                                <div class="grid-list">
+                                                    <div>Payment Method</div>
+                                                    <div>{{review.get('payment_method').value}}</div>
                                                 </div>
-                                                <div><span class="prp_">Void Reason</span><span class="prv_">{{review.get('void_type').value}} - {{review.get('void_reason').value}}</span>
+                                                <div class="grid-list">
+                                                    <div>Penalty Charged</div>
+                                                    <div>$ {{review.get('penalty_charged').value}}</div>
+                                                </div>
+                                                <div class="grid-list">
+                                                    <div>Penalty Paid</div>
+                                                    <div>$ {{review.get('penalty_paid').value}}</div>
+                                                </div>
+                                                <div class="grid-list">
+                                                    <div>Updated By</div>
+                                                    <div>{{review.get('updated_by_first_name').value}}
+                                                        {{review.get('updated_by_last_name').value}}</div>
+                                                </div>
+                                                <div class="grid-list">
+                                                    <div>Updated On</div>
+                                                    <div *ngIf="review.get('updated_by_first_name').value">
+                                                        {{review.get('updatedAt').value | date:'MM-dd-yyyy'}}</div>
+                                                </div>
+                                            </div>
+                                            <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100" class="expand-details"
+                                                [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
+                                                <div class="grid-list">
+                                                    <div>Reference Number</div>
+                                                    <div>{{review.get('reference_no').value}}</div>
+                                                </div>
+                                                <div class="grid-list">
+                                                    <div>Interest Charged</div>
+                                                    <div>$ {{review.get('interest_charged').value}}</div>
+                                                </div>
+                                                <div class="grid-list">
+                                                    <div>Interest Paid</div>
+                                                    <div>$ {{review.get('interest_paid').value}}</div>
+                                                </div>
+                                                <div class="grid-list">
+                                                    <div>Status</div>
+                                                    <div>{{review.get('bill_paid_status').value}}</div>
+                                                </div>
+                                                <div class="grid-list">
+                                                    <div>Void Reason</div>
+                                                    <div>{{review.get('void_type').value}} -
+                                                        {{review.get('void_reason').value}}</div>
                                                 </div>
                                             </div>
                                             <div fxFlex="100">
@@ -101,146 +156,195 @@
                                                         <mat-radio-button *ngFor="let type of review.get('voidData').value" [value]="type?.id" class="m-r-15">{{type?.name}}
                                                         </mat-radio-button>
                                                     </mat-radio-group>
-                                                    <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
+                                                    <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100" class="expand-details editable">
                                                         <mat-form-field appearance="outline" class="w-100 m-t-10">
                                                             <mat-label>Reason *</mat-label>
                                                             <input formControlName="void_reason" matInput placeholder="Reason">
                                                             <!-- <mat-error>Error message comes here...</mat-error> -->
                                                         </mat-form-field>
                                                     </div>
-                                                    <div *ngIf="review.get('void_type_id').value != 3" class="main-title m-t-10 p-l-0 p-b-10">Add new response</div>
+                                                    <div *ngIf="review.get('void_type_id').value != 3" class="main-title m-t-10 p-l-0">Add new response</div>
                                                 </div>
                                             </div>
-                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100"
-                                                class="expand-details editable" *ngIf="review.get('void_type_id').value != 3">
-                                                <div>
-                                                    <span class="prp_">Explanation of Review *</span>
-                                                    <span class="prv_">
-                                                        <div *ngIf="review.get('file_name').value">{{review.get('file_name').value}}</div>
-                                                        <button type="button" class="filled-gray mini-btn"
-                                                            mat-raised-button [disabled]="review.get('file_name').disabled" (click)="uploader.click()">{{!review.get('file_name').value ? 'Upload' : 'Reupload'}}</button>
-                                                            <input type="file" #uploader hidden
-                                                            (change)="addEOR($event,review)"
-                                                            accept=".pdf, .jpg, .jpeg, .png" required>
-                                                    </span>
-                                                </div>
-                                                <div>
-                                                    <span class="prp_">Post Date *</span>
-                                                    <span class="prv_">
+                                            <div fxFlex="100" class="bg-white m-b-20">
+                                                <div fxLayout="row wrap">
+                                                    <div class="sub-title" fxFlex="100">Response Type</div>
+                                                    <div fxFlex="50" fxFlex.sm="50" fxFlex.xs="100" class="p-r-10">
                                                         <mat-form-field appearance="outline" class="w-100">
-                                                            <input formControlName="post_date" matInput type="text"
-                                                                placeholder="Post Date" autocomplete="off" [min]="minimumDate" [matDatepicker]="post_date">
-                                                                <mat-datepicker-toggle matSuffix [for]="post_date"></mat-datepicker-toggle>
-                                                                <mat-datepicker #post_date></mat-datepicker>    
-                                                        </mat-form-field>
-                                                    </span>
-                                                </div>
-                                                <div>
-                                                    <span class="prp_">Effective Date *</span>
-                                                    <span class="prv_">
-                                                        <mat-form-field appearance="outline" class="w-100">
-                                                            <input formControlName="effective_date" matInput type="text"
-                                                                autocomplete="off" placeholder="Effective Date" [min]="minimumDate" [matDatepicker]="effective">
-                                                                <mat-datepicker-toggle matSuffix [for]="effective"></mat-datepicker-toggle>
-                                                                <mat-datepicker #effective></mat-datepicker>
-                                                        </mat-form-field>
-                                                    </span>
-                                                </div>
-                                                <div>
-                                                    <span class="prp_">Deposit Date *</span>
-                                                    <span class="prv_">
-                                                        <mat-form-field appearance="outline" class="w-100">
-                                                            <input formControlName="deposit_date" matInput type="text" placeholder="Deposit Date"
-                                                                autocomplete="off" [min]="minimumDate" [max]="currentDate" [matDatepicker]="deposited">
-                                                                <mat-datepicker-toggle matSuffix [for]="deposited"></mat-datepicker-toggle>
-                                                                <mat-datepicker #deposited></mat-datepicker>
-                                                        </mat-form-field>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100"
-                                                class="expand-details editable" *ngIf="review.get('void_type_id').value != 3">
-                                                <div>
-                                                    <span class="prp_">Payment Amount *</span>
-                                                    <span class="prv_">
-                                                        <mat-form-field appearance="outline" class="w-100">
-                                                            <input formControlName="payment_amount" min="0" matInput type="number" placeholder="Payment Amount"
-                                                                autocomplete="off">
-                                                        </mat-form-field>
-                                                    </span>
-                                                </div>
-                                                <div>
-                                                    <span class="prp_">Payment Method *</span>
-                                                    <span class="prv_">
-                                                        <mat-form-field appearance="outline" class="w-100">
-                                                            <mat-select formControlName="payment_method">
-                                                                <mat-option *ngFor="let payment of paymentTypes" [value]="payment">
-                                                                    {{payment}}
-                                                                </mat-option>
-                                                            </mat-select>
-                                                        </mat-form-field>
-                                                    </span>
-                                                </div>
-                                                <div>
-                                                    <span class="prp_">Penalty Charged</span>
-                                                    <span class="prv_">
-                                                        <mat-form-field appearance="outline" class="w-100">
-                                                            <input formControlName="penalty_charged" min="0" matInput type="number" placeholder="Penalty Charged"
-                                                                autocomplete="off">
-                                                        </mat-form-field>
-                                                    </span>
-                                                </div>
-                                                <div>
-                                                    <span class="prp_">Penalty Paid</span>
-                                                    <span class="prv_">
-                                                        <mat-form-field appearance="outline" class="w-100">
-                                                            <input formControlName="penalty_paid" min="0" matInput type="number" placeholder="Penalty Paid"
-                                                                autocomplete="off">
-                                                        </mat-form-field>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100"
-                                                class="expand-details editable" *ngIf="review.get('void_type_id').value != 3">
-                                                <div>
-                                                    <span class="prp_">Reference Number *</span>
-                                                    <span class="prv_">
-                                                        <mat-form-field appearance="outline" class="w-100">
-                                                            <input formControlName="reference_no" matInput type="text" placeholder="Reference Number"
-                                                                autocomplete="off">
-                                                        </mat-form-field>
-                                                    </span>
-                                                </div>
-                                                <div>
-                                                    <span class="prp_">Interest Charged</span>
-                                                    <span class="prv_">
-                                                        <mat-form-field appearance="outline" class="w-100">
-                                                            <input formControlName="interest_charged" min="0" matInput type="number" placeholder="Interest Charged"
-                                                                autocomplete="off">
-                                                        </mat-form-field>
-                                                    </span>
-                                                </div>
-                                                <div>
-                                                    <span class="prp_">Interest Paid</span>
-                                                    <span class="prv_">
-                                                        <mat-form-field appearance="outline" class="w-100">
-                                                            <input formControlName="interest_paid" min="0" matInput type="number" placeholder="Interest Paid"
-                                                                autocomplete="off">
-                                                        </mat-form-field>
-                                                    </span>
-                                                </div>
-                                                <div>
-                                                    <span class="prp_">Status *</span>
-                                                    <span class="prv_">
-                                                        <mat-form-field appearance="outline" class="w-100">
-                                                            <mat-select formControlName="bill_paid_status_id">
-                                                                <mat-option *ngFor="let paidStatus of paidStatusData" [value]="paidStatus?.id">
+                                                            <mat-select formControlName="bill_paid_status_id" placeholder="Response Type">
+                                                                <mat-option *ngFor="let paidStatus of paidStatusData"
+                                                                    [value]="paidStatus?.id">
                                                                     {{paidStatus?.name}}
                                                                 </mat-option>
                                                             </mat-select>
                                                         </mat-form-field>
-                                                    </span>
                                                 </div>
+                                                <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="p-r-10">
+                                                    <mat-form-field appearance="outline" class="w-100">
+                                                        <input matInput type="text" placeholder="Other Description"
+                                                            autocomplete="off">
+                                                    </mat-form-field>
+                                                </div>
+                                                </div>
+                                                
+                                            </div>
+                                            <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100"
+                                                class="expand-details editable"
+                                                *ngIf="review.get('void_type_id').value != 3">
+                                                <div class="grid-list-form">
+                                                    <div class="property p-t-10">Explanation of Review*</div>
+                                                    <div class="value eor">
+                                                        <p *ngIf="review.get('file_name').value" fxFlex="100"
+                                                            class="w-100">
+                                                            {{review.get('file_name').value}}</p>
+                                                        <button type="button" class="filled-gray mini-btn"
+                                                            mat-raised-button
+                                                            [disabled]="review.get('file_name').disabled"
+                                                            (click)="uploader.click()">{{!review.get('file_name').value
+                                                            ? 'Upload' : 'Reupload'}}</button>
+                                                        <input type="file" #uploader hidden
+                                                            (change)="addEOR($event,review)"
+                                                            accept=".pdf, .jpg, .jpeg, .png" required>
+                                                    </div>
+                                                </div>
+                                                <div class="grid-list-form">
+                                                    <div class="property">Post Date*</div>
+                                                    <div class="value">
+                                                        <mat-form-field appearance="outline" class="mat-date-picker">
+                                                            <input formControlName="post_date" matInput type="text"
+                                                                placeholder="Post Date" autocomplete="off"
+                                                                [min]="minimumDate" [matDatepicker]="post_date">
+                                                            <mat-datepicker-toggle matSuffix [for]="post_date">
+                                                            </mat-datepicker-toggle>
+                                                            <mat-datepicker #post_date></mat-datepicker>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="grid-list-form">
+                                                    <div class="property">Effective Date*</div>
+                                                    <div class="value">
+                                                        <mat-form-field appearance="outline" class="mat-date-picker">
+                                                            <input formControlName="effective_date" matInput type="text"
+                                                                autocomplete="off" placeholder="Effective Date"
+                                                                [min]="minimumDate" [matDatepicker]="effective">
+                                                            <mat-datepicker-toggle matSuffix [for]="effective">
+                                                            </mat-datepicker-toggle>
+                                                            <mat-datepicker #effective></mat-datepicker>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="grid-list-form">
+                                                    <div class="property">Deposit Date*</div>
+                                                    <div class="value">
+                                                        <mat-form-field appearance="outline" class="mat-date-picker">
+                                                            <input formControlName="deposit_date" matInput type="text"
+                                                                placeholder="Deposit Date" autocomplete="off"
+                                                                [min]="minimumDate" [max]="currentDate"
+                                                                [matDatepicker]="deposited">
+                                                            <mat-datepicker-toggle matSuffix [for]="deposited">
+                                                            </mat-datepicker-toggle>
+                                                            <mat-datepicker #deposited></mat-datepicker>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100"
+                                                class="expand-details editable"
+                                                *ngIf="review.get('void_type_id').value != 3">
+                                                <div class="grid-list-form">
+                                                    <div class="property">Payment Amount*</div>
+                                                    <div class="value">
+                                                        <mat-form-field appearance="outline">
+                                                            <input formControlName="payment_amount" min="0" matInput
+                                                                type="number" placeholder="Payment Amount"
+                                                                autocomplete="off">
+                                                            <span matPrefix>$&nbsp;</span>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="grid-list-form">
+                                                    <div class="property">Payment Method*</div>
+                                                    <div class="value">
+                                                        <mat-form-field appearance="outline">
+                                                            <mat-select formControlName="payment_method">
+                                                                <mat-option *ngFor="let payment of paymentTypes"
+                                                                    [value]="payment">
+                                                                    {{payment}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="grid-list-form">
+                                                    <div class="property">Penalty Charged</div>
+                                                    <div class="value">
+                                                        <mat-form-field appearance="outline">
+                                                            <input formControlName="penalty_charged" min="0" matInput
+                                                                type="number" placeholder="Penalty Charged"
+                                                                autocomplete="off">
+                                                            <span matPrefix>$&nbsp;</span>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="grid-list-form">
+                                                    <div class="property">Penalty Paid</div>
+                                                    <div class="value">
+                                                        <mat-form-field appearance="outline">
+                                                            <input formControlName="penalty_paid" min="0" matInput
+                                                                type="number" placeholder="Penalty Paid"
+                                                                autocomplete="off">
+                                                            <span matPrefix>$&nbsp;</span>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100"
+                                                class="expand-details editable"
+                                                *ngIf="review.get('void_type_id').value != 3">
+                                                <div class="grid-list-form">
+                                                    <div class="property">Reference Number*</div>
+                                                    <div class="value">
+                                                        <mat-form-field appearance="outline">
+                                                            <input formControlName="reference_no" matInput type="text"
+                                                                placeholder="Reference Number" autocomplete="off">
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="grid-list-form">
+                                                    <div class="property">Interest Charged</div>
+                                                    <div class="value">
+                                                        <mat-form-field appearance="outline">
+                                                            <input formControlName="interest_charged" min="0" matInput
+                                                                type="number" placeholder="Interest Charged"
+                                                                autocomplete="off">
+                                                            <span matPrefix>$&nbsp;</span>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="grid-list-form">
+                                                    <div class="property">Interest Paid</div>
+                                                    <div class="value">
+                                                        <mat-form-field appearance="outline">
+                                                            <input formControlName="interest_paid" min="0" matInput
+                                                                type="number" placeholder="Interest Paid"
+                                                                autocomplete="off">
+                                                            <span matPrefix>$&nbsp;</span>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="grid-list-form">
+                                                    <div class="property">Status*</div>
+                                                    <div class="value">
+                                                        <mat-form-field appearance="outline">
+                                                            <mat-select formControlName="bill_paid_status_id">
+                                                                <mat-option *ngFor="let paidStatus of paidStatusData"
+                                                                    [value]="paidStatus?.id">
+                                                                    {{paidStatus?.name}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div> -->
                                             </div>
                                             <div class="w-100 text-center p-t-10">
                                                 <button type="button" class="outline-danger m-r-10" (click)="removeReview(payIndex,reviewIndex)" mat-stroked-button>Cancel</button>

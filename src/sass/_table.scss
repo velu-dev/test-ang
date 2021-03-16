@@ -372,6 +372,9 @@ tr.detail-row {
         .mat-form-field.mat-form-field-appearance-outline .mat-form-field-infix {
           padding: 5px 0 10px 0;
         }
+        .mat-form-field-appearance-outline .mat-form-field-prefix, .mat-form-field-appearance-outline .mat-form-field-suffix {
+          top: 0 !important;
+      }
         mat-form-field {
           width: 100%;
           .mat-form-field-wrapper {

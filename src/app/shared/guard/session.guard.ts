@@ -20,7 +20,7 @@ export class SessionGuard implements CanActivate {
         console.log('session', role)
         let url = location.href.split('/').pop();
         console.log(url)
-        if (url == 'verification' || url == 'forgotpassword' || url == 'register') {
+        if (url == 'verification' || url == 'register' || url == 'forgotpassword-verify' || url == 'changepassword') {
           this.cookieService.deleteAll()
           this.router.navigate(['/', url]);
           return true;
