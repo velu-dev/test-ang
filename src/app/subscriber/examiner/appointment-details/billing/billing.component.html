@@ -382,14 +382,15 @@
                                                 <mat-form-field appearance="outline" class="w-100">
                                                     <input matInput min="0" type="number" autocomplete="off"
                                                         formControlName="charge" (change)="setTwoNumberDecimal($event)">
+                                                        <span matPrefix>$&nbsp;</span>
                                                 </mat-form-field>
                                             </td>
                                             <td>
-                                                {{group.value.payment | number : '1.2-2'}}
+                                                $ {{group.value.payment | number : '1.2-2'}}
                                             </td>
                                             <td>
                                                 <span class="text-danger">
-                                                    {{group.get('charge').value - group.value.payment | number :
+                                                    $ {{group.get('charge').value - group.value.payment | number :
                                                     '1.2-2'}}</span>
                                             </td>
 
@@ -419,13 +420,13 @@
                                                 {{group.get('units').value}}
                                             </td>
                                             <td>
-                                                {{group.get('charge').value | number : '1.2-2'}}
+                                                $ {{group.get('charge').value | number : '1.2-2'}}
                                             </td>
                                             <td>
-                                                {{group.get('payment').value | number : '1.2-2'}}
+                                                $ {{group.get('payment').value | number : '1.2-2'}}
                                             </td>
                                             <td>
-                                                {{(group.get('charge').value) | number : '1.2-2'}}
+                                                $ {{(group.get('charge').value) | number : '1.2-2'}}
                                             </td>
                                             <td class="no-wrap-td">
 
@@ -451,9 +452,9 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>{{calculateTotal() | number : '1.2-2'}}</td>
-                                        <td>{{calculateTotalPayment() | number : '1.2-2' }}</td>
-                                        <td><span class="text-danger">{{calculateTotalBal() | number : '1.2-2'}}</span>
+                                        <td>$ {{calculateTotal() | number : '1.2-2'}}</td>
+                                        <td>$ {{calculateTotalPayment() | number : '1.2-2' }}</td>
+                                        <td><span class="text-danger">$ {{calculateTotalBal() | number : '1.2-2'}}</span>
                                         </td>
                                         <td></td>
                                     </tr>
