@@ -47,7 +47,7 @@ export class DashboardComponent implements OnInit {
   filterValue: string;
   procedureTypeStatus = []
   selectedTile = "";
-  totalCount = {};
+  totalCount:any = {};
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   dashboardData = [];
