@@ -325,7 +325,7 @@
                                         }
                                     }
                                     div.property {
-                                        padding-top: 5px;
+                                        padding-top: 15px;
                                         min-width: 150px;
                                         width: 100%;
                                         max-width: 150px;
@@ -345,7 +345,7 @@
                                             display: inline-flex;
                                             float: right;
                                             position: absolute;
-                                            top: 5px;
+                                            top: 15px;
                                             right: 0;
                                         }
                                     }
@@ -387,4 +387,11 @@
             }
         }
     }
+}
+
+
+.bg-white {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
 }
