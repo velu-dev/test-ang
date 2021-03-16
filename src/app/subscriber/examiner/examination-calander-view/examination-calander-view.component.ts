@@ -353,7 +353,7 @@ export const MY_CUSTOM_FORMATS = {
   ]
 })
 export class EventdetailDialog {
-  event = { is_virtual_location: null, service_location_name: "", conference_url: "", conference_phone: "", duration: "", claimant_id: "", billable_item_id: "", claim_id: "", title: "", start: "", location: "", examiner_name: "", claimant_name: "", exam_procedure_name: "", exam_name: "", claim_number: "", status: "", phone_no_1: "", email: "", description: "", }
+  event = { is_virtual_location: null, service_location_name: "", conference_url: "", conference_phone: "", duration: "", claimant_id: "", billable_item_id: "", claim_id: "", title: "", start: "", location: "", examiner_name: "", claimant_name: "", exam_procedure_name: "", exam_name: "", claim_number: "", status: "", phone_no_1: "", phone_ext1: "", email: "", description: "", }
   isEdit = false;
   textDisable: boolean = true;
   examinationStatus = [];
@@ -381,6 +381,7 @@ export class EventdetailDialog {
       is_deposition: null,
       location: "",
       phone_no_1: null,
+      phone_ext1: "",
       procedure_type: "",
       status: "",
       status_color: "",

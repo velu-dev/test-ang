@@ -47,6 +47,7 @@ export class DashboardComponent implements OnInit {
   filterValue: string;
   procedureTypeStatus = []
   selectedTile = "";
+  totalCount = {};
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   dashboardData = [];
@@ -55,6 +56,10 @@ export class DashboardComponent implements OnInit {
     private subscriberService: SubscriberService,
     private intercom: IntercomService) {
     this.subscriberService.getDashboardData({}).subscribe(res => {
+      res.data.map(total => {
+        this.totalCount[total.type] = total.total_count
+      })
+      console.log(this.totalCount)
       this.dashboardData = res.data;
       this.selectedTile = status;
       let data = [];

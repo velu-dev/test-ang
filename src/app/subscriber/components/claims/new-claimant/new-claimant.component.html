@@ -138,7 +138,8 @@
 
           <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
             <mat-label>Ext</mat-label>
-            <input matInput type="text" placeholder="Ext" autocomplete="off">
+            <input matInput type="text" placeholder="Ext" autocomplete="off" (keypress)="numberOnly($event)"
+              formControlName="phone_ext1">
             <mat-error>Please enter valid Extension</mat-error>
           </mat-form-field>
         </div>
@@ -152,7 +153,8 @@
 
           <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
             <mat-label>Ext</mat-label>
-            <input matInput type="text" placeholder="Ext" autocomplete="off">
+            <input matInput type="text" placeholder="Ext" autocomplete="off" (keypress)="numberOnly($event)"
+              formControlName="phone_ext2">
             <mat-error>Please enter valid Extension</mat-error>
           </mat-form-field>
         </div>
@@ -179,8 +181,8 @@
               {{address?.zipcode}}
             </mat-option>
           </mat-autocomplete>
-          <mat-hint *ngIf="isAddressError">Street Search Temporarily is not available. Team is
-            aware of this.</mat-hint>
+          <mat-hint *ngIf="isAddressError">The address autocomplete service is temporarily unavailable. Our team is
+            working to fix it.</mat-hint>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" fxFlex.sm="50"

@@ -98,7 +98,7 @@
 
                 <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
                     <mat-label>Ext</mat-label>
-                    <input matInput type="text" placeholder="Ext" autocomplete="off">
+                    <input matInput type="text" placeholder="Ext" autocomplete="off" (keypress)="numberOnly($event)" formControlName="phone_ext">
                     <mat-error>Please enter valid Extension</mat-error>
                 </mat-form-field>
 

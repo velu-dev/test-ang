@@ -140,59 +140,63 @@
                     <ul>
                         <li>3</li>
                         <li></li>
-                        <li>9</li>
+                        <li>{{totalCount?.awaiting_appointment_details}}</li>
                     </ul>
                 </mat-card-content>
             </mat-card>
         </div>
 
         <div fxFlex="20" fxFlex.xl="20" fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
-            <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'submit_correspondence'}" (click)="getDashboardData('submit_correspondence')">
+            <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'submit_correspondence'}"
+                (click)="getDashboardData('submit_correspondence')">
                 <mat-card-content>
                     <h4>Submit Correspondence</h4>
                     <ul>
                         <li>3</li>
                         <li></li>
-                        <li>10</li>
+                        <li>{{totalCount?.submit_correspondence}}</li>
                     </ul>
                 </mat-card-content>
             </mat-card>
         </div>
 
         <div fxFlex="20" fxFlex.xl="20" fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
-            <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'awaiting_appointment'}" (click)="getDashboardData('awaiting_appointment')">
+            <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'awaiting_appointment'}"
+                (click)="getDashboardData('awaiting_appointment')">
                 <mat-card-content>
                     <h4>Awaiting Appointment</h4>
                     <ul>
                         <li>3</li>
                         <li></li>
-                        <li>12</li>
+                        <li>{{totalCount?.awaiting_appointment}}</li>
                     </ul>
                 </mat-card-content>
             </mat-card>
         </div>
 
         <div fxFlex="20" fxFlex.xl="20" fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
-            <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'bill_report'}" (click)="getDashboardData('bill_report')">
+            <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'bill_report'}"
+                (click)="getDashboardData('bill_report')">
                 <mat-card-content>
                     <h4>Bill Report</h4>
                     <ul>
                         <li>3</li>
                         <li></li>
-                        <li>33</li>
+                        <li>{{totalCount?.bill_report}}</li>
                     </ul>
                 </mat-card-content>
             </mat-card>
         </div>
 
         <div fxFlex="20" fxFlex.xl="20" fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
-            <mat-card matRipple class="simple-card"  [ngClass]="{'active': selectedTile == 'collect_on_payment'}" (click)="getDashboardData('collect_on_payment')">
+            <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'collect_on_payment'}"
+                (click)="getDashboardData('collect_on_payment')">
                 <mat-card-content>
                     <h4>Collect Bill Payment</h4>
                     <ul>
                         <li>3</li>
                         <li></li>
-                        <li>78</li>
+                        <li>{{totalCount?.collect_on_payment}}</li>
                     </ul>
                 </mat-card-content>
             </mat-card>
@@ -224,7 +228,7 @@
                     </span>
                     <div>
                         <span *ngIf="column == 'claimant_first_name'">{{element?.claimant_first_name + "
-                            "+element?.claimant_last_name}}</span>
+                            "+element?.claimant_last_name}} {{element.appointment_id}}</span>
                         <span *ngIf="column == 'date_of_birth'">{{element?.date_of_birth | date:'MM-dd-yyyy'}}</span>
                         <span *ngIf="column == 'examiner_first_name'">{{element?.examiner_first_name}}
                             {{element?.examiner_last_name}}</span>
