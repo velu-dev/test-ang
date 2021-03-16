@@ -95,7 +95,7 @@ export class PaymentResponseComponent implements OnInit {
       this.voidType = data.data;
     })
 
-    this.billingService.seedData('bill_paid_status_seed_data').subscribe(data => {
+    this.billingService.seedData('response_type_seed_data').subscribe(data => {
       this.paidStatusData = data.data;
     })
 
@@ -227,8 +227,10 @@ export class PaymentResponseComponent implements OnInit {
       updated_by_last_name: '',
       voidData: '',
       void_type: '',
-      bill_paid_status_id: ['', Validators.compose([Validators.required])],
-      bill_paid_status: ['']
+      response_type_id: ['', Validators.compose([Validators.required])],
+      response_type: [''],
+      bill_paid_status: [''],
+      other_type_reason: ['']
 
     })
   }
@@ -291,7 +293,9 @@ export class PaymentResponseComponent implements OnInit {
     formData.append('void_type_id', review.get('void_type_id').value);
     formData.append('void_reason', review.get('void_reason').value);
     formData.append('eor_file_id', review.get('eor_file_id').value);
-    formData.append('bill_paid_status_id', review.get('bill_paid_status_id').value);
+    formData.append('response_type_id', review.get('response_type_id').value);
+    formData.append('other_type_reason', review.get('other_type_reason').value);
+
 
 
     formData.append('file', review.get('file').value);
@@ -346,7 +350,7 @@ export class PaymentResponseComponent implements OnInit {
     this.paymentReviews(payI).removeAt(reviewI)
   }
 
-  editResponse(payement, review, payi, reviewi) {
+  editResponse(payment, review, payi, reviewi) {
     // console.log(this.voidType)
     this.addReviews(payi);
     this.paymentReviews(payi).at(reviewi + 1).patchValue(review.value);
@@ -358,6 +362,7 @@ export class PaymentResponseComponent implements OnInit {
     this.paymentReviews(payi).at(reviewi + 1).get('void_type_id').enable();
     this.paymentReviews(payi).at(reviewi + 1).get('void_reason').enable();
     console.log(this.paymentReviews(payi).at(reviewi + 1))
+
   }
 
   changeVoidType(payment, review, payIndex, reviewIndex, event) {
@@ -375,6 +380,36 @@ export class PaymentResponseComponent implements OnInit {
       review.enable();
     }
     // console.log(review)
+    this.changeResponseType(payment, review, payIndex, reviewIndex, { value: review.value.response_type_id })
+  }
+
+  changeResponseType(payment, review, payIndex, reviewIndex, event) {
+    console.log(event.value);
+    if (event.value == 3 || event.value == 5) {
+      review.get('payment_amount').setValidators([Validators.min(0)]); review.get('payment_amount').updateValueAndValidity();
+      review.get('reference_no').setValidators([]); review.get('reference_no').updateValueAndValidity();
+      review.get('effective_date').setValidators([]); review.get('effective_date').updateValueAndValidity();
+      review.get('payment_method').setValidators([]); review.get('payment_method').updateValueAndValidity();
+      review.get('post_date').setValidators([]); review.get('post_date').updateValueAndValidity();
+      review.get('deposit_date').setValidators([]); review.get('deposit_date').updateValueAndValidity();
+
+    } else if (event.value == 4) {
+      review.get('payment_amount').setValidators(Validators.compose([Validators.required, Validators.min(0)])); review.get('payment_amount').updateValueAndValidity();
+      review.get('reference_no').setValidators([]); review.get('reference_no').updateValueAndValidity();
+      review.get('effective_date').setValidators([Validators.required]); review.get('effective_date').updateValueAndValidity();
+      review.get('payment_method').setValidators([]); review.get('payment_method').updateValueAndValidity();
+      review.get('post_date').setValidators([]); review.get('post_date').updateValueAndValidity();
+      review.get('deposit_date').setValidators([]); review.get('deposit_date').updateValueAndValidity();
+    } else {
+      review.get('payment_amount').setValidators(Validators.compose([Validators.required, Validators.min(0)])); review.get('payment_amount').updateValueAndValidity();
+      review.get('reference_no').setValidators(Validators.compose([Validators.required])); review.get('reference_no').updateValueAndValidity();
+      review.get('effective_date').setValidators(Validators.compose([Validators.required])); review.get('effective_date').updateValueAndValidity();
+      review.get('payment_method').setValidators(Validators.compose([Validators.required])); review.get('payment_method').updateValueAndValidity();
+      review.get('post_date').setValidators(Validators.compose([Validators.required])); review.get('post_date').updateValueAndValidity();
+      review.get('deposit_date').setValidators(Validators.compose([Validators.required])); review.get('deposit_date').updateValueAndValidity();
+    }
+    review.updateValueAndValidity();
+    console.log(review)
   }
 
   addEOR(event, review?) {
