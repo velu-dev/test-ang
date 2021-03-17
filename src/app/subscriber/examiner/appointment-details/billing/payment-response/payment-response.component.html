@@ -34,9 +34,9 @@
                             <td>{{payment.get('bill_submission_type').value}}</td>
                             <td>{{payment.get('date_sent').value | date:'MM-dd-yyyy'}}</td>
                             <td>{{payment.get('bill_due_date').value | date:'MM-dd-yyyy'}}</td>
-                            <td>$ {{payment.get('charge').value}}</td>
-                            <td>$ {{payment.get('payment').value}}</td>
-                            <td class="text-danger">$ {{payment.get('balance').value}}</td>
+                            <td>{{payment.get('charge').value ? '$ ' : ''}}{{payment.get('charge').value}}</td>
+                            <td>{{payment.get('payment').value ? '$ ' : ''}}{{payment.get('payment').value}}</td>
+                            <td class="text-danger">{{payment.get('balance').value ? '$ ' : ''}}{{payment.get('balance').value}}</td>
                             <td class="text-success">{{payment.get('bill_paid_status').value}}</td>
                             <td><button type="button"
                                     *ngIf="paymentReviews(payIndex)?.controls?.length == 0 || paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length -1).get('void_type_id').value == 3"
@@ -92,7 +92,7 @@
                                                 [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
                                                 <div class="grid-list">
                                                     <div>Payment Amount</div>
-                                                    <div>$ {{review.get('payment_amount').value}}</div>
+                                                    <div>{{review.get('payment_amount').value ? '$ ' : ''}}{{review.get('payment_amount').value}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Payment Method</div>
@@ -100,11 +100,11 @@
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Penalty Charged</div>
-                                                    <div>$ {{review.get('penalty_charged').value}}</div>
+                                                    <div>{{review.get('penalty_charged').value ? '$ ' : ''}}{{review.get('penalty_charged').value}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Penalty Paid</div>
-                                                    <div>$ {{review.get('penalty_paid').value}}</div>
+                                                    <div>{{review.get('penalty_paid').value ? '$ ' : ''}}{{review.get('penalty_paid').value}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Updated By</div>
@@ -125,11 +125,11 @@
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Interest Charged</div>
-                                                    <div>$ {{review.get('interest_charged').value}}</div>
+                                                    <div>{{review.get('interest_charged').value ? '$ ' : ''}}{{review.get('interest_charged').value}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Interest Paid</div>
-                                                    <div>$ {{review.get('interest_paid').value}}</div>
+                                                    <div>{{review.get('interest_paid').value ? '$ ' : ''}}{{review.get('interest_paid').value}}</div>
                                                 </div>
                                                 <!-- <div class="grid-list">
                                                     <div>Status</div>
