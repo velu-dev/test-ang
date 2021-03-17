@@ -37,6 +37,8 @@ export class StaffDashboardComponent implements OnInit {
   procedureTypeStatus = [];
   dashboardData = [];
   selectedTile = "";
+  totalCount: any = {};
+  criticalCount: any = {};
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   constructor(public router: Router, private breakpointObserver: BreakpointObserver, private subscriberService: SubscriberService, private intercom: IntercomService, private cookieService: CookieService) {
@@ -47,6 +49,10 @@ export class StaffDashboardComponent implements OnInit {
     //   this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     // })
     this.subscriberService.getDashboardData({}).subscribe(res => {
+      res.data.map(total => {
+        this.totalCount[total.type] = total.total_count
+        this.criticalCount[total.type] = total.critical_count
+      })
       this.dashboardData = res.data;
       this.selectedTile = status;
       let data = [];
@@ -95,6 +101,22 @@ export class StaffDashboardComponent implements OnInit {
     } else {
       this.expandId = element.appointment_id;
     }
+  }
+  getDashboardData(status?) {
+    this.selectedTile = status;
+
+    console.log(this.dashboardData)
+    let filteredData = [];
+    let test = this.dashboardData.map(res => {
+      if (res.type == status) {
+        filteredData = res.data;
+        return true
+      }
+    })
+    this.dataSource = new MatTableDataSource(filteredData);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
   }
   openExtract(element, type) {
     this.intercom.setClaimant(element.claimant_first_name + ' ' + element.claimant_last_name);
