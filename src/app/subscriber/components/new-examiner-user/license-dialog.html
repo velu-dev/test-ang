@@ -1,6 +1,6 @@
 <div class="dialog">
     <mat-card-header class="model-header">
-        <div class="content-wrapper-main-title">{{ data?.editStatus ? 'Edit
+        <div class="content-wrapper-main-title">{{ licenceState ? 'Edit
             License' : 'Add License'}}</div>
         <span class="spacer"></span>
         <button class="close-model" (click)="onNoClick()" color="warn"> <i class="fa fa-close"></i> close </button>
@@ -36,7 +36,7 @@
                     <button mat-stroked-button (click)="onNoClick()" type="button"
                         class="outline-danger m-r-10">Cancel</button>
                     <button mat-stroked-button class="outline-success text-center m-r-5" (click)="addLicense()">{{
-                        data?.editStatus ? 'Save' : 'Add'}}</button>
+                        licenceState ? 'Save' : 'Add'}}</button>
                 </div>
 
             </div>
