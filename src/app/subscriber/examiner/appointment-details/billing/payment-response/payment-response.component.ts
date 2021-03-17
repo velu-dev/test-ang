@@ -385,6 +385,7 @@ export class PaymentResponseComponent implements OnInit {
 
   changeResponseType(payment, review, payIndex, reviewIndex, event) {
     console.log(event.value);
+
     if (event.value == 3 || event.value == 5) {
       review.get('payment_amount').setValidators([Validators.min(0)]); review.get('payment_amount').updateValueAndValidity();
       review.get('reference_no').setValidators([]); review.get('reference_no').updateValueAndValidity();
@@ -412,6 +413,8 @@ export class PaymentResponseComponent implements OnInit {
     }
     if (event.value == 5) {
       review.get('other_type_reason').setValidators(Validators.compose([Validators.required])); review.get('other_type_reason').updateValueAndValidity();
+    } else {
+      review.get('other_type_reason').patchValue('')
     }
     review.updateValueAndValidity();
     console.log(review)
