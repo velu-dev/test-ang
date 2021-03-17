@@ -34,9 +34,9 @@
                             <td>{{payment.get('bill_submission_type').value}}</td>
                             <td>{{payment.get('date_sent').value | date:'MM-dd-yyyy'}}</td>
                             <td>{{payment.get('bill_due_date').value | date:'MM-dd-yyyy'}}</td>
-                            <td>$ {{payment.get('charge').value}}</td>
-                            <td>$ {{payment.get('payment').value}}</td>
-                            <td class="text-danger">$ {{payment.get('balance').value}}</td>
+                            <td>{{payment.get('charge').value ? '$ ' : ''}}{{payment.get('charge').value}}</td>
+                            <td>{{payment.get('payment').value ? '$ ' : ''}}{{payment.get('payment').value}}</td>
+                            <td class="text-danger">{{payment.get('balance').value ? '$ ' : ''}}{{payment.get('balance').value}}</td>
                             <td class="text-success">{{payment.get('bill_paid_status').value}}</td>
                             <td><button type="button"
                                     *ngIf="paymentReviews(payIndex)?.controls?.length == 0 || paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length -1).get('void_type_id').value == 3"
@@ -54,7 +54,7 @@
                                             <div fxFlex="100">
                                                 <div class="grid-list">
                                                     <div>Response Type</div>
-                                                    <div>Other - Other response description comes here</div>
+                                                    <div>{{review.get('response_type').value}} {{review.get('other_type_reason').value ? '- ' + review.get('other_type_reason').value : '' }}</div>
                                                 </div>
                                             </div>
                                             <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100" class="expand-details"
@@ -92,7 +92,7 @@
                                                 [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
                                                 <div class="grid-list">
                                                     <div>Payment Amount</div>
-                                                    <div>$ {{review.get('payment_amount').value}}</div>
+                                                    <div>{{review.get('payment_amount').value ? '$ ' : ''}}{{review.get('payment_amount').value}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Payment Method</div>
@@ -100,11 +100,11 @@
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Penalty Charged</div>
-                                                    <div>$ {{review.get('penalty_charged').value}}</div>
+                                                    <div>{{review.get('penalty_charged').value ? '$ ' : ''}}{{review.get('penalty_charged').value}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Penalty Paid</div>
-                                                    <div>$ {{review.get('penalty_paid').value}}</div>
+                                                    <div>{{review.get('penalty_paid').value ? '$ ' : ''}}{{review.get('penalty_paid').value}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Updated By</div>
@@ -125,16 +125,16 @@
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Interest Charged</div>
-                                                    <div>$ {{review.get('interest_charged').value}}</div>
+                                                    <div>{{review.get('interest_charged').value ? '$ ' : ''}}{{review.get('interest_charged').value}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Interest Paid</div>
-                                                    <div>$ {{review.get('interest_paid').value}}</div>
+                                                    <div>{{review.get('interest_paid').value ? '$ ' : ''}}{{review.get('interest_paid').value}}</div>
                                                 </div>
-                                                <div class="grid-list">
+                                                <!-- <div class="grid-list">
                                                     <div>Status</div>
                                                     <div>{{review.get('bill_paid_status').value}}</div>
-                                                </div>
+                                                </div> -->
                                                 <div class="grid-list">
                                                     <div>Void Reason</div>
                                                     <div>{{review.get('void_type').value}} -
@@ -166,12 +166,12 @@
                                                     <div *ngIf="review.get('void_type_id').value != 3" class="main-title m-t-10 p-l-0">Add new response</div>
                                                 </div>
                                             </div>
-                                            <div fxFlex="100" class="bg-white m-b-20">
+                                            <div fxFlex="100" class="bg-white m-b-20" *ngIf="review.get('void_type_id').value != 3">
                                                 <div fxLayout="row wrap">
-                                                    <div class="sub-title" fxFlex="100">Response Type</div>
+                                                    <div class="sub-title" fxFlex="100">Response Type*</div>
                                                     <div fxFlex="50" fxFlex.sm="50" fxFlex.xs="100" class="p-r-10">
                                                         <mat-form-field appearance="outline" class="w-100">
-                                                            <mat-select formControlName="bill_paid_status_id" placeholder="Response Type">
+                                                            <mat-select formControlName="response_type_id" (selectionChange)="changeResponseType(payment,review,payIndex,reviewIndex,$event)" placeholder="Response Type">
                                                                 <mat-option *ngFor="let paidStatus of paidStatusData"
                                                                     [value]="paidStatus?.id">
                                                                     {{paidStatus?.name}}
@@ -179,9 +179,9 @@
                                                             </mat-select>
                                                         </mat-form-field>
                                                 </div>
-                                                <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="p-r-10">
+                                                <div *ngIf="review.get('response_type_id').value == 5" fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="p-r-10">
                                                     <mat-form-field appearance="outline" class="w-100">
-                                                        <input matInput type="text" placeholder="Other Description"
+                                                        <input matInput type="text" formControlName="other_type_reason" placeholder="Other Description"
                                                             autocomplete="off">
                                                     </mat-form-field>
                                                 </div>
@@ -192,7 +192,7 @@
                                                 class="expand-details editable"
                                                 *ngIf="review.get('void_type_id').value != 3">
                                                 <div class="grid-list-form">
-                                                    <div class="property p-t-10">Explanation of Review*</div>
+                                                    <div class="property p-t-10">Explanation of Review{{review.get('file')?.errors?.required ? '*' : ''}}</div>
                                                     <div class="value eor">
                                                         <p *ngIf="review.get('file_name').value" fxFlex="100"
                                                             class="w-100">
@@ -208,7 +208,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid-list-form">
-                                                    <div class="property">Post Date*</div>
+                                                    <div class="property">Post Date{{review.get('post_date')?.errors?.required ? '*' : ''}}</div>
                                                     <div class="value">
                                                         <mat-form-field appearance="outline" class="mat-date-picker">
                                                             <input formControlName="post_date" matInput type="text"
@@ -221,7 +221,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid-list-form">
-                                                    <div class="property">Effective Date*</div>
+                                                    <div class="property">Effective Date{{review.get('effective_date')?.errors?.required ? '*' : ''}}</div>
                                                     <div class="value">
                                                         <mat-form-field appearance="outline" class="mat-date-picker">
                                                             <input formControlName="effective_date" matInput type="text"
@@ -234,7 +234,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid-list-form">
-                                                    <div class="property">Deposit Date*</div>
+                                                    <div class="property">Deposit Date{{review.get('deposit_date')?.errors?.required ? '*' : ''}}</div>
                                                     <div class="value">
                                                         <mat-form-field appearance="outline" class="mat-date-picker">
                                                             <input formControlName="deposit_date" matInput type="text"
@@ -252,7 +252,7 @@
                                                 class="expand-details editable"
                                                 *ngIf="review.get('void_type_id').value != 3">
                                                 <div class="grid-list-form">
-                                                    <div class="property">Payment Amount*</div>
+                                                    <div class="property">Payment Amount{{review.get('payment_amount')?.errors?.required ? '*' : ''}}</div>
                                                     <div class="value">
                                                         <mat-form-field appearance="outline">
                                                             <input formControlName="payment_amount" min="0" matInput
@@ -263,7 +263,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="grid-list-form">
-                                                    <div class="property">Payment Method*</div>
+                                                    <div class="property">Payment Method{{review.get('payment_method')?.errors?.required ? '*' : ''}}</div>
                                                     <div class="value">
                                                         <mat-form-field appearance="outline">
                                                             <mat-select formControlName="payment_method">
@@ -302,7 +302,7 @@
                                                 class="expand-details editable"
                                                 *ngIf="review.get('void_type_id').value != 3">
                                                 <div class="grid-list-form">
-                                                    <div class="property">Reference Number*</div>
+                                                    <div class="property">Reference Number{{review.get('reference_no')?.errors?.required ? '*' : ''}}</div>
                                                     <div class="value">
                                                         <mat-form-field appearance="outline">
                                                             <input formControlName="reference_no" matInput type="text"
