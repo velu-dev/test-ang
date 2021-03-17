@@ -558,7 +558,7 @@
                 </div>
             </div>
             <div fxLayout="row wrap" fxFlex="100" class="p-t-15">
-                <mat-tab-group fxFlex="100" (selectedTabChange)="tabChanges($event);">
+                <mat-tab-group fxFlex="100" (selectedTabChange)="tabChanges($event)">
                     <mat-tab *ngFor="let doc of procedureTypeList" label="{{doc.name}}"></mat-tab>
                 </mat-tab-group>
                 <div class="table-filter">
