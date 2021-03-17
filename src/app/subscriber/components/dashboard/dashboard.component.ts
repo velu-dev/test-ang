@@ -48,6 +48,7 @@ export class DashboardComponent implements OnInit {
   procedureTypeStatus = []
   selectedTile = "";
   totalCount:any = {};
+  criticalCount:any = {};
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   dashboardData = [];
@@ -58,6 +59,7 @@ export class DashboardComponent implements OnInit {
     this.subscriberService.getDashboardData({}).subscribe(res => {
       res.data.map(total => {
         this.totalCount[total.type] = total.total_count
+        this.criticalCount[total.type] = total.critical_count
       })
       console.log(this.totalCount)
       this.dashboardData = res.data;
