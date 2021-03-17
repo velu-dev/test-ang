@@ -137,9 +137,9 @@
                                     position: absolute;
                                     left: -30px;
                                     top: -15px;
-                                    height: -moz-calc(61.7% - 0px);
-                                    height: -webkit-calc(61.7% - 0px);
-                                    height: calc(61.7% - 0px);
+                                    height: -moz-calc(60.6% - 0px);
+                                    height: -webkit-calc(60.6% - 0px);
+                                    height: calc(60.6% - 0px);
                                 }
                             }
                             .expand-details-list.form-level {
@@ -150,9 +150,9 @@
                                     position: absolute;
                                     left: -30px;
                                     top: -15px;
-                                    height: -moz-calc(56.5% - 0px);
-                                    height: -webkit-calc(56.5% - 0px);
-                                    height: calc(56.5% - 0px);
+                                    height: -moz-calc(55% - 0px);
+                                    height: -webkit-calc(55% - 0px);
+                                    height: calc(55% - 0px);
                                 }
                             }
                             .expand-details-list.void_ {
@@ -279,8 +279,11 @@
                                             @media only screen and (min-width: 1200px) {
                                                 width: calc(85% - 20px);
                                             }
-                                            @media screen and (max-width: 1200px) and (min-width: 920px) {
+                                            @media screen and (max-width: 1200px) and (min-width: 1160px) {
                                                 width: calc(65% - 20px);
+                                            }
+                                            @media screen and (max-width: 1160px) and (min-width: 920px) {
+                                                width: calc(55% - 20px);
                                             }
                                             @media screen and (max-width: 920px) and (min-width: 320px) {
                                                 width: 100%;
@@ -291,10 +294,13 @@
                                         }
                                         .mat-form-field.mat-date-picker {
                                             @media only screen and (min-width: 1200px) {
-                                                width: calc(90% - 20px);
+                                                width: 70%;
                                             }
-                                            @media screen and (max-width: 1200px) and (min-width: 920px) {
+                                            @media screen and (max-width: 1200px) and (min-width: 1160px) {
                                                 width: calc(60% - 20px);
+                                            }
+                                            @media screen and (max-width: 1160px) and (min-width: 920px) {
+                                                width: calc(50% - 20px);
                                             }
                                         }
                                         .mat-form-field-wrapper {
