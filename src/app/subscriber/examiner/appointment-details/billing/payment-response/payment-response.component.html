@@ -34,9 +34,9 @@
                             <td>{{payment.get('bill_submission_type').value}}</td>
                             <td>{{payment.get('date_sent').value | date:'MM-dd-yyyy'}}</td>
                             <td>{{payment.get('bill_due_date').value | date:'MM-dd-yyyy'}}</td>
-                            <td>{{payment.get('charge').value ? '$ ' : ''}}{{payment.get('charge').value}}</td>
-                            <td>{{payment.get('payment').value ? '$ ' : ''}}{{payment.get('payment').value}}</td>
-                            <td class="text-danger">{{payment.get('balance').value ? '$ ' : ''}}{{payment.get('balance').value}}</td>
+                            <td>{{payment.get('charge').value ? '$ ' : ''}}{{payment.get('charge').value | number : '1.2-2'}}</td>
+                            <td>{{payment.get('payment').value ? '$ ' : ''}}{{payment.get('payment').value | number : '1.2-2'}}</td>
+                            <td class="text-danger">{{+payment.get('balance').value > -1 ? '$ ' : ''}}{{payment.get('balance').value | number : '1.2-2'}}</td>
                             <td class="text-success">{{payment.get('bill_paid_status').value}}</td>
                             <td><button type="button"
                                     *ngIf="paymentReviews(payIndex)?.controls?.length == 0 || paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length -1).get('void_type_id').value == 3"
@@ -92,7 +92,7 @@
                                                 [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
                                                 <div class="grid-list">
                                                     <div>Payment Amount</div>
-                                                    <div>{{review.get('payment_amount').value ? '$ ' : ''}}{{review.get('payment_amount').value}}</div>
+                                                    <div>{{review.get('payment_amount').value ? '$ ' : ''}}{{review.get('payment_amount').value | number : '1.2-2'}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Payment Method</div>
@@ -100,11 +100,11 @@
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Penalty Charged</div>
-                                                    <div>{{review.get('penalty_charged').value ? '$ ' : ''}}{{review.get('penalty_charged').value}}</div>
+                                                    <div>{{review.get('penalty_charged').value ? '$ ' : ''}}{{review.get('penalty_charged').value | number : '1.2-2'}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Penalty Paid</div>
-                                                    <div>{{review.get('penalty_paid').value ? '$ ' : ''}}{{review.get('penalty_paid').value}}</div>
+                                                    <div>{{review.get('penalty_paid').value ? '$ ' : ''}}{{review.get('penalty_paid').value | number : '1.2-2'}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Updated By</div>
@@ -125,11 +125,11 @@
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Interest Charged</div>
-                                                    <div>{{review.get('interest_charged').value ? '$ ' : ''}}{{review.get('interest_charged').value}}</div>
+                                                    <div>{{review.get('interest_charged').value ? '$ ' : ''}}{{review.get('interest_charged').value | number : '1.2-2'}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Interest Paid</div>
-                                                    <div>{{review.get('interest_paid').value ? '$ ' : ''}}{{review.get('interest_paid').value}}</div>
+                                                    <div>{{review.get('interest_paid').value ? '$ ' : ''}}{{review.get('interest_paid').value | number : '1.2-2'}}</div>
                                                 </div>
                                                 <!-- <div class="grid-list">
                                                     <div>Status</div>
@@ -257,7 +257,7 @@
                                                         <mat-form-field appearance="outline">
                                                             <input formControlName="payment_amount" min="0" matInput
                                                                 type="number" placeholder="Payment Amount"
-                                                                autocomplete="off">
+                                                                autocomplete="off" (change)="setTwoNumberDecimal($event)">
                                                             <span matPrefix>$&nbsp;</span>
                                                         </mat-form-field>
                                                     </div>
@@ -281,7 +281,7 @@
                                                         <mat-form-field appearance="outline">
                                                             <input formControlName="penalty_charged" min="0" matInput
                                                                 type="number" placeholder="Penalty Charged"
-                                                                autocomplete="off">
+                                                                autocomplete="off" (change)="setTwoNumberDecimal($event)">
                                                             <span matPrefix>$&nbsp;</span>
                                                         </mat-form-field>
                                                     </div>
@@ -292,7 +292,7 @@
                                                         <mat-form-field appearance="outline">
                                                             <input formControlName="penalty_paid" min="0" matInput
                                                                 type="number" placeholder="Penalty Paid"
-                                                                autocomplete="off">
+                                                                autocomplete="off" (change)="setTwoNumberDecimal($event)">
                                                             <span matPrefix>$&nbsp;</span>
                                                         </mat-form-field>
                                                     </div>
@@ -316,7 +316,7 @@
                                                         <mat-form-field appearance="outline">
                                                             <input formControlName="interest_charged" min="0" matInput
                                                                 type="number" placeholder="Interest Charged"
-                                                                autocomplete="off">
+                                                                autocomplete="off" (change)="setTwoNumberDecimal($event)">
                                                             <span matPrefix>$&nbsp;</span>
                                                         </mat-form-field>
                                                     </div>
@@ -327,7 +327,7 @@
                                                         <mat-form-field appearance="outline">
                                                             <input formControlName="interest_paid" min="0" matInput
                                                                 type="number" placeholder="Interest Paid"
-                                                                autocomplete="off">
+                                                                autocomplete="off" (change)="setTwoNumberDecimal($event)">
                                                             <span matPrefix>$&nbsp;</span>
                                                         </mat-form-field>
                                                     </div>

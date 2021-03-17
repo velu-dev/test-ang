@@ -421,7 +421,7 @@ export class AppointmentDetailsComponent implements OnInit {
               }
             }
           })
-
+          console.log(response.data.bill_id)
           this.examinationStatusForm.patchValue(response.data.appointments);
           this.examinationStatusForm.patchValue({ notes: '', examination_notes: '' });
           if (moment(response.data.appointments.appointment_scheduled_date_time) < moment()) {

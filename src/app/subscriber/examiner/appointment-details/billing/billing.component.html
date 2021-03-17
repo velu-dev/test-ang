@@ -386,11 +386,11 @@
                                                 </mat-form-field>
                                             </td>
                                             <td>
-                                                {{group.value.payment? '$ ' : ''}}{{group.value.payment | number : '1.2-2'}}
+                                                {{group.get('payment').value > -1 ? '$ ' : ''}}{{group.get('payment').value | number : '1.2-2'}}
                                             </td>
                                             <td>
                                                 <span class="text-danger">
-                                                    {{group.get('charge').value? '$ ' : ''}}{{group.get('charge').value - group.value.payment | number :
+                                                    {{group.get('charge').value > -1 ? '$ ' : ''}}{{group.get('charge').value - group.value.payment | number :
                                                     '1.2-2'}}</span>
                                             </td>
 
@@ -420,13 +420,13 @@
                                                 {{group.get('units').value}}
                                             </td>
                                             <td>
-                                                {{group.get('charge').value? '$ ' : ''}}{{group.get('charge').value | number : '1.2-2'}}
+                                                {{group.get('charge').value > -1 ? '$ ' : ''}}{{group.get('charge').value | number : '1.2-2'}}
                                             </td>
                                             <td>
-                                                {{group.get('payment').value? '$ ' : ''}}{{group.get('payment').value | number : '1.2-2'}}
+                                                {{group.get('payment').value > -1 ? '$ ' : ''}}{{group.get('payment').value | number : '1.2-2'}}
                                             </td>
                                             <td>
-                                                {{group.get('charge').value? '$ ' : ''}}{{(group.get('charge').value) | number : '1.2-2'}}
+                                                {{group.get('charge').value > -1 ? '$ ' : ''}}{{(group.get('charge').value) | number : '1.2-2'}}
                                             </td>
                                             <td class="no-wrap-td">
 

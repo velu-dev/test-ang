@@ -184,6 +184,8 @@ export class NewClaimantComponent implements OnInit {
       .pipe(
         debounceTime(500),
       ).subscribe(key => {
+        if (key && typeof (key) == 'string')
+          key = key.trim();
         this.isAddressSearched = true;
         if (key)
           this.claimService.searchAddress(key).subscribe(address => {

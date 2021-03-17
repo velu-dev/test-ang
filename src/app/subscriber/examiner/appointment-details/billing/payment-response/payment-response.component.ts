@@ -392,7 +392,7 @@ export class PaymentResponseComponent implements OnInit {
       review.get('payment_method').setValidators([]); review.get('payment_method').updateValueAndValidity();
       review.get('post_date').setValidators([]); review.get('post_date').updateValueAndValidity();
       review.get('deposit_date').setValidators([]); review.get('deposit_date').updateValueAndValidity();
-
+      review.get('other_type_reason').setValidators(); review.get('other_type_reason').updateValueAndValidity();
     } else if (event.value == 4) {
       review.get('payment_amount').setValidators(Validators.compose([Validators.required, Validators.min(0)])); review.get('payment_amount').updateValueAndValidity();
       review.get('reference_no').setValidators([]); review.get('reference_no').updateValueAndValidity();
@@ -400,6 +400,7 @@ export class PaymentResponseComponent implements OnInit {
       review.get('payment_method').setValidators([]); review.get('payment_method').updateValueAndValidity();
       review.get('post_date').setValidators([]); review.get('post_date').updateValueAndValidity();
       review.get('deposit_date').setValidators([]); review.get('deposit_date').updateValueAndValidity();
+      review.get('other_type_reason').setValidators(); review.get('other_type_reason').updateValueAndValidity();
     } else {
       review.get('payment_amount').setValidators(Validators.compose([Validators.required, Validators.min(0)])); review.get('payment_amount').updateValueAndValidity();
       review.get('reference_no').setValidators(Validators.compose([Validators.required])); review.get('reference_no').updateValueAndValidity();
@@ -407,6 +408,10 @@ export class PaymentResponseComponent implements OnInit {
       review.get('payment_method').setValidators(Validators.compose([Validators.required])); review.get('payment_method').updateValueAndValidity();
       review.get('post_date').setValidators(Validators.compose([Validators.required])); review.get('post_date').updateValueAndValidity();
       review.get('deposit_date').setValidators(Validators.compose([Validators.required])); review.get('deposit_date').updateValueAndValidity();
+      review.get('other_type_reason').setValidators(); review.get('other_type_reason').updateValueAndValidity();
+    }
+    if (event.value == 5) {
+      review.get('other_type_reason').setValidators(Validators.compose([Validators.required])); review.get('other_type_reason').updateValueAndValidity();
     }
     review.updateValueAndValidity();
     console.log(review)
@@ -473,6 +478,9 @@ export class PaymentResponseComponent implements OnInit {
     });
   }
 
+  setTwoNumberDecimal($event) {
+    $event.target.value = parseFloat($event.target.value).toFixed(2);
+  }
 
 }
 
