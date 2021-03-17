@@ -273,6 +273,12 @@
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content class="m-t-5">
+        <div fxLayout="row wrap">
+            <div class="card" fxFlex="48" fxFlex.xs="100">
+                <span>Zip FileName</span>
+                Received Documents Zip Filename WIll Comes Here...
+            </div>
+        </div>
         <div class="w-100" *ngIf="!isLoading">
             <table mat-table [dataSource]="receivedDocuments" class="user-table striped_ w-100">
                 <!-- Document Name Column -->
