@@ -166,7 +166,7 @@
                                                     <div *ngIf="review.get('void_type_id').value != 3" class="main-title m-t-10 p-l-0">Add new response</div>
                                                 </div>
                                             </div>
-                                            <div fxFlex="100" class="bg-white m-b-20">
+                                            <div fxFlex="100" class="bg-white m-b-20" *ngIf="review.get('void_type_id').value != 3">
                                                 <div fxLayout="row wrap">
                                                     <div class="sub-title" fxFlex="100">Response Type*</div>
                                                     <div fxFlex="50" fxFlex.sm="50" fxFlex.xs="100" class="p-r-10">
