@@ -421,7 +421,7 @@ export class AppointmentDetailsComponent implements OnInit {
               }
             }
           })
-          console.log(response.data.bill_id)
+
           this.examinationStatusForm.patchValue(response.data.appointments);
           this.examinationStatusForm.patchValue({ notes: '', examination_notes: '' });
           if (moment(response.data.appointments.appointment_scheduled_date_time) < moment()) {
@@ -691,7 +691,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   updateExamStatus() {
-    this.examinationStatusForm.patchValue({ notes: this.examinationStatusForm.value.examination_notes.trim() })
+    this.examinationStatusForm.patchValue({ id: this.billableId, notes: this.examinationStatusForm.value.examination_notes.trim() })
     this.examinerService.updateExaminationStatus(this.examinationStatusForm.value).subscribe(res => {
       this.examinationStatusForm.disable()
       this.isExaminationStatusEdit = false;

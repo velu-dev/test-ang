@@ -773,7 +773,7 @@
                                                 ? ' - '+element?.service_name : ''}}</span>
                                             <span *ngIf="column == 'phone_no'">{{element?.primary_contact_phone ?
                                                 (element?.primary_contact_phone
-                                                | mask:'(000) 000-0000') : '' }} {{element?.phone_ext}}</span>
+                                                | mask:'(000) 000-0000') : '' }} {{element?.phone_ext1 ? "Ext: " + element?.phone_ext1 : ""}}</span>
                                             <span
                                                 *ngIf="column == 'npi_number'">{{element.national_provider_identifier}}</span>
                                             <span *ngIf="column == 'action'" class="no-wrap-td">
@@ -799,7 +799,7 @@
                                                         {{element?.service_name}}</span></div>
                                                 <div><span>Phone</span><span>{{element?.phone_no ? (element?.phone_no |
                                                         mask:'(000)
-                                                        000-0000') : '' }}</span></div>
+                                                        000-0000') : '' }} {{element?.phone_ext1 ? "Ext: " + element?.phone_ext1 : ""}}</span></div>
                                                 <div><span>NPI
                                                         Number</span><span>{{element?.national_provider_identifier}}</span>
                                                 </div>
