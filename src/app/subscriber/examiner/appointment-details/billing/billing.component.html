@@ -1,4 +1,17 @@
 <div class="billing">
+
+    <mat-tab-group class="m-t-10">
+        <mat-tab label="First Bill Submission">
+            <!-- ===== First Bill Submission ===== -->
+        </mat-tab>
+        <mat-tab label="Second Bill Review" disabled>
+             <!-- ===== Second Bill Review ===== -->
+        </mat-tab>
+        <mat-tab label="Independent Bill Review" disabled>
+             <!-- ===== Independent Bill Submission ===== -->
+        </mat-tab>
+      </mat-tab-group>
+
     <!-- ===== Bill Status ==== -->
     <div fxLayout="row wrap" class="p-t-20">
         <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100" class="bill-status">
@@ -712,7 +725,7 @@
                         matTooltip="The QME 122 - Declaration of service form will be created when the Report Documents are Downloaded or Billed on Demand."
                         matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span>
                 </div>
-                <div class="content-wrapper-main-title bill-status" fxFlex="50">Original Submission</div>
+                <div class="content-wrapper-main-title bill-status" fxFlex="50">First Bill Submission</div>
             </mat-card-header>
             <mat-divider></mat-divider>
             <mat-card-content>
@@ -952,9 +965,9 @@
 
 
         </div>
-        <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-right">
+        <!-- <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-right">
             <button mat-stroked-button class="filled-secondary huge-btn" (click)="openDialog()">Post Payment</button>
-        </div>
+        </div> -->
 
     </div>
 
