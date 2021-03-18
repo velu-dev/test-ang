@@ -5,12 +5,12 @@
             <!-- ===== First Bill Submission ===== -->
         </mat-tab>
         <mat-tab label="Second Bill Review" disabled>
-             <!-- ===== Second Bill Review ===== -->
+            <!-- ===== Second Bill Review ===== -->
         </mat-tab>
         <mat-tab label="Independent Bill Review" disabled>
-             <!-- ===== Independent Bill Submission ===== -->
+            <!-- ===== Independent Bill Submission ===== -->
         </mat-tab>
-      </mat-tab-group>
+    </mat-tab-group>
 
     <!-- ===== Bill Status ==== -->
     <div fxLayout="row wrap" class="p-t-20">
@@ -213,7 +213,7 @@
         </mat-card>
     </div>
     <!-- ===== Bill Items ==== -->
-    <div class="bill-item">
+    <!-- <div class="bill-item">
         <mat-card>
             <mat-card-header>
                 <div class="content-wrapper-main-title">Billing Line Items</div>
@@ -633,9 +633,9 @@
 
 
         </mat-card>
-    </div>
+    </div> -->
 
-
+    <app-bill-line-item *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData"></app-bill-line-item>
 
 
     <!-- ===== Payment Response ==== -->

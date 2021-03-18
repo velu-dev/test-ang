@@ -12,7 +12,7 @@ import { DialogData, DialogueComponent } from 'src/app/shared/components/dialogu
 import { BillingService } from 'src/app/subscriber/service/billing.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { saveAs } from 'file-saver';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
+// import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { formatDate } from '@angular/common';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { ThirdPartyDraggable } from '@fullcalendar/interaction';
@@ -106,13 +106,13 @@ export class BilllableBillingComponent implements OnInit {
   visible = true;
   selectable = true;
   removable = true;
-  addOnBlur = true;
-  separatorKeysCodes: number[] = [ENTER, COMMA];
+  // addOnBlur = true;
+  // separatorKeysCodes: number[] = [ENTER, COMMA];
   fruitCtrl = new FormControl();
-  filteredmodifier: any;
-  modiferList: any = ['93', '94', '95', '96'];
+  // filteredmodifier: any;
+  // modiferList: any = ['93', '94', '95', '96'];
   @ViewChild(MatAutocompleteTrigger, { static: false }) _autoTrigger: MatAutocompleteTrigger;
-  unitTypes: any = [{ unit_type: 'Units', unit_short_code: 'UN' }, { unit_type: 'Pages', unit_short_code: 'UN' }];// { unit_type: 'Minutes', unit_short_code: 'MJ' }]
+  //unitTypes: any = [{ unit_type: 'Units', unit_short_code: 'UN' }, { unit_type: 'Pages', unit_short_code: 'UN' }];// { unit_type: 'Minutes', unit_short_code: 'MJ' }]
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   billDocumentList: any;
   @ViewChild('scrollBottom', { static: false }) private scrollBottom: ElementRef;
@@ -213,11 +213,11 @@ export class BilllableBillingComponent implements OnInit {
     return;
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
+  // private _filter(value: string): string[] {
+  //   const filterValue = value.toLowerCase();
 
-    return this.modiferList.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
-  }
+  //   return this.modiferList.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
+  // }
 
   icdCtrl = new FormControl();
   icdSearched = false;
@@ -231,7 +231,7 @@ export class BilllableBillingComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.getBillLineItem();
+       // this.getBillLineItem();
       }
     });
   }
@@ -342,16 +342,16 @@ export class BilllableBillingComponent implements OnInit {
           }
         }
 
-        if (!this.billingData.certified_interpreter_required) {
-          let index = this.modiferList.indexOf('93');
-          this.modiferList.splice(index, 1)
-        }
-        if (!this.billingData.is_psychological_exam) {
-          let index = this.modiferList.indexOf('96');
-          this.modiferList.splice(index, 1)
-        }
-        this.filteredmodifier = this.modiferList
-        this.getBillLineItem()
+        // if (!this.billingData.certified_interpreter_required) {
+        //   let index = this.modiferList.indexOf('93');
+        //   this.modiferList.splice(index, 1)
+        // }
+        // if (!this.billingData.is_psychological_exam) {
+        //   let index = this.modiferList.indexOf('96');
+        //   this.modiferList.splice(index, 1)
+        // }
+        // this.filteredmodifier = this.modiferList
+        //this.getBillLineItem()
         if (this.billingData && this.billingData.bill_no) {
           this.intercom.setBillNo('CMBN' + this.billingData.bill_no);
           this.cookieService.set('billNo', 'CMBN' + this.billingData.bill_no)
@@ -662,463 +662,463 @@ export class BilllableBillingComponent implements OnInit {
 
   }
 
-  setTwoNumberDecimal($event) {
-    $event.target.value = parseFloat($event.target.value).toFixed(2);
-  }
+  // setTwoNumberDecimal($event) {
+  //   $event.target.value = parseFloat($event.target.value).toFixed(2);
+  // }
 
-  ngAfterOnInit() {
-    this.control = this.userTable.get('tableRows') as FormArray;
-  }
+  // ngAfterOnInit() {
+  //   this.control = this.userTable.get('tableRows') as FormArray;
+  // }
 
-  billing_line_items: any;
-  newFeeScheduleStatus: boolean;
-  billingCodeDetails: any;
-  getBillLineItem() {
-    this.touchedRows = [];
-    this.userTable = this.fb.group({
-      tableRows: this.fb.array([])
-    });
-    this.billingService.getBillLineItem(this.paramsId.claim_id, this.paramsId.billId).subscribe(line => {
-      if (line.data) {
-        this.billing_line_items = line.data;
-        line.data.map((item, index) => {
-          this.newFeeScheduleStatus = this.billing_line_items[0].is_new_fee_schedule;
-          this.billingCodeDetails = this.billing_line_items[0].billing_code_details;
-          let firstData = {};
-          this.addRow(1);
-          let modifier = item.modifier ? item.modifier.split('-') : [];
-          line.data[index].modifierList = modifier;
-          if (this.newFeeScheduleStatus && item.is_auto_generate && !item.is_excess_pages) {
-            if (item.unit_type == 'unit') item.unit_type = 'Units';
-            item.units = item.units ? item.units : 1;
-            item.charge = item.charge ? item.charge : item.units * item.billing_code_details.unit_price;
-            item.unit_price = item.billing_code_details.unit_price ? item.billing_code_details.unit_price : 0;
-            item.filteredmodifier = item.modifier_seed_data && item.modifier_seed_data.length ? item.modifier_seed_data.map(data => data.modifier_code) : [];
-            item.modifierTotal = 0
-            let modData = item.modifier_seed_data && item.modifier_seed_data.map((e, i) => {
-              let presentMod = modifier.includes(e.modifier_code)
-              if (presentMod) {
-                let modIndex = modifier.findIndex(m => m == e.modifier_code)
-                if (e.modifier_code == modifier[modIndex]) {
-                  e.exclude_modifiers.map((ex, ind) => {
-                    let filterIndex = item.filteredmodifier.findIndex(m => m == ex)
-                    item.filteredmodifier.splice(filterIndex, 1)
-                  });
-                  if (+e.price_increase > 0) {
+  // billing_line_items: any;
+  // newFeeScheduleStatus: boolean;
+  // billingCodeDetails: any;
+  // getBillLineItem() {
+  //   this.touchedRows = [];
+  //   this.userTable = this.fb.group({
+  //     tableRows: this.fb.array([])
+  //   });
+  //   this.billingService.getBillLineItem(this.paramsId.claim_id, this.paramsId.billId).subscribe(line => {
+  //     if (line.data) {
+  //       this.billing_line_items = line.data;
+  //       line.data.map((item, index) => {
+  //         this.newFeeScheduleStatus = this.billing_line_items[0].is_new_fee_schedule;
+  //         this.billingCodeDetails = this.billing_line_items[0].billing_code_details;
+  //         let firstData = {};
+  //         this.addRow(1);
+  //         let modifier = item.modifier ? item.modifier.split('-') : [];
+  //         line.data[index].modifierList = modifier;
+  //         if (this.newFeeScheduleStatus && item.is_auto_generate && !item.is_excess_pages) {
+  //           if (item.unit_type == 'unit') item.unit_type = 'Units';
+  //           item.units = item.units ? item.units : 1;
+  //           item.charge = item.charge ? item.charge : item.units * item.billing_code_details.unit_price;
+  //           item.unit_price = item.billing_code_details.unit_price ? item.billing_code_details.unit_price : 0;
+  //           item.filteredmodifier = item.modifier_seed_data && item.modifier_seed_data.length ? item.modifier_seed_data.map(data => data.modifier_code) : [];
+  //           item.modifierTotal = 0
+  //           let modData = item.modifier_seed_data && item.modifier_seed_data.map((e, i) => {
+  //             let presentMod = modifier.includes(e.modifier_code)
+  //             if (presentMod) {
+  //               let modIndex = modifier.findIndex(m => m == e.modifier_code)
+  //               if (e.modifier_code == modifier[modIndex]) {
+  //                 e.exclude_modifiers.map((ex, ind) => {
+  //                   let filterIndex = item.filteredmodifier.findIndex(m => m == ex)
+  //                   item.filteredmodifier.splice(filterIndex, 1)
+  //                 });
+  //                 if (+e.price_increase > 0) {
 
-                    let calculateChange = (+e.price_increase / 100) * (+item.units * +item.billing_code_details.unit_price);
-                    item.modifierTotal = (+item.modifierTotal + +calculateChange);
-                    item.charge = (+item.modifierTotal + +item.units * +item.billing_code_details.unit_price);
-                  }
-                }
-              }
-            })
-          }
-          firstData = {
-            id: item.id,
-            modifierList: modifier,
-            item_description: item.item_description,
-            procedure_code: item.procedure_code,
-            modifier: item.modifier,
-            unitType: item.unit_type,
-            units: item.units,
-            charge: +item.charge,
-            payment: item.payment_amount ? item.payment_amount : 0.00,
-            balance: 0,
-            isEditable: [true],
-            unit_price: item.unit_price ? +item.unit_price : null,
-            is_post_payment: item.is_post_payment,
-            post_payment_id: item.post_payment_id,
-            billing_code_details: item.billing_code_details,
-            modifier_seed_data: item.modifier_seed_data,
-            is_auto_generate: item.is_auto_generate,
-            filteredmodifier: item.filteredmodifier,
-            unitTotal: +item.charge,
-            is_excess_pages: item.is_excess_pages,
-            modifierTotal: item.modifierTotal
-          }
-          this.getFormControls.controls[index].patchValue(firstData)
-          if (this.getFormControls.controls[index].status == "VALID") {
-            this.getFormControls.controls[index].get('isEditable').setValue(false);
-          }
-        })
+  //                   let calculateChange = (+e.price_increase / 100) * (+item.units * +item.billing_code_details.unit_price);
+  //                   item.modifierTotal = (+item.modifierTotal + +calculateChange);
+  //                   item.charge = (+item.modifierTotal + +item.units * +item.billing_code_details.unit_price);
+  //                 }
+  //               }
+  //             }
+  //           })
+  //         }
+  //         firstData = {
+  //           id: item.id,
+  //           modifierList: modifier,
+  //           item_description: item.item_description,
+  //           procedure_code: item.procedure_code,
+  //           modifier: item.modifier,
+  //           unitType: item.unit_type,
+  //           units: item.units,
+  //           charge: +item.charge,
+  //           payment: item.payment_amount ? item.payment_amount : 0.00,
+  //           balance: 0,
+  //           isEditable: [true],
+  //           unit_price: item.unit_price ? +item.unit_price : null,
+  //           is_post_payment: item.is_post_payment,
+  //           post_payment_id: item.post_payment_id,
+  //           billing_code_details: item.billing_code_details,
+  //           modifier_seed_data: item.modifier_seed_data,
+  //           is_auto_generate: item.is_auto_generate,
+  //           filteredmodifier: item.filteredmodifier,
+  //           unitTotal: +item.charge,
+  //           is_excess_pages: item.is_excess_pages,
+  //           modifierTotal: item.modifierTotal
+  //         }
+  //         this.getFormControls.controls[index].patchValue(firstData)
+  //         if (this.getFormControls.controls[index].status == "VALID") {
+  //           this.getFormControls.controls[index].get('isEditable').setValue(false);
+  //         }
+  //       })
 
-      }
-    }, error => {
-      this.logger.error(error)
-    })
-  }
+  //     }
+  //   }, error => {
+  //     this.logger.error(error)
+  //   })
+  // }
 
-  initiateForm(): FormGroup {
-    return this.fb.group({
-      id: [''],
-      item_description: ['', Validators.compose([Validators.required])],
-      procedure_code: ['', Validators.compose([Validators.required])],
-      modifierList: [[]],
-      modifier: ['', Validators.compose([Validators.pattern('^[0-9]{2}(?:-[0-9]{2})?(?:-[0-9]{2})?(?:-[0-9]{2})?$')])],
-      unitType: [''],
-      units: ['', Validators.compose([Validators.required, Validators.min(1), Validators.pattern('^(0|[0-9]{1,100}\d*)$')])],
-      charge: ['', Validators.compose([Validators.required, Validators.min(0), Validators.max(99999999.99)])],
-      payment: [0],
-      balance: [0],
-      total_charge: [0],
-      isEditable: [true],
-      is_post_payment: [],
-      post_payment_id: [],
-      unit_price: [null],
-      billing_code_details: [],
-      modifier_seed_data: [],
-      is_auto_generate: [null],
-      filteredmodifier: [[]],
-      modifierTotal: [0],
-      unitTotal: [0],
-      is_excess_pages: [null]
-    });
-  }
+  // initiateForm(): FormGroup {
+  //   return this.fb.group({
+  //     id: [''],
+  //     item_description: ['', Validators.compose([Validators.required])],
+  //     procedure_code: ['', Validators.compose([Validators.required])],
+  //     modifierList: [[]],
+  //     modifier: ['', Validators.compose([Validators.pattern('^[0-9]{2}(?:-[0-9]{2})?(?:-[0-9]{2})?(?:-[0-9]{2})?$')])],
+  //     unitType: [''],
+  //     units: ['', Validators.compose([Validators.required, Validators.min(1), Validators.pattern('^(0|[0-9]{1,100}\d*)$')])],
+  //     charge: ['', Validators.compose([Validators.required, Validators.min(0), Validators.max(99999999.99)])],
+  //     payment: [0],
+  //     balance: [0],
+  //     total_charge: [0],
+  //     isEditable: [true],
+  //     is_post_payment: [],
+  //     post_payment_id: [],
+  //     unit_price: [null],
+  //     billing_code_details: [],
+  //     modifier_seed_data: [],
+  //     is_auto_generate: [null],
+  //     filteredmodifier: [[]],
+  //     modifierTotal: [0],
+  //     unitTotal: [0],
+  //     is_excess_pages: [null]
+  //   });
+  // }
 
-  addRow(status?: number) {
-    if (status != 1) {
-      let newRowStatus = true
-      for (var j in this.getFormControls.controls) {
-        if (this.getFormControls.controls[j].status == 'INVALID') {
-          newRowStatus = false;
-        }
-      }
+  // addRow(status?: number) {
+  //   if (status != 1) {
+  //     let newRowStatus = true
+  //     for (var j in this.getFormControls.controls) {
+  //       if (this.getFormControls.controls[j].status == 'INVALID') {
+  //         newRowStatus = false;
+  //       }
+  //     }
 
-      if (!newRowStatus) {
-        this.alertService.openSnackBar("Please fill existing data", 'error');
-        return;
-      }
-    }
-
-
-    const control = this.userTable.get('tableRows') as FormArray;
-    control.push(this.initiateForm());
-    if (status != 1) {
-      setTimeout(() => {
-        this.scrollToBottom();
-      }, 500);
-    }
-  }
-
-  deleteRow(index: number, group) {
-    this.openDialogBillLine('remove', index, group);
-
-  }
-
-  openDialogBillLine(dialogue, index, group) {
-    const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '500px',
-      data: { name: dialogue, address: true, title: "Billing Line Item" }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result['data']) {
-        if (group.value.id) {
-          this.billingService.removeBillItem(group.value.id, this.paramsId.claim_id, this.paramsId.billId,).subscribe(del => {
-            this.alertService.openSnackBar("Bill Line Item removed successfully", 'success');
-            const control = this.userTable.get('tableRows') as FormArray;
-            control.removeAt(index);
-            this.billing_line_items.splice(index, 1)
-            return
-          }, err => {
-            this.alertService.openSnackBar(err.error.message, 'error');
-          })
-        } else {
-          const control = this.userTable.get('tableRows') as FormArray;
-          control.removeAt(index);
-          this.billing_line_items.splice(index, 1)
-        }
-      }
-    })
-  }
-
-  editRow(group: FormGroup, i) {
-    console.log(group)
-    if (group.get('procedure_code').value && group.get('procedure_code').value.trim() && this.newFeeScheduleStatus) {
-      let valReplace = group.get('procedure_code').value.replace(/[^a-zA-Z]/g, "");
-      if (valReplace.toLowerCase() == 'mlprr') {
-        console.log(valReplace)
-        group.get('is_excess_pages').patchValue(true);
-        this.getFormControls.at(i).get('modifier').disable()
-        this.getFormControls.at(i).get('modifierList').disable();
-        this.getFormControls.at(i).get('modifierList').updateValueAndValidity();
-        this.getFormControls.at(i).get('modifier').updateValueAndValidity();
-      }
-
-    }
-    group.get('isEditable').setValue(true);
-    if (group.value.is_auto_generate && this.newFeeScheduleStatus) {
-      group.get('procedure_code').disable();
-      group.get('unitType').disable();
-      group.get('charge').disable();
-    }
-  }
-
-  doneRow(group: FormGroup, index) {
-    Object.keys(group.controls).forEach((key) => {
-      if (group.get(key).value && typeof (group.get(key).value) == 'string')
-        group.get(key).setValue(group.get(key).value.trim())
-    });
-    if (group.status == "INVALID") {
-      group.markAllAsTouched();
-      return;
-    }
-    if (group.untouched) {
-      return;
-    }
-
-    let moidfier = group.get('modifierList').value.toString();
-    moidfier = moidfier ? moidfier.replace(/,/g, '-') : null;
-    let data = {
-      id: group.value.id,
-      item_description: group.value.item_description,
-      procedure_code: group.value.procedure_code,
-      modifier: moidfier,
-      units: group.value.units,
-      charge: group.get('charge').value ? parseFloat(group.get('charge').value).toFixed(2) : group.get('charge').value,
-      total_charge: this.calculateTotal(),
-      unit_type: group.value.unitType,
-      unit_short_code: this.getUnitCode(group.value.unitType)
-    }
-
-    this.billingService.createBillLine(this.billingId, this.paramsId.billId, this.paramsId.claim_id, data).subscribe(line => {
-      group.get('id').setValue(line.data.id);
-      if (data.id) {
-        this.alertService.openSnackBar("Bill Line Item updated successfully", 'success');
-      } else {
-        this.alertService.openSnackBar("Bill Line Item added successfully", 'success');
-      }
-      let modifier = line.data.modifier ? line.data.modifier.split('-') : [];
-      this.billing_line_items[index] = line.data;
-      this.billing_line_items[index].modifierList = modifier;
-    }, error => {
-      this.alertService.openSnackBar(error.error.message, 'error');
-    })
-    group.get('isEditable').setValue(false);
-  }
-
-  get getFormControls() {
-    const control = this.userTable.get('tableRows') as FormArray;
-    return control;
-  }
-
-  unitChange(group, i, e) {
-    if (e && group.value.is_auto_generate && this.newFeeScheduleStatus && !group.value.is_excess_pages) {
-      console.log(group);
-      let calculateChange = 0;
-      if (group.get('modifierList').value.length) {
-        group.value.modifier_seed_data.map((e, i) => {
-          if (group.get('modifierList').value.includes(e.modifier_code)) {
-            if (+e.price_increase > 0) {
-              calculateChange += (e.price_increase / 100) * (+group.get('units').value * +group.value.billing_code_details.unit_price);
-            }
-          }
-
-        });
-        group.get('modifierTotal').patchValue(+calculateChange);
-      }
-      let charge = (e * group.get('unit_price').value) + +group.get('modifierTotal').value
-      group.get('unitTotal').patchValue(+(e * group.get('unit_price').value))
-      group.get('charge').patchValue(+charge)
-    } else if (group.value.is_excess_pages) {
-      let charge = +group.get('units').value * + this.billingCodeDetails.rate_for_extra_units
-      group.get('charge').patchValue(+charge)
-    }
-  }
-
-  procedureChange(val, group) {
-    let valReplace;
-    if (val && val.trim() && this.newFeeScheduleStatus) {
-      valReplace = val.replace(/[^a-zA-Z]/g, "");
-      if (valReplace.toLowerCase() == 'mlprr') {
-        group.get('is_excess_pages').patchValue(true);
-        group.get('modifierList').patchValue([]);
-        group.get('unitType').patchValue(this.billingCodeDetails.extra_unit_type == 'page' ? 'Pages' : '');
-        group.get('modifier').disable();
-        group.get('modifierList').disable();
-        group.get('modifierList').updateValueAndValidity();
-        group.get('modifier').updateValueAndValidity();
-      } else {
-        group.get('is_excess_pages').patchValue(false);
-        group.get('modifier').enable();
-        group.get('modifier').updateValueAndValidity();
-        group.get('modifierList').enable();
-        group.get('modifierList').updateValueAndValidity();
-      }
-    }
-  }
-  getUnitCode(code) {
-    if (code) {
-      for (var c in this.unitTypes) {
-        if (this.unitTypes[c].unit_type == code) {
-          return this.unitTypes[c].unit_short_code;
-        }
-      }
-    } else {
-      return null;
-    }
-
-  }
+  //     if (!newRowStatus) {
+  //       this.alertService.openSnackBar("Please fill existing data", 'error');
+  //       return;
+  //     }
+  //   }
 
 
-  cancelRow(group: FormGroup, i) {
-    if (!group.value.id) {
-      this.deleteRow(i, group);
-      return
-    }
-    console.log(group, i)
-    console.log(this.billing_line_items)
-    let data = [];
-    data.push(this.billing_line_items[i])
-    data.map((item, index) => {
-      let firstData = {};
-      let modifier = item.modifier ? item.modifier.split('-') : [];
-      if (this.newFeeScheduleStatus && item.is_auto_generate && !item.is_excess_pages) {
-        if (item.unit_type == 'unit') item.unit_type = 'Units';
-        item.units = item.units ? item.units : 1;
-        item.charge = item.charge ? item.charge : item.units * item.billing_code_details.unit_price;
-        item.unit_price = item.billing_code_details.unit_price ? item.billing_code_details.unit_price : 0;
-        item.filteredmodifier = item.modifier_seed_data && item.modifier_seed_data.length ? item.modifier_seed_data.map(data => data.modifier_code) : [];
-        item.modifierTotal = 0
-        let modData = item.modifier_seed_data.map((e, i) => {
-          let presentMod = modifier.includes(e.modifier_code)
-          if (presentMod) {
-            let modIndex = modifier.findIndex(m => m == e.modifier_code)
-            if (e.modifier_code == modifier[modIndex]) {
-              e.exclude_modifiers.map((ex, ind) => {
-                let filterIndex = item.filteredmodifier.findIndex(m => m == ex)
-                item.filteredmodifier.splice(filterIndex, 1)
-              });
-              if (+e.price_increase > 0) {
+  //   const control = this.userTable.get('tableRows') as FormArray;
+  //   control.push(this.initiateForm());
+  //   if (status != 1) {
+  //     setTimeout(() => {
+  //       this.scrollToBottom();
+  //     }, 500);
+  //   }
+  // }
 
-                let calculateChange = (+e.price_increase / 100) * (+item.units * +item.billing_code_details.unit_price);
-                item.modifierTotal = (+item.modifierTotal + +calculateChange);
-                item.charge = (+item.modifierTotal + +item.units * +item.billing_code_details.unit_price);
-              }
-            }
-          }
-        })
-      }
-      firstData = {
-        id: item.id,
-        modifierList: modifier,
-        item_description: item.item_description,
-        procedure_code: item.procedure_code,
-        modifier: item.modifier,
-        unitType: item.unit_type,
-        units: item.units,
-        charge: +item.charge,
-        payment: item.payment_amount ? item.payment_amount : 0.00,
-        balance: 0,
-        isEditable: [true],
-        unit_price: item.unit_price ? +item.unit_price : null,
-        is_post_payment: item.is_post_payment,
-        post_payment_id: item.post_payment_id,
-        billing_code_details: item.billing_code_details,
-        modifier_seed_data: item.modifier_seed_data,
-        is_auto_generate: item.is_auto_generate,
-        filteredmodifier: item.filteredmodifier,
-        unitTotal: +item.charge,
-        is_excess_pages: item.is_excess_pages,
-        modifierTotal: item.modifierTotal
-      }
-      this.getFormControls.controls[i].patchValue(firstData)
-    })
-    group.get('isEditable').setValue(false);
+  // deleteRow(index: number, group) {
+  //   this.openDialogBillLine('remove', index, group);
 
-  }
+  // }
 
-  remove(val: string, group: FormGroup, gruopindex?): void {
-    const index = group.value.modifierList.indexOf(val);
-    if (group.value.is_auto_generate && this.newFeeScheduleStatus && !group.value.is_excess_pages) {
-      group.value.modifier_seed_data.map((e, i) => {
-        if (e.modifier_code == val) {
-          let modifier = e.exclude_modifiers.map((ex, ind) => {
-            if (!group.get('filteredmodifier').value.includes(ex)) group.get('filteredmodifier').value.push(ex)
-          })
-          if (+e.price_increase > 0) {
-            let calculateChange = (e.price_increase / 100) * (+group.get('units').value * +group.value.billing_code_details.unit_price);
-            group.get('modifierTotal').patchValue(Math.abs(+group.get('modifierTotal').value - +calculateChange));
-            group.get('charge').patchValue(Math.abs(+group.get('modifierTotal').value + (+group.get('units').value * +group.value.billing_code_details.unit_price)));
-          }
-        }
-      });
-      console.log(group);
-    }
-    if (index >= 0) {
-      group.get('modifierList').value.splice(index, 1);
-    }
-    group.get('modifierList').updateValueAndValidity();
-  }
+  // openDialogBillLine(dialogue, index, group) {
+  //   const dialogRef = this.dialog.open(DialogueComponent, {
+  //     width: '500px',
+  //     data: { name: dialogue, address: true, title: "Billing Line Item" }
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result['data']) {
+  //       if (group.value.id) {
+  //         this.billingService.removeBillItem(group.value.id, this.paramsId.claim_id, this.paramsId.billId,).subscribe(del => {
+  //           this.alertService.openSnackBar("Bill Line Item removed successfully", 'success');
+  //           const control = this.userTable.get('tableRows') as FormArray;
+  //           control.removeAt(index);
+  //           this.billing_line_items.splice(index, 1)
+  //           return
+  //         }, err => {
+  //           this.alertService.openSnackBar(err.error.message, 'error');
+  //         })
+  //       } else {
+  //         const control = this.userTable.get('tableRows') as FormArray;
+  //         control.removeAt(index);
+  //         this.billing_line_items.splice(index, 1)
+  //       }
+  //     }
+  //   })
+  // }
 
-  selected(event: MatAutocompleteSelectedEvent, group: FormGroup, index?): void {
-    if (group.value.modifierList.length > 0 && group.value.modifierList.includes(event.option.viewValue)) {
-      this.alertService.openSnackBar("Already added", "error");
-      return;
-    }
-    if (group.value.modifierList.length > 3) {
-      this.alertService.openSnackBar("Maximum 4 value", "error");
-      return;
-    }
-    if (group.value.is_auto_generate && this.newFeeScheduleStatus) {
-      group.value.modifier_seed_data.map((e, i) => {
-        if (e.modifier_code == event.option.viewValue) {
-          e.exclude_modifiers.map((ex, ind) => {
-            let filterIndex = group.get('filteredmodifier').value.findIndex(m => m == ex)
-            group.get('filteredmodifier').value.splice(filterIndex, 1)
-          });
-          if (+e.price_increase > 0) {
-            let calculateChange = (e.price_increase / 100) * (+group.get('units').value * +group.value.billing_code_details.unit_price);
-            group.get('modifierTotal').patchValue(Math.abs(+group.get('modifierTotal').value + +calculateChange));
-            group.get('charge').patchValue(Math.abs(+group.get('modifierTotal').value + (+group.get('units').value * +group.value.billing_code_details.unit_price)));
+  // editRow(group: FormGroup, i) {
+  //   console.log(group)
+  //   if (group.get('procedure_code').value && group.get('procedure_code').value.trim() && this.newFeeScheduleStatus) {
+  //     let valReplace = group.get('procedure_code').value.replace(/[^a-zA-Z]/g, "");
+  //     if (valReplace.toLowerCase() == 'mlprr') {
+  //       console.log(valReplace)
+  //       group.get('is_excess_pages').patchValue(true);
+  //       this.getFormControls.at(i).get('modifier').disable()
+  //       this.getFormControls.at(i).get('modifierList').disable();
+  //       this.getFormControls.at(i).get('modifierList').updateValueAndValidity();
+  //       this.getFormControls.at(i).get('modifier').updateValueAndValidity();
+  //     }
 
-          }
-        }
+  //   }
+  //   group.get('isEditable').setValue(true);
+  //   if (group.value.is_auto_generate && this.newFeeScheduleStatus) {
+  //     group.get('procedure_code').disable();
+  //     group.get('unitType').disable();
+  //     group.get('charge').disable();
+  //   }
+  // }
 
-      });
-      console.log(group);
-    }
-    let modify = group.value.modifierList;
-    modify.push(event.option.viewValue)
-    group.get('modifierList').setValue(modify)
-  }
+  // doneRow(group: FormGroup, index) {
+  //   Object.keys(group.controls).forEach((key) => {
+  //     if (group.get(key).value && typeof (group.get(key).value) == 'string')
+  //       group.get(key).setValue(group.get(key).value.trim())
+  //   });
+  //   if (group.status == "INVALID") {
+  //     group.markAllAsTouched();
+  //     return;
+  //   }
+  //   if (group.untouched) {
+  //     return;
+  //   }
 
-  rowSelected(group: FormGroup) {
-  }
+  //   let moidfier = group.get('modifierList').value.toString();
+  //   moidfier = moidfier ? moidfier.replace(/,/g, '-') : null;
+  //   let data = {
+  //     id: group.value.id,
+  //     item_description: group.value.item_description,
+  //     procedure_code: group.value.procedure_code,
+  //     modifier: moidfier,
+  //     units: group.value.units,
+  //     charge: group.get('charge').value ? parseFloat(group.get('charge').value).toFixed(2) : group.get('charge').value,
+  //     total_charge: this.calculateTotal(),
+  //     unit_type: group.value.unitType,
+  //     unit_short_code: this.getUnitCode(group.value.unitType)
+  //   }
 
-  calculateTotal() {
-    let total: any = 0;
-    for (var j in this.getFormControls.controls) {
-      if (this.getFormControls.controls[j].get('charge').value) {
-        total += parseFloat(this.getFormControls.controls[j].get('charge').value)
-      }
-    }
-    return total.toFixed(2);
-  }
+  //   this.billingService.createBillLine(this.billingId, this.paramsId.billId, this.paramsId.claim_id, data).subscribe(line => {
+  //     group.get('id').setValue(line.data.id);
+  //     if (data.id) {
+  //       this.alertService.openSnackBar("Bill Line Item updated successfully", 'success');
+  //     } else {
+  //       this.alertService.openSnackBar("Bill Line Item added successfully", 'success');
+  //     }
+  //     let modifier = line.data.modifier ? line.data.modifier.split('-') : [];
+  //     this.billing_line_items[index] = line.data;
+  //     this.billing_line_items[index].modifierList = modifier;
+  //   }, error => {
+  //     this.alertService.openSnackBar(error.error.message, 'error');
+  //   })
+  //   group.get('isEditable').setValue(false);
+  // }
 
-  calculateTotalBal() {
-    let total: any = 0;
-    let payment: any = 0
-    for (var j in this.getFormControls.controls) {
-      if (this.getFormControls.controls[j].get('charge').value) {
-        total += parseFloat(this.getFormControls.controls[j].get('charge').value)
-      }
-      if (this.getFormControls.controls[j].get('payment').value) {
-        payment += parseFloat(this.getFormControls.controls[j].get('payment').value)
-      }
-    }
-    return (total - payment).toFixed(2);
-  }
+  // get getFormControls() {
+  //   const control = this.userTable.get('tableRows') as FormArray;
+  //   return control;
+  // }
 
-  calculateTotalPayment() {
-    let total: any = 0;
-    for (var j in this.getFormControls.controls) {
-      if (this.getFormControls.controls[j].get('payment').value) {
-        total += parseFloat(this.getFormControls.controls[j].get('payment').value)
-      }
-    }
-    return total.toFixed(2);
-  }
+  // unitChange(group, i, e) {
+  //   if (e && group.value.is_auto_generate && this.newFeeScheduleStatus && !group.value.is_excess_pages) {
+  //     console.log(group);
+  //     let calculateChange = 0;
+  //     if (group.get('modifierList').value.length) {
+  //       group.value.modifier_seed_data.map((e, i) => {
+  //         if (group.get('modifierList').value.includes(e.modifier_code)) {
+  //           if (+e.price_increase > 0) {
+  //             calculateChange += (e.price_increase / 100) * (+group.get('units').value * +group.value.billing_code_details.unit_price);
+  //           }
+  //         }
+
+  //       });
+  //       group.get('modifierTotal').patchValue(+calculateChange);
+  //     }
+  //     let charge = (e * group.get('unit_price').value) + +group.get('modifierTotal').value
+  //     group.get('unitTotal').patchValue(+(e * group.get('unit_price').value))
+  //     group.get('charge').patchValue(+charge)
+  //   } else if (group.value.is_excess_pages) {
+  //     let charge = +group.get('units').value * + this.billingCodeDetails.rate_for_extra_units
+  //     group.get('charge').patchValue(+charge)
+  //   }
+  // }
+
+  // procedureChange(val, group) {
+  //   let valReplace;
+  //   if (val && val.trim() && this.newFeeScheduleStatus) {
+  //     valReplace = val.replace(/[^a-zA-Z]/g, "");
+  //     if (valReplace.toLowerCase() == 'mlprr') {
+  //       group.get('is_excess_pages').patchValue(true);
+  //       group.get('modifierList').patchValue([]);
+  //       group.get('unitType').patchValue(this.billingCodeDetails.extra_unit_type == 'page' ? 'Pages' : '');
+  //       group.get('modifier').disable();
+  //       group.get('modifierList').disable();
+  //       group.get('modifierList').updateValueAndValidity();
+  //       group.get('modifier').updateValueAndValidity();
+  //     } else {
+  //       group.get('is_excess_pages').patchValue(false);
+  //       group.get('modifier').enable();
+  //       group.get('modifier').updateValueAndValidity();
+  //       group.get('modifierList').enable();
+  //       group.get('modifierList').updateValueAndValidity();
+  //     }
+  //   }
+  // }
+  // getUnitCode(code) {
+  //   if (code) {
+  //     for (var c in this.unitTypes) {
+  //       if (this.unitTypes[c].unit_type == code) {
+  //         return this.unitTypes[c].unit_short_code;
+  //       }
+  //     }
+  //   } else {
+  //     return null;
+  //   }
+
+  // }
+
+
+  // cancelRow(group: FormGroup, i) {
+  //   if (!group.value.id) {
+  //     this.deleteRow(i, group);
+  //     return
+  //   }
+  //   console.log(group, i)
+  //   console.log(this.billing_line_items)
+  //   let data = [];
+  //   data.push(this.billing_line_items[i])
+  //   data.map((item, index) => {
+  //     let firstData = {};
+  //     let modifier = item.modifier ? item.modifier.split('-') : [];
+  //     if (this.newFeeScheduleStatus && item.is_auto_generate && !item.is_excess_pages) {
+  //       if (item.unit_type == 'unit') item.unit_type = 'Units';
+  //       item.units = item.units ? item.units : 1;
+  //       item.charge = item.charge ? item.charge : item.units * item.billing_code_details.unit_price;
+  //       item.unit_price = item.billing_code_details.unit_price ? item.billing_code_details.unit_price : 0;
+  //       item.filteredmodifier = item.modifier_seed_data && item.modifier_seed_data.length ? item.modifier_seed_data.map(data => data.modifier_code) : [];
+  //       item.modifierTotal = 0
+  //       let modData = item.modifier_seed_data.map((e, i) => {
+  //         let presentMod = modifier.includes(e.modifier_code)
+  //         if (presentMod) {
+  //           let modIndex = modifier.findIndex(m => m == e.modifier_code)
+  //           if (e.modifier_code == modifier[modIndex]) {
+  //             e.exclude_modifiers.map((ex, ind) => {
+  //               let filterIndex = item.filteredmodifier.findIndex(m => m == ex)
+  //               item.filteredmodifier.splice(filterIndex, 1)
+  //             });
+  //             if (+e.price_increase > 0) {
+
+  //               let calculateChange = (+e.price_increase / 100) * (+item.units * +item.billing_code_details.unit_price);
+  //               item.modifierTotal = (+item.modifierTotal + +calculateChange);
+  //               item.charge = (+item.modifierTotal + +item.units * +item.billing_code_details.unit_price);
+  //             }
+  //           }
+  //         }
+  //       })
+  //     }
+  //     firstData = {
+  //       id: item.id,
+  //       modifierList: modifier,
+  //       item_description: item.item_description,
+  //       procedure_code: item.procedure_code,
+  //       modifier: item.modifier,
+  //       unitType: item.unit_type,
+  //       units: item.units,
+  //       charge: +item.charge,
+  //       payment: item.payment_amount ? item.payment_amount : 0.00,
+  //       balance: 0,
+  //       isEditable: [true],
+  //       unit_price: item.unit_price ? +item.unit_price : null,
+  //       is_post_payment: item.is_post_payment,
+  //       post_payment_id: item.post_payment_id,
+  //       billing_code_details: item.billing_code_details,
+  //       modifier_seed_data: item.modifier_seed_data,
+  //       is_auto_generate: item.is_auto_generate,
+  //       filteredmodifier: item.filteredmodifier,
+  //       unitTotal: +item.charge,
+  //       is_excess_pages: item.is_excess_pages,
+  //       modifierTotal: item.modifierTotal
+  //     }
+  //     this.getFormControls.controls[i].patchValue(firstData)
+  //   })
+  //   group.get('isEditable').setValue(false);
+
+  // }
+
+  // remove(val: string, group: FormGroup, gruopindex?): void {
+  //   const index = group.value.modifierList.indexOf(val);
+  //   if (group.value.is_auto_generate && this.newFeeScheduleStatus && !group.value.is_excess_pages) {
+  //     group.value.modifier_seed_data.map((e, i) => {
+  //       if (e.modifier_code == val) {
+  //         let modifier = e.exclude_modifiers.map((ex, ind) => {
+  //           if (!group.get('filteredmodifier').value.includes(ex)) group.get('filteredmodifier').value.push(ex)
+  //         })
+  //         if (+e.price_increase > 0) {
+  //           let calculateChange = (e.price_increase / 100) * (+group.get('units').value * +group.value.billing_code_details.unit_price);
+  //           group.get('modifierTotal').patchValue(Math.abs(+group.get('modifierTotal').value - +calculateChange));
+  //           group.get('charge').patchValue(Math.abs(+group.get('modifierTotal').value + (+group.get('units').value * +group.value.billing_code_details.unit_price)));
+  //         }
+  //       }
+  //     });
+  //     console.log(group);
+  //   }
+  //   if (index >= 0) {
+  //     group.get('modifierList').value.splice(index, 1);
+  //   }
+  //   group.get('modifierList').updateValueAndValidity();
+  // }
+
+  // selected(event: MatAutocompleteSelectedEvent, group: FormGroup, index?): void {
+  //   if (group.value.modifierList.length > 0 && group.value.modifierList.includes(event.option.viewValue)) {
+  //     this.alertService.openSnackBar("Already added", "error");
+  //     return;
+  //   }
+  //   if (group.value.modifierList.length > 3) {
+  //     this.alertService.openSnackBar("Maximum 4 value", "error");
+  //     return;
+  //   }
+  //   if (group.value.is_auto_generate && this.newFeeScheduleStatus) {
+  //     group.value.modifier_seed_data.map((e, i) => {
+  //       if (e.modifier_code == event.option.viewValue) {
+  //         e.exclude_modifiers.map((ex, ind) => {
+  //           let filterIndex = group.get('filteredmodifier').value.findIndex(m => m == ex)
+  //           group.get('filteredmodifier').value.splice(filterIndex, 1)
+  //         });
+  //         if (+e.price_increase > 0) {
+  //           let calculateChange = (e.price_increase / 100) * (+group.get('units').value * +group.value.billing_code_details.unit_price);
+  //           group.get('modifierTotal').patchValue(Math.abs(+group.get('modifierTotal').value + +calculateChange));
+  //           group.get('charge').patchValue(Math.abs(+group.get('modifierTotal').value + (+group.get('units').value * +group.value.billing_code_details.unit_price)));
+
+  //         }
+  //       }
+
+  //     });
+  //     console.log(group);
+  //   }
+  //   let modify = group.value.modifierList;
+  //   modify.push(event.option.viewValue)
+  //   group.get('modifierList').setValue(modify)
+  // }
+
+  // rowSelected(group: FormGroup) {
+  // }
+
+  // calculateTotal() {
+  //   let total: any = 0;
+  //   for (var j in this.getFormControls.controls) {
+  //     if (this.getFormControls.controls[j].get('charge').value) {
+  //       total += parseFloat(this.getFormControls.controls[j].get('charge').value)
+  //     }
+  //   }
+  //   return total.toFixed(2);
+  // }
+
+  // calculateTotalBal() {
+  //   let total: any = 0;
+  //   let payment: any = 0
+  //   for (var j in this.getFormControls.controls) {
+  //     if (this.getFormControls.controls[j].get('charge').value) {
+  //       total += parseFloat(this.getFormControls.controls[j].get('charge').value)
+  //     }
+  //     if (this.getFormControls.controls[j].get('payment').value) {
+  //       payment += parseFloat(this.getFormControls.controls[j].get('payment').value)
+  //     }
+  //   }
+  //   return (total - payment).toFixed(2);
+  // }
+
+  // calculateTotalPayment() {
+  //   let total: any = 0;
+  //   for (var j in this.getFormControls.controls) {
+  //     if (this.getFormControls.controls[j].get('payment').value) {
+  //       total += parseFloat(this.getFormControls.controls[j].get('payment').value)
+  //     }
+  //   }
+  //   return total.toFixed(2);
+  // }
 
 
   VMC1500Submit() {
@@ -1214,354 +1214,354 @@ export class BilllableBillingComponent implements OnInit {
   ]
 })
 export class BillingPaymentDialog {
-  file: any;
-  postPaymentForm: FormGroup;
-  paymentTypes: any = ["Paper Check", "EFT", "Virtual Credit Card"];
-  @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
-  paymentDetails: any;
-  currentDate = new Date();
-  minimumDate = new Date(1900, 0, 1);
-  writeoffReason = [];
-  constructor(
-    public dialogRef: MatDialogRef<BillingPaymentDialog>, private formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: any, private alertService: AlertService, public billingService: BillingService,
-    private fb: FormBuilder, public dialog: MatDialog) {
-    dialogRef.disableClose = true;
-    this.postPaymentForm = this.formBuilder.group({
-      id: [''],
-      is_file_change: [true],
-      claim_id: [this.data.claimId, Validators.required],
-      billable_item_id: [this.data.billableId, Validators.required],
-      payment_amount: [null, Validators.compose([Validators.required, Validators.min(0)])],
-      reference_no: [null, Validators.required],
-      effective_date: [null, Validators.required],
-      payment_method: [null, Validators.required],
-      is_deposited: [false],
-      deposit_date: [null],
-      payor_control_claim_no: [null],
-      is_penalty: [false],
-      penalty_amount: [null, Validators.compose([Validators.min(0)])],
-      is_interest_paid: [false],
-      interest_paid: [null, Validators.compose([Validators.min(0)])],
-      is_bill_closed: [false],
-      post_payment_eor_ids: [this.eorDocumentIds]
-    });
-    this.billingService.seedData("write_off_reason").subscribe(res => {
-      this.writeoffReason = res.data;
-    })
-    this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').enable() : this.postPaymentForm.get('deposit_date').disable();
-    this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').enable() : this.postPaymentForm.get('penalty_amount').disable();
-    this.postPaymentForm.value.is_interest_paid ? this.postPaymentForm.get('interest_paid').enable() : this.postPaymentForm.get('interest_paid').disable();
-    //this.postPaymentForm.value.is_bill_closed ? this.postPaymentForm.get('write_off_reason').enable() : this.postPaymentForm.get('write_off_reason').disable();
-    if (data.status) {
-      this.billingService.getPostPayment(data.id).subscribe(pay => {
-        this.paymentDetails = pay.data;
-        this.paymentDetails.post_payment_eor_details.map((data, index) => {
-          this.addRow();
-          let details = {
-            id: data.id,
-            post_payment_id: this.paymentDetails.id ? this.paymentDetails.id : '',
-            write_off_reason_id: data.write_off_reason_id,
-            write_off_other_reason: data.write_off_other_reason,
-            eor_allowance: data.eor_allowance,
-            claim_id: this.data.claimId,
-            billable_item_id: this.data.billableId,
-            isEditable: [true],
-            file: null,
-            file_name: data.file_name,
-            url: data.exam_report_file_url,
-            save_status: true
-          }
-          this.getFormControls.controls[index].patchValue(details)
-          if (this.getFormControls.controls[index].status == "VALID") {
-            this.getFormControls.controls[index].get('isEditable').setValue(false);
-          }
-        })
-        pay.data.payment_amount = pay.data.payment_amount ? parseFloat(pay.data.payment_amount).toFixed(2) : pay.data.payment_amount;
-        pay.data.interest_paid = pay.data.interest_paid ? parseFloat(pay.data.interest_paid).toFixed(2) : pay.data.interest_paid;
-        pay.data.penalty_amount = pay.data.penalty_amount ? parseFloat(pay.data.penalty_amount).toFixed(2) : pay.data.penalty_amount;
-        // pay.data.eor_allowance = pay.data.eor_allowance ? parseFloat(pay.data.eor_allowance).toFixed(2) : pay.data.eor_allowance;
-        this.postPaymentForm.patchValue(pay.data);
-        this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').enable() : this.postPaymentForm.get('deposit_date').disable();
-        this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').enable() : this.postPaymentForm.get('penalty_amount').disable();
-        this.postPaymentForm.value.is_interest_paid ? this.postPaymentForm.get('interest_paid').enable() : this.postPaymentForm.get('interest_paid').disable();
-        //this.postPaymentForm.value.is_bill_closed ? this.postPaymentForm.get('write_off_reason').enable() : this.postPaymentForm.get('write_off_reason').disable();
-      }, error => {
+  // file: any;
+  // postPaymentForm: FormGroup;
+  // paymentTypes: any = ["Paper Check", "EFT", "Virtual Credit Card"];
+  // @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
+  // paymentDetails: any;
+  // currentDate = new Date();
+  // minimumDate = new Date(1900, 0, 1);
+  // writeoffReason = [];
+  // constructor(
+  //   public dialogRef: MatDialogRef<BillingPaymentDialog>, private formBuilder: FormBuilder,
+  //   @Inject(MAT_DIALOG_DATA) public data: any, private alertService: AlertService, public billingService: BillingService,
+  //   private fb: FormBuilder, public dialog: MatDialog) {
+  //   dialogRef.disableClose = true;
+  //   this.postPaymentForm = this.formBuilder.group({
+  //     id: [''],
+  //     is_file_change: [true],
+  //     claim_id: [this.data.claimId, Validators.required],
+  //     billable_item_id: [this.data.billableId, Validators.required],
+  //     payment_amount: [null, Validators.compose([Validators.required, Validators.min(0)])],
+  //     reference_no: [null, Validators.required],
+  //     effective_date: [null, Validators.required],
+  //     payment_method: [null, Validators.required],
+  //     is_deposited: [false],
+  //     deposit_date: [null],
+  //     payor_control_claim_no: [null],
+  //     is_penalty: [false],
+  //     penalty_amount: [null, Validators.compose([Validators.min(0)])],
+  //     is_interest_paid: [false],
+  //     interest_paid: [null, Validators.compose([Validators.min(0)])],
+  //     is_bill_closed: [false],
+  //     post_payment_eor_ids: [this.eorDocumentIds]
+  //   });
+  //   this.billingService.seedData("write_off_reason").subscribe(res => {
+  //     this.writeoffReason = res.data;
+  //   })
+  //   this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').enable() : this.postPaymentForm.get('deposit_date').disable();
+  //   this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').enable() : this.postPaymentForm.get('penalty_amount').disable();
+  //   this.postPaymentForm.value.is_interest_paid ? this.postPaymentForm.get('interest_paid').enable() : this.postPaymentForm.get('interest_paid').disable();
+  //   //this.postPaymentForm.value.is_bill_closed ? this.postPaymentForm.get('write_off_reason').enable() : this.postPaymentForm.get('write_off_reason').disable();
+  //   if (data.status) {
+  //     this.billingService.getPostPayment(data.id).subscribe(pay => {
+  //       this.paymentDetails = pay.data;
+  //       this.paymentDetails.post_payment_eor_details.map((data, index) => {
+  //         this.addRow();
+  //         let details = {
+  //           id: data.id,
+  //           post_payment_id: this.paymentDetails.id ? this.paymentDetails.id : '',
+  //           write_off_reason_id: data.write_off_reason_id,
+  //           write_off_other_reason: data.write_off_other_reason,
+  //           eor_allowance: data.eor_allowance,
+  //           claim_id: this.data.claimId,
+  //           billable_item_id: this.data.billableId,
+  //           isEditable: [true],
+  //           file: null,
+  //           file_name: data.file_name,
+  //           url: data.exam_report_file_url,
+  //           save_status: true
+  //         }
+  //         this.getFormControls.controls[index].patchValue(details)
+  //         if (this.getFormControls.controls[index].status == "VALID") {
+  //           this.getFormControls.controls[index].get('isEditable').setValue(false);
+  //         }
+  //       })
+  //       pay.data.payment_amount = pay.data.payment_amount ? parseFloat(pay.data.payment_amount).toFixed(2) : pay.data.payment_amount;
+  //       pay.data.interest_paid = pay.data.interest_paid ? parseFloat(pay.data.interest_paid).toFixed(2) : pay.data.interest_paid;
+  //       pay.data.penalty_amount = pay.data.penalty_amount ? parseFloat(pay.data.penalty_amount).toFixed(2) : pay.data.penalty_amount;
+  //       // pay.data.eor_allowance = pay.data.eor_allowance ? parseFloat(pay.data.eor_allowance).toFixed(2) : pay.data.eor_allowance;
+  //       this.postPaymentForm.patchValue(pay.data);
+  //       this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').enable() : this.postPaymentForm.get('deposit_date').disable();
+  //       this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').enable() : this.postPaymentForm.get('penalty_amount').disable();
+  //       this.postPaymentForm.value.is_interest_paid ? this.postPaymentForm.get('interest_paid').enable() : this.postPaymentForm.get('interest_paid').disable();
+  //       //this.postPaymentForm.value.is_bill_closed ? this.postPaymentForm.get('write_off_reason').enable() : this.postPaymentForm.get('write_off_reason').disable();
+  //     }, error => {
 
-      })
+  //     })
 
-    } else {
-      this.paymentDetails = { post_payment_eor_details: [] }
-    }
+  //   } else {
+  //     this.paymentDetails = { post_payment_eor_details: [] }
+  //   }
 
-    this.userTable = this.fb.group({
-      tableRows: this.fb.array([])
-    });
+  //   this.userTable = this.fb.group({
+  //     tableRows: this.fb.array([])
+  //   });
 
-  }
-  setRequired(group) {
-    if (group.get('write_off_reason_id').value == 4) {
-      group.get('write_off_other_reason').setValidators([Validators.required])
-    } else {
-      group.get('write_off_other_reason').clearValidators()
-      group.get('write_off_other_reason').updateValueAndValidity()
-    }
-  }
-  writeoff(group) {
-    let other = group.write_off_other_reason != null ? group.write_off_other_reason : ""
-    for (var i in this.writeoffReason) {
-      if (this.writeoffReason[i].id == group.write_off_reason_id) {
-        if (other != "") {
-          return other;
-        } else {
-          return this.writeoffReason[i].name;
-        }
-      }
-    }
-  }
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
+  // }
+  // setRequired(group) {
+  //   if (group.get('write_off_reason_id').value == 4) {
+  //     group.get('write_off_other_reason').setValidators([Validators.required])
+  //   } else {
+  //     group.get('write_off_other_reason').clearValidators()
+  //     group.get('write_off_other_reason').updateValueAndValidity()
+  //   }
+  // }
+  // writeoff(group) {
+  //   let other = group.write_off_other_reason != null ? group.write_off_other_reason : ""
+  //   for (var i in this.writeoffReason) {
+  //     if (this.writeoffReason[i].id == group.write_off_reason_id) {
+  //       if (other != "") {
+  //         return other;
+  //       } else {
+  //         return this.writeoffReason[i].name;
+  //       }
+  //     }
+  //   }
+  // }
+  // onNoClick(): void {
+  //   this.dialogRef.close();
+  // }
 
-  setTwoNumberDecimal($event) {
-    $event.target.value = parseFloat($event.target.value).toFixed(2);
-  }
-  postIsSubmit: boolean = false;
-  PaymentFormSubmit() {
-    let newRowStatus = true
-    for (var j in this.getFormControls.controls) {
-      if (!this.getFormControls.controls[j].value['save_status']) {
-        newRowStatus = false;
-      }
-    }
+  // setTwoNumberDecimal($event) {
+  //   $event.target.value = parseFloat($event.target.value).toFixed(2);
+  // }
+  // postIsSubmit: boolean = false;
+  // PaymentFormSubmit() {
+  //   let newRowStatus = true
+  //   for (var j in this.getFormControls.controls) {
+  //     if (!this.getFormControls.controls[j].value['save_status']) {
+  //       newRowStatus = false;
+  //     }
+  //   }
 
-    if (!newRowStatus) {
-      this.alertService.openSnackBar("Please save EOR data", 'error');
-      return;
-    }
-    this.postIsSubmit = true;
-    this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').setValidators([Validators.compose([Validators.required])]) : this.postPaymentForm.get('deposit_date').setValidators([]);
-    this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').setValidators([Validators.compose([Validators.required, Validators.min(0)])]) : this.postPaymentForm.get('penalty_amount').setValidators([]);
-    this.postPaymentForm.value.is_interest_paid ? this.postPaymentForm.get('interest_paid').setValidators([Validators.compose([Validators.required, Validators.min(0)])]) : this.postPaymentForm.get('interest_paid').setValidators([]);
+  //   if (!newRowStatus) {
+  //     this.alertService.openSnackBar("Please save EOR data", 'error');
+  //     return;
+  //   }
+  //   this.postIsSubmit = true;
+  //   this.postPaymentForm.value.is_deposited ? this.postPaymentForm.get('deposit_date').setValidators([Validators.compose([Validators.required])]) : this.postPaymentForm.get('deposit_date').setValidators([]);
+  //   this.postPaymentForm.value.is_penalty ? this.postPaymentForm.get('penalty_amount').setValidators([Validators.compose([Validators.required, Validators.min(0)])]) : this.postPaymentForm.get('penalty_amount').setValidators([]);
+  //   this.postPaymentForm.value.is_interest_paid ? this.postPaymentForm.get('interest_paid').setValidators([Validators.compose([Validators.required, Validators.min(0)])]) : this.postPaymentForm.get('interest_paid').setValidators([]);
 
-    Object.keys(this.postPaymentForm.controls).forEach((key) => {
-      this.postPaymentForm.get(key).updateValueAndValidity();
-      if (this.postPaymentForm.get(key).value && typeof (this.postPaymentForm.get(key).value) == 'string')
-        this.postPaymentForm.get(key).setValue(this.postPaymentForm.get(key).value.trim())
-    });
-    this.postPaymentForm.value.effective_date = new Date(this.postPaymentForm.value.effective_date).toDateString();
-    this.postPaymentForm.value.deposit_date = this.postPaymentForm.value.deposit_date ? new Date(this.postPaymentForm.value.deposit_date).toDateString() : null;
-    if (this.postPaymentForm.invalid) {
-      this.postPaymentForm.markAllAsTouched();
-      return;
-    }
+  //   Object.keys(this.postPaymentForm.controls).forEach((key) => {
+  //     this.postPaymentForm.get(key).updateValueAndValidity();
+  //     if (this.postPaymentForm.get(key).value && typeof (this.postPaymentForm.get(key).value) == 'string')
+  //       this.postPaymentForm.get(key).setValue(this.postPaymentForm.get(key).value.trim())
+  //   });
+  //   this.postPaymentForm.value.effective_date = new Date(this.postPaymentForm.value.effective_date).toDateString();
+  //   this.postPaymentForm.value.deposit_date = this.postPaymentForm.value.deposit_date ? new Date(this.postPaymentForm.value.deposit_date).toDateString() : null;
+  //   if (this.postPaymentForm.invalid) {
+  //     this.postPaymentForm.markAllAsTouched();
+  //     return;
+  //   }
 
-    this.billingService.billingPostPayment(this.data.billingId, this.postPaymentForm.value).subscribe(post => {
-      if (!this.postPaymentForm.value.id) {
-        this.alertService.openSnackBar("Post payment created successfully", 'success');
-      } else {
-        this.alertService.openSnackBar("Post payment updated successfully", 'success');
-      }
+  //   this.billingService.billingPostPayment(this.data.billingId, this.postPaymentForm.value).subscribe(post => {
+  //     if (!this.postPaymentForm.value.id) {
+  //       this.alertService.openSnackBar("Post payment created successfully", 'success');
+  //     } else {
+  //       this.alertService.openSnackBar("Post payment updated successfully", 'success');
+  //     }
 
-      this.dialogRef.close(post.data);
-    }, error => {
-      this.alertService.openSnackBar(error.error.message, 'error');
-    })
+  //     this.dialogRef.close(post.data);
+  //   }, error => {
+  //     this.alertService.openSnackBar(error.error.message, 'error');
+  //   })
 
 
-  }
+  // }
 
-  fileDownload(file) {
-    saveAs(file.post_payment_file_url, file.file_name, '_self');
-  }
+  // fileDownload(file) {
+  //   saveAs(file.post_payment_file_url, file.file_name, '_self');
+  // }
 
-  removeFile(i) {
-    this.postPaymentForm.patchValue({ file: null, is_file_change: true })
-    this.alertService.openSnackBar("File deleted successfully", 'success');
-  }
+  // removeFile(i) {
+  //   this.postPaymentForm.patchValue({ file: null, is_file_change: true })
+  //   this.alertService.openSnackBar("File deleted successfully", 'success');
+  // }
 
-  removeFileEdit(i, file) {
+  // removeFileEdit(i, file) {
 
-    this.billingService.deleteDocument(file.id).subscribe(res => {
-      this.paymentDetails.exam_report_file_url.splice(i, 1)
-      this.alertService.openSnackBar("File deleted successfully", 'success');
-    }, error => {
-      this.alertService.openSnackBar(error.error.message, 'error');
-    })
-  }
+  //   this.billingService.deleteDocument(file.id).subscribe(res => {
+  //     this.paymentDetails.exam_report_file_url.splice(i, 1)
+  //     this.alertService.openSnackBar("File deleted successfully", 'success');
+  //   }, error => {
+  //     this.alertService.openSnackBar(error.error.message, 'error');
+  //   })
+  // }
 
-  userTable: FormGroup;
-  control: FormArray;
+  // userTable: FormGroup;
+  // control: FormArray;
 
-  ngAfterOnInit() {
-    this.control = this.userTable.get('tableRows') as FormArray;
-  }
+  // ngAfterOnInit() {
+  //   this.control = this.userTable.get('tableRows') as FormArray;
+  // }
 
-  initiateForm(): FormGroup {
-    return this.fb.group({
-      post_payment_id: [''],
-      id: [''],
-      write_off_reason_id: [null, Validators.compose([])],
-      write_off_other_reason: [null, Validators.compose([])],
-      eor_allowance: ['', Validators.compose([Validators.min(0)])],
-      claim_id: [this.data.claimId, Validators.required],
-      billable_item_id: [this.data.billableId, Validators.required],
-      isEditable: [true],
-      isFileChanged: [false],
-      file: null,
-      file_name: [null],
-      url: null,
-      save_status: [false],
-    });
-  }
+  // initiateForm(): FormGroup {
+  //   return this.fb.group({
+  //     post_payment_id: [''],
+  //     id: [''],
+  //     write_off_reason_id: [null, Validators.compose([])],
+  //     write_off_other_reason: [null, Validators.compose([])],
+  //     eor_allowance: ['', Validators.compose([Validators.min(0)])],
+  //     claim_id: [this.data.claimId, Validators.required],
+  //     billable_item_id: [this.data.billableId, Validators.required],
+  //     isEditable: [true],
+  //     isFileChanged: [false],
+  //     file: null,
+  //     file_name: [null],
+  //     url: null,
+  //     save_status: [false],
+  //   });
+  // }
 
-  get getFormControls() {
-    const control = this.userTable.get('tableRows') as FormArray;
-    return control;
-  }
+  // get getFormControls() {
+  //   const control = this.userTable.get('tableRows') as FormArray;
+  //   return control;
+  // }
 
-  openFileUpload() {
-    let newRowStatus = true
-    for (var j in this.getFormControls.controls) {
-      if (!this.getFormControls.controls[j].value['save_status']) {
-        newRowStatus = false;
-      }
-    }
+  // openFileUpload() {
+  //   let newRowStatus = true
+  //   for (var j in this.getFormControls.controls) {
+  //     if (!this.getFormControls.controls[j].value['save_status']) {
+  //       newRowStatus = false;
+  //     }
+  //   }
 
-    if (!newRowStatus) {
-      this.alertService.openSnackBar("Please save existing data", 'error');
-      return;
-    }
-    this.fileUpload.nativeElement.click()
-  }
+  //   if (!newRowStatus) {
+  //     this.alertService.openSnackBar("Please save existing data", 'error');
+  //     return;
+  //   }
+  //   this.fileUpload.nativeElement.click()
+  // }
 
-  selectedFile: File;
-  addEOR(event, isEdit?, group?) {
-    this.selectedFile = null;
-    let fileTypes = ['pdf', 'jpg', 'jpeg', 'png']
+  // selectedFile: File;
+  // addEOR(event, isEdit?, group?) {
+  //   this.selectedFile = null;
+  //   let fileTypes = ['pdf', 'jpg', 'jpeg', 'png']
 
-    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
-      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
-      if (FileSize > 30) {
-        this.alertService.openSnackBar(event.target.files[0].name + " file too long", 'error');
-        return;
-      }
+  //   if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
+  //     var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
+  //     if (FileSize > 30) {
+  //       this.alertService.openSnackBar(event.target.files[0].name + " file too long", 'error');
+  //       return;
+  //     }
 
-      this.selectedFile = event.target.files[0];
-      if (!isEdit) {
-        this.addRow(1);
-        let file = {
-          post_payment_id: this.paymentDetails ? this.paymentDetails.id : '',
-          file: event.target.files[0],
-          file_name: event.target.files[0].name
-        }
-        this.getFormControls.controls[this.getFormControls.controls.length - 1].patchValue(file)
-      } else {
+  //     this.selectedFile = event.target.files[0];
+  //     if (!isEdit) {
+  //       this.addRow(1);
+  //       let file = {
+  //         post_payment_id: this.paymentDetails ? this.paymentDetails.id : '',
+  //         file: event.target.files[0],
+  //         file_name: event.target.files[0].name
+  //       }
+  //       this.getFormControls.controls[this.getFormControls.controls.length - 1].patchValue(file)
+  //     } else {
 
-        group.get('isFileChanged').setValue(true)
-        group.get('file').setValue(event.target.files[0])
-        group.get('file_name').setValue(event.target.files[0].name)
-      }
-    } else {
-      this.selectedFile = null;
-      this.alertService.openSnackBar(event.target.files[0].name + " file is not accepted", 'error');
-    }
-  }
+  //       group.get('isFileChanged').setValue(true)
+  //       group.get('file').setValue(event.target.files[0])
+  //       group.get('file_name').setValue(event.target.files[0].name)
+  //     }
+  //   } else {
+  //     this.selectedFile = null;
+  //     this.alertService.openSnackBar(event.target.files[0].name + " file is not accepted", 'error');
+  //   }
+  // }
 
-  addRow(status?) {
-    const control = this.userTable.get('tableRows') as FormArray;
-    control.push(this.initiateForm());
-  }
+  // addRow(status?) {
+  //   const control = this.userTable.get('tableRows') as FormArray;
+  //   control.push(this.initiateForm());
+  // }
 
-  formEOR = new FormData();
-  eorDocumentIds: any = []
-  saveRow(group: FormGroup, index) {
-    if (group.status == "INVALID") {
-      group.markAllAsTouched();
-      return;
-    }
-    this.formEOR = new FormData();
+  // formEOR = new FormData();
+  // eorDocumentIds: any = []
+  // saveRow(group: FormGroup, index) {
+  //   if (group.status == "INVALID") {
+  //     group.markAllAsTouched();
+  //     return;
+  //   }
+  //   this.formEOR = new FormData();
 
-    this.formEOR.append('file', group.value.file)
-    this.formEOR.append('id', group.value.id)
-    this.formEOR.append('write_off_reason_id', group.value.write_off_reason_id)
-    this.formEOR.append('claim_id', group.value.claim_id.toString())
-    this.formEOR.append('billable_item_id', group.value.billable_item_id.toString())
-    this.formEOR.append('eor_allowance', group.value.eor_allowance)
-    this.formEOR.append('post_payment_id', group.value.post_payment_id ? group.value.post_payment_id : '')
-    this.formEOR.append('isFileChanged', group.value.isFileChanged)
-    this.formEOR.append('write_off_other_reason', String(group.value.write_off_other_reason))
+  //   this.formEOR.append('file', group.value.file)
+  //   this.formEOR.append('id', group.value.id)
+  //   this.formEOR.append('write_off_reason_id', group.value.write_off_reason_id)
+  //   this.formEOR.append('claim_id', group.value.claim_id.toString())
+  //   this.formEOR.append('billable_item_id', group.value.billable_item_id.toString())
+  //   this.formEOR.append('eor_allowance', group.value.eor_allowance)
+  //   this.formEOR.append('post_payment_id', group.value.post_payment_id ? group.value.post_payment_id : '')
+  //   this.formEOR.append('isFileChanged', group.value.isFileChanged)
+  //   this.formEOR.append('write_off_other_reason', String(group.value.write_off_other_reason))
 
-    this.billingService.postPaymentFileAdd(this.data.billingId, this.formEOR).subscribe(file => {
-      if (group.value.id) {
-        this.alertService.openSnackBar("EOR updated successfully", 'success');
-      } else {
-        this.alertService.openSnackBar("EOR created successfully", 'success');
-      }
+  //   this.billingService.postPaymentFileAdd(this.data.billingId, this.formEOR).subscribe(file => {
+  //     if (group.value.id) {
+  //       this.alertService.openSnackBar("EOR updated successfully", 'success');
+  //     } else {
+  //       this.alertService.openSnackBar("EOR created successfully", 'success');
+  //     }
 
-      this.eorDocumentIds.push(file.data.id)
-      group.patchValue({ id: file.data.id, save_status: true })
-      file.data.file_name = group.value.file_name;
-      this.paymentDetails.post_payment_eor_details.push(file.data)
+  //     this.eorDocumentIds.push(file.data.id)
+  //     group.patchValue({ id: file.data.id, save_status: true })
+  //     file.data.file_name = group.value.file_name;
+  //     this.paymentDetails.post_payment_eor_details.push(file.data)
 
-    }, error => {
-      this.alertService.openSnackBar(error.error.message, 'error');
-    })
-    group.get('isEditable').setValue(false);
-  }
+  //   }, error => {
+  //     this.alertService.openSnackBar(error.error.message, 'error');
+  //   })
+  //   group.get('isEditable').setValue(false);
+  // }
 
-  editRow(group: FormGroup) {
-    group.get('isEditable').setValue(true);
-  }
+  // editRow(group: FormGroup) {
+  //   group.get('isEditable').setValue(true);
+  // }
 
-  removeEOR(group, index) {
-    this.openDialogEOR('Remove', group, index)
-  }
+  // removeEOR(group, index) {
+  //   this.openDialogEOR('Remove', group, index)
+  // }
 
-  openDialogEOR(dialogue, group, index) {
+  // openDialogEOR(dialogue, group, index) {
 
-    const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '500px',
-      data: { name: dialogue, address: true, title: group.value.file_name }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result['data']) {
-        this.billingService.eorRemove(group.value.id).subscribe(remove => {
-          this.alertService.openSnackBar("EOR removed successfully", 'success');
-          this.paymentDetails.post_payment_eor_details.splice(index, 1);
-          this.getFormControls.controls.splice(index, 1);
-          this.eorDocumentIds.splice(index, 1);
-        }, error => {
-          this.alertService.openSnackBar(error.error.message, 'error');
-        })
-      }
-    })
-  }
+  //   const dialogRef = this.dialog.open(DialogueComponent, {
+  //     width: '500px',
+  //     data: { name: dialogue, address: true, title: group.value.file_name }
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result['data']) {
+  //       this.billingService.eorRemove(group.value.id).subscribe(remove => {
+  //         this.alertService.openSnackBar("EOR removed successfully", 'success');
+  //         this.paymentDetails.post_payment_eor_details.splice(index, 1);
+  //         this.getFormControls.controls.splice(index, 1);
+  //         this.eorDocumentIds.splice(index, 1);
+  //       }, error => {
+  //         this.alertService.openSnackBar(error.error.message, 'error');
+  //       })
+  //     }
+  //   })
+  // }
 
-  cancelEOR(group, index) {
-    if (!group.value.id) {
-      this.getFormControls.controls.splice(index, 1)
-      return;
-    }
-    let details = {
-      write_off_reason_id: this.paymentDetails.post_payment_eor_details[index].write_off_reason_id,
-      eor_allowance: this.paymentDetails.post_payment_eor_details[index].eor_allowance,
-      file_name: this.paymentDetails.post_payment_eor_details[index].file_name,
-      url: this.paymentDetails.post_payment_eor_details[index].exam_report_file_url,
-      isEditable: false
-    }
-    group.patchValue(details);
-  }
+  // cancelEOR(group, index) {
+  //   if (!group.value.id) {
+  //     this.getFormControls.controls.splice(index, 1)
+  //     return;
+  //   }
+  //   let details = {
+  //     write_off_reason_id: this.paymentDetails.post_payment_eor_details[index].write_off_reason_id,
+  //     eor_allowance: this.paymentDetails.post_payment_eor_details[index].eor_allowance,
+  //     file_name: this.paymentDetails.post_payment_eor_details[index].file_name,
+  //     url: this.paymentDetails.post_payment_eor_details[index].exam_report_file_url,
+  //     isEditable: false
+  //   }
+  //   group.patchValue(details);
+  // }
 
-  download(element) {
-    if (!element.value.id) {
-      return;
-    }
-    this.billingService.downloadOndemandDocuments({ file_url: element.value.url }).subscribe(res => {
-      this.alertService.openSnackBar("File downloaded successfully", "success");
-      saveAs(res.signed_file_url, element.value.file_name);
-    })
-  }
+  // download(element) {
+  //   if (!element.value.id) {
+  //     return;
+  //   }
+  //   this.billingService.downloadOndemandDocuments({ file_url: element.value.url }).subscribe(res => {
+  //     this.alertService.openSnackBar("File downloaded successfully", "success");
+  //     saveAs(res.signed_file_url, element.value.file_name);
+  //   })
+  // }
 
 }
 

@@ -1,4 +1,4 @@
-<ngx-spinner type="ball-clip-rotate" size="medium"></ngx-spinner>
+<!-- <ngx-spinner type="ball-clip-rotate" size="medium"></ngx-spinner>
 <div fxLayout="row wrap">
     <div fxFlex="100" class="payment-dialog dialog custom-dialog">
         <mat-card-header class="model-header">
@@ -161,8 +161,7 @@
                                                             {{writeoff.name}}
                                                         </mat-option>
                                                     </mat-select>
-                                                    <!-- <input matInput formControlName="write_off_reason"
-                                                        placeholder="Write Off Reason" type="text" autocomplete="off"> -->
+                                                  
                                                 </mat-form-field>
                                                 <mat-form-field appearance="outline" class="w-100 p-t-0"
                                                     *ngIf="group.value.write_off_reason_id ==4">
@@ -281,18 +280,11 @@
                                                             </mat-panel-title>
                                                         </mat-expansion-panel-header>
                                                         <mat-card>
-                                                            <!-- <div class="flex">
-                                                                <div class="bill-property">File Name</div>
-                                                                <div class="value">
-                                                                    <a (click)="download(group)"
-                                                                    class="text-ternary">{{group.get('file_name').value}}</a>
-                                                                </div>
-                                                            </div> -->
+                                                          
                                                             <div class="flex">
                                                                 <div class="bill-property">Write Off Reason</div>
                                                                 <div class="value">
                                                                     {{writeoff(group.value)}}
-                                                                    <!-- {{group.get('write_off_other_reason').value}} -->
                                                                 </div>
                                                             </div>
                                                             <div class="flex">
@@ -316,30 +308,7 @@
                                         </tr>
                                     </ng-container>
                                 </tbody>
-                                <!-- <tfoot *ngIf="getFormControls.controls.length > 0">
-                                    <tr class="bill-value" id="static-footer">
-                                        <td>
-                                            <mat-card>
-                                                <div class="grid-list">
-                                                    <div><b>Total Charge </b></div>
-                                                    <div>{{calculateTotal() | number : '1.2-2'}}</div>
-                                                </div>
-
-                                                <div class="grid-list">
-                                                    <div><b>Total Payment</b></div>
-                                                    <div>{{calculateTotalPayment() | number : '1.2-2' }}</div>
-                                                </div>
-
-                                                <div class="grid-list">
-                                                    <div><b>Total Balance: </b></div>
-                                                    <div class="text-danger">
-                                                        {{calculateTotalBal() | number : '1.2-2'}} </div>
-                                                </div>
-                                            </mat-card>
-                                        </td>
-
-                                    </tr>
-                                </tfoot> -->
+                              
                             </table>
                         </form>
                     </div>
@@ -362,48 +331,6 @@
                         </div>
                     </div>
 
-                    <!-- <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                        <button type="button" mat-raised-button class="outline-danger float-right m-r-5" (click)="openVoidDialog()">Void Payment</button>
-                    </div> -->
-                    <!-- <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
-                        fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>Write Off Reason</mat-label>
-                        <input matInput placeholder="Write Off Reason" formControlName="write_off_reason"
-                            autocomplete="off">
-                        <mat-error *ngIf="postIsSubmit">Please enter valid Write Off Reason</mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
-                        fxFlex.sm="50" fxFlex.xs="100">
-                        <mat-label>EOR Allowance</mat-label>
-                        <input matInput type="number" min="0" (change)="setTwoNumberDecimal($event)"
-                            placeholder="EOR Allowance" formControlName="eor_allowance" autocomplete="off">
-                        <mat-error *ngIf="postIsSubmit">Please enter valid EOR Allowance</mat-error>
-                    </mat-form-field>
-                    <div fxFlex="100">
-                        <div fxLayout="row wrap">
-                            <div class="sub-tile" fxFlex="100">Upload Paper EOR</div>
-                            <div fxFlex="50" class="upload-file" fxFlex.sm="100" fxFlex.xs="100">
-                                <button type="button" mat-raised-button (click)="uploader.click()"
-                                    class="filled-gray">Select
-                                    File</button>
-                                <mat-form-field appearance="standard" class="m-l-10">
-                                    <input matInput value="{{listOfFiles}}" readonly
-                                        placeholder="EOR Paper thing that was scanned">
-                                    <input type="file" #uploader multiple hidden (change)="addFile($event)"
-                                        accept=".pdf, .jpg, .jpeg, .png" required>
-                                 </mat-form-field>
-                                <div class="eor-file"
-                                    *ngFor="let fl of paymentDetails?.exam_report_file_url;let i = index"><a routerLink
-                                        (click)="fileDownload(fl)">{{fl.file_name}}</a><i (click)="removeFileEdit(i,fl)"
-                                        class="fas fa-trash-alt"></i></div>
-                                <div class="eor-file" *ngFor="let fl of listOfFiles;let i = index">{{fl}}<i
-                                        (click)="removeFile(i)" class="fas fa-trash-alt"></i></div>
-                                
-                            </div>
-                        </div>
-
-                    </div> -->
                     <div fxFlex="100" class="m-t-20 text-center">
                         <button mat-stroked-button type="button" (click)="onNoClick()"
                             class="outline-danger">Cancel</button>
@@ -415,4 +342,4 @@
         </mat-card-content>
 
     </div>
-</div>
+</div> -->
