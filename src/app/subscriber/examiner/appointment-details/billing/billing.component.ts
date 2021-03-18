@@ -77,7 +77,6 @@ export class BilllableBillingComponent implements OnInit {
   expandedElement1;
   columnName1 = [];
   isMobile1 = false;
-  // dataSource2 = ELEMENT_DATA2;
   documentsData: any = new MatTableDataSource([]);
   columnsToDisplay2 = [];
   expandedElement2;
@@ -113,7 +112,6 @@ export class BilllableBillingComponent implements OnInit {
   filteredmodifier: any;
   modiferList: any = ['93', '94', '95', '96'];
   @ViewChild(MatAutocompleteTrigger, { static: false }) _autoTrigger: MatAutocompleteTrigger;
-  //@ViewChild('auto', { static: false }) matAutocomplete: MatAutocomplete;
   unitTypes: any = [{ unit_type: 'Units', unit_short_code: 'UN' }, { unit_type: 'Pages', unit_short_code: 'UN' }];// { unit_type: 'Minutes', unit_short_code: 'MJ' }]
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   billDocumentList: any;
@@ -200,8 +198,6 @@ export class BilllableBillingComponent implements OnInit {
       }
     })
 
-    //this.filteredmodifier = this.modiferList
-
     this.billingService.seedData("state").subscribe(res => {
       this.states = res.data;
     })
@@ -214,34 +210,8 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   add(event: MatChipInputEvent, group: FormGroup): void {
-    // Add fruit only when MatAutocomplete is not open
-    // To make sure this does not conflict with OptionSelected Event
     return;
-    // if (!this.matAutocomplete.isOpen) {
-    //   const input = event.input;
-    //   const value = event.value;
-
-    //   if (group.value.modifierList.length > 4) {
-    //     this.alertService.openSnackBar("Maximum 4 value", "error");
-    //     return;
-    //   }
-    //   // Add our fruit
-    //   if ((value || '').trim()) {
-    //     let data = group.value.modifierList
-    //     data.push(value.trim())
-    //     group.get('modifierList').setValue(data);
-    //     group.get('modifierList').updateValueAndValidity();
-    //   }
-
-    //   // Reset the input value
-    //   if (input) {
-    //     input.value = '';
-    //   }
-
-    // }
   }
-
-
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
@@ -249,12 +219,9 @@ export class BilllableBillingComponent implements OnInit {
     return this.modiferList.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
   }
 
-
-
   icdCtrl = new FormControl();
   icdSearched = false;
   filteredICD: any = [];
-
 
   openDialog(status?: boolean, group?): void {
     const dialogRef = this.dialog.open(BillingPaymentDialog, {
@@ -269,12 +236,9 @@ export class BilllableBillingComponent implements OnInit {
     });
   }
 
-
-
   openBillOnDemand(): void {
     const dialogRef = this.dialog.open(billingOnDemandDialog, {
       width: '800px',
-      // data: {name: this.name, animal: this.animal}
       data: {
         billingId: this.billingId, claimId: this.paramsId.claim_id, billableId: this.paramsId.billId,
         states: this.states, on_demand_progress_status: this.billingData.on_demand_progress_status, is_w9_form: this.billingData.is_w9_form,
@@ -283,7 +247,6 @@ export class BilllableBillingComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      // this.animal = result;
       if (result) {
         this.getBillingDetails();
       }
@@ -309,50 +272,8 @@ export class BilllableBillingComponent implements OnInit {
       ).subscribe(value => { this.claimService.getICD10(value).subscribe(val => this.filteredICD = val[3]) });
 
 
-    // this.billingService.searchPayor({ search: null }).subscribe(payor => {
-    //   this.payors = payor.data
-    // });
-
-    // this.payorCtrl.valueChanges.subscribe(res => {
-    //   if (res && res.length > 2) {
-    //     this.billingService.searchPayor({ search: res }).subscribe(payor => {
-    //       if (payor.data) {
-    //         this.payors = payor.data
-    //       } else {
-    //         this.payors = [];
-    //       }
-
-    //     });
-    //   }
-    // })
-
-    // this.claimService.seedData('bill_ondemand_document_types').subscribe(type => {
-    //   this.documentList = type['data']
-    // })
-
-    // this.claimService.getProcedureType(2).subscribe(procedure => {
-    //   this.eaxmProcuderalCodes = procedure.data;
-    // })
-
-    // this.claimService.seedData('procedural_codes').subscribe(type => {
-    //   this.procuderalCodes = type['data']
-    // })
-
-    // this.claimService.seedData('modifier').subscribe(type => {
-    //   this.modifiers = type['data']
-    // })
-
-
-
-    // this.claimService.seedData('workcompedi_payor_details').subscribe(type => {
-    //   this.payors = type['data']
-    // })
-
-
-
     this.getDocumentData();
     this.getBillingDetails();
-    // this.getBillLineItem()
     this.getBillDocument();
     //table
     this.touchedRows = [];
@@ -403,11 +324,9 @@ export class BilllableBillingComponent implements OnInit {
       if (billing.data) {
         this.changeColors(billing.data.bill_status_color_code)
         this.billingData = billing.data;
-        // this.statusBarChanges(this.billingData.on_demand_progress_status);
         if (!billing.data) {
           return;
         }
-        // this.payerResponse = billing.data.payor_response_messages;
         for (let payer in billing.data.payor_response_messages) {
           if (billing.data.payor_response_messages[payer].payor_response_status == 'R') {
             if (billing.data.payor_response_messages[payer].payor_response_message.length) {
@@ -449,42 +368,6 @@ export class BilllableBillingComponent implements OnInit {
         })
 
         this.dataSourceDocList = new MatTableDataSource(billing.data.documets_sent_and_received);
-        // if (billing.data && billing.data.billing_line_items) {
-        //   billing.data.billing_line_items.map((item, index) => {
-        //     let firstData = {};
-        //     this.addRow(1);
-        //     let modifier = item.modifier ? item.modifier.split('-') : [];
-        //     billing.data.billing_line_items[index].modifierList = modifier;
-        //     firstData = {
-        //       id: item.id,
-        //       modifierList: modifier,
-        //       item_description: item.item_description,
-        //       procedure_code: item.procedure_code,
-        //       modifier: item.modifier,
-        //       unitType: item.unit_type,
-        //       units: item.units,
-        //       charge: item.charge,
-        //       payment: 0,
-        //       balance: 1,
-        //       isEditable: [true]
-        //     }
-        //     if (item.is_post_payment) {
-        //       this.getFormControls.controls[index].get('item_description').setValidators([]);
-        //       this.getFormControls.controls[index].get('procedure_code').setValidators([]);
-        //       this.getFormControls.controls[index].get('units').setValidators([]);
-        //       this.getFormControls.controls[index].get('charge').setValidators([]);
-        //       this.getFormControls.controls[index].get('item_description').updateValueAndValidity();
-        //       this.getFormControls.controls[index].get('procedure_code').updateValueAndValidity();
-        //       this.getFormControls.controls[index].get('units').updateValueAndValidity();
-        //       this.getFormControls.controls[index].get('charge').updateValueAndValidity();
-        //     }
-        //     this.getFormControls.controls[index].patchValue(firstData)
-        //     if (this.getFormControls.controls[index].status == "VALID") {
-        //       this.getFormControls.controls[index].get('isEditable').setValue(false);
-        //     }
-        //   })
-
-        // }
       }
     }, error => {
       this.logger.error(error)
@@ -602,12 +485,7 @@ export class BilllableBillingComponent implements OnInit {
       }
     }
   }
-  applyFilter(filterValue: string) {
-    // this.dataSource.filter = filterValue.trim().toLowerCase();
-    // if (this.dataSource.paginator) {
-    //   this.dataSource.paginator.firstPage();
-    // }
-  }
+
   getDocumentData() {
     // this.billingService.getDocumentData(this.paramsId.claim_id, this.paramsId.billId).subscribe(res => {
     //   this.documentsData = new MatTableDataSource(res.data);
@@ -670,7 +548,6 @@ export class BilllableBillingComponent implements OnInit {
       this.errors.file.error = "Please select a file";
       return;
     }
-    //this.formData.append('file', this.selectedFile);
     this.formData.append('document_category_id', '8');
     this.formData.append('claim_id', this.paramsId.claim_id);
     this.formData.append('bill_item_id', this.paramsId.billId.toString());
@@ -708,8 +585,6 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   download(element) {
-    // saveAs(data.exam_report_file_url, data.file_name, '_self');
-    // this.alertService.openSnackBar("File downloaded successfully", "success");
     this.billingService.downloadOndemandDocuments({ file_url: element.exam_report_file_url }).subscribe(res => {
       this.alertService.openSnackBar("File downloaded successfully", "success");
       saveAs(res.signed_file_url, element.file_name);
@@ -740,8 +615,6 @@ export class BilllableBillingComponent implements OnInit {
       billable_item_id: this.paramsId.billId,
       service_request_type_id: 5,
       bill_id: this.billingId,
-      //documents_ids: [1753, 1755],
-      //recipients_ids: [2, 3, 4, 5]
     }
 
     this.billingService.onDemandBilling(data).subscribe(bill => {
@@ -876,7 +749,6 @@ export class BilllableBillingComponent implements OnInit {
     })
   }
 
-  //'item', 'procedure_code', 'modifier', 'units', 'charge', 'payment', 'balance', 'action'
   initiateForm(): FormGroup {
     return this.fb.group({
       id: [''],
@@ -905,10 +777,6 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   addRow(status?: number) {
-    // if (this.getFormControls.controls && this.getFormControls.controls.length >= 12) {
-    //   this.alertService.openSnackBar("Maximum 12", 'error');
-    //   return
-    // }
     if (status != 1) {
       let newRowStatus = true
       for (var j in this.getFormControls.controls) {
@@ -1011,9 +879,6 @@ export class BilllableBillingComponent implements OnInit {
       total_charge: this.calculateTotal(),
       unit_type: group.value.unitType,
       unit_short_code: this.getUnitCode(group.value.unitType)
-      //payment: 0,
-      //balance: 1,
-      //isEditable: [false]
     }
 
     this.billingService.createBillLine(this.billingId, this.paramsId.billId, this.paramsId.claim_id, data).subscribe(line => {
@@ -1031,9 +896,6 @@ export class BilllableBillingComponent implements OnInit {
     })
     group.get('isEditable').setValue(false);
   }
-
-  // saveUserDetails() {
-  // }
 
   get getFormControls() {
     const control = this.userTable.get('tableRows') as FormArray;
@@ -1055,7 +917,6 @@ export class BilllableBillingComponent implements OnInit {
         });
         group.get('modifierTotal').patchValue(+calculateChange);
       }
-      //group.get('charge').patchValue(+group.get('modifierTotal').value + +group.get('unitTotal').value);
       let charge = (e * group.get('unit_price').value) + +group.get('modifierTotal').value
       group.get('unitTotal').patchValue(+(e * group.get('unit_price').value))
       group.get('charge').patchValue(+charge)
@@ -1099,10 +960,6 @@ export class BilllableBillingComponent implements OnInit {
 
   }
 
-  // submitForm() {
-  //   const control = this.userTable.get('tableRows') as FormArray;
-  //   this.touchedRows = control.controls.filter(row => row.touched).map(row => row.value);
-  // }
 
   cancelRow(group: FormGroup, i) {
     if (!group.value.id) {
@@ -1167,24 +1024,6 @@ export class BilllableBillingComponent implements OnInit {
       }
       this.getFormControls.controls[i].patchValue(firstData)
     })
-    // if (this.billing_line_items[i].unit_type == 'unit') this.billing_line_items[i].unit_type = 'Units';
-    // if (this.billing_line_items[i].unit_type == 'page') this.billing_line_items[i].unit_type = 'Pages';
-    // let data = {
-    //   id: this.billing_line_items[i].id,
-    //   item_description: this.billing_line_items[i].item_description,
-    //   procedure_code: this.billing_line_items[i].procedure_code,
-    //   modifier: this.billing_line_items[i].modifier,
-    //   modifierList: this.billing_line_items[i].modifierList,
-    //   units: this.billing_line_items[i].units,
-    //   charge: this.billing_line_items[i].charge,
-    //   unitType: this.billing_line_items[i].unit_type,
-    //   payment: 0,
-    //   balance: 0,
-    //   isEditable: [false]
-    // }
-    // let modifier = data.modifier ? data.modifier.split('-') : [];
-    // data.modifierList = modifier;
-    // group.patchValue(data);
     group.get('isEditable').setValue(false);
 
   }
@@ -1296,12 +1135,6 @@ export class BilllableBillingComponent implements OnInit {
       this.alertService.openSnackBar("Document not found", "error");
       return;
     }
-    // this.billingService.billingDownloadAll(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId).subscribe(doc => {
-    //   saveAs(doc.data.file_url, doc.data.file_name, '_self');
-    //   this.alertService.openSnackBar("Document(s) downloaded successfully", "success");
-    // }, error => {
-    //   this.alertService.openSnackBar(error.error.message, "error");
-    // })
   }
 
   inOutdownload(data) {
@@ -1354,6 +1187,21 @@ export class BilllableBillingComponent implements OnInit {
     })
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///Blling end
 
 //post payment 
 @Component({
