@@ -1,0 +1,27 @@
+@import "variables";
+@import "table";
+@import "../../billing/billing.component.scss";
+
+.diagnosis-info {
+    margin-top: 20px;
+    mat-card {
+        box-shadow: $shadow-style-one !important;
+        &:hover {
+            box-shadow: $shadow-style-one-hover;
+        }
+        mat-card-header {
+            .content-wrapper-main-title {
+                width: 100%;
+                .info {
+                    line-height: 0.6 !important;
+                }
+            }
+        }
+        mat-card-content {
+            .vertical-fixed {
+                min-height: 197px !important;
+                max-height: 197px !important;
+            }
+        }
+    }
+}

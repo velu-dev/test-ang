@@ -68,11 +68,11 @@ export class BilllableBillingComponent implements OnInit {
       shareReplay()
     );
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
-  columnsToDisplay = [];
-  IcdDataSource = new MatTableDataSource([]);
+  //columnsToDisplay = [];
+  //IcdDataSource = new MatTableDataSource([]);
   expandedElement;
   isMobile = false;
-  columnName = [];
+ // columnName = [];
   columnsToDisplay1 = [];
   expandedElement1;
   columnName1 = [];
@@ -81,7 +81,7 @@ export class BilllableBillingComponent implements OnInit {
   columnsToDisplay2 = [];
   expandedElement2;
   columnName2 = [];
-  dataSourceDocList = new MatTableDataSource([]);
+  //dataSourceDocList = new MatTableDataSource([]);
   columnsToDisplayDoc = [];
   expandedElement3;
   columnsNameDoc = [];
@@ -174,13 +174,13 @@ export class BilllableBillingComponent implements OnInit {
     })
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
-      if (res) {
-        this.columnName = ["", "Code", "Action"]
-        this.columnsToDisplay = ['is_expand', 'code', 'action']
-      } else {
-        this.columnName = ["Code", "Name", "Action"]
-        this.columnsToDisplay = ['code', 'name', 'action']
-      }
+      // if (res) {
+      //   this.columnName = ["", "Code", "Action"]
+      //   this.columnsToDisplay = ['is_expand', 'code', 'action']
+      // } else {
+      //   this.columnName = ["Code", "Name", "Action"]
+      //   this.columnsToDisplay = ['code', 'name', 'action']
+      // }
       if (res) {
         this.columnName2 = ["", "File Name"]
         this.columnsToDisplay2 = ['is_expand', 'file_name']
@@ -219,9 +219,9 @@ export class BilllableBillingComponent implements OnInit {
   //   return this.modiferList.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
   // }
 
-  icdCtrl = new FormControl();
-  icdSearched = false;
-  filteredICD: any = [];
+  // icdCtrl = new FormControl();
+  // icdSearched = false;
+  // filteredICD: any = [];
 
   openDialog(status?: boolean, group?): void {
     const dialogRef = this.dialog.open(BillingPaymentDialog, {
@@ -262,14 +262,14 @@ export class BilllableBillingComponent implements OnInit {
   ngOnInit() {
     this.styleElement = document.createElement("style");
     this.changeColors("#cccccc");
-    this.claimService.getICD10('a').subscribe(icd => {
-      this.filteredICD = icd[3];
-    });
+    // this.claimService.getICD10('a').subscribe(icd => {
+    //   this.filteredICD = icd[3];
+    // });
 
-    this.icdCtrl.valueChanges
-      .pipe(
-        debounceTime(300),
-      ).subscribe(value => { this.claimService.getICD10(value).subscribe(val => this.filteredICD = val[3]) });
+    // this.icdCtrl.valueChanges
+    //   .pipe(
+    //     debounceTime(300),
+    //   ).subscribe(value => { this.claimService.getICD10(value).subscribe(val => this.filteredICD = val[3]) });
 
 
     this.getDocumentData();
@@ -358,16 +358,16 @@ export class BilllableBillingComponent implements OnInit {
         } else {
           this.intercom.setBillNo('Bill');
         }
-        this.icdData = billing.data && billing.data.billing_diagnosis_code ? billing.data.billing_diagnosis_code : [];
-        this.IcdDataSource = new MatTableDataSource(this.icdData);
-        this.IcdDataSource.sort = this.sort;
+        // this.icdData = billing.data && billing.data.billing_diagnosis_code ? billing.data.billing_diagnosis_code : [];
+        // this.IcdDataSource = new MatTableDataSource(this.icdData);
+        // this.IcdDataSource.sort = this.sort;
         billing.data.documets_sent_and_received.map(doccc => {
           if (doccc.file_name == "DOCUMENTS_1140121036_BILL_20201209_051281_819.pdf") {
             this.logger.log("billing", doccc)
           }
         })
 
-        this.dataSourceDocList = new MatTableDataSource(billing.data.documets_sent_and_received);
+        //this.dataSourceDocList = new MatTableDataSource(billing.data.documets_sent_and_received);
       }
     }, error => {
       this.logger.error(error)
@@ -376,96 +376,96 @@ export class BilllableBillingComponent implements OnInit {
 
 
 
-  icdData = [];
-  selectedIcd = { code: "", name: "" };
-  selectICD(icd) {
-    this.selectedIcd = { code: icd[0], name: icd[1] }
-    this.addIcd()
+  // icdData = [];
+  // selectedIcd = { code: "", name: "" };
+  // selectICD(icd) {
+  //   this.selectedIcd = { code: icd[0], name: icd[1] }
+  //   this.addIcd()
 
-  }
+  // }
   openSnackBar() {
     this.alertService.openSnackBar("Payor changed successfully", "success");
   }
-  addIcd() {
-    if (this.icdData && this.icdData.length >= 12) {
-      this.icdCtrl.reset();
-      this.alertService.openSnackBar("Maximum 12 Diagnosis Codes will be allowed here!", 'error');
-      return
-    }
+  // addIcd() {
+  //   if (this.icdData && this.icdData.length >= 12) {
+  //     this.icdCtrl.reset();
+  //     this.alertService.openSnackBar("Maximum 12 Diagnosis Codes will be allowed here!", 'error');
+  //     return
+  //   }
 
-    if (this.selectedIcd.code != '') {
-      let icdStatus = true;
-      if (this.icdData.length) {
-        for (var j in this.icdData) {
-          if (this.icdData[j].code == this.selectedIcd.code && this.icdData[j].name == this.selectedIcd.name) {
-            icdStatus = false;
-          }
-        }
-      }
-      if (!icdStatus) {
-        this.icdCtrl.reset();
-        this.alertService.openSnackBar("Already added", 'error');
-        return
-      }
-      this.filteredICD = [];
-      this.icdData = this.IcdDataSource.data;
-      this.icdData.push(this.selectedIcd)
-      let data = { id: this.billingId, claim_id: this.paramsId.claim_id, billable_item_id: this.paramsId.billId, diagnosis_code: this.icdData }
-      this.billingService.updateDiagnosisCode(data).subscribe(code => {
-        this.IcdDataSource = new MatTableDataSource(this.icdData);
-        this.selectedIcd = { code: "", name: "" };
-        this.alertService.openSnackBar("ICD data added successfully", "success");
-        this.icdCtrl.reset();
-        this.filteredICD = [];
-        this.logger.log("icd 10 data", this.icdData)
-      }, error => {
-        this.logger.error(error)
-      })
+  //   if (this.selectedIcd.code != '') {
+  //     let icdStatus = true;
+  //     if (this.icdData.length) {
+  //       for (var j in this.icdData) {
+  //         if (this.icdData[j].code == this.selectedIcd.code && this.icdData[j].name == this.selectedIcd.name) {
+  //           icdStatus = false;
+  //         }
+  //       }
+  //     }
+  //     if (!icdStatus) {
+  //       this.icdCtrl.reset();
+  //       this.alertService.openSnackBar("Already added", 'error');
+  //       return
+  //     }
+  //     this.filteredICD = [];
+  //     this.icdData = this.IcdDataSource.data;
+  //     this.icdData.push(this.selectedIcd)
+  //     let data = { id: this.billingId, claim_id: this.paramsId.claim_id, billable_item_id: this.paramsId.billId, diagnosis_code: this.icdData }
+  //     this.billingService.updateDiagnosisCode(data).subscribe(code => {
+  //       this.IcdDataSource = new MatTableDataSource(this.icdData);
+  //       this.selectedIcd = { code: "", name: "" };
+  //       this.alertService.openSnackBar("ICD data added successfully", "success");
+  //       this.icdCtrl.reset();
+  //       this.filteredICD = [];
+  //       this.logger.log("icd 10 data", this.icdData)
+  //     }, error => {
+  //       this.logger.error(error)
+  //     })
 
-    }
-  }
-  removeICD(icd) {
-    this.openDialogDiagnosis('remove', icd);
-  }
+  //   }
+  // }
+  // removeICD(icd) {
+  //   this.openDialogDiagnosis('remove', icd);
+  // }
 
-  openDialogDiagnosis(dialogue, icd) {
-    const dialogRef = this.dialog.open(DialogueComponent, {
-      width: '500px',
-      data: { name: dialogue, address: true, title: icd.code + " - " + icd.name }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result['data']) {
-        let index = 0;
-        this.icdData.map(res => {
-          if (res.code == icd.code) {
-            this.icdData.splice(index, 1);
-            let data = { claim_id: this.paramsId.claim_id, billable_item_id: this.paramsId.billId, id: this.billingId, diagnosis_code: this.icdData }
-            this.billingService.updateDiagnosisCode(data).subscribe(code => {
-              this.IcdDataSource = new MatTableDataSource(this.icdData);
-              this.selectedIcd = { code: "", name: "" };
-              this.alertService.openSnackBar("ICD data removed successfully", "success");
-              this.icdCtrl.reset();
-            }, error => {
-              this.logger.error(error)
-            })
-          }
-          index = index + 1;
-        })
-      }
-    })
-  }
-  icdExpandID: any;
+  // openDialogDiagnosis(dialogue, icd) {
+  //   const dialogRef = this.dialog.open(DialogueComponent, {
+  //     width: '500px',
+  //     data: { name: dialogue, address: true, title: icd.code + " - " + icd.name }
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result['data']) {
+  //       let index = 0;
+  //       this.icdData.map(res => {
+  //         if (res.code == icd.code) {
+  //           this.icdData.splice(index, 1);
+  //           let data = { claim_id: this.paramsId.claim_id, billable_item_id: this.paramsId.billId, id: this.billingId, diagnosis_code: this.icdData }
+  //           this.billingService.updateDiagnosisCode(data).subscribe(code => {
+  //             this.IcdDataSource = new MatTableDataSource(this.icdData);
+  //             this.selectedIcd = { code: "", name: "" };
+  //             this.alertService.openSnackBar("ICD data removed successfully", "success");
+  //             this.icdCtrl.reset();
+  //           }, error => {
+  //             this.logger.error(error)
+  //           })
+  //         }
+  //         index = index + 1;
+  //       })
+  //     }
+  //   })
+  // }
+  //icdExpandID: any;
   expandId1: any;
   expandId2: any = -1;
   expandIdDoc: any;
-  openElement(element) {
-    if (this.isMobile)
-      if (this.icdExpandID && this.icdExpandID == element.id) {
-        this.icdExpandID = null;
-      } else {
-        this.icdExpandID = element.id;
-      }
-  }
+  // openElement(element) {
+  //   if (this.isMobile)
+  //     if (this.icdExpandID && this.icdExpandID == element.id) {
+  //       this.icdExpandID = null;
+  //     } else {
+  //       this.icdExpandID = element.id;
+  //     }
+  // }
 
   openElementBill(element) {
     if (this.isMobile)
