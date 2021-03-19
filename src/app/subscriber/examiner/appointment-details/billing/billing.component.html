@@ -138,17 +138,13 @@
         </mat-card>
     </div>
     <!-- ===== Diagnosis Codes ==== -->
-    <div class="diagnosis-info">
         <app-diagnosis-code *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
         </app-diagnosis-code>
-    </div>
  
     <!-- ===== Bill Items ==== -->
    
-    <div class="bill-item">
         <app-bill-line-item *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
         </app-bill-line-item>
-    </div>
 
 
     <!-- ===== Payment Response ==== -->
