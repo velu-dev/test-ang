@@ -692,7 +692,9 @@ export class AppointmentDetailsComponent implements OnInit {
 
   updateExamStatus() {
     this.examinationStatusForm.patchValue({ id: this.billableId, notes: this.examinationStatusForm.value.examination_notes.trim() })
-    this.examinerService.updateExaminationStatus(this.examinationStatusForm.value).subscribe(res => {
+    let data = this.examinationStatusForm.value
+    data['appointment_id'] = this.appointmentId
+    this.examinerService.updateExaminationStatus(data).subscribe(res => {
       this.examinationStatusForm.disable()
       this.isExaminationStatusEdit = false;
       this.alertService.openSnackBar(this.isDisplayStatus.name + ' details updated Successfully', "success");
@@ -862,7 +864,6 @@ export class AppointmentDetailsComponent implements OnInit {
     } else {
       this.billable_item.get('intake_call').get('call_date').setValidators([]);
     }
-    this.billable_item.get('intake_call').get('call_date').updateValueAndValidity();
     Object.keys(this.billable_item.controls).forEach((key) => {
       console.log(this.billable_item.get(key).value)
       if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')

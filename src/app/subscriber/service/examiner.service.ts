@@ -95,7 +95,7 @@ export class ExaminerService {
     return this.http.post(environment.baseUrl + api_endpoint.updateExistingLocation, data)
   }
   updateExaminationStatus(data): Observable<any> {
-    return this.http.put(environment.baseUrl + api_endpoint.updateExamType + data.id, data)
+    return this.http.put(environment.baseUrl + api_endpoint.updateExamType + data.appointment_id, data)
   }
   updateBillableItem(billable_item, data): Observable<any> {
     return this.http.put(environment.baseUrl + api_endpoint.update_billable_item + billable_item, data)
