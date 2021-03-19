@@ -718,15 +718,16 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   billableCancel() {
     this.billable_item.disable();
+    this.billable_item.patchValue(this.billableData);
     if (this.billableData.appointment.is_virtual_location) {
       this.service_location_name = '0';
       this.billable_item.patchValue({
         appointment: {
-          examiner_service_location_id: "0"
+          examiner_service_location_id: "0",
+          is_virtual_location: true
         }
       })
     }
-    this.billable_item.patchValue(this.billableData);
     this.isEditBillableItem = false;
     this.procuderalCodes.map(proc => {
       if (proc.exam_procedure_type_id == this.billable_item.get(['exam_type', 'exam_procedure_type_id']).value) {
