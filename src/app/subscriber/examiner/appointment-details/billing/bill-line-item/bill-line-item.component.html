@@ -1,0 +1,428 @@
+<!-- ===== Bill Items ==== -->
+<div class="bill-item">
+    <mat-card>
+        <mat-card-header>
+            <div class="content-wrapper-main-title">Billing Line Items</div>
+            <span class="spacer"></span>
+            <button mat-raised-button class="filled-gray m-b-5" (click)="addRow()">
+                Add Billing Line Item
+            </button>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content class="m-b-10">
+            <div fxLayout="row wrap">
+                <div fxFlex="100" class="note">
+                    <mat-icon>info</mat-icon> Note : Item and Procedure code can have alphanumeric, hyphen and
+                    forward slash
+                </div>
+            </div>
+            <div fxLayout="row wrap">
+                <div #scrollBottom class="user-detail vertical-fixed hide-mobile">
+
+                    <form [formGroup]="userTable">
+                        <table class="table table-border res-table" [ngClass]="{'table-dark': mode}">
+                            <thead class="text-nowrap">
+                                <th>Item </th>
+                                <th>Procedure Code</th>
+                                <th>Modifier</th>
+                                <th>Unit Type</th>
+                                <th>Units</th>
+                                <th>Charge</th>
+                                <th>Payment</th>
+                                <th>Balance</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody>
+                                <ng-container formArrayName="tableRows"
+                                    *ngFor="let group of getFormControls.controls ; let i=index">
+                                    <tr *ngIf="group.get('isEditable').value" [formGroupName]="i"
+                                        (click)="rowSelected(group)">
+                                        <td>
+                                            <mat-form-field appearance="outline"
+                                                *ngIf="!group.get('is_auto_generate').value && i != 0">
+                                                <input matInput type="text" name="item_description" autocomplete="off"
+                                                    formControlName="item_description" pattern="[a-zA-Z0-9/ -]+">
+                                            </mat-form-field>
+                                            <span *ngIf="group.get('is_auto_generate').value || i == 0">
+                                                {{group.get('item_description').value}}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <mat-form-field appearance="outline">
+                                                <input matInput type="text"
+                                                    oninput="this.value = this.value.toUpperCase()"
+                                                    (change)="procedureChange($event.target.value,group)"
+                                                    name="procedure_code" autocomplete="off"
+                                                    formControlName="procedure_code" pattern="[a-zA-Z0-9/ -]+">
+                                            </mat-form-field>
+                                        </td>
+                                        <td class="bill-modifier">
+
+                                            <mat-form-field class="chip-list">
+                                                <mat-chip-list #chipList aria-label="Modifier selection"
+                                                    formControlName="modifierList">
+                                                    <mat-chip *ngFor="let modifier of group.value.modifierList"
+                                                        [removable]="removable" (removed)="remove(modifier,group,i)">
+                                                        {{modifier}}
+                                                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                                    </mat-chip>
+                                                    <input #modifierInput formControlName="modifier"
+                                                        [matAutocomplete]="auto1" [matChipInputFor]="chipList"
+                                                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                        [matChipInputAddOnBlur]="addOnBlur"
+                                                        #trigger="matAutocompleteTrigger"
+                                                        (matChipInputTokenEnd)="add($event,group)"
+                                                        (click)="openAuto($event,trigger)">
+                                                </mat-chip-list>
+                                                <mat-autocomplete #auto1="matAutocomplete"
+                                                    (optionSelected)="selected($event,group,i)">
+                                                    <mat-option
+                                                        *ngFor="let modifier of group.get('is_auto_generate').value || group.get('is_excess_pages').value? group.value.filteredmodifier : filteredmodifier"
+                                                        [value]="modifier">
+                                                        {{modifier}}
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+                                        </td>
+                                        <td>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-select formControlName="unitType">
+                                                    <mat-option *ngFor="let unit of unitTypes" [value]="unit.unit_type">
+                                                        {{unit.unit_type}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </td>
+                                        <td>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <input matInput min="1"
+                                                    (change)="unitChange(group,i,$event.target.value)" type="number"
+                                                    autocomplete="off" formControlName="units">
+                                            </mat-form-field>
+                                        </td>
+                                        <td>
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <input matInput min="0" type="number" autocomplete="off"
+                                                    formControlName="charge" (change)="setTwoNumberDecimal($event)">
+                                                <span matPrefix>$&nbsp;</span>
+                                            </mat-form-field>
+                                        </td>
+                                        <td>
+                                            {{group.get('payment').value > -1 ? '$ ' : ''}}{{group.get('payment').value
+                                            | number : '1.2-2'}}
+                                        </td>
+                                        <td>
+                                            <span class="text-danger">
+                                                {{group.get('charge').value > -1 ? '$ ' :
+                                                ''}}{{group.get('charge').value - group.value.payment | number :
+                                                '1.2-2'}}</span>
+                                        </td>
+
+                                        <td class="no-wrap-td">
+                                            <a class="text-success" (click)="doneRow(group,i)">
+                                                Save
+                                            </a>
+                                            <a class="text-danger m-l-10" (click)="cancelRow(group,i)">
+                                                Cancel
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="!group.get('isEditable').value" class="bill-value">
+                                        <td>
+                                            {{group.get('item_description').value}}
+                                        </td>
+                                        <td>
+                                            {{group.get('procedure_code').value}}
+                                        </td>
+                                        <td>
+                                            {{group.get('modifierList').value}}
+                                        </td>
+                                        <td>
+                                            {{group.get('unitType').value}}
+                                        </td>
+                                        <td>
+                                            {{group.get('units').value}}
+                                        </td>
+                                        <td>
+                                            {{group.get('charge').value > -1 ? '$ ' : ''}}{{group.get('charge').value |
+                                            number : '1.2-2'}}
+                                        </td>
+                                        <td>
+                                            {{group.get('payment').value > -1 ? '$ ' : ''}}{{group.get('payment').value
+                                            | number : '1.2-2'}}
+                                        </td>
+                                        <td>
+                                            {{group.get('charge').value > -1 ? '$ ' : ''}}{{(group.get('charge').value)
+                                            | number : '1.2-2'}}
+                                        </td>
+                                        <td class="no-wrap-td">
+
+                                            <a class="text-success"
+                                                (click)="editRow(group,i)">
+                                                Edit
+                                            </a>
+
+                                            <a *ngIf="i != 0" class="text-danger m-l-10" (click)="deleteRow(i,group)">
+                                                Remove
+                                            </a>
+                                        </td>
+                                    </tr>
+
+                                </ng-container>
+
+                            </tbody>
+                            <tfoot *ngIf="getFormControls.controls.length > 0">
+                                <tr class="bill-value" id="static-footer">
+                                    <td>Total </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{{calculateTotal()? '$ ' : ''}}{{calculateTotal() | number : '1.2-2'}}</td>
+                                    <td>{{calculateTotalPayment()? '$ ' : ''}}{{calculateTotalPayment() | number :
+                                        '1.2-2' }}</td>
+                                    <td><span class="text-danger">{{calculateTotalBal()? '$ ' :
+                                            ''}}{{calculateTotalBal() | number : '1.2-2'}}</span>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </mat-card-content>
+
+
+
+
+        <div class="bill-line-mobile show-mobile">
+            <form [formGroup]="userTable">
+                <table>
+                    <tbody>
+                        <ng-container formArrayName="tableRows"
+                            *ngFor="let group of getFormControls.controls ; let i=index">
+                            <tr *ngIf="group.get('isEditable').value" [formGroupName]="i" (click)="rowSelected(group)"
+                                class="editable-bill">
+                                <td>
+                                    <mat-card>
+                                        <div class="flex">
+                                            <div class="bill-property">Item</div>
+                                            <div class="editable">
+                                                <mat-form-field appearance="outline"
+                                                    *ngIf="!group.get('is_auto_generate').value && i != 0">
+                                                    <input matInput type="text" name="item_description"
+                                                        autocomplete="off" formControlName="item_description"
+                                                        pattern="[a-zA-Z0-9/ -]+">
+                                                </mat-form-field>
+                                                <span *ngIf="group.get('is_auto_generate').value || i == 0">
+                                                    {{group.get('item_description').value}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="bill-property">Procedure Code</div>
+                                            <div class="editable">
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput type="text"
+                                                        oninput="this.value = this.value.toUpperCase()"
+                                                        (change)="procedureChange($event.target.value,group)"
+                                                        name="procedure_code" autocomplete="off"
+                                                        formControlName="procedure_code" pattern="[a-zA-Z0-9/ -]+">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="bill-property">Modifier</div>
+                                            <div class="editable">
+                                                <mat-form-field class="chip-list">
+                                                    <mat-chip-list #chipList aria-label="Modifier selection"
+                                                        formControlName="modifierList">
+                                                        <mat-chip *ngFor="let modifier of group.value.modifierList"
+                                                            [removable]="removable"
+                                                            (removed)="remove(modifier,group,i)">
+                                                            {{modifier}}
+                                                            <mat-icon matChipRemove *ngIf="removable">cancel
+                                                            </mat-icon>
+                                                        </mat-chip>
+                                                        <input #modifierInput formControlName="modifier"
+                                                            [matAutocomplete]="auto1" [matChipInputFor]="chipList"
+                                                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                            [matChipInputAddOnBlur]="addOnBlur"
+                                                            #trigger="matAutocompleteTrigger"
+                                                            (matChipInputTokenEnd)="add($event,group)"
+                                                            (click)="openAuto($event,trigger)">
+                                                    </mat-chip-list>
+                                                    <mat-autocomplete #auto1="matAutocomplete"
+                                                        (optionSelected)="selected($event,group,i)">
+                                                        <mat-option
+                                                            *ngFor="let modifier of group.get('is_auto_generate').value || group.get('is_excess_pages').value? group.value.filteredmodifier : filteredmodifier"
+                                                            [value]="modifier">
+                                                            {{modifier}}
+                                                        </mat-option>
+                                                    </mat-autocomplete>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="bill-property">Unit Type</div>
+                                            <div class="editable">
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <mat-select formControlName="unitType">
+                                                        <mat-option *ngFor="let unit of unitTypes"
+                                                            [value]="unit.unit_type">
+                                                            {{unit.unit_type}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="bill-property">Units</div>
+                                            <div class="editable">
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <input matInput min="1"
+                                                        (change)="unitChange(group,i,$event.target.value)" type="number"
+                                                        autocomplete="off" formControlName="units">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="bill-property">Charge</div>
+                                            <div class="editable">
+                                                <mat-form-field appearance="outline" class="w-100">
+                                                    <input matInput min="0" type="number" autocomplete="off"
+                                                        formControlName="charge" (change)="setTwoNumberDecimal($event)">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="bill-property">Payment</div>
+                                            <div class="editable">{{group.value.payment? '$ ' :
+                                                ''}}{{group.value.payment | number : '1.2-2'}}</div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="bill-property">Balance</div>
+                                            <div class="editable">
+                                                <span class="text-danger">
+                                                    {{group.get('charge').value? '$ ' : ''}}{{group.get('charge').value
+                                                    - group.value.payment | number :
+                                                    '1.2-2'}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="bill-property">Action </div>
+                                            <div class="editable">
+                                                <a class="text-success" (click)="doneRow(group,i)">
+                                                    Save
+                                                </a>
+                                                <a class="text-danger m-l-10" (click)="cancelRow(group,i)">
+                                                    Cancel
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </mat-card>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td *ngIf="!group.get('isEditable').value">
+
+                                    <mat-accordion>
+                                        <mat-expansion-panel>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    <mat-icon class="expand-close p-t-0">add_circle</mat-icon>
+                                                    <b>Item :</b> {{group.get('item_description').value}}
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <mat-card>
+                                                <div class="flex">
+                                                    <div class="bill-property">Item</div>
+                                                    <div class="value">{{group.get('item_description').value}}
+                                                    </div>
+                                                </div>
+                                                <div class="flex">
+                                                    <div class="bill-property">Procedure Code</div>
+                                                    <div class="value">{{group.get('procedure_code').value}}</div>
+                                                </div>
+                                                <div class="flex">
+                                                    <div class="bill-property">Modifier</div>
+                                                    <div class="value">{{group.get('modifierList').value}}</div>
+                                                </div>
+                                                <div class="flex">
+                                                    <div class="bill-property">Unit Type</div>
+                                                    <div class="value">{{group.get('unitType').value}}</div>
+                                                </div>
+                                                <div class="flex">
+                                                    <div class="bill-property">Units</div>
+                                                    <div class="value">{{group.get('units').value}}</div>
+                                                </div>
+                                                <div class="flex">
+                                                    <div class="bill-property">Charge</div>
+                                                    <div class="value">
+                                                        {{group.get('charge').value? '$ ' :
+                                                        ''}}{{group.get('charge').value | number : '1.2-2'}}</div>
+                                                </div>
+                                                <div class="flex">
+                                                    <div class="bill-property">Payment</div>
+                                                    <div class="value">
+                                                        {{group.get('payment').value? '$ ' :
+                                                        ''}}{{group.get('payment').value | number : '1.2-2'}}</div>
+                                                </div>
+                                                <div class="flex">
+                                                    <div class="bill-property">Balance</div>
+                                                    <div class="value">
+                                                        {{group.get('charge').value? '$ ' :
+                                                        ''}}{{(group.get('charge').value) | number : '1.2-2'}}</div>
+                                                </div>
+                                                <div class="flex">
+                                                    <div class="bill-property">Action </div>
+                                                    <div class="value">
+                                                        <a class="text-success"
+                                                            (click)="editRow(group,i)">Edit</a>
+                                                        <a *ngIf="i != 0" class="text-danger m-l-10"
+                                                            (click)="deleteRow(i,group)">Remove</a>
+                                                    </div>
+                                                </div>
+                                            </mat-card>
+
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                    <tfoot *ngIf="getFormControls.controls.length > 0">
+                        <tr class="bill-value" id="static-footer">
+                            <td>
+                                <mat-card>
+                                    <div class="grid-list">
+                                        <div><b>Total Charge </b></div>
+                                        <div>{{calculateTotal()? '$ ' : ''}}{{calculateTotal() | number : '1.2-2'}}
+                                        </div>
+                                    </div>
+
+                                    <div class="grid-list">
+                                        <div><b>Total Payment</b></div>
+                                        <div>{{calculateTotalPayment()? '$ ' : ''}}{{calculateTotalPayment() | number :
+                                            '1.2-2' }}</div>
+                                    </div>
+
+                                    <div class="grid-list">
+                                        <div><b>Total Balance: </b></div>
+                                        <div class="text-danger">
+                                            {{calculateTotalBal()? '$ ' : ''}}{{calculateTotalBal() | number : '1.2-2'}}
+                                        </div>
+                                    </div>
+                                </mat-card>
+                            </td>
+
+                        </tr>
+                    </tfoot>
+                </table>
+            </form>
+        </div>
+
+    </mat-card>
+</div>

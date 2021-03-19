@@ -69,6 +69,7 @@ import { StripeService } from './service/stripe.service';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { CloseBill, EditResponse, LateResponse, PaymentResponseComponent, SecondBillReview, VoidPayment } from './examiner/appointment-details/billing/payment-response/payment-response.component';
 import { SearchClaimComponent } from './components/search-claim/search-claim.component';
+import { BillLineItemComponent } from './examiner/appointment-details/billing/bill-line-item/bill-line-item.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -149,7 +150,8 @@ import { SearchClaimComponent } from './components/search-claim/search-claim.com
     SearchClaimComponent,
     MailOnDemandConfirm,
     EditResponse,
-    LateResponse
+    LateResponse,
+    BillLineItemComponent
    
   ],
   entryComponents: [
