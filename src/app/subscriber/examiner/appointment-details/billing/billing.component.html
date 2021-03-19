@@ -11,9 +11,10 @@
             <!-- ===== Independent Bill Submission ===== -->
         </mat-tab>
     </mat-tab-group>
-
+    <app-billing-info *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
+    </app-billing-info>
     <!-- ===== Bill Status ==== -->
-    <div fxLayout="row wrap" class="p-t-20">
+    <!-- <div fxLayout="row wrap" class="p-t-20">
         <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100" class="bill-status">
             <div class="progress">
                 <div class="main-title p-l-0">Bill Status</div>
@@ -38,10 +39,10 @@
         </div>
     </div>
 
-    <div class="border-dashed-blue"></div>
+    <div class="border-dashed-blue"></div> -->
 
     <!-- ===== incomplete information ==== -->
-    <div class="incomplete-info" *ngIf="!isIncompleteError">
+    <!-- <div class="incomplete-info" *ngIf="!isIncompleteError">
         <mat-card>
             <mat-card-header>
                 <div class="content-wrapper-main-title text-danger">Incomplete Information
@@ -94,10 +95,10 @@
                 </div>
             </mat-card-content>
         </mat-card>
-    </div>
+    </div> -->
 
     <!-- ===== Examiner information ==== -->
-    <div class="examiner-info">
+    <!-- <div class="examiner-info">
         <mat-card>
             <mat-card-header>
                 <div class="content-wrapper-main-title">Provider Information</div>
@@ -136,7 +137,7 @@
                 </div>
             </mat-card-content>
         </mat-card>
-    </div>
+    </div> -->
     <!-- ===== Diagnosis Codes ==== -->
     <app-diagnosis-code *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
     </app-diagnosis-code>
