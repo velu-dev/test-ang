@@ -22,6 +22,7 @@ export class BillLineItemComponent implements OnInit {
 
   @Input() billingData: any;
   @Input() paramsId: any;
+  @Input() isMobile: any;
   //@Input() billingId: number;
   //table
   userTable: FormGroup;
