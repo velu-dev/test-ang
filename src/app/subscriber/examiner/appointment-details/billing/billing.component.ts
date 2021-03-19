@@ -72,7 +72,7 @@ export class BilllableBillingComponent implements OnInit {
   //IcdDataSource = new MatTableDataSource([]);
   expandedElement;
   isMobile = false;
- // columnName = [];
+  // columnName = [];
   columnsToDisplay1 = [];
   expandedElement1;
   columnName1 = [];
@@ -157,6 +157,7 @@ export class BilllableBillingComponent implements OnInit {
         this.billingService.billCreate(param.claim_id, param.billId).subscribe(bill => {
           console.log(bill)
           this.billingId = bill.data.bill_id
+          this.paramsId['billingId'] = bill.data.bill_id;
         }, error => {
           this.logger.error(error)
         })
@@ -231,7 +232,7 @@ export class BilllableBillingComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-       // this.getBillLineItem();
+        // this.getBillLineItem();
       }
     });
   }
@@ -320,7 +321,7 @@ export class BilllableBillingComponent implements OnInit {
   payerResponse: any = [];
   getBillingDetails() {
 
-    this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId).subscribe(billing => {
+    this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId, this.billingId).subscribe(billing => {
       if (billing.data) {
         this.changeColors(billing.data.bill_status_color_code)
         this.billingData = billing.data;

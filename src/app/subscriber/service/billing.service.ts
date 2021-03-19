@@ -33,8 +33,8 @@ export class BillingService {
     return this.http.delete(environment.baseUrl + api_endpoint.deleteDocument + id + "/" + isBillableItemDocument)
   }
 
-  getBilling(id, billId): Observable<any> {
-    return this.http.get(environment.baseUrl + api_endpoint.getbilling + id + '/' + billId)
+  getBilling(id, billId, billing): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getbilling + id + '/' + billId + '/' + billing)
   }
 
   createBillLine(billId, billableId, claim_id, data): Observable<any> {
@@ -69,8 +69,8 @@ export class BillingService {
     return this.http.put(environment.baseUrl + api_endpoint.billingPostPayment + id, data)
   }
 
-  getBillLineItem(claimID, billableId): Observable<any> {
-    return this.http.get(environment.baseUrl + api_endpoint.getBillLine + claimID + '/' + billableId)
+  getBillLineItem(claimID, billableId, billingId): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getBillLine + claimID + '/' + billableId + '/' + billingId)
   }
 
   getPostPayment(id): Observable<any> {

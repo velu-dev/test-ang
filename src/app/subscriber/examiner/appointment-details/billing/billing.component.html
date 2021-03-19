@@ -138,13 +138,13 @@
         </mat-card>
     </div>
     <!-- ===== Diagnosis Codes ==== -->
-        <app-diagnosis-code *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
-        </app-diagnosis-code>
- 
+    <app-diagnosis-code *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
+    </app-diagnosis-code>
+
     <!-- ===== Bill Items ==== -->
-   
-        <app-bill-line-item *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
-        </app-bill-line-item>
+
+    <app-bill-line-item *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
+    </app-bill-line-item>
 
 
     <!-- ===== Payment Response ==== -->
@@ -344,7 +344,8 @@
 
     <!-- ===== Billing Documents ==== -->
     <div class="completed-documents m-t-30">
-        <app-billing-document *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile"></app-billing-document>
+        <app-billing-document *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData"
+            [isMobile]="isMobile"></app-billing-document>
         <!-- <mat-card>
             <mat-card-content>
                 <div fxLayout="row wrap" class="w-100">
