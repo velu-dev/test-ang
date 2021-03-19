@@ -344,7 +344,8 @@
 
     <!-- ===== Billing Documents ==== -->
     <div class="completed-documents m-t-30">
-        <mat-card>
+        <app-billing-document *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile"></app-billing-document>
+        <!-- <mat-card>
             <mat-card-content>
                 <div fxLayout="row wrap" class="w-100">
                     <div fxFlex="100">
@@ -473,6 +474,6 @@
                     </div>
                 </div>
             </mat-card-content>
-        </mat-card>
+        </mat-card> -->
     </div>
 </div>
