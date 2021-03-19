@@ -40,6 +40,9 @@ export class ClaimAdminComponent implements OnInit {
     //       map(value => this._filterAttroney(value, this.claimAdminList))
     //     );
     // })
+    this.claimService.searchEAMSAdmin({ search: "" }).subscribe(res => {
+      this.claimAdminGroupOptions = [{ name: "Simplexam Addresses", data: res.data }];
+    })
     this.claimAdminForm = this.formBuilder.group({
       id: [],
       company_name: [{ value: null, disabled: true }, Validators.compose([Validators.pattern("^[a-zA-Z0-9-&/' ]{0,100}$")])],

@@ -39,6 +39,11 @@ export class DeoComponent implements OnInit {
     });
     this.claimService.getDeuDetails().subscribe(res => {
       this.deuDetails = res.data;
+      this.filteredDeu = this.deuCtrl.valueChanges
+        .pipe(
+          startWith(''),
+          map(deu => deu ? this._filteDeu(deu) : this.deuDetails.slice())
+        );
       this.deuCtrl.valueChanges
         .pipe(
           debounceTime(300),

@@ -32,6 +32,9 @@ export class DefenseAttorneyComponent implements OnInit {
     this.claimService.seedData("state").subscribe(res => {
       this.states = res.data;
     })
+    this.claimService.searchEAMSAttorney({ search: "" }).subscribe(res => {
+      this.dattroneyGroupOptions = [{ name: "Simplexam Addresses", data: res.data }];
+    })
     // this.claimService.searchEAMSAttorney('eams_representatives').subscribe(res => {
     //   this.eamsRepresentatives = res.data;
     //   this.attroneylist = [{ name: "Simplexam Addresses", data: this.eamsRepresentatives }];

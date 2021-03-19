@@ -35,20 +35,9 @@ export class ApplicationAttorneyComponent implements OnInit {
     private claimService: ClaimService,
     public dialogRef: MatDialogRef<ApplicationAttorneyComponent>,
     private alertService: AlertService) {
-    // this.claimService.seedData("state").subscribe(res => {
-    //   this.states = res.data;
-    // })
-    // console.log(this.aattorneyDetail)
-    // this.changeState(this.aattorneyDetail['state'], this.aattorneyDetail['state_code']);
-    // this.claimService.seedData('eams_representatives').subscribe(res => {
-    //   this.eamsRepresentatives = res.data;
-    //   this.attroneylist = [{ name: "Simplexam Addresses", data: this.eamsRepresentatives }];
-    //   this.dattroneyGroupOptions = this.ApplicantAttorney.get('company_name')!.valueChanges
-    //     .pipe(
-    //       startWith(''),
-    //       map(value => this._filterAttroney(value, this.attroneylist))
-    //     );
-    // })
+    this.claimService.searchEAMSAttorney({ search: "" }).subscribe(res => {
+      this.dattroneyGroupOptions = [{ name: "Simplexam Addresses", data: res.data }];
+    })
     this.ApplicantAttorney = this.formBuilder.group({
       id: [],
       company_name: [{ value: null, disabled: true }, Validators.compose([Validators.pattern("^[a-zA-Z0-9-&/' ]{0,100}$")])],

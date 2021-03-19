@@ -864,6 +864,13 @@ export class AppointmentDetailsComponent implements OnInit {
     } else {
       this.billable_item.get('intake_call').get('call_date').setValidators([]);
     }
+    this.billable_item.get('intake_call').get('call_date').updateValueAndValidity();
+    let appointmentDate = this.billable_item.get('appointment').get('appointment_scheduled_date_time').value;
+    if ((moment(appointmentDate).isAfter(moment(new Date())))) {
+      alert("sdfdsfdsfds")
+      return
+    }
+    return
     Object.keys(this.billable_item.controls).forEach((key) => {
       console.log(this.billable_item.get(key).value)
       if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')
