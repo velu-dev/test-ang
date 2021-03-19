@@ -893,9 +893,10 @@ export class NewClaimComponent implements OnInit {
         if (key)
           this.claimService.searchAddress(key).subscribe(address => {
             this.streetAddressList = address.suggestions;
+            this.isAddressError = false;
           }, error => {
-            console.log(error)
-            this.isAddressError = true;
+            if (error.status == 0)
+              this.isAddressError = true;
             this.streetAddressList = [];
           })
       })
