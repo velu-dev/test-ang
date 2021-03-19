@@ -719,6 +719,15 @@ export class AppointmentDetailsComponent implements OnInit {
   billableCancel() {
     this.billable_item.disable();
     this.billable_item.patchValue(this.billableData);
+    if (this.billableData.appointment.is_virtual_location) {
+      this.service_location_name = '0';
+      this.billable_item.patchValue({
+        appointment: {
+          examiner_service_location_id: "0",
+          is_virtual_location: true
+        }
+      })
+    }
     this.isEditBillableItem = false;
     this.procuderalCodes.map(proc => {
       if (proc.exam_procedure_type_id == this.billable_item.get(['exam_type', 'exam_procedure_type_id']).value) {
@@ -865,12 +874,6 @@ export class AppointmentDetailsComponent implements OnInit {
       this.billable_item.get('intake_call').get('call_date').setValidators([]);
     }
     this.billable_item.get('intake_call').get('call_date').updateValueAndValidity();
-    let appointmentDate = this.billable_item.get('appointment').get('appointment_scheduled_date_time').value;
-    if ((moment(appointmentDate).isAfter(moment(new Date())))) {
-      alert("sdfdsfdsfds")
-      return
-    }
-    return
     Object.keys(this.billable_item.controls).forEach((key) => {
       console.log(this.billable_item.get(key).value)
       if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')
