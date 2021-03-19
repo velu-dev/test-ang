@@ -54,6 +54,7 @@ export const PICK_FORMATS = {
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
+      state('void', style({ height: '0px', minHeight: '0' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
@@ -204,6 +205,13 @@ export class BilllableBillingComponent implements OnInit {
     })
 
   }
+  tabIndex: number;
+  tabchange(index) {
+    this.tabIndex = index
+    if (index == 1) {
+      this.createSecondBill();
+    }
+  }
 
   openAuto(e, trigger: MatAutocompleteTrigger) {
     e.stopPropagation()
@@ -260,6 +268,14 @@ export class BilllableBillingComponent implements OnInit {
     } catch (err) { }
   }
 
+  createSecondBill() {
+    this.billingService.createSecondBill(this.paramsId.claim_id, this.paramsId.billId, this.billingId).subscribe(second => {
+      console.log(second);
+    }, error => {
+      console.log(error);
+    })
+  }
+
   ngOnInit() {
     // this.styleElement = document.createElement("style");
     // this.changeColors("#cccccc");
@@ -283,7 +299,7 @@ export class BilllableBillingComponent implements OnInit {
     });
 
   }
- // styleElement: HTMLStyleElement;
+  // styleElement: HTMLStyleElement;
   // changeColors(color) {
   //   console.log(color);
   //   const head = document.getElementsByTagName("head")[0];
@@ -323,7 +339,7 @@ export class BilllableBillingComponent implements OnInit {
 
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId, this.billingId).subscribe(billing => {
       if (billing.data) {
-       // this.changeColors(billing.data.bill_status_color_code)
+        // this.changeColors(billing.data.bill_status_color_code)
         this.billingData = billing.data;
         if (!billing.data) {
           return;

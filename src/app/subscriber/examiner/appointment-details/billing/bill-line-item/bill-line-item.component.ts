@@ -12,11 +12,20 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { Location } from '@angular/common';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { animate, style, transition, trigger, state } from '@angular/animations';
 
 @Component({
   selector: 'app-bill-line-item',
   templateUrl: './bill-line-item.component.html',
-  styleUrls: ['./bill-line-item.component.scss']
+  styleUrls: ['./bill-line-item.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      state('void', style({ height: '0px', minHeight: '0' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class BillLineItemComponent implements OnInit {
 
