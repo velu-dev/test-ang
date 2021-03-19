@@ -1,7 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { IntercomService } from 'src/app/services/intercom.service';
@@ -38,6 +38,7 @@ export class DiagnosisCodeComponent implements OnInit {
   columnsToDisplay = [];
   columnName = [];
   expandedElement;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(private logger: NGXLogger,
     private claimService: ClaimService,
     private breakpointObserver: BreakpointObserver,
@@ -59,6 +60,10 @@ export class DiagnosisCodeComponent implements OnInit {
       this.columnName = ["Code", "Name", "Action"]
       this.columnsToDisplay = ['code', 'name', 'action']
     }
+
+    this.icdData = this.billingData && this.billingData.billing_diagnosis_code ? this.billingData.billing_diagnosis_code : [];
+    this.IcdDataSource = new MatTableDataSource(this.icdData);
+    this.IcdDataSource.sort = this.sort;
 
     this.claimService.getICD10('a').subscribe(icd => {
       this.filteredICD = icd[3];

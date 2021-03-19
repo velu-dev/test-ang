@@ -65,7 +65,7 @@ export class BillLineItemComponent implements OnInit {
     this.userTable = this.fb.group({
       tableRows: this.fb.array([])
     });
-    this.billingService.getBillLineItem(this.paramsId.claim_id, this.paramsId.billId).subscribe(line => {
+    this.billingService.getBillLineItem(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId).subscribe(line => {
       if (!this.billingData.certified_interpreter_required) {
         let index = this.modiferList.indexOf('93');
         this.modiferList.splice(index, 1)
