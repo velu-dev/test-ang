@@ -1,0 +1,125 @@
+  <!-- ===== Bill Status ==== -->
+  <div fxLayout="row wrap" class="p-t-20">
+    <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100" class="bill-status">
+        <div class="progress">
+            <div class="main-title p-l-0">Bill Status</div>
+            <p class="description p-l-0">View the Bill’s progress here, from beginning to end.</p>
+            <mat-progress-bar mode="determinate" value="50" class="progress-status">
+            </mat-progress-bar>
+            <div class="text-center">{{billingData?.on_demand_progress_status}}</div>
+        </div>
+        <div class="review-status">
+            <div>First Bill Review</div>
+        </div>
+    </div>
+</div>
+<div fxLayout="row wrap" class="p-t-20">
+    <div fxFlex="50">
+        <div class="bill-id"><span>Bill : </span> {{billingData?.agent_short_code}}{{billingData?.bill_no}}</div>
+    </div>
+    <div fxFlex="50">
+        <div class="submission-date"><span>First Bill Review Submission Date :
+            </span>{{billingData?.bill_first_submission_date ? (billingData?.bill_first_submission_date |
+            date:'MM-dd-yyyy') : billingData?.on_demand_progress_status}}</div>
+    </div>
+</div>
+
+<div class="border-dashed-blue"></div>
+
+<!-- ===== incomplete information ==== -->
+<div class="incomplete-info" *ngIf="!isIncompleteError">
+    <mat-card>
+        <mat-card-header>
+            <div class="content-wrapper-main-title text-danger">Incomplete Information
+                <button mat-raised-button class="filled-gray m-b-5" (click)="isExpandDetail = !isExpandDetail">
+                    {{isExpandDetail ? "Collapse" : "Expand"}} <i class="p-l-5 fas"
+                        [ngClass]="{'fa-angle-up': isExpandDetail,'fa-angle-down': !isExpandDetail}"></i>
+                </button>
+            </div>
+        </mat-card-header>
+        <mat-divider class="border-red"></mat-divider>
+        <mat-card-content>
+            <div fxLayout="row wrap" class="m-t-10">
+                <div fxFlex="100" class="incomplete-modules">
+                    <div fxLayout="row wrap">
+                        <div *ngFor="let incompleteInfo of incompleteInformation" fxFlex="50" fxFlex.xs="100"
+                            fxFlex.sm="100">
+                            <span class="text-danger">
+                                <mat-icon> error</mat-icon> {{incompleteInfo.name}}
+                            </span>
+                            <div class="incomplete-details"
+                                *ngIf="isExpandDetail && incompleteInfo?.value?.length > 0">
+                                <ol>
+                                    <li *ngFor="let val of incompleteInfo.value">{{val}}</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<div class="incomplete-info" *ngIf="payerResponse.length">
+    <mat-card>
+        <mat-card-header>
+            <div class="content-wrapper-main-title text-danger m-t-10 m-b-10">Claims Administrator Feedback</div>
+        </mat-card-header>
+        <mat-divider class="border-red"></mat-divider>
+        <mat-card-content>
+            <div fxLayout="row wrap" class="p-t-10">
+                <div class="incomplete-modules" fxFlex="100">
+                    <ul>
+                        <li *ngFor="let payer of payerResponse" class="text-danger">
+                            <mat-icon>error</mat-icon>{{payer?.status_date | date:'MM-dd-yyyy' }} -
+                            {{payer?.MessageText}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<!-- ===== Examiner information ==== -->
+<div class="examiner-info">
+    <mat-card>
+        <mat-card-header>
+            <div class="content-wrapper-main-title">Provider Information</div>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+            <div fxLayout="row wrap" class="p-t-20">
+                <div fxFlex="33.3" fxFlex.xs="100">
+                    <div class="p-b-5"><b>Billing Provider</b></div>
+                    <div *ngIf="billingData?.billing_is_person"> {{billingData?.billing_last_name}}
+                        {{billingData?.billing_first_name}}{{billingData?.billing_suffix ? (', '+
+                        billingData?.billing_suffix) : ''}}
+                    </div>
+                    <div *ngIf="!billingData?.billing_is_person">{{billingData?.billing_provider_name}}</div>
+                </div>
+                <div fxFlex="33.3" fxFlex.xs="100">
+                    <div class="p-b-5"><b>Rendering Provider</b></div>
+                    <div *ngIf="billingData?.rendering_is_persion">{{billingData?.rendr_last_name}}
+                        {{billingData?.rendr_first_name}}{{billingData?.rendr_suffix ? (', '+
+                        billingData?.rendr_suffix) : ''}}
+                    </div>
+                    <div *ngIf="!billingData?.rendering_is_persion">{{billingData?.rendering_provider_name}}</div>
+                </div>
+                <div fxFlex="33.3" fxFlex.xs="100" *ngIf="billingData?.procedure_type != 'Supplemental'">
+                    <div class="p-b-5"><b>Service Location</b> </div>
+                    <div *ngIf="!billingData?.is_virtual_location">{{billingData?.service_location_name ?
+                        billingData?.service_location_name + ' - ' : ''}}{{billingData?.service_location?.street1 }}
+                        {{billingData?.service_location?.street2 }}
+                        {{billingData?.service_location?.city}}
+                        {{billingData?.state_code }}
+                        {{billingData?.service_location?.zip_code ? '- ' + billingData?.service_location?.zip_code :
+                        '' }}
+                    </div>
+                    <div *ngIf="billingData?.is_virtual_location">Virtual Service Location</div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

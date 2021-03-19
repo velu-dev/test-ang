@@ -117,9 +117,9 @@ export class BilllableBillingComponent implements OnInit {
   billDocumentList: any;
   @ViewChild('scrollBottom', { static: false }) private scrollBottom: ElementRef;
   states: any;
-  incompleteInformation: any;
-  isIncompleteError: any = true;
-  isExpandDetail = true;
+  // incompleteInformation: any;
+  // isIncompleteError: any = true;
+  //isExpandDetail = true;
   role = this.cookieService.get('role_id');
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
@@ -164,12 +164,12 @@ export class BilllableBillingComponent implements OnInit {
       } else {
         this.billingId = param.billingId
       }
-      this.billingService.getIncompleteInfo(param.claim_id, param.billId, { isPopupValidate: false }).subscribe(res => {
-        this.isIncompleteError = true;
-      }, error => {
-        this.isIncompleteError = false;
-        this.incompleteInformation = error.error.data;
-      })
+      // this.billingService.getIncompleteInfo(param.claim_id, param.billId, { isPopupValidate: false }).subscribe(res => {
+      //   this.isIncompleteError = true;
+      // }, error => {
+      //   this.isIncompleteError = false;
+      //   this.incompleteInformation = error.error.data;
+      // })
       this.logger.log(this.billingId, "billing id")
 
     })
@@ -261,8 +261,8 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.styleElement = document.createElement("style");
-    this.changeColors("#cccccc");
+    // this.styleElement = document.createElement("style");
+    // this.changeColors("#cccccc");
     // this.claimService.getICD10('a').subscribe(icd => {
     //   this.filteredICD = icd[3];
     // });
@@ -283,19 +283,19 @@ export class BilllableBillingComponent implements OnInit {
     });
 
   }
-  styleElement: HTMLStyleElement;
-  changeColors(color) {
-    console.log(color);
-    const head = document.getElementsByTagName("head")[0];
-    const css = `
-  .progress-status .mat-progress-bar-fill::after {
-    background-color: ${color} !important;
-  }  `;
-    this.styleElement.innerHTML = "";
-    this.styleElement.type = "text/css";
-    this.styleElement.appendChild(document.createTextNode(css));
-    head.appendChild(this.styleElement);
-  }
+ // styleElement: HTMLStyleElement;
+  // changeColors(color) {
+  //   console.log(color);
+  //   const head = document.getElementsByTagName("head")[0];
+  //   const css = `
+  // .progress-status .mat-progress-bar-fill::after {
+  //   background-color: ${color} !important;
+  // }  `;
+  //   this.styleElement.innerHTML = "";
+  //   this.styleElement.type = "text/css";
+  //   this.styleElement.appendChild(document.createTextNode(css));
+  //   head.appendChild(this.styleElement);
+  // }
   statusBarValues = { value: null, status: '', class: '' }
   statusBarChanges(status) {
     switch (status) {
@@ -318,30 +318,30 @@ export class BilllableBillingComponent implements OnInit {
     }
   }
 
-  payerResponse: any = [];
+  //payerResponse: any = [];
   getBillingDetails() {
 
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId, this.billingId).subscribe(billing => {
       if (billing.data) {
-        this.changeColors(billing.data.bill_status_color_code)
+       // this.changeColors(billing.data.bill_status_color_code)
         this.billingData = billing.data;
         if (!billing.data) {
           return;
         }
-        for (let payer in billing.data.payor_response_messages) {
-          if (billing.data.payor_response_messages[payer].payor_response_status == 'R') {
-            if (billing.data.payor_response_messages[payer].payor_response_message.length) {
-              for (let arr in billing.data.payor_response_messages[payer].payor_response_message) {
-                billing.data.payor_response_messages[payer].payor_response_message[arr]._attributes.status_date = billing.data.payor_response_messages[payer].status_date;
-                this.payerResponse.push(billing.data.payor_response_messages[payer].payor_response_message[arr]._attributes);
-              }
+        // for (let payer in billing.data.payor_response_messages) {
+        //   if (billing.data.payor_response_messages[payer].payor_response_status == 'R') {
+        //     if (billing.data.payor_response_messages[payer].payor_response_message.length) {
+        //       for (let arr in billing.data.payor_response_messages[payer].payor_response_message) {
+        //         billing.data.payor_response_messages[payer].payor_response_message[arr]._attributes.status_date = billing.data.payor_response_messages[payer].status_date;
+        //         this.payerResponse.push(billing.data.payor_response_messages[payer].payor_response_message[arr]._attributes);
+        //       }
 
-            } else {
-              billing.data.payor_response_messages[payer].payor_response_message._attributes.status_date = billing.data.payor_response_messages[payer].status_date;
-              this.payerResponse.push(billing.data.payor_response_messages[payer].payor_response_message._attributes);
-            }
-          }
-        }
+        //     } else {
+        //       billing.data.payor_response_messages[payer].payor_response_message._attributes.status_date = billing.data.payor_response_messages[payer].status_date;
+        //       this.payerResponse.push(billing.data.payor_response_messages[payer].payor_response_message._attributes);
+        //     }
+        //   }
+        // }
 
         // if (!this.billingData.certified_interpreter_required) {
         //   let index = this.modiferList.indexOf('93');
