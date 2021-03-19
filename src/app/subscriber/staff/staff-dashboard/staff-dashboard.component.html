@@ -213,7 +213,7 @@
                         <span *ngIf="column == 'due_date'" class="no-wrap-td">{{element?.due_date |
                             date:'MM-dd-yyyy'}}</span>
                         <span *ngIf="column == 'critical'"
-                            [ngClass]="{'text-primary': element?.is_critical}"><b>{{element?.is_critical ? "Critical" :
+                            [ngClass]="{'text-primary': element?.is_critical}"><b>{{element?.is_critical ? element?.is_critical :
                                 "-"}}</b></span>
                     </div>
                 </td>

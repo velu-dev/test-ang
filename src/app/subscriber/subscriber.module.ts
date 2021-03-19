@@ -71,6 +71,7 @@ import { CloseBill, EditResponse, LateResponse, PaymentResponseComponent, Second
 import { SearchClaimComponent } from './components/search-claim/search-claim.component';
 import { BillLineItemComponent } from './examiner/appointment-details/billing/bill-line-item/bill-line-item.component';
 import { DiagnosisCodeComponent } from './examiner/appointment-details/billing/diagnosis-code/diagnosis-code.component';
+import { BillingDocumentComponent } from './examiner/appointment-details/billing/billing-document/billing-document.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -153,7 +154,8 @@ import { DiagnosisCodeComponent } from './examiner/appointment-details/billing/d
     EditResponse,
     LateResponse,
     BillLineItemComponent,
-    DiagnosisCodeComponent
+    DiagnosisCodeComponent,
+    BillingDocumentComponent
    
   ],
   entryComponents: [

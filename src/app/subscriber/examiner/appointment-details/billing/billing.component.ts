@@ -81,7 +81,7 @@ export class BilllableBillingComponent implements OnInit {
   columnsToDisplay2 = [];
   expandedElement2;
   columnName2 = [];
-  dataSourceDocList = new MatTableDataSource([]);
+  //dataSourceDocList = new MatTableDataSource([]);
   columnsToDisplayDoc = [];
   expandedElement3;
   columnsNameDoc = [];
@@ -367,7 +367,7 @@ export class BilllableBillingComponent implements OnInit {
           }
         })
 
-        this.dataSourceDocList = new MatTableDataSource(billing.data.documets_sent_and_received);
+        //this.dataSourceDocList = new MatTableDataSource(billing.data.documets_sent_and_received);
       }
     }, error => {
       this.logger.error(error)
