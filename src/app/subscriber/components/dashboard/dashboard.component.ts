@@ -47,8 +47,8 @@ export class DashboardComponent implements OnInit {
   filterValue: string;
   procedureTypeStatus = []
   selectedTile = "";
-  totalCount:any = {};
-  criticalCount:any = {};
+  totalCount: any = {};
+  criticalCount: any = {};
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   dashboardData = [];
@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit {
         this.totalCount[total.type] = total.total_count
         this.criticalCount[total.type] = total.critical_count
       })
-      console.log(this.totalCount)
+      console.log(this.totalCount, this.criticalCount)
       this.dashboardData = res.data;
       this.selectedTile = status;
       let data = [];

@@ -68,7 +68,7 @@
                             </mat-select>
                             <mat-error *ngIf="isSubmitted">{{errorMessages?.selectrole}}</mat-error>
                         </mat-form-field> -->
-                        <div class="text-center w-100 m-t-10">
+                        <div class="text-center w-100 m-t-10 action">
                             <button mat-stroked-button type="button" class="outline-danger"
                                 (click)="cancel()">Cancel</button>
                             <button mat-stroked-button class="m-l-10 outline-light_green" (click)="userSubmit('close')"
@@ -203,7 +203,7 @@
                             <mat-error *ngIf="mailingSubmit">Please enter valid notes</mat-error>
                         </mat-form-field>
 
-                        <div class="text-center w-100 m-t-10 m-b-20">
+                        <div class="text-center w-100 m-t-10 m-b-20 action">
                             <button mat-stroked-button type="button" class="outline-danger"
                                 (click)="cancel()">Cancel</button>
                             <button mat-stroked-button (click)="mailingAddressSubmit('close')"
@@ -467,7 +467,7 @@
                             </div>
                         </div>
 
-                        <div class="text-center w-100 m-t-10 m-b-20">
+                        <div class="text-center w-100 m-t-10 m-b-20 action">
                             <button mat-stroked-button type="button" class="outline-danger"
                                 (click)="cancel()">Cancel</button>
                             <button mat-stroked-button class="m-l-10 outline-light_green"
@@ -719,7 +719,7 @@
                             </mat-radio-group>
                         </div> -->
 
-                        <div class="text-center w-100 m-t-30 m-b-20">
+                        <div class="text-center w-100 m-t-30 m-b-20 action">
                             <button mat-stroked-button type="button" class="outline-danger"
                                 (click)="cancel()">Cancel</button>
                             <button mat-stroked-button class="m-l-10 outline-light_green"
@@ -916,7 +916,7 @@
                                 </div>
                             </div>
 
-                            <div class="text-center w-100 m-t-10 m-b-10">
+                            <div class="text-center w-100 m-t-10 m-b-10 action">
                                 <button mat-stroked-button type="button" class="outline-danger"
                                     (click)="locationCancel()">Cancel</button>
                                 <button mat-stroked-button class="m-l-10 outline-success"
