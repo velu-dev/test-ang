@@ -720,6 +720,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.billable_item.disable();
     this.billable_item.patchValue(this.billableData);
     if (this.billableData.appointment.is_virtual_location) {
+      this.VserviceLocation();
       this.service_location_name = '0';
       this.billable_item.patchValue({
         appointment: {
@@ -743,7 +744,7 @@ export class AppointmentDetailsComponent implements OnInit {
           controlArray[ind] = (true)
         }
       })
-      this.billable_item.setControl('documents_received', this.formBuilder.array(controlArray))
+      this.billable_item.patchValue({ 'documents_received': this.formBuilder.array(controlArray) })
     }
   }
   // psychiatric(event) {
