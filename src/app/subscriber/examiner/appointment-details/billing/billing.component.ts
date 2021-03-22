@@ -89,7 +89,7 @@ export class BilllableBillingComponent implements OnInit {
   filterValue: string;
   file: any;
   documentType: any;
-  paramsId: any;
+  paramsId: any = {};
   billingId: number;
   documentList: any;
   eaxmProcuderalCodes: any;
@@ -122,6 +122,8 @@ export class BilllableBillingComponent implements OnInit {
   // isIncompleteError: any = true;
   //isExpandDetail = true;
   role = this.cookieService.get('role_id');
+  firstBillId: string;
+  secondBillId: string;
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
     public dialog: MatDialog,
@@ -165,6 +167,8 @@ export class BilllableBillingComponent implements OnInit {
       } else {
         this.billingId = param.billingId
       }
+      this.firstBillId = param.billingId
+      this.tabIndex = 0;
       // this.billingService.getIncompleteInfo(param.claim_id, param.billId, { isPopupValidate: false }).subscribe(res => {
       //   this.isIncompleteError = true;
       // }, error => {
@@ -208,6 +212,14 @@ export class BilllableBillingComponent implements OnInit {
   tabIndex: number;
   tabchange(index) {
     this.tabIndex = index
+    if (index == 0) {
+      console.log(this.firstBillId)
+      this.billingId = +this.firstBillId;
+      let ids = {}
+      ids = { claimant_id: this.paramsId.claimant_id, claim_id: this.paramsId.claim_id, billId: this.paramsId.billId, billingId: this.firstBillId };
+      this.paramsId = ids;
+      this.getBillingDetails();
+    }
     if (index == 1) {
       this.createSecondBill();
     }
@@ -268,9 +280,16 @@ export class BilllableBillingComponent implements OnInit {
     } catch (err) { }
   }
 
+
   createSecondBill() {
     this.billingService.createSecondBill(this.paramsId.claim_id, this.paramsId.billId, this.billingId).subscribe(second => {
-      console.log(second);
+      this.billingId = second.data.bill_id;
+      this.secondBillId = second.data.bill_id;
+      let ids = {}
+      ids = { claimant_id: this.paramsId.claimant_id, claim_id: this.paramsId.claim_id, billId: this.paramsId.billId, billingId: this.secondBillId };
+      this.paramsId = ids;
+      this.getBillingDetails();
+      this.billingData = null;
     }, error => {
       console.log(error);
     })

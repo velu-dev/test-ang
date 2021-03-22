@@ -39,7 +39,10 @@ export class BillingDocumentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataSourceDocList = new MatTableDataSource(this.billingData.documets_sent_and_received);
+    
+    this.billingService.getSendRecDocument(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId).subscribe(document=>{
+      this.dataSourceDocList = new MatTableDataSource(document.data);
+    })
   }
 
 

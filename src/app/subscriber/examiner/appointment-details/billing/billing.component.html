@@ -1,7 +1,8 @@
 <div class="billing">
 
     <mat-tab-group class="m-t-10" (selectedTabChange)="tabchange($event.index)">
-        <mat-tab label="First Bill Submission">
+        <mat-tab label="First Bill Submission" >
+            <div *ngIf="firstBillId && tabIndex == 0">
             <!-- ===== First Bill Submission ===== -->
             <app-billing-info *ngIf="billingData"  [review]="'First'" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
             </app-billing-info>
@@ -219,9 +220,10 @@
                 <app-billing-document *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData"
                     [isMobile]="isMobile"></app-billing-document>
             </div>
+        </div>
         </mat-tab>
         <mat-tab label="Second Bill Review">
-            <div *ngIf="tabIndex == 1">
+            <div *ngIf="secondBillId && tabIndex == 1">
             <!-- ===== Second Bill Review ===== -->
                    <!-- ===== First Bill Submission ===== -->
                    <app-billing-info *ngIf="billingData" [review]="'Second'" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
@@ -246,7 +248,7 @@
                                     matTooltip="The QME 122 - Declaration of service form will be created when the Report Documents are Downloaded or Billed on Demand."
                                     matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span>
                             </div>
-                            <div class="content-wrapper-main-title bill-status" fxFlex="50">First Bill Submission</div>
+                            <div class="content-wrapper-main-title bill-status" fxFlex="50">{{tabIndex == 0 ? 'First' : 'Second' }} Bill Submission</div>
                         </mat-card-header>
                         <mat-divider></mat-divider>
                         <mat-card-content>

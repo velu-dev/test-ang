@@ -206,6 +206,7 @@ export const api_endpoint = {
     postPayment: 'billing/payment-response-add/',
     closeBill: 'billing/close-bill/',
     postSecondBillCreate: 'billing/create-second-bill/',
+    sendRecDocument: 'billing/send-received-documents/',
 
     //Calendar 
 
