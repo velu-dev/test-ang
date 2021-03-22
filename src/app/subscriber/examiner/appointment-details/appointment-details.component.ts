@@ -728,6 +728,8 @@ export class AppointmentDetailsComponent implements OnInit {
           is_virtual_location: true
         }
       })
+    } else {
+      this.serviceLocationChange(this.billableData.appointment.examiner_service_location_id);
     }
     this.isEditBillableItem = false;
     this.procuderalCodes.map(proc => {
