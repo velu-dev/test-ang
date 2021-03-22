@@ -143,4 +143,10 @@ export class BillingService {
   closeBill(billId, claim, billable, data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.closeBill + claim + '/' + billable + '/' + billId, data)
   }
+
+  createSecondBill(billId, claim, billable): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.postSecondBillCreate + claim + '/' + billable + '/' + billId, {})
+  }
+
+
 }

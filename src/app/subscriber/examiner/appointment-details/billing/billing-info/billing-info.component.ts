@@ -10,6 +10,7 @@ export class BillingInfoComponent implements OnInit {
   @Input() billingData: any;
   @Input() paramsId: any;
   @Input() isMobile: any;
+  @Input() review: string;
   incompleteInformation: any;
   isIncompleteError: any = true;
   isExpandDetail = true;

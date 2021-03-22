@@ -22,6 +22,7 @@ import { animate, style, transition, trigger, state } from '@angular/animations'
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
+      state('void', style({ height: '0px', minHeight: '0' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
