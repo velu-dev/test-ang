@@ -36,8 +36,8 @@ export class ManagerDashboardComponent implements OnInit {
   procedureTypeStatus = [];
   dashboardData = [];
   selectedTile = "";
-  totalCount:any = {};
-  criticalCount:any = {};
+  totalCount: any = {};
+  criticalCount: any = {};
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   constructor(public router: Router, private breakpointObserver: BreakpointObserver, private subscriberService: SubscriberService, private cookieService: CookieService, private intercom: IntercomService) {
@@ -49,17 +49,13 @@ export class ManagerDashboardComponent implements OnInit {
     // })
 
     this.subscriberService.getDashboardData({}).subscribe(res => {
-      res.data.map(total => {
+      res.data.splited_record.map(total => {
         this.totalCount[total.type] = total.total_count
         this.criticalCount[total.type] = total.critical_count
       })
-      this.dashboardData = res.data;
+      this.dashboardData = res.data.splited_record;
       this.selectedTile = status;
-      let data = [];
-      res.data.map(typeData => {
-        data = data.concat(typeData.data)
-      })
-      this.dataSource = new MatTableDataSource(data);
+      this.dataSource = new MatTableDataSource(res.data.all_record);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
@@ -101,7 +97,7 @@ export class ManagerDashboardComponent implements OnInit {
       this.expandId = element.appointment_id;
     }
   }
-  getDashboardData(status?){
+  getDashboardData(status?) {
     this.selectedTile = status;
 
     console.log(this.dashboardData)
