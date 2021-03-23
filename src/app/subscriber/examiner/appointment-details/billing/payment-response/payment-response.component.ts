@@ -132,7 +132,7 @@ export class PaymentResponseComponent implements OnInit {
   }
 
   getPaymentRes() {
-    this.billingService.getPaymentResponse(this.billingData.bill_id, this.paramsId.claim_id, this.paramsId.billId).subscribe(payment => {
+    this.billingService.getPaymentResponse(this.paramsId.billingId, this.paramsId.claim_id, this.paramsId.billId).subscribe(payment => {
       // console.log(payment);
       this.paymentRes = payment.data;
       this.paymentRes.map((pay, i) => {
@@ -299,7 +299,7 @@ export class PaymentResponseComponent implements OnInit {
 
 
     formData.append('file', review.get('file').value);
-    this.billingService.postPaymentResponse(this.billingData.bill_id, this.paramsId.claim_id, this.paramsId.billId, formData).subscribe(pay => {
+    this.billingService.postPaymentResponse(this.paramsId.billingId, this.paramsId.claim_id, this.paramsId.billId, formData).subscribe(pay => {
       // console.log(pay);
       this.paymentForm = this.fb.group({
         payments: this.fb.array([]),

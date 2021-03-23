@@ -148,5 +148,8 @@ export class BillingService {
     return this.http.post(environment.baseUrl + api_endpoint.postSecondBillCreate + claim + '/' + billable + '/' + billId, {})
   }
 
+  getSendRecDocument(claim, billable, billId): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.sendRecDocument + claim + '/' + billable + '/' + billId)
+  }
 
 }
