@@ -16,7 +16,7 @@
                     [isMobile]="isMobile">
                 </app-bill-line-item>
 
-                <app-payment-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData">
+                <app-payment-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" (getPaymentStatus)="getPaymentStatus($event)">
                 </app-payment-response>
 
                 <!-- Subbmission -->
@@ -29,7 +29,7 @@
                 </div>
             </div>
         </mat-tab>
-        <mat-tab label="Second Bill Review">
+        <mat-tab label="Second Bill Review" [disabled]="!(paymentStatus?.bill_paid_status?.toLowerCase() == 'partially paid' || paymentStatus?.bill_paid_status?.toLowerCase() == 'rejected')">
             <div *ngIf="secondBillId && tabIndex == 1">
                 <!-- ===== Second Bill Review ===== -->
                 <!-- ===== First Bill Submission ===== -->

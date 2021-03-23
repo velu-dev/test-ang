@@ -38,7 +38,7 @@ export class BillingService {
   }
 
   createBillLine(billId, billableId, claim_id, data): Observable<any> {
-    return this.http.put(environment.baseUrl + api_endpoint.createBillLineItem + billId + '/' + billableId + '/' + claim_id, data)
+    return this.http.put(environment.baseUrl + api_endpoint.createBillLineItem + claim_id + '/' + billableId + '/' + billId, data)
   }
 
   updateDiagnosisCode(data): Observable<any> {
