@@ -73,6 +73,7 @@ import { BillLineItemComponent } from './examiner/appointment-details/billing/bi
 import { DiagnosisCodeComponent } from './examiner/appointment-details/billing/diagnosis-code/diagnosis-code.component';
 import { BillingDocumentComponent } from './examiner/appointment-details/billing/billing-document/billing-document.component';
 import { BillingInfoComponent } from './examiner/appointment-details/billing/billing-info/billing-info.component';
+import { SubmissionComponent } from './examiner/appointment-details/billing/submission/submission.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -157,7 +158,8 @@ import { BillingInfoComponent } from './examiner/appointment-details/billing/bil
     BillLineItemComponent,
     DiagnosisCodeComponent,
     BillingDocumentComponent,
-    BillingInfoComponent
+    BillingInfoComponent,
+    SubmissionComponent
    
   ],
   entryComponents: [
