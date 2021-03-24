@@ -1179,6 +1179,7 @@ export class NewClaimComponent implements OnInit {
   //   })
   // }
   submitBillableItem(state?) {
+    this.todayDate.appointment = new Date();
     this.currentTab = "billable_item"
     this.isBillSubmited = true;
     if (this.isSuplimental) {
@@ -1191,6 +1192,9 @@ export class NewClaimComponent implements OnInit {
       if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')
         this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim())
     });
+    if (!(moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).isSameOrAfter(moment.now()))) {
+      return
+    }
     if (this.billable_item.invalid) {
       return;
     }
