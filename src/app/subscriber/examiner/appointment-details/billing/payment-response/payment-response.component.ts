@@ -12,6 +12,7 @@ import { DialogData } from 'src/app/shared/components/dialogue/dialogue.componen
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { BillingService } from 'src/app/subscriber/service/billing.service';
 import { saveAs } from 'file-saver';
+import * as moment from 'moment';
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
@@ -281,9 +282,9 @@ export class PaymentResponseComponent implements OnInit {
       review.markAllAsTouched();
       return;
     }
-    formData.append('post_date', review.get('post_date').value);
-    formData.append('effective_date', review.get('effective_date').value);
-    formData.append('deposit_date', review.get('deposit_date').value);
+    formData.append('post_date', review.get('post_date').value ? moment(review.get('post_date').value).format("MM-DD-YYYY") : '');
+    formData.append('effective_date', review.get('effective_date').value ? moment(review.get('effective_date').value).format("MM-DD-YYYY") : '');
+    formData.append('deposit_date', review.get('deposit_date').value ? moment(review.get('deposit_date').value).format("MM-DD-YYYY") : '');
     formData.append('payment_amount', review.get('payment_amount').value);
     formData.append('payment_method', review.get("payment_method").value);
     formData.append('penalty_charged', review.get('penalty_charged').value);
