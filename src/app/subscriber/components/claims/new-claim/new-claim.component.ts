@@ -1691,7 +1691,7 @@ export class NewClaimComponent implements OnInit {
   }
   selectedAAttorney: any;
   appAttorney(attroney) {
-    this.claim.get('DefenseAttorney').patchValue({
+    this.claim.get('ApplicantAttorney').patchValue({
       city: null,
       email: null,
       company_name: null,
