@@ -32,6 +32,7 @@ export class BillLineItemComponent implements OnInit {
   @Input() billingData: any;
   @Input() paramsId: any;
   @Input() isMobile: any;
+  @Input() review: string;
   //@Input() billingId: number;
   //table
   userTable: FormGroup;
@@ -191,7 +192,8 @@ export class BillLineItemComponent implements OnInit {
       filteredmodifier: [[]],
       modifierTotal: [0],
       unitTotal: [0],
-      is_excess_pages: [null]
+      is_excess_pages: [null],
+      reviewShow: [false]
     });
   }
 
@@ -546,6 +548,10 @@ export class BillLineItemComponent implements OnInit {
 
   add(event: MatChipInputEvent, group: FormGroup): void {
     return;
+  }
+
+  reviewCheck(value, group) {
+    group.get('reviewShow').patchValue(value)
   }
 
 

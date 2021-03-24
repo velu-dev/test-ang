@@ -37,7 +37,8 @@
                             <td>{{payment.get('charge').value ? '$ ' : ''}}{{payment.get('charge').value | number : '1.2-2'}}</td>
                             <td>{{payment.get('payment').value ? '$ ' : ''}}{{payment.get('payment').value | number : '1.2-2'}}</td>
                             <td class="text-danger">{{+payment.get('balance').value > -1 ? '$ ' : ''}}{{payment.get('balance').value | number : '1.2-2'}}</td>
-                            <td class="text-success">{{payment.get('bill_paid_status').value}}</td>
+                            <td [ngClass]="{'text-success' : payment.get('bill_paid_status').value != 'Rejected', 'text-danger' : payment.get('bill_paid_status').value == 'Rejected'}">
+                                {{payment.get('bill_paid_status').value}}</td>
                             <td><button type="button"
                                     *ngIf="paymentReviews(payIndex)?.controls?.length == 0 || paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length -1).get('void_type_id').value == 3"
                                     mat-raised-button class="mini-btn filled-gray" (click)="addReviews(payIndex)">Add

@@ -71,6 +71,7 @@ export class ServiceRequestDetailsComponent implements OnInit {
   displayedColumns3: string[] = ['document_name', 'received_doc_name',];
   dataSource3 = ELEMENT_DATA3;
   serviceRequestDetails: any;
+  processedZipFileName: any;
   transmissions = [];
   followupCalls = [];
   isLoading = false;
@@ -102,6 +103,7 @@ export class ServiceRequestDetailsComponent implements OnInit {
       }
       let requestDocuments = [];
       let receivedDocument = [];
+      this.processedZipFileName = res.service_request_doc[0].processed_zip_file_name;
       res.service_request_doc.map(doc => {
         if (doc.transmission_direction == 'OUT') {
           requestDocuments.push(doc)

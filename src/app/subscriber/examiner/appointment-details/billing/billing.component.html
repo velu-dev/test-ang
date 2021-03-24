@@ -20,7 +20,7 @@
         <app-diagnosis-code *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
         </app-diagnosis-code>
 
-        <app-bill-line-item *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
+        <app-bill-line-item *ngIf="billingData" [review]="'First'" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
         </app-bill-line-item>
 
         <app-payment-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData"
@@ -46,7 +46,7 @@
         <app-diagnosis-code *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
         </app-diagnosis-code>
 
-        <app-bill-line-item *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
+        <app-bill-line-item *ngIf="billingData" [review]="'Second'" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
         </app-bill-line-item>
 
         <app-payment-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData">
