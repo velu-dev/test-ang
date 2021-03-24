@@ -219,11 +219,13 @@ export class BilllableBillingComponent implements OnInit {
       let ids = {}
       ids = { claimant_id: this.paramsId.claimant_id, claim_id: this.paramsId.claim_id, billId: this.paramsId.billId, billingId: this.firstBillId };
       this.paramsId = ids;
+      this.billingData = null;
       this.getBillingDetails();
     }
     if (index == 1) {
       if (this.billingData.second_bill_id) {
         this.secondBillId = this.billingData.second_bill_id;
+        this.billingId = this.billingData.second_bill_id;
         let ids = {}
         ids = { claimant_id: this.paramsId.claimant_id, claim_id: this.paramsId.claim_id, billId: this.paramsId.billId, billingId: this.secondBillId };
         this.paramsId = ids;
