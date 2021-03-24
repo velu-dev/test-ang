@@ -2,7 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { SelectionModel } from '@angular/cdk/collections';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { formatDate } from '@angular/common';
-import { Component, ElementRef, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MatDialog, MatDialogRef, MatTableDataSource, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_DIALOG_DATA, NativeDateAdapter } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -67,6 +67,7 @@ export class PaymentResponseComponent implements OnInit {
   paymentForm: FormGroup;
   @Input() billingData: any;
   @Input() paramsId: any;
+  @Output() getPaymentStatus = new EventEmitter<any>();
   paymentTypes: any = ["Paper Check", "EFT", "Virtual Credit Card"];
   currentDate = new Date();
   minimumDate = new Date(1900, 0, 1);
@@ -133,8 +134,9 @@ export class PaymentResponseComponent implements OnInit {
 
   getPaymentRes() {
     this.billingService.getPaymentResponse(this.paramsId.billingId, this.paramsId.claim_id, this.paramsId.billId).subscribe(payment => {
-      // console.log(payment);
+      console.log(payment);
       this.paymentRes = payment.data;
+      this.getPaymentStatus.emit(this.paymentRes ? this.paymentRes[0] : null)
       this.paymentRes.map((pay, i) => {
         // console.log(pay, i)
         this.addPayment();
@@ -305,6 +307,7 @@ export class PaymentResponseComponent implements OnInit {
         payments: this.fb.array([]),
       })
       this.paymentRes = pay.data;
+      this.getPaymentStatus.emit(this.paymentRes ? this.paymentRes[0] : null)
       this.paymentRes.map((pay, i) => {
         // console.log(pay, i)
         this.addPayment();

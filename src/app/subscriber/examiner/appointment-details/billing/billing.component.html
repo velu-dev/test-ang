@@ -1,67 +1,66 @@
 <div class="billing">
-
     <mat-tab-group class="m-t-10" (selectedTabChange)="tabchange($event.index)">
         <mat-tab label="First Bill Submission">
-            <div *ngIf="firstBillId && tabIndex == 0">
-                <!-- ===== First Bill Submission ===== -->
-                <app-billing-info *ngIf="billingData" [review]="'First'" [paramsId]="paramsId"
-                    [billingData]="billingData" [isMobile]="isMobile">
-                </app-billing-info>
-
-                <app-diagnosis-code *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData"
-                    [isMobile]="isMobile">
-                </app-diagnosis-code>
-
-                <app-bill-line-item *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData"
-                    [isMobile]="isMobile">
-                </app-bill-line-item>
-
-                <app-payment-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData">
-                </app-payment-response>
-
-                <!-- Subbmission -->
-                <app-submission *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [states]="states">
-                </app-submission>
-                <!-- ===== Billing Documents ==== -->
-                <div class="completed-documents m-t-30">
-                    <app-billing-document *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData"
-                        [isMobile]="isMobile"></app-billing-document>
-                </div>
-            </div>
         </mat-tab>
-        <mat-tab label="Second Bill Review">
-            <div *ngIf="secondBillId && tabIndex == 1">
-                <!-- ===== Second Bill Review ===== -->
-                <!-- ===== First Bill Submission ===== -->
-                <app-billing-info *ngIf="billingData" [review]="'Second'" [paramsId]="paramsId"
-                    [billingData]="billingData" [isMobile]="isMobile">
-                </app-billing-info>
+        <mat-tab label="Second Bill Review"
+            [disabled]="!(paymentStatus?.bill_paid_status?.toLowerCase() == 'partially paid' || paymentStatus?.bill_paid_status?.toLowerCase() == 'rejected')">
 
-                <app-diagnosis-code *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData"
-                    [isMobile]="isMobile">
-                </app-diagnosis-code>
-
-                <app-bill-line-item *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData"
-                    [isMobile]="isMobile">
-                </app-bill-line-item>
-
-                <app-payment-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData">
-                </app-payment-response>
-
-                <!-- ===== Examination Submission Documents ==== -->
-                <app-submission *ngIf="billingData"  [review]="'Second'" [paramsId]="paramsId" [billingData]="billingData" [states]="states">
-                </app-submission>
-
-                <!-- ===== Billing Documents ==== -->
-                <div class="completed-documents m-t-30">
-                    <app-billing-document *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData"
-                        [isMobile]="isMobile"></app-billing-document>
-                </div>
-            </div>
         </mat-tab>
         <mat-tab label="Independent Bill Review" disabled>
             <!-- ===== Independent Bill Submission ===== -->
         </mat-tab>
     </mat-tab-group>
 
+    <div *ngIf="firstBillId && tabIndex == 0">
+        <!-- ===== First Bill Submission ===== -->
+        <app-billing-info *ngIf="billingData" [review]="'First'" [paramsId]="paramsId" [billingData]="billingData"
+            [isMobile]="isMobile">
+        </app-billing-info>
+
+        <app-diagnosis-code *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
+        </app-diagnosis-code>
+
+        <app-bill-line-item *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
+        </app-bill-line-item>
+
+        <app-payment-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData"
+            (getPaymentStatus)="getPaymentStatus($event)">
+        </app-payment-response>
+
+        <!-- Subbmission -->
+        <app-submission *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [states]="states">
+        </app-submission>
+        <!-- ===== Billing Documents ==== -->
+        <div class="completed-documents m-t-30">
+            <app-billing-document *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData"
+                [isMobile]="isMobile"></app-billing-document>
+        </div>
+    </div>
+    <div *ngIf="secondBillId && tabIndex == 1">
+        <!-- ===== Second Bill Review ===== -->
+        <!-- ===== First Bill Submission ===== -->
+        <app-billing-info *ngIf="billingData" [review]="'Second'" [paramsId]="paramsId" [billingData]="billingData"
+            [isMobile]="isMobile">
+        </app-billing-info>
+
+        <app-diagnosis-code *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
+        </app-diagnosis-code>
+
+        <app-bill-line-item *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
+        </app-bill-line-item>
+
+        <app-payment-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData">
+        </app-payment-response>
+
+        <!-- ===== Examination Submission Documents ==== -->
+        <app-submission *ngIf="billingData" [review]="'Second'" [paramsId]="paramsId" [billingData]="billingData"
+            [states]="states">
+        </app-submission>
+
+        <!-- ===== Billing Documents ==== -->
+        <div class="completed-documents m-t-30">
+            <app-billing-document *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData"
+                [isMobile]="isMobile"></app-billing-document>
+        </div>
+    </div>
 </div>

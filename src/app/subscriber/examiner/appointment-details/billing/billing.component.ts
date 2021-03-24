@@ -78,20 +78,20 @@ export class BilllableBillingComponent implements OnInit {
   expandedElement1;
   columnName1 = [];
   isMobile1 = false;
- // documentsData: any = new MatTableDataSource([]);
+  // documentsData: any = new MatTableDataSource([]);
   //columnsToDisplay2 = [];
   expandedElement2;
   //columnName2 = [];
   //dataSourceDocList = new MatTableDataSource([]);
-  columnsToDisplayDoc = [];
-  expandedElement3;
-  columnsNameDoc = [];
+  // columnsToDisplayDoc = [];
+  // expandedElement3;
+  // columnsNameDoc = [];
   filterValue: string;
-  file: any;
+  // file: any;
   //documentType: any;
   paramsId: any = {};
   billingId: number;
-  documentList: any;
+  //documentList: any;
   eaxmProcuderalCodes: any;
   procuderalCodes: any;
   modifiers: any;
@@ -109,14 +109,14 @@ export class BilllableBillingComponent implements OnInit {
   removable = true;
   // addOnBlur = true;
   // separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl();
+  //fruitCtrl = new FormControl();
   // filteredmodifier: any;
   // modiferList: any = ['93', '94', '95', '96'];
-  @ViewChild(MatAutocompleteTrigger, { static: false }) _autoTrigger: MatAutocompleteTrigger;
+  ///@ViewChild(MatAutocompleteTrigger, { static: false }) _autoTrigger: MatAutocompleteTrigger;
   //unitTypes: any = [{ unit_type: 'Units', unit_short_code: 'UN' }, { unit_type: 'Pages', unit_short_code: 'UN' }];// { unit_type: 'Minutes', unit_short_code: 'MJ' }]
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
- // billDocumentList: any;
-  @ViewChild('scrollBottom', { static: false }) private scrollBottom: ElementRef;
+  //@ViewChild(MatSort, { static: true }) sort: MatSort;
+  // billDocumentList: any;
+  // @ViewChild('scrollBottom', { static: false }) private scrollBottom: ElementRef;
   states: any;
   // incompleteInformation: any;
   // isIncompleteError: any = true;
@@ -124,6 +124,7 @@ export class BilllableBillingComponent implements OnInit {
   role = this.cookieService.get('role_id');
   firstBillId: string;
   secondBillId: string;
+  paymentStatus: any;
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
     public dialog: MatDialog,
@@ -168,7 +169,7 @@ export class BilllableBillingComponent implements OnInit {
         this.billingId = param.billingId
       }
       this.firstBillId = param.billingId
-      
+
       // this.billingService.getIncompleteInfo(param.claim_id, param.billId, { isPopupValidate: false }).subscribe(res => {
       //   this.isIncompleteError = true;
       // }, error => {
@@ -195,13 +196,13 @@ export class BilllableBillingComponent implements OnInit {
       //   this.columnsToDisplay2 = ['doc_image', 'file_name', 'partial', 'complete', "action"]
       // }
 
-      if (res) {
-        this.columnsNameDoc = ["", "File Name"]
-        this.columnsToDisplayDoc = ['is_expand', 'file_name']
-      } else {
-        this.columnsNameDoc = ["", "Ref #", "File Name", "Action", "Date", "Recipients", "Download" + '\n' + "Sent Documents", "Further Information"]
-        this.columnsToDisplayDoc = ['doc_image', 'request_reference_id', 'file_name', 'action', "date", "recipients", 'download', 'payor_response_message']
-      }
+      // if (res) {
+      //   this.columnsNameDoc = ["", "File Name"]
+      //   this.columnsToDisplayDoc = ['is_expand', 'file_name']
+      // } else {
+      //   this.columnsNameDoc = ["", "Ref #", "File Name", "Action", "Date", "Recipients", "Download" + '\n' + "Sent Documents", "Further Information"]
+      //   this.columnsToDisplayDoc = ['doc_image', 'request_reference_id', 'file_name', 'action', "date", "recipients", 'download', 'payor_response_message']
+      // }
     })
 
     this.billingService.seedData("state").subscribe(res => {
@@ -221,7 +222,16 @@ export class BilllableBillingComponent implements OnInit {
       this.getBillingDetails();
     }
     if (index == 1) {
-      this.createSecondBill();
+      if (this.billingData.second_bill_id) {
+        this.secondBillId = this.billingData.second_bill_id;
+        let ids = {}
+        ids = { claimant_id: this.paramsId.claimant_id, claim_id: this.paramsId.claim_id, billId: this.paramsId.billId, billingId: this.secondBillId };
+        this.paramsId = ids;
+        this.getBillingDetails();
+        this.billingData = null;
+      } else {
+        this.createSecondBill();
+      }
     }
   }
 
@@ -274,11 +284,11 @@ export class BilllableBillingComponent implements OnInit {
     });
   }
 
-  scrollToBottom(): void {
-    try {
-      this.scrollBottom.nativeElement.scrollTop = this.scrollBottom.nativeElement.scrollHeight;
-    } catch (err) { }
-  }
+  // scrollToBottom(): void {
+  //   try {
+  //     this.scrollBottom.nativeElement.scrollTop = this.scrollBottom.nativeElement.scrollHeight;
+  //   } catch (err) { }
+  // }
 
 
   createSecondBill() {
@@ -308,7 +318,7 @@ export class BilllableBillingComponent implements OnInit {
     //   ).subscribe(value => { this.claimService.getICD10(value).subscribe(val => this.filteredICD = val[3]) });
 
     this.tabIndex = 0;
-   // this.getDocumentData();
+    // this.getDocumentData();
     this.getBillingDetails();
     //this.getBillDocument();
     //table
@@ -397,17 +407,22 @@ export class BilllableBillingComponent implements OnInit {
         // this.icdData = billing.data && billing.data.billing_diagnosis_code ? billing.data.billing_diagnosis_code : [];
         // this.IcdDataSource = new MatTableDataSource(this.icdData);
         // this.IcdDataSource.sort = this.sort;
-        billing.data.documets_sent_and_received.map(doccc => {
-          if (doccc.file_name == "DOCUMENTS_1140121036_BILL_20201209_051281_819.pdf") {
-            this.logger.log("billing", doccc)
-          }
-        })
+        // billing.data.documets_sent_and_received.map(doccc => {
+        //   if (doccc.file_name == "DOCUMENTS_1140121036_BILL_20201209_051281_819.pdf") {
+        //     this.logger.log("billing", doccc)
+        //   }
+        // })
 
         //this.dataSourceDocList = new MatTableDataSource(billing.data.documets_sent_and_received);
       }
     }, error => {
       this.logger.error(error)
     })
+  }
+
+
+  getPaymentStatus(value) {
+    this.paymentStatus = value;
   }
 
 
@@ -523,11 +538,11 @@ export class BilllableBillingComponent implements OnInit {
   // }
 
   //getDocumentData() {
-    // this.billingService.getDocumentData(this.paramsId.claim_id, this.paramsId.billId).subscribe(res => {
-    //   this.documentsData = new MatTableDataSource(res.data);
-    // }, error => {
-    //   this.documentsData = new MatTableDataSource([]);
-    // })
+  // this.billingService.getDocumentData(this.paramsId.claim_id, this.paramsId.billId).subscribe(res => {
+  //   this.documentsData = new MatTableDataSource(res.data);
+  // }, error => {
+  //   this.documentsData = new MatTableDataSource([]);
+  // })
   //}
 
   // getBillDocument() {
