@@ -441,7 +441,7 @@
                         <table class="table table-border res-table" [ngClass]="{'table-dark': mode}">
                             <thead class="text-nowrap">
                                 <th>
-                                    <mat-checkbox value="0"></mat-checkbox>
+                                    <mat-checkbox value="false" [(ngModel)]="selectAllStatus" [ngModelOptions]="{standalone: true}" (change)="selectAllCheck($event.checked,getFormControls.controls)"></mat-checkbox>
                                 </th>
                                 <th>Item </th>
                                 <th>Procedure Code</th>
@@ -636,6 +636,12 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div fxLayout="row wrap">
+                                                <div fxFlex="100" class="p-t-20 text-center">
+                                                    <button mat-stroked-button type="button" class="outline-danger">Cancel</button>
+                                                    <button mat-stroked-button class="outline-success text-center m-l-10">Save</button>
+                                                  </div>
+                                            </div>
                                         </td>
                                     </tr>
 
@@ -644,12 +650,7 @@
                             </tbody>
                         </table>
                     </form>
-                    <div fxLayout="row wrap">
-                        <div fxFlex="100" class="p-t-20 text-center">
-                            <button mat-stroked-button type="button" (click)="onNoClick()" class="outline-danger">Cancel</button>
-                            <button mat-stroked-button class="outline-success text-center m-l-10">Save</button>
-                          </div>
-                    </div>
+                   
                 </div>
             </div>
         </mat-card-content>

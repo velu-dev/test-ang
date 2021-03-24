@@ -554,5 +554,15 @@ export class BillLineItemComponent implements OnInit {
     group.get('reviewShow').patchValue(value)
   }
 
+  selectAllStatus: boolean = false;
+  selectAllCheck(value, group) {
+    //console.log(value)
+   // console.log(group)
+    group.map((data, i) => {
+    //  console.log(data.get('reviewShow').value);
+      data.get('reviewShow').patchValue(value);
+    })
+  }
+
 
 }
