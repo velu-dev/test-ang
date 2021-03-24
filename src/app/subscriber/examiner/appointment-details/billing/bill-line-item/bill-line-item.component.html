@@ -1,5 +1,5 @@
 <!-- ===== Bill Items ==== -->
-<div class="bill-item">
+<div class="bill-item" *ngIf="review?.toLowerCase() == 'first'">
     <mat-card>
         <mat-card-header>
             <div class="content-wrapper-main-title">Billing Line Items</div>
@@ -428,7 +428,7 @@
 
 <!-- +++++ Second Bill Review - Bill Items +++++ -->
 
-<!-- <div class="bill-item sbr_">
+<div class="bill-item sbr_"  *ngIf="review?.toLowerCase() == 'second'">
     <mat-card>
         <mat-card-header>
             <div class="content-wrapper-main-title">Second Bill Review - Bill Items</div>
@@ -459,7 +459,7 @@
                                     <tr *ngIf="group.get('isEditable').value" [formGroupName]="i"
                                         (click)="rowSelected(group)">
                                         <td>
-                                            <mat-checkbox value="0"></mat-checkbox>
+                                            <mat-checkbox value="false" formControlName="reviewShow" (change)="reviewCheck($event.checked, group)"></mat-checkbox>
                                         </td>
                                         <td>
                                             <mat-form-field appearance="outline"
@@ -552,8 +552,8 @@
                                         </td>
                                     </tr>
                                     <tr *ngIf="!group.get('isEditable').value" class="bill-value">
-                                        <td>
-                                            <mat-checkbox value="0"></mat-checkbox>
+                                        <td  [formGroupName]="i">
+                                            <mat-checkbox value="false" formControlName="reviewShow" (change)="reviewCheck($event.checked, group)"></mat-checkbox>
                                         </td>
                                         <td>
                                             {{group.get('item_description').value}}
@@ -584,7 +584,7 @@
                                         </td>
                                         <td>-</td>
                                     </tr>
-                                    <tr class="reason">
+                                    <tr class="reason" *ngIf="group.get('reviewShow').value">
                                         <td colspan="10">
                                             <div fxLayout="row wrap" class="reason-for-request">
                                                 <div fxFlex="50">
@@ -654,4 +654,4 @@
             </div>
         </mat-card-content>
     </mat-card>
-</div> -->
+</div>
