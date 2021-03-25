@@ -6,7 +6,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import * as moment from 'moment';
-import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MatPaginator, MatSort, MatTableDataSource, MAT_DATE_LOCALE } from '@angular/material';
+import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS, MatPaginator, MatSort, MatTableDataSource, MAT_DATE_LOCALE, MatDialog } from '@angular/material';
 import { formatDate } from '@angular/common';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { User } from 'src/app/shared/model/user.model';
@@ -17,6 +17,8 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
+import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
+import { UserService } from 'src/app/shared/services/user.service';
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
@@ -97,7 +99,9 @@ export class NewClaimantComponent implements OnInit {
     private _location: Location,
     private route: ActivatedRoute,
     private intercom: IntercomService,
-    private cookieService: CookieService
+    private userService: UserService,
+    private cookieService: CookieService,
+    public dialog: MatDialog
   ) {
     this.claimService.seedData('state').subscribe(response => {
       this.states = response['data'];
@@ -355,7 +359,15 @@ export class NewClaimantComponent implements OnInit {
     return true;
 
   }
-
+  openPopup() {
+    let data = this.userService.getRegulation(["1", "2", "3", "4"])
+    const dialogRef = this.dialog.open(RegulationDialogueComponent, {
+      width: '500px',
+      data: { title: "dsfdsd", regulations: data }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    })
+  }
   langChange(event) {
     this.claimantForm.get('primary_language_spoken').reset();
     if (event.checked) {

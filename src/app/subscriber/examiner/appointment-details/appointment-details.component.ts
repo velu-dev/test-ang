@@ -889,9 +889,10 @@ export class AppointmentDetailsComponent implements OnInit {
         })
       }
     });
-    if (!(moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).isSameOrAfter(moment.now()))) {
-      return
-    }
+    if (this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value)
+      if (!(moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).isSameOrAfter(moment.now()))) {
+        return
+      }
     if (this.billable_item.invalid) {
       return;
     }

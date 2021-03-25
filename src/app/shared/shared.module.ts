@@ -40,6 +40,7 @@ import { BreadcrumbService } from 'xng-breadcrumb';
 import { AlertDialogueComponent } from './components/alert-dialogue/alert-dialogue.component';
 import { BillingAlertComponent } from './components/billingalert/billing-alert.component';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { RegulationDialogueComponent } from './components/regulation-dialogue/regulation-dialogue.component';
 export const MY_MOMENT_FORMATS = {
   parseInput: 'MM-DD-YYYY HH:mm A z',
   fullPickerInput: 'MM-DD-YYYY HH:mm A z',
@@ -56,6 +57,7 @@ export const MY_MOMENT_FORMATS = {
     ErrorComponent,
     DialogueComponent,
     AlertDialogueComponent,
+    RegulationDialogueComponent,
     NodataComponent,
     EllipsisPipe,
     FilterPipe,
@@ -67,6 +69,7 @@ export const MY_MOMENT_FORMATS = {
     AlertComponent,
     DialogueComponent,
     AlertDialogueComponent,
+    RegulationDialogueComponent,
     NodataComponent,
     AlertDialogComponent,
     BillingAlertComponent
