@@ -644,15 +644,15 @@
                                                                 <input type="file" #uploader hidden (change)="addFile($event,group)" multiple
                                                                 accept=".pdf, .doc, .docx, .jpg, .jpeg, .png" required>    
                                                         </div>
-                                                        <div fxFlex="100" class="m-b-20">
+                                                        <div fxFlex="100" class="m-b-20" *ngIf="group.get('support_documents').value?.length > 0">
                                                             <table class="supporting-docs table table-border res-table">
                                                                 <thead>
-                                                                    <th>Filename</th>
+                                                                    <th>File name</th>
                                                                     <th>Action</th>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr>
-                                                                        <td><a href="" class="text-ternary">Supporting Document Filename Comes Here...</a></td>
+                                                                    <tr *ngFor="let file of group.get('support_documents').value">
+                                                                        <td><a href="" class="text-ternary">{{file?.file_name}}</a></td>
                                                                         <td class="action"><a class="text-danger p-r-10">Remove</a> |
                                                                             <a class="text-danger p-l-10">Reupload</a>
                                                                         </td>

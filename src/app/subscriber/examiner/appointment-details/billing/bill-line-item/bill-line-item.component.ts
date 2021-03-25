@@ -595,7 +595,7 @@ export class BillLineItemComponent implements OnInit {
           this.alertService.openSnackBar("File size is too large", 'error');
           return;
         }
-        this.fileName.push(this.selectedFiles[i].name)
+        this.fileName.push({file_name : this.selectedFiles[i].name})
         console.log(this.selectedFiles[i])
       } else {
         this.selectedFiles = null
