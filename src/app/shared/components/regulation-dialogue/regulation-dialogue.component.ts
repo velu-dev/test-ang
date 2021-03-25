@@ -20,7 +20,7 @@ export class RegulationDialogueComponent implements OnInit {
   ngOnInit() {
 
   }
-  onClick(status): void {
+  onClick(status?): void {
     this.dialogRef.close({ data: status })
   }
 
