@@ -362,8 +362,9 @@ export class NewClaimantComponent implements OnInit {
   openPopup() {
     let data = this.userService.getRegulation(["1", "2", "3", "4"])
     const dialogRef = this.dialog.open(RegulationDialogueComponent, {
-      width: '500px',
-      data: { title: "dsfdsd", regulations: data }
+      width: '1000px',
+      data: { title: "dsfdsd", regulations: data },
+      panelClass: 'info-regulation-dialog'
     });
     dialogRef.afterClosed().subscribe(result => {
     })

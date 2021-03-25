@@ -654,7 +654,7 @@ mat-progress-bar {
   }
   .mh-auto {
     min-height: auto !important;
-}
+  }
   .info-alert {
     padding: 10px 15px;
     color: $info;
@@ -991,6 +991,16 @@ mat-progress-bar {
     }
     button.outline-success {
       @extend.outline-success;
+    }
+  }
+}
+
+// Regulation info
+.info-regulation-dialog {
+  .mat-dialog-container {
+    @media only screen and (min-width: 1024px) {
+      margin-left: 160px;
+      background-color: red;
     }
   }
 }
