@@ -645,22 +645,20 @@
                                                                 accept=".pdf, .doc, .docx, .jpg, .jpeg, .png" required>    
                                                         </div>
                                                         <div fxFlex="100" class="m-b-20">
-                                                            <table mat-table [dataSource]="dataSource1" class="user-table">
-                                                    
-                                                              <ng-container matColumnDef="name">
-                                                                <th mat-header-cell *matHeaderCellDef class="w-100">Filename</th>
-                                                                <td mat-cell *matCellDef="let element"><a href="" class="text-ternary">{{element.name}}</a></td>
-                                                              </ng-container>
-                                                    
-                                                              <ng-container matColumnDef="action">
-                                                                <th mat-header-cell *matHeaderCellDef class="text-center">Action</th>
-                                                                <td mat-cell *matCellDef="let element" class="text-center action"><a class="text-danger p-r-10">Remove</a> | <a class="text-danger p-l-10">Reupload</a></td>
-                                                              </ng-container>
-                                                    
-                                                              <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
-                                                              <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                                                            <table class="supporting-docs table table-border res-table">
+                                                                <thead>
+                                                                    <th>Filename</th>
+                                                                    <th>Action</th>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td><a href="" class="text-ternary">Supporting Document Filename Comes Here...</a></td>
+                                                                        <td class="action"><a class="text-danger p-r-10">Remove</a> |
+                                                                            <a class="text-danger p-l-10">Reupload</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
                                                             </table>
-                                                    
                                                           </div>
                                                     </div>
                                                 </div>

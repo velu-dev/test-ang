@@ -62,17 +62,23 @@ th {
         }
     }
 }
-.user-table {
+.supporting-docs {
     th {
         border: 1px solid transparent !important;
         &:first-child {
             width: 50%;
         }
     }
-    td.action {
-        color: $lightgray;
-        a {
-            display: contents !important;
+    tbody {
+        td {
+            padding: 10px !important;
+        }
+
+        td.action {
+            color: $lightgray;
+            a {
+                display: contents !important;
+            }
         }
     }
 }
