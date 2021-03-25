@@ -86,7 +86,8 @@ export const MY_MOMENT_FORMATS = {
     OwlDateTimeModule, OwlNativeDateTimeModule, OwlMomentDateTimeModule,
     TextMaskModule,
     BreadcrumbModule,
-    NgxMatSelectSearchModule
+    NgxMatSelectSearchModule,
+    MaterialModule
   ],
   exports: [
     MaterialModule,
@@ -101,6 +102,7 @@ export const MY_MOMENT_FORMATS = {
     ErrorComponent,
     DialogueComponent,
     AlertDialogueComponent,
+    RegulationDialogueComponent,
     NodataComponent,
     NgxSkeletonLoaderModule,
     EllipsisPipe,
