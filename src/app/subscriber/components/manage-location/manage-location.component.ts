@@ -14,6 +14,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { trigger, style, state, transition, animate } from '@angular/animations';
 import { SubscriberService } from '../../service/subscriber.service';
+import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-manage-location',
@@ -49,7 +51,8 @@ export class ManageLocationComponent implements OnInit {
     public dialog: MatDialog,
     private alertService: AlertService,
     private subscriberService: SubscriberService,
-    private breakpointObserver: BreakpointObserver) {
+    private breakpointObserver: BreakpointObserver,
+    private userService: UserService) {
 
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -113,6 +116,16 @@ export class ManageLocationComponent implements OnInit {
 
   }
 
+  openPopup() {
+    let data = this.userService.getRegulation(["5", "6", "8", "9", "10"])
+    const dialogRef = this.dialog.open(RegulationDialogueComponent, {
+      width: '1000px',
+      data: { title: "Regulations for service locations", regulations: data },
+      panelClass: 'info-regulation-dialog'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    })
+  }
   openDialog(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '500px',
