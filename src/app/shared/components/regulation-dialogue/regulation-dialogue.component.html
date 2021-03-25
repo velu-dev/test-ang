@@ -1,23 +1,16 @@
-<!-- <h1>{{data.title}}</h1>
-<span *ngFor="let regulation of data.regulations">
-  <h2>{{regulation.section_number}} - {{regulation.section_title}}</h2>
-  <p>{{regulation.regulation_text}}</p>
-</span> -->
-
-
 <div class="regultion-info">
-   <div class="header">
-       <div class="title">
-        {{data.title}}{{data.title}}{{data.title}}{{data.title}}{{data.title}}{{data.title}}{{data.title}}{{data.title}}{{data.title}}
-       </div>
-       <button (click)="onClick()" aria-label="icon-button with a close icon">
-        <i class="fa fa-close"></i>
-      </button>
-   </div>
-   <div class="container">
-    <span *ngFor="let regulation of data.regulations">
-      <div class="sub-title">{{regulation.section_number}} - {{regulation.section_title}}</div>
-      <div class="description">{{regulation.regulation_text}}</div>
-    </span>
-   </div>
+  <div class="header">
+      <div class="title">
+       {{data.title}}{{data.title}}{{data.title}}{{data.title}}{{data.title}}{{data.title}}{{data.title}}{{data.title}}{{data.title}}
+      </div>
+      <button (click)="onClick()" aria-label="icon-button with a close icon">
+       <i class="fa fa-close"></i>
+     </button>
+  </div>
+  <div class="container">
+   <span *ngFor="let regulation of data.regulations">
+     <div class="sub-title">{{regulation.section_number}} - {{regulation.section_title}}</div>
+     <div class="description">{{regulation.regulation_text}}</div>
+   </span>
+  </div>
 </div>
