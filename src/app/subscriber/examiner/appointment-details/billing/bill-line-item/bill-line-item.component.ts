@@ -13,7 +13,10 @@ import { Location } from '@angular/common';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { animate, style, transition, trigger, state } from '@angular/animations';
-
+export interface PeriodicElement2 {
+  name: string;
+  action: string;
+}
 @Component({
   selector: 'app-bill-line-item',
   templateUrl: './bill-line-item.component.html',
@@ -45,6 +48,8 @@ export class BillLineItemComponent implements OnInit {
   modiferList: any = ['93', '94', '95', '96'];
   addOnBlur = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
+  displayedColumns1: string[] = ['name', 'action'];
+  dataSource1 = ELEMENT_DATA2;
   @ViewChild('scrollBottom', { static: false }) private scrollBottom: ElementRef;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   constructor(private logger: NGXLogger,
@@ -609,3 +614,6 @@ export class BillLineItemComponent implements OnInit {
   }
 
 }
+const ELEMENT_DATA2: PeriodicElement2[] = [
+  { action: '', name: 'Document_filename.pdf' },
+];
