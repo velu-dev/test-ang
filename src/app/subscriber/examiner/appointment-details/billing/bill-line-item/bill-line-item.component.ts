@@ -13,7 +13,10 @@ import { Location } from '@angular/common';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { animate, style, transition, trigger, state } from '@angular/animations';
-
+export interface PeriodicElement2 {
+  name: string;
+  action: string;
+}
 @Component({
   selector: 'app-bill-line-item',
   templateUrl: './bill-line-item.component.html',
@@ -45,7 +48,10 @@ export class BillLineItemComponent implements OnInit {
   modiferList: any = ['93', '94', '95', '96'];
   addOnBlur = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
+  displayedColumns1: string[] = ['name', 'action'];
+  dataSource1 = ELEMENT_DATA2;
   @ViewChild('scrollBottom', { static: false }) private scrollBottom: ElementRef;
+  @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   constructor(private logger: NGXLogger,
     private claimService: ClaimService,
     private breakpointObserver: BreakpointObserver,
@@ -193,7 +199,15 @@ export class BillLineItemComponent implements OnInit {
       modifierTotal: [0],
       unitTotal: [0],
       is_excess_pages: [null],
-      reviewShow: [false]
+      reviewShow: [false],
+
+      bill_request_reason: [],
+      billed_service_authorized: [],
+      payor_claim_control_number: [],
+      support_documents_attached: [],
+      support_documents: [],
+      file: []
+
     });
   }
 
@@ -557,12 +571,49 @@ export class BillLineItemComponent implements OnInit {
   selectAllStatus: boolean = false;
   selectAllCheck(value, group) {
     //console.log(value)
-   // console.log(group)
+    // console.log(group)
     group.map((data, i) => {
-    //  console.log(data.get('reviewShow').value);
+      //  console.log(data.get('reviewShow').value);
       data.get('reviewShow').patchValue(value);
     })
   }
 
+  saveReview(grp) {
+    console.log(grp)
+  }
+
+  selectedFiles: FileList;
+  fileName: any = []
+  addFile(event, group) {
+    // group.get('file').patchValue(null);
+    // group.get('support_documents').patchValue(null);
+    this.selectedFiles = null
+    this.selectedFiles = event.target.files;
+    let fileTypes = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png'];
+
+
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      if (fileTypes.includes(this.selectedFiles[i].name.split('.').pop().toLowerCase())) {
+        var FileSize = this.selectedFiles[i].size / 1024 / 1024; // in MB
+        if (FileSize > 3073) {
+          this.fileUpload.nativeElement.value = "";
+          this.alertService.openSnackBar("File size is too large", 'error');
+          return;
+        }
+        this.fileName.push(this.selectedFiles[i].name)
+        console.log(this.selectedFiles[i])
+      } else {
+        this.selectedFiles = null
+        this.fileUpload.nativeElement.value = "";
+        this.alertService.openSnackBar("This file type is not accepted", 'error');
+      }
+    }
+
+    group.get('file').patchValue(this.selectedFiles);
+    group.get('support_documents').patchValue(this.fileName);
+  }
 
 }
+const ELEMENT_DATA2: PeriodicElement2[] = [
+  { action: '', name: 'Document_filename.pdf' },
+];
