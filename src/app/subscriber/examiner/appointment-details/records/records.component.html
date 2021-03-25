@@ -1,9 +1,10 @@
 <div class="billable-item-status">
   <div fxLayout="row wrap" class="ondemand-status p-t-20">
     <div fxFlex="100">
-      <div class="main-title">Record Summary On Demand Status <span class="info ondemand-info m-l-10"
-          matTooltip="The Record Summarizer will send progress updates that will be reflected in the status here."
-          matTooltipPosition="above"><i class="fa fa-info" aria-hidden="true"></i></span></div>
+      <div class="main-title">Record Summary On Demand Status <span class="info ondemand-info m-l-10" (click)="openPopup()"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
+          <!-- <div class="main-title">Record Summary On Demand Status <span class="info ondemand-info m-l-10"
+            matTooltip="The Record Summarizer will send progress updates that will be reflected in the status here."
+            matTooltipPosition="above"><i class="fa fa-info" aria-hidden="true"></i></span></div> -->
       <p class="description">View the progress of Record Summary service here.</p>
       <mat-progress-bar mode="determinate" value="{{statusBarValues?.value}}" class="progress">
       </mat-progress-bar>

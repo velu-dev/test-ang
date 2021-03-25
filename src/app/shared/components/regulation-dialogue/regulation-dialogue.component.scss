@@ -18,13 +18,19 @@
         }
     }
     .container {
+        max-height: 700px;
+        overflow-y: auto;
+        span {
+            margin: 10px 0 10px 0;
+            display: block;
         .sub-title {
             font-size: $font-size-2;
-            font-weight: $font-weight-medium;
+            font-weight: $font-weight-bold;
         }
         .description {
             font-size: $font-size-1;
             font-weight: $font-weight-base;
         }
+    }
     }
 }

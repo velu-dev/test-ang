@@ -14,6 +14,8 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import * as moment from 'moment-timezone';
+import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
+import { UserService } from 'src/app/shared/services/user.service';
 @Component({
   selector: 'app-records',
   templateUrl: './records.component.html',
@@ -62,7 +64,8 @@ export class RecordsComponent implements OnInit {
     private onDemandService: OnDemandService,
     private intercom: IntercomService,
     private cookieService: CookieService,
-    public router: Router) {
+    public router: Router,
+    public userService: UserService) {
 
 
     this.route.params.subscribe(param => {
@@ -377,7 +380,16 @@ export class RecordsComponent implements OnInit {
   deleteDocument(data) {
     this.openDialogDelete('delete', data);
   }
-
+  openPopup() {
+    let data = this.userService.getRegulation(["44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55"])
+    const dialogRef = this.dialog.open(RegulationDialogueComponent, {
+      width: '1000px',
+      data: { title: "Regulations for records", regulations: data },
+      panelClass: 'info-regulation-dialog'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    })
+  }
   openDialogDelete(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '500px',

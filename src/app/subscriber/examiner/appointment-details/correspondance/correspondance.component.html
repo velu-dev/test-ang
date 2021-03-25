@@ -1,7 +1,7 @@
 <div class="billable-item-status">
   <div fxLayout="row wrap" class="ondemand-status p-t-20">
     <div fxFlex="100" class="container">
-      <div class="main-title">Mail On Demand</div>
+      <div class="main-title">Mail On Demand <span class="info ondemand-info m-l-10" (click)="openPopup()"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
       <p class="description">View the progress of Correspondence Mail On Demand service here.</p>
       <mat-progress-bar mode="determinate" class="p-l-0" value="{{statusBarValues?.value}}" class="progress">
       </mat-progress-bar>

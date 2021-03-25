@@ -20,6 +20,8 @@ import { AlertComponent } from 'src/app/shared/components/alert/alert.component'
 import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { IntercomService } from 'src/app/services/intercom.service';
+import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
+import { UserService } from 'src/app/shared/services/user.service';
 @Component({
   selector: 'app-billing-correspondance',
   templateUrl: './correspondance.component.html',
@@ -75,7 +77,8 @@ export class BillingCorrespondanceComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild('popupMenu', { static: false }) popupMenu: MatMenuTrigger;
 
-  constructor(private claimService: ClaimService, private logger: NGXLogger, private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private router: Router, private onDemandService: OnDemandService, public dialog: MatDialog, private alertService: AlertService, private intercom: IntercomService, private cookieService: CookieService) {
+  constructor(private claimService: ClaimService, private logger: NGXLogger, private breakpointObserver: BreakpointObserver, private route: ActivatedRoute, private router: Router, private onDemandService: OnDemandService, public dialog: MatDialog, private alertService: AlertService, private intercom: IntercomService, private cookieService: CookieService,
+    private userService: UserService,) {
     this.claimService.seedData("state").subscribe(res => {
       this.states = res.data;
     })
@@ -261,6 +264,16 @@ export class BillingCorrespondanceComponent implements OnInit {
       // }
       // this.animal = result;
     });
+  }
+  openPopup() {
+    let data = this.userService.getRegulation(["28", "106", "107", "108", "109", "110"])
+    const dialogRef = this.dialog.open(RegulationDialogueComponent, {
+      width: '1000px',
+      data: { title: "Regulations for correspondence", regulations: data },
+      panelClass: 'info-regulation-dialog'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    })
   }
   openCustomRecipient(): void {
     const dialogRef = this.dialog.open(CustomRecipient, {
