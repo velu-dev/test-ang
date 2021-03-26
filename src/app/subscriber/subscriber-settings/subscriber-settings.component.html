@@ -738,7 +738,8 @@
                                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
                                         fxFlex.xl="50" fxFlex.sm="50" fxFlex.xs="100">
                                         <mat-label>Date</mat-label>
-                                        <mat-select [(ngModel)]="selectedDate" name="selectedDate">
+                                        <mat-select [(ngModel)]="selectedDate" name="selectedDate"
+                                            [value]="selectedDate">
                                             <mat-option *ngFor="let date of subscriptionCharges"
                                                 (click)="getHistory(date.date)" [value]="date.date">
                                                 {{date.date}}
@@ -756,7 +757,8 @@
                                         'Bill Total'}}</div>
                                 </div>
                                 <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="text-right">
-                                    <div class="sub-title" fxFlex="100">$1630.80</div>
+                                    <div class="sub-title" fxFlex="100">{{paymentData?.bill_total| number : '1.2-2'}}
+                                    </div>
                                 </div>
                                 <div class="divider"></div>
                                 <div class="note" fxFlex="100" *ngIf="currentMonth == selectedMonth">The total charge
@@ -768,7 +770,8 @@
                                     <div class="sub-title m-t-10">Details</div>
                                 </div>
                                 <div fxFlex="50" class="text-right m-b-5">
-                                    <button (click)="expandAll()" mat-raised-button class="filled-lightgray mini-btn m-t-15">
+                                    <button (click)="expandAll()" mat-raised-button
+                                        class="filled-lightgray mini-btn m-t-15">
                                         <i class="fas fa-plus"></i> {{isExpanded ? "Collapse All" : "Expand All"}}
                                     </button>
                                 </div>
@@ -777,7 +780,8 @@
                             <div fxLayout="row wrap" class="details m-t-10" fxFlex="100">
                                 <mat-tree #tree [dataSource]="dataSourceList" [treeControl]="treeControl"
                                     class="pay-list">
-                                    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding  matTreeNodePaddingIndent="10">
+                                    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding
+                                        matTreeNodePaddingIndent="10">
                                         <button mat-icon-button disabled></button>
 
                                         <div [class]="'pay-records pay-records-expand node'+node?.level">
@@ -785,14 +789,18 @@
                                             <span>&nbsp;{{node.pages ? node.pages : " "}}</span>
                                             <span><b> {{node.charges ? ("$"+ (node.charges | number : '1.2-2')) :
                                                     "$0.00"}}</b></span> -->
-                                                    <div class="property">{{node.name}}</div>
-                                                    <div class="items hide-mobile"><p>&nbsp;{{node.pages ? node.pages : " "}}</p></div>
-                                                    <div class="show-mobile"><b>{{node.pages ? node.pages : " "}}</b></div>
-                                                    <div class="total">{{node.charges ? ("$"+ (node.charges | number : '1.2-2')) : "$0.00"}}</div>
-                                                    
+                                            <div class="property">{{node.name}}</div>
+                                            <div class="items hide-mobile">
+                                                <p>&nbsp;{{node.pages ? node.pages : " "}}</p>
+                                            </div>
+                                            <div class="show-mobile"><b>{{node.pages ? node.pages : " "}}</b></div>
+                                            <div class="total">{{node.charges ? ("$"+ (node.charges | number : '1.2-2'))
+                                                : "$0.00"}}</div>
+
                                         </div>
                                     </mat-tree-node>
-                                    <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding  matTreeNodePaddingIndent="10">
+                                    <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding
+                                        matTreeNodePaddingIndent="10">
                                         <button mat-icon-button matTreeNodeToggle
                                             [attr.aria-label]="'toggle ' + node.name" disableRipple="true">
                                             <mat-icon class="mat-icon-rtl-mirror">
@@ -804,12 +812,15 @@
                                             <span>&nbsp;{{node.pages}}</span>
                                             <span><b> {{node.charges ? ("$"+ (node.charges | number : '1.2-2')) :
                                                     "$0.00"}}</b></span> -->
-                                                    <div class="property"><b>{{node.name}}</b></div>
-                                                    <div class="items hide-mobile"><p>&nbsp;</p></div>
-                                                    <div class="total"><b>{{node.charges ? ("$"+ (node.charges | number : '1.2-2')) : "$0.00"}}</b></div>
-                                                    <div class="divider"></div>
+                                            <div class="property"><b>{{node.name}}</b></div>
+                                            <div class="items hide-mobile">
+                                                <p>&nbsp;</p>
+                                            </div>
+                                            <div class="total"><b>{{node.charges ? ("$"+ (node.charges | number :
+                                                    '1.2-2')) : "$0.00"}}</b></div>
+                                            <div class="divider"></div>
                                         </div>
-                                    
+
                                     </mat-tree-node>
                                 </mat-tree>
                             </div>
