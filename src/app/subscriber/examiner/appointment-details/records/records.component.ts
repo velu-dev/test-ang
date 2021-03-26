@@ -380,11 +380,11 @@ export class RecordsComponent implements OnInit {
   deleteDocument(data) {
     this.openDialogDelete('delete', data);
   }
-  openPopup() {
-    let data = this.userService.getRegulation(["44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55"])
+  openPopup(title, value) {
+    let data = this.userService.getRegulation(value)
     const dialogRef = this.dialog.open(RegulationDialogueComponent, {
       width: '1000px',
-      data: { title: "Regulations for records", regulations: data },
+      data: { title: title, regulations: data },
       panelClass: 'info-regulation-dialog'
     });
     dialogRef.afterClosed().subscribe(result => {

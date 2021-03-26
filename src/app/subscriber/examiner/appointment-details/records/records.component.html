@@ -1,7 +1,7 @@
 <div class="billable-item-status">
   <div fxLayout="row wrap" class="ondemand-status p-t-20">
     <div fxFlex="100">
-      <div class="main-title">Record Summary On Demand Status <span class="info ondemand-info m-l-10" (click)="openPopup()"> <i class="fa fa-info" aria-hidden="true"></i></span></div>
+      <div class="main-title">Record Summary On Demand Status <span class="custom-info" (click)="openPopup('Regulations for records', ['44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55'])"><i class="material-icons-outlined">info</i></span></div>
           <!-- <div class="main-title">Record Summary On Demand Status <span class="info ondemand-info m-l-10"
             matTooltip="The Record Summarizer will send progress updates that will be reflected in the status here."
             matTooltipPosition="above"><i class="fa fa-info" aria-hidden="true"></i></span></div> -->
@@ -14,9 +14,9 @@
 
   <div fxLayout="row wrap" class="p-t-25">
     <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
-      <div class="main-title">Record Documents <span class="info ondemand-info m-l-10"
+      <div class="main-title">Record Documents <span class="custom-info"
           matTooltip="Record the number of pages in the documents. The number of pages will be included in the bill to the insurance company."
-          matTooltipPosition="above"><i class="fa fa-info" aria-hidden="true"></i></span></div>
+          matTooltipPosition="above"><i class="material-icons-outlined">info</i></span></div>
       <p class="description">Upload record documents and select the documents to send to the record summarizers from
         this list.</p>
       <div class="info-alert m-b-10 m-t-10">
@@ -168,10 +168,9 @@
 
   <div fxLayout="row wrap" class="send-document">
     <div fxFlex="100">
-      <div class="main-title">Documents Sent <span class="info ondemand-info m-l-10"
+      <div class="main-title">Documents Sent <span class="custom-info"
           matTooltip="This table lists the documents, actions that were performed on the documents, the date that the actions were performed and the document recipients."
-          matTooltipPosition="above">
-          <i class="fa fa-info" aria-hidden="true"></i></span></div>
+          matTooltipPosition="above"><i class="material-icons-outlined">info</i></span></div>
       <p class="description">This table lists the record documents that were sent to be summarized.</p>
 
       <div class="user-detail vertical-fixed default-cursor">

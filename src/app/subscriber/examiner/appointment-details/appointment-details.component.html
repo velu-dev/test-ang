@@ -126,10 +126,10 @@
         </div>
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
             <form [formGroup]="examinationStatusForm">
-                <div fxLayout="row wrap">
+                <div fxLayout="row wrap" class="examination-status">
                     <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100" class="p-t-15 p-r-10">{{isDisplayStatus.name}}
                         Status</div>
-                    <mat-form-field appearance="outline" fxFlex="70" fxFlex.sm="100" fxFlex.xs="100">
+                    <mat-form-field appearance="outline" fxFlex="70" fxFlex.sm="92" fxFlex.xs="92">
                         <mat-label>Choose an option</mat-label>
                         <mat-select formControlName="examination_status">
                             <mat-option *ngFor="let examination_status of examinationStatus"
@@ -139,6 +139,7 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
+                    <span class="custom-info" (click)="openPopupRegulation('Regulations for appointment notification and cancellation', ['31', '32', '33', '34', '35'])"><i class="material-icons-outlined">info</i></span>
                     <mat-form-field appearance="outline" fxFlex="100">
                         <mat-label>Notes</mat-label>
                         <textarea formControlName="examination_notes" matInput placeholder="Notes" cdkTextareaAutosize
@@ -186,10 +187,10 @@
         </div>
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
             <form [formGroup]="examinationStatusForm">
-                <div fxLayout="row wrap">
+                <div fxLayout="row wrap" class="examination-status">
                     <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100" class="p-t-15 p-r-10">{{isDisplayStatus.name}}
                         Status</div>
-                    <mat-form-field appearance="outline" fxFlex="70" fxFlex.sm="100" fxFlex.xs="100">
+                    <mat-form-field appearance="outline" fxFlex="70" fxFlex.sm="92" fxFlex.xs="92">
                         <mat-label>Choose an option</mat-label>
                         <mat-select formControlName="examination_status">
                             <mat-option *ngFor="let examination_status of cancelSupplemental"
@@ -199,6 +200,7 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
+                    <span class="custom-info" (click)="openPopupRegulation('Regulations for appointment notification and cancellation', ['31', '32', '33', '34', '35'])"><i class="material-icons-outlined">info</i></span>
                     <mat-form-field appearance="outline" fxFlex="100">
                         <mat-label>Notes</mat-label>
                         <textarea formControlName="examination_notes" matInput placeholder="Notes" cdkTextareaAutosize
@@ -476,7 +478,7 @@
 
 <mat-card class="document-info m-t-25" *ngIf="examinationDetails?.procedure_type != 'Cancellation'">
     <mat-card-header>
-        <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Documents</div>
+        <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Documents<span class="custom-info" (click)="openPopupRegulation('Regulations for retention of medical-legal reports', ['119', '120'])"><i class="material-icons-outlined">info</i></span></div>
     </mat-card-header>
     <mat-divider> </mat-divider>
     <mat-card-content>

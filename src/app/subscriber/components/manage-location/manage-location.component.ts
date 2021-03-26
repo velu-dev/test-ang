@@ -115,12 +115,11 @@ export class ManageLocationComponent implements OnInit {
   editClaim(e) {
 
   }
-
-  openPopup() {
-    let data = this.userService.getRegulation(["5", "6", "8", "9", "10"])
+  openPopup(title, value) {
+    let data = this.userService.getRegulation(value)
     const dialogRef = this.dialog.open(RegulationDialogueComponent, {
       width: '1000px',
-      data: { title: "Regulations for service locations", regulations: data },
+      data: { title: title, regulations: data },
       panelClass: 'info-regulation-dialog'
     });
     dialogRef.afterClosed().subscribe(result => {
