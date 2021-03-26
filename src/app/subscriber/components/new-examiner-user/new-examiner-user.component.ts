@@ -80,6 +80,7 @@ export class NewExaminerUserComponent implements OnInit {
   selectedUser: any = {}
   texonomySearch = new FormControl();
   texonomyFilteredOptions: Observable<any>;
+  texonomyFilteredData = [];
   selected: any;
   examinerNumber: any;
   isEmailId: boolean = false;
@@ -228,6 +229,20 @@ export class NewExaminerUserComponent implements OnInit {
           this.clearAutoComplete();
         }
       })
+      this.texonomySearch.valueChanges
+        .pipe(
+          debounceTime(300),
+        ).subscribe(val => {
+          if (this.texonomySearch.errors) {
+            return
+          } else {
+            if (val) {
+              this.texonomyFilteredData = this._filter(val)
+            } else {
+              this.texonomyFilteredData = this.taxonomyList.slice()
+            }
+          }
+        })
       this.texonomyFilteredOptions = this.texonomySearch.valueChanges
         .pipe(
           startWith(''),
@@ -887,6 +902,7 @@ export class NewExaminerUserComponent implements OnInit {
       taxonomy_id: null
     })
     this.texonomyValue = null;
+    this.texonomyFilteredData = this.taxonomyList;
     this.texonomySearch.reset();
   }
   renderingSubmit: boolean = false;

@@ -588,18 +588,18 @@
                             </mat-select> -->
                             <input type="text" matInput [formControl]="texonomySearch"
                                 [matAutocomplete]="examinerAutocomplete">
-                            <button mat-button *ngIf="renderingForm.value.taxonomy_id" matSuffix mat-icon-button
+                            <button mat-button matSuffix mat-icon-button
                                 aria-label="Clear" (click)="clearAutoComplete()" matTooltip="Clear Code"
                                 matTooltipPosition="above">
                                 <mat-icon>close</mat-icon>
                             </button>
                             <mat-autocomplete #examinerAutocomplete="matAutocomplete"
                                 (optionSelected)="texonomyChange($event.option.value)">
-                                <mat-option *ngFor="let option of (texonomyFilteredOptions | async)" [value]="option.id"
+                                <mat-option *ngFor="let option of texonomyFilteredData" [value]="option.id"
                                     title="{{option?.taxonomy_code}}-{{option?.taxonomy_name}}">
                                     {{option.taxonomy_code}}-{{option.taxonomy_name}}
                                 </mat-option>
-                                <mat-option *ngIf="(texonomyFilteredOptions | async)?.length == 0" disabled>No Result
+                                <mat-option *ngIf="texonomyFilteredData?.length == 0" disabled>No Result
                                     Found
                                 </mat-option>
                             </mat-autocomplete>

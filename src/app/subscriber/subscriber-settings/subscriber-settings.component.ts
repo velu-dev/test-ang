@@ -168,10 +168,7 @@ export class SubscriberSettingsComponent implements OnInit {
     })
     this.userService.subscriptionCharges().subscribe(res => {
       this.subscriptionCharges = res.data;
-      var m = new Date().getMonth();
-      var y = new Date().getFullYear();
-      this.selectedDate = this.month[m] + " " + y;
-      this.getHistory(this.month[m] + " " + y);
+      console.log(res.data)
     })
     this.listCard();
     this.userService.getProfile().subscribe(res => {
@@ -232,12 +229,14 @@ export class SubscriberSettingsComponent implements OnInit {
     this.isViewInit = true;
   }
   isDataAvailable = false;
+  paymentData: any;
   getHistory(date) {
     this.selectedMonth = new Date(date).getMonth();
     this.userService.getPaymentHistory(date).subscribe(res => {
       this.isDataAvailable = true;
+      this.paymentData = res.data;
       //this.alertService.openSnackBar(res.message, 'success');
-      this.dataSourceList.data = res.data;/* Tree view */
+      this.dataSourceList.data = res.data.data;/* Tree view */
     }, error => {
       this.isDataAvailable = false;
       // this.alertService.openSnackBar(error.error.message, 'error');
@@ -312,7 +311,10 @@ export class SubscriberSettingsComponent implements OnInit {
     }, error => {
       console.log("error", error)
     })
-
+    var m = new Date().getMonth();
+    var y = new Date().getFullYear();
+    this.selectedDate = this.month[m] + " " + y;
+    this.getHistory(this.month[m] + " " + y);
   }
 
   selectedTabChange(event) {
