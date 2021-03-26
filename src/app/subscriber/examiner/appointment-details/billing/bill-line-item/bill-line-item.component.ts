@@ -47,6 +47,10 @@ export class BillLineItemComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   @ViewChild('scrollBottom', { static: false }) private scrollBottom: ElementRef;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
+  selectAllStatus: boolean = false;
+  showDocumentSec: boolean = false;
+  selectedFiles: FileList;
+  fileName: any = []
   constructor(private logger: NGXLogger,
     private claimService: ClaimService,
     private breakpointObserver: BreakpointObserver,
@@ -197,9 +201,9 @@ export class BillLineItemComponent implements OnInit {
       reviewShow: [false],
 
       bill_request_reason: [],
-      billed_service_authorized: [],
+      billed_service_authorized: [false],
+      support_documents_attached: [false],
       payor_claim_control_number: [],
-      support_documents_attached: [],
       support_documents: [],
       file: []
 
@@ -559,29 +563,43 @@ export class BillLineItemComponent implements OnInit {
     return;
   }
 
-  reviewCheck(value, group) {
-    group.get('reviewShow').patchValue(value)
+  reviewCheck(value, group, groupAll) {
+    group.get('reviewShow').patchValue(value);
+    if (value) {
+      this.showDocumentSec = true;
+    }
+    if (!value) {
+      this.selectAllStatus = value
+    }
+    let statusArr = groupAll.map(data => {
+      return data.get('reviewShow').value;
+    })
+
+    if (statusArr.includes(true)) {
+      this.showDocumentSec = true;
+    } else {
+      this.showDocumentSec = false;
+    }
   }
 
-  selectAllStatus: boolean = false;
+  
   selectAllCheck(value, group) {
-    //console.log(value)
-    // console.log(group)
     group.map((data, i) => {
-      //  console.log(data.get('reviewShow').value);
       data.get('reviewShow').patchValue(value);
     })
+    if (value) {
+      this.showDocumentSec = true;
+    } else {
+      this.showDocumentSec = false;
+    }
   }
 
   saveReview(grp) {
     console.log(grp)
   }
 
-  selectedFiles: FileList;
-  fileName: any = []
-  addFile(event, group) {
-    // group.get('file').patchValue(null);
-    // group.get('support_documents').patchValue(null);
+  
+  addFile(event) {
     this.selectedFiles = null
     this.selectedFiles = event.target.files;
     let fileTypes = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png'];
@@ -595,7 +613,7 @@ export class BillLineItemComponent implements OnInit {
           this.alertService.openSnackBar("File size is too large", 'error');
           return;
         }
-        this.fileName.push({file_name : this.selectedFiles[i].name})
+        this.fileName.push({ file_name: this.selectedFiles[i].name })
         console.log(this.selectedFiles[i])
       } else {
         this.selectedFiles = null
@@ -604,8 +622,10 @@ export class BillLineItemComponent implements OnInit {
       }
     }
 
-    group.get('file').patchValue(this.selectedFiles);
-    group.get('support_documents').patchValue(this.fileName);
+    // group.get('file').patchValue(this.selectedFiles);
+    // group.get('support_documents').patchValue(this.fileName);
   }
+
+
 
 }
