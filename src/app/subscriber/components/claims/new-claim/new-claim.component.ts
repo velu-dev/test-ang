@@ -1879,6 +1879,7 @@ export class NewClaimComponent implements OnInit {
     })
   }
   isSuplimental = false;
+  isDeposition = false;
   procedure_type(procuderalCode) {
     console.log(procuderalCode)
     if (procuderalCode.exam_procedure_type.includes("SUPP")) {
@@ -1910,7 +1911,11 @@ export class NewClaimComponent implements OnInit {
       }
       this.appointment_scheduled_date_time = null
     } else {
-
+      if (procuderalCode.exam_procedure_type.includes("DEPO")) {
+        this.isDeposition = true;
+      } else {
+        this.isDeposition = false;
+      }
       this.isSuplimental = false;
     }
   }
