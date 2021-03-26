@@ -468,7 +468,7 @@
                                     <tr *ngIf="group.get('isEditable').value" [formGroupName]="i"
                                         (click)="rowSelected(group)">
                                         <td>
-                                            <mat-checkbox value="false" formControlName="reviewShow" (change)="reviewCheck($event.checked, group)"></mat-checkbox>
+                                            <mat-checkbox value="false" formControlName="reviewShow" (change)="reviewCheck($event.checked, group, getFormControls.controls)"></mat-checkbox>
                                         </td>
                                         <td>
                                             <mat-form-field appearance="outline"
@@ -562,7 +562,7 @@
                                     </tr>
                                     <tr *ngIf="!group.get('isEditable').value" class="bill-value">
                                         <td  [formGroupName]="i">
-                                            <mat-checkbox value="false" formControlName="reviewShow" (change)="reviewCheck($event.checked, group)"></mat-checkbox>
+                                            <mat-checkbox value="false" formControlName="reviewShow" (change)="reviewCheck($event.checked, group, getFormControls.controls)"></mat-checkbox>
                                         </td>
                                         <td>
                                             {{group.get('item_description').value}}
@@ -611,9 +611,9 @@
                                                         <div fxFlex="100" class="select-1">Service / Good Authorized?
                                                          
                                                                 <mat-radio-group formControlName="billed_service_authorized" aria-label="Select an option">
-                                                                    <mat-radio-button value="1" class="p-r-20">Yes
+                                                                    <mat-radio-button [value]="true" class="p-r-20">Yes
                                                                     </mat-radio-button>
-                                                                    <mat-radio-button value="2">No</mat-radio-button>
+                                                                    <mat-radio-button [value]="false">No</mat-radio-button>
                                                                 </mat-radio-group>
                                                             
                                                         </div>
@@ -621,54 +621,55 @@
                                                             Attached?
                                                            
                                                                 <mat-radio-group formControlName="support_documents_attached" aria-label="Select an option">
-                                                                    <mat-radio-button value="1" class="p-r-20">Yes
+                                                                    <mat-radio-button [value]="true" class="p-r-20">Yes
                                                                     </mat-radio-button>
-                                                                    <mat-radio-button value="2">No</mat-radio-button>
+                                                                    <mat-radio-button [value]="false">No</mat-radio-button>
                                                                 </mat-radio-group>
                                                             
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div fxFlex="100" class="m-t-20">
-                                                    <div fxLayout="row wrap">
-                                                        <div fxFlex="50">
-                                                            <mat-form-field appearance="outline" fxFlex="100">
-                                                                <mat-label>Payer Claim Control Number</mat-label>
-                                                                <input matInput formControlName="payor_claim_control_number" placeholder="Payer Claim Control Number"
-                                                                    value="">
-                                                            </mat-form-field>
-                                                        </div>
-                                                        <div fxFlex="50" class="text-right">
-                                                            <button mat-stroked-button class="filled-ternary" (click)="uploader.click()">Upload
-                                                                Supporting Documents</button>
-                                                                <input type="file" #uploader hidden (change)="addFile($event,group)" multiple
-                                                                accept=".pdf, .doc, .docx, .jpg, .jpeg, .png" required>    
-                                                        </div>
-                                                        <div fxFlex="100" class="m-b-20" *ngIf="group.get('support_documents').value?.length > 0">
-                                                            <table class="supporting-docs table table-border res-table">
-                                                                <thead>
-                                                                    <th>File name</th>
-                                                                    <th>Action</th>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <tr *ngFor="let file of group.get('support_documents').value">
-                                                                        <td><a href="" class="text-ternary">{{file?.file_name}}</a></td>
-                                                                        <td class="action"><a class="text-danger p-r-10">Remove</a> |
-                                                                            <a class="text-danger p-l-10">Reupload</a>
-                                                                        </td>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                          </div>
-                                                    </div>
-                                                </div>
+                                               
                                             </div>
                                         </td>
                                     </tr>
                                 </ng-container>
                             </tbody>
                         </table>
-                        <div fxLayout="row wrap">
+                        <div fxLayout="row wrap" *ngIf="showDocumentSec">
+                            <div fxFlex="100" class="m-t-20">
+                                <div fxLayout="row wrap">
+                                    <div fxFlex="50">
+                                        <mat-form-field appearance="outline" fxFlex="100">
+                                            <mat-label>Payer Claim Control Number</mat-label>
+                                            <input matInput  placeholder="Payer Claim Control Number"
+                                                value="">
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxFlex="50" class="text-right">
+                                        <button mat-stroked-button class="filled-ternary" (click)="uploader.click()">Upload
+                                            Supporting Documents</button>
+                                            <input type="file" #uploader hidden (change)="addFile($event)" multiple
+                                            accept=".pdf, .doc, .docx, .jpg, .jpeg, .png" required>    
+                                    </div>
+                                    <div fxFlex="100" class="m-b-20">
+                                        <table class="supporting-docs table table-border res-table">
+                                            <thead>
+                                                <th>File name</th>
+                                                <th>Action</th>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let file of fileName">
+                                                    <td><a href="" class="text-ternary">{{file?.file_name}}</a></td>
+                                                    <td class="action"><a class="text-danger p-r-10">Remove</a> |
+                                                        <a class="text-danger p-l-10">Reupload</a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                      </div>
+                                </div>
+                            </div>
                             <div fxFlex="100" class="p-t-20 text-center">
                                 <button mat-stroked-button type="button" class="outline-danger">Cancel</button>
                                 <button mat-stroked-button class="outline-success text-center m-l-10" (click)="saveReview(getFormControls.controls)">Save</button>
