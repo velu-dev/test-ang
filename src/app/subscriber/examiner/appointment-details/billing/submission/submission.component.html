@@ -10,7 +10,7 @@
                         </div> -->
                         <div class="content-wrapper-main-title" fxFlex="50">{{billDocumentList?.exam_procedure_name}}
                             Examination Submission Documents
-                            <span class="custom-info" (click)="openPopup('Regulations for record review and  psychiatric or psychological claims', ['57', '65', '66', '67', '68', '69', '144'])"><i class="material-icons-outlined">info</i></span>
+                            <span class="custom-info" (click)="billDocumentList?.exam_procedure_name?.toLowerCase()?.includes('psych')? openPopup('Regulations for record review and psychiatric or psychological claims', ['71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '144']) : openPopup('Regulations for record review and service of comprehensive medical-legal evaluation reports by medical evaluators', ['144', '57', '65', '66', '67', '68', '69'])"><i class="material-icons-outlined">info</i></span>
                         </div>
                         <div class="content-wrapper-main-title bill-status" fxFlex="50">{{review}} Bill Submission</div>
                     </mat-card-header>

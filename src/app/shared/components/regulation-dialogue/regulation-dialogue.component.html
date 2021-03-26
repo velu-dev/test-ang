@@ -10,7 +10,7 @@
   <div class="container">
    <span *ngFor="let regulation of data.regulations">
      <div class="sub-title">{{regulation.section_number}} - {{regulation.section_title}}</div>
-     <div class="description">{{regulation.regulation_text}}</div>
+     <div class="description" [innerHtml] = "regulation.regulation_text"></div>
    </span>
   </div>
 </div>
