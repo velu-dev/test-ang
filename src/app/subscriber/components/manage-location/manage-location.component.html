@@ -20,7 +20,7 @@
             <input matInput (keyup)="applyFilter($event.target.value)"
                 placeholder="Search by Location Name, address, etc.">
             <mat-icon>search</mat-icon>
-        </div> <span class="info ondemand-info m-l-10 m-t-15" (click)="openPopup()"> <i class="fa fa-info" aria-hidden="true"></i></span>
+        </div> <span class="custom-info gap" (click)="openPopup('Regulations for service locations', ['5', '6', '8', '9', '10'])"><i class="material-icons-outlined">info</i></span>
         <span class="spacer"></span>
         <button mat-stroked-button class="outline-success float-right" [routerLink]="[router.url +'/add-location']"
             routerLinkActive="router-link-active">

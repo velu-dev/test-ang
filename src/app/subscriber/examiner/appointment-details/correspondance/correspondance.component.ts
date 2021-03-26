@@ -265,11 +265,11 @@ export class BillingCorrespondanceComponent implements OnInit {
       // this.animal = result;
     });
   }
-  openPopup() {
-    let data = this.userService.getRegulation(["28", "106", "107", "108", "109", "110"])
+  openPopup(title, value) {
+    let data = this.userService.getRegulation(value)
     const dialogRef = this.dialog.open(RegulationDialogueComponent, {
       width: '1000px',
-      data: { title: "Regulations for correspondence", regulations: data },
+      data: { title: title, regulations: data },
       panelClass: 'info-regulation-dialog'
     });
     dialogRef.afterClosed().subscribe(result => {

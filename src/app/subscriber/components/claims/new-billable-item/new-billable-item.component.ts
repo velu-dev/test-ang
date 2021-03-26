@@ -9,10 +9,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import * as moment from 'moment';
 import { NGXLogger } from 'ngx-logger';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, NativeDateAdapter } from '@angular/material';
+import { DateAdapter, MatDialog, MAT_DATE_FORMATS, MAT_DATE_LOCALE, NativeDateAdapter } from '@angular/material';
 import { formatDate } from '@angular/common';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { CookieService } from 'src/app/shared/services/cookie.service';
+import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
+import { UserService } from 'src/app/shared/services/user.service';
 export const MY_CUSTOM_FORMATS = {
   parseInput: 'MM-DD-YYYY hh:mm A Z',
   fullPickerInput: 'MM-DD-YYYY hh:mm A Z',
@@ -92,7 +94,9 @@ export class NewBillableItemComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private logger: NGXLogger,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private userService: UserService,
+    public dialog: MatDialog
   ) {
     this.isLoading = true;
     this.claimService.seedData('exam_type').subscribe(res => {
@@ -281,6 +285,7 @@ export class NewBillableItemComponent implements OnInit {
     })
   }
   isSuplimental = false;
+  isDeposition = false;
   procedure_type(procuderalCode) {
     if (procuderalCode.modifier)
       this.modifiers = procuderalCode.modifier;
@@ -315,6 +320,11 @@ export class NewBillableItemComponent implements OnInit {
         this.billable_item.setControl('documents_received', this.formBuilder.array(controlArray))
       }
     } else {
+      if (procuderalCode.exam_procedure_type.includes("DEPO")) {
+        this.isDeposition = true;
+      } else {
+        this.isDeposition = false;
+      }
       this.isSuplimental = false;
     }
   }
@@ -553,4 +563,14 @@ export class NewBillableItemComponent implements OnInit {
     }
   }
 
+  openPopup(title, value) {
+    let data = this.userService.getRegulation(value)
+    const dialogRef = this.dialog.open(RegulationDialogueComponent, {
+      width: '1000px',
+      data: { title: title, regulations: data },
+      panelClass: 'info-regulation-dialog'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    })
+  }
 }

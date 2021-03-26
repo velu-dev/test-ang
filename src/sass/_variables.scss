@@ -228,7 +228,9 @@ $box-shadow: 0px 0px 5px #b3c5de9c;
 .display-block {
   display: block !important;
 }
-
+.pointer {
+  cursor: pointer;
+}
 //Width
 .w-10 {
   width: 10%;
@@ -1424,22 +1426,34 @@ input:-webkit-autofill {
 }
 
 // On Demand Pages Information Icon
-.ondemand-info {
-  border-radius: 50px;
-  border: 2px solid $black;
-  width: 15px;
-  height: 15px;
-  line-height: 0.5;
+// .ondemand-info {
+//   border-radius: 50px;
+//   border: 2px solid $black;
+//   width: 15px;
+//   height: 15px;
+//   line-height: 0.5;
+//   vertical-align: middle;
+//   text-align: center;
+//   display: inline-table;
+//   cursor: pointer;
+//   i {
+//     font-size: $font-size-12 !important;
+//     line-height: 0;
+//   }
+// }
+.custom-info {
   vertical-align: middle;
-  text-align: center;
-  display: inline-table;
   cursor: pointer;
+  margin-left: 5px;
   i {
-    font-size: $font-size-12 !important;
-    line-height: 0;
+    cursor: pointer;
+    padding-top: 4px;
   }
 }
-
+.custom-info.gap {
+  display: inline-block;
+  margin-top: 10px;
+}
 // ==================================
 // POPUP CUSTOM CSS         =========
 // ==================================

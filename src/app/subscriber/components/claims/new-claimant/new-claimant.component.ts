@@ -328,6 +328,16 @@ export class NewClaimantComponent implements OnInit {
     }
   }
 
+  openPopupRegulation(title, value) {
+    let data = this.userService.getRegulation(value)
+    const dialogRef = this.dialog.open(RegulationDialogueComponent, {
+      width: '1000px',
+      data: { title: title, regulations: data },
+      panelClass: 'info-regulation-dialog'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    })
+  }
 
   cancel() {
     //this._location.back();
