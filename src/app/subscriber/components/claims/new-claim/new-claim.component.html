@@ -57,7 +57,7 @@
                             <div fxFlex="100" class="m-b-20">
                                 <div fxLayout="row wrap" class="w-100">
                                     <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="50">
-                                        <div class="content-wrapper-main-title p-t-10 m-b-10 p-l-10"> Claimant<span class="custom-info" (click)="openPopup('Regulations for claimant intake', ['14', '30'])"><i class="material-icons-outlined">info</i></span></div>
+                                        <div class="content-wrapper-main-title p-t-10 m-b-10 p-l-10"> Claimant<span class="custom-info" (click)="openPopup(regulation?.regulationsForClaimantIntake?.title, regulation?.regulationsForClaimantIntake?.codes)"><i class="material-icons-outlined">info</i></span></div>
                                     </div>
                                     <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="50" class="reference_no">
                                         <div class="content-wrapper-main-title p-t-10 m-b-10 text-center"
@@ -1237,7 +1237,7 @@
                 <mat-card>
                     <mat-card-header>
                         <mat-panel-title>
-                            <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Information<span class="custom-info" (click)="isDeposition ? openPopup('Regulations for deposition item intake', ['60']) : openPopup('Regulations for billable item intake', ['29', '129'])"><i class="material-icons-outlined">info</i></span></div>
+                            <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Information<span class="custom-info" (click)="isDeposition ? openPopup(regulation?.regulationsForDepositionItemIntake?.title, regulation?.regulationsForDepositionItemIntake?.codes) : openPopup(regulation?.regulationsForBillableItemIntake?.title, regulation?.regulationsForBillableItemIntake?.codes)"><i class="material-icons-outlined">info</i></span></div>
                         </mat-panel-title>
                     </mat-card-header>
                     <mat-divider> </mat-divider>

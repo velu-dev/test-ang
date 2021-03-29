@@ -1,3 +1,33 @@
+export const regulationsForCorrespondence = {
+    title: 'Regulations for correspondence',
+    codes: ['28', '106', '107', '108', '109', '110']
+};
+export const regulationsForBillingSubmissionDocPsych = {
+    title: 'Regulations for record review and psychiatric or psychological claims',
+    codes: ['144', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81']
+};
+export const regulationsForBillingSubmissionDoc = {
+    title: 'Regulations for record review and service of comprehensive medical-legal evaluation reports by medical evaluators',
+    codes: ['144', '57', '65', '66', '67', '68', '69']
+};
+export const regulationsForRecords = {
+    title: 'Regulations for records',
+    codes: ['44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55']
+};
+export const regulationsForClaimantIntake = {
+    title: 'Regulations for claimant intake',
+    codes: ['14', '30']
+};
+export const regulationsForDepositionItemIntake = {
+    title: 'Regulations for deposition item intake',
+    codes: ['60']
+};
+
+export const regulationsForBillableItemIntake = {
+    title: 'Regulations for billable item intake',
+    codes: ['29', '129']
+};
+
 export const Regulations = [
     {
         "code": "0",
@@ -866,6 +896,13 @@ export const Regulations = [
     {
         "code": "144",
         "section_number": "§9793(n)",
+        "section_title": "",
         "regulation_text": "“Record Review” means the review by a physician of documents sent to the physician in connection with a medical-legal evaluation or request for report. The documents may consist of medical records, legal transcripts, medical test results, and or other relevant documents. For purposes of record review, a page is defined as an 8 ½ by 11 single-sided document, chart or paper, whether in physical or electronic form. Multiple condensed pages or documents displayed on a single page shall be charged as separate pages. Any documents sent to the physician for record review must be accompanied by a declaration under penalty of perjury that the provider of the documents has complied with the provisions of Labor Code section 4062.3 before providing the documents to the physician. The declaration must also contain an attestation as to the total page count of the documents provided. A physician may not bill for review of documents that are not provided with this accompanying required declaration from the document provider. Any documents or records that are sent to the physician without the required declaration and attestation shall not be considered available to the physician or received by the physician for purposes of any regulatory or statutory duty of the physician regarding records and report writing."
+    },
+    {
+        "code": "145",
+        "section_number": "",
+        "section_title": "",
+        "regulation_text": ""
     }
 ]
