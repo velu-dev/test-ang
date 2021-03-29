@@ -2,7 +2,7 @@
     [ngClass]="{'dark':  footerFrom == 'full', 'light':   footerFrom == 'common'}">
     <div fxLayout="row wrap">
         <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column">
-            <p>©2021, Simplexam™. All rights reserved.</p>
+            <p>©{{date | date:'yyyy'}}, Simplexam™. All rights reserved.</p>
         </div>
         <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" fxLayout="column">
             <p class="terms_policy"><a>Terms & Conditions</a>|<a>Privacy Policy</a></p>
