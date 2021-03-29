@@ -16,6 +16,8 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 import * as moment from 'moment-timezone';
 import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
 import { UserService } from 'src/app/shared/services/user.service';
+import * as regulation from 'src/app/shared/services/regulations';
+
 @Component({
   selector: 'app-records',
   templateUrl: './records.component.html',
@@ -48,6 +50,7 @@ export class RecordsComponent implements OnInit {
   columnName = [];
   columnName1 = [];
   filterValue: string;
+  regulation = regulation;
 
   paramsId: any;
   recordData: any;

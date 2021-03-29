@@ -22,6 +22,7 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
 import { UserService } from 'src/app/shared/services/user.service';
+import * as regulation from 'src/app/shared/services/regulations';
 @Component({
   selector: 'app-billing-correspondance',
   templateUrl: './correspondance.component.html',
@@ -73,6 +74,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   is_appointment_incomplete = false;
   error_message = "";
   isExaminerChange = true;
+  regulation = regulation;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild('popupMenu', { static: false }) popupMenu: MatMenuTrigger;

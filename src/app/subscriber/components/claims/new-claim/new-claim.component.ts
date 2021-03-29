@@ -36,6 +36,7 @@ import { IntercomService } from 'src/app/services/intercom.service';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
 import { UserService } from 'src/app/shared/services/user.service';
+import * as regulation from 'src/app/shared/services/regulations';
 export const PICK_FORMATS = {
   // parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
   parse: {
@@ -232,6 +233,7 @@ export class NewClaimComponent implements OnInit {
   streetAddressList = [];
   isAddressError = false;
   isAddressSearched = false;
+  regulation = regulation;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
