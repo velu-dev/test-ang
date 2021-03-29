@@ -152,8 +152,12 @@ export class BillingService {
     return this.http.get(environment.baseUrl + api_endpoint.sendRecDocument + claim + '/' + billable + '/' + billId)
   }
 
-  postSBRSupport(claim, billable, billId, lineItemId, data): Observable<any> {
-    return this.http.post(environment.baseUrl + api_endpoint.supportDocUpload + claim + '/' + billable + '/' + billId + '/' + lineItemId, data)
+  postSBRSupport(claim, billable, billId, data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.supportDocUpload + claim + '/' + billable + '/' + billId, data)
+  }
+
+  removeLineDoc(claim, billable, billId, docId): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.removeSBRLineDoc + claim + '/' + billable + '/' + billId + '/' + docId)
   }
 
 }

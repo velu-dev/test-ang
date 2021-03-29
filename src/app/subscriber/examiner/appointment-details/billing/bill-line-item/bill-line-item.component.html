@@ -599,9 +599,9 @@
                                                 <div fxFlex="50">
                                                     <div fxLayout="row wrap" fxFlex="100">
                                                         <div fxFlex="100">Reason for Requesting Second Bill Review and
-                                                            Description of Supporting Documentation</div>
+                                                            Description of Supporting Documentation*</div>
                                                         <mat-form-field  appearance="outline" fxFlex="100">
-                                                            <textarea formControlName="bill_request_reason" matInput placeholder="Textarea"
+                                                            <textarea formControlName="bill_request_reason" matInput placeholder="Reason"
                                                                 rows="0"></textarea>
                                                         </mat-form-field>
                                                     </div>
@@ -641,9 +641,9 @@
                                 <div fxLayout="row wrap">
                                     <div fxFlex="50">
                                         <mat-form-field appearance="outline" fxFlex="100">
-                                            <mat-label>Payer Claim Control Number</mat-label>
-                                            <input matInput  placeholder="Payer Claim Control Number"
-                                                value="">
+                                            <mat-label>Payer Claim Control Number*</mat-label>
+                                            <input matInput  formControlName="payor_claim_control_number" placeholder="Payer Claim Control Number"
+                                                >
                                         </mat-form-field>
                                     </div>
                                     <div fxFlex="50" class="text-right">
@@ -659,9 +659,16 @@
                                                 <th>Action</th>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let file of fileName">
-                                                    <td><a href="" class="text-ternary">{{file?.file_name}}</a></td>
-                                                    <td class="action"><a class="text-danger p-r-10">Remove</a> |
+                                                
+                                                <tr *ngFor="let file of support_documents;let i=index">
+                                                    <td><a class="text-ternary" (click)="download(file?.exam_report_file_url)" >{{file?.file_name}}</a></td>
+                                                    <td class="action"><a class="text-danger p-r-10" (click)="RemoveFile(file,i)">Remove</a> |
+                                                        <a class="text-danger p-l-10">Reupload</a>
+                                                    </td>
+                                                </tr>
+                                                <tr *ngFor="let file of fileName;let i=index">
+                                                    <td><a class="text-ternary">{{file?.file_name}}</a></td>
+                                                    <td class="action"><a class="text-danger p-r-10" (click)="RemoveFile(file,i)">Remove</a> |
                                                         <a class="text-danger p-l-10">Reupload</a>
                                                     </td>
                                                 </tr>
@@ -672,7 +679,7 @@
                             </div>
                             <div fxFlex="100" class="p-t-20 text-center">
                                 <button mat-stroked-button type="button" class="outline-danger">Cancel</button>
-                                <button mat-stroked-button class="outline-success text-center m-l-10" (click)="saveReview(getFormControls.controls)">Save</button>
+                                <button mat-stroked-button class="outline-success text-center m-l-10" (click)="saveReview(getFormControls.controls,userTable)">Save</button>
                               </div>
                         </div>
                     </form>
