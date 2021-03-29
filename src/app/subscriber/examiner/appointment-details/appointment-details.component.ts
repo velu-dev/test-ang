@@ -518,7 +518,7 @@ export class AppointmentDetailsComponent implements OnInit {
         is_virtual_location: [false],
         conference_url: [null],
         conference_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        conference_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       }),
       intake_call: this.formBuilder.group({
         caller_affiliation: [{ value: '', disable: true }],
@@ -889,10 +889,13 @@ export class AppointmentDetailsComponent implements OnInit {
         })
       }
     });
-    if (this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value)
-      if (!(moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).isSameOrAfter(moment.now()))) {
+    let billable_item_date: any;
+    if (this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value) {
+      billable_item_date = moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).add(1, 'minute')
+      if (!(moment(billable_item_date).isSameOrAfter(moment.now()))) {
         return
       }
+    }
     if (this.billable_item.invalid) {
       return;
     }

@@ -472,10 +472,13 @@ export class NewBillableItemComponent implements OnInit {
       if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')
         this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim())
     });
-    if (this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value)
-      if (!(moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).isSameOrAfter(moment.now()))) {
+    let billable_item_date: any;
+    if (this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value) {
+      billable_item_date = moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).add(1, 'minute')
+      if (!(moment(billable_item_date).isSameOrAfter(moment.now()))) {
         return
       }
+    }
     if (this.billable_item.invalid) {
       return;
     }

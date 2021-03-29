@@ -188,7 +188,6 @@ export class DashboardComponent implements OnInit {
   }
 
   dispalySimpleservice(type): any {
-    console.log("dfdsf")
     if (type == "Evaluation" || type == "Reevaluation") {
       return this.procedureTypeStatus = [
         { name: "Correspondence", status: 'correspondence_status', progress_name: 'correspondence', icon: "far fa-folder-open", for: ["E", "S", "D"], url: "/correspondence" },

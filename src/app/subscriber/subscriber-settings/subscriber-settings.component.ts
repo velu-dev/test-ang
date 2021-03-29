@@ -241,6 +241,7 @@ export class SubscriberSettingsComponent implements OnInit {
       this.isDataAvailable = false;
       // this.alertService.openSnackBar(error.error.message, 'error');
       this.dataSourceList.data = [];/* Tree view */
+      this.paymentData = {};
     })
   }
   isExpanded = false;

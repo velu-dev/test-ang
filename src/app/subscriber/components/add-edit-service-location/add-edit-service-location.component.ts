@@ -299,6 +299,7 @@ export class AddEditServiceLocationComponent implements OnInit {
       if (address.data) {
         this.isMailingAddressPresent = true;
         address.data.notes = null;
+        console.log(address.data)
         this.maillingAddress = address.data
       } else {
         this.isMailingAddressPresent = false;
@@ -326,7 +327,7 @@ export class AddEditServiceLocationComponent implements OnInit {
     })
   }
   sameAsMailling(e) {
-    console.log(e.checked)
+    console.log(this.maillingAddress)
     if (e.checked) {
       if (!this.maillingAddress) {
         this.locationForm.patchValue(this.maillingAddress);

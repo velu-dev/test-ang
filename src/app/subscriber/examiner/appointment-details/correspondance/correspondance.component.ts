@@ -177,6 +177,11 @@ export class BillingCorrespondanceComponent implements OnInit {
           this.selection.select(doc);
         }
       })
+      res.recipient.map(doc => {
+        if (doc.is_mandatory) {
+          this.selection1.select(doc);
+        }
+      })
       this.documents = new MatTableDataSource(res.documets);
       this.recipients = new MatTableDataSource(res.recipient);
       this.sentDocuments = new MatTableDataSource(res.documets_sent_and_received);
