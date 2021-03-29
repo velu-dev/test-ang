@@ -12,6 +12,9 @@ import * as moment from 'moment';
 import { Router } from '@angular/router';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { IntercomService } from 'src/app/services/intercom.service';
+import { MatDialog } from '@angular/material/dialog';
+import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
+import { UserService } from 'src/app/shared/services/user.service';
 @Component({
   selector: 'app-upcomming-billable-item',
   templateUrl: './upcomming-billable-item.component.html',
@@ -40,7 +43,8 @@ export class UpcommingBillableItemComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(public router: Router, private breakpointObserver: BreakpointObserver, private examinerService: ExaminerService,
     private alertService: AlertService,
-    private _location: Location, private cookieService: CookieService, private intercom: IntercomService) {
+    private _location: Location, private cookieService: CookieService, private intercom: IntercomService,
+    public dialog: MatDialog, private userService: UserService) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -93,6 +97,16 @@ export class UpcommingBillableItemComponent implements OnInit {
       // this.router.navigate(['subscriber/examiner/upcomming-billable-item/' + 'billable-item/' + element.claim_id + '/' + element.claimant_id + "/" + element.billable_item_id])
       this.router.navigate(['subscriber/examiner/upcomming-billable-item/' + "claimants/claimant/" + element.claimant_id + "/claim/" + element.claim_id + "/billable-item/" + element.billable_item_id]);
     }
+  }
+  openPopup(title, value) {
+    let data = this.userService.getRegulation(value)
+    const dialogRef = this.dialog.open(RegulationDialogueComponent, {
+      width: '1000px',
+      data: { title: title, regulations: data },
+      panelClass: 'info-regulation-dialog'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    })
   }
   applyFilter(filterValue: string) {
     this.upcomingAppointment.filter = filterValue.trim().toLowerCase();

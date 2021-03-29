@@ -16,6 +16,8 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 import * as moment from 'moment-timezone';
 import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
 import { UserService } from 'src/app/shared/services/user.service';
+import * as regulation from 'src/app/shared/services/regulations';
+
 @Component({
   selector: 'app-records',
   templateUrl: './records.component.html',
@@ -48,6 +50,7 @@ export class RecordsComponent implements OnInit {
   columnName = [];
   columnName1 = [];
   filterValue: string;
+  regulation = regulation;
 
   paramsId: any;
   recordData: any;
@@ -380,11 +383,11 @@ export class RecordsComponent implements OnInit {
   deleteDocument(data) {
     this.openDialogDelete('delete', data);
   }
-  openPopup() {
-    let data = this.userService.getRegulation(["44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55"])
+  openPopup(title, value) {
+    let data = this.userService.getRegulation(value)
     const dialogRef = this.dialog.open(RegulationDialogueComponent, {
       width: '1000px',
-      data: { title: "Regulations for records", regulations: data },
+      data: { title: title, regulations: data },
       panelClass: 'info-regulation-dialog'
     });
     dialogRef.afterClosed().subscribe(result => {

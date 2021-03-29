@@ -22,6 +22,7 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
 import { UserService } from 'src/app/shared/services/user.service';
+import * as regulation from 'src/app/shared/services/regulations';
 @Component({
   selector: 'app-billing-correspondance',
   templateUrl: './correspondance.component.html',
@@ -73,6 +74,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   is_appointment_incomplete = false;
   error_message = "";
   isExaminerChange = true;
+  regulation = regulation;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild('popupMenu', { static: false }) popupMenu: MatMenuTrigger;
@@ -270,11 +272,11 @@ export class BillingCorrespondanceComponent implements OnInit {
       // this.animal = result;
     });
   }
-  openPopup() {
-    let data = this.userService.getRegulation(["28", "106", "107", "108", "109", "110"])
+  openPopup(title, value) {
+    let data = this.userService.getRegulation(value)
     const dialogRef = this.dialog.open(RegulationDialogueComponent, {
       width: '1000px',
-      data: { title: "Regulations for correspondence", regulations: data },
+      data: { title: title, regulations: data },
       panelClass: 'info-regulation-dialog'
     });
     dialogRef.afterClosed().subscribe(result => {

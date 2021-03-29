@@ -2,11 +2,15 @@
             <div fxlayout="row wrap" class="m-t-30 submission-document">
                 <mat-card>
                     <mat-card-header fxLayout="row wrap">
+                        <!-- <div class="content-wrapper-main-title" fxFlex="50">{{billDocumentList?.exam_procedure_name}}
+                            Examination Submission Documents
+                            <span class="custom-info"
+                                matTooltip="The QME 122 - Declaration of service form will be created when the Report Documents are Downloaded or Billed on Demand."
+                                matTooltipPosition="above"><i class="material-icons-outlined">info</i></span>
+                        </div> -->
                         <div class="content-wrapper-main-title" fxFlex="50">{{billDocumentList?.exam_procedure_name}}
                             Examination Submission Documents
-                            <span class="info ondemand-info m-l-10"
-                                matTooltip="The QME 122 - Declaration of service form will be created when the Report Documents are Downloaded or Billed on Demand."
-                                matTooltipPosition="above"> <i class="fa fa-info" aria-hidden="true"></i></span>
+                            <span class="custom-info" (click)="billDocumentList?.exam_procedure_name?.toLowerCase()?.includes('psych')? openPopup(regulation?.regulationsForBillingSubmissionDocPsych?.title, regulation?.regulationsForBillingSubmissionDocPsych?.codes) : openPopup(regulation?.regulationsForBillingSubmissionDoc?.title, regulation?.regulationsForBillingSubmissionDoc?.codes)"><i class="material-icons-outlined">info</i></span>
                         </div>
                         <div class="content-wrapper-main-title bill-status" fxFlex="50">{{review}} Bill Submission</div>
                     </mat-card-header>

@@ -7,6 +7,9 @@ import { billingOnDemandDialog } from '../billing.component';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
+import { UserService } from 'src/app/shared/services/user.service';
+import * as regulation from 'src/app/shared/services/regulations';
 @Component({
   selector: 'app-submission',
   templateUrl: './submission.component.html',
@@ -38,7 +41,8 @@ export class SubmissionComponent implements OnInit {
   columnName2 = [];
   columnsToDisplay2 = [];
   expandedElement;
-  constructor(public billingService: BillingService, private alertService: AlertService, public dialog: MatDialog) { }
+  regulation = regulation;
+  constructor(public billingService: BillingService, private alertService: AlertService, public dialog: MatDialog, public userService: UserService) { }
 
   ngOnInit() {
     this.getBillDocument();
@@ -192,6 +196,16 @@ export class SubmissionComponent implements OnInit {
     })
 
 
+  }
+  openPopup(title, value) {
+    let data = this.userService.getRegulation(value)
+    const dialogRef = this.dialog.open(RegulationDialogueComponent, {
+      width: '1000px',
+      data: { title: title, regulations: data },
+      panelClass: 'info-regulation-dialog'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    })
   }
 
   docSelectedFile: File;

@@ -34,6 +34,9 @@ import { saveAs } from 'file-saver';
 import { DayTable } from '@fullcalendar/core';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
+import { UserService } from 'src/app/shared/services/user.service';
+import * as regulation from 'src/app/shared/services/regulations';
 export const PICK_FORMATS = {
   // parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
   parse: {
@@ -230,6 +233,7 @@ export class NewClaimComponent implements OnInit {
   streetAddressList = [];
   isAddressError = false;
   isAddressSearched = false;
+  regulation = regulation;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -242,7 +246,8 @@ export class NewClaimComponent implements OnInit {
     private _location: Location,
     private logger: NGXLogger,
     private intercom: IntercomService,
-    private loader: NgxSpinnerService) {
+    private loader: NgxSpinnerService,
+    private userService: UserService) {
     // this.logger.log(moment.)
     this.intercom.setClaimant(null);
     this.isHandset$.subscribe(res => {
@@ -2092,6 +2097,16 @@ export class NewClaimComponent implements OnInit {
       if (result['data']) {
         this.routeDashboard();
       }
+    })
+  }
+  openPopup(title, value) {
+    let data = this.userService.getRegulation(value)
+    const dialogRef = this.dialog.open(RegulationDialogueComponent, {
+      width: '1000px',
+      data: { title: title, regulations: data },
+      panelClass: 'info-regulation-dialog'
+    });
+    dialogRef.afterClosed().subscribe(result => {
     })
   }
   selectedLanguage: any;

@@ -21,6 +21,8 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
 import { formatDate } from '@angular/common';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
+import { UserService } from 'src/app/shared/services/user.service';
 export interface PeriodicElement1 {
   file_name: string;
   date: string;
@@ -112,7 +114,7 @@ export class AppointmentDetailsComponent implements OnInit {
   noteDisable: boolean = false;
   saveButtonStatus: boolean = false;
   file = '';
-  procedureTypeStatus = [{ name: "Correspondence", progress_name: 'correspondence', icon: "far fa-folder-open", for: ["E", "S", "D"], url: "/correspondence" }, { name: "History", progress_name: 'history', icon: "fa fa-history", for: ["E"], url: "/history" }, { name: "Records", progress_name: 'record', icon: "far fa-list-alt", for: ["E", "S"], url: "/records" }, { name: "Examination", progress_name: 'examination', icon: "far fa-edit", for: ["E"], url: "/examination" }, { name: "Report", progress_name: 'transcription', icon: "fa fa-tasks", for: ["E", "S", "D"], url: "/reports" }, { name: "Billing", progress_name: 'billing', icon: "fa fa-usd", for: ["E", "S", "D"], url: "/billing", billing: true }];
+  procedureTypeStatus = [{ name: "Correspondence", progress_name: 'correspondence', icon: "far fa-folder-open", for: ["E", "S", "D"], url: "/correspondence" }, { name: "History", progress_name: 'history', icon: "fa fa-history", for: ["E"], url: "/history" }, { name: "Records", progress_name: 'record', icon: "far fa-list-alt", for: ["E", "S"], url: "/records" }, { name: "Examination Documents", progress_name: 'examination', icon: "far fa-edit", for: ["E"], url: "/examination" }, { name: "Transcription & Compilation", progress_name: 'transcription', icon: "fa fa-tasks", for: ["E", "S", "D"], url: "/reports" }, { name: "Billing", progress_name: 'billing', icon: "fa fa-usd", for: ["E", "S", "D"], url: "/billing", billing: true }];
   procedureTypeList = [];
   forms = [
     { name: "QME-110", group: "QME", value: "110" },
@@ -189,7 +191,8 @@ export class AppointmentDetailsComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private router: Router,
     private intercom: IntercomService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private userService: UserService
   ) {
     this.userEmail = JSON.parse(this.cookieService.get('user')).sign_in_email_id.toLowerCase();
     this.intercom.setBillableItem("Billable Item");
@@ -824,6 +827,17 @@ export class AppointmentDetailsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       return
+    })
+  }
+
+  openPopupRegulation(title, value) {
+    let data = this.userService.getRegulation(value)
+    const dialogRef = this.dialog.open(RegulationDialogueComponent, {
+      width: '1000px',
+      data: { title: title, regulations: data },
+      panelClass: 'info-regulation-dialog'
+    });
+    dialogRef.afterClosed().subscribe(result => {
     })
   }
   clickNav(url) {
