@@ -175,7 +175,7 @@ export class BillLineItemComponent implements OnInit {
           if (this.getFormControls.controls[index].status == "VALID") {
             this.getFormControls.controls[index].get('isEditable').setValue(false);
           }
-          if(this.review.toLowerCase() == 'second'){
+          if (this.review.toLowerCase() == 'second') {
             this.getFormControls.controls[index].get('isEditable').setValue(false);
           }
         })
@@ -657,8 +657,8 @@ export class BillLineItemComponent implements OnInit {
 
 
     if (grp.status == "INVALID" || fullForm.status == "INVALID") {
-      grp.markAllAsTouched();
-      fullForm.markAllAsTouched();
+      //grp.markAllAsTouched();
+      //fullForm.markAllAsTouched();
       return;
     }
 
@@ -743,10 +743,10 @@ export class BillLineItemComponent implements OnInit {
     // group.get('support_documents').patchValue(this.fileName);
   }
 
-  download(element) {
+  download(element, file_name) {
     this.billingService.downloadOndemandDocuments({ file_url: element }).subscribe(res => {
       this.alertService.openSnackBar("File downloaded successfully", "success");
-      saveAs(res.signed_file_url, element.file_name);
+      saveAs(res.signed_file_url, file_name);
     })
   }
 
