@@ -4,7 +4,7 @@
             <input matInput (keyup)="applyFilter($event.target.value)" [(ngModel)]="filterValue"
                 placeholder="Search by name, type, etc.">
             <mat-icon>search</mat-icon>
-        </div> <span class="custom-info gap" (click)="openPopup('Regulations for upcoming appointments', ['58', '59', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131'])"><i class="material-icons-outlined">info</i></span>
+        </div> <span class="custom-info gap" (click)="openPopup(regulation?.regulationsForUpcomingAppointments?.title, regulation?.regulationsForUpcomingAppointments?.codes)"><i class="material-icons-outlined">info</i></span>
         <div class="user-detail">
             <table mat-table [dataSource]="upcomingAppointment" multiTemplateDataRows
                 class="mat-elevation-z8 user-table" matSort>

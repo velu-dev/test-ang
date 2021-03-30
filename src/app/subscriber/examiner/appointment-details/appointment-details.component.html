@@ -139,7 +139,7 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <span class="custom-info" (click)="openPopupRegulation('Regulations for appointment notification and cancellation', ['31', '32', '33', '34', '35'])"><i class="material-icons-outlined">info</i></span>
+                    <span class="custom-info" (click)="openPopupRegulation(regulation?.regulationsForAppointmentNotification?.title, regulation?.regulationsForAppointmentNotification?.codes)"><i class="material-icons-outlined">info</i></span>
                     <mat-form-field appearance="outline" fxFlex="100">
                         <mat-label>Notes</mat-label>
                         <textarea formControlName="examination_notes" matInput placeholder="Notes" cdkTextareaAutosize
@@ -237,7 +237,7 @@
 <mat-card class="billable-item-info m-b-20">
     <form [formGroup]="billable_item" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
         <mat-card-header>
-            <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Information<span class="custom-info" (click)="examinationDetails?.procedure_type == 'Deposition' ? openPopupRegulation('Regulations for deposition item intake', ['60']) : openPopupRegulation('Regulations for billable item intake', ['29', '129'])"><i class="material-icons-outlined">info</i></span></div>
+            <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Information<span class="custom-info" (click)="examinationDetails?.procedure_type == 'Deposition' ? openPopupRegulation(regulation?.regulationsForDepositionItemIntake?.title, regulation?.regulationsForDepositionItemIntake?.codes) : openPopupRegulation(regulation?.regulationsForBillableItemIntake?.title, regulation?.regulationsForBillableItemIntake?.codes)"><i class="material-icons-outlined">info</i></span></div>
             <span class="spacer"></span>
             <span *ngIf="!isExamTypeChanged && !billableData?.isExaminerDisabled">
                 <button type="button" class="filled-gray m-b-5"
@@ -478,7 +478,7 @@
 
 <mat-card class="document-info m-t-25" *ngIf="examinationDetails?.procedure_type != 'Cancellation'">
     <mat-card-header>
-        <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Documents<span class="custom-info" (click)="openPopupRegulation('Regulations for retention of medical-legal reports', ['119', '120'])"><i class="material-icons-outlined">info</i></span></div>
+        <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Documents<span class="custom-info" (click)="openPopupRegulation(regulation?.regulationsForBillableItemDocuments?.title, regulation?.regulationsForBillableItemDocuments?.codes)"><i class="material-icons-outlined">info</i></span></div>
     </mat-card-header>
     <mat-divider> </mat-divider>
     <mat-card-content>
