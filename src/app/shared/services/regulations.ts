@@ -22,10 +22,25 @@ export const regulationsForDepositionItemIntake = {
     title: 'Regulations for deposition item intake',
     codes: ['60']
 };
-
 export const regulationsForBillableItemIntake = {
     title: 'Regulations for billable item intake',
     codes: ['29', '129']
+};
+export const regulationsForAppointmentNotification = {
+    title: 'Regulations for appointment notification and cancellation',
+    codes: ['31', '32', '33', '34', '35']
+};
+export const regulationsForBillableItemDocuments = {
+    title: 'Regulations for retention of medical-legal reports',
+    codes: ['119', '120']
+};
+export const regulationsForServiceLocation = {
+    title: 'Regulations for service locations',
+    codes: ['5', '6', '8', '9', '10']
+};
+export const regulationsForUpcomingAppointments = {
+    title: 'Regulations for upcoming appointments',
+    codes: ['58', '59', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132']
 };
 
 export const Regulations = [

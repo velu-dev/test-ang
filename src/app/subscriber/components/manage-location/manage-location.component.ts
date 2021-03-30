@@ -16,7 +16,7 @@ import { trigger, style, state, transition, animate } from '@angular/animations'
 import { SubscriberService } from '../../service/subscriber.service';
 import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
 import { UserService } from 'src/app/shared/services/user.service';
-
+import * as regulation from 'src/app/shared/services/regulations';
 @Component({
   selector: 'app-manage-location',
   templateUrl: './manage-location.component.html',
@@ -46,6 +46,7 @@ export class ManageLocationComponent implements OnInit {
   columnsToDisplay = [];
   isMobile = false;
   expandedElement: any;
+  regulation = regulation;
   constructor(private examinerService: ExaminerService,
     public router: Router,
     public dialog: MatDialog,

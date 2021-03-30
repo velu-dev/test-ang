@@ -23,6 +23,7 @@ import { formatDate } from '@angular/common';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
 import { UserService } from 'src/app/shared/services/user.service';
+import * as regulation from 'src/app/shared/services/regulations';
 export interface PeriodicElement1 {
   file_name: string;
   date: string;
@@ -182,6 +183,7 @@ export class AppointmentDetailsComponent implements OnInit {
   cancelSupplemental: any;
   supplementalOtherIndex: number;
   pastTwoYearDate = moment().subtract(2, 'year');
+  regulation = regulation;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,

@@ -19,6 +19,7 @@ import { IntercomService } from 'src/app/services/intercom.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
 import { UserService } from 'src/app/shared/services/user.service';
+import * as regulation from 'src/app/shared/services/regulations';
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
@@ -90,6 +91,7 @@ export class NewClaimantComponent implements OnInit {
   streetAddressList = [];
   isAddressError = false;
   isAddressSearched = false;
+  regulation = regulation;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private claimService: ClaimService,

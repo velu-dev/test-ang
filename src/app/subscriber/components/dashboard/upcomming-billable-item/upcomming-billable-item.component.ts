@@ -15,6 +15,7 @@ import { IntercomService } from 'src/app/services/intercom.service';
 import { MatDialog } from '@angular/material/dialog';
 import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
 import { UserService } from 'src/app/shared/services/user.service';
+import * as regulation from 'src/app/shared/services/regulations';
 @Component({
   selector: 'app-upcomming-billable-item',
   templateUrl: './upcomming-billable-item.component.html',
@@ -39,6 +40,7 @@ export class UpcommingBillableItemComponent implements OnInit {
   isMobile = false;
   columnName = [];
   filterValue: string;
+  regulation = regulation;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(public router: Router, private breakpointObserver: BreakpointObserver, private examinerService: ExaminerService,

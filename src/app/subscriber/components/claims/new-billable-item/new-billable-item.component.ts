@@ -15,6 +15,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
 import { UserService } from 'src/app/shared/services/user.service';
+import * as regulation from 'src/app/shared/services/regulations';
 export const MY_CUSTOM_FORMATS = {
   parseInput: 'MM-DD-YYYY hh:mm A Z',
   fullPickerInput: 'MM-DD-YYYY hh:mm A Z',
@@ -87,6 +88,7 @@ export class NewBillableItemComponent implements OnInit {
   supplementalItems: any;
   supplementalOtherIndex: number;
   pastTwoYearDate = moment().subtract(2, 'year');
+  regulation = regulation;
   constructor(private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,

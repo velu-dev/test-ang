@@ -445,7 +445,7 @@
         <mat-divider></mat-divider>
         <mat-card-content class="m-b-10 m-t-10">
             <div fxLayout="row wrap">
-                <div #scrollBottom class="user-detail hide-mobile">
+                <div #scrollBottom class="user-detail hide-mobile sbr-billitem">
                     <form [formGroup]="userTable">
                         <table class="table table-border res-table" [ngClass]="{'table-dark': mode}">
                             <thead class="text-nowrap">
@@ -647,7 +647,7 @@
                                         </mat-form-field>
                                     </div>
                                     <div fxFlex="50" class="text-right">
-                                        <button mat-stroked-button class="filled-ternary" (click)="uploader.click()">Upload
+                                        <button mat-stroked-button class="filled-ternary m-t-20" (click)="uploader.click()">Upload
                                             Supporting Documents</button>
                                             <input type="file" #uploader hidden (change)="addFile($event)" multiple
                                             accept=".pdf, .doc, .docx, .jpg, .jpeg, .png" required>    
@@ -656,7 +656,7 @@
                                         <table class="supporting-docs table table-border res-table">
                                             <thead>
                                                 <th>File name</th>
-                                                <th>Action</th>
+                                                <th class="text-center">Action</th>
                                             </thead>
                                             <tbody>
                                                 
