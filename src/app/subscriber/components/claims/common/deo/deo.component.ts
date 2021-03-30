@@ -107,9 +107,48 @@ export class DeoComponent implements OnInit {
     this.DEU.reset();
     this.deuState = null;
     this.deuCtrl.reset();
+    this.DEU.get("street1").disable();
+    this.DEU.get("street2").disable();
+    this.DEU.get("city").disable();
+    this.DEU.get("state").disable();
+    this.DEU.get("zip_code").disable();
+    this.DEU.get("phone").disable();
+    this.DEU.get("phone_ext").disable();
+    this.DEU.get("email").disable();
+    this.DEU.get("fax").disable();
   }
   editDEU() {
     this.DEU.enable();
+    // street1: [{ value: null, disabled: true }],
+    //   street2: [{ value: null, disabled: true }],
+    //   city: [{ value: null, disabled: true }],
+    //   state: [{ value: null, disabled: true }],
+    //   zip_code: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+    //   phone: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
+    //   phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+    //   email: [{ value: null, disabled: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+    //   fax: [{ 
+    if (this.deuDetail.name) {
+      this.DEU.get("street1").enable();
+      this.DEU.get("street2").enable();
+      this.DEU.get("city").enable();
+      this.DEU.get("state").enable();
+      this.DEU.get("zip_code").enable();
+      this.DEU.get("phone").enable();
+      this.DEU.get("phone_ext").enable();
+      this.DEU.get("email").enable();
+      this.DEU.get("fax").enable();
+    } else {
+      this.DEU.get("street1").disable();
+      this.DEU.get("street2").disable();
+      this.DEU.get("city").disable();
+      this.DEU.get("state").disable();
+      this.DEU.get("zip_code").disable();
+      this.DEU.get("phone").disable();
+      this.DEU.get("phone_ext").disable();
+      this.DEU.get("email").disable();
+      this.DEU.get("fax").disable();
+    }
     this.deoEdit = true;
     this.deuCtrl.setValue(this.deuDetail.name);
   }
@@ -142,6 +181,15 @@ export class DeoComponent implements OnInit {
     this.DEU.reset();
     this.DEU.patchValue(deu)
     this.changeState(deu.state);
+    this.DEU.get("street1").enable();
+    this.DEU.get("street2").enable();
+    this.DEU.get("city").enable();
+    this.DEU.get("state").enable();
+    this.DEU.get("zip_code").enable();
+    this.DEU.get("phone").enable();
+    this.DEU.get("phone_ext").enable();
+    this.DEU.get("email").enable();
+    this.DEU.get("fax").enable();
     this.DEU.patchValue({
       name: this.deuCtrl.value
     })

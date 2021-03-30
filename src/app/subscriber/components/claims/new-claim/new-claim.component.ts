@@ -743,15 +743,15 @@ export class NewClaimComponent implements OnInit {
       DEU: this.formBuilder.group({
         id: [null],
         name: [null, Validators.compose([Validators.pattern("^[a-zA-Z0-9-&/' ]{0,100}$")])],
-        street1: [null],
-        street2: [null],
-        city: [null],
-        state: [null],
-        zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
-        phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
-        email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
-        fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+        street1: [{ value: null, disabled: true }],
+        street2: [{ value: null, disabled: true }],
+        city: [{ value: null, disabled: true }],
+        state: [{ value: null, disabled: true }],
+        zip_code: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+        phone: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
+        phone_ext: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+        email: [{ value: null, disabled: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+        fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
       })
     })
     this.billable_item = this.formBuilder.group({
@@ -1843,6 +1843,15 @@ export class NewClaimComponent implements OnInit {
           street2: null,
           zip_code: null
         });
+        this.claim.get(["DEU", "street1"]).disable();
+        this.claim.get(["DEU", "street2"]).disable();
+        this.claim.get(["DEU", "city"]).disable();
+        this.claim.get(["DEU", "state"]).disable();
+        this.claim.get(["DEU", "zip_code"]).disable();
+        this.claim.get(["DEU", "phone"]).disable();
+        this.claim.get(["DEU", "phone_ext"]).disable();
+        this.claim.get(["DEU", "email"]).disable();
+        this.claim.get(["DEU", "fax"]).disable();
         break;
     }
   }
@@ -2039,7 +2048,7 @@ export class NewClaimComponent implements OnInit {
     })
   }
   deuSelect(deu) {
-    // deu.id = ;
+    this.claim.get("DEU").enable();
     this.claim.patchValue({
       DEU: {
         city: deu.city,
