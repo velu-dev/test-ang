@@ -588,7 +588,30 @@ export class NewExaminerUserComponent implements OnInit {
 
         }
         this.userForm.get('role_id').updateValueAndValidity();
+        let role = this.cookieService.get('role_id')
         if (status == 'next') {
+          let baseUrl: any;
+          switch (role) {
+            case '1':
+              baseUrl = "/admin/users";
+              break;
+            case '2':
+              baseUrl = "/subscriber/users";
+              break;
+            case '3':
+              baseUrl = "/subscriber/manager/users";
+              break;
+            case '4':
+              baseUrl = "/subscriber/staff/users";
+              break;
+            case '11':
+              baseUrl = "/subscriber/examiner/users";
+              break;
+            default:
+              baseUrl = "/admin/users";
+              break;
+          }
+          this.router.navigate([baseUrl + "/examiner", this.examinerId])
           this.tabIndex = 1;
         } else if (status == 'close') {
           // this._location.back();

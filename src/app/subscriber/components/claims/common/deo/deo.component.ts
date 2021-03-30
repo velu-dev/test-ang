@@ -104,7 +104,18 @@ export class DeoComponent implements OnInit {
 
   }
   clearAutoComplete() {
-    this.DEU.reset();
+    this.DEU.patchValue({
+      name: null,
+      street1: null,
+      street2: null,
+      city: null,
+      state: null,
+      zip_code: null,
+      phone: null,
+      phone_ext: null,
+      email: null,
+      fax: null,
+    })
     this.deuState = null;
     this.deuCtrl.reset();
     this.DEU.get("street1").disable();
