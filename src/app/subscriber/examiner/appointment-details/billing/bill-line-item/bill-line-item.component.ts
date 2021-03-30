@@ -175,6 +175,9 @@ export class BillLineItemComponent implements OnInit {
           if (this.getFormControls.controls[index].status == "VALID") {
             this.getFormControls.controls[index].get('isEditable').setValue(false);
           }
+          if(this.review.toLowerCase() == 'second'){
+            this.getFormControls.controls[index].get('isEditable').setValue(false);
+          }
         })
         if (this.review.toLowerCase() == 'second') {
           this.support_documents = line.support_documents ? line.support_documents : [];
