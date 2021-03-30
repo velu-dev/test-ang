@@ -157,7 +157,7 @@ export class BillingService {
   }
 
   removeLineDoc(claim, billable, billId, docId): Observable<any> {
-    return this.http.get(environment.baseUrl + api_endpoint.removeSBRLineDoc + claim + '/' + billable + '/' + billId + '/' + docId)
+    return this.http.delete(environment.baseUrl + api_endpoint.removeSBRLineDoc + claim + '/' + billable + '/' + billId + '/' + docId)
   }
 
 }
