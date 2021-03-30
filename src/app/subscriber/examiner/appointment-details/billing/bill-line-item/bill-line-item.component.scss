@@ -48,11 +48,6 @@ th {
 }
 .sbr_ {
     table {
-        // tr {
-        //     &:nth-child(n+1) {
-        //         background-color: $lightgray;
-        //     }
-        // }
         .reason {
             padding: 10px;
             .reason-for-request {
@@ -60,24 +55,29 @@ th {
                 padding: 10px;
             }
         }
+        
     }
-}
-.supporting-docs {
-    th {
-        border: 1px solid transparent !important;
-        &:first-child {
-            width: 50%;
-        }
-    }
-    tbody {
-        td {
-            padding: 10px !important;
-        }
+    table.supporting-docs {
+        th {
+            border: 1px solid transparent !important;
+            &:first-child {
+                width: 80%;
+            }
 
-        td.action {
-            color: $lightgray;
-            a {
-                display: contents !important;
+            &:last-child {
+                text-align: center;
+            }
+        }
+        tr {
+            td {
+             padding: 10px !important;  
+            }
+            td.action {
+                text-align: center;
+                color: $lightgray;
+                a {
+                    display: contents !important;
+                }
             }
         }
     }
