@@ -437,7 +437,7 @@
 
 <!-- +++++ Second Bill Review - Bill Items +++++ -->
 
-<div class="bill-item sbr_"  *ngIf="review?.toLowerCase() == 'second'">
+<div class="bill-item sbr_" *ngIf="review?.toLowerCase() == 'second'">
     <mat-card>
         <mat-card-header>
             <div class="content-wrapper-main-title">Second Bill Review - Bill Items</div>
@@ -450,7 +450,10 @@
                         <table class="table table-border res-table" [ngClass]="{'table-dark': mode}">
                             <thead class="text-nowrap">
                                 <th>
-                                    <mat-checkbox value="false" [(ngModel)]="selectAllStatus" [ngModelOptions]="{standalone: true}" (change)="selectAllCheck($event.checked,getFormControls.controls)"></mat-checkbox>
+                                    <mat-checkbox value="false" [(ngModel)]="selectAllStatus"
+                                        [ngModelOptions]="{standalone: true}"
+                                        (change)="selectAllCheck($event.checked,getFormControls.controls)">
+                                    </mat-checkbox>
                                 </th>
                                 <th>Item </th>
                                 <th>Procedure Code</th>
@@ -468,7 +471,9 @@
                                     <tr *ngIf="group.get('isEditable').value" [formGroupName]="i"
                                         (click)="rowSelected(group)">
                                         <td>
-                                            <mat-checkbox value="false" formControlName="reviewShow" (change)="reviewCheck($event.checked, group, getFormControls.controls)"></mat-checkbox>
+                                            <mat-checkbox value="false" formControlName="reviewShow"
+                                                (change)="reviewCheck($event.checked, group, getFormControls.controls)">
+                                            </mat-checkbox>
                                         </td>
                                         <td>
                                             <mat-form-field appearance="outline"
@@ -552,17 +557,19 @@
                                         </td>
 
                                         <td class="no-wrap-td">
-                                            <a class="text-success" (click)="doneRow(group,i)">
+                                            <!-- <a class="text-success" (click)="doneRow(group,i)">
                                                 Save
                                             </a>
                                             <a class="text-danger m-l-10" (click)="cancelRow(group,i)">
                                                 Cancel
-                                            </a>
+                                            </a> -->
                                         </td>
                                     </tr>
                                     <tr *ngIf="!group.get('isEditable').value" class="bill-value">
-                                        <td  [formGroupName]="i">
-                                            <mat-checkbox value="false" formControlName="reviewShow" (change)="reviewCheck($event.checked, group, getFormControls.controls)"></mat-checkbox>
+                                        <td [formGroupName]="i">
+                                            <mat-checkbox value="false" formControlName="reviewShow"
+                                                (change)="reviewCheck($event.checked, group, getFormControls.controls)">
+                                            </mat-checkbox>
                                         </td>
                                         <td>
                                             {{group.get('item_description').value}}
@@ -594,42 +601,45 @@
                                         <td>-</td>
                                     </tr>
                                     <tr class="reason" *ngIf="group.get('reviewShow').value">
-                                        <td colspan="10"  [formGroupName]="i">
+                                        <td colspan="10" [formGroupName]="i">
                                             <div fxLayout="row wrap" class="reason-for-request">
                                                 <div fxFlex="50">
                                                     <div fxLayout="row wrap" fxFlex="100">
                                                         <div fxFlex="100">Reason for Requesting Second Bill Review and
                                                             Description of Supporting Documentation*</div>
-                                                        <mat-form-field  appearance="outline" fxFlex="100">
-                                                            <textarea formControlName="bill_request_reason" matInput placeholder="Reason"
-                                                                rows="0"></textarea>
+                                                        <mat-form-field appearance="outline" fxFlex="100">
+                                                            <textarea formControlName="bill_request_reason" matInput
+                                                                placeholder="Reason" rows="0"></textarea>
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
                                                 <div fxFlex="50">
                                                     <div fxLayout="row wrap" fxFlex="100" class="custom-select m-t-15">
                                                         <div fxFlex="100" class="select-1">Service / Good Authorized?
-                                                         
-                                                                <mat-radio-group formControlName="billed_service_authorized" aria-label="Select an option">
-                                                                    <mat-radio-button [value]="true" class="p-r-20">Yes
-                                                                    </mat-radio-button>
-                                                                    <mat-radio-button [value]="false">No</mat-radio-button>
-                                                                </mat-radio-group>
-                                                            
+
+                                                            <mat-radio-group formControlName="billed_service_authorized"
+                                                                aria-label="Select an option">
+                                                                <mat-radio-button [value]="true" class="p-r-20">Yes
+                                                                </mat-radio-button>
+                                                                <mat-radio-button [value]="false">No</mat-radio-button>
+                                                            </mat-radio-group>
+
                                                         </div>
                                                         <div fxFlex="100" class="select-1">Supporting Documentation
                                                             Attached?
-                                                           
-                                                                <mat-radio-group formControlName="support_documents_attached" aria-label="Select an option">
-                                                                    <mat-radio-button [value]="true" class="p-r-20">Yes
-                                                                    </mat-radio-button>
-                                                                    <mat-radio-button [value]="false">No</mat-radio-button>
-                                                                </mat-radio-group>
-                                                            
+
+                                                            <mat-radio-group
+                                                                formControlName="support_documents_attached"
+                                                                aria-label="Select an option">
+                                                                <mat-radio-button [value]="true" class="p-r-20">Yes
+                                                                </mat-radio-button>
+                                                                <mat-radio-button [value]="false">No</mat-radio-button>
+                                                            </mat-radio-group>
+
                                                         </div>
                                                     </div>
                                                 </div>
-                                               
+
                                             </div>
                                         </td>
                                     </tr>
@@ -642,15 +652,16 @@
                                     <div fxFlex="50">
                                         <mat-form-field appearance="outline" fxFlex="100">
                                             <mat-label>Payer Claim Control Number*</mat-label>
-                                            <input matInput  formControlName="payor_claim_control_number" placeholder="Payer Claim Control Number"
-                                                >
+                                            <input matInput formControlName="payor_claim_control_number"
+                                                placeholder="Payer Claim Control Number">
                                         </mat-form-field>
                                     </div>
                                     <div fxFlex="50" class="text-right">
-                                        <button mat-stroked-button class="filled-ternary m-t-20" (click)="uploader.click()">Upload
+                                        <button mat-stroked-button class="filled-ternary m-t-20"
+                                            (click)="uploader.click()">Upload
                                             Supporting Documents</button>
-                                            <input type="file" #uploader hidden (change)="addFile($event)" multiple
-                                            accept=".pdf, .doc, .docx, .jpg, .jpeg, .png" required>    
+                                        <input type="file" #uploader hidden (change)="addFile($event)" multiple
+                                            accept=".pdf, .doc, .docx, .jpg, .jpeg, .png" required>
                                     </div>
                                     <div fxFlex="100" class="m-b-20">
                                         <table class="supporting-docs table table-border res-table">
@@ -659,31 +670,44 @@
                                                 <th class="text-center">Action</th>
                                             </thead>
                                             <tbody>
-                                                
+
                                                 <tr *ngFor="let file of support_documents;let i=index">
-                                                    <td><a class="text-ternary" (click)="download(file?.exam_report_file_url)" >{{file?.file_name}}</a></td>
-                                                    <td class="action"><a class="text-danger p-r-10" (click)="RemoveFile(file,i)">Remove</a> |
-                                                        <a class="text-danger p-l-10">Reupload</a>
+                                                    <td><a class="text-ternary"
+                                                            (click)="download(file?.exam_report_file_url)">{{file?.file_name}}</a>
+                                                    </td>
+                                                    <td class="action"><a class="text-danger p-r-10"
+                                                            (click)="RemoveFile(file,i)">Remove</a> |
+                                                        <a class="text-danger p-l-10"
+                                                            (click)="uploader.click()">Reupload</a>
+                                                        <input type="file" #uploader hidden
+                                                            (change)="reuploadFile($event,file,i)"
+                                                            accept=".pdf, .doc, .docx, .jpg, .jpeg, .png" required>
                                                     </td>
                                                 </tr>
                                                 <tr *ngFor="let file of fileName;let i=index">
-                                                    <td><a class="text-ternary">{{file?.file_name}}</a></td>
-                                                    <td class="action"><a class="text-danger p-r-10" (click)="RemoveFile(file,i)">Remove</a> |
-                                                        <a class="text-danger p-l-10">Reupload</a>
+                                                    <td><a class="">{{file?.file_name}}</a></td>
+                                                    <td class="action"><a class="text-danger p-r-10"
+                                                            (click)="RemoveFile(file,i)">Remove</a> |
+                                                        <a class="text-danger p-l-10"
+                                                            (click)="uploader.click()">Reupload</a>
+                                                        <input type="file" #uploader hidden
+                                                            (change)="reuploadFile($event,file,i)"
+                                                            accept=".pdf, .doc, .docx, .jpg, .jpeg, .png" required>
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
-                                      </div>
+                                    </div>
                                 </div>
                             </div>
                             <div fxFlex="100" class="p-t-20 text-center">
-                                <button mat-stroked-button type="button" class="outline-danger">Cancel</button>
-                                <button mat-stroked-button class="outline-success text-center m-l-10" (click)="saveReview(getFormControls.controls,userTable)">Save</button>
-                              </div>
+                                <button mat-stroked-button type="button" class="outline-danger" (click)="getBillLineItem()">Cancel</button>
+                                <button mat-stroked-button class="outline-success text-center m-l-10"
+                                    (click)="saveReview(getFormControls.controls,userTable)">Save</button>
+                            </div>
                         </div>
                     </form>
-                   
+
                 </div>
             </div>
         </mat-card-content>

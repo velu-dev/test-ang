@@ -14,6 +14,7 @@ import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.c
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { animate, style, transition, trigger, state } from '@angular/animations';
 import { saveAs } from 'file-saver';
+import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
 
 @Component({
   selector: 'app-bill-line-item',
@@ -80,11 +81,23 @@ export class BillLineItemComponent implements OnInit {
   billingCodeDetails: any;
   getBillLineItem() {
     this.touchedRows = [];
-    this.userTable = this.fb.group({
-      payor_claim_control_number: ['', Validators.compose([Validators.required])],
-      file: [],
-      tableRows: this.fb.array([])
-    });
+
+    if (this.review.toLowerCase() == 'second') {
+      this.userTable = this.fb.group({
+        payor_claim_control_number: ['', Validators.compose([Validators.required])],
+        file: [],
+        tableRows: this.fb.array([])
+      });
+      this.fileList = [];
+      this.fileName = [];
+      this.showDocumentSec = false;
+      this.selectAllStatus = false;
+    } else {
+      this.userTable = this.fb.group({
+        tableRows: this.fb.array([])
+      });
+    }
+
     this.billingService.getBillLineItem(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId).subscribe(line => {
       if (!this.billingData.certified_interpreter_required) {
         let index = this.modiferList.indexOf('93');
@@ -155,16 +168,19 @@ export class BillLineItemComponent implements OnInit {
           }
           if (this.review.toLowerCase() == 'second') {
             firstData['bill_request_reason'] = item.support_documents_details.bill_request_reason;
-            firstData['billed_service_authorized'] = item.support_documents_details.billed_service_authorized;
-            firstData['support_documents_attached'] = item.support_documents_details.support_documents_attached;
+            firstData['billed_service_authorized'] = item.support_documents_details.billed_service_authorized ? item.support_documents_details.billed_service_authorized : false;
+            firstData['support_documents_attached'] = item.support_documents_details.support_documents_attached ? item.support_documents_details.support_documents_attached : false;
           }
           this.getFormControls.controls[index].patchValue(firstData)
           if (this.getFormControls.controls[index].status == "VALID") {
             this.getFormControls.controls[index].get('isEditable').setValue(false);
           }
+          if(this.review.toLowerCase() == 'second'){
+            this.getFormControls.controls[index].get('isEditable').setValue(false);
+          }
         })
         if (this.review.toLowerCase() == 'second') {
-          this.support_documents = line.support_documents;
+          this.support_documents = line.support_documents ? line.support_documents : [];
           this.userTable.get('payor_claim_control_number').patchValue(line.payor_claim_control_number);
         }
       }
@@ -606,6 +622,7 @@ export class BillLineItemComponent implements OnInit {
 
   saveReview(grp, fullForm) {
     console.log(grp, fullForm)
+    let showConfirmDialog = false;
     let reason_details = []
     let formData = new FormData()
     grp.map((data, i) => {
@@ -631,20 +648,56 @@ export class BillLineItemComponent implements OnInit {
         data.get('billed_service_authorized').updateValueAndValidity();
         data.get('support_documents_attached').updateValueAndValidity();
       }
-
+      if (data.get('support_documents_attached').value) {
+        showConfirmDialog = true;
+      }
 
     })
+
+
 
     if (grp.status == "INVALID" || fullForm.status == "INVALID") {
       grp.markAllAsTouched();
       fullForm.markAllAsTouched();
       return;
     }
+
+    if (showConfirmDialog && this.fileList && this.fileList.length == 0 && this.support_documents && this.support_documents.length == 0) {
+      const dialogRef = this.dialog.open(AlertDialogueComponent, {
+        width: '500px',
+        data: { title: 'Bill Line Item', message: "Select supporting Document 'Yes' but not File exist, Do you want to proceed?", yes: true, no: true, type: "info", info: true }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result.data) {
+          formData.append('reason_details', JSON.stringify(reason_details));
+          formData.append('payor_claim_control_number', fullForm.get('payor_claim_control_number').value);
+          formData.append('is_file_changed', this.fileList && this.fileList.length > 0 ? 'true' : 'false');
+
+          if (this.fileList) {
+            for (let i = 0; i < this.fileList.length; i++) {
+              formData.append('file', this.fileList[i]);
+            }
+          }
+
+          this.billingService.postSBRSupport(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, formData).subscribe(line => {
+            console.log(line);
+            this.alertService.openSnackBar('Updated Successfully', 'success');
+            this.fileList = []
+          }, error => {
+            console.log(error);
+          })
+        } else {
+          return;
+        }
+      })
+      return;
+    }
+
     formData.append('reason_details', JSON.stringify(reason_details));
     formData.append('payor_claim_control_number', fullForm.get('payor_claim_control_number').value);
-    formData.append('is_file_changed', this.selectedFiles && this.selectedFiles.length > 0 ? 'true' : 'false');
+    formData.append('is_file_changed', this.fileList && this.fileList.length > 0 ? 'true' : 'false');
 
-    if (this.selectedFiles) {
+    if (this.fileList) {
       for (let i = 0; i < this.fileList.length; i++) {
         formData.append('file', this.fileList[i]);
       }
@@ -652,7 +705,10 @@ export class BillLineItemComponent implements OnInit {
 
     this.billingService.postSBRSupport(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, formData).subscribe(line => {
       console.log(line);
-      this.alertService.openSnackBar('Updated Successfully', 'success')
+      this.alertService.openSnackBar('Updated Successfully', 'success');
+      this.fileList = [];
+      this.fileName = [];
+      this.support_documents = line.data.support_documents ? line.data.support_documents : [];
     }, error => {
       console.log(error);
     })
@@ -660,7 +716,7 @@ export class BillLineItemComponent implements OnInit {
 
 
   addFile(event) {
-    this.selectedFiles = null
+    // this.selectedFiles = null
     this.selectedFiles = event.target.files;
     let fileTypes = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png'];
 
@@ -668,7 +724,7 @@ export class BillLineItemComponent implements OnInit {
     for (let i = 0; i < this.selectedFiles.length; i++) {
       if (fileTypes.includes(this.selectedFiles[i].name.split('.').pop().toLowerCase())) {
         var FileSize = this.selectedFiles[i].size / 1024 / 1024; // in MB
-        if (FileSize > 3073) {
+        if (FileSize > 501) {
           this.fileUpload.nativeElement.value = "";
           this.alertService.openSnackBar("File size is too large", 'error');
           return;
@@ -709,7 +765,10 @@ export class BillLineItemComponent implements OnInit {
       if (result['data']) {
         console.log(data, index);
         if (data.id) {
-
+          this.billingService.removeLineDoc(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, data.id).subscribe(del => {
+            console.log(del)
+            this.support_documents.splice(index, 1)
+          })
         } else {
           this.fileList.splice(index, 1)
           this.fileName.splice(index, 1)
@@ -720,7 +779,39 @@ export class BillLineItemComponent implements OnInit {
 
   }
 
-  reuploadFile() {
+  reuploadFile(event, file, index) {
+
+    let selectedFiles = event.target.files;
+    let fileTypes = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png'];
+
+
+    for (let i = 0; i < selectedFiles.length; i++) {
+      if (fileTypes.includes(selectedFiles[i].name.split('.').pop().toLowerCase())) {
+        var FileSize = selectedFiles[i].size / 1024 / 1024; // in MB
+        if (FileSize > 501) {
+          this.fileUpload.nativeElement.value = "";
+          this.alertService.openSnackBar("File size is too large", 'error');
+          return;
+        }
+        this.fileName.push({ file_name: selectedFiles[i].name })
+        this.fileList.push(selectedFiles[i])
+        if (file && file.id) {
+          this.billingService.removeLineDoc(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, file.id).subscribe(del => {
+            console.log(del)
+            this.support_documents.splice(index, 1);
+            // this.fileUpload.nativeElement.click();
+          })
+        } else {
+          this.fileList.splice(index, 1)
+          this.fileName.splice(index, 1)
+        }
+      } else {
+        selectedFiles = null
+        this.fileUpload.nativeElement.value = "";
+        this.alertService.openSnackBar("This file type is not accepted", 'error');
+      }
+    }
+
 
   }
 

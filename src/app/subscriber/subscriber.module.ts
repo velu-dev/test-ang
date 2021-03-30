@@ -74,6 +74,7 @@ import { DiagnosisCodeComponent } from './examiner/appointment-details/billing/d
 import { BillingDocumentComponent } from './examiner/appointment-details/billing/billing-document/billing-document.component';
 import { BillingInfoComponent } from './examiner/appointment-details/billing/billing-info/billing-info.component';
 import { SubmissionComponent } from './examiner/appointment-details/billing/submission/submission.component';
+import { LateResponseComponent } from './examiner/appointment-details/billing/late-response/late-response.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -159,7 +160,8 @@ import { SubmissionComponent } from './examiner/appointment-details/billing/subm
     DiagnosisCodeComponent,
     BillingDocumentComponent,
     BillingInfoComponent,
-    SubmissionComponent
+    SubmissionComponent,
+    LateResponseComponent
    
   ],
   entryComponents: [
