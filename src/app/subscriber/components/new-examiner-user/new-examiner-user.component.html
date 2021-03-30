@@ -575,7 +575,7 @@
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
-                            fxFlex.sm="50" fxFlex.xs="100">
+                            fxFlex.sm="50" fxFlex.xs="100" >
                             <mat-label>Taxonomy Code</mat-label>
                             <!-- <mat-select formControlName="taxonomy_id" (selectionChange)="texonomyChange($event.value)">
                                 <mat-select-trigger>
@@ -590,7 +590,7 @@
                                 [matAutocomplete]="examinerAutocomplete">
                             <button mat-button matSuffix mat-icon-button
                                 aria-label="Clear" (click)="clearAutoComplete()" matTooltip="Clear Code"
-                                matTooltipPosition="above">
+                                matTooltipPosition="above" class="clear" class="clear">
                                 <mat-icon>close</mat-icon>
                             </button>
                             <mat-autocomplete #examinerAutocomplete="matAutocomplete"
