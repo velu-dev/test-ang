@@ -14,7 +14,7 @@ export class RegulationDialogueComponent implements OnInit {
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<RegulationDialogueComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    dialogRef.disableClose = true;
+    // dialogRef.disableClose = true;
   }
 
   ngOnInit() {
