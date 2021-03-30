@@ -30,7 +30,7 @@
                     [matAutocomplete]="daAuto">
                 <button mat-button *ngIf="daEdit" matSuffix mat-icon-button aria-label="Clear"
                     (click)="$event.stopPropagation();clearAutoComplete()" matTooltip="Clear Address"
-                    matTooltipPosition="above">
+                    matTooltipPosition="above" class="clear">
                     <mat-icon>close</mat-icon>
                 </button>
                 <mat-autocomplete #daAuto="matAutocomplete">

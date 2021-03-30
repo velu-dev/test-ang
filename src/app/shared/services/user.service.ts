@@ -39,7 +39,8 @@ export class UserService {
         let data = [];
         regulations.Regulations.map(res => {
             if (codes.includes(res.code)) {
-                data.push(res)
+                let ind = codes.indexOf(res.code);
+                data[ind] = res//push(res)
             }
         });
         return data;
