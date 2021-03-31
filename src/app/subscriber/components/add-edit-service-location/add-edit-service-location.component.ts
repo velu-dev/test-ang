@@ -334,10 +334,13 @@ export class AddEditServiceLocationComponent implements OnInit {
         this.locationForm.patchValue({
           primary_contact: this.maillingAddress.contact_person,
           primary_contact_phone: this.maillingAddress.phone_no1,
+          phone_ext1: "",
           alternate_contact_1: "",
           alternate_contact_1_phone: this.maillingAddress.phone_no2,
+          phone_ext2: "",
           alternate_contact_2: "",
           alternate_contact_2_phone: "",
+          phone_ext3: ""
         })
         this.changeState(this.maillingAddress.state, this.maillingAddress.state_code)
 
@@ -345,10 +348,13 @@ export class AddEditServiceLocationComponent implements OnInit {
         this.locationForm.patchValue({
           primary_contact: this.maillingAddress.contact_person,
           primary_contact_phone: this.maillingAddress.phone_no1,
+          phone_ext1:"",
           alternate_contact_1: "",
           alternate_contact_1_phone: this.maillingAddress.phone_no2,
+          phone_ext2: "",
           alternate_contact_2: "",
           alternate_contact_2_phone: "",
+          phone_ext3: ""
         })
         this.locationForm.patchValue(this.maillingAddress)
         this.changeState(this.maillingAddress.state, this.maillingAddress.state_code)
