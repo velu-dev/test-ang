@@ -1,0 +1,7 @@
+@import "variables";
+@import "table";
+@import "../payment-response/payment-response.component.scss";
+
+.bg-white {
+    background-color: $white !important;
+}

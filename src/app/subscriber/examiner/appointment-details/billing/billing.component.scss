@@ -1,7 +1,18 @@
 @import "variables";
 @import "table";
 @import "../appointment-details.component.scss";
-
+.billing {
+    .fbr-pay-response  {
+        margin-top: 20px;
+        box-shadow: $shadow-style-one !important;
+        &:hover {
+            box-shadow: $shadow-style-one-hover;
+        }
+    }
+    .sbr-pay-response {
+        @extend .fbr-pay-response;
+    }
+}
 // .billing {
 //     .bill-status {
 //         .progress {
