@@ -152,7 +152,8 @@
 
                             <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
                                 <mat-label>Ext</mat-label>
-                                <input matInput type="text" placeholder="Ext" autocomplete="off" (keypress)="numberOnly($event)" formControlName="phone_ext1">
+                                <input matInput type="text" placeholder="Ext" autocomplete="off"
+                                    (keypress)="numberOnly($event)" formControlName="phone_ext1">
                                 <mat-error>Please enter valid Extension</mat-error>
                             </mat-form-field>
                         </div>
@@ -167,7 +168,8 @@
 
                             <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
                                 <mat-label>Ext</mat-label>
-                                <input matInput type="text" placeholder="Ext" autocomplete="off"(keypress)="numberOnly($event)" formControlName="phone_ext2">
+                                <input matInput type="text" placeholder="Ext" autocomplete="off"
+                                    (keypress)="numberOnly($event)" formControlName="phone_ext2">
                                 <mat-error>Please enter valid Extension</mat-error>
                             </mat-form-field>
                         </div>
@@ -417,7 +419,8 @@
 
                             <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
                                 <mat-label>Ext</mat-label>
-                                <input matInput type="text" placeholder="Ext" autocomplete="off" (keypress)="numberOnly($event)" formControlName="phone_ext1">
+                                <input matInput type="text" placeholder="Ext" autocomplete="off"
+                                    (keypress)="numberOnly($event)" formControlName="phone_ext1">
                                 <mat-error>Please enter valid Extension</mat-error>
                             </mat-form-field>
                         </div>
@@ -575,7 +578,7 @@
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
-                            fxFlex.sm="50" fxFlex.xs="100" >
+                            fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Taxonomy Code</mat-label>
                             <!-- <mat-select formControlName="taxonomy_id" (selectionChange)="texonomyChange($event.value)">
                                 <mat-select-trigger>
@@ -587,10 +590,10 @@
                                 <mat-error *ngIf="renderingSubmit">Please select valid taxonomy code</mat-error>
                             </mat-select> -->
                             <input type="text" matInput [formControl]="texonomySearch"
-                                [matAutocomplete]="examinerAutocomplete">
-                            <button mat-button matSuffix mat-icon-button
-                                aria-label="Clear" (click)="clearAutoComplete()" matTooltip="Clear Code"
-                                matTooltipPosition="above" class="clear" class="clear">
+                                placeholder="Select taxonomy code" [matAutocomplete]="examinerAutocomplete">
+                            <button mat-button matSuffix mat-icon-button aria-label="Clear"
+                                (click)="clearAutoComplete()" matTooltip="Clear Code" matTooltipPosition="above"
+                                class="clear" class="clear">
                                 <mat-icon>close</mat-icon>
                             </button>
                             <mat-autocomplete #examinerAutocomplete="matAutocomplete"
@@ -773,7 +776,8 @@
                                                 ? ' - '+element?.service_name : ''}}</span>
                                             <span *ngIf="column == 'phone_no'">{{element?.primary_contact_phone ?
                                                 (element?.primary_contact_phone
-                                                | mask:'(000) 000-0000') : '' }} {{element?.phone_ext1 ? "Ext: " + element?.phone_ext1 : ""}}</span>
+                                                | mask:'(000) 000-0000') : '' }} {{element?.phone_ext1 ? "Ext: " +
+                                                element?.phone_ext1 : ""}}</span>
                                             <span
                                                 *ngIf="column == 'npi_number'">{{element.national_provider_identifier}}</span>
                                             <span *ngIf="column == 'action'" class="no-wrap-td">
@@ -799,7 +803,8 @@
                                                         {{element?.service_name}}</span></div>
                                                 <div><span>Phone</span><span>{{element?.phone_no ? (element?.phone_no |
                                                         mask:'(000)
-                                                        000-0000') : '' }} {{element?.phone_ext1 ? "Ext: " + element?.phone_ext1 : ""}}</span></div>
+                                                        000-0000') : '' }} {{element?.phone_ext1 ? "Ext: " +
+                                                        element?.phone_ext1 : ""}}</span></div>
                                                 <div><span>NPI
                                                         Number</span><span>{{element?.national_provider_identifier}}</span>
                                                 </div>
@@ -902,6 +907,7 @@
                                     <div fxFlex="100"
                                         *ngFor="let item of ['Same as Billing Provider NPI Number','Same as Rendering Provider NPI Number'];  let i = index">
                                         <mat-checkbox [checked]="selected === i" (change)="selected = i"
+                                            [disabled]="providerPresent(item)"
                                             (change)="npiChange($event,i)">{{item}}</mat-checkbox>
                                     </div>
 

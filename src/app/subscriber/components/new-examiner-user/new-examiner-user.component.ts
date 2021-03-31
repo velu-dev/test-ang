@@ -1315,6 +1315,13 @@ export class NewExaminerUserComponent implements OnInit {
       this.billingProviderForm.patchValue(addresEmpty);
     }
   }
+  providerPresent(item) {
+    if (item == 'Same as Billing Provider NPI Number') {
+      return this.billingProviderForm.value.national_provider_identifier ? false : true;
+    } else {
+      return this.renderingForm.value.national_provider_identifier ? false : true;
+    }
+  }
   npiChange(e, i) {
     if (e.checked) {
       if (i == 1) {
