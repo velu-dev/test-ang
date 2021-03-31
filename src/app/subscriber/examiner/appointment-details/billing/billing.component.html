@@ -25,14 +25,18 @@
         </app-bill-line-item>
 
         <mat-card class="fbr-pay-response">
-            <mat-card-header>
-                <div class="content-wrapper-main-title">Payment Responses</div>
-                <span class="spacer"></span>
-            </mat-card-header>
-            <mat-divider></mat-divider>
-            <app-payment-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData"
-                (getPaymentStatus)="getPaymentStatus($event)">
-            </app-payment-response>
+            <mat-tab-group>
+                <mat-tab label="Payment response">
+                    <mat-card>
+                        <app-payment-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData">
+                        </app-payment-response>
+                    </mat-card>
+                </mat-tab>
+                <mat-tab label="Late response">
+                    <app-late-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [billType]="tabIndex" [isMobile]="isMobile">
+                    </app-late-response>
+                </mat-tab>
+            </mat-tab-group>
         </mat-card>
 
         <!-- Subbmission -->

@@ -3,113 +3,148 @@
         <div class="content-wrapper-main-title">Payment Responses</div>
         <span class="spacer"></span>
     </mat-card-header> -->
-    <mat-card-content class="m-b-10">
-        <form fxLayout="row wrap">
-            <div class="user-detail m-t-10">
-                <table class="table res-table pay-response">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Bill #</th>
-                            <th>Submission</th>
-                            <th>Date Sent</th>
-                            <th>Due Date</th>
-                            <th>Charge</th>
-                            <th>Payment</th>
-                            <th>Balance</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <thead>
-                        <tr>
-                            <td>
-                                <mat-icon class="text-success">add_circle</mat-icon>
-                            </td>
-                            <td>SBR-1456312</td>
-                            <td>SECOND</td>
-                            <td></td>
-                            <td></td>
-                            <td>$ 8965</td>
-                            <td>$ 8965</td>
-                            <td class="text-danger">$ 8965</td>
-                            <td></td>
-                            <td><button type="button" mat-raised-button class="mini-btn filled-gray" >Add Response</button></td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="10">
-                                <div class="detail bg-white">
-                                    <div>
-                                        <div class="expand-details-list list-level" fxLayout="row wrap">
-                                            <div fxFlex="100">
-                                                <div class="main-title p-l-0 p-b-10" fxFlex="100">Claims Administrator Information</div>
+<mat-card-content class="m-b-10">
+    <form fxLayout="row wrap">
+        <div class="user-detail m-t-10">
+            <table class="table res-table pay-response">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Bill #</th>
+                        <th>Submission</th>
+                        <th>Date Sent</th>
+                        <th>Due Date</th>
+                        <th>Charge</th>
+                        <th>Payment</th>
+                        <th>Balance</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+               
+                <thead>
+                    <tr>
+                        <td>
+                            <mat-icon class="text-success">add_circle</mat-icon>
+                        </td>
+                        <td>{{lateResData?.bill_no}}</td>
+                        <td>{{lateResData?.bill_submission_type}}</td>
+                        <td></td>
+                        <td>{{lateResData?.bill_due_date | date:'MM-dd-yyyy'}}</td>
+                        <td>{{lateResData?.charge}}</td>
+                        <td>{{lateResData?.payment}}</td>
+                        <td class="text-danger">$ 8965</td>
+                        <td>{{lateResData?.bill_paid_status}}</td>
+                        <td><button type="button" *ngIf="lateRes().controls?.length == 0" mat-raised-button class="mini-btn filled-gray"
+                                (click)="addlateRes()">Add</button></td>
+                    </tr>
+                   
+                    <tr >                 
+                          
+                        <td colspan="10" >
+                            <div class="detail bg-white" *ngIf="lateRes().controls?.length > 0">
+                                <div>
+                                    <div class="expand-details-list list-level" fxLayout="row wrap">
+                                        <div fxFlex="100">
+                                            <div class="main-title p-l-0 p-b-10" fxFlex="100">Claims Administrator
+                                                Information</div>
+                                        </div>
+                                        <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="expand-details">
+                                            <div class="grid-list">
+                                                <div>Insurance Name</div>
+                                                <div>{{lateResData?.claims_administrator_details?.insurance_name}}</div>
                                             </div>
-                                            <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="expand-details">
-                                                <div class="grid-list">
-                                                    <div>Insurance Name</div>
-                                                    <div>ABC CDE LIMITED</div>
-                                                </div>
-                                                <div class="grid-list">
-                                                    <div>Phone Number</div>
-                                                    <div>+4839 48389 3873</div>
-                                                </div>
-                                                <div class="grid-list">
-                                                    <div>Email Address</div>
-                                                    <div>ABCD@EFG.HIJ</div>
-                                                </div>
+                                            <div class="grid-list">
+                                                <div>Phone Number</div>
+                                                <div>{{lateResData?.claims_administrator_details?.phone_number |
+                                                    mask:'(000) 000-0000'}}</div>
                                             </div>
-                                            <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="expand-details">
-                                                <div class="grid-list">
-                                                    <div>Adjuster Name</div>
-                                                    <div>Sarath Selvaraj</div>
-                                                </div>
-                                                <div class="grid-list">
-                                                    <div>Fax Number</div>
-                                                    <div>845 465 4454</div>
-                                                </div>
+                                            <div class="grid-list">
+                                                <div>Email Address</div>
+                                                <div>{{lateResData?.claims_administrator_details?.email_address}}</div>
                                             </div>
                                         </div>
-                                        
+                                        <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="expand-details">
+                                            <div class="grid-list">
+                                                <div>Adjuster Name</div>
+                                                <div>{{lateResData?.claims_administrator_details?.adjuster_name}}</div>
+                                            </div>
+                                            <div class="grid-list">
+                                                <div>Fax Number</div>
+                                                <div>{{lateResData?.claims_administrator_details?.fax | mask:'(000)
+                                                    000-0000'}}</div>
+                                            </div>
+                                        </div>
                                     </div>
+
                                 </div>
-                                <div class="detail">
-                                    <div>
+                            </div>
+                            <form [formGroup]="lateForm" > 
+                                <div class="detail"  formArrayName="lateRes" *ngFor="let late of lateRes().controls; let lateindex=index" >
+                                    <div  [formGroupName]="lateindex">
                                         <div class="expand-details-list list-level" fxLayout="row wrap">
                                             <div fxFlex="100">
                                                 <div class="main-title p-l-0 p-b-10" fxFlex="100">Bill Status</div>
                                             </div>
-                                            <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="expand-details editable">
-                                                <!-- <div class="grid-list">
-                                                    <div>Status</div>
-                                                    <div><a class="text-success">Status Comes Here</a></div>
+                                            <div *ngIf="!late.get('showStatus').value">
+                                                <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100"
+                                                    class="expand-details editable">
+                                                    <div class="grid-list">
+                                                        <div>Status</div>
+                                                        <div><a class="text-success">{{late.get('bill_status_id').value}}</a></div>
+                                                    </div>
+                                                    <div class="grid-list"  *ngIf="late.get('bill_status_id').value == 51">
+                                                        <div>Other Reason</div>
+                                                        <div>{{late.get('bill_other_status').value}}</div>
+                                                    </div>
+                                                    <div class="grid-list">
+                                                        <div>Notes</div>
+                                                        <div>{{late.get('late_payment_response_notes').value}}</div>
+                                                    </div>
+
                                                 </div>
-                                                <div class="grid-list">
-                                                    <div>Other Reason</div>
-                                                    <div>Other Reason Will Comes Here...</div>
+                                                <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="expand-details">
+                                                    <div class="grid-list">
+                                                        <div>Created By</div>
+                                                        <div>{{late.get('created_by').value}}</div>
+                                                    </div>
+                                                    <div class="grid-list">
+                                                        <div>Created On</div>
+                                                        <div>{{late.get('createdAt').value  | date:'MM-dd-yyyy'}}</div>
+                                                    </div>
+                                                    <div class="grid-list">
+                                                        <div>Updated By</div>
+                                                        <div>{{late.get('updated_by').value}}</div>
+                                                    </div>
+                                                    <div class="grid-list">
+                                                        <div>Updated On</div>
+                                                        <div>{{late.get('updatedAt').value  | date:'MM-dd-yyyy'}}</div>
+                                                    </div>
                                                 </div>
-                                                <div class="grid-list">
-                                                    <div>Notes</div>
-                                                    <div>Notes Comes Here</div>
-                                                </div> -->
+                                            </div>
+
+                                            <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100"
+                                                class="expand-details editable" *ngIf="late.get('showStatus').value">
                                                 <div class="grid-list-form">
                                                     <div class="property">Status</div>
                                                     <div class="value">
                                                         <mat-form-field appearance="outline">
-                                                            <mat-select >
-                                                                <mat-option>
-                                                                    Test
+                                                            <mat-select formControlName="bill_status_id">
+                                                                <mat-option *ngFor="let list of billStatusList"
+                                                                    [value]="list.id">
+                                                                    {{list?.bill_status}}
                                                                 </mat-option>
                                                             </mat-select>
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
 
-                                                <div class="grid-list-form">
+                                                <div class="grid-list-form" *ngIf="late.get('bill_status_id').value == 51" >
                                                     <div class="property">Other</div>
                                                     <div class="value">
                                                         <mat-form-field appearance="outline">
-                                                            <input matInput type="text" placeholder="Other Description"autocomplete="off">
+                                                            <input matInput formControlName="bill_other_status" type="text" placeholder="Other Description"
+                                                                autocomplete="off">
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
@@ -118,41 +153,33 @@
                                                     <div class="property">Notes</div>
                                                     <div class="value">
                                                         <mat-form-field appearance="outline">
-                                                            <input matInput type="text" placeholder="Notes"autocomplete="off">
+                                                            <input matInput formControlName="late_payment_response_notes" type="text" placeholder="Notes"
+                                                                autocomplete="off">
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
+                                              
                                             </div>
-                                            <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="expand-details">
-                                                <div class="grid-list">
-                                                    <div>Created By</div>
-                                                    <div>Sarath Selvaraj</div>
-                                                </div>
-                                                <div class="grid-list">
-                                                    <div>Created On</div>
-                                                    <div>12-12-2020</div>
-                                                </div>
-                                                <div class="grid-list">
-                                                    <div>Updated By</div>
-                                                    <div>Sarath Selvaraj</div>
-                                                </div>
-                                                <div class="grid-list">
-                                                    <div>Updated On</div>
-                                                    <div>12-12-2020</div>
-                                                </div>
+                                            <div class="w-100 text-center p-t-10" *ngIf="late.get('showStatus').value">
+                                                <button type="button" class="outline-danger m-r-10" mat-stroked-button>Cancel</button>
+                                                <button class="outline-success" mat-stroked-button (click)="submitLateRes(late, lateindex)">Save</button>
                                             </div>
                                             <div fxFlex="100">
-                                                <button type="button" mat-raised-button class="filled-gray m-t-10">Copy & Edit Response</button>
+                                                <button type="button" mat-raised-button class="filled-gray m-t-10" (click)="copyedit(late ,lateindex)">Copy
+                                                    & Edit Response</button>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
-                            </td>
-                        </tr>
-
-                    </thead>
-                </table>
-            </div>
-        </form>
-    </mat-card-content>
+                            </form>
+                        </td>
+                   
+                    </tr>
+               
+                </thead>
+           
+            </table>
+        </div>
+    </form>
+</mat-card-content>

@@ -160,4 +160,16 @@ export class BillingService {
     return this.http.delete(environment.baseUrl + api_endpoint.removeSBRLineDoc + claim + '/' + billable + '/' + billId + '/' + docId)
   }
 
+  getLateResponse(claim, billable, billId, type): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getLateRes + claim + '/' + billable + '/' + billId + '/' + type)
+  }
+
+  postLateResponse(claim, billable, billId, data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.postLateRes + claim + '/' + billable + '/' + billId, data)
+  }
+
+  getLateResBillStatus(claim, billable, billId, type): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.lateResStatus + claim + '/' + billable + '/' + billId + '/' + type)
+  }
+
 }

@@ -209,6 +209,10 @@ export const api_endpoint = {
     sendRecDocument: 'billing/send-received-documents/',
     supportDocUpload: 'billing/upload-supporting-documents/',
     removeSBRLineDoc: 'billing/remove-supporting-document/',
+    postLateRes: 'billing/add-late-response/',
+    getLateRes: 'billing/late-response/',
+    lateResStatus: 'billing/late-response-bill-status/',
+
 
     //Calendar 
 
