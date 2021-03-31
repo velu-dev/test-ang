@@ -103,7 +103,7 @@ export class ServiceRequestDetailsComponent implements OnInit {
       }
       let requestDocuments = [];
       let receivedDocument = [];
-      this.processedZipFileName = res.service_request_doc[0].processed_zip_file_name;
+      this.processedZipFileName = res.service_request_doc && res.service_request_doc.length > 0 ? res.service_request_doc[0].processed_zip_file_name : null;
       res.service_request_doc.map(doc => {
         if (doc.transmission_direction == 'OUT') {
           requestDocuments.push(doc)
