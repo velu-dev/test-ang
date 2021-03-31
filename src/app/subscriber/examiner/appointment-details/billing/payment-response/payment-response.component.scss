@@ -1,30 +1,30 @@
 @import "variables";
 @import "table";
 
-.bill-item {
-    margin-top: 20px;
-    mat-card {
-        box-shadow: $shadow-style-one !important;
-        &:hover {
-            box-shadow: $shadow-style-one-hover;
-        }
-    }
-    .custom-input {
-        padding: 8px 3px;
-        border: 1px solid $gray;
-        width: 100px;
-        border-radius: 3px;
-        &:disabled {
-            border: 1px solid $white;
-            background-color: transparent;
-            width: auto;
-            border-radius: 3px;
-        }
-    }
-}
-.payment-response {
-    .vertical-fixed {
-        overflow: inherit !important;
+// .bill-item {
+//     margin-top: 20px;
+//     mat-card {
+//         box-shadow: $shadow-style-one !important;
+//         &:hover {
+//             box-shadow: $shadow-style-one-hover;
+//         }
+//     }
+//     .custom-input {
+//         padding: 8px 3px;
+//         border: 1px solid $gray;
+//         width: 100px;
+//         border-radius: 3px;
+//         &:disabled {
+//             border: 1px solid $white;
+//             background-color: transparent;
+//             width: auto;
+//             border-radius: 3px;
+//         }
+//     }
+// }
+// .payment-response {
+//     .vertical-fixed {
+//         overflow: inherit !important;
         // .pay-response {
         //     width: 2000px;
         //     thead {
@@ -91,12 +91,12 @@
         //         }
         //     }
         // }
-    }
-}
+//     }
+// }
 // New design implementation
-.m-card {
-    margin-bottom: 20px;
-    min-height: fit-content;
+// .m-card {
+//     margin-bottom: 20px;
+//     min-height: fit-content;
     mat-card-content {
         .user-detail {
             min-height: auto !important;
@@ -393,4 +393,4 @@
             }
         }
     }
-}
+// }
