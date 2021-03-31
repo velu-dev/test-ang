@@ -79,8 +79,8 @@
                                             <div fxFlex="100">
                                                 <div class="main-title p-l-0 p-b-10" fxFlex="100">Bill Status</div>
                                             </div>
-                                            <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="expand-details">
-                                                <div class="grid-list">
+                                            <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="expand-details editable">
+                                                <!-- <div class="grid-list">
                                                     <div>Status</div>
                                                     <div><a class="text-success">Status Comes Here</a></div>
                                                 </div>
@@ -91,6 +91,36 @@
                                                 <div class="grid-list">
                                                     <div>Notes</div>
                                                     <div>Notes Comes Here</div>
+                                                </div> -->
+                                                <div class="grid-list-form">
+                                                    <div class="property">Status</div>
+                                                    <div class="value">
+                                                        <mat-form-field appearance="outline">
+                                                            <mat-select >
+                                                                <mat-option>
+                                                                    Test
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+
+                                                <div class="grid-list-form">
+                                                    <div class="property">Other</div>
+                                                    <div class="value">
+                                                        <mat-form-field appearance="outline">
+                                                            <input matInput type="text" placeholder="Other Description"autocomplete="off">
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+
+                                                <div class="grid-list-form">
+                                                    <div class="property">Notes</div>
+                                                    <div class="value">
+                                                        <mat-form-field appearance="outline">
+                                                            <input matInput type="text" placeholder="Notes"autocomplete="off">
+                                                        </mat-form-field>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="expand-details">
@@ -112,7 +142,7 @@
                                                 </div>
                                             </div>
                                             <div fxFlex="100">
-                                                <button type="button" mat-raised-button class="filled-gray">Copy & Edit Response</button>
+                                                <button type="button" mat-raised-button class="filled-gray m-t-10">Copy & Edit Response</button>
                                             </div>
                                         </div>
                                         
