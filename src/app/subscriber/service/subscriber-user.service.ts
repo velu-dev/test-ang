@@ -121,4 +121,7 @@ export class SubscriberUserService {
   subscriptionCharges(): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.subscriptionCharges)
   }
+  downloadCSV(date): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.downloadPaymentHistoryCSV, { date: date })
+  }
 }
