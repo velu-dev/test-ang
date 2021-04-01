@@ -31,11 +31,14 @@ export class LateResponseComponent implements OnInit {
     return this.fb.group({
       id: [],
       bill_status_id: [],
+      bill_status: [],
       bill_other_status: [],
       late_payment_response_notes: [],
       is_void_response: [],
-      created_by: [],
-      updated_by: [],
+      created_by_first_name: [],
+      created_by_last_name: [],
+      updated_by_first_name: [],
+      updated_by_last_name: [],
       updatedAt: [],
       createdAt: [],
       showStatus: [true],
@@ -55,6 +58,7 @@ export class LateResponseComponent implements OnInit {
     this.addlateRes();
     this.lateRes().at(index + 1).patchValue(group.value)
     this.lateRes().at(index + 1).get('showStatus').patchValue(true)
+    this.lateRes().at(index + 1).get('previous_response_id').patchValue(group.get('id').value)
 
     console.log(this.lateRes().at(index + 1))
   }
@@ -77,8 +81,6 @@ export class LateResponseComponent implements OnInit {
   }
 
   getLateResStatus() {
-
-
     this.billingService.getLateResBillStatus(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, +this.billType + 1).subscribe(lateStatus => {
       console.log(lateStatus)
       this.billStatusList = lateStatus.data;
@@ -100,9 +102,37 @@ export class LateResponseComponent implements OnInit {
     }
     this.billingService.postLateResponse(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, details).subscribe(lateRes => {
       console.log(lateRes);
+      group.patchValue(lateRes.data)
       group.get('showStatus').patchValue(false)
     }, error => {
       console.log(error)
     })
+  }
+
+  changestatus(group, value) {
+
+    // if(value == 47){
+    group.get('late_payment_response_notes').patchValue(null);
+    group.get('bill_other_status').patchValue(null)
+    //}
+
+  }
+
+  removeResponse(index) {
+    this.lateRes().removeAt(index)
+  }
+
+  copyText(val: string) {
+    let selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = val;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
   }
 }
