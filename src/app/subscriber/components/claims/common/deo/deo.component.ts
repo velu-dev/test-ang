@@ -104,20 +104,9 @@ export class DeoComponent implements OnInit {
 
   }
   clearAutoComplete() {
-    this.DEU.patchValue({
-      name: null,
-      street1: null,
-      street2: null,
-      city: null,
-      state: null,
-      zip_code: null,
-      phone: null,
-      phone_ext: null,
-      email: null,
-      fax: null,
-    })
     this.deuState = null;
     this.deuCtrl.reset();
+    this.DEU.reset();
     this.DEU.get("street1").disable();
     this.DEU.get("street2").disable();
     this.DEU.get("city").disable();
@@ -129,7 +118,7 @@ export class DeoComponent implements OnInit {
     this.DEU.get("fax").disable();
   }
   editDEU() {
-    this.DEU.enable();
+    // this.DEU.enable();
     // street1: [{ value: null, disabled: true }],
     //   street2: [{ value: null, disabled: true }],
     //   city: [{ value: null, disabled: true }],
@@ -140,25 +129,27 @@ export class DeoComponent implements OnInit {
     //   email: [{ value: null, disabled: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
     //   fax: [{ 
     if (this.deuDetail.name) {
-      this.DEU.get("street1").enable();
-      this.DEU.get("street2").enable();
-      this.DEU.get("city").enable();
-      this.DEU.get("state").enable();
-      this.DEU.get("zip_code").enable();
-      this.DEU.get("phone").enable();
-      this.DEU.get("phone_ext").enable();
-      this.DEU.get("email").enable();
-      this.DEU.get("fax").enable();
+      this.DEU.enable();
+      // this.DEU.get("street1").enable();
+      // this.DEU.get("street2").enable();
+      // this.DEU.get("city").enable();
+      // this.DEU.get("state").enable();
+      // this.DEU.get("zip_code").enable();
+      // this.DEU.get("phone").enable();
+      // this.DEU.get("phone_ext").enable();
+      // this.DEU.get("email").enable();
+      // this.DEU.get("fax").enable();
     } else {
-      this.DEU.get("street1").disable();
-      this.DEU.get("street2").disable();
-      this.DEU.get("city").disable();
-      this.DEU.get("state").disable();
-      this.DEU.get("zip_code").disable();
-      this.DEU.get("phone").disable();
-      this.DEU.get("phone_ext").disable();
-      this.DEU.get("email").disable();
-      this.DEU.get("fax").disable();
+      this.DEU.disable();
+      // this.DEU.get("street1").disable();
+      // this.DEU.get("street2").disable();
+      // this.DEU.get("city").disable();
+      // this.DEU.get("state").disable();
+      // this.DEU.get("zip_code").disable();
+      // this.DEU.get("phone").disable();
+      // this.DEU.get("phone_ext").disable();
+      // this.DEU.get("email").disable();
+      // this.DEU.get("fax").disable();
     }
     this.deoEdit = true;
     this.deuCtrl.setValue(this.deuDetail.name);
@@ -172,7 +163,9 @@ export class DeoComponent implements OnInit {
       return;
     }
     this.DEU.value['id'] = this.id;
-    this.claimService.updateAgent(this.DEU.value.id, { DEU: this.DEU.value }).subscribe(res => {
+    let data = this.DEU.getRawValue();
+    data.name = this.deuCtrl.value;
+    this.claimService.updateAgent(this.DEU.value.id, { DEU: data }).subscribe(res => {
       this.deoEdit = false;
       this.DEU.patchValue(this.DEU.value);
       this.deuDetail = this.DEU.value;
@@ -188,6 +181,7 @@ export class DeoComponent implements OnInit {
     })
   }
   deuSelect(deu) {
+    console.log(deu)
     deu.id = this.deuId;
     this.DEU.reset();
     this.DEU.patchValue(deu)

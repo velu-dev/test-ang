@@ -1832,26 +1832,16 @@ export class NewClaimComponent implements OnInit {
       case 'deu':
         this.deuState = null;
         this.deuCtrl.reset();
-        this.claim.get('DEU').patchValue({
-          city: null,
-          email: null,
-          fax: null,
-          name: null,
-          phone: null,
-          state: null,
-          street1: null,
-          street2: null,
-          zip_code: null
-        });
-        this.claim.get(["DEU", "street1"]).disable();
-        this.claim.get(["DEU", "street2"]).disable();
-        this.claim.get(["DEU", "city"]).disable();
-        this.claim.get(["DEU", "state"]).disable();
-        this.claim.get(["DEU", "zip_code"]).disable();
-        this.claim.get(["DEU", "phone"]).disable();
-        this.claim.get(["DEU", "phone_ext"]).disable();
-        this.claim.get(["DEU", "email"]).disable();
-        this.claim.get(["DEU", "fax"]).disable();
+        this.claim.get('DEU').reset();
+        // this.claim.get(["DEU", "street1"]).disable();
+        // this.claim.get(["DEU", "street2"]).disable();
+        // this.claim.get(["DEU", "city"]).disable();
+        // this.claim.get(["DEU", "state"]).disable();
+        // this.claim.get(["DEU", "zip_code"]).disable();
+        // this.claim.get(["DEU", "phone"]).disable();
+        // this.claim.get(["DEU", "phone_ext"]).disable();
+        // this.claim.get(["DEU", "email"]).disable();
+        // this.claim.get(["DEU", "fax"]).disable();
         break;
     }
   }
