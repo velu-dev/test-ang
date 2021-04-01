@@ -22,7 +22,7 @@ import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/ale
 import { StripeService } from '../service/stripe.service';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
-
+import { saveAs } from 'file-saver';
 
 /*Treeview*/
 interface PaymentHistroy {
@@ -242,6 +242,13 @@ export class SubscriberSettingsComponent implements OnInit {
       // this.alertService.openSnackBar(error.error.message, 'error');
       this.dataSourceList.data = [];/* Tree view */
       this.paymentData = {};
+    })
+  }
+  downloadCSV() {
+    this.userService.downloadCSV(this.selectedDate).subscribe(res => {
+      saveAs(res.data.file_url, res.data.file_name, '_self');
+    }, error => {
+      this.alertService.openSnackBar(error.error.error, "error")
     })
   }
   isExpanded = false;

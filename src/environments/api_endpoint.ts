@@ -57,6 +57,7 @@ export const api_endpoint = {
     examinerDisable: 'subscriber/disable-examiner/',
     paymentHistory: 'subscription-charges/details',
     subscriptionCharges: "subscription-charges/date",
+    downloadPaymentHistoryCSV: "subscription-charges/download-csv",
     listCards: "payment/list-all-cards",
     createCard: "payment/create-card",
     updateCard: "payment/update-card",

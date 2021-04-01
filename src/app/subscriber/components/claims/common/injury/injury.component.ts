@@ -349,24 +349,24 @@ export class InjuryPopup {
     if (this.injuryInfo.continuous_trauma) {
       if (this.injuryInfo.continuous_trauma_start_date) {
         if (!(ct_start_date.isSameOrAfter(date_of_birth))) {
-          this.alertService.openSnackBar("Continues trauma Start date should after date of birth", "error")
+          this.alertService.openSnackBar("Continuous trauma Start date should after date of birth", "error")
           return
         }
         if (!(ct_start_date.isSameOrBefore(moment(new Date())))) {
-          this.alertService.openSnackBar("Continues trauma Start date should be before today", "error");
+          this.alertService.openSnackBar("Continuous trauma Start date should be before today", "error");
           return
         }
         if (this.injuryInfo.continuous_trauma_end_date) {
           if (!(ct_end_date.isSameOrAfter(date_of_birth))) {
-            this.alertService.openSnackBar("Continues trauma End date should after date of birth", "error")
+            this.alertService.openSnackBar("Continuous trauma End date should after date of birth", "error")
             return
           }
           if (!(ct_end_date.isSameOrBefore(moment(new Date())))) {
-            this.alertService.openSnackBar("Continues trauma End date should be before today", "error");
+            this.alertService.openSnackBar("Continuous trauma End date should be before today", "error");
             return
           }
           if (!(ct_start_date.isSameOrBefore(ct_end_date))) {
-            this.alertService.openSnackBar("Continues trauma end date should below than start date", "error")
+            this.alertService.openSnackBar("Continuous trauma end date should below than start date", "error")
             return
           }
         }

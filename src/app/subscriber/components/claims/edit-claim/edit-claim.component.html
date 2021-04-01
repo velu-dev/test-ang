@@ -78,7 +78,7 @@
 <!-- ###~~~~~ Applicant Attorney   ~~~~~###-->
 <div class="app_attorney m-t-25" fxLayout="row wrap">
     <div fxFlex="100">
-        <app-application-attorney *ngIf="!isLoading" [state]="states" [aattorney]="aAttorneyDetail">
+        <app-application-attorney *ngIf="!isLoading" [state]="states" (aaChnaged)="onChange($event)" [aattorney]="aAttorneyDetail">
         </app-application-attorney>
     </div>
 </div>

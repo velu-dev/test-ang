@@ -18,6 +18,7 @@ export const _filter = (opt: any[], value: string): string[] => {
 })
 export class ApplicationAttorneyComponent implements OnInit {
   // @Input('edit') isEdit;
+  @Output() aaChnaged = new EventEmitter<boolean>();
   aaEdit = false;
   @Input('aattorney') aattorneyDetail;
   @Input('state') states;
@@ -48,7 +49,7 @@ export class ApplicationAttorneyComponent implements OnInit {
       state: [{ value: null, disabled: true }],
       zip_code: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       phone: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
-      phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+      phone_ext: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       email: [{ value: null, disabled: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
@@ -138,6 +139,8 @@ export class ApplicationAttorneyComponent implements OnInit {
       if (this.fromPop) {
         this.dialogRef.close(true);
         return
+      } else {
+        this.aaChnaged.emit(true)
       }
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
