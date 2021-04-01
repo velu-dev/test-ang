@@ -110,11 +110,11 @@ export class LateResponseComponent implements OnInit {
   }
 
   changestatus(group, value) {
-
-    // if(value == 47){
-    group.get('late_payment_response_notes').patchValue(null);
+    if (value == 47) {
+      group.get('late_payment_response_notes').patchValue(null);
+    }
     group.get('bill_other_status').patchValue(null)
-    //}
+
 
   }
 
