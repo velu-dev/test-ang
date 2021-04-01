@@ -5,3 +5,30 @@
 .bg-white {
     background-color: $white !important;
 }
+.strike {
+    .grid-list {
+        div {
+            &:last-child {
+                text-decoration: line-through;
+            }
+        }
+    }
+}
+.create-support {
+    background-color: $white;
+    padding: 20px;
+    .link {
+        margin-top: 10px;
+        background-color: $info-bg;
+        color: $info;
+        padding: 10px;
+        width: fit-content;
+        font-size: $font-size-1;
+        .copy-link {
+            float: right;
+            margin-left: 50px;
+            padding-right: 10px;
+            cursor: pointer;
+        }
+    }
+}
