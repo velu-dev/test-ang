@@ -172,7 +172,7 @@
 
 
                                             <div fxFlex="100" *ngIf="late.get('bill_status_id').value == 47 && last">
-                                                <div class="create-support">
+                                                <div class="create-support m-t-10">
                                                     <div><b>Create Support Ticket</b></div>
                                                     <div>Click below link to create new ticket</div>
                                                     <div class="link"><i class="fas fa-link p-r-10"></i>https://simplexam.freshdesk.com/support/tickets/new <span (click)="copyText('https://simplexam.freshdesk.com/support/tickets/new')" class="copy-link"><i ngxClipboard
@@ -189,7 +189,7 @@
                                                 <button type="button" mat-raised-button class="filled-gray m-t-10"
                                                     (click)="copyedit(late ,lateindex)">Copy
                                                     & Edit Response</button>
-                                                <button type="button" mat-raised-button class="filled-gray m-t-10"
+                                                <button type="button" mat-raised-button class="filled-gray m-l-10 m-t-10"
                                                     (click)="addlateRes()">Add Response</button>    
                                             </div>
                                         </div>
