@@ -25,21 +25,24 @@
                 <thead>
                     <tr>
                         <td>
-                            <!-- <mat-icon class="text-success">add_circle</mat-icon> -->
+                            <mat-icon
+                            [ngClass]="{'text-success': expandId != lateResData?.id, 'text-danger' : expandId == lateResData?.id}"
+                            (click)="openElement(lateResData?.id)">{{expandId
+                            == lateResData?.id ? 'remove_circle' : 'add_circle'}}</mat-icon>
                         </td>
                         <td>{{lateResData?.bill_no}}</td>
                         <td>{{lateResData?.bill_submission_type}}</td>
-                        <td></td>
+                        <td>{{lateResData?.date_sent | date:'MM-dd-yyyy'}}</td>
                         <td>{{lateResData?.bill_due_date | date:'MM-dd-yyyy'}}</td>
-                        <td>{{lateResData?.charge}}</td>
-                        <td>{{lateResData?.payment}}</td>
-                        <td class="text-danger"></td>
+                        <td>{{lateResData?.charge ? '$ ' : ''}} {{lateResData?.charge}}</td>
+                        <td>{{lateResData?.payment ? '$ ' : ''}} {{lateResData?.payment}}</td>
+                        <td class="text-danger">{{lateResData?.balance ? '$ ' : ''}} {{lateResData?.balance}}</td>
                         <td>{{lateResData?.bill_paid_status}}</td>
                         <td><button type="button" *ngIf="lateRes().controls?.length == 0" mat-raised-button
                               class="mini-btn filled-gray" (click)="addlateRes()">Add Response</button></td>
                     </tr>
 
-                    <tr>
+                    <tr *ngIf="expandId == lateResData?.id">
                         <td colspan="10">
                             <div class="detail" *ngIf="lateRes().controls?.length > 0">
                                 <div>
@@ -185,7 +188,7 @@
                                                 <button class="outline-success" mat-stroked-button
                                                     (click)="submitLateRes(late, lateindex)">Save</button>
                                             </div>
-                                            <div fxFlex="100 p-t-10" *ngIf="last">
+                                            <div fxFlex="100 p-t-10" *ngIf="last && !late.get('showStatus').value">
                                                 <button type="button" mat-raised-button class="filled-gray m-t-10"
                                                     (click)="copyedit(late ,lateindex)">Copy
                                                     & Edit Response</button>
