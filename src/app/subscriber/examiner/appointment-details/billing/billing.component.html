@@ -71,7 +71,7 @@
                     </mat-card>
                 </mat-tab>
                 <mat-tab label="Late response">
-                    <app-late-response>
+                    <app-late-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [billType]="tabIndex" [isMobile]="isMobile">
                     </app-late-response>
                 </mat-tab>
             </mat-tab-group>
