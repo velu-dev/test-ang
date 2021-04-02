@@ -24,7 +24,7 @@
                     <thead *ngFor="let payment of payments().controls; let payIndex=index" [formGroupName]="payIndex">
                         <tr>
                             <td>
-                                <mat-icon
+                                <mat-icon class="pointer"
                                     [ngClass]="{'text-success': expandId != payment.get('id').value, 'text-danger' : expandId == payment.get('id').value}"
                                     (click)="openElement(payment.get('id').value)">{{expandId
                                     == payment.get('id').value ? 'remove_circle' : 'add_circle'}}</mat-icon>

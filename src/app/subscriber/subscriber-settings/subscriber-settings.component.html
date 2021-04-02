@@ -751,8 +751,9 @@
                                     <button (click)="downloadCSV()" mat-raised-button class="filled-lightgray m-t-15">Download CSV</button>
                                 </div>
                             </div>
-                            <div fxLayout="row wrap" class="estimation" fxFlex="100" *ngIf="!isDataAvailable">
-                                <p>No Statement For This Period</p>
+                            <div fxLayout="row wrap" class="no-data" fxFlex="100" *ngIf="!isDataAvailable">
+                                <div><span class="material-icons-outlined">receipt_long</span></div>
+                                <div>No statement available for this period!</div>
                             </div>
                             <div fxLayout="row wrap" class="estimation" fxFlex="100" *ngIf="isDataAvailable">
                                 <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
