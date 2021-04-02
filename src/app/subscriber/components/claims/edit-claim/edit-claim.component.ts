@@ -94,11 +94,11 @@ export class EditClaimComponent implements OnInit {
       this.claimDetail['is_billable_item_available'] = true;
     }
   }
-  onChange(eve) {
-    window.location.reload();
-    // console.log("fdsfdsfdsf")
-    // this.router.navigate([this.router.url])
-  }
+  // onChange(eve) {
+  //   window.location.reload();
+  //   // console.log("fdsfdsfdsf")
+  //   // this.router.navigate([this.router.url])
+  // }
   ngOnInit() {
   }
   navigateBillable() {

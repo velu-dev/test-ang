@@ -7,6 +7,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { shareReplay, map } from 'rxjs/operators';
+import { IntercomService } from 'src/app/services/intercom.service';
 export const MY_CUSTOM_FORMATS = {
   parseInput: 'MM-DD-YYYY hh:mm A Z',
   fullPickerInput: 'MM-DD-YYYY hh:mm A Z',
@@ -53,7 +54,7 @@ export class UpdateBillableItemComponent implements OnInit {
   isMobile = false;
 
 
-  constructor(private claimService: ClaimService, private router: Router, private breakpointObserver: BreakpointObserver) {
+  constructor(private claimService: ClaimService, private router: Router, private breakpointObserver: BreakpointObserver, private intercom: IntercomService) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -63,6 +64,9 @@ export class UpdateBillableItemComponent implements OnInit {
         this.columnName = ["Exam Procedure Type", "Date of Service / Date Item Received", "Examiner", "Status"]
         this.columnsToDisplay = ['procedure_type_name', 'appointment_scheduled_date_time', 'examiner_name', "status"]
       }
+    })
+    this.intercom.getaaStatus().subscribe(res => {
+      this.ngOnInit();
     })
   }
 
