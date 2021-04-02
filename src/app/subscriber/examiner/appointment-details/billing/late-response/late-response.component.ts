@@ -64,6 +64,9 @@ export class LateResponseComponent implements OnInit {
   }
 
   getLateRes() {
+    this.lateForm = this.fb.group({
+      lateRes: this.fb.array([]),
+    })
     this.billingService.getLateResponse(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, +this.billType + 1).subscribe(late => {
       console.log(late)
       this.lateResData = late.data;
@@ -105,6 +108,7 @@ export class LateResponseComponent implements OnInit {
     this.billingService.postLateResponse(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, details).subscribe(lateRes => {
       console.log(lateRes);
       group.patchValue(lateRes.data)
+      group.get('createdAt').patchValue(lateRes.data.created_at)
       group.get('showStatus').patchValue(false)
     }, error => {
       console.log(error)
