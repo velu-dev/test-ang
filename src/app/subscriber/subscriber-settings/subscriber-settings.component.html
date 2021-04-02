@@ -751,7 +751,10 @@
                                     <button (click)="downloadCSV()" mat-raised-button class="filled-lightgray m-t-15">Download CSV</button>
                                 </div>
                             </div>
-                            <div fxLayout="row wrap" class="estimation" fxFlex="100">
+                            <div fxLayout="row wrap" class="estimation" fxFlex="100" *ngIf="!isDataAvailable">
+                                <p>No Statement For This Period</p>
+                            </div>
+                            <div fxLayout="row wrap" class="estimation" fxFlex="100" *ngIf="isDataAvailable">
                                 <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
                                     <div class="sub-title">{{currentMonth == selectedMonth ? 'Current Usage Total' :
                                         'Bill Total'}}</div>
