@@ -67,7 +67,9 @@ export class LateResponseComponent implements OnInit {
     this.billingService.getLateResponse(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, +this.billType + 1).subscribe(late => {
       console.log(late)
       this.lateResData = late.data;
+
       if (this.lateResData && this.lateResData.late_response_details.length > 0) {
+        this.openElement(this.lateResData.id)
         this.lateResData.late_response_details.map((lateData, i) => {
           this.addlateRes();
           this.lateRes().at(i).patchValue(lateData)
@@ -134,5 +136,14 @@ export class LateResponseComponent implements OnInit {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
+  }
+
+  expandId: any;
+  openElement(element) {
+    if (this.expandId && this.expandId == element) {
+      this.expandId = null;
+    } else {
+      this.expandId = element;
+    }
   }
 }
