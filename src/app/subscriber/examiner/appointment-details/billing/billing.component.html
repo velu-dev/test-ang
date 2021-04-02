@@ -28,7 +28,7 @@
             <mat-tab-group>
                 <mat-tab label="Payment response">
                     <mat-card>
-                        <app-payment-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData">
+                        <app-payment-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" (getPaymentStatus)="getPaymentStatus($event)">
                         </app-payment-response>
                     </mat-card>
                 </mat-tab>
