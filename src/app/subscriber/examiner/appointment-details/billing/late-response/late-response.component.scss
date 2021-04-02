@@ -14,21 +14,33 @@
         }
     }
 }
+.grid-list {
+    div {
+        a {
+            color: $info;
+            text-decoration: none;
+        }
+    }
+}
 .create-support {
     background-color: $white;
     padding: 20px;
     .link {
+        width: fit-content;
+        font-size: $font-size-1;
         margin-top: 10px;
         background-color: $info-bg;
         color: $info;
         padding: 10px;
-        width: fit-content;
-        font-size: $font-size-1;
-        .copy-link {
-            float: right;
-            margin-left: 50px;
-            padding-right: 10px;
-            cursor: pointer;
+        a {
+            color: $info;
+            text-decoration: none;
+            .copy-link {
+                float: right;
+                margin-left: 50px;
+                padding-right: 10px;
+                cursor: pointer;
+            }
         }
     }
 }

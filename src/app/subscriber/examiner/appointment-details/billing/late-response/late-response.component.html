@@ -90,14 +90,12 @@
                                                 <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="expand-details " [ngClass]="{'strike' : !last}">
                                                     <div class="grid-list">
                                                         <div>Status</div>
-                                                        <div><a
-                                                                class="text-success">{{late.get('bill_status').value}}</a>
-                                                        </div>
+                                                        <div class="text-success">{{late.get('bill_status').value}}</div>
                                                     </div>
 
                                                     <div class="grid-list" *ngIf="late.get('bill_status_id').value == 47 && !last">
                                                         <div>Create Support Ticket</div>
-                                                        <div><i class="text-ternary">https://simplexam.freshdesk.com/support/tickets/new</i></div>
+                                                        <div><a href="https://simplexam.freshdesk.com/support/tickets/new" target="_blank" class="text-ternary"><i>https://simplexam.freshdesk.com/support/tickets/new</i></a></div>
                                                     </div>
                                                     <div class="grid-list"
                                                         *ngIf="late.get('bill_status_id').value == 51">
@@ -175,8 +173,8 @@
                                                 <div class="create-support m-t-10">
                                                     <div><b>Create Support Ticket</b></div>
                                                     <div>Click below link to create new ticket</div>
-                                                    <div class="link"><i class="fas fa-link p-r-10"></i>https://simplexam.freshdesk.com/support/tickets/new <span (click)="copyText('https://simplexam.freshdesk.com/support/tickets/new')" class="copy-link"><i ngxClipboard
-                                                        cbContent="ssssss" class="far fa-copy"></i></span></div>
+                                                    <div class="link"><a href="https://simplexam.freshdesk.com/support/tickets/new" target="_blank"><i class="fas fa-link p-r-10"></i>https://simplexam.freshdesk.com/support/tickets/new <span (click)="$event.stopPropagation();copyText('https://simplexam.freshdesk.com/support/tickets/new')" class="copy-link"><i ngxClipboard
+                                                        cbContent="ssssss" class="far fa-copy"></i></span></a></div>
                                                 </div>
                                             </div>
                                             <div class="w-100 text-center p-t-10" *ngIf="late.get('showStatus').value">
