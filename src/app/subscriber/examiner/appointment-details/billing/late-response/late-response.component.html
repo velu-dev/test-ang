@@ -25,7 +25,7 @@
                 <thead>
                     <tr>
                         <td>
-                            <mat-icon
+                            <mat-icon class="pointer"
                             [ngClass]="{'text-success': expandId != lateResData?.id, 'text-danger' : expandId == lateResData?.id}"
                             (click)="openElement(lateResData?.id)">{{expandId
                             == lateResData?.id ? 'remove_circle' : 'add_circle'}}</mat-icon>
@@ -37,7 +37,7 @@
                         <td>{{lateResData?.charge ? '$ ' : ''}} {{lateResData?.charge}}</td>
                         <td>{{lateResData?.payment ? '$ ' : ''}} {{lateResData?.payment}}</td>
                         <td class="text-danger">{{lateResData?.balance ? '$ ' : ''}} {{lateResData?.balance}}</td>
-                        <td>{{lateResData?.bill_paid_status}}</td>
+                        <td class="text-success">{{lateResData?.bill_paid_status}}</td>
                         <td><button type="button" *ngIf="lateRes().controls?.length == 0" mat-raised-button
                               class="mini-btn filled-gray" (click)="addlateRes()">Add Response</button></td>
                     </tr>
