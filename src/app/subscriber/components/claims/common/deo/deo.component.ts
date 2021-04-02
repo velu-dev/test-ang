@@ -165,6 +165,7 @@ export class DeoComponent implements OnInit {
     this.DEU.value['id'] = this.id;
     let data = this.DEU.getRawValue();
     data.name = this.deuCtrl.value;
+    data.id = this.id;
     this.claimService.updateAgent(this.DEU.value.id, { DEU: data }).subscribe(res => {
       this.deoEdit = false;
       this.DEU.patchValue(this.DEU.value);
