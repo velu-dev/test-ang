@@ -2,9 +2,10 @@ import { Component, OnInit, Input, SimpleChange, EventEmitter, Output } from '@a
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { IntercomService } from 'src/app/services/intercom.service';
 export const _filter = (opt: any[], value: string): string[] => {
   // console.log("opt", opt);
   const filterValue = value.toLowerCase();
@@ -18,7 +19,7 @@ export const _filter = (opt: any[], value: string): string[] => {
 })
 export class ApplicationAttorneyComponent implements OnInit {
   // @Input('edit') isEdit;
-  @Output() aaChnaged = new EventEmitter<boolean>();
+  private subject = new Subject<any>();
   aaEdit = false;
   @Input('aattorney') aattorneyDetail;
   @Input('state') states;
@@ -35,6 +36,7 @@ export class ApplicationAttorneyComponent implements OnInit {
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
     public dialogRef: MatDialogRef<ApplicationAttorneyComponent>,
+    private intercom: IntercomService,
     private alertService: AlertService) {
     this.claimService.searchEAMSAttorney({ search: "" }).subscribe(res => {
       this.dattroneyGroupOptions = [{ name: "Simplexam Addresses", data: res.data }];
@@ -140,7 +142,7 @@ export class ApplicationAttorneyComponent implements OnInit {
         this.dialogRef.close(true);
         return
       } else {
-        this.aaChnaged.emit(true)
+        this.intercom.aaChange();
       }
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")

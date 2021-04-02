@@ -5,13 +5,14 @@ import { Subject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class IntercomService {
+  public IsaaChanged = new Subject<any>();
   public cusname = new Subject<any>();
   public userChanges = new Subject<any>();
   public claimantName = new Subject<any>();
   public claimNumber = new Subject<any>();
   public billableItem = new Subject<any>();
   public billNo = new Subject<any>();
-  public examinerPage:any;
+  public examinerPage: any;
   constructor() { }
   public setUser(status): any {
     this.cusname.next(status);
@@ -32,7 +33,12 @@ export class IntercomService {
   public setClaimant(status): any {
     this.claimantName.next(status);
   }
-
+  public aaChange(): any {
+    this.IsaaChanged.next(true)
+  }
+  public getaaStatus(): Observable<any> {
+    return this.IsaaChanged.asObservable();
+  }
   public getClaimant(): Observable<any> {
     return this.claimantName.asObservable();
   }

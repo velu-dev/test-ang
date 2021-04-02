@@ -370,6 +370,24 @@ mat-tab-group {
         padding-left: 0 !important;
       }
     }
+    .no-data {
+      text-align: center;
+      div {
+        &:first-child {
+          padding-top: 50px;
+        }
+        &:last-child {
+          padding-bottom: 50px;
+        }
+        width: 100%;
+        font-size: $font-size-9;
+        display: block;
+        span {
+          font-size: 100px;
+          color:$light-color;
+        }
+      }
+    }
     .estimation {
       .divider {
         content: "";
