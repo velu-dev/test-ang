@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BillingService } from 'src/app/subscriber/service/billing.service';
 
 @Component({
@@ -95,6 +95,10 @@ export class LateResponseComponent implements OnInit {
   }
 
   submitLateRes(group, index) {
+    Object.keys(group.controls).forEach((key) => {
+      if (group.get(key).value && typeof (group.get(key).value) == 'string')
+        group.get(key).setValue(group.get(key).value.trim())
+    });
     if (group.status == "INVALID") {
       group.markAllAsTouched();
       return;
@@ -120,7 +124,13 @@ export class LateResponseComponent implements OnInit {
       group.get('late_payment_response_notes').patchValue(null);
     }
     group.get('bill_other_status').patchValue(null)
-
+    if (value == 51) {
+      group.get('bill_other_status').setValidators([Validators.required]);
+      group.get('bill_other_status').updateValueAndValidity()
+    } else {
+      group.get('bill_other_status').setValidators([]);
+      group.get('bill_other_status').updateValueAndValidity();
+    }
 
   }
 
