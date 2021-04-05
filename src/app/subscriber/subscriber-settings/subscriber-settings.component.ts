@@ -137,6 +137,7 @@ export class SubscriberSettingsComponent implements OnInit {
   subscriptionCharges = [];
   currentMonth = new Date().getMonth();
   selectedMonth: any;
+  roleId: any;
   selectedDate = "";
   month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   constructor(
@@ -172,13 +173,13 @@ export class SubscriberSettingsComponent implements OnInit {
     })
     this.listCard();
     this.userService.getProfile().subscribe(res => {
-      console.log("res obj", res)
       this.user = res.data;
       if (res.data.organization_type == 'INDV') {
         res.data.company_name = '';
       }
       let userDetails;
       this.first_name = res.data.first_name;
+      this.roleId = res.data.role_id
       if (res.data.role_id == 2) {
         this.disableCompany = false;
         userDetails = {
