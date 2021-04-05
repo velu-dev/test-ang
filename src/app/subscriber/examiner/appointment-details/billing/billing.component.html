@@ -24,7 +24,7 @@
             [isMobile]="isMobile">
         </app-bill-line-item>
 
-        <mat-card class="fbr-pay-response">
+        <mat-card class="fbr-pay-response" *ngIf="billingData">
             <mat-tab-group>
                 <mat-tab label="Payment response">
                     <mat-card>
@@ -62,7 +62,7 @@
             [isMobile]="isMobile">
         </app-bill-line-item>
 
-        <mat-card class="sbr-pay-response">
+        <mat-card class="sbr-pay-response" *ngIf="billingData">
             <mat-tab-group>
                 <mat-tab label="Payment response">
                     <mat-card>

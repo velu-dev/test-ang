@@ -96,7 +96,7 @@
                                                         <div class="text-success">{{late.get('bill_status').value}}</div>
                                                     </div>
 
-                                                    <div class="grid-list" *ngIf="late.get('bill_status_id').value == 47 && !last">
+                                                    <div class="grid-list" *ngIf="(late.get('bill_status_id').value == 47 || late.get('bill_status_id').value == 49) && !last">
                                                         <div>Create Support Ticket</div>
                                                         <div><a href="https://simplexam.freshdesk.com/support/tickets/new" target="_blank" class="text-ternary"><i>https://simplexam.freshdesk.com/support/tickets/new</i></a></div>
                                                     </div>
@@ -105,7 +105,7 @@
                                                         <div>Other Reason</div>
                                                         <div>{{late.get('bill_other_status').value}}</div>
                                                     </div>
-                                                    <div class="grid-list" *ngIf="late.get('bill_status_id').value != 47">
+                                                    <div class="grid-list" *ngIf="late.get('bill_status_id').value != 47 && late.get('bill_status_id').value != 49">
                                                         <div>Notes</div>
                                                         <div>{{late.get('late_payment_response_notes').value}}</div>
                                                     </div>
@@ -159,7 +159,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="grid-list-form" *ngIf="late.get('bill_status_id').value != 47">
+                                                <div class="grid-list-form" *ngIf="late.get('bill_status_id').value != 47 && late.get('bill_status_id').value != 49">
                                                     <div class="property">Notes</div>
                                                     <div class="value">
                                                         <mat-form-field appearance="outline">
@@ -172,7 +172,7 @@
                                             </div>
 
 
-                                            <div fxFlex="100" *ngIf="late.get('bill_status_id').value == 47 && last">
+                                            <div fxFlex="100" *ngIf="(late.get('bill_status_id').value == 47 || late.get('bill_status_id').value == 49) && last">
                                                 <div class="create-support m-t-10">
                                                     <div><b>Create Support Ticket</b></div>
                                                     <div>Click below link to create new ticket</div>

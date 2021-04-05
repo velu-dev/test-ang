@@ -107,7 +107,7 @@ export class BilllableBillingComponent implements OnInit {
   visible = true;
   selectable = true;
   removable = true;
-    states: any;
+  states: any;
   role = this.cookieService.get('role_id');
   firstBillId: string;
   secondBillId: string;
@@ -181,9 +181,9 @@ export class BilllableBillingComponent implements OnInit {
       this.getBillingDetails();
     }
     if (index == 1) {
-      if (this.billingData.second_bill_id) {
-        this.secondBillId = this.billingData.second_bill_id;
-        this.billingId = this.billingData.second_bill_id;
+      if ((this.billingData && this.billingData.second_bill_id) || this.secondBillId) {
+        this.secondBillId = this.secondBillId;
+        this.billingId = +this.secondBillId;
         let ids = {}
         ids = { claimant_id: this.paramsId.claimant_id, claim_id: this.paramsId.claim_id, billId: this.paramsId.billId, billingId: this.secondBillId };
         this.paramsId = ids;
@@ -260,7 +260,7 @@ export class BilllableBillingComponent implements OnInit {
     });
 
   }
-  
+
   billTypestatus = false;
   getBillingDetails() {
 
@@ -277,9 +277,11 @@ export class BilllableBillingComponent implements OnInit {
         } else {
           this.intercom.setBillNo('Bill');
         }
+        console.log(this.billingData.bill_id)
         if (this.billingData.second_bill_id) {
+          this.secondBillId = this.billingData.second_bill_id
           if (!this.billTypestatus) {
-            this.tabchange(1)
+            this.tabchange(1);
             this.billTypestatus = true;
           }
         }
@@ -298,7 +300,7 @@ export class BilllableBillingComponent implements OnInit {
 
 
   expandId1: any;
-  
+
   downloadDocumet(element, details?) {
     this.billingService.downloadOndemandDocuments({ file_url: element.file_url }).subscribe(res => {
       this.alertService.openSnackBar("File downloaded successfully", "success");
@@ -309,7 +311,7 @@ export class BilllableBillingComponent implements OnInit {
     })
   }
 
-  
+
 }
 
 ///Blling end

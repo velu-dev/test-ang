@@ -71,7 +71,7 @@ export class LateResponseComponent implements OnInit {
       console.log(late)
       this.lateResData = late.data;
 
-      if (this.lateResData && this.lateResData.late_response_details.length > 0) {
+      if (this.lateResData && this.lateResData.late_response_details && this.lateResData.late_response_details.length > 0) {
         this.openElement(this.lateResData.id)
         this.lateResData.late_response_details.map((lateData, i) => {
           this.addlateRes();
@@ -116,7 +116,7 @@ export class LateResponseComponent implements OnInit {
   }
 
   changestatus(group, value) {
-    if (value == 47) {
+    if (value == 47 || value == 49) {
       group.get('late_payment_response_notes').patchValue(null);
     }
     group.get('bill_other_status').patchValue(null)
