@@ -60,7 +60,7 @@ import { RecordsComponent } from './examiner/appointment-details/records/records
 import { ExaminationComponent } from './examiner/appointment-details/examination/examination.component';
 import { ReportComponent } from './examiner/appointment-details/report/report.component';
 import { BillingCorrespondanceComponent, CustomDocuments, CustomRecipient, AddAddress, MailOnDemandConfirm } from './examiner/appointment-details/correspondance/correspondance.component';
-import { BilllableBillingComponent, BillingPaymentDialog, billingOnDemandDialog, BillingCustomRecipient} from './examiner/appointment-details/billing/billing.component';
+import { BilllableBillingComponent, billingOnDemandDialog, BillingCustomRecipient} from './examiner/appointment-details/billing/billing.component';
 import { OnDemandService } from './service/on-demand.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { BillingService } from './service/billing.service';
@@ -144,7 +144,6 @@ import { LateResponseComponent } from './examiner/appointment-details/billing/la
     CustomDocuments,
     CustomRecipient,
     InActivedialog,
-    BillingPaymentDialog,
     AddAddress,
     billingOnDemandDialog,
     BillingCustomRecipient,
@@ -177,7 +176,6 @@ import { LateResponseComponent } from './examiner/appointment-details/billing/la
     CustomDocuments,
     CustomRecipient,
     InActivedialog,
-    BillingPaymentDialog,
     AddAddress,
     billingOnDemandDialog,
     BillingCustomRecipient,

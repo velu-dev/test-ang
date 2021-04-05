@@ -1,5 +1,5 @@
 <div class="billing">
-    <mat-tab-group class="m-t-10" (selectedTabChange)="tabchange($event.index)">
+    <mat-tab-group class="m-t-10" [(selectedIndex)]="tabIndex" (selectedTabChange)="tabchange($event.index)">
         <mat-tab label="First Bill Submission">
         </mat-tab>
         <mat-tab label="Second Bill Review"
