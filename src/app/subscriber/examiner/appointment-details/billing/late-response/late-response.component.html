@@ -85,9 +85,9 @@
                                 <div class="detail" formArrayName="lateRes"
                                     *ngFor="let late of lateRes().controls; let lateindex=index; let last = last">
                                     <div [formGroupName]="lateindex">
-                                        <div class="expand-details-list list" fxLayout="row wrap">
+                                        <div fxLayout="row wrap" class="expand-details-list list w-100">
                                             <div fxFlex="100">
-                                                <div class="main-title p-l-0 p-b-10" fxFlex="100">Bill Status</div>
+                                                <div class="main-title p-l-0 m-b-10" fxFlex="100">Bill Status</div>
                                             </div>
                                             <div *ngIf="!late.get('showStatus').value" class="w-100">
                                                 <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="expand-details " [ngClass]="{'strike' : !last}">
@@ -96,7 +96,7 @@
                                                         <div class="text-success">{{late.get('bill_status').value}}</div>
                                                     </div>
 
-                                                    <div class="grid-list" *ngIf="late.get('bill_status_id').value == 47 && !last">
+                                                    <div class="grid-list" *ngIf="(late.get('bill_status_id').value == 47 || late.get('bill_status_id').value == 49) && !last">
                                                         <div>Create Support Ticket</div>
                                                         <div><a href="https://simplexam.freshdesk.com/support/tickets/new" target="_blank" class="text-ternary"><i>https://simplexam.freshdesk.com/support/tickets/new</i></a></div>
                                                     </div>
@@ -105,7 +105,7 @@
                                                         <div>Other Reason</div>
                                                         <div>{{late.get('bill_other_status').value}}</div>
                                                     </div>
-                                                    <div class="grid-list" *ngIf="late.get('bill_status_id').value != 47">
+                                                    <div class="grid-list" *ngIf="late.get('bill_status_id').value != 47 && late.get('bill_status_id').value != 49">
                                                         <div>Notes</div>
                                                         <div>{{late.get('late_payment_response_notes').value}}</div>
                                                     </div>
@@ -159,7 +159,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="grid-list-form" *ngIf="late.get('bill_status_id').value != 47">
+                                                <div class="grid-list-form" *ngIf="late.get('bill_status_id').value != 47 && late.get('bill_status_id').value != 49">
                                                     <div class="property">Notes</div>
                                                     <div class="value">
                                                         <mat-form-field appearance="outline">
@@ -172,7 +172,7 @@
                                             </div>
 
 
-                                            <div fxFlex="100" *ngIf="late.get('bill_status_id').value == 47 && last">
+                                            <div fxFlex="100" *ngIf="(late.get('bill_status_id').value == 47 || late.get('bill_status_id').value == 49) && last">
                                                 <div class="create-support m-t-10">
                                                     <div><b>Create Support Ticket</b></div>
                                                     <div>Click below link to create new ticket</div>
@@ -186,11 +186,11 @@
                                                 <button class="outline-success" mat-stroked-button
                                                     (click)="submitLateRes(late, lateindex)">Save</button>
                                             </div>
-                                            <div fxFlex="100 p-t-10" *ngIf="last && !late.get('showStatus').value">
-                                                <button type="button" mat-raised-button class="filled-gray m-t-10"
+                                            <div fxFlex="100" *ngIf="last && !late.get('showStatus').value">
+                                                <button type="button" mat-raised-button class="filled-gray"
                                                     (click)="copyedit(late ,lateindex)">Copy
                                                     & Edit Response</button>
-                                                <button type="button" mat-raised-button class="filled-gray m-l-10 m-t-10"
+                                                <button type="button" mat-raised-button class="filled-gray m-l-10"
                                                     (click)="addlateRes()">Add Response</button>    
                                             </div>
                                         </div>

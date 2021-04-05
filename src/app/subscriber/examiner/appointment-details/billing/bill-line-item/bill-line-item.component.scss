@@ -27,6 +27,11 @@
         }
     }
 }
+.bill-item.sbr_ {
+    .sbr-billitem {
+        min-height: auto !important;
+    }
+}
 
 th {
     position: sticky !important;
@@ -55,7 +60,6 @@ th {
                 padding: 10px;
             }
         }
-        
     }
     table.supporting-docs {
         th {
@@ -70,7 +74,7 @@ th {
         }
         tr {
             td {
-             padding: 10px !important;  
+                padding: 10px !important;
             }
             td.action {
                 text-align: center;
