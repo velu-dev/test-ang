@@ -58,6 +58,14 @@ th {
             .reason-for-request {
                 margin-top: 15px;
                 padding: 10px;
+                .checkbox {
+                    background-color: $white;
+                    padding: 10px;
+                    margin-bottom: 10px;
+                    width: max-content;
+                    display: block;
+                    float: left;
+                  }
             }
         }
     }

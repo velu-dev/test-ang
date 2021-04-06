@@ -603,6 +603,12 @@
                                     <tr class="reason" *ngIf="group.get('reviewShow').value">
                                         <td colspan="10" [formGroupName]="i">
                                             <div fxLayout="row wrap" class="reason-for-request">
+                                                <div fxFlex="100">
+                                                    <div class="checkbox">
+                                                        <mat-checkbox class="p-l-10" labelposition="after">Same as
+                                                            previous line item</mat-checkbox>
+                                                    </div>
+                                                </div>
                                                 <div fxFlex="50">
                                                     <div fxLayout="row wrap" fxFlex="100">
                                                         <div fxFlex="100">Reason for Requesting Second Bill Review and
@@ -701,7 +707,8 @@
                                 </div>
                             </div>
                             <div fxFlex="100" class="p-t-20 text-center">
-                                <button mat-stroked-button type="button" class="outline-danger" (click)="getBillLineItem()">Cancel</button>
+                                <button mat-stroked-button type="button" class="outline-danger"
+                                    (click)="getBillLineItem()">Cancel</button>
                                 <button mat-stroked-button class="outline-success text-center m-l-10"
                                     (click)="saveReview(getFormControls.controls,userTable)">Save</button>
                             </div>
