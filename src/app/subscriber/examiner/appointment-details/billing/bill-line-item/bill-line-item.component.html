@@ -467,7 +467,7 @@
                             </thead>
                             <tbody>
                                 <ng-container formArrayName="tableRows"
-                                    *ngFor="let group of getFormControls.controls ; let i=index; let last=last">
+                                    *ngFor="let group of getFormControls.controls ; let i=index;let first=first; let last=last">
                                     <tr *ngIf="group.get('isEditable').value" [formGroupName]="i"
                                         (click)="rowSelected(group)">
                                         <td>
@@ -605,7 +605,7 @@
                                             <div fxLayout="row wrap" class="reason-for-request">
                                                 <div fxFlex="100">
                                                     <div class="checkbox">
-                                                        <mat-checkbox class="p-l-10" labelposition="after">Same as
+                                                        <mat-checkbox *ngIf="!first" (change)="BillLineSame(group,i, $event)" class="p-l-10" labelposition="after">Same as
                                                             previous line item</mat-checkbox>
                                                     </div>
                                                 </div>

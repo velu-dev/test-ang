@@ -815,4 +815,22 @@ export class BillLineItemComponent implements OnInit {
 
   }
 
+  BillLineSame(group, index, event) {
+    if (event.checked) {
+      let formData = {
+        bill_request_reason: this.getFormControls.controls[index - 1].value.bill_request_reason,
+        billed_service_authorized: this.getFormControls.controls[index - 1].value.billed_service_authorized,
+        support_documents_attached: this.getFormControls.controls[index - 1].value.support_documents_attached
+      }
+      group.patchValue(formData)
+    } else {
+      let formData = {
+        bill_request_reason: '',
+        billed_service_authorized: false,
+        support_documents_attached: false
+      }
+      group.patchValue(formData)
+    }
+  }
+
 }
