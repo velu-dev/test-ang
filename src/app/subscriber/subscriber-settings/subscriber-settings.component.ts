@@ -34,6 +34,9 @@ interface PaymentHistroy {
   name?: string;
   pages: any;
   charges: any;
+  claimant_id: "",
+  claim_id: "",
+  billable_item_id: "",
   request_reference_id?: number;
   lines?: any;
   extra_units_charged?: any;
@@ -121,6 +124,9 @@ export class SubscriberSettingsComponent implements OnInit {
       name: name,
       pages: node.pages,
       charges: node.charges,
+      claimant_id: node.claimant_id,
+      claim_id: node.claim_id,
+      billable_item_id: node.billable_item_id,
       level: level,
     };
   }
@@ -604,7 +610,42 @@ export class SubscriberSettingsComponent implements OnInit {
     }
   }
 
+  openData(node) {
+    let nodeType = this.getParent(node).name;
+    let tail_name = "";
+    if (nodeType == "Record Review") {
+      tail_name = "records";
+    } else if (nodeType == "Transcription and Compilation") {
+      tail_name = "reports";
+    } else if (nodeType == "Correspondance") {
+      tail_name = "correspondence";
+    } else if (nodeType == "Billing") {
+      tail_name = "billing";
+    } else if (nodeType == "History") {
+      tail_name = "history";
+    }
+    if (node.level == 3) {
+      this.router.navigate(['subscriber/claimants/claimant/' + node.claimant_id + '/claim/' + node.claim_id + '/billable-item/' + node.billable_item_id + "/" + tail_name])
+    }
+  }
+  getParent(node) {
+    const { treeControl } = this;
+    const currentLevel = treeControl.getLevel(node);
 
+    if (currentLevel < 1) {
+      return null;
+    }
+
+    const startIndex = treeControl.dataNodes.indexOf(node) - 1;
+
+    for (let i = startIndex; i >= 0; i--) {
+      const currentNode = treeControl.dataNodes[i];
+
+      if (treeControl.getLevel(currentNode) < currentLevel) {
+        return currentNode;
+      }
+    }
+  }
   userformSubmit() {
     if (this.user.role_id == 2) {
       console.log(this.user)

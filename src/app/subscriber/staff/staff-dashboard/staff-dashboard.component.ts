@@ -39,6 +39,7 @@ export class StaffDashboardComponent implements OnInit {
   selectedTile = "";
   totalCount: any = {};
   criticalCount: any = {};
+  allData = [];
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   constructor(public router: Router, private breakpointObserver: BreakpointObserver, private subscriberService: SubscriberService, private intercom: IntercomService, private cookieService: CookieService) {
@@ -55,6 +56,7 @@ export class StaffDashboardComponent implements OnInit {
       })
       this.dashboardData = res.data.splited_record;
       this.selectedTile = status;
+      this.allData = res.data.all_record;
       this.dataSource = new MatTableDataSource(res.data.all_record);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -99,16 +101,19 @@ export class StaffDashboardComponent implements OnInit {
     }
   }
   getDashboardData(status?) {
-    this.selectedTile = status;
-
-    console.log(this.dashboardData)
-    let filteredData = [];
-    let test = this.dashboardData.map(res => {
-      if (res.type == status) {
-        filteredData = res.data;
-        return true
-      }
-    })
+    var filteredData = [];
+    if (this.selectedTile == status) {
+      this.selectedTile = "";
+      filteredData = this.allData;
+    } else {
+      this.selectedTile = status;
+      this.dashboardData.map(res => {
+        if (res.type == status) {
+          filteredData = res.data;
+          return true
+        }
+      })
+    }
     this.dataSource = new MatTableDataSource(filteredData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

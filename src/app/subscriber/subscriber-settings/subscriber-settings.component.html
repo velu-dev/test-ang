@@ -817,7 +817,7 @@
                                             <span>&nbsp;{{node.pages}}</span>
                                             <span><b> {{node.charges ? ("$"+ (node.charges | number : '1.2-2')) :
                                                     "$0.00"}}</b></span> -->
-                                            <div class="property"><b>{{node.name}}</b></div>
+                                            <div class="property" (click)="openData(node)"><b>{{node.name}}</b></div>
                                             <div class="items hide-mobile">
                                                 <p>&nbsp;</p>
                                             </div>

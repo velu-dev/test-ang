@@ -271,7 +271,6 @@ export class NewBillableItemComponent implements OnInit {
   }
   changeDateType(date) {
     if (date) {
-      console.log(date.toString())
       let timezone = moment.tz.guess();
       return this.appointment_scheduled_date_time = moment(date.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
     } else {
@@ -383,7 +382,7 @@ export class NewBillableItemComponent implements OnInit {
     if (type = 'intake') {
       let date = moment();
       this.minDate = date.subtract(1, 'year');
-      this.todayDate.intake = new Date();
+      let ddate = date.add(1, 'minute');
       this.todayDate.intake = new Date();
     } else {
       this.todayDate.appointment = new Date();
