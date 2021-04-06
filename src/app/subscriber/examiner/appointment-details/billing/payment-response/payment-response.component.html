@@ -54,66 +54,66 @@
                                             <div fxFlex="100">
                                                 <div class="grid-list">
                                                     <div>Response Type</div>
-                                                    <div>{{review.get('response_type').value}} {{review.get('other_type_reason').value ? '- ' + review.get('other_type_reason').value : '' }}</div>
+                                                    <div class="value">{{review.get('response_type').value}} {{review.get('other_type_reason').value ? '- ' + review.get('other_type_reason').value : '' }}</div>
                                                 </div>
                                             </div>
                                             <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100" class="expand-details"
                                                 [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
                                                 <div class="grid-list">
                                                     <div>Explanation of Review</div>
-                                                    <div><a class="text-ternary"
+                                                    <div class="value"><a class="text-ternary"
                                                             (click)="download(review.get('file_url').value)">{{review.get('file_name').value}}</a>
                                                     </div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Post Date</div>
-                                                    <div>{{review.get('post_date').value | date:'MM-dd-yyyy'}}</div>
+                                                    <div class="value">{{review.get('post_date').value | date:'MM-dd-yyyy'}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Effective Date</div>
-                                                    <div>{{review.get('effective_date').value | date:'MM-dd-yyyy'}}
+                                                    <div class="value">{{review.get('effective_date').value | date:'MM-dd-yyyy'}}
                                                     </div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Deposit Date</div>
-                                                    <div>{{review.get('deposit_date').value | date:'MM-dd-yyyy'}}</div>
+                                                    <div class="value">{{review.get('deposit_date').value | date:'MM-dd-yyyy'}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Created By</div>
-                                                    <div>{{review.get('created_by_first_name').value}}
+                                                    <div class="value">{{review.get('created_by_first_name').value}}
                                                         {{review.get('created_by_last_name').value}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Created On</div>
-                                                    <div>{{review.get('createdAt').value | date:'MM-dd-yyyy'}}</div>
+                                                    <div class="value">{{review.get('createdAt').value | date:'MM-dd-yyyy'}}</div>
                                                 </div>
                                             </div>
                                             <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100" class="expand-details"
                                                 [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
                                                 <div class="grid-list">
                                                     <div>Payment Amount</div>
-                                                    <div>{{review.get('payment_amount').value ? '$ ' : ''}}{{review.get('payment_amount').value | number : '1.2-2'}}</div>
+                                                    <div class="value">{{review.get('payment_amount').value ? '$ ' : ''}}{{review.get('payment_amount').value | number : '1.2-2'}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Payment Method</div>
-                                                    <div>{{review.get('payment_method').value}}</div>
+                                                    <div class="value">{{review.get('payment_method').value}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Penalty Charged</div>
-                                                    <div>{{review.get('penalty_charged').value ? '$ ' : ''}}{{review.get('penalty_charged').value | number : '1.2-2'}}</div>
+                                                    <div class="value">{{review.get('penalty_charged').value ? '$ ' : ''}}{{review.get('penalty_charged').value | number : '1.2-2'}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Penalty Paid</div>
-                                                    <div>{{review.get('penalty_paid').value ? '$ ' : ''}}{{review.get('penalty_paid').value | number : '1.2-2'}}</div>
+                                                    <div class="value">{{review.get('penalty_paid').value ? '$ ' : ''}}{{review.get('penalty_paid').value | number : '1.2-2'}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Updated By</div>
-                                                    <div>{{review.get('updated_by_first_name').value}}
+                                                    <div class="value">{{review.get('updated_by_first_name').value}}
                                                         {{review.get('updated_by_last_name').value}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Updated On</div>
-                                                    <div *ngIf="review.get('updated_by_first_name').value">
+                                                    <div class="value" *ngIf="review.get('updated_by_first_name').value">
                                                         {{review.get('updatedAt').value | date:'MM-dd-yyyy'}}</div>
                                                 </div>
                                             </div>
@@ -121,15 +121,15 @@
                                                 [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
                                                 <div class="grid-list">
                                                     <div>Reference Number</div>
-                                                    <div>{{review.get('reference_no').value}}</div>
+                                                    <div class="value">{{review.get('reference_no').value}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Interest Charged</div>
-                                                    <div>{{review.get('interest_charged').value ? '$ ' : ''}}{{review.get('interest_charged').value | number : '1.2-2'}}</div>
+                                                    <div class="value">{{review.get('interest_charged').value ? '$ ' : ''}}{{review.get('interest_charged').value | number : '1.2-2'}}</div>
                                                 </div>
                                                 <div class="grid-list">
                                                     <div>Interest Paid</div>
-                                                    <div>{{review.get('interest_paid').value ? '$ ' : ''}}{{review.get('interest_paid').value | number : '1.2-2'}}</div>
+                                                    <div class="value">{{review.get('interest_paid').value ? '$ ' : ''}}{{review.get('interest_paid').value | number : '1.2-2'}}</div>
                                                 </div>
                                                 <!-- <div class="grid-list">
                                                     <div>Status</div>
@@ -137,7 +137,7 @@
                                                 </div> -->
                                                 <div class="grid-list">
                                                     <div>Void Reason</div>
-                                                    <div>{{review.get('void_type').value}} -
+                                                    <div class="value">{{review.get('void_type').value}} -
                                                         {{review.get('void_reason').value}}</div>
                                                 </div>
                                             </div>
