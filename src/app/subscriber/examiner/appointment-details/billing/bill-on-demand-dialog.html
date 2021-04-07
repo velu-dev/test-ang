@@ -24,10 +24,9 @@
                         [checked]="selection1.hasValue() && isAllSelected1()"
                         [indeterminate]="selection1.hasValue() && !isAllSelected1()" [aria-label]="checkboxLabel1()">
                     </mat-checkbox>
-                    <mat-checkbox  *ngIf="data.billType == 2" disabled [checked]="selection1.hasValue() && isAllSelected1()"
-                    [indeterminate]="selection1.hasValue() && !isAllSelected1()" [aria-label]="checkboxLabel1()">
+                    <mat-checkbox  *ngIf="data.billType == 2" disabled [checked]="true">
                 </mat-checkbox>
-                    <mat-icon [matMenuTriggerFor]="recipients" id="dropdown-list">arrow_drop_down</mat-icon>
+                    <mat-icon *ngIf="data.billType != 2" [matMenuTriggerFor]="recipients" id="dropdown-list">arrow_drop_down</mat-icon>
                     <mat-menu #recipients="matMenu">
                         <button mat-menu-item (click)="allOrNone1(true)">
                             <span>All</span>
@@ -42,7 +41,7 @@
                         [checked]="selection1.isSelected(row)" [aria-label]="data.billType != 2 ? checkboxLabel1(row) : ''">
                     </mat-checkbox>
 
-                    <mat-checkbox *ngIf="data.billType == 2"  disabled [checked]="selection1.isSelected(row)">
+                    <mat-checkbox *ngIf="data.billType == 2" disabled [checked]="true">
                 </mat-checkbox>
                 </td>
             </ng-container>
