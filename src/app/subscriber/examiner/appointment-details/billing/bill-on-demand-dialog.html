@@ -20,10 +20,13 @@
             <!-- Checkbox Column -->
             <ng-container matColumnDef="select">
                 <th mat-header-cell *matHeaderCellDef>
-                    <mat-checkbox (change)="$event ? masterToggle1() : null"
+                    <mat-checkbox *ngIf="data.billType != 2" (change)="$event ? masterToggle1() : null"
                         [checked]="selection1.hasValue() && isAllSelected1()"
                         [indeterminate]="selection1.hasValue() && !isAllSelected1()" [aria-label]="checkboxLabel1()">
                     </mat-checkbox>
+                    <mat-checkbox  *ngIf="data.billType == 2" disabled [checked]="selection1.hasValue() && isAllSelected1()"
+                    [indeterminate]="selection1.hasValue() && !isAllSelected1()" [aria-label]="checkboxLabel1()">
+                </mat-checkbox>
                     <mat-icon [matMenuTriggerFor]="recipients" id="dropdown-list">arrow_drop_down</mat-icon>
                     <mat-menu #recipients="matMenu">
                         <button mat-menu-item (click)="allOrNone1(true)">
@@ -35,16 +38,19 @@
                     </mat-menu>
                 </th>
                 <td mat-cell *matCellDef="let row" class="width-fixed">
-                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection1.toggle(row) : null"
-                        [checked]="selection1.isSelected(row)" [aria-label]="checkboxLabel1(row)">
+                    <mat-checkbox *ngIf="data.billType != 2" (click)="$event.stopPropagation()" (change)="$event ? selection1.toggle(row) : null"
+                        [checked]="selection1.isSelected(row)" [aria-label]="data.billType != 2 ? checkboxLabel1(row) : ''">
                     </mat-checkbox>
+
+                    <mat-checkbox *ngIf="data.billType == 2"  disabled [checked]="selection1.isSelected(row)">
+                </mat-checkbox>
                 </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="recipient_type">
                 <th mat-header-cell *matHeaderCellDef>
-                    <button mat-stroked-button class="outline-success white-btn float-right m-t-5  m-b-5"
+                    <button *ngIf="data.billType != 2" mat-stroked-button class="outline-success white-btn float-right m-t-5  m-b-5"
                         (click)="openCustomRecipient()">
                         <i class="fa fa-user-plus p-r-10"></i> Add Custom Recipient
                     </button></th>

@@ -213,6 +213,7 @@ export const api_endpoint = {
     postLateRes: 'billing/add-late-response/',
     getLateRes: 'billing/late-response/',
     lateResStatus: 'billing/late-response-bill-status/',
+    secondBillDemand: 'service-requests/second-bill-ondemand/create',
 
 
     //Calendar 

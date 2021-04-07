@@ -334,6 +334,7 @@ export class billingOnDemandDialog {
     private alertService: AlertService) {
     dialogRef.disableClose = true;
     this.states = data.states
+    console.log(data.billType)
     this.getBillRecipient();
   }
 
@@ -423,13 +424,18 @@ export class billingOnDemandDialog {
   getBillRecipient() {
     this.billingService.getBillRecipient(this.data.claimId, this.data.billableId).subscribe(rec => {
       this.recipientsData = rec.data;
+      let secondRecData = []
       this.selection1.clear()
       rec.data.map(doc => {
         if (doc.recipient_type && doc.recipient_type == 'Insurance Company') {
+          if (this.data.billType == 2) { //Bill stype Second
+            secondRecData.push(doc);
+          }
           this.selection1.select(doc);
         }
       })
-      this.recipients = new MatTableDataSource(rec.data);
+      let tableData = this.data.billType == 2 ? secondRecData : this.recipientsData;
+      this.recipients = new MatTableDataSource(tableData);
     })
   }
 
@@ -517,72 +523,23 @@ export class billingOnDemandDialog {
               });
               dialogRef.afterClosed().subscribe(result => {
                 if (result.data) {
-                  this.billingService.onDemandBilling(data).subscribe(bill => {
-                    this.data.on_demand_progress_status = 'In Progress';
-                    this.data.last_bill_on_demand_request_date = new Date();
-                    if (bill.data.exam_report_signed_file_url) {
-                      recipientsDocuments_ids = [];
-                      this.selection1.clear();
-                      this.recipientsData.map(doc => {
-                        if (doc.recipient_type && doc.recipient_type == 'Insurance Company') {
-                          this.selection1.select(doc);
-                        }
-                      })
-                      this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
-                    }
-                    if (bill.data.bill_on_demand_signed_zip_file_url) {
-                      this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
-                    }
-                    if (bill.data.dtm_file_url) {
-                      this.download({ exam_report_file_url: bill.data.dtm_file_url, file_name: bill.data.dtm_file_name })
-                    }
-                    this.onDemandStatus = true;
-                    this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
-                  }, error => {
-                    if (typeof (error.error.message) == 'object') {
-                      let timezone = moment.tz.guess();
-                      let date = moment(error.error.message.requested_on.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
-                      this.alertService.openSnackBar(error.error.message.message + ' ' + date, 'error');
-                      return;
-                    }
-                    this.alertService.openSnackBar(error.error.message, 'error');
-                  })
+                  if (this.data.billType == 1) {
+                    this.firstBillOnDemand(data);
+                  } else if (this.data.billType == 2) {
+                    this.secondBillOnDemand(data);
+                  }
+
                 } else {
                   return;
                 }
               })
             } else {
-              this.billingService.onDemandBilling(data).subscribe(bill => {
-                this.data.on_demand_progress_status = 'In Progress';
-                this.data.last_bill_on_demand_request_date = new Date();
-                if (bill.data.exam_report_signed_file_url) {
-                  recipientsDocuments_ids = [];
-                  this.selection1.clear();
-                  this.recipientsData.map(doc => {
-                    if (doc.recipient_type && doc.recipient_type == 'Insurance Company') {
-                      this.selection1.select(doc);
-                    }
-                  })
-                  this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
-                }
-                if (bill.data.bill_on_demand_signed_zip_file_url) {
-                  this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
+              if (this.data.billType == 1) {
+                this.firstBillOnDemand(data);
+              } else if (this.data.billType == 2) {
+                this.secondBillOnDemand(data);
+              }
 
-                }
-                if (bill.data.dtm_file_url) {
-                  this.download({ exam_report_file_url: bill.data.dtm_file_url, file_name: bill.data.dtm_file_name })
-                }
-                this.onDemandStatus = true;
-                this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
-              }, error => {
-                if (typeof (error.error.message) == 'object') {
-                  let timezone = moment.tz.guess();
-                  let date = moment(error.error.message.requested_on.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
-                  this.alertService.openSnackBar(error.error.message.message + ' ' + date, 'error');
-                  return;
-                }
-                this.alertService.openSnackBar(error.error.message, 'error');
-              })
             }
           }
         })
@@ -596,73 +553,23 @@ export class billingOnDemandDialog {
         });
         dialogRef.afterClosed().subscribe(result => {
           if (result.data) {
-            this.billingService.onDemandBilling(data).subscribe(bill => {
-              this.data.on_demand_progress_status = 'In Progress';
-              this.data.last_bill_on_demand_request_date = new Date();
-              if (bill.data.exam_report_signed_file_url) {
-                recipientsDocuments_ids = [];
-                this.selection1.clear();
-                this.recipientsData.map(doc => {
-                  if (doc.recipient_type && doc.recipient_type == 'Insurance Company') {
-                    this.selection1.select(doc);
-                  }
-                })
-                this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
-              }
-              if (bill.data.bill_on_demand_signed_zip_file_url) {
-                this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
-              }
-              if (bill.data.dtm_file_url) {
-                this.download({ exam_report_file_url: bill.data.dtm_file_url, file_name: bill.data.dtm_file_name })
-              }
-              this.onDemandStatus = true;
-              this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
-            }, error => {
-              if (typeof (error.error.message) == 'object') {
-                let timezone = moment.tz.guess();
-                let date = moment(error.error.message.requested_on.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
-                this.alertService.openSnackBar(error.error.message.message + ' ' + date, 'error');
-                return;
-              }
-              this.alertService.openSnackBar(error.error.message, 'error');
-            })
+            if (this.data.billType == 1) {
+              this.firstBillOnDemand(data);
+            } else if (this.data.billType == 2) {
+              this.secondBillOnDemand(data);
+            }
+
           } else {
             return;
           }
         })
       } else {
-        this.billingService.onDemandBilling(data).subscribe(bill => {
-          if (bill.data.exam_report_signed_file_url) {
-            recipientsDocuments_ids = [];
-            this.selection1.clear();
-            this.recipientsData.map(doc => {
-              if (doc.recipient_type && doc.recipient_type == 'Insurance Company') {
-                this.selection1.select(doc);
-              }
-            })
-            this.data.on_demand_progress_status = 'In Progress';
-            this.data.last_bill_on_demand_request_date = new Date();
-            this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
-          }
-          if (bill.data.bill_on_demand_signed_zip_file_url) {
-            this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
+        if (this.data.billType == 1) {
+          this.firstBillOnDemand(data);
+        } else if (this.data.billType == 2) {
+          this.secondBillOnDemand(data);
+        }
 
-          }
-
-          if (bill.data.dtm_file_url) {
-            this.download({ exam_report_file_url: bill.data.dtm_file_url, file_name: bill.data.dtm_file_name })
-          }
-          this.onDemandStatus = true;
-          this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
-        }, error => {
-          if (typeof (error.error.message) == 'object') {
-            let timezone = moment.tz.guess();
-            let date = moment(error.error.message.requested_on.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
-            this.alertService.openSnackBar(error.error.message.message + ' ' + date, 'error');
-            return;
-          }
-          this.alertService.openSnackBar(error.error.message, 'error');
-        })
       }
     }, error => {
       const dialogRef = this.dialog.open(BillingAlertComponent, {
@@ -675,6 +582,74 @@ export class billingOnDemandDialog {
     })
   }
 
+  firstBillOnDemand(data) {
+    this.billingService.onDemandBilling(data).subscribe(bill => {
+      if (bill.data.exam_report_signed_file_url) {
+        this.selection1.clear();
+        this.recipientsData.map(doc => {
+          if (doc.recipient_type && doc.recipient_type == 'Insurance Company') {
+            this.selection1.select(doc);
+          }
+        })
+        this.data.on_demand_progress_status = 'In Progress';
+        this.data.last_bill_on_demand_request_date = new Date();
+        this.download({ exam_report_file_url: bill.data.exam_report_signed_file_url, file_name: bill.data.exam_report_csv_file_name })
+      }
+      if (bill.data.bill_on_demand_signed_zip_file_url) {
+        this.download({ exam_report_file_url: bill.data.bill_on_demand_signed_zip_file_url, file_name: bill.data.bill_on_demand_zip_file_name })
+
+      }
+
+      if (bill.data.dtm_file_url) {
+        this.download({ exam_report_file_url: bill.data.dtm_file_url, file_name: bill.data.dtm_file_name })
+      }
+      this.onDemandStatus = true;
+      this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
+    }, error => {
+      if (typeof (error.error.message) == 'object') {
+        let timezone = moment.tz.guess();
+        let date = moment(error.error.message.requested_on.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
+        this.alertService.openSnackBar(error.error.message.message + ' ' + date, 'error');
+        return;
+      }
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
+  }
+
+  secondBillOnDemand(data) {
+    this.billingService.secondBillOnDemand(data).subscribe(secondbill => {
+
+      if (secondbill.data.exam_report_signed_file_url) {
+        this.selection1.clear();
+        this.recipientsData.map(doc => {
+          if (doc.recipient_type && doc.recipient_type == 'Insurance Company') {
+            this.selection1.select(doc);
+          }
+        })
+        this.data.on_demand_progress_status = 'In Progress';
+        this.data.last_bill_on_demand_request_date = new Date();
+        this.download({ exam_report_file_url: secondbill.data.exam_report_signed_file_url, file_name: secondbill.data.exam_report_csv_file_name })
+      }
+      if (secondbill.data.bill_on_demand_signed_zip_file_url) {
+        this.download({ exam_report_file_url: secondbill.data.bill_on_demand_signed_zip_file_url, file_name: secondbill.data.bill_on_demand_zip_file_name })
+
+      }
+
+      if (secondbill.data.dtm_file_url) {
+        this.download({ exam_report_file_url: secondbill.data.dtm_file_url, file_name: secondbill.data.dtm_file_name })
+      }
+      this.onDemandStatus = true;
+      this.alertService.openSnackBar("Billing On Demand created successfully", 'success');
+    }, error => {
+      if (typeof (error.error.message) == 'object') {
+        let timezone = moment.tz.guess();
+        let date = moment(error.error.message.requested_on.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
+        this.alertService.openSnackBar(error.error.message.message + ' ' + date, 'error');
+        return;
+      }
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
+  }
   typeIfRecipient = "";
   openAddAddress(element): void {
     this.typeIfRecipient = element.recipient_type;

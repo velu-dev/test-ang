@@ -172,4 +172,8 @@ export class BillingService {
     return this.http.get(environment.baseUrl + api_endpoint.lateResStatus + claim + '/' + billable + '/' + billId + '/' + type)
   }
 
+  secondBillOnDemand(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.secondBillDemand, data)
+  }
+
 }

@@ -33,14 +33,14 @@
                     </mat-card>
                 </mat-tab>
                 <mat-tab label="Late response">
-                    <app-late-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [billType]="tabIndex" [isMobile]="isMobile">
+                    <app-late-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [billType]="tabIndex + 1" [isMobile]="isMobile">
                     </app-late-response>
                 </mat-tab>
             </mat-tab-group>
         </mat-card>
 
         <!-- Subbmission -->
-        <app-submission *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [states]="states">
+        <app-submission *ngIf="billingData"  [billType]="tabIndex + 1" [paramsId]="paramsId" [billingData]="billingData" [states]="states">
         </app-submission>
         <!-- ===== Billing Documents ==== -->
         <div class="completed-documents m-t-30">
@@ -71,14 +71,14 @@
                     </mat-card>
                 </mat-tab>
                 <mat-tab label="Late response">
-                    <app-late-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [billType]="tabIndex" [isMobile]="isMobile">
+                    <app-late-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [billType]="tabIndex + 1" [isMobile]="isMobile">
                     </app-late-response>
                 </mat-tab>
             </mat-tab-group>
         </mat-card>
 
         <!-- ===== Examination Submission Documents ==== -->
-        <app-submission *ngIf="billingData" [review]="'Second'" [paramsId]="paramsId" [billingData]="billingData"
+        <app-submission *ngIf="billingData" [review]="'Second'"  [billType]="tabIndex + 1" [paramsId]="paramsId" [billingData]="billingData"
             [states]="states">
         </app-submission>
 
