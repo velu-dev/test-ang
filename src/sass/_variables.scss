@@ -1882,9 +1882,11 @@ input:-webkit-autofill {
   }
   .node3 {
     font-size: $font-size-3;
-    // div.property {
-    //   text-decoration: underline;
-    // }
+    div.property {
+      text-decoration: underline;
+      color: $ternary;
+      cursor: pointer;
+    }
     div.items {
       p {
         margin-right: 5px;
