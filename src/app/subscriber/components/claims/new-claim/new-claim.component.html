@@ -57,7 +57,11 @@
                             <div fxFlex="100" class="m-b-20">
                                 <div fxLayout="row wrap" class="w-100">
                                     <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="50">
-                                        <div class="content-wrapper-main-title p-t-10 m-b-10 p-l-10"> Claimant<span class="custom-info" (click)="openPopup(regulation?.regulationsForClaimantIntake?.title, regulation?.regulationsForClaimantIntake?.codes)"><i class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
+                                        <div class="content-wrapper-main-title p-t-10 m-b-10 p-l-10"> Claimant<span
+                                                class="custom-info"
+                                                (click)="openPopup(regulation?.regulationsForClaimantIntake?.title, regulation?.regulationsForClaimantIntake?.codes)"><i
+                                                    class="material-icons-outlined">info</i><sup>Regulations</sup></span>
+                                        </div>
                                     </div>
                                     <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="50" class="reference_no">
                                         <div class="content-wrapper-main-title p-t-10 m-b-10 text-center"
@@ -202,7 +206,8 @@
 
                                 <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
                                     <mat-label>Ext</mat-label>
-                                    <input matInput type="text" placeholder="Ext" autocomplete="off" (keypress)="numberOnly($event)" formControlName="phone_ext1">
+                                    <input matInput type="text" placeholder="Ext" autocomplete="off" (keypress)="numberOnly($event)"
+                                        formControlName="phone_ext1">
                                     <mat-error>Please enter valid Extension</mat-error>
                                 </mat-form-field>
                             </div>
@@ -219,7 +224,8 @@
 
                                 <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
                                     <mat-label>Ext</mat-label>
-                                    <input matInput type="text" placeholder="Ext" autocomplete="off" (keypress)="numberOnly($event)" formControlName="phone_ext2">
+                                    <input matInput type="text" placeholder="Ext" autocomplete="off"
+                                        (keypress)="numberOnly($event)" formControlName="phone_ext2">
                                     <mat-error>Please enter valid Extension</mat-error>
                                 </mat-form-field>
                             </div>
@@ -248,7 +254,9 @@
                                         {{address?.zipcode}}
                                     </mat-option>
                                 </mat-autocomplete>
-                                <mat-hint *ngIf="isAddressError"><i class="fas fa-info-circle"></i> The address autocomplete service is temporarily unavailable. Our team is working to fix it.</mat-hint>
+                                <mat-hint *ngIf="isAddressError"><i class="fas fa-info-circle"></i> The address
+                                    autocomplete service is temporarily unavailable. Our team is working to fix it.
+                                </mat-hint>
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.lg="50"
@@ -346,7 +354,8 @@
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
                                     <mat-label>Ext</mat-label>
-                                    <input matInput type="text" placeholder="Ext" autocomplete="off" (keypress)="numberOnly($event)" formControlName="phone_ext1">
+                                    <input matInput type="text" placeholder="Ext" autocomplete="off"
+                                        (keypress)="numberOnly($event)" formControlName="phone_ext1">
                                     <mat-error>Please enter valid Extension</mat-error>
                                 </mat-form-field>
                             </div>
@@ -641,7 +650,8 @@
 
                                 <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
                                     <mat-label>Ext</mat-label>
-                                    <input matInput type="text" placeholder="Ext" autocomplete="off" (keypress)="numberOnly($event)" formControlName="phone_ext">
+                                    <input matInput type="text" placeholder="Ext" autocomplete="off"
+                                        (keypress)="numberOnly($event)" formControlName="phone_ext">
                                     <mat-error>Please enter valid Extension</mat-error>
                                 </mat-form-field>
                             </div>
@@ -771,7 +781,8 @@
 
                                 <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
                                     <mat-label>Ext</mat-label>
-                                    <input matInput type="text" placeholder="Ext" autocomplete="off" (keypress)="numberOnly($event)" formControlName="phone_ext">
+                                    <input matInput type="text" placeholder="Ext" autocomplete="off"
+                                        (keypress)="numberOnly($event)" formControlName="phone_ext">
                                     <mat-error>Please enter valid Extension</mat-error>
                                 </mat-form-field>
                             </div>
@@ -886,7 +897,8 @@
 
                                 <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
                                     <mat-label>Ext</mat-label>
-                                    <input matInput type="text" placeholder="Ext" autocomplete="off" (keypress)="numberOnly($event)" formControlName="phone_ext">
+                                    <input matInput type="text" placeholder="Ext" autocomplete="off"
+                                        (keypress)="numberOnly($event)" formControlName="phone_ext">
                                     <mat-error>Please enter valid Extension</mat-error>
                                 </mat-form-field>
 
@@ -1001,7 +1013,8 @@
 
                                 <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
                                     <mat-label>Ext</mat-label>
-                                    <input matInput type="text" placeholder="Ext" autocomplete="off" (keypress)="numberOnly($event)" formControlName="phone_ext">
+                                    <input matInput type="text" placeholder="Ext" autocomplete="off"
+                                        (keypress)="numberOnly($event)" formControlName="phone_ext">
                                     <mat-error>Please enter valid Extension</mat-error>
                                 </mat-form-field>
                             </div>
@@ -1122,7 +1135,8 @@
 
                                 <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
                                     <mat-label>Ext</mat-label>
-                                    <input matInput type="text" placeholder="Ext" autocomplete="off" (keypress)="numberOnly($event)" formControlName="phone_ext">
+                                    <input matInput type="text" placeholder="Ext" autocomplete="off"
+                                        (keypress)="numberOnly($event)" formControlName="phone_ext">
                                     <mat-error>Please enter valid Extension</mat-error>
                                 </mat-form-field>
 
@@ -1199,7 +1213,8 @@
 
                                 <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
                                     <mat-label>Ext</mat-label>
-                                    <input matInput type="text" placeholder="Ext" autocomplete="off" (keypress)="numberOnly($event)" formControlName="phone_ext1">
+                                    <input matInput type="text" placeholder="Ext" autocomplete="off"
+                                        (keypress)="numberOnly($event)" formControlName="phone_ext1">
                                     <mat-error>Please enter valid Extension</mat-error>
                                 </mat-form-field>
 
@@ -1237,7 +1252,10 @@
                 <mat-card>
                     <mat-card-header>
                         <mat-panel-title>
-                            <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Information<span class="custom-info" (click)="isDeposition ? openPopup(regulation?.regulationsForDepositionItemIntake?.title, regulation?.regulationsForDepositionItemIntake?.codes) : openPopup(regulation?.regulationsForBillableItemIntake?.title, regulation?.regulationsForBillableItemIntake?.codes)"><i class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
+                            <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Information<span
+                                    class="custom-info"
+                                    (click)="isDeposition ? openPopup(regulation?.regulationsForDepositionItemIntake?.title, regulation?.regulationsForDepositionItemIntake?.codes) : openPopup(regulation?.regulationsForBillableItemIntake?.title, regulation?.regulationsForBillableItemIntake?.codes)"><i
+                                        class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
                         </mat-panel-title>
                     </mat-card-header>
                     <mat-divider> </mat-divider>
@@ -1375,7 +1393,8 @@
 
                                     <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
                                         <mat-label>Ext</mat-label>
-                                        <input matInput type="text" placeholder="Ext" autocomplete="off" (keypress)="numberOnly($event)" formControlName="phone_ext"> 
+                                        <input matInput type="text" placeholder="Ext" autocomplete="off"
+                                            (keypress)="numberOnly($event)" formControlName="phone_ext">
                                         <mat-error>Please enter valid Extension</mat-error>
                                     </mat-form-field>
 
@@ -1439,7 +1458,8 @@
 
                                     <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
                                         <mat-label>Ext</mat-label>
-                                        <input matInput type="text" placeholder="Ext" autocomplete="off" (keypress)="numberOnly($event)" formControlName="phone_ext">
+                                        <input matInput type="text" placeholder="Ext" autocomplete="off"
+                                            (keypress)="numberOnly($event)" formControlName="phone_ext">
                                         <mat-error>Please enter valid Extension</mat-error>
                                     </mat-form-field>
 

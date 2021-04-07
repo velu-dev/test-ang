@@ -174,10 +174,10 @@ export class NewClaimantComponent implements OnInit {
       certified_interpreter_required: [null],
       ssn: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       phone_no_1: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-      phone_ext1: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+      phone_ext1: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       organization_id: [null],
       phone_no_2: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-      phone_ext2: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+      phone_ext2: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       street1: [null],
       street2: [null],
       salutation: [null, Validators.compose([Validators.maxLength(4)])],
@@ -185,6 +185,20 @@ export class NewClaimantComponent implements OnInit {
       state: [null],
       zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       other_language: [null]
+    })
+    this.claimantForm.get("phone_no_1").valueChanges.subscribe(res => {
+      if (this.claimantForm.get("phone_no_1").value && this.claimantForm.get("phone_no_1").valid) {
+        this.claimantForm.get("phone_ext1").enable();
+      } else {
+        this.claimantForm.get("phone_ext1").disable();
+      }
+    })
+    this.claimantForm.get("phone_no_2").valueChanges.subscribe(res => {
+      if (this.claimantForm.get("phone_no_2").value && this.claimantForm.get("phone_no_2").valid) {
+        this.claimantForm.get("phone_ext2").enable();
+      } else {
+        this.claimantForm.get("phone_ext2").disable();
+      }
     })
     this.claimantForm.get("street1").valueChanges
       .pipe(
@@ -357,6 +371,13 @@ export class NewClaimantComponent implements OnInit {
     this.editStatus = true;
     this.claimantForm.enable();
     this.claimantChanges = false;
+    if (this.claimantForm.get("phone_no_1").value && this.claimantForm.get("phone_no_1").valid) {
+      this.claimantForm.get("phone_ext1").enable();
+      this.claimantForm.get("phone_ext2").enable();
+    } else {
+      this.claimantForm.get("phone_ext1").disable();
+      this.claimantForm.get("phone_ext2").disable();
+    }
     if (!this.claimantForm.value.certified_interpreter_required) {
       this.claimantForm.get('primary_language_spoken').disable();
     } else {
