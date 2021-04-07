@@ -457,15 +457,28 @@ export class NewExaminerUserComponent implements OnInit {
       state: [null],
       zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       phone_no1: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-      phone_ext1: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+      phone_ext1: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       phone_no2: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-      phone_ext2: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+      phone_ext2: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       fax_no: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       email: ["", Validators.compose([Validators.email])],
       contact_person: [""],
       notes: [""],
     })
-
+    this.mailingAddressForm.get("phone_no1").valueChanges.subscribe(res => {
+      if (this.mailingAddressForm.get("phone_no1").value && this.mailingAddressForm.get("phone_no1").valid) {
+        this.mailingAddressForm.get("phone_ext1").enable();
+      } else {
+        this.mailingAddressForm.get("phone_ext1").disable();
+      }
+    })
+    this.mailingAddressForm.get("phone_no2").valueChanges.subscribe(res => {
+      if (this.mailingAddressForm.get("phone_no2").value && this.mailingAddressForm.get("phone_no2").valid) {
+        this.mailingAddressForm.get("phone_ext2").enable();
+      } else {
+        this.mailingAddressForm.get("phone_ext2").disable();
+      }
+    })
     this.billingProviderForm = this.formBuilder.group({
       id: [""],
       first_name: ['', Validators.compose([Validators.maxLength(50)])],
@@ -483,12 +496,19 @@ export class NewExaminerUserComponent implements OnInit {
       state: [null],
       zip_code: ['', Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       phone_no1: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
-      phone_ext1: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+      phone_ext1: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       billing_provider_name: ['', Validators.compose([Validators.maxLength(100)])],
       fax_no: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       file: [''],
       isFileChanged: [false]
 
+    })
+    this.billingProviderForm.get("phone_no1").valueChanges.subscribe(res => {
+      if (this.billingProviderForm.get("phone_no1").value && this.billingProviderForm.get("phone_no1").valid) {
+        this.billingProviderForm.get("phone_ext1").enable();
+      } else {
+        this.billingProviderForm.get("phone_ext1").disable();
+      }
     })
 
     this.renderingForm = this.formBuilder.group({

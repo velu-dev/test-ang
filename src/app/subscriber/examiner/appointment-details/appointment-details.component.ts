@@ -523,7 +523,7 @@ export class AppointmentDetailsComponent implements OnInit {
         is_virtual_location: [false],
         conference_url: [null],
         conference_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+        phone_ext: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       }),
       intake_call: this.formBuilder.group({
         caller_affiliation: [{ value: '', disable: true }],
@@ -533,11 +533,25 @@ export class AppointmentDetailsComponent implements OnInit {
         call_type_detail: [{ value: '', disable: true }],
         notes: [{ value: '', disable: true }],
         caller_phone: [{ value: '', disable: true }, Validators.compose([Validators.pattern('[0-9]+')])],
-        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+        phone_ext: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
         caller_email: [{ value: null, disable: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
         caller_fax: [{ value: '', disable: true }, Validators.compose([Validators.pattern('[0-9]+')])]
       }),
 
+    })
+    this.billable_item.get(["appointment", "conference_phone"]).valueChanges.subscribe(res => {
+      if (this.billable_item.get(["appointment", "conference_phone"]).value && this.billable_item.get(["appointment", "conference_phone"]).valid) {
+        this.billable_item.get(["appointment", "phone_ext"]).enable();
+      } else {
+        this.billable_item.get(["appointment", "phone_ext"]).disable();
+      }
+    })
+    this.billable_item.get(["intake_call", "caller_phone"]).valueChanges.subscribe(res => {
+      if (this.billable_item.get(["intake_call", "caller_phone"]).value && this.billable_item.get(["intake_call", "caller_phone"]).valid) {
+        this.billable_item.get(["intake_call", "phone_ext"]).enable();
+      } else {
+        this.billable_item.get(["intake_call", "phone_ext"]).disable();
+      }
     })
     this.claimService.seedData("supplemental_item_received").subscribe(supp => {
       this.supplementalItems = supp.data;
@@ -566,6 +580,16 @@ export class AppointmentDetailsComponent implements OnInit {
   changeEditStatus() {
     this.examinationStatusForm.enable();
     this.isExaminationStatusEdit = true;
+    if (this.billable_item.get(["appointment", "conference_phone"]).value && this.billable_item.get(["appointment", "conference_phone"]).valid) {
+      this.billable_item.get(["appointment", "phone_ext"]).enable();
+    } else {
+      this.billable_item.get(["appointment", "phone_ext"]).disable();
+    }
+    if (this.billable_item.get(["intake_call", "caller_phone"]).value && this.billable_item.get(["intake_call", "caller_phone"]).valid) {
+      this.billable_item.get(["intake_call", "phone_ext"]).enable();
+    } else {
+      this.billable_item.get(["intake_call", "phone_ext"]).disable();
+    }
   }
   examinationStatusSubmit() {
     if (this.examinationStatusForm.invalid) {

@@ -58,6 +58,13 @@ export class DefenseAttorneyComponent implements OnInit {
       email: [{ value: null, disabled: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
+    this.DefanceAttorney.get('phone')!.valueChanges.subscribe(input => {
+      if (this.DefanceAttorney.get("phone").value && this.DefanceAttorney.get("phone").valid) {
+        this.DefanceAttorney.get("phone_ext").enable();
+      } else {
+        this.DefanceAttorney.get("phone_ext").disable();
+      }
+    })
     this.DefanceAttorney.get('company_name')!.valueChanges.subscribe(input => {
       if (this.DefanceAttorney.get('company_name').errors) {
         return
@@ -125,6 +132,11 @@ export class DefenseAttorneyComponent implements OnInit {
   editDA() {
     this.daEdit = true;
     this.DefanceAttorney.enable();
+    if (this.DefanceAttorney.get("phone").value && this.DefanceAttorney.get("phone").valid) {
+      this.DefanceAttorney.get("phone_ext").enable();
+    } else {
+      this.DefanceAttorney.get("phone_ext").disable();
+    }
   }
   updateDAttorney() {
     Object.keys(this.DefanceAttorney.controls).forEach((key) => {

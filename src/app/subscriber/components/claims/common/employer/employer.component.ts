@@ -33,6 +33,13 @@ export class EmployerComponent implements OnInit {
       email: [{ value: null, disabled: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
+    this.employer.get('phone')!.valueChanges.subscribe(input => {
+      if (this.employer.get("phone").value && this.employer.get("phone").valid) {
+        this.employer.get("phone_ext").enable();
+      } else {
+        this.employer.get("phone_ext").disable();
+      }
+    })
   }
   ngOnInit() {
     if (this.fromPop) {
@@ -84,6 +91,11 @@ export class EmployerComponent implements OnInit {
   editEmployer() {
     this.employerEdit = true;
     this.employer.enable();
+    if (this.employer.get("phone").value && this.employer.get("phone").valid) {
+      this.employer.get("phone_ext").enable();
+    } else {
+      this.employer.get("phone_ext").disable();
+    }
   }
   cancel() {
     if (this.fromPop) {
