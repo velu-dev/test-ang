@@ -234,7 +234,7 @@
                                 <div><span>Date of Service / Date Item
                                         Received</span>{{element?.appointment_scheduled_date_time| date:'MM-dd-yyyy'}}
                                 </div>
-                                <div><span>Due Date</span>{{element?.due_date | date:'MM-dd-yyyy'}}</div>
+                                <div><span>Standing Due Date</span>{{element?.due_date | date:'MM-dd-yyyy'}}</div>
                             </section>
                             <section class="navigation" *ngIf="(expandId == element.appointment_id) || isExpandAll">
                                <span class="box-layout"  *ngFor="let type of dispalySimpleservice(element?.procedure_type)" [ngStyle]="{'display':role == 4 && type?.name == 'Billing' ? 'none' : 'block' }">

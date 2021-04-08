@@ -156,7 +156,7 @@
                                 <div><span>Date of Service / Date of Item
                                         Received</span>{{element?.appointment_scheduled_date_time | date:'MM-dd-yyyy'}}
                                 </div>
-                                <div><span>Due Date</span>{{element?.due_date | date:'MM-dd-yyyy'}}</div>
+                                <div><span>Standing Due Date</span>{{element?.due_date | date:'MM-dd-yyyy'}}</div>
                             </section>
                             <section class="navigation" *ngIf="(expandId == element.appointment_id) || isExpandAll">
                                 <span class="box-layout"
