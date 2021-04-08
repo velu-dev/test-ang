@@ -41,7 +41,8 @@ interface PaymentHistroy {
   lines?: any;
   extra_units_charged?: any;
   no_of_units_charged?: any;
-
+  examiner_id: any;
+  bill_id: any;
   children?: PaymentHistroy[];
 }
 /** Flat node with expandable and level information */
@@ -126,7 +127,9 @@ export class SubscriberSettingsComponent implements OnInit {
       charges: node.charges,
       claimant_id: node.claimant_id,
       claim_id: node.claim_id,
+      examiner_id: node.examiner_id,
       billable_item_id: node.billable_item_id,
+      bill_id: node.bill_id,
       level: level,
     };
   }
@@ -618,11 +621,12 @@ export class SubscriberSettingsComponent implements OnInit {
     } else if (nodeType == "Transcription and Compilation") {
       tail_name = "reports";
     } else if (nodeType == "Correspondance") {
-      tail_name = "correspondence";
+      tail_name = node.examiner_id ? "correspondence/" + node.examiner_id : "correspondence";
     } else if (nodeType == "Billing") {
-      tail_name = "billing";
+      tail_name = node.bill_id ? "billing/" + node.bill_id : "billing";
     } else if (nodeType == "History") {
       tail_name = "history";
+      tail_name = node.examiner_id ? "history/" + node.examiner_id : "history";
     }
     if (node.level == 3) {
       this.router.navigate(['subscriber/claimants/claimant/' + node.claimant_id + '/claim/' + node.claim_id + '/billable-item/' + node.billable_item_id + "/" + tail_name])
