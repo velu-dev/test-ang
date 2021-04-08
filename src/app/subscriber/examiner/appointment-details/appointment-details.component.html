@@ -299,9 +299,9 @@
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100"
-                            *ngIf="!isSuplimental">
+                            *ngIf="!isSuplimental" class="duration">
                             <mat-label>Duration</mat-label>
-                            <input matInput type="text" placeholder="Minutes" min="1" max="450" maxlength="3"
+                            <input matInput type="number" placeholder="Minutes" min="1" max="450" maxlength="3"
                                 formControlName="duration" autocomplete="off">
                             <span matSuffix>Minutes</span>
                             <mat-error>Please enter a valid duration between 1 to 450 minutes</mat-error>

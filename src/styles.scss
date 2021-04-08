@@ -459,6 +459,9 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button.clear {
     top: 5px;
   }
+  .mat-form-field.duration:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix {
+    top: -3px;
+  }
 }
 
 // custom calender css
