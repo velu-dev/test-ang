@@ -29,6 +29,7 @@ export class SubmissionComponent implements OnInit {
   @Input() isMobile: any;
   @Input() review: string;
   @Input() states: string;
+  @Input() billType: any;
   billDocumentList: any;
   documentsData: any = new MatTableDataSource([]);
   selectedFile: File;
@@ -159,7 +160,7 @@ export class SubmissionComponent implements OnInit {
       data: {
         billingId: this.paramsId.billingId, claimId: this.paramsId.claim_id, billableId: this.paramsId.billId,
         states: this.states, on_demand_progress_status: this.billingData.on_demand_progress_status, is_w9_form: this.billingData.is_w9_form,
-        last_bill_on_demand_request_date: this.billingData.last_bill_on_demand_request_date
+        last_bill_on_demand_request_date: this.billingData.last_bill_on_demand_request_date, billType: this.billType
       }
     });
 

@@ -55,6 +55,13 @@ export class ApplicationAttorneyComponent implements OnInit {
       email: [{ value: null, disabled: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
+    this.ApplicantAttorney.get('phone')!.valueChanges.subscribe(input => {
+      if (this.ApplicantAttorney.get("phone").value && this.ApplicantAttorney.get("phone").valid) {
+        this.ApplicantAttorney.get("phone_ext").enable();
+      } else {
+        this.ApplicantAttorney.get("phone_ext").disable();
+      }
+    })
     this.ApplicantAttorney.get('company_name')!.valueChanges.subscribe(input => {
       if (this.ApplicantAttorney.get('company_name').errors) {
         return
@@ -121,6 +128,11 @@ export class ApplicationAttorneyComponent implements OnInit {
   editAA() {
     this.aaEdit = true;
     this.ApplicantAttorney.enable();
+    if (this.ApplicantAttorney.get("phone").value && this.ApplicantAttorney.get("phone").valid) {
+      this.ApplicantAttorney.get("phone_ext").enable();
+    } else {
+      this.ApplicantAttorney.get("phone_ext").disable();
+    }
   }
   updateAAttorney() {
     Object.keys(this.ApplicantAttorney.controls).forEach((key) => {

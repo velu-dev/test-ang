@@ -658,10 +658,10 @@ export class NewClaimComponent implements OnInit {
       certified_interpreter_required: [null],
       ssn: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       phone_no_1: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-      phone_ext1: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+      phone_ext1: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       organization_id: [null],
       phone_no_2: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-      phone_ext2: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+      phone_ext2: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       street1: [null],
       street2: [null],
       city: [null],
@@ -694,7 +694,7 @@ export class NewClaimComponent implements OnInit {
         state: [null],
         zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+        phone_ext: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
         fax: [null],
         email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
       }),
@@ -707,7 +707,7 @@ export class NewClaimComponent implements OnInit {
         state: [null],
         zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+        phone_ext: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
         fax: [null],
         email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
 
@@ -722,7 +722,7 @@ export class NewClaimComponent implements OnInit {
         state: [null],
         zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+        phone_ext: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
         email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
         fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       }),
@@ -737,7 +737,7 @@ export class NewClaimComponent implements OnInit {
         state: [null],
         zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+        phone_ext: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
         fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       }),
       DEU: this.formBuilder.group({
@@ -780,7 +780,7 @@ export class NewClaimComponent implements OnInit {
         is_virtual_location: [false],
         conference_url: [null],
         conference_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+        phone_ext: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       }),
       intake_call: this.formBuilder.group({
         caller_affiliation: [null],
@@ -790,7 +790,7 @@ export class NewClaimComponent implements OnInit {
         call_type_detail: [null],
         notes: [null],
         caller_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+        phone_ext: [{ value: null, disabled: true } , Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
         caller_email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
         caller_fax: [null, Validators.compose([Validators.pattern('[0-9]+')])]
       })
@@ -802,7 +802,69 @@ export class NewClaimComponent implements OnInit {
       const controlArray = this.supplementalItems.map(c => new FormControl(false));
       this.billable_item.addControl('documents_received', new FormArray(controlArray))
     })
-
+    this.claimant.get("phone_no_1").valueChanges.subscribe(res => {
+      if (this.claimant.get("phone_no_1").value && this.claimant.get("phone_no_1").valid) {
+        this.claimant.get("phone_ext1").enable();
+      } else {
+        this.claimant.get("phone_ext1").disable();
+      }
+    })
+    this.claimant.get("phone_no_2").valueChanges.subscribe(res => {
+      if (this.claimant.get("phone_no_2").value && this.claimant.get("phone_no_2").valid) {
+        this.claimant.get("phone_ext2").enable();
+      } else {
+        this.claimant.get("phone_ext2").disable();
+      }
+    })
+    this.claim.get(["InsuranceAdjuster", "phone"]).valueChanges.subscribe(res => {
+      if (this.claim.get(["InsuranceAdjuster", "phone"]).value && this.claim.get(["InsuranceAdjuster", "phone"]).valid) {
+        this.claim.get(["InsuranceAdjuster", "phone_ext"]).enable();
+      } else {
+        this.claim.get(["InsuranceAdjuster", "phone_ext"]).disable();
+      }
+    })
+    this.claim.get(["Employer", "phone"]).valueChanges.subscribe(res => {
+      if (this.claim.get(["Employer", "phone"]).value && this.claim.get(["Employer", "phone"]).valid) {
+        this.claim.get(["Employer", "phone_ext"]).enable();
+      } else {
+        this.claim.get(["Employer", "phone_ext"]).disable();
+      }
+    })
+    this.claim.get(["ApplicantAttorney", "phone"]).valueChanges.subscribe(res => {
+      if (this.claim.get(["ApplicantAttorney", "phone"]).value && this.claim.get(["ApplicantAttorney", "phone"]).valid) {
+        this.claim.get(["ApplicantAttorney", "phone_ext"]).enable();
+      } else {
+        this.claim.get(["ApplicantAttorney", "phone_ext"]).disable();
+      }
+    })
+    this.claim.get(["DefenseAttorney", "phone"]).valueChanges.subscribe(res => {
+      if (this.claim.get(["DefenseAttorney", "phone"]).value && this.claim.get(["DefenseAttorney", "phone"]).valid) {
+        this.claim.get(["DefenseAttorney", "phone_ext"]).enable();
+      } else {
+        this.claim.get(["DefenseAttorney", "phone_ext"]).disable();
+      }
+    })
+    this.claim.get(["DEU", "phone"]).valueChanges.subscribe(res => {
+      if (this.claim.get(["DEU", "phone"]).value && this.claim.get(["DEU", "phone"]).valid) {
+        this.claim.get(["DEU", "phone_ext"]).enable();
+      } else {
+        this.claim.get(["DEU", "phone_ext"]).disable();
+      }
+    })
+    this.billable_item.get(["appointment", "conference_phone"]).valueChanges.subscribe(res => {
+      if (this.billable_item.get(["appointment", "conference_phone"]).value && this.billable_item.get(["appointment", "conference_phone"]).valid) {
+        this.billable_item.get(["appointment", "phone_ext"]).enable();
+      } else {
+        this.billable_item.get(["appointment", "phone_ext"]).disable();
+      }
+    })
+    this.billable_item.get(["intake_call", "caller_phone"]).valueChanges.subscribe(res => {
+      if (this.billable_item.get(["intake_call", "caller_phone"]).value && this.billable_item.get(["intake_call", "caller_phone"]).valid) {
+        this.billable_item.get(["intake_call", "phone_ext"]).enable();
+      } else {
+        this.billable_item.get(["intake_call", "phone_ext"]).disable();
+      }
+    })
     this.correspondForm = this.formBuilder.group({
       file: ['', Validators.compose([Validators.required])],
       note: ['', Validators.compose([Validators.required])]
@@ -960,7 +1022,6 @@ export class NewClaimComponent implements OnInit {
   }
 
   advanceSearchSubmit(auto) {
-    this.logger.log("advanceSearch", this.advanceSearch.value)
     let data = this.advanceSearch.value;
     data['isadvanced'] = this.searchStatus;
     this.claimService.searchClaimant(data).subscribe(res => {
@@ -977,7 +1038,6 @@ export class NewClaimComponent implements OnInit {
 
   }
   selectionChange(event) {
-    console.log(event.selectedIndex)
     if (event.selectedIndex == 0) {
       this.titleName = " Claimant"
     } else if (event.selectedIndex == 1) {
@@ -1015,8 +1075,6 @@ export class NewClaimComponent implements OnInit {
       if (this.claim.invalid) {
         return
       }
-      console.log(this.claim.value.claim_details)
-
       if (this.claimantChanges) {
         this.createClaimant('tab');
       }
@@ -1039,16 +1097,11 @@ export class NewClaimComponent implements OnInit {
     // }
 
     Object.keys(this.claim.controls).forEach((key) => {
-      console.log(Object.keys(this.claim.controls), key)
       if (this.claim.get(key).value && typeof (this.claim.get(key).value) == 'string') {
         this.claim.get(key).setValue(this.claim.get(key).value.trim())
       }
       if (key != "claim_injuries") {
-        console.log(key)
-        console.log(Object.keys(this.claim.get(key)['controls']))
         Object.keys(this.claim.get(key)['controls']).forEach(key1 => {
-          console.log(key1)
-          //   console.log(key,)
           if (this.claim.get([key, key1]).value && typeof (this.claim.get([key, key1]).value) == 'string') {
             this.claim.get([key, key1]).setValue(this.claim.get([key, key1]).value.trim())
           }
@@ -1070,7 +1123,6 @@ export class NewClaimComponent implements OnInit {
     }
     this.fileErrors.file.isError = false;
     claim['claim_details'].claimant_id = this.claimant_id;
-    console.log(claim)
     if (!this.claimId) {
       this.claimService.createClaim(claim).subscribe(res => {
         this.claimId = res.data.id;

@@ -58,6 +58,13 @@ export class ClaimAdminComponent implements OnInit {
       email: [{ value: null, disabled: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
+    this.claimAdminForm.get('phone')!.valueChanges.subscribe(input => {
+      if (this.claimAdminForm.get("phone").value && this.claimAdminForm.get("phone").valid) {
+        this.claimAdminForm.get("phone_ext").enable();
+      } else {
+        this.claimAdminForm.get("phone_ext").disable();
+      }
+    })
     this.claimAdminForm.get('company_name')!.valueChanges.subscribe(input => {
       if (this.claimAdminForm.get('company_name').errors) {
         return
@@ -152,6 +159,11 @@ export class ClaimAdminComponent implements OnInit {
   editCA() {
     this.claimAdminForm.enable();
     this.claimAdminEdit = true;
+    if (this.claimAdminForm.get("phone").value && this.claimAdminForm.get("phone").valid) {
+      this.claimAdminForm.get("phone_ext").enable();
+    } else {
+      this.claimAdminForm.get("phone_ext").disable();
+    }
   }
   cancel() {
     if (this.fromPop) {

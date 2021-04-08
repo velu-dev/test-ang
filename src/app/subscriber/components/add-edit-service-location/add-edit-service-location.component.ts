@@ -136,23 +136,50 @@ export class AddEditServiceLocationComponent implements OnInit {
       state: [null, Validators.required],
       zip_code: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       phone_no: [null],
-      phone_ext1: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+      phone_ext1: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       fax_no: [null],
       email: [null, Validators.compose([Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
       primary_contact: [""],
       primary_contact_phone: [""],
       alternate_contact_1: [""],
       alternate_contact_1_phone: [""],
-      phone_ext2: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+      phone_ext2: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       alternate_contact_2: [""],
       alternate_contact_2_phone: [""],
-      phone_ext3: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+      phone_ext3: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       notes: [null],
       service_code_id: [null, Validators.required],
       //national_provider_identifier: [null],
       is_active: ['true'],
     })
-
+    this.locationForm.get("phone_no").valueChanges.subscribe(res => {
+      if (this.locationForm.get("phone_no").value && this.locationForm.get("phone_no").valid) {
+        this.locationForm.get("phone_ext1").enable();
+      } else {
+        this.locationForm.get("phone_ext1").disable();
+      }
+    })
+    this.locationForm.get("primary_contact_phone").valueChanges.subscribe(res => {
+      if (this.locationForm.get("primary_contact_phone").value && this.locationForm.get("primary_contact_phone").valid) {
+        this.locationForm.get("phone_ext1").enable();
+      } else {
+        this.locationForm.get("phone_ext1").disable();
+      }
+    })
+    this.locationForm.get("alternate_contact_1_phone").valueChanges.subscribe(res => {
+      if (this.locationForm.get("alternate_contact_1_phone").value && this.locationForm.get("alternate_contact_1_phone").valid) {
+        this.locationForm.get("phone_ext2").enable();
+      } else {
+        this.locationForm.get("phone_ext2").disable();
+      }
+    })
+    this.locationForm.get("alternate_contact_2_phone").valueChanges.subscribe(res => {
+      if (this.locationForm.get("alternate_contact_2_phone").value && this.locationForm.get("alternate_contact_2_phone").valid) {
+        this.locationForm.get("phone_ext3").enable();
+      } else {
+        this.locationForm.get("phone_ext3").disable();
+      }
+    })
     this.subscriberService.seedData('service_code').subscribe(response => {
       this.addressType = response['data'];
     }, error => {
@@ -282,6 +309,26 @@ export class AddEditServiceLocationComponent implements OnInit {
   edit() {
     this.editStatus = true;
     this.locationForm.enable();
+    if (this.locationForm.get("phone_no").value && this.locationForm.get("phone_no").valid) {
+      this.locationForm.get("phone_ext1").enable();
+    } else {
+      this.locationForm.get("phone_ext1").disable();
+    }
+    if (this.locationForm.get("primary_contact_phone").value && this.locationForm.get("primary_contact_phone").valid) {
+      this.locationForm.get("phone_ext1").enable();
+    } else {
+      this.locationForm.get("phone_ext1").disable();
+    }
+    if (this.locationForm.get("alternate_contact_1_phone").value && this.locationForm.get("alternate_contact_1_phone").valid) {
+      this.locationForm.get("phone_ext2").enable();
+    } else {
+      this.locationForm.get("phone_ext2").disable();
+    }
+    if (this.locationForm.get("alternate_contact_2_phone").value && this.locationForm.get("alternate_contact_2_phone").valid) {
+      this.locationForm.get("phone_ext3").enable();
+    } else {
+      this.locationForm.get("phone_ext3").disable();
+    }
   }
 
   nevigateExaminer(e) {
@@ -348,7 +395,7 @@ export class AddEditServiceLocationComponent implements OnInit {
         this.locationForm.patchValue({
           primary_contact: this.maillingAddress.contact_person,
           primary_contact_phone: this.maillingAddress.phone_no1,
-          phone_ext1:"",
+          phone_ext1: "",
           alternate_contact_1: "",
           alternate_contact_1_phone: this.maillingAddress.phone_no2,
           phone_ext2: "",

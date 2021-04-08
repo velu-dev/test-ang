@@ -185,7 +185,7 @@ export class NewBillableItemComponent implements OnInit {
         is_virtual_location: [false],
         conference_url: [null],
         conference_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+        phone_ext: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       }),
       intake_call: this.formBuilder.group({
         caller_affiliation: [null],
@@ -196,11 +196,25 @@ export class NewBillableItemComponent implements OnInit {
         notes: [null],
         caller_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         caller_email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
-        phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+        phone_ext: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
         caller_fax: [null, Validators.compose([Validators.pattern('[0-9]+')])]
       }),
       //documents_received:[]
 
+    })
+    this.billable_item.get(["appointment", "conference_phone"]).valueChanges.subscribe(res => {
+      if (this.billable_item.get(["appointment", "conference_phone"]).value && this.billable_item.get(["appointment", "conference_phone"]).valid) {
+        this.billable_item.get(["appointment", "phone_ext"]).enable();
+      } else {
+        this.billable_item.get(["appointment", "phone_ext"]).disable();
+      }
+    })
+    this.billable_item.get(["intake_call", "caller_phone"]).valueChanges.subscribe(res => {
+      if (this.billable_item.get(["intake_call", "caller_phone"]).value && this.billable_item.get(["intake_call", "caller_phone"]).valid) {
+        this.billable_item.get(["intake_call", "phone_ext"]).enable();
+      } else {
+        this.billable_item.get(["intake_call", "phone_ext"]).disable();
+      }
     })
     this.claimService.seedData("supplemental_item_received").subscribe(supp => {
       console.log(supp)

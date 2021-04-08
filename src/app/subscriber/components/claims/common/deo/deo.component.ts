@@ -37,6 +37,13 @@ export class DeoComponent implements OnInit {
       email: [{ value: null, disabled: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
+    this.DEU.get('phone')!.valueChanges.subscribe(input => {
+      if (this.DEU.get("phone").value && this.DEU.get("phone").valid) {
+        this.DEU.get("phone_ext").enable();
+      } else {
+        this.DEU.get("phone_ext").disable();
+      }
+    })
     this.claimService.getDeuDetails().subscribe(res => {
       this.deuDetails = res.data;
       this.filteredDeu = this.deuCtrl.valueChanges
@@ -118,16 +125,6 @@ export class DeoComponent implements OnInit {
     this.DEU.get("fax").disable();
   }
   editDEU() {
-    // this.DEU.enable();
-    // street1: [{ value: null, disabled: true }],
-    //   street2: [{ value: null, disabled: true }],
-    //   city: [{ value: null, disabled: true }],
-    //   state: [{ value: null, disabled: true }],
-    //   zip_code: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
-    //   phone: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
-    //   phone_ext: [null, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
-    //   email: [{ value: null, disabled: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
-    //   fax: [{ 
     if (this.deuDetail.name) {
       this.DEU.enable();
       // this.DEU.get("street1").enable();
@@ -152,6 +149,11 @@ export class DeoComponent implements OnInit {
       // this.DEU.get("fax").disable();
     }
     this.deoEdit = true;
+    if (this.DEU.get("phone").value && this.DEU.get("phone").valid && this.deuDetail.name) {
+      this.DEU.get("phone_ext").enable();
+    } else {
+      this.DEU.get("phone_ext").disable();
+    }
     this.deuCtrl.setValue(this.deuDetail.name);
   }
   updateDEU() {
