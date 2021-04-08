@@ -132,10 +132,10 @@
                                     border-radius: 3px;
                                     min-width: 330px;
                                     display: flex;
-                                    @media screen and (max-width: 568px) {
-                                        width: 100%;
-                                        margin: 10px 0 0 0;
-                                    }
+                                    // @media screen and (max-width: 568px) {
+                                    //     width: 100%;
+                                    //     margin: 10px 0 0 0;
+                                    // }
                                     @media screen and (min-width: 1024px) {
                                         margin: 5px 0 5px 40px;
                                     }
@@ -144,7 +144,8 @@
                                     }
 
                                     @media screen and (max-width: 568px) {
-                                        width: 88%;
+                                        max-width: 84%;
+                                        min-width: 84%;
                                         margin: 10px 0 0 0;
                                     }
                                     &:hover {
@@ -152,15 +153,18 @@
                                     }
                                     span {
                                         width: auto;
-                                        min-width: 165px;
+                                        min-width: 180px;
                                         display: inline-block;
                                         position: relative;
-                                        // padding-right: 0px !important;
+                                        @media screen and (max-width: 568px) {
+                                            min-width: 120px;
+                                        }
                                         &::after {
                                             position: absolute;
                                             top: 0;
                                             right: 5px;
                                         }
+                                        
                                     }
                                 }
                             }
