@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { first, take } from 'rxjs/operators';
+import { IntercomService } from 'src/app/services/intercom.service';
 import { BillingService } from 'src/app/subscriber/service/billing.service';
 
 @Component({
@@ -16,9 +18,15 @@ export class LateResponseComponent implements OnInit {
   billStatusList = [];
   lateResData: any;
   lateForm: FormGroup;
-  constructor(public billingService: BillingService, private fb: FormBuilder) {
+  constructor(public billingService: BillingService, private fb: FormBuilder, private intercom: IntercomService) {
     this.lateForm = this.fb.group({
       lateRes: this.fb.array([]),
+    })
+
+    this.intercom.getBillItemChange().pipe(take(1)).subscribe(res => {
+      this.lateResData['charge'] = res.total_charge;
+      let balance = +res.total_charge - + this.lateResData['payment'];
+      this.lateResData['balance'] = balance > 0 ? balance : 0;
     })
   }
 
@@ -64,11 +72,11 @@ export class LateResponseComponent implements OnInit {
   }
 
   getLateRes() {
-    this.lateForm = this.fb.group({
-      lateRes: this.fb.array([]),
-    })
     this.billingService.getLateResponse(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, +this.billType).subscribe(late => {
       console.log(late)
+      this.lateForm = this.fb.group({
+        lateRes: this.fb.array([]),
+      })
       this.lateResData = late.data;
 
       if (this.lateResData && this.lateResData.late_response_details && this.lateResData.late_response_details.length > 0) {

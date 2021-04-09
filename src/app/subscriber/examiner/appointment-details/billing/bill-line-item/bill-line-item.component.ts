@@ -187,7 +187,7 @@ export class BillLineItemComponent implements OnInit {
         }
 
         if (this.newFeeScheduleStatus && firstLineCharge && this.getFormControls.at(0)) {
-          let moidfier =  this.getFormControls.at(0).get('modifierList').value.toString();
+          let moidfier = this.getFormControls.at(0).get('modifierList').value.toString();
           moidfier = moidfier ? moidfier.replace(/,/g, '-') : null;
           let data = {
             id: this.getFormControls.at(0).value.id,
@@ -200,7 +200,7 @@ export class BillLineItemComponent implements OnInit {
             unit_type: this.getFormControls.at(0).value.unitType,
             unit_short_code: this.getUnitCode(this.getFormControls.at(0).value.unitType)
           }
-      
+
           this.billingService.createBillLine(this.paramsId.billingId, this.paramsId.billId, this.paramsId.claim_id, data).subscribe(line => {
           }, error => {
             this.alertService.openSnackBar(error.error.message, 'error');
@@ -374,6 +374,7 @@ export class BillLineItemComponent implements OnInit {
       let modifier = line.data.modifier ? line.data.modifier.split('-') : [];
       this.billing_line_items[index] = line.data;
       this.billing_line_items[index].modifierList = modifier;
+      this.intercom.setBillItemChange(this.billing_line_items[index])
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })

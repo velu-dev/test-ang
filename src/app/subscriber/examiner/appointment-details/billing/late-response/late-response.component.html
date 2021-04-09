@@ -34,9 +34,9 @@
                         <td>{{lateResData?.bill_submission_type}}</td>
                         <td>{{lateResData?.date_sent | date:'MM-dd-yyyy'}}</td>
                         <td>{{lateResData?.bill_due_date | date:'MM-dd-yyyy'}}</td>
-                        <td>{{lateResData?.charge ? '$ ' : ''}} {{lateResData?.charge}}</td>
-                        <td>{{lateResData?.payment ? '$ ' : ''}} {{lateResData?.payment}}</td>
-                        <td class="text-danger">{{lateResData?.balance ? '$ ' : ''}} {{lateResData?.balance}}</td>
+                        <td>{{lateResData?.charge ? '$ ' : ''}} {{lateResData?.charge | number : '1.2-2'}}</td>
+                        <td>{{lateResData?.payment ? '$ ' : ''}} {{lateResData?.payment | number : '1.2-2'}}</td>
+                        <td class="text-danger">{{lateResData?.balance ? '$ ' : ''}} {{lateResData?.balance | number : '1.2-2'}}</td>
                         <td class="text-success">{{lateResData?.bill_paid_status}}</td>
                         <td><button type="button" *ngIf="lateRes().controls?.length == 0" mat-raised-button
                               class="mini-btn filled-gray" (click)="addlateRes();openElement(lateResData?.id)">Add Response</button></td>

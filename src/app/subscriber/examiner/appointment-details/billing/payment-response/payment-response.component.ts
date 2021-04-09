@@ -13,6 +13,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { BillingService } from 'src/app/subscriber/service/billing.service';
 import { saveAs } from 'file-saver';
 import * as moment from 'moment';
+import { IntercomService } from 'src/app/services/intercom.service';
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
@@ -78,7 +79,7 @@ export class PaymentResponseComponent implements OnInit {
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, private breakpointObserver: BreakpointObserver,
-    private alertService: AlertService, public billingService: BillingService) {
+    private alertService: AlertService, public billingService: BillingService, private intercom: IntercomService) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
@@ -131,11 +132,20 @@ export class PaymentResponseComponent implements OnInit {
   ngOnInit() {
     console.log(this.billingData)
     this.getPaymentRes();
+    this.intercom.BillItemChange.subscribe(res => {
+      this.payments().at(0).get('charge').patchValue(res.total_charge)
+      let balance = +res.total_charge - +this.payments().at(0).get('payment').value;
+      this.payments().at(0).get('balance').patchValue(balance > 0 ? balance : 0);
+    })
+
   }
 
   getPaymentRes() {
     this.billingService.getPaymentResponse(this.paramsId.billingId, this.paramsId.claim_id, this.paramsId.billId).subscribe(payment => {
       console.log(payment);
+      this.paymentForm = this.fb.group({
+        payments: this.fb.array([]),
+      })
       this.paymentRes = payment.data;
       this.getPaymentStatus.emit(this.paymentRes ? this.paymentRes[0] : null)
       this.paymentRes.map((pay, i) => {
