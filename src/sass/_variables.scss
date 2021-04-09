@@ -1450,7 +1450,7 @@ input:-webkit-autofill {
     cursor: pointer;
     // padding-top: 4px;
     @-moz-document url-prefix() {
-     vertical-align:text-bottom;
+      vertical-align: text-bottom;
     }
   }
   sup {
@@ -1550,6 +1550,7 @@ input:-webkit-autofill {
 }
 // Cropper border custom color
 .cropper {
+  width: calc(100% - 10px) !important;
   &::after {
     border: 2px dashed !important;
     border-color: $primary !important;
