@@ -463,7 +463,9 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     top: -3px;
   }
 }
-
+.mat-form-field.duration:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix {
+  top: -2px;
+}
 // custom calender css
 .fc-event,
 .fc-event:hover {
