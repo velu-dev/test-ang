@@ -1147,7 +1147,7 @@ input:-webkit-autofill {
       p {
         margin: 0px;
         padding: 5px 0;
-        b{
+        b {
           min-width: 100px;
           display: inline-block;
           padding-right: 5px;
@@ -1449,6 +1449,9 @@ input:-webkit-autofill {
   i {
     cursor: pointer;
     // padding-top: 4px;
+    @-moz-document url-prefix() {
+      vertical-align: text-bottom;
+    }
   }
   sup {
     vertical-align: top;
@@ -1459,7 +1462,7 @@ input:-webkit-autofill {
     font-size: $font-size-3;
     font-weight: $font-weight-medium;
     font-style: italic;
-    background-color:$ternary;
+    background-color: $ternary;
     border-radius: 50px;
     padding: 0 10px;
   }
@@ -1547,6 +1550,7 @@ input:-webkit-autofill {
 }
 // Cropper border custom color
 .cropper {
+  width: calc(100% - 10px) !important;
   &::after {
     border: 2px dashed !important;
     border-color: $primary !important;

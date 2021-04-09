@@ -108,8 +108,10 @@ export class BillLineItemComponent implements OnInit {
         this.modiferList.splice(index, 1)
       }
       this.filteredmodifier = this.modiferList
+      let firstLineCharge: boolean = false;
       if (line.data) {
         this.billing_line_items = line.data;
+        firstLineCharge = this.billing_line_items[0].charge ? false : true;
         line.data.map((item, index) => {
           this.newFeeScheduleStatus = this.billing_line_items[0].is_new_fee_schedule;
           this.billingCodeDetails = this.billing_line_items[0].billing_code_details;
@@ -182,6 +184,27 @@ export class BillLineItemComponent implements OnInit {
         if (this.review.toLowerCase() == 'second') {
           this.support_documents = line.support_documents ? line.support_documents : [];
           this.userTable.get('payor_claim_control_number').patchValue(line.payor_claim_control_number);
+        }
+
+        if (this.newFeeScheduleStatus && firstLineCharge && this.getFormControls.at(0)) {
+          let moidfier =  this.getFormControls.at(0).get('modifierList').value.toString();
+          moidfier = moidfier ? moidfier.replace(/,/g, '-') : null;
+          let data = {
+            id: this.getFormControls.at(0).value.id,
+            item_description: this.getFormControls.at(0).value.item_description,
+            procedure_code: this.getFormControls.at(0).value.procedure_code,
+            modifier: moidfier,
+            units: this.getFormControls.at(0).value.units,
+            charge: this.getFormControls.at(0).get('charge').value ? parseFloat(this.getFormControls.at(0).get('charge').value).toFixed(2) : this.getFormControls.at(0).get('charge').value,
+            total_charge: this.calculateTotal(),
+            unit_type: this.getFormControls.at(0).value.unitType,
+            unit_short_code: this.getUnitCode(this.getFormControls.at(0).value.unitType)
+          }
+      
+          this.billingService.createBillLine(this.paramsId.billingId, this.paramsId.billId, this.paramsId.claim_id, data).subscribe(line => {
+          }, error => {
+            this.alertService.openSnackBar(error.error.message, 'error');
+          })
         }
       }
     }, error => {

@@ -459,8 +459,13 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button.clear {
     top: 5px;
   }
+  .mat-form-field.duration:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix {
+    top: -3px;
+  }
 }
-
+.mat-form-field.duration:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix {
+  top: -2px;
+}
 // custom calender css
 .fc-event,
 .fc-event:hover {
@@ -586,8 +591,8 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     padding: 10px;
   }
 }
-.fc-today {
-  background: #f5f6fa !important;
+.fc-unthemed td.fc-today {
+  background: #f5f6fa;
 }
 
 .fc-ltr .fc-dayGrid-view .fc-day-top .fc-day-number {
