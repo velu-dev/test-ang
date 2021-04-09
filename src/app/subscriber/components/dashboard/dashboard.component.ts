@@ -139,28 +139,18 @@ export class DashboardComponent implements OnInit {
   expandAll() {
     if (!this.isExpandAll) {
       this.isExpandAll = true;
-      this.expandId = null;
-      this.isCloseId = null;
     } else {
       this.isExpandAll = false;
       this.expandId = null;
-      this.isCloseId = null;
     }
   }
   expandId: any;
-  isCloseId: any;
   openElement(element) {
-    if (this.isExpandAll) {
-      this.isCloseId = element.appointment_id;
+    this.isExpandAll = false;
+    if (this.expandId && this.expandId == element.appointment_id) {
       this.expandId = null;
     } else {
-      this.isCloseId = null;
-      this.isExpandAll = false;
-      if (this.expandId && this.expandId == element.appointment_id) {
-        this.expandId = null;
-      } else {
-        this.expandId = element.appointment_id;
-      }
+      this.expandId = element.appointment_id;
     }
   }
   navigate(menu) {
@@ -172,7 +162,6 @@ export class DashboardComponent implements OnInit {
     }
   }
   openExtract(element, type) {
-    console.log("dsfdsfdsfds");
     this.intercom.setClaimant(element.claimant_first_name + ' ' + element.claimant_last_name);
     this.cookieService.set('claimDetails', element.claimant_first_name + ' ' + element.claimant_last_name)
     this.intercom.setClaimNumber(element.claim_number);
