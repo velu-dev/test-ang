@@ -367,6 +367,7 @@ export class AppointmentDetailsComponent implements OnInit {
 
         // })
         this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
+          console.log(response)
           this.intercom.setClaimant(response.data.claimant_name.first_name + ' ' + response.data.claimant_name.last_name);
           this.cookieService.set('claimDetails', response.data.claimant_name.first_name + ' ' + response.data.claimant_name.last_name)
           this.intercom.setClaimNumber(response.data.claim_details.claim_number);
@@ -459,6 +460,7 @@ export class AppointmentDetailsComponent implements OnInit {
             })
           }
         }, error => {
+          console.log(error)
           this.dataSource = new MatTableDataSource([]);
         })
       })
