@@ -139,6 +139,7 @@ export class DashboardComponent implements OnInit {
   expandAll() {
     this.expandId = null;
     this.isCloseId = null;
+    this.isCloseIds = [];
     this.isExpandAll = this.isExpandAll ? false : true;
     // if (!this.isExpandAll) {
     //   this.isExpandAll = true;
