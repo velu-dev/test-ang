@@ -57,7 +57,7 @@ export class SubmissionComponent implements OnInit {
   }
 
   getBillDocument() {
-    this.billingService.getBillDocument(this.paramsId.claim_id, this.paramsId.billId).subscribe(doc => {
+    this.billingService.getBillDocument(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, this.billType).subscribe(doc => {
       this.billDocumentList = doc.data;
       if (doc.data) {
         if (doc.data.document_list) {

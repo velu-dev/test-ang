@@ -100,8 +100,8 @@ export class BillingService {
     return this.http.delete(environment.baseUrl + api_endpoint.removeCustomRecipient + last + "/" + data.request_type, data)
   }
 
-  getBillDocument(claimID, billableId): Observable<any> {
-    return this.http.get(environment.baseUrl + api_endpoint.getBillDocument + claimID + '/' + billableId)
+  getBillDocument(claimID, billableId, billingId, billType): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getBillDocument + claimID + '/' + billableId + '/' + billingId + '/' + billType)
   }
 
   downloadOndemandDocuments(data): Observable<any> {
@@ -148,8 +148,8 @@ export class BillingService {
     return this.http.post(environment.baseUrl + api_endpoint.postSecondBillCreate + claim + '/' + billable + '/' + billId, {})
   }
 
-  getSendRecDocument(claim, billable, billId): Observable<any> {
-    return this.http.get(environment.baseUrl + api_endpoint.sendRecDocument + claim + '/' + billable + '/' + billId)
+  getSendRecDocument(claim, billable, billId, billtype): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.sendRecDocument + claim + '/' + billable + '/' + billId + '/' + billtype)
   }
 
   postSBRSupport(claim, billable, billId, data): Observable<any> {
