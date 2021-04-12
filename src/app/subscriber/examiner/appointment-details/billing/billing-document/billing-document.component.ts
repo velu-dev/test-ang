@@ -23,6 +23,7 @@ export class BillingDocumentComponent implements OnInit {
   @Input() billingData: any;
   @Input() paramsId: any;
   @Input() isMobile: any;
+  @Input() billType: any;
   columnsNameDoc = [];
   columnsToDisplayDoc = [];
   dataSourceDocList = new MatTableDataSource([]);
@@ -39,8 +40,8 @@ export class BillingDocumentComponent implements OnInit {
   }
 
   ngOnInit() {
-    
-    this.billingService.getSendRecDocument(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId).subscribe(document=>{
+
+    this.billingService.getSendRecDocument(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, this.billType).subscribe(document => {
       this.dataSourceDocList = new MatTableDataSource(document.data);
     })
   }

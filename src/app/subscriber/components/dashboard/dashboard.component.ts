@@ -137,21 +137,41 @@ export class DashboardComponent implements OnInit {
   }
   isExpandAll = false;
   expandAll() {
-    if (!this.isExpandAll) {
-      this.isExpandAll = true;
-    } else {
-      this.isExpandAll = false;
-      this.expandId = null;
-    }
+    this.expandId = null;
+    this.isCloseId = null;
+    this.isCloseIds = [];
+    this.isExpandAll = this.isExpandAll ? false : true;
+    // if (!this.isExpandAll) {
+    //   this.isExpandAll = true;
+    // } else {
+    //   this.isExpandAll = false;
+    // }
   }
   expandId: any;
+  isCloseId: any;
+  isCloseIds = [];
   openElement(element) {
-    this.isExpandAll = false;
-    if (this.expandId && this.expandId == element.appointment_id) {
+    if (this.isExpandAll) {
+      if (this.isCloseIds.includes(element.appointment_id)) {
+        let index = this.isCloseIds.indexOf(element.appointment_id)
+        this.isCloseIds.splice(index, 1)
+      } else {
+        this.isCloseId = element.appointment_id;
+        this.isCloseIds.push(element.appointment_id)
+      }
       this.expandId = null;
     } else {
-      this.expandId = element.appointment_id;
+      this.isCloseId = null;
+      this.isExpandAll = false;
+      if (this.expandId && this.expandId == element.appointment_id) {
+        this.expandId = null;
+      } else {
+        this.expandId = element.appointment_id;
+        let index = this.isCloseIds.indexOf(element.appointment_id)
+        this.isCloseIds.splice(index, 1)
+      }
     }
+
   }
   navigate(menu) {
     this.router.navigate([this.router.url + menu])
