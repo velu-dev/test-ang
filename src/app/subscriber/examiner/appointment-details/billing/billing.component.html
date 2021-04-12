@@ -44,7 +44,7 @@
         </app-submission>
         <!-- ===== Billing Documents ==== -->
         <div class="completed-documents m-t-30">
-            <app-billing-document *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData"
+            <app-billing-document *ngIf="billingData" [billType]="tabIndex + 1" [paramsId]="paramsId" [billingData]="billingData"
                 [isMobile]="isMobile"></app-billing-document>
         </div>
     </div>
@@ -84,7 +84,7 @@
 
         <!-- ===== Billing Documents ==== -->
         <div class="completed-documents m-t-30">
-            <app-billing-document *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData"
+            <app-billing-document *ngIf="billingData" [billType]="tabIndex + 1" [paramsId]="paramsId" [billingData]="billingData"
                 [isMobile]="isMobile"></app-billing-document>
         </div>
     </div>
