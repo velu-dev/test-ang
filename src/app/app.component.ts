@@ -26,6 +26,17 @@ export class AppComponent {
     private breadcrumbService: BreadcrumbService,
     private intercom: IntercomService,
     private cookieService: CookieService, private claimService: ClaimService) {
+      window.addEventListener('storage', (event) => {
+        if (event.storageArea == localStorage) {
+          let token = localStorage.getItem('SYb+KUjt03Mkgz22hYyCXR3hloq2jrRXu6ozoRJPos8=');
+          if(token == undefined) { // you can update this as per your key
+              // DO LOGOUT FROM THIS TAB AS WELL
+              this._router.navigate(['/']); // If you are using router
+              // OR
+              // window.location.href = '<home page URL>';
+          }
+        }
+      }, false);
     // this.claimService.seedData('state').subscribe(res => {
     //   this.cookieService.set("states", res.data);
     // })

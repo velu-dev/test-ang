@@ -204,6 +204,7 @@ export class HeaderComponent implements OnInit {
       this.alertService.openSnackBar(success.logoutSuccess, "success")
       this.spinnerService.hide();
       this.cookieService.deleteAll();
+      localStorage.clear();
       this.router.navigate(['/'])
     }, error => {
       this.alertService.openSnackBar(error.logoutSuccess, "error")

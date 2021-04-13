@@ -59,6 +59,7 @@ export class ApplicationAttorneyComponent implements OnInit {
       if (this.ApplicantAttorney.get("phone").value && this.ApplicantAttorney.get("phone").valid) {
         this.ApplicantAttorney.get("phone_ext").enable();
       } else {
+        this.ApplicantAttorney.get("phone_ext").reset();
         this.ApplicantAttorney.get("phone_ext").disable();
       }
     })
@@ -131,6 +132,7 @@ export class ApplicationAttorneyComponent implements OnInit {
     if (this.ApplicantAttorney.get("phone").value && this.ApplicantAttorney.get("phone").valid) {
       this.ApplicantAttorney.get("phone_ext").enable();
     } else {
+      this.ApplicantAttorney.get("phone_ext").reset();
       this.ApplicantAttorney.get("phone_ext").disable();
     }
   }

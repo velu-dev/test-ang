@@ -190,6 +190,7 @@ export class NewClaimantComponent implements OnInit {
       if (this.claimantForm.get("phone_no_1").value && this.claimantForm.get("phone_no_1").valid) {
         this.claimantForm.get("phone_ext1").enable();
       } else {
+        this.claimantForm.get("phone_ext1").reset();
         this.claimantForm.get("phone_ext1").disable();
       }
     })
@@ -197,6 +198,7 @@ export class NewClaimantComponent implements OnInit {
       if (this.claimantForm.get("phone_no_2").value && this.claimantForm.get("phone_no_2").valid) {
         this.claimantForm.get("phone_ext2").enable();
       } else {
+        this.claimantForm.get("phone_ext2").reset();
         this.claimantForm.get("phone_ext2").disable();
       }
     })
@@ -374,11 +376,13 @@ export class NewClaimantComponent implements OnInit {
     if (this.claimantForm.get("phone_no_1").value && this.claimantForm.get("phone_no_1").valid) {
       this.claimantForm.get("phone_ext1").enable();
     } else {
+      this.claimantForm.get("phone_ext1").reset();
       this.claimantForm.get("phone_ext1").disable();
     }
     if (this.claimantForm.get("phone_no_2").value && this.claimantForm.get("phone_no_2").valid) {
       this.claimantForm.get("phone_ext2").enable();
     } else {
+      this.claimantForm.get("phone_ext2").reset();
       this.claimantForm.get("phone_ext2").disable();
     }
     if (!this.claimantForm.value.certified_interpreter_required) {

@@ -469,6 +469,7 @@ export class NewExaminerUserComponent implements OnInit {
       if (this.mailingAddressForm.get("phone_no1").value && this.mailingAddressForm.get("phone_no1").valid) {
         this.mailingAddressForm.get("phone_ext1").enable();
       } else {
+        this.mailingAddressForm.get("phone_ext1").reset();
         this.mailingAddressForm.get("phone_ext1").disable();
       }
     })
@@ -476,6 +477,7 @@ export class NewExaminerUserComponent implements OnInit {
       if (this.mailingAddressForm.get("phone_no2").value && this.mailingAddressForm.get("phone_no2").valid) {
         this.mailingAddressForm.get("phone_ext2").enable();
       } else {
+        this.mailingAddressForm.get("phone_ext2").reset();
         this.mailingAddressForm.get("phone_ext2").disable();
       }
     })
