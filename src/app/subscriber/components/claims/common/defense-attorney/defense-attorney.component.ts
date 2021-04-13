@@ -62,6 +62,7 @@ export class DefenseAttorneyComponent implements OnInit {
       if (this.DefanceAttorney.get("phone").value && this.DefanceAttorney.get("phone").valid) {
         this.DefanceAttorney.get("phone_ext").enable();
       } else {
+        this.DefanceAttorney.get("phone_ext").reset();
         this.DefanceAttorney.get("phone_ext").disable();
       }
     })
@@ -135,6 +136,7 @@ export class DefenseAttorneyComponent implements OnInit {
     if (this.DefanceAttorney.get("phone").value && this.DefanceAttorney.get("phone").valid) {
       this.DefanceAttorney.get("phone_ext").enable();
     } else {
+      this.DefanceAttorney.get("phone_ext").reset();
       this.DefanceAttorney.get("phone_ext").disable();
     }
   }

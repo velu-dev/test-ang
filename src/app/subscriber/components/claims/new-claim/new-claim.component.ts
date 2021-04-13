@@ -806,6 +806,7 @@ export class NewClaimComponent implements OnInit {
       if (this.claimant.get("phone_no_1").value && this.claimant.get("phone_no_1").valid) {
         this.claimant.get("phone_ext1").enable();
       } else {
+        this.claimant.get("phone_ext1").reset();
         this.claimant.get("phone_ext1").disable();
       }
     })
@@ -813,6 +814,7 @@ export class NewClaimComponent implements OnInit {
       if (this.claimant.get("phone_no_2").value && this.claimant.get("phone_no_2").valid) {
         this.claimant.get("phone_ext2").enable();
       } else {
+        this.claimant.get("phone_ext2").reset();
         this.claimant.get("phone_ext2").disable();
       }
     })
@@ -820,6 +822,7 @@ export class NewClaimComponent implements OnInit {
       if (this.claim.get(["InsuranceAdjuster", "phone"]).value && this.claim.get(["InsuranceAdjuster", "phone"]).valid) {
         this.claim.get(["InsuranceAdjuster", "phone_ext"]).enable();
       } else {
+        this.claim.get(["InsuranceAdjuster", "phone_ext"]).reset();
         this.claim.get(["InsuranceAdjuster", "phone_ext"]).disable();
       }
     })
@@ -827,6 +830,7 @@ export class NewClaimComponent implements OnInit {
       if (this.claim.get(["Employer", "phone"]).value && this.claim.get(["Employer", "phone"]).valid) {
         this.claim.get(["Employer", "phone_ext"]).enable();
       } else {
+        this.claim.get(["Employer", "phone_ext"]).reset();
         this.claim.get(["Employer", "phone_ext"]).disable();
       }
     })
@@ -834,6 +838,7 @@ export class NewClaimComponent implements OnInit {
       if (this.claim.get(["ApplicantAttorney", "phone"]).value && this.claim.get(["ApplicantAttorney", "phone"]).valid) {
         this.claim.get(["ApplicantAttorney", "phone_ext"]).enable();
       } else {
+        this.claim.get(["ApplicantAttorney", "phone_ext"]).reset();
         this.claim.get(["ApplicantAttorney", "phone_ext"]).disable();
       }
     })
@@ -841,6 +846,7 @@ export class NewClaimComponent implements OnInit {
       if (this.claim.get(["DefenseAttorney", "phone"]).value && this.claim.get(["DefenseAttorney", "phone"]).valid) {
         this.claim.get(["DefenseAttorney", "phone_ext"]).enable();
       } else {
+        this.claim.get(["DefenseAttorney", "phone_ext"]).reset();
         this.claim.get(["DefenseAttorney", "phone_ext"]).disable();
       }
     })
@@ -848,6 +854,7 @@ export class NewClaimComponent implements OnInit {
       if (this.claim.get(["DEU", "phone"]).value && this.claim.get(["DEU", "phone"]).valid) {
         this.claim.get(["DEU", "phone_ext"]).enable();
       } else {
+        this.claim.get(["DEU", "phone_ext"]).reset();
         this.claim.get(["DEU", "phone_ext"]).disable();
       }
     })
@@ -855,6 +862,7 @@ export class NewClaimComponent implements OnInit {
       if (this.billable_item.get(["appointment", "conference_phone"]).value && this.billable_item.get(["appointment", "conference_phone"]).valid) {
         this.billable_item.get(["appointment", "phone_ext"]).enable();
       } else {
+        this.billable_item.get(["appointment", "phone_ext"]).reset();
         this.billable_item.get(["appointment", "phone_ext"]).disable();
       }
     })
@@ -862,6 +870,7 @@ export class NewClaimComponent implements OnInit {
       if (this.billable_item.get(["intake_call", "caller_phone"]).value && this.billable_item.get(["intake_call", "caller_phone"]).valid) {
         this.billable_item.get(["intake_call", "phone_ext"]).enable();
       } else {
+        this.billable_item.get(["intake_call", "phone_ext"]).reset();
         this.billable_item.get(["intake_call", "phone_ext"]).disable();
       }
     })
@@ -1720,7 +1729,7 @@ export class NewClaimComponent implements OnInit {
           }
           this.iseams_entry = true;
         } else {
-          this.alertService.openSnackBar("EAMS number doesn't matches with the Claimant details", "error")
+          this.alertService.openSnackBar("EAMS Number Not Found", "error")
         }
       }, error => {
         this.alertService.openSnackBar(error.error.message, "error")

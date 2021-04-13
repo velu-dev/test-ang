@@ -37,6 +37,7 @@ export class EmployerComponent implements OnInit {
       if (this.employer.get("phone").value && this.employer.get("phone").valid) {
         this.employer.get("phone_ext").enable();
       } else {
+        this.employer.get("phone_ext").reset();
         this.employer.get("phone_ext").disable();
       }
     })
@@ -94,6 +95,7 @@ export class EmployerComponent implements OnInit {
     if (this.employer.get("phone").value && this.employer.get("phone").valid) {
       this.employer.get("phone_ext").enable();
     } else {
+      this.employer.get("phone_ext").reset();
       this.employer.get("phone_ext").disable();
     }
   }

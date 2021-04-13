@@ -62,6 +62,7 @@ export class ClaimAdminComponent implements OnInit {
       if (this.claimAdminForm.get("phone").value && this.claimAdminForm.get("phone").valid) {
         this.claimAdminForm.get("phone_ext").enable();
       } else {
+        this.claimAdminForm.get("phone_ext").reset();
         this.claimAdminForm.get("phone_ext").disable();
       }
     })
@@ -162,6 +163,7 @@ export class ClaimAdminComponent implements OnInit {
     if (this.claimAdminForm.get("phone").value && this.claimAdminForm.get("phone").valid) {
       this.claimAdminForm.get("phone_ext").enable();
     } else {
+      this.claimAdminForm.get("phone_ext").reset();
       this.claimAdminForm.get("phone_ext").disable();
     }
   }

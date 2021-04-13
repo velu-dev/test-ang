@@ -156,6 +156,7 @@ export class AddEditServiceLocationComponent implements OnInit {
       if (this.locationForm.get("phone_no").value && this.locationForm.get("phone_no").valid) {
         this.locationForm.get("phone_ext1").enable();
       } else {
+        this.locationForm.get("phone_ext1").reset();
         this.locationForm.get("phone_ext1").disable();
       }
     })
@@ -163,6 +164,7 @@ export class AddEditServiceLocationComponent implements OnInit {
       if (this.locationForm.get("primary_contact_phone").value && this.locationForm.get("primary_contact_phone").valid) {
         this.locationForm.get("phone_ext1").enable();
       } else {
+        this.locationForm.get("phone_ext1").reset();
         this.locationForm.get("phone_ext1").disable();
       }
     })
@@ -170,6 +172,7 @@ export class AddEditServiceLocationComponent implements OnInit {
       if (this.locationForm.get("alternate_contact_1_phone").value && this.locationForm.get("alternate_contact_1_phone").valid) {
         this.locationForm.get("phone_ext2").enable();
       } else {
+        this.locationForm.get("phone_ext2").reset();
         this.locationForm.get("phone_ext2").disable();
       }
     })
@@ -177,6 +180,7 @@ export class AddEditServiceLocationComponent implements OnInit {
       if (this.locationForm.get("alternate_contact_2_phone").value && this.locationForm.get("alternate_contact_2_phone").valid) {
         this.locationForm.get("phone_ext3").enable();
       } else {
+        this.locationForm.get("phone_ext3").reset();
         this.locationForm.get("phone_ext3").disable();
       }
     })
@@ -312,21 +316,25 @@ export class AddEditServiceLocationComponent implements OnInit {
     if (this.locationForm.get("phone_no").value && this.locationForm.get("phone_no").valid) {
       this.locationForm.get("phone_ext1").enable();
     } else {
+      this.locationForm.get("phone_ext1").reset();
       this.locationForm.get("phone_ext1").disable();
     }
     if (this.locationForm.get("primary_contact_phone").value && this.locationForm.get("primary_contact_phone").valid) {
       this.locationForm.get("phone_ext1").enable();
     } else {
+      this.locationForm.get("phone_ext1").reset();
       this.locationForm.get("phone_ext1").disable();
     }
     if (this.locationForm.get("alternate_contact_1_phone").value && this.locationForm.get("alternate_contact_1_phone").valid) {
       this.locationForm.get("phone_ext2").enable();
     } else {
+      this.locationForm.get("phone_ext2").reset();
       this.locationForm.get("phone_ext2").disable();
     }
     if (this.locationForm.get("alternate_contact_2_phone").value && this.locationForm.get("alternate_contact_2_phone").valid) {
       this.locationForm.get("phone_ext3").enable();
     } else {
+      this.locationForm.get("phone_ext3").reset();
       this.locationForm.get("phone_ext3").disable();
     }
   }
