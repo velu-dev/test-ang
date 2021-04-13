@@ -2,7 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { SelectionModel } from '@angular/cdk/collections';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { formatDate } from '@angular/common';
-import { Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MatDialog, MatDialogRef, MatTableDataSource, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_DIALOG_DATA, NativeDateAdapter } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -52,7 +52,7 @@ export const PICK_FORMATS = {
   ]
 })
 
-export class PaymentResponseComponent implements OnInit {
+export class PaymentResponseComponent implements OnInit, OnDestroy {
 
   userTable: FormGroup;
   mode: boolean;
@@ -76,6 +76,7 @@ export class PaymentResponseComponent implements OnInit {
   paymentRes: any;
   voidType: any;
   paidStatusData: any;
+  subscription: any;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, private breakpointObserver: BreakpointObserver,
@@ -132,12 +133,16 @@ export class PaymentResponseComponent implements OnInit {
   ngOnInit() {
     console.log(this.billingData)
     this.getPaymentRes();
-    this.intercom.BillItemChange.subscribe(res => {
+    this.subscription = this.intercom.BillItemChange.subscribe(res => {
       this.payments().at(0).get('charge').patchValue(res.total_charge)
       let balance = +res.total_charge - +this.payments().at(0).get('payment').value;
       this.payments().at(0).get('balance').patchValue(balance > 0 ? balance : 0);
     })
 
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   getPaymentRes() {

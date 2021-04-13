@@ -41,6 +41,7 @@ export class DeoComponent implements OnInit {
       if (this.DEU.get("phone").value && this.DEU.get("phone").valid) {
         this.DEU.get("phone_ext").enable();
       } else {
+        this.DEU.get("phone_ext").reset();
         this.DEU.get("phone_ext").disable();
       }
     })
@@ -152,6 +153,7 @@ export class DeoComponent implements OnInit {
     if (this.DEU.get("phone").value && this.DEU.get("phone").valid && this.deuDetail.name) {
       this.DEU.get("phone_ext").enable();
     } else {
+      this.DEU.get("phone_ext").reset();
       this.DEU.get("phone_ext").disable();
     }
     this.deuCtrl.setValue(this.deuDetail.name);
@@ -166,7 +168,7 @@ export class DeoComponent implements OnInit {
     }
     this.DEU.value['id'] = this.id;
     let data = this.DEU.getRawValue();
-    data.name = this.deuCtrl.value;
+    // data.name = this.deuCtrl.value;
     data.id = this.id;
     this.claimService.updateAgent(this.DEU.value.id, { DEU: data }).subscribe(res => {
       this.deoEdit = false;

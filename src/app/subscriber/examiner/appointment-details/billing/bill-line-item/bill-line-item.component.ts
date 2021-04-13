@@ -203,6 +203,7 @@ export class BillLineItemComponent implements OnInit {
 
           this.billingService.createBillLine(this.paramsId.billingId, this.paramsId.billId, this.paramsId.claim_id, data).subscribe(line => {
           }, error => {
+            this.intercom.setBillItemChange(line.data)
             this.alertService.openSnackBar(error.error.message, 'error');
           })
         }

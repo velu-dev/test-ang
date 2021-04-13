@@ -124,8 +124,8 @@ export class BillingService {
     return this.http.post(environment.baseUrl + api_endpoint.getIncompleteinfo + claim_id + "/" + bill_id, data)
   }
 
-  generateBillingForm(claimID, billableId, formId): Observable<any> {
-    return this.http.get(environment.baseUrl + api_endpoint.generateBillingForm + claimID + '/' + billableId + '/' + formId)
+  generateBillingForm(claimID, billableId, billingId, formId): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.generateBillingForm + claimID + '/' + billableId + '/' + billingId + '/' + formId)
   }
 
   getBreadcrumbDetails(data): Observable<any> {

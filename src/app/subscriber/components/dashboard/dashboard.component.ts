@@ -7,6 +7,7 @@ import { NGXLogger } from 'ngx-logger';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { IntercomService } from 'src/app/services/intercom.service';
+import { AlertService } from 'src/app/shared/services/alert.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { SubscriberService } from '../../service/subscriber.service';
 
@@ -56,7 +57,7 @@ export class DashboardComponent implements OnInit {
   constructor(public router: Router, private logger: NGXLogger, private cookieService: CookieService,
     private breakpointObserver: BreakpointObserver,
     private subscriberService: SubscriberService,
-    private intercom: IntercomService) {
+    private intercom: IntercomService, private alertService: AlertService) {
     this.subscriberService.getDashboardData({}).subscribe(res => {
       console.log(res)
       res.data.splited_record.map(total => {
@@ -196,7 +197,7 @@ export class DashboardComponent implements OnInit {
     let examiner_id = "";
     if (type == "correspondence" || type == "history" || type == "billing")
       examiner_id = element.examiner_id != null ? "/" + String(element.examiner_id) : "";
-    this.router.navigate(['subscriber/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + examiner_id])
+      this.router.navigate(['subscriber/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + examiner_id])
   }
 
   navigateBillableItem(element) {
@@ -209,7 +210,11 @@ export class DashboardComponent implements OnInit {
     let claimant_id = element.claimant_id;
     let claim_id = element.claim_id;
     let billable_id = element.billable_item_id;
+    if(billable_id){
     this.router.navigate(['subscriber/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id])
+    } else {
+      this.alertService.openSnackBar("Billable Item ID Not Found", "error");
+    }
   }
 
   dispalySimpleservice(type): any {
