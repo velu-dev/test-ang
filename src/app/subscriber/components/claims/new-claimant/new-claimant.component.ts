@@ -373,9 +373,12 @@ export class NewClaimantComponent implements OnInit {
     this.claimantChanges = false;
     if (this.claimantForm.get("phone_no_1").value && this.claimantForm.get("phone_no_1").valid) {
       this.claimantForm.get("phone_ext1").enable();
-      this.claimantForm.get("phone_ext2").enable();
     } else {
       this.claimantForm.get("phone_ext1").disable();
+    }
+    if (this.claimantForm.get("phone_no_2").value && this.claimantForm.get("phone_no_2").valid) {
+      this.claimantForm.get("phone_ext2").enable();
+    } else {
       this.claimantForm.get("phone_ext2").disable();
     }
     if (!this.claimantForm.value.certified_interpreter_required) {

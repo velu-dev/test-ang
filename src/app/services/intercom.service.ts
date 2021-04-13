@@ -79,7 +79,6 @@ export class IntercomService {
 
 
   public setBillItemChange(status): any {
-    console.log("set",status)
     this.BillItemChange.next(status);
   }
 

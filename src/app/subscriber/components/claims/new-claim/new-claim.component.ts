@@ -1720,7 +1720,7 @@ export class NewClaimComponent implements OnInit {
           }
           this.iseams_entry = true;
         } else {
-          this.alertService.openSnackBar("EAMS Number Not Found", "error")
+          this.alertService.openSnackBar("EAMS number doesn't matches with the Claimant details", "error")
         }
       }, error => {
         this.alertService.openSnackBar(error.error.message, "error")
