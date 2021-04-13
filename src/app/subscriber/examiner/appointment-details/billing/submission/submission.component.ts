@@ -10,6 +10,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
 import { UserService } from 'src/app/shared/services/user.service';
 import * as regulation from 'src/app/shared/services/regulations';
+import { IntercomService } from 'src/app/services/intercom.service';
 @Component({
   selector: 'app-submission',
   templateUrl: './submission.component.html',
@@ -43,7 +44,11 @@ export class SubmissionComponent implements OnInit {
   columnsToDisplay2 = [];
   expandedElement;
   regulation = regulation;
-  constructor(public billingService: BillingService, private alertService: AlertService, public dialog: MatDialog, public userService: UserService) { }
+  constructor(public billingService: BillingService,
+    private alertService: AlertService,
+    public dialog: MatDialog,
+    private intercom: IntercomService,
+    public userService: UserService) { }
 
   ngOnInit() {
     this.getBillDocument();
@@ -167,6 +172,7 @@ export class SubmissionComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         //this.getBillingDetails();
+        this.intercom.setBillDocChange(true);
       }
     });
   }

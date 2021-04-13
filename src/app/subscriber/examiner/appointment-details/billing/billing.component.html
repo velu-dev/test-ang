@@ -40,7 +40,7 @@
         </mat-card>
 
         <!-- Subbmission -->
-        <app-submission *ngIf="billingData"  [billType]="tabIndex + 1" [paramsId]="paramsId" [billingData]="billingData" [states]="states">
+        <app-submission *ngIf="billingData" [review]="'First'" [billType]="tabIndex + 1" [paramsId]="paramsId" [billingData]="billingData" [states]="states">
         </app-submission>
         <!-- ===== Billing Documents ==== -->
         <div class="completed-documents m-t-30">

@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { BillingService } from 'src/app/subscriber/service/billing.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { saveAs } from 'file-saver';
+import { IntercomService } from 'src/app/services/intercom.service';
 
 @Component({
   selector: 'app-billing-document',
@@ -19,7 +20,7 @@ import { saveAs } from 'file-saver';
     ]),
   ],
 })
-export class BillingDocumentComponent implements OnInit {
+export class BillingDocumentComponent implements OnInit, OnDestroy {
   @Input() billingData: any;
   @Input() paramsId: any;
   @Input() isMobile: any;
@@ -29,7 +30,8 @@ export class BillingDocumentComponent implements OnInit {
   dataSourceDocList = new MatTableDataSource([]);
   expandIdDoc: any;
   expandedElement;
-  constructor(private claimService: ClaimService, public billingService: BillingService, private alertService: AlertService) {
+  subscription: any;
+  constructor(private claimService: ClaimService, public billingService: BillingService, private alertService: AlertService, private intercom: IntercomService) {
     if (this.isMobile) {
       this.columnsNameDoc = ["", "File Name"]
       this.columnsToDisplayDoc = ['is_expand', 'file_name']
@@ -37,13 +39,24 @@ export class BillingDocumentComponent implements OnInit {
       this.columnsNameDoc = ["", "Ref #", "File Name", "Action", "Date", "Recipients", "Download" + '\n' + "Sent Documents", "Further Information"]
       this.columnsToDisplayDoc = ['doc_image', 'request_reference_id', 'file_name', 'action', "date", "recipients", 'download', 'payor_response_message']
     }
+
+    this.subscription = this.intercom.getBillDocChange().subscribe(res => {
+      this.getDocument();
+    })
   }
 
   ngOnInit() {
+    this.getDocument();
+  }
 
+  getDocument() {
     this.billingService.getSendRecDocument(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, this.billType).subscribe(document => {
       this.dataSourceDocList = new MatTableDataSource(document.data);
     })
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 
@@ -63,7 +76,7 @@ export class BillingDocumentComponent implements OnInit {
       this.claimService.updateActionLog({ type: "billing", "document_category_id": 8, "claim_id": this.paramsId.claim_id, "billable_item_id": this.paramsId.billId, "documents_ids": [element.document_id ? element.document_id : details.document_id] }).subscribe(res => {
       })
       saveAs(res.signed_file_url, element.file_name);
-      // this.getBillingDetails();
+      this.getDocument();
     })
   }
 

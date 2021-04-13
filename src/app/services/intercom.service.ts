@@ -12,7 +12,7 @@ export class IntercomService {
   public claimNumber = new Subject<any>();
   public billableItem = new Subject<any>();
   public billNo = new Subject<any>();
-
+  public BillDocChange = new Subject<any>();
   public BillItemChange = new Subject<any>();
   public examinerPage: any;
   constructor() { }
@@ -79,12 +79,17 @@ export class IntercomService {
 
 
   public setBillItemChange(status): any {
-    console.log("set",status)
     this.BillItemChange.next(status);
   }
 
   public getBillItemChange() {
     return this.BillItemChange.asObservable();;
   }
+  public setBillDocChange(status): any {
+    this.BillDocChange.next(status);
+  }
 
+  public getBillDocChange() {
+    return this.BillDocChange.asObservable();;
+  }
 }
