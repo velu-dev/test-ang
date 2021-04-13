@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first, take } from 'rxjs/operators';
 import { IntercomService } from 'src/app/services/intercom.service';
@@ -9,7 +9,7 @@ import { BillingService } from 'src/app/subscriber/service/billing.service';
   templateUrl: './late-response.component.html',
   styleUrls: ['./late-response.component.scss']
 })
-export class LateResponseComponent implements OnInit {
+export class LateResponseComponent implements OnInit, OnDestroy {
   @Input() billingData: any;
   @Input() paramsId: any;
   @Input() isMobile: any;
@@ -18,12 +18,13 @@ export class LateResponseComponent implements OnInit {
   billStatusList = [];
   lateResData: any;
   lateForm: FormGroup;
+  subscription: any;
   constructor(public billingService: BillingService, private fb: FormBuilder, private intercom: IntercomService) {
     this.lateForm = this.fb.group({
       lateRes: this.fb.array([]),
     })
 
-    this.intercom.getBillItemChange().pipe(take(1)).subscribe(res => {
+    this.subscription = this.intercom.getBillItemChange().subscribe(res => {
       this.lateResData['charge'] = res.total_charge;
       let balance = +res.total_charge - + this.lateResData['payment'];
       this.lateResData['balance'] = balance > 0 ? balance : 0;
@@ -34,6 +35,11 @@ export class LateResponseComponent implements OnInit {
     this.getLateRes();
     this.getLateResStatus();
   }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
 
   newLateRes(): FormGroup {
     return this.fb.group({
