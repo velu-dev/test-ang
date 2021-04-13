@@ -262,7 +262,7 @@ export class SubmissionComponent implements OnInit {
   }
 
   getGenerateBillingForm(id) {
-    this.billingService.generateBillingForm(this.paramsId.claim_id, this.paramsId.billId, id).subscribe(billing => {
+    this.billingService.generateBillingForm(this.paramsId.claim_id, this.paramsId.billId,this.paramsId.billingId , id).subscribe(billing => {
       saveAs(billing.data.exam_report_file_url, billing.data.file_name);
       this.alertService.openSnackBar("File downloaded successfully", "success");
     }, error => {
