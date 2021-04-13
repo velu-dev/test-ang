@@ -538,7 +538,7 @@ export class BillLineItemComponent implements OnInit {
 
   selected(event: MatAutocompleteSelectedEvent, group: FormGroup, index?): void {
     if (group.value.modifierList.length > 0 && group.value.modifierList.includes(event.option.viewValue)) {
-      this.alertService.openSnackBar("Already added", "error");
+      this.alertService.openSnackBar("Modifier already added!", "error");
       return;
     }
     if (group.value.modifierList.length > 3) {
