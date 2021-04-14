@@ -74,8 +74,8 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   currentDate = new Date();
   minimumDate = new Date(1900, 0, 1);
   paymentRes: any;
-  voidType: any;
-  paidStatusData: any;
+  @Input() voidType: any;
+  @Input() paidStatusData: any;
   subscription: any;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
 
@@ -93,14 +93,6 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     })
     this.paymentForm = this.fb.group({
       payments: this.fb.array([]),
-    })
-
-    this.billingService.seedData('void_type_seed_data').subscribe(data => {
-      this.voidType = data.data;
-    })
-
-    this.billingService.seedData('response_type_seed_data').subscribe(data => {
-      this.paidStatusData = data.data;
     })
 
   }
@@ -131,7 +123,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    console.log(this.billingData)
+    console.log("payemnt response")
     this.getPaymentRes();
     this.subscription = this.intercom.BillItemChange.subscribe(res => {
       this.payments().at(0).get('charge').patchValue(res.total_charge)

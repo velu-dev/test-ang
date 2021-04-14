@@ -11,46 +11,45 @@
         </mat-tab>
     </mat-tab-group>
 
-    <div *ngIf="firstBillId && tabIndex == 0">
-        <!-- ===== First Bill Submission ===== -->
-        <app-billing-info *ngIf="billingData" [review]="'First'" [paramsId]="paramsId" [billingData]="billingData"
-            [isMobile]="isMobile">
+    <div *ngIf="billingData">
+        <app-billing-info [review]="review" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
         </app-billing-info>
 
-        <app-diagnosis-code *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
+        <app-diagnosis-code [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
         </app-diagnosis-code>
 
-        <app-bill-line-item *ngIf="billingData" [review]="'First'" [paramsId]="paramsId" [billingData]="billingData"
-            [isMobile]="isMobile">
+        <app-bill-line-item [review]="review" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
         </app-bill-line-item>
 
         <mat-card class="fbr-pay-response" *ngIf="billingData">
             <mat-tab-group>
                 <mat-tab label="Payment response">
                     <mat-card>
-                        <app-payment-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" (getPaymentStatus)="getPaymentStatus($event)">
+                        <app-payment-response [paramsId]="paramsId" [billingData]="billingData"
+                            (getPaymentStatus)="getPaymentStatus($event)" [voidType]="voidType" [paidStatusData]="paidStatusData">
                         </app-payment-response>
                     </mat-card>
                 </mat-tab>
                 <mat-tab label="Late response">
-                    <app-late-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" [billType]="tabIndex + 1" [isMobile]="isMobile">
+                    <app-late-response [paramsId]="paramsId" [billingData]="billingData" [billType]="tabIndex + 1"
+                        [isMobile]="isMobile">
                     </app-late-response>
                 </mat-tab>
             </mat-tab-group>
         </mat-card>
 
-        <!-- Subbmission -->
-        <app-submission *ngIf="billingData" [review]="'First'" [billType]="tabIndex + 1" [paramsId]="paramsId" [billingData]="billingData" [states]="states">
+        <app-submission [review]="review" [billType]="tabIndex + 1" [paramsId]="paramsId" [billingData]="billingData"
+            [states]="states">
         </app-submission>
-        <!-- ===== Billing Documents ==== -->
+
         <div class="completed-documents m-t-30">
-            <app-billing-document *ngIf="billingData" [billType]="tabIndex + 1" [paramsId]="paramsId" [billingData]="billingData"
+            <app-billing-document [billType]="tabIndex + 1" [paramsId]="paramsId" [billingData]="billingData"
                 [isMobile]="isMobile"></app-billing-document>
         </div>
     </div>
-    <div *ngIf="secondBillId && tabIndex == 1">
-        <!-- ===== Second Bill Review ===== -->
-        <!-- ===== First Bill Submission ===== -->
+
+    <!-- ===== Second Bill Review ===== -->
+    <!-- <div *ngIf="secondBillId && tabIndex == 1 && billingData">
         <app-billing-info *ngIf="billingData" [review]="'Second'" [paramsId]="paramsId" [billingData]="billingData"
             [isMobile]="isMobile">
         </app-billing-info>
@@ -66,7 +65,7 @@
             <mat-tab-group>
                 <mat-tab label="Payment response">
                     <mat-card>
-                        <app-payment-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData">
+                        <app-payment-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData"  (getPaymentStatus)="getPaymentStatus($event)">
                         </app-payment-response>
                     </mat-card>
                 </mat-tab>
@@ -77,15 +76,13 @@
             </mat-tab-group>
         </mat-card>
 
-        <!-- ===== Examination Submission Documents ==== -->
         <app-submission *ngIf="billingData" [review]="'Second'"  [billType]="tabIndex + 1" [paramsId]="paramsId" [billingData]="billingData"
             [states]="states">
         </app-submission>
 
-        <!-- ===== Billing Documents ==== -->
         <div class="completed-documents m-t-30">
             <app-billing-document *ngIf="billingData" [billType]="tabIndex + 1" [paramsId]="paramsId" [billingData]="billingData"
                 [isMobile]="isMobile"></app-billing-document>
         </div>
-    </div>
+    </div> -->
 </div>
