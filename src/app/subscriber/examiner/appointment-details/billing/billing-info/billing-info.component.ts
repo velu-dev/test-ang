@@ -43,7 +43,7 @@ export class BillingInfoComponent implements OnInit {
       }
     }
 
-    this.changeColors(this.billingData.bill_status_color_code)
+    this.changeColors(this.billingData.bill_status_color_code ? this.billingData.bill_status_color_code : '#E6E6E6')
   }
 
   changeColors(color) {
