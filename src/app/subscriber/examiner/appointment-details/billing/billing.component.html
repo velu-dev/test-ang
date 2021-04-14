@@ -27,7 +27,7 @@
         <mat-card class="fbr-pay-response" *ngIf="billingData">
             <mat-tab-group>
                 <mat-tab label="Payment response">
-                    <mat-card>
+                    <mat-card class="fbr-mat-card">
                         <app-payment-response *ngIf="billingData" [paramsId]="paramsId" [billingData]="billingData" (getPaymentStatus)="getPaymentStatus($event)">
                         </app-payment-response>
                     </mat-card>
