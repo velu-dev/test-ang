@@ -59,13 +59,13 @@ export class DashboardComponent implements OnInit {
     private subscriberService: SubscriberService,
     private intercom: IntercomService, private alertService: AlertService) {
     this.subscriberService.getDashboardData({}).subscribe(res => {
-      console.log(res)
-      res.data.splited_record.map(total => {
+      // console.log(res)
+      res.data.splitted_record.map(total => {
         this.totalCount[total.type] = total.total_count
         this.criticalCount[total.type] = total.critical_count
       })
       console.log(this.totalCount, this.criticalCount)
-      this.dashboardData = res.data.splited_record
+      this.dashboardData = res.data.splitted_record
       this.allData = res.data.all_record;
       this.dataSource = new MatTableDataSource(res.data.all_record);
       this.dataSource.paginator = this.paginator;
