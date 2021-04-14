@@ -50,11 +50,11 @@ export class StaffDashboardComponent implements OnInit {
     //   this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
     // })
     this.subscriberService.getDashboardData({}).subscribe(res => {
-      res.data.splited_record.map(total => {
+      res.data.splitted_record.map(total => {
         this.totalCount[total.type] = total.total_count
         this.criticalCount[total.type] = total.critical_count
       })
-      this.dashboardData = res.data.splited_record;
+      this.dashboardData = res.data.splitted_record;
       this.selectedTile = status;
       this.allData = res.data.all_record;
       this.dataSource = new MatTableDataSource(res.data.all_record);
