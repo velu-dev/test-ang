@@ -112,6 +112,9 @@ export class BilllableBillingComponent implements OnInit {
   firstBillId: string;
   secondBillId: string;
   paymentStatus: any;
+  review: any;
+  voidType: any;
+  paidStatusData: any;
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
     public dialog: MatDialog,
@@ -167,6 +170,13 @@ export class BilllableBillingComponent implements OnInit {
       this.states = res.data;
     })
 
+    this.billingService.seedData('void_type_seed_data').subscribe(data => {
+      this.voidType = data.data;
+    })
+
+    this.billingService.seedData('response_type_seed_data').subscribe(data => {
+      this.paidStatusData = data.data;
+    })
   }
   tabIndex: number;
   tabchange(index) {
@@ -179,6 +189,7 @@ export class BilllableBillingComponent implements OnInit {
       this.paramsId = ids;
       this.billingData = null;
       this.getBillingDetails();
+      this.review = 'First'
     }
     if (index == 1) {
       if ((this.billingData && this.billingData.second_bill_id) || this.secondBillId) {
@@ -187,11 +198,12 @@ export class BilllableBillingComponent implements OnInit {
         let ids = {}
         ids = { claimant_id: this.paramsId.claimant_id, claim_id: this.paramsId.claim_id, billId: this.paramsId.billId, billingId: this.secondBillId };
         this.paramsId = ids;
-        this.getBillingDetails();
         this.billingData = null;
+        this.getBillingDetails();
       } else {
         this.createSecondBill();
       }
+      this.review = 'Second'
     }
   }
 
