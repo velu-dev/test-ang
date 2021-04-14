@@ -740,6 +740,14 @@ input:-webkit-autofill {
     }
   }
 }
+.claim-search {
+  .mat-form-field-wrapper {
+    .mat-form-field-subscript-wrapper {
+      min-height: auto !important;
+      display: inline-block !important;
+    }
+  }
+}
 
 // Form fields disabled label color
 .mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-label {
