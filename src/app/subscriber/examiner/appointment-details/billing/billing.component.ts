@@ -227,6 +227,7 @@ export class BilllableBillingComponent implements OnInit {
         this.billingId = submission.data.first_bill_id;
         this.firstBillId = submission.data.first_bill_id;
         this.tabIndex = 0;
+        this.getBillingDetails();
       }
     })
     //table
