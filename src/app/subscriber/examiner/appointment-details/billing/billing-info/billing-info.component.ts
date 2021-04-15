@@ -21,7 +21,7 @@ export class BillingInfoComponent implements OnInit {
   ngOnInit() {
     this.styleElement = document.createElement("style");
     this.changeColors("#cccccc");
-    this.billingService.getIncompleteInfo(this.paramsId.claim_id, this.paramsId.billId, { isPopupValidate: false }).subscribe(res => {
+    this.billingService.getIncompleteInfo(this.paramsId.claim_id, this.paramsId.billId,this.paramsId.billingId, { isPopupValidate: false }).subscribe(res => {
       this.isIncompleteError = true;
     }, error => {
       this.isIncompleteError = false;

@@ -120,8 +120,8 @@ export class BillingService {
     return this.http.delete(environment.baseUrl + api_endpoint.eorRemove + id)
   }
 
-  getIncompleteInfo(claim_id, bill_id, data): Observable<any> {
-    return this.http.post(environment.baseUrl + api_endpoint.getIncompleteinfo + claim_id + "/" + bill_id, data)
+  getIncompleteInfo(claim_id, bill_id, billingId, data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.getIncompleteinfo + claim_id + "/" + bill_id + '/' + billingId, data)
   }
 
   generateBillingForm(claimID, billableId, billingId, formId): Observable<any> {
@@ -174,6 +174,10 @@ export class BillingService {
 
   secondBillOnDemand(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.secondBillDemand, data)
+  }
+
+  getSubmission(claim, billable): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getSubmission + claim + '/' + billable)
   }
 
 }

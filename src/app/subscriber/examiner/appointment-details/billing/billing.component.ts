@@ -69,29 +69,16 @@ export class BilllableBillingComponent implements OnInit {
       shareReplay()
     );
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
-  //columnsToDisplay = [];
-  //IcdDataSource = new MatTableDataSource([]);
   expandedElement;
   isMobile = false;
-  // columnName = [];
   columnsToDisplay1 = [];
   expandedElement1;
   columnName1 = [];
   isMobile1 = false;
-  // documentsData: any = new MatTableDataSource([]);
-  //columnsToDisplay2 = [];
   expandedElement2;
-  //columnName2 = [];
-  //dataSourceDocList = new MatTableDataSource([]);
-  // columnsToDisplayDoc = [];
-  // expandedElement3;
-  // columnsNameDoc = [];
   filterValue: string;
-  // file: any;
-  //documentType: any;
   paramsId: any = {};
   billingId: number;
-  //documentList: any;
   eaxmProcuderalCodes: any;
   procuderalCodes: any;
   modifiers: any;
@@ -111,10 +98,12 @@ export class BilllableBillingComponent implements OnInit {
   role = this.cookieService.get('role_id');
   firstBillId: string;
   secondBillId: string;
+  independentBillId: string;
   paymentStatus: any;
   review: any = 'First';
   voidType: any;
   paidStatusData: any;
+  tabIndex: number = 0;
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
     public dialog: MatDialog,
@@ -178,34 +167,6 @@ export class BilllableBillingComponent implements OnInit {
       this.paidStatusData = data.data;
     })
   }
-  tabIndex: number;
-  tabchange(index) {
-    this.tabIndex = index
-    if (index == 0) {
-      console.log(this.firstBillId)
-      this.billingId = +this.firstBillId;
-      let ids = {}
-      ids = { claimant_id: this.paramsId.claimant_id, claim_id: this.paramsId.claim_id, billId: this.paramsId.billId, billingId: this.firstBillId };
-      this.paramsId = ids;
-      this.billingData = null;
-      this.getBillingDetails();
-      this.review = 'First'
-    }
-    if (index == 1) {
-      if ((this.billingData && this.billingData.second_bill_id) || this.secondBillId) {
-        this.secondBillId = this.secondBillId;
-        this.billingId = +this.secondBillId;
-        let ids = {}
-        ids = { claimant_id: this.paramsId.claimant_id, claim_id: this.paramsId.claim_id, billId: this.paramsId.billId, billingId: this.secondBillId };
-        this.paramsId = ids;
-        this.billingData = null;
-        this.getBillingDetails();
-      } else {
-        this.createSecondBill();
-      }
-      this.review = 'Second'
-    }
-  }
 
   openAuto(e, trigger: MatAutocompleteTrigger) {
     e.stopPropagation()
@@ -215,19 +176,6 @@ export class BilllableBillingComponent implements OnInit {
   add(event: MatChipInputEvent, group: FormGroup): void {
     return;
   }
-
-  // openDialog(status?: boolean, group?): void {
-  //   const dialogRef = this.dialog.open(BillingPaymentDialog, {
-  //     width: '800px',
-  //     data: { status: status, id: group ? group.get('post_payment_id').value : null, billingId: this.billingId, claimId: this.paramsId.claim_id, billableId: this.paramsId.billId }
-  //   });
-
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (result) {
-  //       // this.getBillLineItem();
-  //     }
-  //   });
-  // }
 
   openBillOnDemand(): void {
     const dialogRef = this.dialog.open(billingOnDemandDialog, {
@@ -263,8 +211,24 @@ export class BilllableBillingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tabIndex = 0;
-    this.getBillingDetails();
+    this.billingService.getSubmission(this.paramsId.claim_id, this.paramsId.billId).subscribe(submission => {
+      console.log(submission.data);
+      if (submission.data.independent_bill_id) {
+        this.billingId = submission.data.independent_bill_id;
+        this.independentBillId = submission.data.independent_bill_id;
+        this.tabIndex = 2;
+      }
+      else if (submission.data.second_bill_id) {
+        this.billingId = submission.data.second_bill_id;
+        this.secondBillId = submission.data.second_bill_id;
+        this.tabIndex = 1;
+      }
+      else if (submission.data.first_bill_id) {
+        this.billingId = submission.data.first_bill_id;
+        this.firstBillId = submission.data.first_bill_id;
+        this.tabIndex = 0;
+      }
+    })
     //table
     this.touchedRows = [];
     this.userTable = this.fb.group({
@@ -273,12 +237,56 @@ export class BilllableBillingComponent implements OnInit {
 
   }
 
-  billTypestatus = false;
+
+  tabchange(index) {
+    this.tabIndex = index
+    if (index == 0) {
+      this.billingData = null;
+      console.log(this.firstBillId)
+      this.billingId = +this.firstBillId;
+      let ids = {}
+      ids = { claimant_id: this.paramsId.claimant_id, claim_id: this.paramsId.claim_id, billId: this.paramsId.billId, billingId: this.firstBillId };
+      this.paramsId = ids;
+      this.getBillingDetails();
+      this.review = 'First'
+    }
+    if (index == 1) {
+      this.billingData = null;
+      if (this.secondBillId) {
+        this.billingId = +this.secondBillId;
+        let ids = {}
+        ids = { claimant_id: this.paramsId.claimant_id, claim_id: this.paramsId.claim_id, billId: this.paramsId.billId, billingId: this.secondBillId };
+        this.paramsId = ids;
+        this.getBillingDetails();
+      } else {
+        this.createSecondBill();
+      }
+      this.review = 'Second'
+    }
+
+    if (index == 2) {
+      this.billingData = null;
+      if (this.independentBillId) {
+        this.billingId = +this.independentBillId;
+        let ids = {}
+        ids = { claimant_id: this.paramsId.claimant_id, claim_id: this.paramsId.claim_id, billId: this.paramsId.billId, billingId: this.independentBillId };
+        this.paramsId = ids;
+        this.getBillingDetails();
+      } else {
+
+      }
+
+      this.review = 'Independent'
+    }
+  }
+
+
   getBillingDetails() {
 
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId, this.billingId).subscribe(billing => {
       if (billing.data) {
         this.billingData = billing.data;
+        console.log("Get Billing")
         if (!billing.data) {
           return;
         }
@@ -289,14 +297,14 @@ export class BilllableBillingComponent implements OnInit {
         } else {
           this.intercom.setBillNo('Bill');
         }
-        console.log(this.billingData.bill_id)
-        if (this.billingData.second_bill_id) {
-          this.secondBillId = this.billingData.second_bill_id
-          if (!this.billTypestatus) {
-            this.tabchange(1);
-            this.billTypestatus = true;
-          }
-        }
+        // console.log(this.billingData.bill_id)
+        // if (this.billingData.second_bill_id) {
+        //   this.secondBillId = this.billingData.second_bill_id
+        //   if (!this.billTypestatus) {
+        //     this.tabchange(1);
+        //     this.billTypestatus = true;
+        //   }
+        // }
 
       }
     }, error => {
@@ -458,7 +466,7 @@ export class billingOnDemandDialog {
   }
 
   billingOnDemand() {
-    this.billingService.getIncompleteInfo(this.data.claimId, this.data.billableId, { isPopupValidate: true }).subscribe(res => {
+    this.billingService.getIncompleteInfo(this.data.claimId, this.data.billableId, this.data.billingId, { isPopupValidate: true }).subscribe(res => {
 
       if (this.selection1.selected.length == 0) {
         this.alertService.openSnackBar('Please select Recipient(s)', "error");
@@ -685,7 +693,7 @@ export class billingOnDemandDialog {
       this.alertService.openSnackBar('Maximum 12 Recipients Allowed', "error");
       return;
     }
-    this.billingService.getIncompleteInfo(this.data.claimId, this.data.billableId, { isPopupValidate: true }).subscribe(res => {
+    this.billingService.getIncompleteInfo(this.data.claimId, this.data.billableId, this.data.billingId, { isPopupValidate: true }).subscribe(res => {
       if (!this.data.is_w9_form) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
