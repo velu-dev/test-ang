@@ -38,12 +38,13 @@ export class DeoComponent implements OnInit {
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
     this.DEU.get('phone')!.valueChanges.subscribe(input => {
-      if (this.DEU.get("phone").value && this.DEU.get("phone").valid) {
-        this.DEU.get("phone_ext").enable();
-      } else {
-        this.DEU.get("phone_ext").reset();
-        this.DEU.get("phone_ext").disable();
-      }
+      if (this.deoEdit)
+        if (this.DEU.get("phone").value && this.DEU.get("phone").valid) {
+          this.DEU.get("phone_ext").enable();
+        } else {
+          this.DEU.get("phone_ext").reset();
+          this.DEU.get("phone_ext").disable();
+        }
     })
     this.claimService.getDeuDetails().subscribe(res => {
       this.deuDetails = res.data;

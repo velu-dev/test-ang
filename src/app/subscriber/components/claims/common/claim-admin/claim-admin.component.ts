@@ -59,6 +59,7 @@ export class ClaimAdminComponent implements OnInit {
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
     this.claimAdminForm.get('phone')!.valueChanges.subscribe(input => {
+      if(this.claimAdminEdit)
       if (this.claimAdminForm.get("phone").value && this.claimAdminForm.get("phone").valid) {
         this.claimAdminForm.get("phone_ext").enable();
       } else {
