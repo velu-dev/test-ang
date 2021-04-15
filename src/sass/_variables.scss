@@ -698,7 +698,7 @@ input:-webkit-autofill {
         // display: inline-flex;
         // float: right;
         position: absolute;
-        top: 4;
+        top: 4px;
         right: 0;
       }
     }
@@ -737,6 +737,14 @@ input:-webkit-autofill {
 
     .mat-form-field-subscript-wrapper {
       min-height: calc(1em + 1px);
+    }
+  }
+}
+.claim-search {
+  .mat-form-field-wrapper {
+    .mat-form-field-subscript-wrapper {
+      min-height: auto !important;
+      display: inline-block !important;
     }
   }
 }

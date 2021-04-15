@@ -82,7 +82,7 @@ export class BillLineItemComponent implements OnInit {
   getBillLineItem() {
     this.touchedRows = [];
 
-    if (this.review.toLowerCase() == 'second') {
+    if (this.review && this.review.toLowerCase() == 'second') {
       this.userTable = this.fb.group({
         payor_claim_control_number: ['', Validators.compose([Validators.required])],
         file: [],

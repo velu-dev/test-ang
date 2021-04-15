@@ -10,7 +10,7 @@
         <div class="searchable-dropdown m-t-5 m-l-15 hide-mobile" [ngClass]="{'custom-dropdown': isSearch}" *ngIf="user?.role_id != 1">
             <form class="example-form">
                 <mat-form-field appearance="outline" hideRequiredMarker="hideRequiredControl.auto"
-                    floatLabel="floatLabelControl.auto">
+                    floatLabel="floatLabelControl.auto" class="claim-search">
                     <input matInput placeholder="Search for Claimant" aria-label="Search for Claimant"
                         [matAutocomplete]="auto" [formControl]="claimantCtrl">
                     <mat-autocomplete #auto="matAutocomplete">

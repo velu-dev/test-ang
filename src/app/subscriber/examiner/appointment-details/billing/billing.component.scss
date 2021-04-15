@@ -8,6 +8,10 @@
         &:hover {
             box-shadow: $shadow-style-one-hover;
         }
+        .fbr-mat-card {
+            padding: 0px ;
+            box-shadow: none
+        }
     }
     .sbr-pay-response {
         @extend .fbr-pay-response;

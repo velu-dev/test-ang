@@ -112,7 +112,7 @@ export class BilllableBillingComponent implements OnInit {
   firstBillId: string;
   secondBillId: string;
   paymentStatus: any;
-  review: any;
+  review: any = 'First';
   voidType: any;
   paidStatusData: any;
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,

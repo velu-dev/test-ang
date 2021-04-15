@@ -100,7 +100,7 @@ export class DiagnosisCodeComponent implements OnInit {
       }
       if (!icdStatus) {
         this.icdCtrl.reset();
-        this.alertService.openSnackBar("Already added", 'error');
+        this.alertService.openSnackBar("Diagnosis code already added!", 'error');
         return
       }
       this.filteredICD = [];
