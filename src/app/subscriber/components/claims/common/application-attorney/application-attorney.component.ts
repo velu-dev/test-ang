@@ -56,12 +56,14 @@ export class ApplicationAttorneyComponent implements OnInit {
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
     this.ApplicantAttorney.get('phone')!.valueChanges.subscribe(input => {
-      if (this.ApplicantAttorney.get("phone").value && this.ApplicantAttorney.get("phone").valid) {
-        this.ApplicantAttorney.get("phone_ext").enable();
-      } else {
-        this.ApplicantAttorney.get("phone_ext").reset();
-        this.ApplicantAttorney.get("phone_ext").disable();
-      }
+      if (this.aaEdit)
+        if (this.ApplicantAttorney.get("phone").value && this.ApplicantAttorney.get("phone").valid) {
+          this.ApplicantAttorney.get("phone_ext").enable();
+        } else {
+          console.log("sdfsfsd")
+          this.ApplicantAttorney.get("phone_ext").reset();
+          this.ApplicantAttorney.get("phone_ext").disable();
+        }
     })
     this.ApplicantAttorney.get('company_name')!.valueChanges.subscribe(input => {
       if (this.ApplicantAttorney.get('company_name').errors) {

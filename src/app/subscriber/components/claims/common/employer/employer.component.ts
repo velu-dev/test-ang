@@ -34,12 +34,13 @@ export class EmployerComponent implements OnInit {
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
     this.employer.get('phone')!.valueChanges.subscribe(input => {
-      if (this.employer.get("phone").value && this.employer.get("phone").valid) {
-        this.employer.get("phone_ext").enable();
-      } else {
-        this.employer.get("phone_ext").reset();
-        this.employer.get("phone_ext").disable();
-      }
+      if (this.employerEdit)
+        if (this.employer.get("phone").value && this.employer.get("phone").valid) {
+          this.employer.get("phone_ext").enable();
+        } else {
+          this.employer.get("phone_ext").reset();
+          this.employer.get("phone_ext").disable();
+        }
     })
   }
   ngOnInit() {

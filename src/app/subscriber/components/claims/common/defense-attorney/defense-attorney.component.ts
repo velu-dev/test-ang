@@ -59,6 +59,7 @@ export class DefenseAttorneyComponent implements OnInit {
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
     this.DefanceAttorney.get('phone')!.valueChanges.subscribe(input => {
+      if(this.daEdit)
       if (this.DefanceAttorney.get("phone").value && this.DefanceAttorney.get("phone").valid) {
         this.DefanceAttorney.get("phone_ext").enable();
       } else {

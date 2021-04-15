@@ -812,15 +812,11 @@ mat-progress-bar {
     padding: 10px 15px;
     font-size: $font-size-10;
     font-weight: $font-weight-bold;
-    // display: flex;
     display: -webkit-box;
     word-break: break-word;
-    // height: inherit;
     img {
       max-width: 50px;
-      // margin: 0px auto;
-      padding-right: 10px;
-      // height: 70px;
+      padding: 10px 10px 0 0 ;
     }
     .inline {
       max-width: 85%;
@@ -833,12 +829,16 @@ mat-progress-bar {
     font-size: $font-size-1;
     font-weight: $font-weight-medium;
     word-break: break-word;
+    line-height: 1.5;
     div {
       width: 100%;
     }
   }
   .disable-actions {
     text-align: center;
+    min-height: auto;
+    padding: 0;
+    margin-bottom: 0;
     .btn {
       border-radius: 50px;
       font-size: $font-size-1;
