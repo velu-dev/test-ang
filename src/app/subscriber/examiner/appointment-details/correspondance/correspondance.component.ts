@@ -399,44 +399,80 @@ export class BillingCorrespondanceComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result.data) {
-          this.onDemandService.downloadCorrespondanceForm(this.claim_id, this.billableId, docDeatils).subscribe(res => {
-            if (res.status) {
-              let data = res.data;
+          const dialogRef = this.dialog.open(AlertDialogueComponent, {
+            width: '500px', data: { title: "Confirm", message: "We are assuming you are processing Correspondence Manually, Instead of 'Mail On-demand.", yes: false, proceed: true, no: true, type: "warning" }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            if (result.data) {
+              console.log("Need to update with api");
+              this.downloadCorrespondance(docDeatils);
               documents_ids = [];
               custom_documents_ids = [];
               recipientsDocuments_ids = [];
               recipientsCustom_documents_ids = [];
-              this.selection.clear();
-              this.selection1.clear();
-              this.download(res.data.file_url, res.data.file_name);
-              this.getData();
-              this.alertService.openSnackBar("File downloaded successfully", 'success');
             } else {
-              this.alertService.openSnackBar(res.message, "error");
+              this.downloadCorrespondance(docDeatils);
+              documents_ids = [];
+              custom_documents_ids = [];
+              recipientsDocuments_ids = [];
+              recipientsCustom_documents_ids = [];
             }
-          });
+          })
         } else {
           return;
         }
       })
     } else {
-      this.onDemandService.downloadCorrespondanceForm(this.claim_id, this.billableId, docDeatils).subscribe(res => {
-        if (res.status) {
-          let data = res.data;
+      // this.onDemandService.downloadCorrespondanceForm(this.claim_id, this.billableId, docDeatils).subscribe(res => {
+      //   if (res.status) {
+      //     let data = res.data;
+      //     documents_ids = [];
+      //     custom_documents_ids = [];
+      //     recipientsDocuments_ids = [];
+      //     recipientsCustom_documents_ids = [];
+      //     this.selection.clear();
+      //     this.selection1.clear();
+      //     this.download(res.data.file_url, res.data.file_name);
+      //     this.getData();
+      //     this.alertService.openSnackBar("File downloaded successfully", 'success');
+      //   } else {
+      //     this.alertService.openSnackBar(res.message, "error");
+      //   }
+      // });
+      const dialogRef = this.dialog.open(AlertDialogueComponent, {
+        width: '500px', data: { title: "Confirm", message: "We are assuming you are processing Correspondence Manually, Instead of 'Mail On-demand.", yes: false, proceed: true, no: true, type: "warning" }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result.data) {
+          console.log("Need to update with api");
+          this.downloadCorrespondance(docDeatils);
           documents_ids = [];
           custom_documents_ids = [];
           recipientsDocuments_ids = [];
           recipientsCustom_documents_ids = [];
-          this.selection.clear();
-          this.selection1.clear();
-          this.download(res.data.file_url, res.data.file_name);
-          this.getData();
-          this.alertService.openSnackBar("File downloaded successfully", 'success');
         } else {
-          this.alertService.openSnackBar(res.message, "error");
+          this.downloadCorrespondance(docDeatils);
+          documents_ids = [];
+          custom_documents_ids = [];
+          recipientsDocuments_ids = [];
+          recipientsCustom_documents_ids = [];
         }
-      });
+      })
     }
+  }
+  downloadCorrespondance(docDeatils) {
+    this.onDemandService.downloadCorrespondanceForm(this.claim_id, this.billableId, docDeatils).subscribe(res => {
+      if (res.status) {
+        let data = res.data;
+        this.selection.clear();
+        this.selection1.clear();
+        this.download(res.data.file_url, res.data.file_name);
+        this.getData();
+        this.alertService.openSnackBar("File downloaded successfully", 'success');
+      } else {
+        this.alertService.openSnackBar(res.message, "error");
+      }
+    });
   }
   download(url, name) {
     saveAs(url, name, '_self');

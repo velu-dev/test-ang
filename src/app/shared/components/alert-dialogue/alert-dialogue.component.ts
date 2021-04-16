@@ -28,6 +28,7 @@ export class AlertDialogueComponent implements OnInit {
 export interface DialogData {
   message: string,
   yes: string,
+  proceed: string,
   no: string,
   type: string
 }
