@@ -180,4 +180,8 @@ export class BillingService {
     return this.http.get(environment.baseUrl + api_endpoint.getSubmission + claim + '/' + billable)
   }
 
+  createIBR(claim, billable, firstBillId, secondBillId): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.postIBRCreate + claim + '/' + billable + '/' + firstBillId + '/' + secondBillId, {})
+  }
+
 }
