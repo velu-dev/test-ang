@@ -74,6 +74,7 @@ export class BillLineItemComponent implements OnInit {
 
   ngOnInit() {
     this.getBillLineItem();
+    console.log('Linr item')
   }
 
   billing_line_items: any;
