@@ -21,6 +21,7 @@
   <div mat-dialog-actions class="disable-actions text-center" fxFlex="80">
     <button mat-stroked-button (click)="onClick(false)" *ngIf="data.no" class="no m-r-10">No</button>
     <button mat-stroked-button (click)="onClick(true)" *ngIf="data.ok" class="yes">OK</button>
+    <button mat-stroked-button (click)="onClick(true)" *ngIf="data.proceed" class="yes">Proceed</button>
     <button mat-stroked-button (click)="onClick(true)" *ngIf="data.yes" class="yes">Yes</button>
   </div>
 </div>
