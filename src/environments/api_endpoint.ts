@@ -215,6 +215,7 @@ export const api_endpoint = {
     lateResStatus: 'billing/late-response-bill-status/',
     secondBillDemand: 'service-requests/second-bill-ondemand/create',
     getSubmission: 'billing/get-submission-details/',
+    postIBRCreate: 'billing/create-ibr/',
 
 
     //Calendar 

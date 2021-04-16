@@ -99,7 +99,8 @@ export class BilllableBillingComponent implements OnInit {
   firstBillId: string;
   secondBillId: string;
   independentBillId: string;
-  paymentStatus: any;
+  sbrPaymentStatus: any;
+  ibrPaymentStatus: any;
   review: any = 'First';
   voidType: any;
   paidStatusData: any;
@@ -210,17 +211,35 @@ export class BilllableBillingComponent implements OnInit {
     })
   }
 
+  createIBR() {
+    this.billingService.createIBR(this.paramsId.claim_id, this.paramsId.billId, this.BillIds.first_bill_id, this.secondBillId).subscribe(second => {
+      this.billingId = second.data.bill_id;
+      this.independentBillId = second.data.bill_id;
+      let ids = {}
+      ids = { claimant_id: this.paramsId.claimant_id, claim_id: this.paramsId.claim_id, billId: this.paramsId.billId, billingId: this.independentBillId };
+      this.paramsId = ids;
+      this.getBillingDetails();
+      this.billingData = null;
+    }, error => {
+      console.log(error);
+    })
+  }
+  BillIds: any;
   ngOnInit() {
     this.billingService.getSubmission(this.paramsId.claim_id, this.paramsId.billId).subscribe(submission => {
       console.log(submission.data);
+      this.BillIds = submission.data;
       if (submission.data.independent_bill_id) {
         this.billingId = submission.data.independent_bill_id;
         this.independentBillId = submission.data.independent_bill_id;
+        this.firstBillId = submission.data.first_bill_id;
+        this.secondBillId = submission.data.second_bill_id;
         this.tabIndex = 2;
       }
       else if (submission.data.second_bill_id) {
         this.billingId = submission.data.second_bill_id;
         this.secondBillId = submission.data.second_bill_id;
+        this.firstBillId = submission.data.first_bill_id;
         this.tabIndex = 1;
       }
       else if (submission.data.first_bill_id) {
@@ -252,6 +271,7 @@ export class BilllableBillingComponent implements OnInit {
       this.review = 'First'
     }
     if (index == 1) {
+      console.log(index, this.secondBillId)
       this.billingData = null;
       if (this.secondBillId) {
         this.billingId = +this.secondBillId;
@@ -274,7 +294,7 @@ export class BilllableBillingComponent implements OnInit {
         this.paramsId = ids;
         this.getBillingDetails();
       } else {
-
+        this.createIBR();
       }
 
       this.review = 'Independent'
@@ -315,7 +335,12 @@ export class BilllableBillingComponent implements OnInit {
 
 
   getPaymentStatus(value) {
-    this.paymentStatus = value;
+    if (this.tabIndex == 1) {
+      this.ibrPaymentStatus = value
+    } else {
+      this.sbrPaymentStatus = value;
+    }
+
   }
 
 
