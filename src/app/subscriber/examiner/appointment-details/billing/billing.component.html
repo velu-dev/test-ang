@@ -6,7 +6,8 @@
             [disabled]="!(paymentStatus?.bill_paid_status?.toLowerCase() == 'partially paid' || paymentStatus?.bill_paid_status?.toLowerCase() == 'rejected')">
 
         </mat-tab>
-        <mat-tab label="Independent Bill Review" disabled>
+        <mat-tab label="Independent Bill Review" 
+         [disabled]="!(paymentStatus?.bill_paid_status?.toLowerCase() == 'partially paid' || paymentStatus?.bill_paid_status?.toLowerCase() == 'rejected')">
             <!-- ===== Independent Bill Submission ===== -->
         </mat-tab>
     </mat-tab-group>
