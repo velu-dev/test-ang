@@ -259,6 +259,7 @@ export class BilllableBillingComponent implements OnInit {
 
 
   tabchange(index) {
+    console.log(index, "tab change")
     this.tabIndex = index
     if (index == 0) {
       this.billingData = null;

@@ -1,5 +1,5 @@
 <!-- ===== Bill Items ==== -->
-<div class="bill-item" *ngIf="review?.toLowerCase() == 'first'">
+<div class="bill-item" *ngIf="billType == 1">
     <mat-card>
         <mat-card-header>
             <div class="content-wrapper-main-title">Billing Line Items</div>
@@ -437,7 +437,7 @@
 
 <!-- +++++ Second Bill Review - Bill Items +++++ -->
 
-<div class="bill-item sbr_" *ngIf="review?.toLowerCase() == 'second' || review?.toLowerCase() == 'independent'">
+<div class="bill-item sbr_" *ngIf="billType == 2 || billType == 3">
     <mat-card>
         <mat-card-header>
             <div class="content-wrapper-main-title">Second Bill Review - Bill Items</div>
@@ -611,8 +611,9 @@
                                                 </div>
                                                 <div fxFlex="50">
                                                     <div fxLayout="row wrap" fxFlex="100">
-                                                        <div fxFlex="100">Reason for Requesting Second Bill Review and
+                                                        <div fxFlex="100" *ngIf="billType == 2">Reason for Requesting Second Bill Review and
                                                             Description of Supporting Documentation*</div>
+                                                        <div fxFlex="100" *ngIf="billType == 3">Reason for Requesting Independent Bill Review*</div>    
                                                         <mat-form-field appearance="outline" fxFlex="100">
                                                             <textarea formControlName="bill_request_reason" matInput
                                                                 placeholder="Reason" rows="0"></textarea>
@@ -631,7 +632,7 @@
                                                             </mat-radio-group>
 
                                                         </div>
-                                                        <div fxFlex="100" class="select-1">Supporting Documentation
+                                                        <div fxFlex="100" class="select-1" *ngIf="billType == 2">Supporting Documentation
                                                             Attached?
 
                                                             <mat-radio-group
@@ -653,7 +654,7 @@
                             </tbody>
                         </table>
                         <div fxLayout="row wrap" *ngIf="showDocumentSec">
-                            <div fxFlex="100" class="m-t-20">
+                            <div fxFlex="100" class="m-t-20" *ngIf="billType == 2">
                                 <div fxLayout="row wrap">
                                     <div fxFlex="50">
                                         <mat-form-field appearance="outline" fxFlex="100">

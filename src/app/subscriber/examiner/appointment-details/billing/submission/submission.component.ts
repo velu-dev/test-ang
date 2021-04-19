@@ -262,7 +262,7 @@ export class SubmissionComponent implements OnInit {
   }
 
   getGenerateBillingForm(id) {
-    this.billingService.generateBillingForm(this.paramsId.claim_id, this.paramsId.billId,this.paramsId.billingId , id).subscribe(billing => {
+    this.billingService.generateBillingForm(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, id).subscribe(billing => {
       saveAs(billing.data.exam_report_file_url, billing.data.file_name);
       this.alertService.openSnackBar("File downloaded successfully", "success");
     }, error => {
@@ -274,6 +274,15 @@ export class SubmissionComponent implements OnInit {
     this.billingService.downloadOndemandDocuments({ file_url: element.exam_report_file_url }).subscribe(res => {
       this.alertService.openSnackBar("File downloaded successfully", "success");
       saveAs(res.signed_file_url, element.file_name);
+    })
+  }
+
+  downloadMethod() {
+    this.billingService.billingDownloadAll(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, {}).subscribe(doc => {
+      saveAs(doc.data.file_url, doc.data.file_name, '_self');
+      this.alertService.openSnackBar("Document(s) downloaded successfully", "success");
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, "error");
     })
   }
 
