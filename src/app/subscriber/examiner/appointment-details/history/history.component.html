@@ -3,31 +3,32 @@
     <div fxFlex="100" class="container">
       <div class="main-title">Medical History Questionnaire On Demand Status <span class="custom-info"
           matTooltipPosition="above"
-          matTooltip="Historian will call the Claimant and go through the Medical History Questionnaire over the phone. The status will be shown here."><i class="material-icons-outlined">info</i></span></div>
+          matTooltip="Historian will call the Claimant and go through the Medical History Questionnaire over the phone. The status will be shown here."><i
+            class="material-icons-outlined">info</i></span></div>
       <p class="description">View the progress of Medical History Questionnaire service here.</p>
       <mat-progress-bar mode="determinate" value="{{statusBarValues?.value}}" class="progress"></mat-progress-bar>
       <div class="text-center">{{historyData?.on_demand_status}}</div>
     </div>
 
     <div fxFlex="100" class="text-center m-t-20 m-b-20"
-      *ngIf="historyData?.on_demand_status == 'Unsent' || historyData?.on_demand_status == 'Completed' || historyData?.on_demand_status == 'Error' || historyData?.on_demand_status == 'Cancelled'">
+      *ngIf="historyData?.on_demand_status_id == 7 || historyData?.on_demand_status_id == 9 || historyData?.on_demand_status_id == 10 || historyData?.on_demand_status_id == 25 || historyData?.on_demand_status_id == 33 || historyData?.on_demand_status_id == 35">
       <mat-checkbox [disabled]="historyData?.is_exam_type_changed || historyData?.isExaminerDisabled "
         [(ngModel)]="rushRequest">Rush Request?</mat-checkbox>
     </div>
     <div fxFlex="100" class="text-center m-t-20 m-b-20"
-      *ngIf="historyData?.on_demand_status && historyData?.on_demand_status != 'Unsent' && historyData?.on_demand_status != 'Completed' && historyData?.on_demand_status != 'Error' && historyData?.on_demand_status != 'Cancelled'">
+      *ngIf="historyData?.on_demand_status_id !=7 && historyData?.on_demand_status_id != 9 && historyData?.on_demand_status_id != 'Completed' != 10 && historyData?.on_demand_status_id != 25 && historyData?.on_demand_status_id != 33 && historyData?.on_demand_status_id != 35">
       <div class="info-alert"><strong>Date Requested :</strong> {{historyData?.date_of_request | date:'MM-dd-yyyy' }}
         <span class="p-l-20"><strong>Rush Request? :</strong> {{historyData?.is_rush_request ? 'Yes' : 'No'}}</span>
       </div>
     </div>
     <div fxFlex="100"
-      *ngIf="historyData?.on_demand_status == 'Unsent' || historyData?.on_demand_status == 'Completed' || historyData?.on_demand_status == 'Error' || historyData?.on_demand_status == 'Cancelled'"
+      *ngIf="historyData?.on_demand_status_id == 7 || historyData?.on_demand_status_id == 9 || historyData?.on_demand_status_id == 10 || historyData?.on_demand_status_id == 25 || historyData?.on_demand_status_id == 33 || historyData?.on_demand_status_id == 35"
       class="text-center m-t-20 m-b-20 action-btns">
       <button [disabled]="historyData?.is_exam_type_changed || historyData?.isExaminerDisabled" mat-stroked-button
         class="outline-success huge-btn" (click)="onDemandSubmit()"> Click Here for Medical History Questionnaire On
         Demand</button>
     </div>
-    
+
     <div fxFlex="100" class="m-t-20" *ngIf="historyTrackingDatasource?.filteredData?.length > 0">
       <div class="main-title m-b-10">History Call Tracking</div>
       <div class="user-detail vertical-fixed default-cursor mh-auto">
@@ -93,7 +94,8 @@
     <div fxFlex="100">
       <div class="main-title">View Completed Medical History Questionnaire <span class="custom-info"
           matTooltipPosition="above"
-          matTooltip="The completed Medical History Questionnaire will be available for download from this table."><i class="material-icons-outlined">info</i></span></div>
+          matTooltip="The completed Medical History Questionnaire will be available for download from this table."><i
+            class="material-icons-outlined">info</i></span></div>
       <p class="description">Completed document table. </p>
       <div class="user-detail vertical-fixed default-cursor">
         <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
@@ -117,12 +119,13 @@
                 <span *ngIf="column == 'service_priority'" class="no-wrap-td">{{element?.service_priority == 'rush' ?
                   'Yes' : ''}} {{element?.service_priority == 'normal' ? 'No' : ''}}</span>
                 <span *ngIf="column == 'date_of_communication'">
-                 <span *ngIf="element.received.length > 0"> {{element?.date_of_communication | date:'MM-dd-yyyy'}}</span>
+                  <span *ngIf="element.received.length > 0"> {{element?.date_of_communication |
+                    date:'MM-dd-yyyy'}}</span>
                 </span>
                 <span *ngIf="column == 'download'">
                   <span *ngIf="element.received.length > 0">
-                     <a class="text-success" (click)="download(element)">Download</a> 
-                    </span>
+                    <a class="text-success" (click)="download(element)">Download</a>
+                  </span>
                 </span>
               </div>
             </td>
@@ -136,7 +139,8 @@
                   <div><span>File Name</span><span> {{element?.file_name}}</span></div>
                   <div class="no-wrap-td"><span>Rush Request?</span><span> {{element?.service_priority == 'rush' ? 'Yes'
                       : ''}} {{element?.service_priority == 'normal' ? 'No' : ''}}</span></div>
-                  <div><span *ngIf="element.received.length > 0">Date Received</span><span> {{element?.received_date}}</span></div>
+                  <div><span *ngIf="element.received.length > 0">Date Received</span><span>
+                      {{element?.received_date}}</span></div>
                   <div><span *ngIf="element.received.length > 0">Download</span><span>
                       <a class="text-success" (click)="download(element)">Download</a>
                     </span></div>

@@ -244,7 +244,6 @@ export class HistoryComponent implements OnInit {
     this.claimService.updateActionLog({ type: "history", "document_category_id": 3, "claim_id": this.ids.claim_id, "billable_item_id": this.ids.billable_item_id, "documents_ids": [data.document_id] }, true).subscribe(log => {
     })
     saveAs(data.file_url, data.file_name, "_self");
-
   }
 
 }
