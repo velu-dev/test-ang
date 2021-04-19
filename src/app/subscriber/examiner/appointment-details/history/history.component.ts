@@ -120,10 +120,10 @@ export class HistoryComponent implements OnInit {
     this.onDemandService.getHistory(this.paramsId.claim_id, this.paramsId.billId).subscribe(history => {
       this.historyData = history;
       this.changeColors(history.on_demand_status_color_code);
-      this.historyData.documets_sent_and_received.map(inFile => {
-        if (inFile.transmission_direction == 'IN') {
+      this.historyData.documents_sent_and_received.map(inFile => {
+        // if (inFile.transmission_direction == 'IN') {
           this.inFile.push(inFile)
-        }
+        // }
 
       })
       this.dataSource = new MatTableDataSource(this.inFile);
