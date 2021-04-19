@@ -35,7 +35,7 @@ export class BillLineItemComponent implements OnInit {
   @Input() paramsId: any;
   @Input() isMobile: any;
   @Input() review: string;
-  //@Input() billingId: number;
+  @Input() billType: any;
   //table
   userTable: FormGroup;
   control: FormArray;
@@ -660,21 +660,22 @@ export class BillLineItemComponent implements OnInit {
           billed_service_authorized: data.get('billed_service_authorized').value,
           support_documents_attached: data.get('support_documents_attached').value
         })
-        data.get('bill_request_reason').setValidators([Validators.required])
-        data.get('billed_service_authorized').setValidators([Validators.required])
-        data.get('support_documents_attached').setValidators([Validators.required])
+        if (this.billType == 3) delete reason_details[i].support_documents_attached;
+        data.get('bill_request_reason').setValidators([Validators.required]);
+        data.get('billed_service_authorized').setValidators([Validators.required]);
+        if (this.billType == 2) data.get('support_documents_attached').setValidators([Validators.required]);
         data.get('bill_request_reason').updateValueAndValidity();
         data.get('billed_service_authorized').updateValueAndValidity();
-        data.get('support_documents_attached').updateValueAndValidity();
+        if (this.billType == 2) data.get('support_documents_attached').updateValueAndValidity();
       } else {
         data.get('bill_request_reason').setValidators([])
         data.get('billed_service_authorized').setValidators([])
-        data.get('support_documents_attached').setValidators([])
+        if (this.billType == 2) data.get('support_documents_attached').setValidators([]);
         data.get('bill_request_reason').updateValueAndValidity();
         data.get('billed_service_authorized').updateValueAndValidity();
-        data.get('support_documents_attached').updateValueAndValidity();
+        if (this.billType == 2) data.get('support_documents_attached').updateValueAndValidity();
       }
-      if (data.get('support_documents_attached').value) {
+      if (this.billType == 2 && data.get('support_documents_attached').value) {
         showConfirmDialog = true;
       }
 
@@ -720,10 +721,10 @@ export class BillLineItemComponent implements OnInit {
     }
 
     formData.append('reason_details', JSON.stringify(reason_details));
-    formData.append('payor_claim_control_number', fullForm.get('payor_claim_control_number').value);
+    if (this.billType == 2) formData.append('payor_claim_control_number', fullForm.get('payor_claim_control_number').value);
     formData.append('is_file_changed', this.fileList && this.fileList.length > 0 ? 'true' : 'false');
 
-    if (this.fileList) {
+    if (this.fileList && this.billType == 2) {
       for (let i = 0; i < this.fileList.length; i++) {
         formData.append('file', this.fileList[i]);
       }
@@ -734,7 +735,7 @@ export class BillLineItemComponent implements OnInit {
       this.alertService.openSnackBar('Updated Successfully', 'success');
       this.fileList = [];
       this.fileName = [];
-      this.support_documents = line.data.support_documents ? line.data.support_documents : [];
+      if (this.billType == 2) this.support_documents = line.data.support_documents ? line.data.support_documents : [];
     }, error => {
       console.log(error);
     })

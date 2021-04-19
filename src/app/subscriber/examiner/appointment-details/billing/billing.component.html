@@ -19,7 +19,7 @@
         <app-diagnosis-code [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
         </app-diagnosis-code>
 
-        <app-bill-line-item [review]="review" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
+        <app-bill-line-item [review]="review" [billType]="tabIndex + 1" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
         </app-bill-line-item>
 
         <mat-card class="fbr-pay-response" *ngIf="billingData">
