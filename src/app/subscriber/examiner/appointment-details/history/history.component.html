@@ -116,10 +116,13 @@
                 <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
                 <span *ngIf="column == 'service_priority'" class="no-wrap-td">{{element?.service_priority == 'rush' ?
                   'Yes' : ''}} {{element?.service_priority == 'normal' ? 'No' : ''}}</span>
-                <span *ngIf="column == 'date_of_communication'">{{element?.date_of_communication | date:'MM-dd-yyyy'
-                  }}</span>
+                <span *ngIf="column == 'date_of_communication'">
+                 <span *ngIf="element.received.length > 0"> {{element?.date_of_communication | date:'MM-dd-yyyy'}}</span>
+                </span>
                 <span *ngIf="column == 'download'">
-                  <a class="text-success" (click)="download(element)">Download</a>
+                  <span *ngIf="element.received.length > 0">
+                     <a class="text-success" (click)="download(element)">Download</a> 
+                    </span>
                 </span>
               </div>
             </td>
@@ -133,8 +136,8 @@
                   <div><span>File Name</span><span> {{element?.file_name}}</span></div>
                   <div class="no-wrap-td"><span>Rush Request?</span><span> {{element?.service_priority == 'rush' ? 'Yes'
                       : ''}} {{element?.service_priority == 'normal' ? 'No' : ''}}</span></div>
-                  <div><span>Date Received</span><span> {{element?.received_date}}</span></div>
-                  <div><span>Download</span><span>
+                  <div><span *ngIf="element.received.length > 0">Date Received</span><span> {{element?.received_date}}</span></div>
+                  <div><span *ngIf="element.received.length > 0">Download</span><span>
                       <a class="text-success" (click)="download(element)">Download</a>
                     </span></div>
                 </div>

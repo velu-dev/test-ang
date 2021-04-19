@@ -12,6 +12,7 @@ import { BillingAlertComponent } from 'src/app/shared/components/billingalert/bi
 import { IntercomService } from 'src/app/services/intercom.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import * as moment from 'moment-timezone';
+import { ClaimService } from 'src/app/subscriber/service/claim.service';
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
@@ -43,21 +44,22 @@ export class HistoryComponent implements OnInit {
   historyTrackingDatasource: any;
   columnsToDisplays = [];
   columnNames = [];
+  ids: any;
   statusBarValues = { value: null, status: '', class: '' }
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
     private onDemandService: OnDemandService, private alertService: AlertService, private intercom: IntercomService,
-    public dialog: MatDialog, private cookieService: CookieService, public router: Router) {
+    public dialog: MatDialog, private cookieService: CookieService, public router: Router, private claimService: ClaimService) {
 
     this.route.params.subscribe(param => {
       this.paramsId = param;
       console.log(param);
-      let ids = {
+      this.ids = {
         claimant_id: param.claimant_id,
         claim_id: param.claim_id,
         billable_item_id: param.billId
       }
-      this.onDemandService.getBreadcrumbDetails(ids).subscribe(details => {
+      this.onDemandService.getBreadcrumbDetails(this.ids).subscribe(details => {
         console.log(details.data);
         this.intercom.setClaimant(details.data.claimant.first_name + ' ' + details.data.claimant.last_name);
         this.cookieService.set('claimDetails', details.data.claimant.first_name + ' ' + details.data.claimant.last_name)
@@ -238,9 +240,11 @@ export class HistoryComponent implements OnInit {
 
 
   }
-
   download(data) {
+    this.claimService.updateActionLog({ type: "history", "document_category_id": 3, "claim_id": this.ids.claim_id, "billable_item_id": this.ids.billable_item_id, "documents_ids": [data.document_id] }, true).subscribe(log => {
+    })
     saveAs(data.file_url, data.file_name, "_self");
+
   }
 
 }

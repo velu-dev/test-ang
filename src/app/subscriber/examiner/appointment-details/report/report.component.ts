@@ -139,10 +139,10 @@ export class ReportComponent implements OnInit {
     this.onDemandService.getTranscription(this.paramsId.claim_id, this.paramsId.billId).subscribe(report => {
       this.reportData = report;
       this.changeColors(report.on_demand_status_color_code);
-      this.dataSource = new MatTableDataSource(report.documets)
+      this.dataSource = new MatTableDataSource(report.documents)
       let inFile = [];
       let outFile = [];
-      // report.documets_sent_and_received.map(file => {
+      // report.documents_sent_and_received.map(file => {
       //   if (file.transmission_direction == 'IN') {
       //     inFile.push(file)
       //   } else {
@@ -150,7 +150,7 @@ export class ReportComponent implements OnInit {
       //   }
 
       // })
-      this.dataSoruceOut = new MatTableDataSource(report.documets_sent_and_received);
+      this.dataSoruceOut = new MatTableDataSource(report.documents_sent_and_received);
       this.dataSoruceIn = new MatTableDataSource(inFile);
       this.rushRequest = false;
       this.statusBarChanges(this.reportData.on_demand_status)
@@ -346,10 +346,10 @@ export class ReportComponent implements OnInit {
       service_priority: this.rushRequest ? "rush" : 'normal',
       service_description: "",
       document_ids: document_ids,
-      document_category_id: this.reportData.documets[0].document_category_id,
+      document_category_id: this.reportData.documents[0].document_category_id,
       billable_item_id: this.paramsId.billId,
-      service_request_type_id: this.reportData.documets[0].service_request_type_id,
-      service_provider_id: this.reportData.documets[0].service_provider_id, // default 3
+      service_request_type_id: this.reportData.documents[0].service_request_type_id,
+      service_provider_id: this.reportData.documents[0].service_provider_id, // default 3
       examiner_detail_id: this.reportData.examiner_detail_id,
       examiner_user_id: this.reportData.examiner_user_id
     }

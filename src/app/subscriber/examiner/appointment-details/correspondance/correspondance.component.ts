@@ -174,7 +174,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.correspondData = res;
       this.changeColors(res.on_demand_status_color_code);
       this.statusOfAppointment = { isEmptyNoDate: !res.is_appointment_no_date_present, IsEmptyAppointmentDate: !res.is_appointment_date_time_present, isEmptyDuration: !res.is_appointment_duration_present, isEmptyLocation: !res.is_appointment_location_present }
-      res.documets.map(doc => {
+      res.documents.map(doc => {
         if (doc.is_mandatory) {
           this.selection.select(doc);
         }
@@ -184,9 +184,9 @@ export class BillingCorrespondanceComponent implements OnInit {
           this.selection1.select(doc);
         }
       })
-      this.documents = new MatTableDataSource(res.documets);
+      this.documents = new MatTableDataSource(res.documents);
       this.recipients = new MatTableDataSource(res.recipient);
-      this.sentDocuments = new MatTableDataSource(res.documets_sent_and_received);
+      this.sentDocuments = new MatTableDataSource(res.documents_sent_and_received);
       this.statusBarChanges(this.correspondData.on_demand_status)
     })
   }

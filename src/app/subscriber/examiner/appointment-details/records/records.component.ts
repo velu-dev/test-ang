@@ -142,15 +142,15 @@ export class RecordsComponent implements OnInit {
       if (this.recordData.service_providers && this.recordData.service_providers.length) {
         this.service_provider_name = this.recordData.service_providers[0]
       }
-      record.documets.map(data => {
+      record.documents.map(data => {
         data.page_number = data.no_of_units;
         data.isEdit = false;
         data.oldPage = data.no_of_units;
       })
-      this.dataSource = new MatTableDataSource(record.documets)
+      this.dataSource = new MatTableDataSource(record.documents)
       let inFile = [];
       let outFile = [];
-      // record.documets_sent_and_received.map(file => {
+      // record.documents_sent_and_received.map(file => {
       //   if (file.transmission_direction == 'IN') {
       //     inFile.push(file)
       //   } else {
@@ -158,7 +158,7 @@ export class RecordsComponent implements OnInit {
       //   }
 
       // })
-      this.dataSoruceOut = new MatTableDataSource(record.documets_sent_and_received);
+      this.dataSoruceOut = new MatTableDataSource(record.documents_sent_and_received);
       this.dataSoruceIn = new MatTableDataSource(inFile)
       this.rushRequest = false;
       this.statusBarChanges(this.recordData.on_demand_status)
@@ -356,10 +356,10 @@ export class RecordsComponent implements OnInit {
       service_priority: this.rushRequest ? "rush" : 'normal',
       service_description: "",
       document_ids: document_ids,
-      document_category_id: this.recordData.documets[0].document_category_id,
+      document_category_id: this.recordData.documents[0].document_category_id,
       billable_item_id: this.paramsId.billId,
-      service_request_type_id: this.recordData.documets[0].service_request_type_id,
-      service_provider_id: this.recordData.documets[0].service_provider_id, // default 3
+      service_request_type_id: this.recordData.documents[0].service_request_type_id,
+      service_provider_id: this.recordData.documents[0].service_provider_id, // default 3
       service_provider_name: this.service_provider_name,
       examiner_detail_id: this.recordData.examiner_detail_id,
       examiner_user_id: this.recordData.examiner_user_id
@@ -441,7 +441,7 @@ export class RecordsComponent implements OnInit {
         }
       })
       this.dataSource = new MatTableDataSource(data)
-      //this.dataSource = new MatTableDataSource(record.documets)
+      //this.dataSource = new MatTableDataSource(record.documents)
       this.alertService.openSnackBar("Page number updated successfully", 'success');
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
