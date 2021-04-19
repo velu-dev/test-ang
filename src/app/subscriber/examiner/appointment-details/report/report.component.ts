@@ -178,7 +178,7 @@ export class ReportComponent implements OnInit {
         break;
 
       default:
-        this.statusBarValues = { value: 0, status: 'Error', class: 'error' }
+        this.statusBarValues = { value: 50, status: 'Error', class: 'error' }
         break;
     }
   }
