@@ -60,13 +60,14 @@
             .mat-card-description {
                 .incomplete-modules {
                     ul {
-                        margin: 0;
+                        margin: 5px 0 0 0;
                         padding: 0;
                         width: 100%;
                         li {
                             list-style: none;
                             display: inline-block;
                             width: 100%;
+                            padding-bottom: 10px;
                             // float: left;
                             span {
                                 color: $error;
@@ -78,7 +79,7 @@
                                     // vertical-align: sub;
                                     width: auto;
                                     height: auto;
-                                    padding: 10px 5px 0 0;
+                                    padding: 4px 5px 0 0;
                                     // font-size: $font-size-9;
                                 }
                                 i.fas {
@@ -94,11 +95,13 @@
                                 /* border: 1px solid red; */
                                 display: inline-block;
                                 border-radius: 3px;
+                                margin-top: 5px;
+                                padding: 8px 0;
                                 ol {
                                     li {
                                         width: 50%;
                                         float: left;
-                                        // padding: 5px 0 5px 0;
+                                        padding-bottom: 5px;
                                         list-style: disc;
                                         display: list-item;
                                         color: $warning;

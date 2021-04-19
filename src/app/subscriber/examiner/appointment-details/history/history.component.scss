@@ -1,6 +1,14 @@
-@import 'variables';
-@import 'table';
-@import '../correspondance/correspondance.component.scss';
+@import "variables";
+@import "table";
+@import "../correspondance/correspondance.component.scss";
+
+.history-status {
+    .text-center {
+        .info-alert {
+            margin: 0px auto;
+        }
+    }
+}
 
 .action-btns {
     button {
