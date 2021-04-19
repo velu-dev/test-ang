@@ -169,20 +169,20 @@ export class BillLineItemComponent implements OnInit {
             is_excess_pages: item.is_excess_pages,
             modifierTotal: item.modifierTotal
           }
-          if (this.review.toLowerCase() == 'second') {
+          if (this.billType == 2 || this.billType == 3) {
             firstData['bill_request_reason'] = item.support_documents_details.bill_request_reason;
             firstData['billed_service_authorized'] = item.support_documents_details.billed_service_authorized ? item.support_documents_details.billed_service_authorized : false;
-            firstData['support_documents_attached'] = item.support_documents_details.support_documents_attached ? item.support_documents_details.support_documents_attached : false;
+            if(this.billType == 2) firstData['support_documents_attached'] = item.support_documents_details.support_documents_attached ? item.support_documents_details.support_documents_attached : false;
           }
           this.getFormControls.controls[index].patchValue(firstData)
           if (this.getFormControls.controls[index].status == "VALID") {
             this.getFormControls.controls[index].get('isEditable').setValue(false);
           }
-          if (this.review.toLowerCase() == 'second') {
+          if (this.billType == 2 || this.billType == 3) {
             this.getFormControls.controls[index].get('isEditable').setValue(false);
           }
         })
-        if (this.review.toLowerCase() == 'second') {
+        if (this.billType == 2) {
           this.support_documents = line.support_documents ? line.support_documents : [];
           this.userTable.get('payor_claim_control_number').patchValue(line.payor_claim_control_number);
         }
