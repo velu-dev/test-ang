@@ -668,18 +668,18 @@ export class BillingCorrespondanceComponent implements OnInit {
       selected_recipients: selected_recipients
     }
 
-    if (documents_ids.includes(3)) {
-      if (!recipientsDocuments_ids.includes(1) || !recipientsDocuments_ids.includes(2)) {
-        const dialogRef = this.dialog.open(AlertDialogueComponent, {
-          width: '500px',
-          data: { title: "Mail On Demand", message: "Please select Claimant & Insurance Company in recipient and try again!", ok: true, no: false, type: "warning", warning: true }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          return
-        })
-        return;
-      }
-    }
+    // if (documents_ids.includes(3)) {
+    //   if (!recipientsDocuments_ids.includes(1) || !recipientsDocuments_ids.includes(2)) {
+    //     const dialogRef = this.dialog.open(AlertDialogueComponent, {
+    //       width: '500px',
+    //       data: { title: "Mail On Demand", message: "Please select Claimant & Insurance Company in recipient and try again!", ok: true, no: false, type: "warning", warning: true }
+    //     });
+    //     dialogRef.afterClosed().subscribe(result => {
+    //       return
+    //     })
+    //     return;
+    //   }
+    // }
 
     if (documents_ids.includes(36)) {
       if (!recipientsDocuments_ids.includes(1)) {
