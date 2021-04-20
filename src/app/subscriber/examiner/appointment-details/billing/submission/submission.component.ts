@@ -116,11 +116,12 @@ export class SubmissionComponent implements OnInit {
     this.formData.append('document_category_id', '8');
     this.formData.append('claim_id', this.paramsId.claim_id);
     this.formData.append('bill_item_id', this.paramsId.billId.toString());
+    this.formData.append('bill_id', this.paramsId.billingId.toString());
 
     for (let i = 0; i < this.selectedFiles.length; i++) {
       this.formData.append('file', this.selectedFiles[i]);
     }
-    this.billingService.postDocument(this.formData).subscribe(res => {
+    this.billingService.uploadCustomDoc(this.formData).subscribe(res => {
       this.selectedFile = null;
       this.fileUpload.nativeElement.value = "";
       this.documentType = null;
@@ -278,7 +279,7 @@ export class SubmissionComponent implements OnInit {
   }
 
   downloadMethod() {
-    this.billingService.billingDownloadAll(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, {}).subscribe(doc => {
+    this.billingService.billingDownloadAll(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, this.billType, {}).subscribe(doc => {
       saveAs(doc.data.file_url, doc.data.file_name, '_self');
       this.alertService.openSnackBar("Document(s) downloaded successfully", "success");
     }, error => {

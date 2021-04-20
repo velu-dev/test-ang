@@ -773,7 +773,7 @@ export class billingOnDemandDialog {
       }
 
     })
-    this.billingService.billingDownloadAll(this.data.claimId, this.data.billableId, this.data.billingId, { selected_recipients: selected_recipients }).subscribe(doc => {
+    this.billingService.billingDownloadAll(this.data.claimId, this.data.billableId, this.data.billingId, this.data.billType, { selected_recipients: selected_recipients }).subscribe(doc => {
       saveAs(doc.data.file_url, doc.data.file_name, '_self');
       this.onDemandStatus = true;
       this.alertService.openSnackBar("Document(s) downloaded successfully", "success");
