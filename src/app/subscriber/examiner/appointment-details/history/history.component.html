@@ -122,12 +122,12 @@
                 </span>
                 <span *ngIf="column == 'history_document_download'">
                   <span *ngIf="element.send">
-                    <a class="text-success" (click)="download(element)">Download</a>
+                    <a class="text-success" (click)="downloadSentFile(element)">Download</a>
                   </span>
                 </span>
                 <span *ngIf="column == 'summary_download'">
                   <span *ngIf="element.received.length > 0">
-                    <a class="text-success" (click)="downloadSentFile(element)">Download</a>
+                    <a class="text-success" (click)="download(element)">Download</a>
                   </span>
                 </span>
               </div>
