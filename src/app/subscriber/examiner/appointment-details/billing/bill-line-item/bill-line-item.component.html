@@ -603,9 +603,9 @@
                                     <tr class="reason" *ngIf="group.get('reviewShow').value">
                                         <td colspan="10" [formGroupName]="i">
                                             <div fxLayout="row wrap" class="reason-for-request">
-                                                <div fxFlex="100">
+                                                <div fxFlex="100" *ngIf="!first" >
                                                     <div class="checkbox">
-                                                        <mat-checkbox *ngIf="!first" (change)="BillLineSame(group,i, $event)" class="p-l-10" labelposition="after">Same as
+                                                        <mat-checkbox (change)="BillLineSame(group,i, $event)" class="p-l-10" labelposition="after">Same as
                                                             previous line item</mat-checkbox>
                                                     </div>
                                                 </div>
