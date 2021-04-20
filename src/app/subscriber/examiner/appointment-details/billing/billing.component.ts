@@ -146,6 +146,7 @@ export class BilllableBillingComponent implements OnInit {
           this.getBillIds()
         }, error => {
           this.logger.error(error)
+          this.alertService.openSnackBar(error.error.message, 'error');
         })
       } else {
         this.billingId = param.billingId
@@ -210,6 +211,7 @@ export class BilllableBillingComponent implements OnInit {
       this.billingData = null;
     }, error => {
       console.log(error);
+      this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
 
@@ -224,6 +226,7 @@ export class BilllableBillingComponent implements OnInit {
       this.billingData = null;
     }, error => {
       console.log(error);
+      this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
   BillIds: any;
@@ -263,6 +266,8 @@ export class BilllableBillingComponent implements OnInit {
         this.tabIndex = 0;
         this.getBillingDetails();
       }
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
 
