@@ -108,6 +108,9 @@ export class DiagnosisCodeComponent implements OnInit {
       this.icdData.push(this.selectedIcd)
       let data = { id: this.paramsId.billingId, claim_id: this.paramsId.claim_id, billable_item_id: this.paramsId.billId, diagnosis_code: this.icdData }
       this.billingService.updateDiagnosisCode(data).subscribe(code => {
+        if (this.icdData.length == 1) {
+          this.intercom.setBillDiagnosisChange(true);
+        }
         this.IcdDataSource = new MatTableDataSource(this.icdData);
         this.selectedIcd = { code: "", name: "" };
         this.alertService.openSnackBar("ICD data added successfully", "success");
@@ -138,6 +141,9 @@ export class DiagnosisCodeComponent implements OnInit {
             this.icdData.splice(index, 1);
             let data = { claim_id: this.paramsId.claim_id, billable_item_id: this.paramsId.billId, id: this.paramsId.billingId, diagnosis_code: this.icdData }
             this.billingService.updateDiagnosisCode(data).subscribe(code => {
+              if (this.icdData.length == 0) {
+                this.intercom.setBillDiagnosisChange(true);
+              }
               this.IcdDataSource = new MatTableDataSource(this.icdData);
               this.selectedIcd = { code: "", name: "" };
               this.alertService.openSnackBar("ICD data removed successfully", "success");

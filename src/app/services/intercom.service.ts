@@ -14,6 +14,7 @@ export class IntercomService {
   public billNo = new Subject<any>();
   public BillDocChange = new Subject<any>();
   public BillItemChange = new Subject<any>();
+  BillDiagnosisChange = new Subject<any>();
   public examinerPage: any;
   constructor() { }
   public setUser(status): any {
@@ -77,7 +78,6 @@ export class IntercomService {
     return this.examinerPage;
   }
 
-
   public setBillItemChange(status): any {
     this.BillItemChange.next(status);
   }
@@ -85,6 +85,7 @@ export class IntercomService {
   public getBillItemChange() {
     return this.BillItemChange.asObservable();;
   }
+
   public setBillDocChange(status): any {
     this.BillDocChange.next(status);
   }
@@ -92,4 +93,14 @@ export class IntercomService {
   public getBillDocChange() {
     return this.BillDocChange.asObservable();;
   }
+
+  public setBillDiagnosisChange(status): any {
+    this.BillDiagnosisChange.next(status);
+  }
+
+  public getBillDiagnosisChange() {
+    return this.BillDiagnosisChange.asObservable();;
+  }
+
+
 }

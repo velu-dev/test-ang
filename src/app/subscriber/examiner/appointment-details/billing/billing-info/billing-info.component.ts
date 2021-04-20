@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { IntercomService } from 'src/app/services/intercom.service';
 import { BillingService } from 'src/app/subscriber/service/billing.service';
 
 @Component({
@@ -6,7 +7,7 @@ import { BillingService } from 'src/app/subscriber/service/billing.service';
   templateUrl: './billing-info.component.html',
   styleUrls: ['./billing-info.component.scss']
 })
-export class BillingInfoComponent implements OnInit {
+export class BillingInfoComponent implements OnInit, OnDestroy {
   @Input() billingData: any;
   @Input() paramsId: any;
   @Input() isMobile: any;
@@ -16,12 +17,22 @@ export class BillingInfoComponent implements OnInit {
   isExpandDetail = true;
   payerResponse: any = [];
   styleElement: HTMLStyleElement;
-  constructor(public billingService: BillingService) { }
+  subscription: any;
+  constructor(public billingService: BillingService, private intercom: IntercomService) {
+    this.subscription = this.intercom.getBillDiagnosisChange().subscribe(res => {
+      this.billingService.getIncompleteInfo(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, { isPopupValidate: false }).subscribe(res => {
+        this.isIncompleteError = true;
+      }, error => {
+        this.isIncompleteError = false;
+        this.incompleteInformation = error.error.data;
+      })
+    })
+  }
 
   ngOnInit() {
     this.styleElement = document.createElement("style");
     this.changeColors("#cccccc");
-    this.billingService.getIncompleteInfo(this.paramsId.claim_id, this.paramsId.billId,this.paramsId.billingId, { isPopupValidate: false }).subscribe(res => {
+    this.billingService.getIncompleteInfo(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, { isPopupValidate: false }).subscribe(res => {
       this.isIncompleteError = true;
     }, error => {
       this.isIncompleteError = false;
@@ -44,6 +55,10 @@ export class BillingInfoComponent implements OnInit {
     }
 
     this.changeColors(this.billingData.bill_status_color_code ? this.billingData.bill_status_color_code : '#E6E6E6')
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   changeColors(color) {
