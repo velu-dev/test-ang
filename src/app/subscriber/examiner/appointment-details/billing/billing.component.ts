@@ -77,7 +77,7 @@ export class BilllableBillingComponent implements OnInit {
   isMobile1 = false;
   expandedElement2;
   filterValue: string;
-  paramsId: any = {};
+  paramsId: any;
   billingId: number;
   eaxmProcuderalCodes: any;
   procuderalCodes: any;
@@ -141,7 +141,8 @@ export class BilllableBillingComponent implements OnInit {
         this.billingService.billCreate(param.claim_id, param.billId).subscribe(bill => {
           console.log(bill)
           this.billingId = bill.data.bill_id
-          this.paramsId['billingId'] = bill.data.bill_id;
+          let params = { claimant_id: this.paramsId.claimant_id, claim_id: this.paramsId.claim_id, billId: this.paramsId.billId, billingId: bill.data.bill_id }
+          this.paramsId = params;
         }, error => {
           this.logger.error(error)
         })

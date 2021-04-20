@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { IntercomService } from 'src/app/services/intercom.service';
+import { AlertService } from 'src/app/shared/services/alert.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { SubscriberService } from '../../service/subscriber.service';
 
@@ -41,7 +42,9 @@ export class ManagerDashboardComponent implements OnInit {
   allData = [];
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  constructor(public router: Router, private breakpointObserver: BreakpointObserver, private subscriberService: SubscriberService, private cookieService: CookieService, private intercom: IntercomService) {
+  constructor(public router: Router, private breakpointObserver: BreakpointObserver, 
+    private subscriberService: SubscriberService, private alertService: AlertService,
+     private cookieService: CookieService, private intercom: IntercomService) {
     // this.subscriberService.getDashboardData().subscribe(res => {
     //   this.dataSource = new MatTableDataSource(res.data);
     //   this.dataSource.paginator = this.paginator;
@@ -151,9 +154,14 @@ export class ManagerDashboardComponent implements OnInit {
     let claim_id = element.claim_id;
     let billable_id = element.billable_item_id;
     let examiner_id = "";
-    if (type == "correspondence" || type == "history" || type == "billing")
+    if (type == "correspondence" || type == "history") {
       examiner_id = element.examiner_id != null ? "/" + String(element.examiner_id) : "";
-    this.router.navigate(['subscriber/manager/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + examiner_id])
+      this.router.navigate(['subscriber/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + examiner_id])
+    }
+    if (type == "billing") {
+      let bill_id = element.bill_id != null ? "/" + String(element.bill_id) : "";
+      this.router.navigate(['subscriber/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + bill_id])
+    }
   }
 
   navigateBillableItem(element) {
@@ -166,7 +174,11 @@ export class ManagerDashboardComponent implements OnInit {
     let claimant_id = element.claimant_id;
     let claim_id = element.claim_id;
     let billable_id = element.billable_item_id;
-    this.router.navigate(['subscriber/manager/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id])
+    if (billable_id) {
+      this.router.navigate(['subscriber/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id])
+    } else {
+      this.alertService.openSnackBar("Billable Item ID Not Found", "error");
+    }
   }
   dispalySimpleservice(type): any {
     if (type == "Evaluation" || type == "Reevaluation") {
