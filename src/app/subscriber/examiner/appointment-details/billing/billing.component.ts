@@ -143,6 +143,7 @@ export class BilllableBillingComponent implements OnInit {
           this.billingId = bill.data.bill_id
           let params = { claimant_id: this.paramsId.claimant_id, claim_id: this.paramsId.claim_id, billId: this.paramsId.billId, billingId: bill.data.bill_id }
           this.paramsId = params;
+          this.getBillIds()
         }, error => {
           this.logger.error(error)
         })
@@ -227,6 +228,19 @@ export class BilllableBillingComponent implements OnInit {
   }
   BillIds: any;
   ngOnInit() {
+
+    //table
+    this.touchedRows = [];
+    this.userTable = this.fb.group({
+      tableRows: this.fb.array([])
+    });
+    if (this.paramsId.billingId) {
+      this.getBillIds()
+    }
+
+  }
+
+  getBillIds() {
     this.billingService.getSubmission(this.paramsId.claim_id, this.paramsId.billId).subscribe(submission => {
       console.log(submission.data);
       this.BillIds = submission.data;
@@ -250,12 +264,6 @@ export class BilllableBillingComponent implements OnInit {
         this.getBillingDetails();
       }
     })
-    //table
-    this.touchedRows = [];
-    this.userTable = this.fb.group({
-      tableRows: this.fb.array([])
-    });
-
   }
 
 
