@@ -83,10 +83,10 @@ export class HistoryComponent implements OnInit {
       this.isMobile = res;
       if (res) {
         this.columnName = ["", "File Name", "Download"]
-        this.columnsToDisplay = ['is_expand', 'file_name', 'download']
+        this.columnsToDisplay = ['is_expand', 'file_name', 'summary_download']
       } else {
-        this.columnName = ["Ref #", "Date Requested", "File Name", "Rush Request?", "Date Received", "Download"]
-        this.columnsToDisplay = ['request_reference_id', "date_of_request", 'file_name', 'service_priority', "date_of_communication", 'download']
+        this.columnName = ["Ref #", "Date Requested", "File Name", "Rush Request?", "Date Received","Download History Document", "Download History Summary"]
+        this.columnsToDisplay = ['request_reference_id', "date_of_request", 'file_name', 'service_priority', "date_of_communication", 'history_document_download','summary_download']
       }
       this.isMobile = res;
       if (res) {
@@ -124,13 +124,13 @@ export class HistoryComponent implements OnInit {
       this.changeColors(history.on_demand_status_color_code);
       this.historyData.documents_sent_and_received.map(inFile => {
         // if (inFile.transmission_direction == 'IN') {
-          this.inFile.push(inFile)
+        this.inFile.push(inFile)
         // }
 
       })
       this.dataSource = new MatTableDataSource(this.inFile);
 
-      this.statusBarChanges(this.historyData.on_demand_status)
+      this.statusBarChanges(this.historyData.on_demand_status_id)
     }, error => {
       this.dataSource = new MatTableDataSource([])
     })
@@ -148,16 +148,19 @@ export class HistoryComponent implements OnInit {
 
   statusBarChanges(status) {
     switch (status) {
-      case 'Unsent':
+      case 7:
         this.statusBarValues = { value: 0, status: status, class: 'not-sent' }
         break;
-      case 'In Progress':
+      case 8:
         this.statusBarValues = { value: 50, status: status, class: 'sent' }
         break;
-      case 'Completed':
+      case 9:
         this.statusBarValues = { value: 100, status: status, class: 'complete' }
         break;
-      case 'Error':
+      case 10:
+        this.statusBarValues = { value: 50, status: status, class: 'error' }
+        break;
+      case 11:
         this.statusBarValues = { value: 50, status: status, class: 'error' }
         break;
 
@@ -240,10 +243,24 @@ export class HistoryComponent implements OnInit {
 
 
   }
+  timeZone = "";
+  toPSTtime(date) {
+    if (date) {
+      let timezone = moment.tz.guess();
+      return moment(date).tz("America/Los_Angeles").format('MM-DD-YYYY hh:mm A z')
+    }
+  }
+  downloadSentFile(data){
+    console.log(data)
+    saveAs(data.send.file_url, data.send.file_name, "_self");
+  }
   download(data) {
     this.claimService.updateActionLog({ type: "history", "document_category_id": 3, "claim_id": this.ids.claim_id, "billable_item_id": this.ids.billable_item_id, "documents_ids": [data.document_id] }, false).subscribe(log => {
     })
-    saveAs(data.file_url, data.file_name, "_self");
+    data.received.map(res => {
+      saveAs(res.file_url, res.file_name, "_self");
+    })
+
   }
 
 }
