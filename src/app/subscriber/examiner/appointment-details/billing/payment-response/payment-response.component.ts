@@ -125,7 +125,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   ngOnInit() {
     console.log("payemnt response")
     this.getPaymentRes();
-    this.subscription = this.intercom.BillItemChange.subscribe(res => {
+    this.subscription = this.intercom.getBillItemChange().subscribe(res => {
       this.payments().at(0).get('charge').patchValue(res.total_charge)
       let balance = +res.total_charge - +this.payments().at(0).get('payment').value;
       this.payments().at(0).get('balance').patchValue(balance > 0 ? balance : 0);

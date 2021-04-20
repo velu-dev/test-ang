@@ -77,7 +77,7 @@ export class BilllableBillingComponent implements OnInit {
   isMobile1 = false;
   expandedElement2;
   filterValue: string;
-  paramsId: any = {};
+  paramsId: any;
   billingId: number;
   eaxmProcuderalCodes: any;
   procuderalCodes: any;
@@ -141,9 +141,12 @@ export class BilllableBillingComponent implements OnInit {
         this.billingService.billCreate(param.claim_id, param.billId).subscribe(bill => {
           console.log(bill)
           this.billingId = bill.data.bill_id
-          this.paramsId['billingId'] = bill.data.bill_id;
+          let params = { claimant_id: this.paramsId.claimant_id, claim_id: this.paramsId.claim_id, billId: this.paramsId.billId, billingId: bill.data.bill_id }
+          this.paramsId = params;
+          this.getBillIds()
         }, error => {
           this.logger.error(error)
+          this.alertService.openSnackBar(error.error.message, 'error');
         })
       } else {
         this.billingId = param.billingId
@@ -208,6 +211,7 @@ export class BilllableBillingComponent implements OnInit {
       this.billingData = null;
     }, error => {
       console.log(error);
+      this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
 
@@ -222,10 +226,24 @@ export class BilllableBillingComponent implements OnInit {
       this.billingData = null;
     }, error => {
       console.log(error);
+      this.alertService.openSnackBar(error.error.message, 'error');
     })
   }
   BillIds: any;
   ngOnInit() {
+
+    //table
+    this.touchedRows = [];
+    this.userTable = this.fb.group({
+      tableRows: this.fb.array([])
+    });
+    if (this.paramsId.billingId) {
+      this.getBillIds()
+    }
+
+  }
+
+  getBillIds() {
     this.billingService.getSubmission(this.paramsId.claim_id, this.paramsId.billId).subscribe(submission => {
       console.log(submission.data);
       this.BillIds = submission.data;
@@ -248,13 +266,9 @@ export class BilllableBillingComponent implements OnInit {
         this.tabIndex = 0;
         this.getBillingDetails();
       }
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
     })
-    //table
-    this.touchedRows = [];
-    this.userTable = this.fb.group({
-      tableRows: this.fb.array([])
-    });
-
   }
 
 
