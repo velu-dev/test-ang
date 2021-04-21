@@ -25,9 +25,14 @@ export class LateResponseComponent implements OnInit, OnDestroy {
     })
 
     this.subscription = this.intercom.getBillItemChange().subscribe(res => {
-      this.lateResData['charge'] = res.total_charge;
-      let balance = +res.total_charge - + this.lateResData['payment'];
-      this.lateResData['balance'] = balance > 0 ? balance : 0;
+      if (res.paymentStatus) {
+        this.getLateRes();
+      } else {
+        this.lateResData['charge'] = res.total_charge;
+        let balance = +res.total_charge - + this.lateResData['payment'];
+        this.lateResData['balance'] = balance > 0 ? balance : 0;
+      }
+
     })
   }
 

@@ -61,8 +61,8 @@ export class BillingService {
     return this.http.get(environment.baseUrl + api_endpoint.CMS1500Form + claimID + '/' + billableId + '/' + billId)
   }
 
-  billingDownloadAll(claimID, billableId, billId, data): Observable<any> {
-    return this.http.post(environment.baseUrl + api_endpoint.billingDownloadAll + claimID + '/' + billableId + '/' + billId, data)
+  billingDownloadAll(claimID, billableId, billId, billType, data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.billingDownloadAll + claimID + '/' + billableId + '/' + billId + '/' + billType, data)
   }
 
   billingPostPayment(id, data): Observable<any> {
@@ -182,6 +182,10 @@ export class BillingService {
 
   createIBR(claim, billable, firstBillId, secondBillId): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.postIBRCreate + claim + '/' + billable + '/' + firstBillId + '/' + secondBillId, {})
+  }
+
+  uploadCustomDoc(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.uploadCustomDoc, data)
   }
 
 }

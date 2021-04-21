@@ -155,11 +155,11 @@ export class StaffDashboardComponent implements OnInit {
     let examiner_id = "";
     if (type == "correspondence" || type == "history") {
       examiner_id = element.examiner_id != null ? "/" + String(element.examiner_id) : "";
-      this.router.navigate(['subscriber/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + examiner_id])
+      this.router.navigate(['subscriber/staff/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + examiner_id])
     }
     if (type == "billing") {
       let bill_id = element.bill_id != null ? "/" + String(element.bill_id) : "";
-      this.router.navigate(['subscriber/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + bill_id])
+      this.router.navigate(['subscriber/staff/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + bill_id])
     }
   }
 
@@ -174,7 +174,7 @@ export class StaffDashboardComponent implements OnInit {
     let claim_id = element.claim_id;
     let billable_id = element.billable_item_id;
     if (billable_id) {
-      this.router.navigate(['subscriber/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id])
+      this.router.navigate(['subscriber/staff/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id])
     } else {
       this.alertService.openSnackBar("Billable Item ID Not Found", "error");
     }
