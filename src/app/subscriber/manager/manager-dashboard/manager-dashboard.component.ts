@@ -42,9 +42,9 @@ export class ManagerDashboardComponent implements OnInit {
   allData = [];
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  constructor(public router: Router, private breakpointObserver: BreakpointObserver, 
+  constructor(public router: Router, private breakpointObserver: BreakpointObserver,
     private subscriberService: SubscriberService, private alertService: AlertService,
-     private cookieService: CookieService, private intercom: IntercomService) {
+    private cookieService: CookieService, private intercom: IntercomService) {
     // this.subscriberService.getDashboardData().subscribe(res => {
     //   this.dataSource = new MatTableDataSource(res.data);
     //   this.dataSource.paginator = this.paginator;
@@ -156,11 +156,11 @@ export class ManagerDashboardComponent implements OnInit {
     let examiner_id = "";
     if (type == "correspondence" || type == "history") {
       examiner_id = element.examiner_id != null ? "/" + String(element.examiner_id) : "";
-      this.router.navigate(['subscriber/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + examiner_id])
+      this.router.navigate(['subscriber/manager/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + examiner_id])
     }
     if (type == "billing") {
       let bill_id = element.bill_id != null ? "/" + String(element.bill_id) : "";
-      this.router.navigate(['subscriber/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + bill_id])
+      this.router.navigate(['subscriber/manager/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + bill_id])
     }
   }
 
@@ -175,7 +175,7 @@ export class ManagerDashboardComponent implements OnInit {
     let claim_id = element.claim_id;
     let billable_id = element.billable_item_id;
     if (billable_id) {
-      this.router.navigate(['subscriber/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id])
+      this.router.navigate(['subscriber/manager/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id])
     } else {
       this.alertService.openSnackBar("Billable Item ID Not Found", "error");
     }
