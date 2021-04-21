@@ -252,8 +252,8 @@ export class HistoryComponent implements OnInit {
   toPSTtime(date) {
     if (date) {
       let timezone = moment.tz.guess();
-      return moment.tz(date, 'YYYY/MM/DD', 'America/Los_Angeles').format('MM-DD-YYYY hh:mm A z');
-      //moment(date).tz("America/Los_Angeles").format('MM-DD-YYYY hh:mm A z');
+      // return moment.tz(date, 'YYYY/MM/DD', 'America/Los_Angeles').format('MM-DD-YYYY hh:mm A z');
+      moment(date).tz("America/Los_Angeles").format('MM-DD-YYYY hh:mm A z');
     }
   }
   downloadSentFile(data) {
