@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { BillingService } from 'src/app/subscriber/service/billing.service';
@@ -31,6 +31,7 @@ export class SubmissionComponent implements OnInit {
   @Input() review: string;
   @Input() states: string;
   @Input() billType: any;
+  @Output() getBillingDetails = new EventEmitter();
   billDocumentList: any;
   documentsData: any = new MatTableDataSource([]);
   selectedFile: File;
@@ -174,6 +175,7 @@ export class SubmissionComponent implements OnInit {
       if (result) {
         //this.getBillingDetails();
         this.intercom.setBillDocChange(true);
+        this.getBillingDetails.emit()
       }
     });
   }

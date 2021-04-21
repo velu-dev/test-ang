@@ -318,7 +318,6 @@ export class BilllableBillingComponent implements OnInit {
 
 
   getBillingDetails() {
-
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId, this.billingId).subscribe(billing => {
       if (billing.data) {
         this.billingData = billing.data;
@@ -333,15 +332,6 @@ export class BilllableBillingComponent implements OnInit {
         } else {
           this.intercom.setBillNo('Bill');
         }
-        // console.log(this.billingData.bill_id)
-        // if (this.billingData.second_bill_id) {
-        //   this.secondBillId = this.billingData.second_bill_id
-        //   if (!this.billTypestatus) {
-        //     this.tabchange(1);
-        //     this.billTypestatus = true;
-        //   }
-        // }
-
       }
     }, error => {
       this.logger.error(error)

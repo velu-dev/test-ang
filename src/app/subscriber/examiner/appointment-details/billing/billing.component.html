@@ -40,7 +40,7 @@
         </mat-card>
 
         <app-submission [review]="review" [billType]="tabIndex + 1" [paramsId]="paramsId" [billingData]="billingData"
-            [states]="states">
+            [states]="states" (getBillingDetails)="getBillingDetails()">
         </app-submission>
 
         <div class="completed-documents m-t-30">
