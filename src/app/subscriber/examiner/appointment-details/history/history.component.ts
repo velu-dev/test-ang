@@ -85,8 +85,8 @@ export class HistoryComponent implements OnInit {
         this.columnName = ["", "File Name", "Download"]
         this.columnsToDisplay = ['is_expand', 'file_name', 'summary_download']
       } else {
-        this.columnName = ["Ref #", "Date Requested", "File Name", "Rush Request?", "Date Received","Download History Document", "Download History Summary"]
-        this.columnsToDisplay = ['request_reference_id', "date_of_request", 'file_name', 'service_priority', "date_of_communication", 'history_document_download','summary_download']
+        this.columnName = ["Ref #", "Date Requested", "File Name", "Rush Request?", "Date Received", "Download History Template", "Download Completed History"]
+        this.columnsToDisplay = ['request_reference_id', "date_of_request", 'file_name', 'service_priority', "date_of_communication", 'history_document_download', 'summary_download']
       }
       this.isMobile = res;
       if (res) {
@@ -118,9 +118,15 @@ export class HistoryComponent implements OnInit {
     this.styleElement.appendChild(document.createTextNode(css));
     head.appendChild(this.styleElement);
   }
+  isMedicalhistoryShow: boolean = false;
   getHistory() {
     this.onDemandService.getHistory(this.paramsId.claim_id, this.paramsId.billId).subscribe(history => {
       this.historyData = history;
+      if (this.historyData.on_demand_status_id == null || this.historyData.on_demand_status_id == 7 || this.historyData.on_demand_status_id == 9 || this.historyData.on_demand_status_id == 10 || this.historyData.on_demand_status_id == 25) {
+        this.isMedicalhistoryShow = true;
+      } else {
+        this.isMedicalhistoryShow = false;
+      }
       this.changeColors(history.on_demand_status_color_code);
       this.historyData.documents_sent_and_received.map(inFile => {
         // if (inFile.transmission_direction == 'IN') {
@@ -190,7 +196,6 @@ export class HistoryComponent implements OnInit {
 
 
   onDemandSubmit() {
-
     if (!this.paramsId.examiner) {
       this.alertService.openSnackBar('Please assign examiner', 'error');
       return;
@@ -247,10 +252,11 @@ export class HistoryComponent implements OnInit {
   toPSTtime(date) {
     if (date) {
       let timezone = moment.tz.guess();
-      return moment(date).tz("America/Los_Angeles").format('MM-DD-YYYY hh:mm A z')
+      return moment.tz(date, 'YYYY/MM/DD', 'America/Los_Angeles').format('MM-DD-YYYY hh:mm A z');
+      //moment(date).tz("America/Los_Angeles").format('MM-DD-YYYY hh:mm A z');
     }
   }
-  downloadSentFile(data){
+  downloadSentFile(data) {
     console.log(data)
     saveAs(data.send.file_url, data.send.file_name, "_self");
   }

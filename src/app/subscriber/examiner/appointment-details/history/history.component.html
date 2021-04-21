@@ -10,20 +10,16 @@
       <div class="text-center">{{historyData?.on_demand_status}}</div>
     </div>
 
-    <div fxFlex="100" class="text-center m-t-20 m-b-20"
-      *ngIf="historyData?.on_demand_status_id == 7 || historyData?.on_demand_status_id == 9 || historyData?.on_demand_status_id == 10 || historyData?.on_demand_status_id == 25">
+    <div fxFlex="100" class="text-center m-t-20 m-b-20"  *ngIf="isMedicalhistoryShow">
       <mat-checkbox [disabled]="historyData?.is_exam_type_changed || historyData?.isExaminerDisabled "
         [(ngModel)]="rushRequest">Rush Request?</mat-checkbox>
     </div>
-    <div fxFlex="100" class="text-center m-t-20 m-b-20"
-      *ngIf="historyData?.on_demand_status_id !=7 && historyData?.on_demand_status_id != 9 && historyData?.on_demand_status_id != 10 && historyData?.on_demand_status_id != 25 ">
+    <div fxFlex="100" class="text-center m-t-20 m-b-20" *ngIf="!isMedicalhistoryShow">
       <div class="info-alert"><strong>Date Requested :</strong> {{historyData?.date_of_request | date:'MM-dd-yyyy' }}
         <span class="p-l-20"><strong>Rush Request? :</strong> {{historyData?.is_rush_request ? 'Yes' : 'No'}}</span>
       </div>
     </div>
-    <div fxFlex="100"
-      *ngIf="historyData?.on_demand_status_id == 7 || historyData?.on_demand_status_id == 9 || historyData?.on_demand_status_id == 10 || historyData?.on_demand_status_id == 25"
-      class="text-center m-t-20 m-b-20 action-btns">
+    <div fxFlex="100" *ngIf="isMedicalhistoryShow" class="text-center m-t-20 m-b-20 action-btns">
       <button [disabled]="historyData?.is_exam_type_changed || historyData?.isExaminerDisabled" mat-stroked-button
         class="outline-success huge-btn" (click)="onDemandSubmit()"> Click Here for Medical History Questionnaire On
         Demand</button>
@@ -144,10 +140,10 @@
                       : ''}} {{element?.service_priority == 'normal' ? 'No' : ''}}</span></div>
                   <div><span *ngIf="element.received.length > 0">Date Received</span><span>
                       {{element?.received_date}}</span></div>
-                  <div><span *ngIf="element.send">Download History Document</span><span>
+                  <div><span *ngIf="element.send">Download History Template</span><span>
                       <a class="text-success" (click)="downloadSentFile(element)">Download</a>
                     </span></div>
-                  <div><span *ngIf="element.received.length > 0">Download History Summary</span><span>
+                  <div><span *ngIf="element.received.length > 0">Download Completed History</span><span>
                       <a class="text-success" (click)="download(element)">Download</a>
                     </span></div>
                 </div>

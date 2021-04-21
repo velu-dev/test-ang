@@ -2,55 +2,6 @@
     <mat-tab-group>
         <mat-tab>
             <ng-template mat-tab-label>
-                Security Settings
-            </ng-template>
-            <!-- cards here -->
-            <div class="edit-profile  m-t-10">
-                <mat-card-content>
-                    <!--Form start-->
-                    <form fxLayout="row wrap" class="mat-form-space"
-                        (keydown.enter)="$event.target.tagName == 'TEXTAREA'" [formGroup]="userPasswrdForm"
-                        (ngSubmit)="changePassword()">
-                        <mat-form-field class="m-t-5" appearance="outline" fxFlex="100">
-                            <mat-label>Current Password*</mat-label>
-                            <input type="password" matInput placeholder="Current Password" autocomplete="off"
-                                formControlName="current_password">
-                            <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidpassword}}</mat-error>
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                            fxFlex.sm="50" fxFlex.xl="50" class="m-t-5">
-                            <mat-label>New Password*</mat-label>
-                            <input [type]="isTypePassword ? 'password': 'text'" matInput placeholder="New Password"
-                                autocomplete="off" formControlName="new_password">
-                            <mat-icon matSuffix
-                                matTooltip="Password must contain at least 8 characters, including UPPER, lowercase, special character and numbers."
-                                matTooltipPosition="above">error_outline</mat-icon>
-                            <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidpassword}}</mat-error>
-
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
-                            fxFlex.sm="50" fxFlex.xl="50" class="m-t-5">
-                            <mat-label>Confirm New Password*</mat-label>
-                            <input [type]="isTypePassword ? 'password': 'text'" matInput
-                                placeholder="Confirm New Password" autocomplete="off" formControlName="confirmPassword">
-                            <mat-icon matSuffix (click)="changeInputType()">
-                                {{isTypePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
-
-                            <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidpassword}}</mat-error>
-                        </mat-form-field>
-
-                        <div class="text-center w-100 m-t-10">
-                            <button mat-stroked-button type="button" (click)="cancel()"
-                                class="outline-danger">Cancel</button>
-                            <button mat-stroked-button class="m-l-10 outline-success">Save </button>
-                        </div>
-                    </form>
-                </mat-card-content>
-            </div>
-        </mat-tab>
-
-        <mat-tab>
-            <ng-template mat-tab-label>
                 Account Settings
             </ng-template>
             <!-- Edit profile -->
@@ -154,6 +105,54 @@
                                 class="outline-danger">Cancel</button>
                             <button mat-stroked-button class="m-l-10 outline-success">Save </button>
 
+                        </div>
+                    </form>
+                </mat-card-content>
+            </div>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Security Settings
+            </ng-template>
+            <!-- cards here -->
+            <div class="edit-profile  m-t-10">
+                <mat-card-content>
+                    <!--Form start-->
+                    <form fxLayout="row wrap" class="mat-form-space"
+                        (keydown.enter)="$event.target.tagName == 'TEXTAREA'" [formGroup]="userPasswrdForm"
+                        (ngSubmit)="changePassword()">
+                        <mat-form-field class="m-t-5" appearance="outline" fxFlex="100">
+                            <mat-label>Current Password*</mat-label>
+                            <input type="password" matInput placeholder="Current Password" autocomplete="off"
+                                formControlName="current_password">
+                            <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidpassword}}</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                            fxFlex.sm="50" fxFlex.xl="50" class="m-t-5">
+                            <mat-label>New Password*</mat-label>
+                            <input [type]="isTypePassword ? 'password': 'text'" matInput placeholder="New Password"
+                                autocomplete="off" formControlName="new_password">
+                            <mat-icon matSuffix
+                                matTooltip="Password must contain at least 8 characters, including UPPER, lowercase, special character and numbers."
+                                matTooltipPosition="above">error_outline</mat-icon>
+                            <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidpassword}}</mat-error>
+
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
+                            fxFlex.sm="50" fxFlex.xl="50" class="m-t-5">
+                            <mat-label>Confirm New Password*</mat-label>
+                            <input [type]="isTypePassword ? 'password': 'text'" matInput
+                                placeholder="Confirm New Password" autocomplete="off" formControlName="confirmPassword">
+                            <mat-icon matSuffix (click)="changeInputType()">
+                                {{isTypePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+
+                            <mat-error *ngIf="isSubmit">{{errorMessages?.entervalidpassword}}</mat-error>
+                        </mat-form-field>
+
+                        <div class="text-center w-100 m-t-10">
+                            <button mat-stroked-button type="button" (click)="cancel()"
+                                class="outline-danger">Cancel</button>
+                            <button mat-stroked-button class="m-l-10 outline-success">Save </button>
                         </div>
                     </form>
                 </mat-card-content>
