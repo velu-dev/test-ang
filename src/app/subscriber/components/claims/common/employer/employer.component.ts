@@ -82,10 +82,11 @@ export class EmployerComponent implements OnInit {
     this.claimService.updateAgent(this.employer.value.id, { Employer: this.employer.value }).subscribe(res => {
       // this.isEdit = false;
       this.alertService.openSnackBar("Employer updated successfully", 'success');
-      this.employer.disable();
       this.employerEdit = false;
-      this.employer.patchValue(this.employer.value);
+      console.log()
+      this.employer.patchValue(this.employer.getRawValue());
       this.employerDetail = this.employer.value;
+      this.employer.disable();
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error")
     })
