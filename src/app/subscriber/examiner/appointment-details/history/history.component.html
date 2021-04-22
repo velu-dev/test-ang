@@ -11,7 +11,7 @@
     </div>
 
     <div fxFlex="100" class="text-center m-t-20 m-b-20"  *ngIf="isMedicalhistoryShow">
-      <mat-checkbox [disabled]="historyData?.is_exam_type_changed || historyData?.isExaminerDisabled "
+      <mat-checkbox [disabled]="historyData?.is_exam_type_changed || historyData?.isExaminerDisabled || !historyData.isenglish_or_spanish_speaking_claimant "
         [(ngModel)]="rushRequest">Rush Request?</mat-checkbox>
     </div>
     <div fxFlex="100" class="text-center m-t-20 m-b-20" *ngIf="!isMedicalhistoryShow">
@@ -20,9 +20,11 @@
       </div>
     </div>
     <div fxFlex="100" *ngIf="isMedicalhistoryShow" class="text-center m-t-20 m-b-20 action-btns">
-      <button [disabled]="historyData?.is_exam_type_changed || historyData?.isExaminerDisabled" mat-stroked-button
+      <button [disabled]="historyData?.is_exam_type_changed || historyData?.isExaminerDisabled || !historyData.isenglish_or_spanish_speaking_claimant" mat-stroked-button
         class="outline-success huge-btn" (click)="onDemandSubmit()"> Click Here for Medical History Questionnaire On
         Demand</button>
+        <br>
+        <mat-hint>*English and Spanish are the languages currently supported</mat-hint>
     </div>
 
     <div fxFlex="100" class="m-t-20" *ngIf="historyTrackingDatasource?.filteredData?.length > 0">
