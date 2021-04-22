@@ -260,6 +260,8 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
 
   addReviews(index: number) {
     this.paymentReviews(index).push(this.newReview());
+    this.expandId = null;
+    this.openElement(this.payments().at(0).get('id').value)
   }
 
   saveReview(payment: FormGroup, review: FormGroup, payIndex, reviewIndex) {
