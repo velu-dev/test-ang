@@ -172,7 +172,7 @@ export class BillLineItemComponent implements OnInit {
           if (this.billType == 2 || this.billType == 3) {
             firstData['bill_request_reason'] = item.support_documents_details.bill_request_reason;
             firstData['billed_service_authorized'] = item.support_documents_details.billed_service_authorized ? item.support_documents_details.billed_service_authorized : false;
-            if(this.billType == 2) firstData['support_documents_attached'] = item.support_documents_details.support_documents_attached ? item.support_documents_details.support_documents_attached : false;
+            if (this.billType == 2) firstData['support_documents_attached'] = item.support_documents_details.support_documents_attached ? item.support_documents_details.support_documents_attached : false;
           }
           this.getFormControls.controls[index].patchValue(firstData)
           if (this.getFormControls.controls[index].status == "VALID") {
@@ -304,6 +304,7 @@ export class BillLineItemComponent implements OnInit {
             const control = this.userTable.get('tableRows') as FormArray;
             control.removeAt(index);
             this.billing_line_items.splice(index, 1)
+            this.intercom.setBillItemChange({ total_charge: this.calculateTotal() });
             return
           }, err => {
             this.alertService.openSnackBar(err.error.message, 'error');
@@ -312,6 +313,7 @@ export class BillLineItemComponent implements OnInit {
           const control = this.userTable.get('tableRows') as FormArray;
           control.removeAt(index);
           this.billing_line_items.splice(index, 1)
+          this.intercom.setBillItemChange({ total_charge: this.calculateTotal() });
         }
       }
     })
