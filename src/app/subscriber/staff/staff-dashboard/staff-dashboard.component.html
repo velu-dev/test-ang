@@ -151,6 +151,7 @@
                             date:'MM-dd-yyyy'}}</span>
                         <span *ngIf="column == 'due_date'" class="no-wrap-td">{{element?.due_date |
                             date:'MM-dd-yyyy'}}</span>
+                            <span *ngIf="column == 'report_submission_due_date'" class="no-wrap-td">{{element?.report_submission_due_date}}</span>
                         <span *ngIf="column == 'critical'"
                             [ngClass]="{'text-primary': element?.is_critical}"><b>{{element?.is_critical ? element?.is_critical :
                                 "-"}}</b></span>
@@ -174,6 +175,7 @@
                                         Received</span>{{element?.appointment_scheduled_date_time| date:'MM-dd-yyyy'}}
                                 </div>
                                 <div><span>Standing Due Date</span>{{element?.due_date | date:'MM-dd-yyyy'}}</div>
+                                <div><span>Report Submission Due Date</span>{{element?.report_submission_due_date}}</div>
                             </section>
                             <section class="navigation" *ngIf="(expandId == element.appointment_id) || isExpandAll">
                                <span class="box-layout"  *ngFor="let type of dispalySimpleservice(element?.procedure_type)" [ngStyle]="{'display':role == 4 && type?.name == 'Billing' ? 'none' : 'block' }">

@@ -71,8 +71,8 @@ export class ManagerDashboardComponent implements OnInit {
         this.columnName = ["", "Claimant", "Critical"]
         this.columnsToDisplay = ['is_expand', 'claimant_first_name', "critical"]
       } else {
-        this.columnName = ["", "Claimant", "Date of Birth", "Examiner", "Exam Procedure Type", "Standing", "Date of Service /" + '\n' + "Date Item Received", "Standing Due Date", "Critical"]
-        this.columnsToDisplay = ['is_expand', 'claimant_first_name', 'date_of_birth', 'examiner_first_name', "exam_procedure_name", "standing", 'appointment_scheduled_date_time', 'due_date', 'critical']
+        this.columnName = ["", "Claimant", "Date of Birth", "Examiner", "Exam Procedure Type", "Standing", "Date of Service /" + '\n' + "Date Item Received", "Standing Due Date","Report Submission Due Date", "Critical"]
+        this.columnsToDisplay = ['is_expand', 'claimant_first_name', 'date_of_birth', 'examiner_first_name', "exam_procedure_name", "standing", 'appointment_scheduled_date_time', 'due_date', "report_submission_due_date", 'critical']
       }
     })
   }

@@ -59,18 +59,21 @@ export class ClaimAdminComponent implements OnInit {
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
     this.claimAdminForm.get('phone')!.valueChanges.subscribe(input => {
-      if(this.claimAdminEdit)
-      if (this.claimAdminForm.get("phone").value && this.claimAdminForm.get("phone").valid) {
-        this.claimAdminForm.get("phone_ext").enable();
-      } else {
-        this.claimAdminForm.get("phone_ext").reset();
-        this.claimAdminForm.get("phone_ext").disable();
-      }
+      if (this.claimAdminEdit)
+        if (this.claimAdminForm.get("phone").value && this.claimAdminForm.get("phone").valid) {
+          this.claimAdminForm.get("phone_ext").enable();
+        } else {
+          this.claimAdminForm.get("phone_ext").reset();
+          this.claimAdminForm.get("phone_ext").disable();
+        }
     })
     this.claimAdminForm.get('company_name')!.valueChanges.subscribe(input => {
       if (this.claimAdminForm.get('company_name').errors) {
         return
       } else {
+        this.claimAdminForm.patchValue({
+          payor_id: null
+        })
         if (input) {
           if (input.length >= 3 || input.length == 0) {
             this.claimService.searchEAMSAdmin({ search: input }).subscribe(res => {

@@ -140,6 +140,7 @@ export class BillingCorrespondanceComponent implements OnInit {
 
   styleElement: HTMLStyleElement;
   changeColors(color) {
+    color = color ? color : "#cccccc";
     const head = document.getElementsByTagName("head")[0];
     const css = `
   .progress .mat-progress-bar-fill::after {

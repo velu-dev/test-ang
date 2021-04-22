@@ -108,6 +108,7 @@ export class HistoryComponent implements OnInit {
   }
   styleElement: HTMLStyleElement;
   changeColors(color) {
+    color = color ? color : "#cccccc";
     const head = document.getElementsByTagName("head")[0];
     const css = `
   .progress .mat-progress-bar-fill::after {
@@ -122,7 +123,7 @@ export class HistoryComponent implements OnInit {
   getHistory() {
     this.onDemandService.getHistory(this.paramsId.claim_id, this.paramsId.billId).subscribe(history => {
       this.historyData = history;
-      if (this.historyData.on_demand_status_id == null || this.historyData.on_demand_status_id == 7 || this.historyData.on_demand_status_id == 9 || this.historyData.on_demand_status_id == 10 || this.historyData.on_demand_status_id == 25 ) {
+      if (this.historyData.on_demand_status_id == null || this.historyData.on_demand_status_id == 7 || this.historyData.on_demand_status_id == 9 || this.historyData.on_demand_status_id == 10 || this.historyData.on_demand_status_id == 25) {
         this.isMedicalhistoryShow = true;
       } else {
         this.isMedicalhistoryShow = false;
