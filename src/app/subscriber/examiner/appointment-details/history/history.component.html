@@ -23,6 +23,9 @@
       <button [disabled]="historyData?.is_exam_type_changed || historyData?.isExaminerDisabled" mat-stroked-button
         class="outline-success huge-btn" (click)="onDemandSubmit()"> Click Here for Medical History Questionnaire On
         Demand</button>
+        <div class="note">
+          <span>*</span>English and Spanish are the only languages currently supported.
+        </div>
     </div>
 
     <div fxFlex="100" class="m-t-20" *ngIf="historyTrackingDatasource?.filteredData?.length > 0">
