@@ -162,7 +162,7 @@
                         <span *ngIf="column == 'due_date'" class="no-wrap-td">{{element?.due_date |
                             date:'MM-dd-yyyy'}}</span>
                         <span *ngIf="column == 'report_submission_due_date'"
-                            class="no-wrap-td">{{element?.report_submission_due_date}}</span>
+                            class="no-wrap-td">{{element?.report_submission_due_date | date:'MM-dd-yyyy'}}</span>
                         <span *ngIf="column == 'critical'"
                             [ngClass]="{'text-primary': element?.is_critical}"><b>{{element?.is_critical ?
                                 element?.is_critical :
@@ -188,7 +188,7 @@
                                         Received</span>{{element?.appointment_scheduled_date_time| date:'MM-dd-yyyy'}}
                                 </div>
                                 <div><span>Standing Due Date</span>{{element?.due_date | date:'MM-dd-yyyy'}}</div>
-                                <div><span>Report Submission Due Date</span>{{element?.report_submission_due_date}}
+                                <div><span>Report Submission Due Date</span>{{element?.report_submission_due_date | date:'MM-dd-yyyy'}}
                                 </div>
                                 <!-- <div [ngClass]="{'text-primary': element?.is_critical}"><span>Critical</span>{{element?.is_critical ? "Critical" : "-"}}</div> -->
                             </section>
