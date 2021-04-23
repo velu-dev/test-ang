@@ -140,7 +140,7 @@ export class BillingCorrespondanceComponent implements OnInit {
 
   styleElement: HTMLStyleElement;
   changeColors(color) {
-    color = color ? color : "#cccccc";
+    color = color ? color : "#E6E6E6";
     const head = document.getElementsByTagName("head")[0];
     const css = `
   .progress .mat-progress-bar-fill::after {
@@ -309,7 +309,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   }
   ngOnInit() {
     this.styleElement = document.createElement("style");
-    this.changeColors("#cccccc");
+    this.changeColors("#E6E6E6");
   }
   downloadForms(sign) {
     if (!this.examinerId) {

@@ -104,11 +104,11 @@ export class HistoryComponent implements OnInit {
     this.getHistory();
     this.getHistoryCallTracking();
     this.styleElement = document.createElement("style");
-    this.changeColors("#cccccc");
+    this.changeColors("#E6E6E6");
   }
   styleElement: HTMLStyleElement;
   changeColors(color) {
-    color = color ? color : "#cccccc";
+    color = color ? color : "#E6E6E6";
     const head = document.getElementsByTagName("head")[0];
     const css = `
   .progress .mat-progress-bar-fill::after {
