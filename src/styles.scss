@@ -59,6 +59,15 @@ body {
 button:focus {
   outline: none !important;
 }
+button:disabled,
+button[disabled]{
+  color: rgba(0, 0, 0, 0.26) !important;
+  &:hover {
+    color: rgba(0, 0, 0, 0.26) !important;
+    background-color: inherit !important;
+  }
+}
+
 .m-auto {
   margin: 0px auto;
 }

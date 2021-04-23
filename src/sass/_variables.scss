@@ -1001,7 +1001,7 @@ input:-webkit-autofill {
   &:disabled {
     background-color: $disabled !important;
     color: $text-gray;
-    cursor: not-allowed;
+    // cursor: not-allowed;
   }
 }
 .underline {
