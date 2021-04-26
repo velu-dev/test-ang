@@ -27,6 +27,11 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
         this.incompleteInformation = error.error.data;
       })
     })
+
+    this.subscription = this.intercom.getBillingDetails().subscribe(res => {
+      this.billingData = res;
+      this.ngOnInit();
+    })
   }
 
   ngOnInit() {
