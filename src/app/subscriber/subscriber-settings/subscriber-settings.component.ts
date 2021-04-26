@@ -325,14 +325,15 @@ export class SubscriberSettingsComponent implements OnInit {
     }, error => {
       console.log("error", error)
     })
-    var m = new Date().getMonth();
-    var y = new Date().getFullYear();
-    this.selectedDate = this.month[m] + " " + y;
-    this.getHistory(this.month[m] + " " + y);
+
   }
 
   selectedTabChange(event) {
     if (event.index == 3) {
+      var m = new Date().getMonth();
+      var y = new Date().getFullYear();
+      this.selectedDate = this.month[m] + " " + y;
+      this.getHistory(this.month[m] + " " + y);
       this.userService.subscriptionCharges().subscribe(res => {
         this.subscriptionCharges = res.data;
       })
