@@ -71,13 +71,16 @@ export class ClaimAdminComponent implements OnInit {
       if (this.claimAdminForm.get('company_name').errors) {
         return
       } else {
-        this.claimAdminForm.patchValue({
-          payor_id: null
-        })
         if (input) {
           if (input.length >= 3 || input.length == 0) {
             this.claimService.searchEAMSAdmin({ search: input }).subscribe(res => {
+              if(res.data){
               this.claimAdminGroupOptions = [{ name: "Simplexam Addresses", data: res.data }];
+              } else {
+                this.claimAdminForm.patchValue({
+                  payor_id: null
+                })
+              }
             })
           }
         } else {

@@ -176,10 +176,6 @@ export class SubscriberSettingsComponent implements OnInit {
         this.columnsToDisplay = ['invoice_number', 'amount', "status", "date", "action",]
       }
     })
-    this.userService.subscriptionCharges().subscribe(res => {
-      this.subscriptionCharges = res.data;
-      console.log(res.data)
-    })
     this.listCard();
     this.userService.getProfile().subscribe(res => {
       this.user = res.data;
@@ -336,6 +332,11 @@ export class SubscriberSettingsComponent implements OnInit {
   }
 
   selectedTabChange(event) {
+    if (event.index == 3) {
+      this.userService.subscriptionCharges().subscribe(res => {
+        this.subscriptionCharges = res.data;
+      })
+    }
   }
   isAddingCard = false;
   publicKey: any;
