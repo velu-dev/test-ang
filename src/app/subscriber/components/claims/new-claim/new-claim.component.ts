@@ -790,7 +790,7 @@ export class NewClaimComponent implements OnInit {
         call_type_detail: [null],
         notes: [null],
         caller_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        phone_ext: [{ value: null, disabled: true } , Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+        phone_ext: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
         caller_email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
         caller_fax: [null, Validators.compose([Validators.pattern('[0-9]+')])]
       })
@@ -1985,6 +1985,10 @@ export class NewClaimComponent implements OnInit {
         this.isDeposition = false;
       }
       this.isSuplimental = false;
+    }
+
+    if (procuderalCode.exam_procedure_type_id == 28) {
+      this.isSuplimental = true;
     }
   }
 

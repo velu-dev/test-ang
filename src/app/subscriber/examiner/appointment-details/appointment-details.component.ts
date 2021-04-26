@@ -1397,6 +1397,64 @@ export class AppointmentDetailsComponent implements OnInit {
     } else {
       this.isSuplimental = false;
     }
+
+    if (procuderalCode.exam_procedure_type_id == 28) {
+      this.isSuplimental = true;
+      if (status) {
+        this.billable_item.patchValue({
+          appointment: {
+            appointment_scheduled_date_time: null,
+            duration: null,
+            examiner_service_location_id: null,
+            is_virtual_location: false,
+            conference_url: null,
+            conference_phone: null,
+            phone_ext: null
+          }
+        })
+        const controlArray = Array(this.supplementalItems.length).fill(false);
+        this.billableData.documents_received.map((doc, index) => {
+          let ind = this.supplementalItems.findIndex(docs => docs.name == doc);
+
+          if (ind != -1) {
+            controlArray[ind] = (true)
+          }
+        })
+        let disableStatus = this.billable_item.get('documents_received').disabled
+        this.billable_item.setControl('documents_received', this.formBuilder.array(controlArray))
+        if (disableStatus) {
+          this.billable_item.get('documents_received').disable()
+        }
+      } else {
+        this.billable_item.patchValue({
+          appointment: {
+            appointment_scheduled_date_time: null,
+            duration: null,
+            examiner_service_location_id: null,
+            is_virtual_location: false,
+            conference_url: null,
+            conference_phone: null,
+            phone_ext: null
+          },
+          intake_call: {
+            caller_affiliation: null,
+            caller_name: null,
+            call_date: null,
+            call_type: null,
+            call_type_detail: null,
+            notes: null,
+            caller_phone: null,
+            phone_ext: null,
+            caller_email: null,
+            caller_fax: null,
+          }
+        })
+        const controlArray = Array(this.supplementalItems.length).fill(false);
+        this.billable_item.setControl('documents_received', this.formBuilder.array(controlArray))
+      }
+
+      this.appointment_scheduled_date_time = null;
+    }
   }
 
   docChange(e) {

@@ -344,6 +344,9 @@ export class NewBillableItemComponent implements OnInit {
       }
       this.isSuplimental = false;
     }
+    if (procuderalCode.exam_procedure_type_id == 28) {
+      this.isSuplimental = true;
+    }
   }
   // procedure_type() {
   //   this.billable_item.patchValue({
