@@ -193,7 +193,7 @@ export class BilllableBillingComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.getBillingDetails();
+        this.getBillingDetails(true);
       }
     });
   }
@@ -317,15 +317,16 @@ export class BilllableBillingComponent implements OnInit {
   }
 
 
-  getBillingDetails() {
+  getBillingDetails(status?) {
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId, this.billingId).subscribe(billing => {
       if (billing.data) {
         this.billingData = billing.data;
-        console.log("Get Billing")
         if (!billing.data) {
           return;
         }
-
+        if (status) {
+          this.intercom.setBillingDetails(this.billingData)
+        }
         if (this.billingData && this.billingData.bill_no) {
           this.intercom.setBillNo('CMBN' + this.billingData.bill_no);
           this.cookieService.set('billNo', 'CMBN' + this.billingData.bill_no)

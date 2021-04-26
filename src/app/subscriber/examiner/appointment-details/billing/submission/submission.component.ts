@@ -173,9 +173,8 @@ export class SubmissionComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        //this.getBillingDetails();
         this.intercom.setBillDocChange(true);
-        this.getBillingDetails.emit()
+        this.getBillingDetails.emit(true)
       }
     });
   }
