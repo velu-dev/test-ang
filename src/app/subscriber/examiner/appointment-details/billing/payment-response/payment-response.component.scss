@@ -150,9 +150,9 @@
                                     position: absolute;
                                     left: -30px;
                                     top: -15px;
-                                    height: -moz-calc(56% - 0px);
-                                    height: -webkit-calc(56% - 0px);
-                                    height: calc(56% - 0px);
+                                    height: -moz-calc(55.5% - 0px);
+                                    height: -webkit-calc(55.5% - 0px);
+                                    height: calc(55.5% - 0px);
                                 }
                             }
                             .expand-details-list.void_ {
@@ -361,9 +361,9 @@
                         .expand-details-list.response_ {
                             &::after {
                                 content: "";
-                                height: -moz-calc(58.8% - 0px) !important;
-                                height: -webkit-calc(58.8% - 0px) !important;
-                                height: calc(58.8% - 0px) !important;
+                                height: -moz-calc(57.5% - 0px) !important;
+                                height: -webkit-calc(57.5% - 0px) !important;
+                                height: calc(57.5% - 0px) !important;
                             }
                         }
                         .expand-details.strike {
