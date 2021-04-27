@@ -55,10 +55,19 @@ body {
 .spacer {
   flex: 1 1 auto;
 }
-
+//button focus and disabled button custom style
 button:focus {
   outline: none !important;
 }
+
+.mat-sort-header-button:disabled,
+.mat-sort-header-button[disabled]{
+  color: $white !important;
+  &:hover {
+    color: $white !important;
+  }
+}
+
 button:disabled,
 button[disabled]{
   color: rgba(0, 0, 0, 0.26) !important;
@@ -67,7 +76,6 @@ button[disabled]{
     background-color: inherit !important;
   }
 }
-
 .m-auto {
   margin: 0px auto;
 }
