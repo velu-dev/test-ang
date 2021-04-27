@@ -287,7 +287,7 @@
                 <section class="supplemental-type" fxLayout="row wrap" fxFlex="100"
                     *ngIf="isSuplimental && billable_item.get('documents_received')">
                     <div fxFlex="50" fxFlex.sm="50" fxFlex.xs="100" class="supplemental-custom-check">
-                        <div class="m-b-10 label">Supplemental Items Received</div>
+                        <div class="m-b-10 label">Items Received</div>
                         <span formArrayName="documents_received" *ngFor="let order of supplementalItems; let i = index">
                             <mat-checkbox class="m-r-10" [formControlName]="i" (click)="supplementalCheck()">
                                 {{supplementalItems[i]?.name}}</mat-checkbox>

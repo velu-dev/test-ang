@@ -1950,7 +1950,7 @@ export class NewClaimComponent implements OnInit {
   isDeposition = false;
   procedure_type(procuderalCode) {
     console.log(procuderalCode)
-    if (procuderalCode.exam_procedure_type.includes("SUPP")) {
+    if (procuderalCode.exam_procedure_type.includes("SUPP") || procuderalCode.exam_procedure_type_id == 28) {
       this.isSuplimental = true;
       this.billable_item.patchValue({
         appointment: {

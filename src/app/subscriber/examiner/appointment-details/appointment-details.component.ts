@@ -405,14 +405,16 @@ export class AppointmentDetailsComponent implements OnInit {
           this.procedureTypeList = [];
           this.procedureTypeStatus.map(pro => {
             if (response.data.procedure_type == "Evaluation" || response.data.procedure_type == "Reevaluation") {
-              this.isDisplayStatus.status = true;
-              this.isDisplayStatus.isDeposition = false;
-              this.isDisplayStatus.name = "Examination";
-              if (pro.for.includes('E')) {
-                this.procedureTypeList.push(pro);
+              if (!(response.data.exam_procedure_type == "IMERECS")) {
+                this.isDisplayStatus.status = true;
+                this.isDisplayStatus.isDeposition = false;
+                this.isDisplayStatus.name = "Examination";
+                if (pro.for.includes('E')) {
+                  this.procedureTypeList.push(pro);
+                }
               }
             }
-            if (response.data.procedure_type == "Supplemental") {
+            if (response.data.procedure_type == "Supplemental" || response.data.exam_procedure_type == "IMERECS") {
               this.isDisplayStatus.status = true;
               this.isDisplayStatus.name = "Supplemental";
               if (pro.for.includes('S')) {
@@ -920,7 +922,6 @@ export class AppointmentDetailsComponent implements OnInit {
     }
     this.billable_item.get('intake_call').get('call_date').updateValueAndValidity();
     Object.keys(this.billable_item.controls).forEach((key) => {
-      console.log(this.billable_item.get(key).value)
       if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')
         this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim());
       if (typeof (this.billable_item.get(key).value) == 'object') {
