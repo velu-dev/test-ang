@@ -197,7 +197,7 @@ export class HistoryComponent implements OnInit {
 
 
   onDemandSubmit() {
-    if (!this.paramsId.examiner) {
+    if (!this.historyData.examiner_detail_id) {
       this.alertService.openSnackBar('Please assign examiner', 'error');
       return;
     }
@@ -209,7 +209,8 @@ export class HistoryComponent implements OnInit {
       document_category_id: 2,
       billable_item_id: this.paramsId.billId,
       service_request_type_id: 2,
-      examiner_id: this.paramsId.examiner
+      examiner_detail_id: this.historyData.examiner_detail_id,
+      examiner_user_id: this.historyData.examiner_user_id
       //service_provider_id: this.historyData.documets[0].service_provider_id // default 3
     }
     // this.onDemandService.requestCreate(data).subscribe(history => {
