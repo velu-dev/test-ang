@@ -223,7 +223,7 @@
             <span *ngIf="!(isExamTypeChanged || billableData?.isExaminerDisabled)">
                 <button *ngIf="!isExaminationStatusEdit" mat-raised-button (click)="changeEditStatus()"
                     class="filled-gray edit_btn hide-mobile hide-sm"
-                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)">Supplemental</button>
+                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)">Close</button>
                 <button *ngIf="isExaminationStatusEdit" mat-raised-button (click)="examinationStatusSubmit()"
                     class="filled-success edit_btn hide-mobile hide-sm"
                     [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)">Save</button><br /><br />
@@ -451,7 +451,7 @@
                     <section class="supplemental-type" fxLayout="row wrap" fxFlex="100"
                         *ngIf="isSuplimental && billable_item.get('documents_received')">
                         <div fxFlex="50" fxFlex.sm="50" fxFlex.xs="100" class="supplemental-custom-check">
-                            <div class="m-b-10 label">Supplemental Items Received</div>
+                            <div class="m-b-10 label">Items Received</div>
                             <span formArrayName="documents_received"
                                 *ngFor="let order of supplementalItems; let i = index">
                                 <mat-checkbox class="m-r-10" [formControlName]="i" (click)="supplementalCheck()">
