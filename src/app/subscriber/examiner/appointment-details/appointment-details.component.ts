@@ -400,6 +400,11 @@ export class AppointmentDetailsComponent implements OnInit {
             this.examinerService.seedData('cancel_supplemental_status').subscribe(supp => {
               this.cancelSupplemental = supp.data
             })
+          } else if (response.data.procedure_type == "IMERecords") {
+            this.examinerService.seedData('ime_records_status').subscribe(supp => {
+              this.cancelSupplemental = supp.data
+            })
+
           }
 
           this.procedureTypeList = [];
@@ -414,9 +419,9 @@ export class AppointmentDetailsComponent implements OnInit {
                 }
               }
             }
-            if (response.data.procedure_type == "Supplemental" || response.data.exam_procedure_type == "IMERECS") {
+            if (response.data.procedure_type == "Supplemental" || response.data.procedure_type == "IMERecords") {
               this.isDisplayStatus.status = true;
-              this.isDisplayStatus.name = "Supplemental";
+              this.isDisplayStatus.name = response.data.procedure_type == "Supplemental" ? "Supplemental" : '';
               if (pro.for.includes('S')) {
                 this.procedureTypeList.push(pro);
               }
