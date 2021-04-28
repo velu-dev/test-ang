@@ -1144,7 +1144,7 @@ export class NewClaimComponent implements OnInit {
       } else {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
-          data: { title: ' ', message: "Date of birth after date of injury!", proceed: true, type: "warning", info: true }
+          data: { title: 'Date of Injury Incorrect', message: "Date of birth after date of injury!", proceed: true, type: "warning", info: true }
         });
         dialogRef.afterClosed().subscribe(result => {
           this.createClaim1(claim, status);
@@ -1387,23 +1387,6 @@ export class NewClaimComponent implements OnInit {
       if (this.claimant.get(key).value && typeof (this.claimant.get(key).value) == 'string')
         this.claimant.get(key).setValue(this.claimant.get(key).value.trim());
     });
-    if (this.isClaimantCreated) {
-      this.claimantCreate1(status);
-    } else {
-      if (moment(this.claimant.get('date_of_birth').value).isBefore(this.minInjuryDate)) {
-        this.claimantCreate1(status);
-      } else {
-        const dialogRef = this.dialog.open(AlertDialogueComponent, {
-          width: '500px',
-          data: { title: ' ', message: "Date of birth after date of injury!", proceed: true, type: "warning", info: true }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          this.claimantCreate1(status);
-        })
-      }
-    }
-  }
-  claimantCreate1(status) {
     if (this.claimant.value.primary_language_spoken == 20) {
       this.claimant.get('other_language').setValidators([Validators.required]);
     } else {
@@ -1413,6 +1396,24 @@ export class NewClaimComponent implements OnInit {
     if (this.claimant.invalid) {
       return;
     }
+    if (this.isClaimantCreated) {
+      this.claimantCreate1(status);
+    } else {
+      if (moment(this.claimant.get('date_of_birth').value).isBefore(this.minInjuryDate)) {
+        this.claimantCreate1(status);
+      } else {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: 'Date of Injury Incorrect', message: "Date of birth after date of injury!", proceed: true, type: "warning", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          this.claimantCreate1(status);
+        })
+      }
+    }
+  }
+  claimantCreate1(status) {
+
     this.logger.log("claimantChanges", this.claimantChanges)
     if (this.claimantChanges) {
       this.claimantChanges = false;
