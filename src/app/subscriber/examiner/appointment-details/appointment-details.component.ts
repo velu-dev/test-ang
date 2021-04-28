@@ -156,7 +156,7 @@ export class AppointmentDetailsComponent implements OnInit {
   billableData: any;
   progressStatus: any;
   appointmentStatus: boolean = false;
-  disableExaminationArr: any = [5, 6, 7, 8, 10];
+  disableExaminationArr: any = [5, 22, 27, 28, 6, 29, 7, 16, 17, 18, 19, 20, 30, 35, 36, 37, 38, 8, 21, 31, 10, 13];
   columnName = [];
   displayedColumnsForDocuments = [];
   activityColumnName = [];

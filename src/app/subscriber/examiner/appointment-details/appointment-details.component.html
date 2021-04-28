@@ -114,12 +114,12 @@
 <mat-card class="exam-status" *ngIf="!isSuplimental">
     <div class="exam-info w-100" fxLayout="row wrap" *ngIf="isDisplayStatus.status">
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="show-mobile show-sm">
-            <span *ngIf="!isExamTypeChanged && !billableData?.isExaminerDisabled">
+            <span *ngIf="!isExamTypeChanged">
                 <button *ngIf="!isExaminationStatusEdit"
-                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || billableData?.isExaminerDisabled"
+                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
                     mat-raised-button (click)="changeEditStatus()" class="filled-gray edit_btn">Edit</button>
                 <button *ngIf="isExaminationStatusEdit"
-                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || billableData?.isExaminerDisabled"
+                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
                     type="submit" mat-raised-button (click)="examinationStatusSubmit()"
                     class="filled-success edit_btn">Save</button>
             </span>
@@ -148,7 +148,7 @@
                             cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
                     </mat-form-field>
                 </div>
-                <div *ngIf="isExaminationStatusEdit && !billableData?.isExaminerDisabled" class="text-center w-100">
+                <div *ngIf="isExaminationStatusEdit" class="text-center w-100">
                     <button mat-stroked-button class="outline-danger" (click)="cancel()">Cancel</button>
                     <button mat-stroked-button class="m-l-10 outline-success" type="submit"
                         (click)="examinationStatusSubmit()">Save
@@ -158,7 +158,7 @@
         </div>
 
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-            <span *ngIf="!(isExamTypeChanged || billableData?.isExaminerDisabled)">
+            <span *ngIf="!(isExamTypeChanged)">
                 <button *ngIf="!isExaminationStatusEdit" mat-raised-button (click)="changeEditStatus()"
                     class="filled-gray edit_btn hide-mobile hide-sm"
                     [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)">Edit</button>
@@ -176,12 +176,12 @@
 <mat-card class="exam-status" *ngIf="isSuplimental">
     <div class="exam-info w-100" fxLayout="row wrap" *ngIf="isDisplayStatus.status">
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="show-mobile show-sm">
-            <span *ngIf="!isExamTypeChanged && !billableData?.isExaminerDisabled">
+            <span *ngIf="!isExamTypeChanged">
                 <button *ngIf="!isExaminationStatusEdit"
-                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || billableData?.isExaminerDisabled"
+                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
                     mat-raised-button (click)="changeEditStatus()" class="filled-gray edit_btn">Close</button>
                 <button *ngIf="isExaminationStatusEdit"
-                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || billableData?.isExaminerDisabled"
+                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
                     type="submit" mat-raised-button (click)="examinationStatusSubmit()"
                     class="filled-success edit_btn">Save</button>
             </span>
@@ -210,7 +210,7 @@
                             cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
                     </mat-form-field>
                 </div>
-                <div *ngIf="isExaminationStatusEdit && !billableData?.isExaminerDisabled" class="text-center w-100">
+                <div *ngIf="isExaminationStatusEdit" class="text-center w-100">
                     <button mat-stroked-button class="outline-danger" (click)="cancel()">Cancel</button>
                     <button mat-stroked-button class="m-l-10 outline-success" type="submit"
                         (click)="examinationStatusSubmit()">Save
@@ -220,7 +220,7 @@
         </div>
 
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-            <span *ngIf="!(isExamTypeChanged || billableData?.isExaminerDisabled)">
+            <span *ngIf="!(isExamTypeChanged)">
                 <button *ngIf="!isExaminationStatusEdit" mat-raised-button (click)="changeEditStatus()"
                     class="filled-gray edit_btn hide-mobile hide-sm"
                     [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)">Close</button>
@@ -244,7 +244,7 @@
                     (click)="examinationDetails?.procedure_type == 'Deposition' ? openPopupRegulation(regulation?.regulationsForDepositionItemIntake?.title, regulation?.regulationsForDepositionItemIntake?.codes) : openPopupRegulation(regulation?.regulationsForBillableItemIntake?.title, regulation?.regulationsForBillableItemIntake?.codes)"><i
                         class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
             <span class="spacer"></span>
-            <span *ngIf="!isExamTypeChanged && !billableData?.isExaminerDisabled">
+            <span *ngIf="!isExamTypeChanged">
                 <button type="button" class="filled-gray m-b-5"
                     [disabled]="billableData?.bill_id || appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status)"
                     *ngIf="!isEditBillableItem" (click)="editBillable()" mat-raised-button>Edit</button>
