@@ -1144,7 +1144,7 @@ export class NewClaimComponent implements OnInit {
       } else {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
-          data: { title: 'Date of Injury Incorrect', message: "Date of birth after date of injury!", proceed: true, type: "warning", info: true }
+          data: { title: 'Date of Birth', message: "Please enter date of birth lesser than date of injury!", proceed: true, type: "warning", info: true }
         });
         dialogRef.afterClosed().subscribe(result => {
           this.createClaim1(claim, status);
@@ -1404,7 +1404,7 @@ export class NewClaimComponent implements OnInit {
       } else {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
-          data: { title: 'Date of Injury Incorrect', message: "Date of birth after date of injury!", proceed: true, type: "warning", info: true }
+          data: { title: 'Date of Birth', message: "Please enter date of birth lesser than date of injury!", proceed: true, type: "warning", info: true }
         });
         dialogRef.afterClosed().subscribe(result => {
           this.claimantCreate1(status);
