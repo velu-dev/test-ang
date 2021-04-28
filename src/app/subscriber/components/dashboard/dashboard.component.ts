@@ -78,8 +78,8 @@ export class DashboardComponent implements OnInit {
         this.columnName = ["", "Claimant", "Critical"]
         this.columnsToDisplay = ['is_expand', 'claimant_first_name', "critical"]
       } else {
-        this.columnName = ["", "Claimant", "Date of Birth", "Examiner", "Exam Procedure Type", "Standing", "Date of Service /" + '\n' + "Date Item Received", "Standing Due Date","Report Submission" + '\n' +"Due Date", "Critical"]
-        this.columnsToDisplay = ['is_expand', 'claimant_first_name', 'date_of_birth', 'examiner_first_name', "exam_procedure_name", "standing", 'appointment_scheduled_date_time', 'due_date','report_submission_due_date', 'critical']
+        this.columnName = ["", "Claimant", "Date of Birth", "Examiner", "Exam Procedure Type", "Standing", "Date of Service /" + '\n' + "Date Item Received", "Standing Due Date", "Report Submission" + '\n' + "Due Date", "Critical"]
+        this.columnsToDisplay = ['is_expand', 'claimant_first_name', 'date_of_birth', 'examiner_first_name', "exam_procedure_name", "standing", 'appointment_scheduled_date_time', 'due_date', 'report_submission_due_date', 'critical']
       }
     })
   }
@@ -183,6 +183,7 @@ export class DashboardComponent implements OnInit {
     }
   }
   openExtract(element, type) {
+
     this.intercom.setClaimant(element.claimant_first_name + ' ' + element.claimant_last_name);
     this.cookieService.set('claimDetails', element.claimant_first_name + ' ' + element.claimant_last_name)
     this.intercom.setClaimNumber(element.claim_number);
@@ -198,10 +199,11 @@ export class DashboardComponent implements OnInit {
     if (type == "correspondence" || type == "history") {
       examiner_id = element.examiner_id != null ? "/" + String(element.examiner_id) : "";
       this.router.navigate(['subscriber/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + examiner_id])
-    }
-    if (type == "billing") {
+    } else if (type == "billing") {
       let bill_id = element.bill_id != null ? "/" + String(element.bill_id) : "";
       this.router.navigate(['subscriber/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + bill_id])
+    } else {
+      this.router.navigate(['subscriber/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type])
     }
 
   }

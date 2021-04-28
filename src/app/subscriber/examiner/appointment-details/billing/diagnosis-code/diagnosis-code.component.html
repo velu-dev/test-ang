@@ -16,7 +16,7 @@
                                 [value]="icd[1]">
                                 {{icd[0] + " "+ icd[1]}}
                             </mat-option>
-                            <mat-option disabled *ngIf="filteredICD?.length == 0">
+                            <mat-option disabled *ngIf="icdCtrl?.value && filteredICD?.length == 0">
                                 Not Found
                             </mat-option>
                         </mat-autocomplete>

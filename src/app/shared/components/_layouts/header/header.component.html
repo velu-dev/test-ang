@@ -60,9 +60,11 @@
                     </mat-icon>
                 </button>
                 -->
-                <button *ngIf="user?.role_id != 1" mat-icon-button class="show-mobile mobile-search m-r-10" (click)="isSearch = true">
-                    <mat-icon matBadgeColor="warn">search</mat-icon>
-                </button>
+                <div *ngIf="user?.role_id != 1">
+                    <button mat-icon-button class="show-mobile mobile-search m-r-10" (click)="isSearch = true">
+                        <mat-icon matBadgeColor="warn">search</mat-icon>
+                    </button>
+                </div>
                 <div class="support-btn hide-mobile p-r-20"><a href="javaScript:void(0)">Help</a>|<a
                         (click)="logout()">Log-Out</a></div>
                 <div *ngIf="user">

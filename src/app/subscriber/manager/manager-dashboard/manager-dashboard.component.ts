@@ -71,7 +71,7 @@ export class ManagerDashboardComponent implements OnInit {
         this.columnName = ["", "Claimant", "Critical"]
         this.columnsToDisplay = ['is_expand', 'claimant_first_name', "critical"]
       } else {
-        this.columnName = ["", "Claimant", "Date of Birth", "Examiner", "Exam Procedure Type", "Standing", "Date of Service /" + '\n' + "Date Item Received", "Standing Due Date","Report Submission" + '\n' +"Due Date", "Critical"]
+        this.columnName = ["", "Claimant", "Date of Birth", "Examiner", "Exam Procedure Type", "Standing", "Date of Service /" + '\n' + "Date Item Received", "Standing Due Date", "Report Submission" + '\n' + "Due Date", "Critical"]
         this.columnsToDisplay = ['is_expand', 'claimant_first_name', 'date_of_birth', 'examiner_first_name', "exam_procedure_name", "standing", 'appointment_scheduled_date_time', 'due_date', "report_submission_due_date", 'critical']
       }
     })
@@ -157,10 +157,11 @@ export class ManagerDashboardComponent implements OnInit {
     if (type == "correspondence" || type == "history") {
       examiner_id = element.examiner_id != null ? "/" + String(element.examiner_id) : "";
       this.router.navigate(['subscriber/manager/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + examiner_id])
-    }
-    if (type == "billing") {
+    } else if (type == "billing") {
       let bill_id = element.bill_id != null ? "/" + String(element.bill_id) : "";
       this.router.navigate(['subscriber/manager/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type + bill_id])
+    } else {
+      this.router.navigate(['subscriber/manager/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id + '/' + type])
     }
   }
 
