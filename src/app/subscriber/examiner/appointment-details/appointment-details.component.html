@@ -179,7 +179,7 @@
             <span *ngIf="!isExamTypeChanged && !billableData?.isExaminerDisabled">
                 <button *ngIf="!isExaminationStatusEdit"
                     [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || billableData?.isExaminerDisabled"
-                    mat-raised-button (click)="changeEditStatus()" class="filled-gray edit_btn">Supplemental</button>
+                    mat-raised-button (click)="changeEditStatus()" class="filled-gray edit_btn">Close</button>
                 <button *ngIf="isExaminationStatusEdit"
                     [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || billableData?.isExaminerDisabled"
                     type="submit" mat-raised-button (click)="examinationStatusSubmit()"
