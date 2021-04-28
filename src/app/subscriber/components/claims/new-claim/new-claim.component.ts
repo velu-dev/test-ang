@@ -37,6 +37,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
 import { UserService } from 'src/app/shared/services/user.service';
 import * as regulation from 'src/app/shared/services/regulations';
+import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
 export const PICK_FORMATS = {
   // parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
   parse: {
@@ -234,6 +235,7 @@ export class NewClaimComponent implements OnInit {
   isAddressError = false;
   isAddressSearched = false;
   regulation = regulation;
+  minInjuryDate: any;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -1124,6 +1126,8 @@ export class NewClaimComponent implements OnInit {
     this.errors = { claim_details: 0, claim: 0, Employer: 0, InsuranceAdjuster: 0, ApplicantAttorney: 0, DefenseAttorney: 0, DEU: 0, }
     let claim = this.claim.value;
     claim['claim_injuries'] = this.injuryInfodata;
+    let moments = this.injuryInfodata.map(d => moment(d.date_of_injury));
+    this.minInjuryDate = moment.min(moments);
     if (this.documents_ids.length > 0) {
       claim['claim_details'].documents_ids = this.documents_ids;
     }
@@ -1132,6 +1136,23 @@ export class NewClaimComponent implements OnInit {
     }
     this.fileErrors.file.isError = false;
     claim['claim_details'].claimant_id = this.claimant_id;
+    if (this.isClaimCreated) {
+      this.createClaim1(claim, status);
+    } else {
+      if (moment(this.claimant.get('date_of_birth').value).isBefore(this.minInjuryDate)) {
+        this.createClaim1(claim, status);
+      } else {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: ' ', message: "Date of birth after date of injury!", proceed: true, type: "warning", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          this.createClaim1(claim, status);
+        })
+      }
+    }
+  }
+  createClaim1(claim, status) {
     if (!this.claimId) {
       this.claimService.createClaim(claim).subscribe(res => {
         this.claimId = res.data.id;
@@ -1366,7 +1387,23 @@ export class NewClaimComponent implements OnInit {
       if (this.claimant.get(key).value && typeof (this.claimant.get(key).value) == 'string')
         this.claimant.get(key).setValue(this.claimant.get(key).value.trim());
     });
-
+    if (this.isClaimantCreated) {
+      this.claimantCreate1(status);
+    } else {
+      if (moment(this.claimant.get('date_of_birth').value).isBefore(this.minInjuryDate)) {
+        this.claimantCreate1(status);
+      } else {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: ' ', message: "Date of birth after date of injury!", proceed: true, type: "warning", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          this.claimantCreate1(status);
+        })
+      }
+    }
+  }
+  claimantCreate1(status) {
     if (this.claimant.value.primary_language_spoken == 20) {
       this.claimant.get('other_language').setValidators([Validators.required]);
     } else {
@@ -1378,17 +1415,6 @@ export class NewClaimComponent implements OnInit {
     }
     this.logger.log("claimantChanges", this.claimantChanges)
     if (this.claimantChanges) {
-      // if (!this.claimantChanges) {
-      //   if (status == 'next') {
-      //     this.stepper.next();
-      //   } else if (status == 'save') {
-      //     this.routeDashboard();
-      //   } else if (status == 'close') {
-      //     this.routeDashboard();
-      //   }
-      //   return;
-      // } else {
-      // } 
       this.claimantChanges = false;
       let data = this.claimant.value;
       data['certified_interpreter_required'] = this.languageStatus;
@@ -1672,6 +1698,9 @@ export class NewClaimComponent implements OnInit {
             inj.continuous_trauma_end_date = injury.continuous_trauma_end_date ? injury.continuous_trauma_end_date : null;
             this.injuryInfodata.push(inj)
           })
+          let moments = res.data.injuryInfodata.map(d => moment(d.date_of_injury))
+          this.minInjuryDate = moment.min(moments)
+
           // this.injuryInfodata = res.data.injuryInfodata;
           if (res.data.employer.length > 0) {
             this.employerList = res.data.employer;

@@ -121,6 +121,7 @@ export class HistoryComponent implements OnInit {
   }
   isMedicalhistoryShow: boolean = false;
   getHistory() {
+    this.inFile = [];
     this.onDemandService.getHistory(this.paramsId.claim_id, this.paramsId.billId).subscribe(history => {
       this.historyData = history;
       if (this.historyData.on_demand_status_id == null || this.historyData.on_demand_status_id == 7 || this.historyData.on_demand_status_id == 9 || this.historyData.on_demand_status_id == 10 || this.historyData.on_demand_status_id == 25) {
@@ -130,10 +131,7 @@ export class HistoryComponent implements OnInit {
       }
       this.changeColors(history.on_demand_status_color_code);
       this.historyData.documents_sent_and_received.map(inFile => {
-        // if (inFile.transmission_direction == 'IN') {
-        this.inFile.push(inFile)
-        // }
-
+        this.inFile.push(inFile);
       })
       this.dataSource = new MatTableDataSource(this.inFile);
 
