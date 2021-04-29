@@ -461,7 +461,7 @@
                                 <th>Unit Type</th>
                                 <th>Units</th>
                                 <th>Charge</th>
-                                <th>First Submission Payment</th>
+                                <th>{{billType == 2 ?  'First Submission Payment' : ""}}{{billType == 3?  'SBR Payment' : ""}}</th>
                                 <th>Balance</th>
                                 <th>Action</th>
                             </thead>

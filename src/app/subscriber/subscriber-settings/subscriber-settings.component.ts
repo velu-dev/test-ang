@@ -241,6 +241,7 @@ export class SubscriberSettingsComponent implements OnInit {
     this.userService.getPaymentHistory(date).subscribe(res => {
       this.isDataAvailable = true;
       this.paymentData = res.data;
+      this.isExpanded = false;
       //this.alertService.openSnackBar(res.message, 'success');
       this.dataSourceList.data = res.data.data;/* Tree view */
     }, error => {
