@@ -1048,12 +1048,12 @@ export class NewClaimComponent implements OnInit {
     });
 
   }
+  isClaimantCompleted = false;
   selectionChange(event) {
     if (event.selectedIndex == 0) {
       this.titleName = " Claimant"
     } else if (event.selectedIndex == 1) {
       this.createClaimant('tab');
-      console.log(this.claimant_id)
       if (!this.claimant_id) {
         this.stepper.selected.completed = false;
         this.stepper.previous();

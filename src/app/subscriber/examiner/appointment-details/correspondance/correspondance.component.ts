@@ -174,6 +174,9 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.selection.clear();
       this.correspondData = res;
       this.changeColors(res.on_demand_status_color_code);
+      if(res.examiner_user_id){
+        this.examinerId = res.examiner_user_id;
+      }
       this.statusOfAppointment = { isEmptyNoDate: !res.is_appointment_no_date_present, IsEmptyAppointmentDate: !res.is_appointment_date_time_present, isEmptyDuration: !res.is_appointment_duration_present, isEmptyLocation: !res.is_appointment_location_present }
       res.documents.map(doc => {
         if (doc.is_mandatory) {

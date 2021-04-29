@@ -254,7 +254,7 @@ export class HistoryComponent implements OnInit {
     if (date) {
       let timezone = moment.tz.guess();
       // return moment.tz(date, 'YYYY/MM/DD', 'America/Los_Angeles').format('MM-DD-YYYY hh:mm A z');
-      moment(date).tz("America/Los_Angeles").format('MM-DD-YYYY hh:mm A z');
+      return moment(date).tz("America/Los_Angeles").format('MM-DD-YYYY hh:mm A z');
     }
   }
   downloadSentFile(data) {
