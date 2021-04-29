@@ -13,8 +13,7 @@
     <img [src]="info" alt="alert" class="text-center" *ngIf="data.type=='info'">
     <div class="inline">
       {{data?.title}}
-      <div class="mat-card-description">
-        {{data?.message}}
+      <div class="mat-card-description" [innerHtml]="data?.message">
       </div>
     </div>
   </div>

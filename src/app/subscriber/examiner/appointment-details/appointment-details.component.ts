@@ -958,7 +958,7 @@ export class AppointmentDetailsComponent implements OnInit {
       if (!this.billable_item.value.appointment.appointment_scheduled_date_time && this.billableData.appointment.appointment_scheduled_date_time && this.examinationStatusForm.value.examination_status != 11) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
-          data: { title: 'Examination', message: "This updates the Examination Status as 'Awaiting Deposition Date' & remove the Duration!. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+          data: { title: 'Examination', message: "This updates the Examination Status as 'Awaiting Deposition Date' & remove the Duration!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
         });
         dialogRef.afterClosed().subscribe(result => {
           if (result.data) {
@@ -973,7 +973,7 @@ export class AppointmentDetailsComponent implements OnInit {
       if (((this.billable_item.value.appointment.appointment_scheduled_date_time != this.billableData.appointment.appointment_scheduled_date_time) || (this.billable_item.value.appointment.duration != this.billableData.appointment.duration)) && (this.examinationStatusForm.getRawValue().examination_status != 12)) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
-          data: { title: 'Examination', message: "This updates the Examination Status as 'Awaiting Deposition'!. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+          data: { title: 'Examination', message: "This updates the Examination Status as 'Awaiting Deposition'!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
         });
         dialogRef.afterClosed().subscribe(result => {
           if (result.data) {
@@ -991,7 +991,7 @@ export class AppointmentDetailsComponent implements OnInit {
       if (!this.billable_item.value.appointment.appointment_scheduled_date_time && this.billableData.appointment.appointment_scheduled_date_time && this.examinationStatusForm.value.examination_status != 1) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
-          data: { title: 'Examination', message: "This updates the Examination Status as 'No Date' & remove the Duration!. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+          data: { title: 'Examination', message: "This updates the Examination Status as 'No Date' & remove the Duration!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
         });
         dialogRef.afterClosed().subscribe(result => {
           if (result.data) {
@@ -1007,7 +1007,7 @@ export class AppointmentDetailsComponent implements OnInit {
       if (((this.billable_item.value.appointment.appointment_scheduled_date_time != this.billableData.appointment.appointment_scheduled_date_time) || (this.billable_item.value.appointment.duration != this.billableData.appointment.duration)) && (this.examinationStatusForm.getRawValue().examination_status != 2)) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
-          data: { title: 'Examination', message: "This updates the Examination Status as 'Not Confirmed'!. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+          data: { title: 'Examination', message: "This updates the Examination Status as 'Not Confirmed'!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
         });
         dialogRef.afterClosed().subscribe(result => {
           if (result.data) {
