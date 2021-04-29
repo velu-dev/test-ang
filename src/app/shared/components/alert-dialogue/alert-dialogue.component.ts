@@ -30,5 +30,6 @@ export interface DialogData {
   yes: string,
   proceed: string,
   no: string,
-  type: string
+  type: string,
+  cancel: boolean
 }

@@ -410,14 +410,14 @@ export class AppointmentDetailsComponent implements OnInit {
           this.procedureTypeList = [];
           this.procedureTypeStatus.map(pro => {
             if (response.data.procedure_type == "Evaluation" || response.data.procedure_type == "Reevaluation") {
-              if (!(response.data.exam_procedure_type == "IMERECS")) {
-                this.isDisplayStatus.status = true;
-                this.isDisplayStatus.isDeposition = false;
-                this.isDisplayStatus.name = "Examination";
-                if (pro.for.includes('E')) {
-                  this.procedureTypeList.push(pro);
-                }
+              // if (!(response.data.exam_procedure_type == "IMERECS")) {
+              this.isDisplayStatus.status = true;
+              this.isDisplayStatus.isDeposition = false;
+              this.isDisplayStatus.name = "Examination";
+              if (pro.for.includes('E')) {
+                this.procedureTypeList.push(pro);
               }
+              // }
             }
             if (response.data.procedure_type == "Supplemental" || response.data.procedure_type == "IMERecords") {
               this.isDisplayStatus.status = true;
