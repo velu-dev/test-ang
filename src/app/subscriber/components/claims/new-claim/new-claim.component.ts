@@ -1144,10 +1144,14 @@ export class NewClaimComponent implements OnInit {
       } else {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
-          data: { title: 'Date of Birth', message: "Please enter date of birth lesser than date of injury!", proceed: true, type: "warning", info: true }
+          data: { title: 'Date of Birth', message: "Please enter date of birth lesser than date of injury!", proceed: true, cancel: true, type: "warning", info: true }
         });
         dialogRef.afterClosed().subscribe(result => {
-          this.createClaim1(claim, status);
+          if (result.data) {
+            this.createClaim1(claim, status);
+          } else {
+            return
+          }
         })
       }
     }
@@ -1404,10 +1408,14 @@ export class NewClaimComponent implements OnInit {
       } else {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
-          data: { title: 'Date of Birth', message: "Please enter date of birth lesser than date of injury!", proceed: true, type: "warning", info: true }
+          data: { title: 'Date of Birth', message: "Please enter date of birth lesser than date of injury!", proceed: true, cancel: true, type: "warning", info: true }
         });
         dialogRef.afterClosed().subscribe(result => {
-          this.claimantCreate1(status);
+          if (result.data) {
+            this.claimantCreate1(status);
+          } else {
+            return
+          }
         })
       }
     }
@@ -1646,7 +1654,6 @@ export class NewClaimComponent implements OnInit {
     if (this.emasSearchInput.value != "") {
       var adjValue = this.emasSearchInput.value.replace(/\s/g, '');
       if (adjValue.substring(0, 3).toLowerCase() == 'adj') {
-        this.logger.log(adjValue);
       } else {
         this.alertService.openSnackBar("EAMS Number Not Valid", "error")
         this.eamsStatus = true;
@@ -1736,7 +1743,6 @@ export class NewClaimComponent implements OnInit {
 
           this.dataSource = new MatTableDataSource(this.injuryInfodata)
           if (res.data.attroney.length != 0) {
-            console.log("attrony")
             // this.attroneylist = res.data.attroney;
             // let attroney = [];
             // res.data.attroney.map(res => {
