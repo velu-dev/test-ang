@@ -12,6 +12,10 @@ const routes: Routes = [{
   component: LoginComponent
 },
 {
+  path: "temporary-login",
+  component: LoginComponent
+},
+{
   path: "register",
   component: RegisterComponent
 },
