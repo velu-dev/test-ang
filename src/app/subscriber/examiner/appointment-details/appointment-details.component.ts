@@ -275,6 +275,7 @@ export class AppointmentDetailsComponent implements OnInit {
   isExamTypeChanged = false;
   examinerId = null;
   examinerName = "";
+  isFreeze: boolean = false;
   loadDatas() {
     this.procedureTypeList = [];
     this.modifiers = [];
@@ -298,6 +299,9 @@ export class AppointmentDetailsComponent implements OnInit {
       })
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
+        if(bills.data.is_first_ebill_ondemand_requested || bills.data.is_second_ebill_ondemand_requested || bills.data.is_exam_type_changed){
+          this.isFreeze = true;
+        }
         this.billableData = bills.data;
         if (this.billableData.appointment.examiner_service_location_id == null) {
           this.service_location_name = '0';
