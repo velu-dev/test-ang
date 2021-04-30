@@ -1150,6 +1150,7 @@ export class NewClaimComponent implements OnInit {
           if (result.data) {
             this.createClaim1(claim, status);
           } else {
+            this.stepper.selectedIndex = 1;
             return
           }
         })
@@ -1414,6 +1415,7 @@ export class NewClaimComponent implements OnInit {
           if (result.data) {
             this.claimantCreate1(status);
           } else {
+            this.stepper.selectedIndex = 0;
             return
           }
         })
@@ -1459,6 +1461,7 @@ export class NewClaimComponent implements OnInit {
           this.isClaimantCreated = true;
           this.isClaimantEdit = true;
           this.claimantChanges = false;
+          this.stepper.selected.completed = true;
           if (status == 'next') {
             this.logger.log("check")
 
