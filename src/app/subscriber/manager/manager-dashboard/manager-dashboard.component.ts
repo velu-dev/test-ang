@@ -106,7 +106,10 @@ export class ManagerDashboardComponent implements OnInit {
         this.isCloseIds.splice(index, 1)
       } else {
         this.isCloseId = element.appointment_id;
-        this.isCloseIds.push(element.appointment_id)
+        this.isCloseIds.push(element.appointment_id);
+        if (this.isCloseIds.length - 1 == this.dashboardData.length) {
+          this.isExpandAll = false;
+        }
       }
       this.expandId = null;
     } else {
