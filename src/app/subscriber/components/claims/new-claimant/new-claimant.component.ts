@@ -149,11 +149,11 @@ export class NewClaimantComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (res) {
-        this.columnName = ["", "Exam Type", "Status"]
-        this.columnsToDisplay = ['is_expand', 'exam_type_code', "status"]
+        this.columnName = ["", "Exam Type"]
+        this.columnsToDisplay = ['is_expand', 'exam_type_code']
       } else {
-        this.columnName = ['Exam Type', 'Claim Number', 'Date of Injury', 'Body Parts', 'Examiner', 'Status']
-        this.columnsToDisplay = ['exam_type_code', 'claim_number', 'date_of_injury', 'parts', 'examiner', 'status']
+        this.columnName = ['Exam Type', 'Claim Number', 'Date of Injury', 'Body Parts', 'Examiner']
+        this.columnsToDisplay = ['exam_type_code', 'claim_number', 'date_of_injury', 'parts', 'examiner']
       }
     });
   }
