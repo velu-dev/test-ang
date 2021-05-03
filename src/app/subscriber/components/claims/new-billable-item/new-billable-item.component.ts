@@ -122,7 +122,7 @@ export class NewBillableItemComponent implements OnInit {
           // this.claimService.getProcedureType(claim.data.claim_details.exam_type_id).subscribe(res => {
           //   this.procuderalCodes = res.data;
           // })
-          this.claimService.getProcedureTypeAttoney(claim.data.claim_details.id, claim.data.claim_details.exam_type_id).subscribe(procedure => {
+          this.claimService.getProcedureTypeAttoney(claim.data.claim_details.id).subscribe(procedure => {
             this.procuderalCodes = procedure.data;
           })
           let Examtype = { exam_type_code: "", exam_name: "" };

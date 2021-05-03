@@ -322,7 +322,7 @@ export class AppointmentDetailsComponent implements OnInit {
         //     }
         //   })
         // })
-        this.claimService.getProcedureTypeAttoney(this.claim_id, bills.data.exam_type_id).subscribe(procedure => {
+        this.claimService.getProcedureTypeAttoney(this.claim_id, this.billableId).subscribe(procedure => {
           this.procuderalCodes = procedure.data;
           procedure.data.map(proc => {
             if (proc.exam_procedure_type_id == bills.data.exam_type.exam_procedure_type_id) {

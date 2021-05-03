@@ -148,8 +148,8 @@ export class ClaimService {
     return this.http.post(environment.searchUrl + api_endpoint.claimNumberSearch, data)
   }
 
-  getProcedureTypeAttoney(claim_id, exam_type): Observable<any> {
-    return this.http.get(environment.baseUrl + api_endpoint.getProcedureTypeAttoney + claim_id + '/' + exam_type);
+  getProcedureTypeAttoney(claim_id, billableId?): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getProcedureTypeAttoney + claim_id + '/' + (billableId ? billableId : null));
   }
 
 
@@ -157,6 +157,6 @@ export class ClaimService {
     // this.headers.append("access-control-allow-origin", '*');
     // this.headers.append("referer", 'https://dev01app.simplexam.com');
     // this.headers = new HttpHeaders().set("Access-Control-Allow-Origin", "http://localhost:4200/");
-    return this.http.get('https://us-autocomplete-pro.api.smartystreets.com/lookup?key=' + environment.smartyStreetsAPIKey + '&search=' + input , { headers: this.headers })
+    return this.http.get('https://us-autocomplete-pro.api.smartystreets.com/lookup?key=' + environment.smartyStreetsAPIKey + '&search=' + input, { headers: this.headers })
   }
 }

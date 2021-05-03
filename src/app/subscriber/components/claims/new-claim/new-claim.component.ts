@@ -1373,7 +1373,7 @@ export class NewClaimComponent implements OnInit {
     //   })
     //   this.procuderalCodes = res.data;
     // })
-    this.claimService.getProcedureTypeAttoney(claim, type.exam_type_id).subscribe(procedure => {
+    this.claimService.getProcedureTypeAttoney(claim).subscribe(procedure => {
       this.billable_item.patchValue({
         exam_type: {
           exam_procedure_type_id: null
