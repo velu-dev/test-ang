@@ -236,6 +236,60 @@
 
 <div class="border-dashed-blue m-b-50"></div>
 
+<mat-card class="documents-declared m-b-20">
+    <mat-card-header>
+        <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Documents Declared<span class="custom-info"> <i
+                    class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
+        <span class="spacer"></span>
+        <span>
+            <button type="button" class="filled-gray m-b-5" mat-raised-button>Add</button>
+        </span>
+    </mat-card-header>
+    <mat-divider> </mat-divider>
+    <mat-card-content>
+        <div class="user-detail m-t-5">
+            <table class="table table-border res-table" [ngClass]="{'table-dark': mode}">
+                <thead class="text-nowrap">
+                    <th>Pages Declared</th>
+                    <th>Submitting Party</th>
+                    <th>Date Received</th>
+                    <th class="text-center">Action</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <mat-form-field appearance="outline" class="w-100">
+                                <input matInput type="number" autocomplete="off" placeholder="Pages Declared">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-select placeholder="Select Submitting Party">
+                                    <mat-option>
+                                        Options here.....
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field appearance="outline" class="mat-date-picker">
+                                <input matInput type="text" placeholder="Date Received" autocomplete="off" [min]="minimumDate" [matDatepicker]="date_received">
+                                <mat-datepicker-toggle matSuffix [for]="date_received">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #date_received></mat-datepicker>
+                            </mat-form-field>
+                        </td>
+                        <td class="text-center">
+                            <a class="text-success m-r-20">Edit</a> <a class="text-danger">Remove</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+
 <mat-card class="billable-item-info m-b-20">
     <form [formGroup]="billable_item" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
         <mat-card-header>
@@ -490,7 +544,8 @@
     <mat-divider> </mat-divider>
     <mat-card-content>
         <div fxLayout="row wrap">
-            <div fxLayout="row wrap" *ngIf="!(isExamTypeChanged) || !(isFreeze)" fxFlex="100" class="document-file-upload w-100">
+            <div fxLayout="row wrap" *ngIf="!(isExamTypeChanged) || !(isFreeze)" fxFlex="100"
+                class="document-file-upload w-100">
                 <mat-form-field fxFlex="100" fxFlex.sm="100" fxFlex.md="30" fxFlex.lg="30" fxFlex.xl="30"
                     appearance="outline" class="p-l-0 m-t-2">
                     <mat-label>Document Type</mat-label>

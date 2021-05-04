@@ -357,6 +357,35 @@
         }
     }
 }
+.documents-declared {
+    padding: 10px;
+    box-shadow: $shadow-style-one !important;
+    &:hover {
+        box-shadow: $shadow-style-one-hover;
+    }
+    mat-card-content {
+        .user-detail {
+            min-height: auto !important;
+            overflow-x: hidden;
+            .text-center {
+                text-align: center !important;
+            }
+            tr {
+                td {
+                    padding-top: 5px !important;
+                    ::ng-deep {
+                        mat-form-field .mat-form-field-wrapper {
+                            padding-bottom: 0 !important;
+                        }
+                        .mat-form-field .mat-form-field-wrapper .mat-form-field-subscript-wrapper {
+                            min-height: 0 !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 .billable-item-info {
     padding: 10px;
     box-shadow: $shadow-style-one !important;
