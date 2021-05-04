@@ -186,6 +186,8 @@ export class AppointmentDetailsComponent implements OnInit {
   regulation = regulation;
   SubmittingParty = [];
   isEdit
+  minimumDate = new Date(1900, 0, 1);
+  mode: boolean;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
