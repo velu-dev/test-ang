@@ -143,7 +143,8 @@ export class HistoryComponent implements OnInit {
 
   getHistoryCallTracking() {
     this.onDemandService.getHistoryCallTracking(this.paramsId.claim_id, this.paramsId.billId).subscribe(history => {
-      this.historyTrackingDatasource = new MatTableDataSource(history.data ? history.data : []);
+      let data = [{ id: 1, historian: "Call 1", call_end_time: "", call_start_time: "2021-04-26T09:03:52", created_date_time: "2021-04-26T09:03:52.337" }, { id: 2, historian: "Call 2", call_end_time: "2021-04-26T09:30:15", call_start_time: "2021-04-26T10:32:15", created_date_time: "2021-04-26T09:30:15.52" }]
+      this.historyTrackingDatasource = new MatTableDataSource(history.data ? data : []);
       this.historyTrackingDatasource.sort = this.sort;
     }, error => {
       this.dataSource = new MatTableDataSource([])

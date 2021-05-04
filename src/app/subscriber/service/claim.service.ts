@@ -56,6 +56,10 @@ export class ClaimService {
   seedData(data): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.seedData + data)
   }
+  seedDocumentData(data, claim_id?, billable_item_id?): Observable<any> {
+    let dd = claim_id ? (data + "/" + claim_id + "/" + billable_item_id) : data
+    return this.http.get(environment.baseUrl + "examinations/" + dd)
+  }
   // getCallerAffliation(): Observable<any> {
   //   return this.http.get(environment.baseUrl + api_endpoint.callerAffliation)
   // }
@@ -69,7 +73,15 @@ export class ClaimService {
   getBillableItemList() {
     return this.http.get(environment.baseUrl + api_endpoint.getBillItem)
   }
-
+  getDocumentsDeclared(claim_id, billable_item_id): Observable<any> {
+    return this.http.get(environment.baseUrl + "examinations/documents-declared-details/" + claim_id + "/" + billable_item_id)
+  }
+  createDeclaredDocument(data, claim_id, billable_item_id): Observable<any> {
+    return this.http.post(environment.baseUrl + "examinations/documents-declared-add/" + claim_id + "/" + billable_item_id, data)
+  }
+  removeDeclaredDocument(documents_declared_id): Observable<any> {
+    return this.http.delete(environment.baseUrl + "examinations/documents-declared-remove/" + documents_declared_id)
+  }
   postcorrespondence(data) {
     return this.http.post(environment.baseUrl + api_endpoint.correspondenceUpload, data)
   }

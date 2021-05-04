@@ -184,6 +184,8 @@ export class AppointmentDetailsComponent implements OnInit {
   supplementalOtherIndex: number;
   pastTwoYearDate = moment().subtract(2, 'year');
   regulation = regulation;
+  SubmittingParty = [];
+  isEdit
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -265,7 +267,19 @@ export class AppointmentDetailsComponent implements OnInit {
       this.notesDataSource.paginator.firstPage();
     }
   }
+  documentsDeclared = [];
   loadActivity() {
+    this.claimService.seedDocumentData("submitting_party_seed_data", this.claim_id, this.billableId).subscribe(res => {
+      console.log(res.data)
+      this.SubmittingParty = res.data;
+    })
+    this.claimService.getDocumentsDeclared(this.claim_id, this.billableId).subscribe(res => {
+      if (res.data) {
+        this.documentsDeclared = res.data;
+      } else {
+        this.documentsDeclared = [];
+      }
+    })
     this.claimService.getActivityLog(this.claim_id, this.billableId).subscribe(res => {
       this.activityLog = new MatTableDataSource(res.data);
       this.activityLog.sort = this.sort;
@@ -299,7 +313,7 @@ export class AppointmentDetailsComponent implements OnInit {
       })
       this.isBillabbleItemLoading = true;
       this.claimService.getBillableItemSingle(this.billableId).subscribe(bills => {
-        if(bills.data.is_first_ebill_ondemand_requested || bills.data.is_second_ebill_ondemand_requested || bills.data.is_exam_type_changed){
+        if (bills.data.is_first_ebill_ondemand_requested || bills.data.is_second_ebill_ondemand_requested || bills.data.is_exam_type_changed) {
           this.isFreeze = true;
         }
         this.billableData = bills.data;
@@ -480,6 +494,58 @@ export class AppointmentDetailsComponent implements OnInit {
   claimant_name = "";
   examinationStatusForm: FormGroup;
   loadForms() {
+
+  }
+  isEditDocument = false;
+  editedDocumentIndex = null;
+  editDocumentDeclared(documents?, index?) {
+    this.isEditDocument = true;
+    if (documents) {
+      this.editedDocumentIndex = index;
+      this.documentDeclared = documents;
+    }
+    console.log(this.documentDeclared, documents, this.isEditDocument)
+  }
+  documentDeclared = { id: null, agent_type: "", no_of_pages_declared: "", date_received: "" }
+  createDocumentsDeclared() {
+    if (this.documentDeclared.id) {
+      this.claimService.createDeclaredDocument(this.documentDeclared, this.claim_id, this.billableId).subscribe(res => {
+        this.alertService.openSnackBar(res.message, "success");
+        this.isEditDocument = false;
+        this.editedDocumentIndex = null;
+        this.documentDeclared = { id: null, agent_type: "", no_of_pages_declared: "", date_received: "" }
+        this.loadActivity();
+      }, error => {
+        this.alertService.openSnackBar(error.error.message, 'error');
+      })
+    } else {
+      this.claimService.createDeclaredDocument(this.documentDeclared, this.claim_id, this.billableId).subscribe(res => {
+        this.alertService.openSnackBar(res.message, "success")
+        this.loadActivity();
+        this.isEditDocument = false;
+        this.editedDocumentIndex = null;
+        this.documentDeclared = { id: null, agent_type: "", no_of_pages_declared: "", date_received: "" }
+      }, error => {
+        this.alertService.openSnackBar(error.error.message, 'error');
+      })
+    }
+  }
+  removeDocument(doc) {
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '500px',
+      data: { address: true, name: "remove" }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+      if (result['data']) {
+        this.claimService.removeDeclaredDocument(doc.id).subscribe(res => {
+          this.alertService.openSnackBar(res.message, "success")
+          this.loadActivity();
+        }, error => {
+          this.alertService.openSnackBar(error.error.message, 'error');
+        })
+      }
+    });
 
   }
   appointmentId: any;

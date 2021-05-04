@@ -256,31 +256,78 @@
                     <th class="text-center">Action</th>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr *ngIf="!isEditDocument">
                         <td>
                             <mat-form-field appearance="outline" class="w-100">
-                                <input matInput type="number" autocomplete="off" placeholder="Pages Declared">
+                                <input matInput type="number" (keypress)="numberOnly($event)"
+                                    [(ngModel)]="documentDeclared.no_of_pages_declared" autocomplete="off"
+                                    placeholder="Pages Declared">
                             </mat-form-field>
                         </td>
                         <td>
                             <mat-form-field appearance="outline" class="w-100">
-                                <mat-select placeholder="Select Submitting Party">
-                                    <mat-option>
-                                        Options here.....
+                                <mat-select placeholder="Select Submitting Party"
+                                    [(ngModel)]="documentDeclared.agent_type">
+                                    <mat-option *ngFor="let party of SubmittingParty" [value]="party.name">
+                                        {{party.name}}
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </td>
                         <td>
                             <mat-form-field appearance="outline" class="mat-date-picker">
-                                <input matInput type="text" placeholder="Date Received" autocomplete="off" [min]="minimumDate" [matDatepicker]="date_received">
+                                <input matInput type="text" placeholder="Date Received"
+                                    [(ngModel)]="documentDeclared.date_received" autocomplete="off" [min]="minimumDate"
+                                    [matDatepicker]="date_received">
                                 <mat-datepicker-toggle matSuffix [for]="date_received">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #date_received></mat-datepicker>
                             </mat-form-field>
                         </td>
                         <td class="text-center">
-                            <a class="text-success m-r-20">Edit</a> <a class="text-danger">Remove</a>
+                            <a class="text-success m-r-20" (click)="createDocumentsDeclared()">Save</a>
+                        </td>
+                    </tr>
+                    <tr *ngFor="let documents of documentsDeclared; let i=index">
+                        <td>
+                            <mat-form-field appearance="outline" class="w-100"
+                                *ngIf="isEditDocument && editedDocumentIndex == i">
+                                <input matInput name="page" type="number" (keypress)="numberOnly($event)"
+                                    [(ngModel)]="documentDeclared.no_of_pages_declared" #page="ngModel" autocomplete="off"
+                                    placeholder="Pages Declared">
+                            </mat-form-field>
+                            <span *ngIf="!(isEditDocument && editedDocumentIndex == i)">{{documents.no_of_pages_declared}}</span>
+                        </td>
+                        <td>
+                            <mat-form-field appearance="outline" class="w-100"
+                                *ngIf="isEditDocument && editedDocumentIndex == i">
+                                <mat-select placeholder="Select Submitting Party" name="party"
+                                    [(ngModel)]="documentDeclared.agent_type" #party="ngModel">
+                                    <mat-option *ngFor="let party of SubmittingParty" [value]="party.name">
+                                        {{party.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <span *ngIf="!(isEditDocument && editedDocumentIndex == i)">{{documents.agent_type}}</span>
+                        </td>
+                        <td>
+                            <mat-form-field appearance="outline" class="mat-date-picker"
+                                *ngIf="isEditDocument && editedDocumentIndex == i">
+                                <input matInput type="text" placeholder="Date Received" name="date"
+                                    [(ngModel)]="documentDeclared.date_received" autocomplete="off" [min]="minimumDate"
+                                    [matDatepicker]="date_received" #date="ngModel">
+                                <mat-datepicker-toggle matSuffix [for]="date_received">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #date_received></mat-datepicker>
+                            </mat-form-field>
+                            <span *ngIf="!(isEditDocument && editedDocumentIndex == i)">{{documents.date_received | date:'MM-dd-yyyy'}}</span>
+                        </td>
+                        <td class="text-center">
+                            <a class="text-success m-r-20" *ngIf="isEditDocument && editedDocumentIndex == i"
+                                (click)="createDocumentsDeclared()">Save</a>
+                            <a class="text-success m-r-20" *ngIf="!(isEditDocument && editedDocumentIndex == i)"
+                                (click)="editDocumentDeclared(documents, i)">Edit</a>
+                            <a class="text-danger" (click)="removeDocument(documents)">Remove</a>
                         </td>
                     </tr>
                 </tbody>
