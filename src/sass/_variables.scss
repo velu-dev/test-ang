@@ -1473,11 +1473,26 @@ input:-webkit-autofill {
   cursor: pointer;
   margin-left: 5px;
   position: relative;
+  @media only screen and (max-width: 568px) {
+    color: #ffffff;
+    padding: 5px 7px;
+    margin-top: 5px;
+    max-width: 100px;
+    min-width: 100px;
+    height: 20px;
+    margin-left: 0px;
+    display: block;
+    background: #00b0e0;
+    border-radius: 50px; }
+
   i {
     cursor: pointer;
     // padding-top: 4px;
     @-moz-document url-prefix() {
       vertical-align: text-bottom;
+    }
+    @media only screen and (max-width: 568px) {
+      font-size: 22px;
     }
   }
   sup {
@@ -1492,8 +1507,13 @@ input:-webkit-autofill {
     background-color: $ternary;
     border-radius: 50px;
     padding: 0 10px;
+    @media only screen and (max-width: 568px) {
+      top: 6px;
+      padding-left: 5px;
+    }
   }
 }
+
 .custom-info.gap {
   display: inline-block;
   margin-top: 15px;
