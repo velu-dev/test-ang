@@ -543,7 +543,7 @@ export class AppointmentDetailsComponent implements OnInit {
   removeDocument(group, i) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '500px',
-      data: { title:'Pages Declared', address: true, name: "remove" }
+      data: { title: 'Pages Declared', address: true, name: "remove" }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)
@@ -724,16 +724,28 @@ export class AppointmentDetailsComponent implements OnInit {
       group.markAllAsTouched();
       return;
     }
-   // group.value.date_received = moment((group.value.date_received).format("MM-DD-YYYY"));
-    this.claimService.createDeclaredDocument(group.value, this.claim_id, this.billableId).subscribe(res => {
-      this.alertService.openSnackBar(res.message, "success");
-      this.documentsDeclared[i] = res.data
-      group.get('isEditable').setValue(false);
-      group.get('id').setValue(res.data.id);
+    const dialogRef = this.dialog.open(AlertDialogueComponent, {
+      width: '500px',
+      data: { title: 'Page Declared', message: "Is this the correct number of pages declared?. <br/>*The excess pages will be added to the bill as a line item.", proceed: true, no: true, type: "info", info: true }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.data) {
+        group.get('date_received').patchValue(moment((group.value.date_received).format("MM-DD-YYYY")));
+        this.claimService.createDeclaredDocument(group.value, this.claim_id, this.billableId).subscribe(res => {
+          this.alertService.openSnackBar(res.message, "success");
+          this.documentsDeclared[i] = res.data
+          group.get('isEditable').setValue(false);
+          group.get('id').setValue(res.data.id);
 
-    }, error => {
-      this.alertService.openSnackBar(error.error.message, 'error');
+        }, error => {
+          this.alertService.openSnackBar(error.error.message, 'error');
+        })
+      } else {
+        return;
+      }
     })
+    return
+
   }
 
   cancelRow(group: FormGroup, i) {
