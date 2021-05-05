@@ -42,6 +42,11 @@ export const regulationsForUpcomingAppointments = {
     title: 'Regulations for upcoming appointments',
     codes: ['58', '59', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131', '132']
 };
+export const regulationsForDeclarationOfPagesReceived = {
+    title: 'Regulations for declaration of pages received',
+    codes: ['144']
+};
+
 
 export const Regulations = [
     {
