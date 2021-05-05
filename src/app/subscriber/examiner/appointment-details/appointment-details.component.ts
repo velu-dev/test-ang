@@ -187,7 +187,9 @@ export class AppointmentDetailsComponent implements OnInit {
   SubmittingParty = [];
   isEdit
   minimumDate = new Date(1900, 0, 1);
+  today = new Date();
   mode: boolean;
+  docDeclearTable: FormGroup;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -278,6 +280,12 @@ export class AppointmentDetailsComponent implements OnInit {
     this.claimService.getDocumentsDeclared(this.claim_id, this.billableId).subscribe(res => {
       if (res.data) {
         this.documentsDeclared = res.data;
+        res.data.map((item, i) => {
+          this.addRow();
+          this.getFormControls.controls[i].patchValue(item)
+          this.getFormControls.controls[i].get('isEditable').patchValue(false)
+        })
+
       } else {
         this.documentsDeclared = [];
       }
@@ -532,7 +540,7 @@ export class AppointmentDetailsComponent implements OnInit {
       })
     }
   }
-  removeDocument(doc) {
+  removeDocument(group, i) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '500px',
       data: { address: true, name: "remove" }
@@ -540,9 +548,10 @@ export class AppointmentDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)
       if (result['data']) {
-        this.claimService.removeDeclaredDocument(doc.id).subscribe(res => {
+        this.claimService.removeDeclaredDocument(group.value.id).subscribe(res => {
           this.alertService.openSnackBar(res.message, "success")
-          this.loadActivity();
+          const control = this.docDeclearTable.get('tableRows') as FormArray;
+          control.removeAt(i);
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');
         })
@@ -656,6 +665,84 @@ export class AppointmentDetailsComponent implements OnInit {
       this.documentList = type['data']
     })
     this.billable_item.disable();
+
+    this.docDeclearTable = this.formBuilder.group({
+      tableRows: this.formBuilder.array([])
+    });
+  }
+
+  initiateForm(): FormGroup {
+    return this.formBuilder.group({
+      id: [],
+      no_of_pages_declared: ['', Validators.required],
+      agent_type: ['', [Validators.required]],
+      date_received: ['', [Validators.required]],
+      isEditable: [true]
+    });
+  }
+
+  get getFormControls() {
+    const control = this.docDeclearTable.get('tableRows') as FormArray;
+    return control;
+  }
+
+  addRow() {
+    let newRowStatus = true
+    for (var j in this.getFormControls.controls) {
+      if (this.getFormControls.controls[j].status == 'INVALID') {
+        newRowStatus = false;
+      }
+    }
+
+    if (!newRowStatus) {
+      this.alertService.openSnackBar("Please fill existing data", 'error');
+      return;
+    }
+    const control = this.docDeclearTable.get('tableRows') as FormArray;
+    control.push(this.initiateForm());
+  }
+
+  deleteRow(index: number, group) {
+    if (group.value.id) {
+      this.removeDocument(group, index);
+      return
+    }
+    const control = this.docDeclearTable.get('tableRows') as FormArray;
+    control.removeAt(index);
+  }
+
+  editRow(group: FormGroup) {
+    group.get('isEditable').setValue(true);
+  }
+
+  doneRow(group: FormGroup, i) {
+    Object.keys(group.controls).forEach((key) => {
+      if (group.get(key).value && typeof (group.get(key).value) == 'string')
+        group.get(key).setValue(group.get(key).value.trim())
+    });
+    if (group.status == "INVALID") {
+      group.markAllAsTouched();
+      return;
+    }
+   // group.value.date_received = moment((group.value.date_received).format("MM-DD-YYYY"));
+    this.claimService.createDeclaredDocument(group.value, this.claim_id, this.billableId).subscribe(res => {
+      this.alertService.openSnackBar(res.message, "success");
+      this.documentsDeclared[i] = res.data
+      group.get('isEditable').setValue(false);
+      group.get('id').setValue(res.data.id);
+
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
+  }
+
+  cancelRow(group: FormGroup, i) {
+    if (!group.value.id) {
+      this.deleteRow(i, group);
+      return
+    }
+    group.patchValue(this.documentsDeclared[i]);
+    group.get('isEditable').setValue(false);
   }
   isExaminationStatusEdit = false;
   changeEditStatus() {

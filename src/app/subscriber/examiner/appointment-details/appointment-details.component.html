@@ -242,12 +242,12 @@
                     class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
         <span class="spacer"></span>
         <span>
-            <button type="button" class="filled-gray m-b-5" mat-raised-button>Add</button>
+            <button type="button" class="filled-gray m-b-5" mat-raised-button (click)="addRow()">Add</button>
         </span>
     </mat-card-header>
     <mat-divider> </mat-divider>
     <mat-card-content>
-        <div class="user-detail m-t-5">
+        <!-- <div class="user-detail m-t-5">
             <table class="table table-border res-table" [ngClass]="{'table-dark': mode}">
                 <thead class="text-nowrap">
                     <th>Pages Declared</th>
@@ -332,6 +332,78 @@
                     </tr>
                 </tbody>
             </table>
+        </div> -->
+
+        <div class="user-detail m-t-5">
+            <form [formGroup]="docDeclearTable">
+            <table class="table table-border res-table" [ngClass]="{'table-dark': mode}" *ngIf="getFormControls.controls.length > 0">
+                <thead class="text-nowrap">
+                    <th>Pages Declared</th>
+                    <th>Submitting Party</th>
+                    <th>Date Received</th>
+                    <th class="text-center">Action</th>
+                </thead>
+                <tbody>
+                    <ng-container formArrayName="tableRows" *ngFor="let group of getFormControls.controls ; let i=index">
+                    <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
+                        <td>
+                            <mat-form-field appearance="outline" class="w-100">
+                                <input matInput type="number" (keypress)="numberOnly($event)"
+                                formControlName="no_of_pages_declared" autocomplete="off"
+                                    placeholder="Pages Declared">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-select placeholder="Select Submitting Party"
+                                formControlName="agent_type">
+                                    <mat-option *ngFor="let party of SubmittingParty" [value]="party.name">
+                                        {{party.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field appearance="outline" class="mat-date-picker">
+                                <input matInput type="text" placeholder="Date Received"
+                                formControlName="date_received" autocomplete="off" [min]="minimumDate"
+                                    [matDatepicker]="date_received" [max]="today">
+                                <mat-datepicker-toggle matSuffix [for]="date_received">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #date_received></mat-datepicker>
+                            </mat-form-field>
+                        </td>
+                        <td class="text-center">
+                            <a class="text-success m-r-20" (click)="doneRow(group, i)">Save</a>
+                            <a class="text-danger m-l-10" (click)="cancelRow(group,i)">
+                                Cancel
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="!group.get('isEditable').value" [formGroupName]="i">
+                        <td>
+                            {{group.get('no_of_pages_declared').value}}
+                        </td>
+                        <td>
+                            {{group.get('agent_type').value}}
+                        </td>
+                        <td>
+                            {{group.get('date_received').value | date:'MM-dd-yyyy'}}
+                        </td>
+                        <td class="text-center">
+                            <a class="text-success" (click)="editRow(group,i)">
+                                Edit
+                            </a>
+                            <a class="text-danger m-l-10" (click)="deleteRow(i,group)">
+                                Remove
+                            </a>
+                        </td>
+                    </tr>
+                </ng-container>
+                </tbody>
+            </table>
+        </form>
         </div>
     </mat-card-content>
 </mat-card>
