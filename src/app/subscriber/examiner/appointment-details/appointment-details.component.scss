@@ -388,6 +388,11 @@
                     }
                 }
             }
+            tr.values {
+                td {
+                    padding: 10px !important;
+                }
+            }
         }
     }
 }

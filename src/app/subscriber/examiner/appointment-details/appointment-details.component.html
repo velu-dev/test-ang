@@ -380,7 +380,7 @@
                         </td>
                     </tr>
 
-                    <tr *ngIf="!group.get('isEditable').value" [formGroupName]="i">
+                    <tr *ngIf="!group.get('isEditable').value" [formGroupName]="i" class="values">
                         <td>
                             {{group.get('no_of_pages_declared').value}}
                         </td>

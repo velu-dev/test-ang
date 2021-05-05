@@ -543,7 +543,7 @@ export class AppointmentDetailsComponent implements OnInit {
   removeDocument(group, i) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '500px',
-      data: { address: true, name: "remove" }
+      data: { title:'Pages Declared', address: true, name: "remove" }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)
