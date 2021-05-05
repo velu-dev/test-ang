@@ -711,7 +711,7 @@ export class AppointmentDetailsComponent implements OnInit {
     control.removeAt(index);
   }
 
-  editRow(group: FormGroup) {
+  editRow(group: FormGroup, i) {
     group.get('isEditable').setValue(true);
   }
 
