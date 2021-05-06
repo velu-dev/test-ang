@@ -255,7 +255,53 @@
                     <th class="text-center">Action</th>
                 </thead>
                 <tbody>
-                    <tr *ngIf="!isEditDocument">
+                    <tr *ngFor="let documents of documentsDeclared; let i=index">
+                        <td>
+                            <mat-form-field appearance="outline" class="w-100"
+                                *ngIf="isEditDocument && editedDocumentIndex == i">
+                                <input matInput name="page" type="number" (keypress)="numberOnly($event)"
+                                    [(ngModel)]="documentDeclared.no_of_pages_declared" #page="ngModel"
+                                    autocomplete="off" placeholder="Pages Declared">
+                            </mat-form-field>
+                            <span
+                                *ngIf="!(isEditDocument && editedDocumentIndex == i)">{{documents.no_of_pages_declared}}</span>
+                        </td>
+                        <td>
+                            <mat-form-field appearance="outline" class="w-100"
+                                *ngIf="isEditDocument && editedDocumentIndex == i">
+                                <mat-select placeholder="Select Submitting Party" name="party"
+                                    [(ngModel)]="documentDeclared.agent_type" #party="ngModel">
+                                    <mat-option *ngFor="let party of SubmittingParty" [value]="party.name">
+                                        {{party.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <span *ngIf="!(isEditDocument && editedDocumentIndex == i)">{{documents.agent_type}}</span>
+                        </td>
+                        <td>
+                            <mat-form-field appearance="outline" class="mat-date-picker"
+                                *ngIf="isEditDocument && editedDocumentIndex == i">
+                                <input matInput type="text" placeholder="Date Received" name="date"
+                                    [(ngModel)]="documentDeclared.date_received" autocomplete="off" [min]="minimumDate"
+                                    [matDatepicker]="date_received" #date="ngModel">
+                                <mat-datepicker-toggle matSuffix [for]="date_received">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #date_received></mat-datepicker>
+                            </mat-form-field>
+                            <span *ngIf="!(isEditDocument && editedDocumentIndex == i)">{{documents.date_received |
+                                date:'MM-dd-yyyy'}}</span>
+                        </td>
+                        <td class="text-center">
+                            <a class="text-success m-r-20" *ngIf="isEditDocument && editedDocumentIndex == i"
+                                (click)="createDocumentsDeclared()">Save</a>
+                            <a class="text-success m-r-20" *ngIf="!(isEditDocument && editedDocumentIndex == i)"
+                                (click)="editDocumentDeclared(documents, i)">Edit</a>
+                            <a class="text-danger" *ngIf="!isEditDocument"
+                                (click)="removeDocument(documents)">Remove</a>
+                            <a class="text-danger" *ngIf="isEditDocument" (click)="cancelDoc()">Cancel</a>
+                        </td>
+                    </tr>
+                    <tr *ngIf="isAddDoc">
                         <td>
                             <mat-form-field appearance="outline" class="w-100">
                                 <input matInput type="number" (keypress)="numberOnly($event)"
@@ -285,48 +331,6 @@
                         </td>
                         <td class="text-center">
                             <a class="text-success m-r-20" (click)="createDocumentsDeclared()">Save</a>
-                        </td>
-                    </tr>
-                    <tr *ngFor="let documents of documentsDeclared; let i=index">
-                        <td>
-                            <mat-form-field appearance="outline" class="w-100"
-                                *ngIf="isEditDocument && editedDocumentIndex == i">
-                                <input matInput name="page" type="number" (keypress)="numberOnly($event)"
-                                    [(ngModel)]="documentDeclared.no_of_pages_declared" #page="ngModel" autocomplete="off"
-                                    placeholder="Pages Declared">
-                            </mat-form-field>
-                            <span *ngIf="!(isEditDocument && editedDocumentIndex == i)">{{documents.no_of_pages_declared}}</span>
-                        </td>
-                        <td>
-                            <mat-form-field appearance="outline" class="w-100"
-                                *ngIf="isEditDocument && editedDocumentIndex == i">
-                                <mat-select placeholder="Select Submitting Party" name="party"
-                                    [(ngModel)]="documentDeclared.agent_type" #party="ngModel">
-                                    <mat-option *ngFor="let party of SubmittingParty" [value]="party.name">
-                                        {{party.name}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <span *ngIf="!(isEditDocument && editedDocumentIndex == i)">{{documents.agent_type}}</span>
-                        </td>
-                        <td>
-                            <mat-form-field appearance="outline" class="mat-date-picker"
-                                *ngIf="isEditDocument && editedDocumentIndex == i">
-                                <input matInput type="text" placeholder="Date Received" name="date"
-                                    [(ngModel)]="documentDeclared.date_received" autocomplete="off" [min]="minimumDate"
-                                    [matDatepicker]="date_received" #date="ngModel">
-                                <mat-datepicker-toggle matSuffix [for]="date_received">
-                                </mat-datepicker-toggle>
-                                <mat-datepicker #date_received></mat-datepicker>
-                            </mat-form-field>
-                            <span *ngIf="!(isEditDocument && editedDocumentIndex == i)">{{documents.date_received | date:'MM-dd-yyyy'}}</span>
-                        </td>
-                        <td class="text-center">
-                            <a class="text-success m-r-20" *ngIf="isEditDocument && editedDocumentIndex == i"
-                                (click)="createDocumentsDeclared()">Save</a>
-                            <a class="text-success m-r-20" *ngIf="!(isEditDocument && editedDocumentIndex == i)"
-                                (click)="editDocumentDeclared(documents, i)">Edit</a>
-                            <a class="text-danger" (click)="removeDocument(documents)">Remove</a>
                         </td>
                     </tr>
                 </tbody>
@@ -402,6 +406,7 @@
                 </ng-container>
                 </tbody>
             </table>
+            <app-nodata *ngIf="getFormControls?.controls?.length == 0"></app-nodata>
         </form>
         </div>
     </mat-card-content>
@@ -450,7 +455,7 @@
                             <!-- <input matInput disabled> -->
                             <!-- <input matInput [value]="examinerName" placeholder="Examiner" maxlength="3"
                                 autocomplete="off" [attr.disabled]="disabled ? '' : null"> -->
-                            <mat-select formControlName="examiner_id" disabled>
+                            <mat-select formControlName="examiner_id">
                                 <mat-option *ngFor="let examinar of examinarList" (click)="examinarChange(examinar)"
                                     [value]="examinar.id">
                                     {{examinar.first_name}} {{examinar.middle_name}}
