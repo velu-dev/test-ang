@@ -454,7 +454,7 @@
                             <!-- <input matInput disabled> -->
                             <!-- <input matInput [value]="examinerName" placeholder="Examiner" maxlength="3"
                                 autocomplete="off" [attr.disabled]="disabled ? '' : null"> -->
-                            <mat-select formControlName="examiner_id" disabled>
+                            <mat-select formControlName="examiner_id">
                                 <mat-option *ngFor="let examinar of examinarList" (click)="examinarChange(examinar)"
                                     [value]="examinar.id">
                                     {{examinar.first_name}} {{examinar.middle_name}}

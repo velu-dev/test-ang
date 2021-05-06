@@ -1080,7 +1080,11 @@ export class AppointmentDetailsComponent implements OnInit {
   editBillable() {
     this.isEditBillableItem = true;
     this.billable_item.enable();
-    this.billable_item.get('appointment').get('examiner_id').disable();
+    if (this.billableData.isExaminerDisabled) {
+      this.billable_item.get('appointment').get('examiner_id').enable();
+    } else {
+      this.billable_item.get('appointment').get('examiner_id').disable();
+    }
     if (this.billable_item.value.appointment.appointment_scheduled_date_time) {
       this.billable_item.get('appointment').get('duration').setValidators([Validators.compose([Validators.required, Validators.pattern('[0-9]+'), Validators.min(1), Validators.max(450)])]);
     } else {
@@ -1127,7 +1131,7 @@ export class AppointmentDetailsComponent implements OnInit {
     }
     if (this.examinationDetails.bill_id) {
       if (this.billableData.exam_type.exam_procedure_type_id != this.billable_item.value.exam_type.exam_procedure_type_id) {
-        this.alertService.openSnackBar("Billing already created this billable item", "error");
+        this.alertService.openSnackBar("Billing already created for this billable Item", "error");
         return;
       }
     }
