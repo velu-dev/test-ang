@@ -780,7 +780,11 @@ mat-progress-bar {
       .note {
         font-size: $font-size-7;
         color: $ternary;
-        padding-top: 4px;
+        padding: 0;
+        display: inline-flex;
+        i {
+          padding: 4px 5px 0 0;
+        }
       }
     }
     .align-center {
