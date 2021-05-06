@@ -496,6 +496,7 @@ export class AppointmentDetailsComponent implements OnInit {
   loadForms() {
 
   }
+  isAddDoc = false;
   isEditDocument = false;
   editedDocumentIndex = null;
   editDocumentDeclared(documents?, index?) {
@@ -513,7 +514,8 @@ export class AppointmentDetailsComponent implements OnInit {
         this.alertService.openSnackBar(res.message, "success");
         this.isEditDocument = false;
         this.editedDocumentIndex = null;
-        this.documentDeclared = { id: null, agent_type: "", no_of_pages_declared: "", date_received: "" }
+        this.documentDeclared = { id: null, agent_type: "", no_of_pages_declared: "", date_received: "" };
+        this.isAddDoc = false;
         this.loadActivity();
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
@@ -524,6 +526,7 @@ export class AppointmentDetailsComponent implements OnInit {
         this.loadActivity();
         this.isEditDocument = false;
         this.editedDocumentIndex = null;
+        this.isAddDoc = false;
         this.documentDeclared = { id: null, agent_type: "", no_of_pages_declared: "", date_received: "" }
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
@@ -547,6 +550,10 @@ export class AppointmentDetailsComponent implements OnInit {
       }
     });
 
+  }
+  cancelDoc() {
+    this.isEditDocument = false;
+    this.editedDocumentIndex = null;
   }
   appointmentId: any;
   openCalendar() {
