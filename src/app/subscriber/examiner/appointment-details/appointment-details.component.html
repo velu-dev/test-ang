@@ -406,6 +406,7 @@
                 </ng-container>
                 </tbody>
             </table>
+            <app-nodata *ngIf="getFormControls?.controls?.length == 0"></app-nodata>
         </form>
         </div>
     </mat-card-content>
