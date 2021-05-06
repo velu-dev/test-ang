@@ -280,6 +280,7 @@ export class AppointmentDetailsComponent implements OnInit {
         this.documentsDeclared = res.data;
         res.data.map((item, i) => {
           this.addRow();
+          console.log(item)
           this.getFormControls.controls[i].patchValue(item)
           this.getFormControls.controls[i].get('isEditable').patchValue(false)
         })
@@ -688,7 +689,7 @@ export class AppointmentDetailsComponent implements OnInit {
       id: [],
       no_of_pages_declared: ['', Validators.required],
       agent_type: ['', [Validators.required]],
-      date_received: ['', [Validators.required]],
+      date_received: ["", [Validators.required]],
       isEditable: [true]
     });
   }
@@ -699,7 +700,6 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   addRow() {
-    console.log("fasdasd")
     let newRowStatus = true
     for (var j in this.getFormControls.controls) {
       if (this.getFormControls.controls[j].status == 'INVALID') {
@@ -733,19 +733,20 @@ export class AppointmentDetailsComponent implements OnInit {
       if (group.get(key).value && typeof (group.get(key).value) == 'string')
         group.get(key).setValue(group.get(key).value.trim())
     });
+    console.log(group.value)
     if (group.status == "INVALID") {
       group.markAllAsTouched();
       return;
     }
     const dialogRef = this.dialog.open(AlertDialogueComponent, {
       width: '500px',
-      data: { title: 'Page Declared', message: "Is this the correct number of pages declared?. <br/>*The excess pages will be added to the bill as a line item.", proceed: true, no: true, type: "info", info: true }
+      data: { title: 'Page Declared', message: "Is this the correct number of pages declared? <br/>*The excess pages will be added to the bill as a line item.", proceed: true, no: true, type: "info", info: true }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result.data) {
         group.get('date_received').patchValue(moment((group.value.date_received).format("MM-DD-YYYY")));
         let data = { agent_type: group.value.agent_type, no_of_pages_declared: group.value.no_of_pages_declared };
-        data['date_received'] = new Date(group.value.date_received).toDateString();
+        data['date_received'] = moment(group.value.date_received).format("LL");
         this.claimService.createDeclaredDocument(data, this.claim_id, this.billableId).subscribe(res => {
           this.alertService.openSnackBar(res.message, "success");
           this.documentsDeclared[i] = res.data
@@ -1032,14 +1033,29 @@ export class AppointmentDetailsComponent implements OnInit {
         examiner_service_location_id: null
       }
     })
-    this.claimService.getExaminarAddress(examinar.id).subscribe(res => {
-      this.examinarAddress = res['data'];
-      res.data.map(address => {
-        if (address.address_id == this.billableData.appointment.examiner_service_location_id) {
-          this.service_location_name = address.service_location_name;
-        }
+    if (this.examinerId != examinar.id) {
+      this.claimService.getExaminarAddress(examinar.id).subscribe(res => {
+        this.examinarAddress = res['data'];
+        res.data.map(address => {
+          if (address.address_id == this.billableData.appointment.examiner_service_location_id) {
+            this.service_location_name = address.service_location_name;
+          }
+        })
       })
-    })
+    }
+    if (this.billableData.isExaminerDisabled) {
+      this.examinarAddress = [];
+    }
+    else {
+      this.claimService.getExaminarAddress(examinar.id).subscribe(res => {
+        this.examinarAddress = res['data'];
+        res.data.map(address => {
+          if (address.address_id == this.billableData.appointment.examiner_service_location_id) {
+            this.service_location_name = address.service_location_name;
+          }
+        })
+      })
+    }
   }
   openPopup() {
     const dialogRef = this.dialog.open(AlertDialogueComponent, {
@@ -1232,7 +1248,7 @@ export class AppointmentDetailsComponent implements OnInit {
     }
     this.billable_item.value.exam_type.is_psychiatric = this.isChecked;
     this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
-    this.billable_item.value.appointment.examiner_id = this.examinerId;
+    // this.billable_item.value.appointment.examiner_id = this.examinerId;
     this.billable_item.value.documents_received = selectedOrderIds;
     this.billable_item.value.id = this.examinationDetails.appointments.id
     this.examinerService.updateBillableItem(this.billableData.id, this.billable_item.value).subscribe(res => {
