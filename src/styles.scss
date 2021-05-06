@@ -1036,3 +1036,11 @@ mat-progress-bar {
 .mat-tab-label, .mat-tab-link {
   font-weight: 600;
 }
+//Mat-tab active color
+  .mat-option.mat-active {
+    background: $info-bg !important; 
+    border: 1px solid $info-border;
+  }
+  .mat-option {
+    border: 1px solid transparent;
+  }
