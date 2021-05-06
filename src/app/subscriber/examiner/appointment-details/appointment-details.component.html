@@ -129,7 +129,7 @@
                 <div fxLayout="row wrap" class="examination-status">
                     <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100" class="p-t-15 p-r-10">{{isDisplayStatus.name}}
                         Status</div>
-                    <mat-form-field appearance="outline" fxFlex="70" fxFlex.sm="92" fxFlex.xs="92">
+                    <mat-form-field appearance="outline" fxFlex="70" fxFlex.sm="100" fxFlex.xs="92">
                         <mat-label>Choose an option</mat-label>
                         <mat-select formControlName="examination_status">
                             <mat-option *ngFor="let examination_status of examinationStatus"
@@ -142,7 +142,7 @@
                     <span class="custom-info"
                         (click)="openPopupRegulation(regulation?.regulationsForAppointmentNotification?.title, regulation?.regulationsForAppointmentNotification?.codes)"><i
                             class="material-icons-outlined">info</i><sup>Regulations</sup></span>
-                    <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-form-field appearance="outline" fxFlex="100" class="notes">
                         <mat-label>Notes</mat-label>
                         <textarea formControlName="examination_notes" matInput placeholder="Notes" cdkTextareaAutosize
                             cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
@@ -191,7 +191,7 @@
                 <div fxLayout="row wrap" class="examination-status">
                     <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100" class="p-t-15 p-r-10">{{isDisplayStatus.name}}
                         Status</div>
-                    <mat-form-field appearance="outline" fxFlex="70" fxFlex.sm="92" fxFlex.xs="92">
+                    <mat-form-field appearance="outline" fxFlex="70" fxFlex.sm="100" fxFlex.xs="100">
                         <mat-label>Choose an option</mat-label>
                         <mat-select formControlName="examination_status">
                             <mat-option *ngFor="let examination_status of cancelSupplemental"
@@ -201,10 +201,9 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <span class="custom-info"
-                        (click)="openPopupRegulation('Regulations for appointment notification and cancellation', ['31', '32', '33', '34', '35'])"><i
+                    <span class="custom-info" (click)="openPopupRegulation(regulation?.regulationsForAppointmentNotification?.title, regulation?.regulationsForAppointmentNotification?.codes)"><i
                             class="material-icons-outlined">info</i><sup>Regulations</sup></span>
-                    <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-form-field appearance="outline" fxFlex="100" class="notes">
                         <mat-label>Notes</mat-label>
                         <textarea formControlName="examination_notes" matInput placeholder="Notes" cdkTextareaAutosize
                             cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
@@ -238,17 +237,16 @@
 
 <mat-card class="documents-declared m-b-20">
     <mat-card-header>
-        <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Documents Declared<span class="custom-info"
-                (click)="openPopupRegulation('Regulations for declaration of pages received', ['144'])"> <i
+        <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Documents Declared<span class="custom-info"  (click)="openPopupRegulation(regulation?.regulationsForDeclarationOfPagesReceived?.title, regulation?.regulationsForDeclarationOfPagesReceived?.codes)"> <i
                     class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
         <span class="spacer"></span>
         <span>
-            <button type="button" class="filled-gray m-b-5" mat-raised-button (click)="isAddDoc = true">Add</button>
+            <button type="button" class="filled-gray m-b-5" mat-raised-button (click)="addRow()">Add</button>
         </span>
     </mat-card-header>
     <mat-divider> </mat-divider>
     <mat-card-content>
-        <div class="user-detail m-t-5">
+        <!-- <div class="user-detail m-t-5">
             <table class="table table-border res-table" [ngClass]="{'table-dark': mode}">
                 <thead class="text-nowrap">
                     <th>Pages Declared</th>
@@ -337,6 +335,78 @@
                     </tr>
                 </tbody>
             </table>
+        </div> -->
+
+        <div class="user-detail m-t-5">
+            <form [formGroup]="docDeclearTable">
+            <table class="table table-border res-table" [ngClass]="{'table-dark': mode}" *ngIf="getFormControls.controls.length > 0">
+                <thead class="text-nowrap">
+                    <th>Pages Declared</th>
+                    <th>Submitting Party</th>
+                    <th>Date Received</th>
+                    <th class="text-center">Action</th>
+                </thead>
+                <tbody>
+                    <ng-container formArrayName="tableRows" *ngFor="let group of getFormControls.controls ; let i=index">
+                    <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
+                        <td>
+                            <mat-form-field appearance="outline" class="w-100">
+                                <input matInput type="number" (keypress)="numberOnly($event)"
+                                formControlName="no_of_pages_declared" autocomplete="off"
+                                    placeholder="Pages Declared">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-select placeholder="Select Submitting Party"
+                                formControlName="agent_type">
+                                    <mat-option *ngFor="let party of SubmittingParty" [value]="party.name">
+                                        {{party.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field appearance="outline" class="mat-date-picker">
+                                <input matInput type="text" placeholder="Date Received"
+                                formControlName="date_received" autocomplete="off" [min]="minimumDate"
+                                    [matDatepicker]="date_received" [max]="today">
+                                <mat-datepicker-toggle matSuffix [for]="date_received">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #date_received></mat-datepicker>
+                            </mat-form-field>
+                        </td>
+                        <td class="text-center">
+                            <a class="text-success m-r-20" (click)="doneRow(group, i)">Save</a>
+                            <a class="text-danger m-l-10" (click)="cancelRow(group,i)">
+                                Cancel
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="!group.get('isEditable').value" [formGroupName]="i" class="values">
+                        <td>
+                            {{group.get('no_of_pages_declared').value}}
+                        </td>
+                        <td>
+                            {{group.get('agent_type').value}}
+                        </td>
+                        <td>
+                            {{group.get('date_received').value | date:'MM-dd-yyyy'}}
+                        </td>
+                        <td class="text-center">
+                            <a class="text-success" (click)="editRow(group,i)">
+                                Edit
+                            </a>
+                            <a class="text-danger m-l-10" (click)="deleteRow(i,group)">
+                                Remove
+                            </a>
+                        </td>
+                    </tr>
+                </ng-container>
+                </tbody>
+            </table>
+        </form>
         </div>
     </mat-card-content>
 </mat-card>
