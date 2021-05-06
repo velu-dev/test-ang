@@ -220,6 +220,7 @@ export class AppointmentDetailsComponent implements OnInit {
     //   })
     // })
     this.loadDatas();
+    this.getDocumentDeclareData();
     this.claimService.listExaminar().subscribe(res => {
       this.examinarList = res.data;
     })
@@ -272,11 +273,8 @@ export class AppointmentDetailsComponent implements OnInit {
     }
   }
   documentsDeclared = [];
-  loadActivity() {
-    this.claimService.seedDocumentData("submitting_party_seed_data", this.claim_id, this.billableId).subscribe(res => {
-      console.log(res.data)
-      this.SubmittingParty = res.data;
-    })
+  getDocumentDeclareData() {
+    console.log("sadasddasdasd --11")
     this.claimService.getDocumentsDeclared(this.claim_id, this.billableId).subscribe(res => {
       if (res.data) {
         this.documentsDeclared = res.data;
@@ -290,6 +288,13 @@ export class AppointmentDetailsComponent implements OnInit {
         this.documentsDeclared = [];
       }
     })
+  }
+  loadActivity() {
+    this.claimService.seedDocumentData("submitting_party_seed_data", this.claim_id, this.billableId).subscribe(res => {
+      console.log(res.data)
+      this.SubmittingParty = res.data;
+    })
+
     this.claimService.getActivityLog(this.claim_id, this.billableId).subscribe(res => {
       this.activityLog = new MatTableDataSource(res.data);
       this.activityLog.sort = this.sort;
@@ -526,14 +531,14 @@ export class AppointmentDetailsComponent implements OnInit {
         this.editedDocumentIndex = null;
         this.documentDeclared = { id: null, agent_type: "", no_of_pages_declared: "", date_received: "" };
         this.isAddDoc = false;
-        this.loadActivity();
+        this.getDocumentDeclareData();
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
     } else {
       this.claimService.createDeclaredDocument(this.documentDeclared, this.claim_id, this.billableId).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success")
-        this.loadActivity();
+        this.getDocumentDeclareData();
         this.isEditDocument = false;
         this.editedDocumentIndex = null;
         this.isAddDoc = false;
@@ -694,6 +699,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   addRow() {
+    console.log("fasdasd")
     let newRowStatus = true
     for (var j in this.getFormControls.controls) {
       if (this.getFormControls.controls[j].status == 'INVALID') {
@@ -738,7 +744,9 @@ export class AppointmentDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result.data) {
         group.get('date_received').patchValue(moment((group.value.date_received).format("MM-DD-YYYY")));
-        this.claimService.createDeclaredDocument(group.value, this.claim_id, this.billableId).subscribe(res => {
+        let data = { agent_type: group.value.agent_type, no_of_pages_declared: group.value.no_of_pages_declared };
+        data['date_received'] = new Date(group.value.date_received).toDateString();
+        this.claimService.createDeclaredDocument(data, this.claim_id, this.billableId).subscribe(res => {
           this.alertService.openSnackBar(res.message, "success");
           this.documentsDeclared[i] = res.data
           group.get('isEditable').setValue(false);
