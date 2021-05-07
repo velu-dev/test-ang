@@ -740,7 +740,7 @@ export class AppointmentDetailsComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(AlertDialogueComponent, {
       width: '500px',
-      data: { title: 'Page Declared', message: "Is this the correct number of pages declared? <br/>*The excess pages will be added to the bill as a line item.", proceed: true, no: true, type: "info", info: true }
+      data: { title: 'Page Declared', message: "Is this the correct number of pages declared? <br/><b>*The excess pages will be added to the bill as a line item</b>.", proceed: true, no: true, type: "info", info: true }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result.data) {

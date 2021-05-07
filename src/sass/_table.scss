@@ -329,7 +329,8 @@ tr.detail-row {
 
 .res-table {
   width: $width-100;
-  border-collapse: collapse;
+  // border-collapse: collapse;
+  border-spacing: 0px;
   table-layout: fixed;
   // position: relative;
   // height: 350px;

@@ -377,10 +377,8 @@
                             </mat-form-field>
                         </td>
                         <td class="text-center">
-                            <a class="text-success m-r-20" (click)="doneRow(group, i)">Save</a>
-                            <a class="text-danger m-l-10" (click)="cancelRow(group,i)">
-                                Cancel
-                            </a>
+                            <a class="text-success" (click)="doneRow(group, i)">Save</a>
+                            <a class="text-danger m-l-10" (click)="cancelRow(group,i)">Cancel</a>
                         </td>
                     </tr>
 
@@ -395,12 +393,8 @@
                             {{group.get('date_received').value | date:'MM-dd-yyyy'}}
                         </td>
                         <td class="text-center">
-                            <a class="text-success" (click)="editRow(group,i)">
-                                Edit
-                            </a>
-                            <a class="text-danger m-l-10" (click)="deleteRow(i,group)">
-                                Remove
-                            </a>
+                            <a class="text-success" (click)="editRow(group,i)">Edit</a>
+                            <a class="text-danger m-l-10" (click)="deleteRow(i,group)">Remove</a>
                         </td>
                     </tr>
                 </ng-container>
