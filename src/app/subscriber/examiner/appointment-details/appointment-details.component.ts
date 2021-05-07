@@ -744,7 +744,7 @@ export class AppointmentDetailsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result.data) {
-        group.get('date_received').patchValue(moment((group.value.date_received).format("MM-DD-YYYY")));
+       // group.get('date_received').patchValue(moment((group.value.date_received).format("MM-DD-YYYY")));
         let data = { agent_type: group.value.agent_type, no_of_pages_declared: group.value.no_of_pages_declared };
         data['date_received'] = moment(group.value.date_received).format("LL");
         this.claimService.createDeclaredDocument(data, this.claim_id, this.billableId).subscribe(res => {
