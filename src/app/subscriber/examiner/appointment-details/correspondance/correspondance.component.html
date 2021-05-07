@@ -16,6 +16,39 @@
         <i class="fa fa-info-circle p-r-5"></i>{{error_message}} </div>
     </div>
   </div> -->
+  <div class="incomplete-info" *ngIf="!isIncompleteError">
+    <mat-card>
+        <mat-card-header>
+            <div class="content-wrapper-main-title text-danger">Incomplete Information
+                <button mat-raised-button class="filled-gray m-b-5" (click)="isExpandDetail = !isExpandDetail">
+                    {{isExpandDetail ? "Collapse" : "Expand"}} <i class="p-l-5 fas"
+                        [ngClass]="{'fa-angle-up': isExpandDetail,'fa-angle-down': !isExpandDetail}"></i>
+                </button>
+            </div>
+        </mat-card-header>
+        <mat-divider class="border-red"></mat-divider>
+        <mat-card-content>
+            <div fxLayout="row wrap" class="m-t-10">
+                <div fxFlex="100" class="incomplete-modules">
+                    <div fxLayout="row wrap">
+                        <div *ngFor="let incompleteInfo of incompleteInformation" fxFlex="50" fxFlex.xs="100"
+                            fxFlex.sm="100">
+                            <span class="text-danger">
+                                <mat-icon> error</mat-icon> {{incompleteInfo.name}}
+                            </span>
+                            <div class="incomplete-details"
+                                *ngIf="isExpandDetail && incompleteInfo?.value?.length > 0">
+                                <ol>
+                                    <li *ngFor="let val of incompleteInfo.value">{{val}}</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
 
   <div fxLayout="row wrap" class="p-t-25" *ngIf="!isLoading">
     <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">

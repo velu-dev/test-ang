@@ -106,7 +106,6 @@ export class StaffDashboardComponent implements OnInit {
       } else {
         this.isCloseId = element.appointment_id;
         this.isCloseIds.push(element.appointment_id);
-        console.log(this.isCloseIds, this.dashboardData.length)
         if (this.isCloseIds.length - 1 == this.dashboardData.length) {
           this.isExpandAll = false;
         }

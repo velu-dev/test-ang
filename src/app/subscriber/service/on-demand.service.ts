@@ -41,6 +41,9 @@ export class OnDemandService {
   getTrackingTable(claim_id, bill_item_id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.getTracking + claim_id + "/" + bill_item_id)
   }
+  getCorresIncomplete(claim_id, bill_item_id): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.getCorresIncomplete + claim_id + "/" + bill_item_id, { "isPopupValidate": true })
+  }
   getTracingPopUp(tracking_id, claim_id, bill_item_id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.tracingPopup + tracking_id + "/" + claim_id + "/" + bill_item_id)
   }
