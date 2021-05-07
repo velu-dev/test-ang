@@ -60,6 +60,7 @@ export class ManagerDashboardComponent implements OnInit {
       this.dashboardData = res.data.splitted_record;
       this.selectedTile = status;
       this.allData = res.data.all_record;
+      this.selectedData = this.allData.length;
       this.dataSource = new MatTableDataSource(res.data.all_record);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -107,7 +108,7 @@ export class ManagerDashboardComponent implements OnInit {
       } else {
         this.isCloseId = element.appointment_id;
         this.isCloseIds.push(element.appointment_id);
-        if (this.isCloseIds.length - 1 == this.dashboardData.length) {
+        if (this.isCloseIds.length == this.selectedData) {
           this.isExpandAll = false;
         }
       }
@@ -125,6 +126,7 @@ export class ManagerDashboardComponent implements OnInit {
     }
 
   }
+  selectedData: any;
   getDashboardData(status?) {
     var filteredData = [];
     if (this.selectedTile == status) {
@@ -139,6 +141,7 @@ export class ManagerDashboardComponent implements OnInit {
         }
       })
     }
+    this.selectedData = filteredData.length;
     this.dataSource = new MatTableDataSource(filteredData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

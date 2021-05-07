@@ -78,6 +78,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   regulation = regulation;
   isIncompleteError = true;
   incompleteInformation: any;
+  isExpandDetail = true;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild('popupMenu', { static: false }) popupMenu: MatMenuTrigger;
@@ -325,19 +326,24 @@ export class BillingCorrespondanceComponent implements OnInit {
     this.changeColors("#E6E6E6");
   }
   downloadForms(sign) {
-    if (this.isIncompleteError) {
+    this.onDemandService.getCorresIncomplete(this.claim_id, this.billableId).subscribe(res => {
       this.downloadMethod(sign);
-    } else {
+    }, error => {
       const dialogRef = this.dialog.open(BillingAlertComponent, {
         width: '500px',
-        data: { title: 'Incomplete Information', incompleteInformation: this.incompleteInformation, ok: false, cancel: true, proceed: true }
+        data: { title: 'Incomplete Information', incompleteInformation: error.error.data, ok: false, cancel: true, proceed: true }
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result.data) {
           this.downloadMethod(sign);
         }
       })
-    }
+    })
+    // if (this.isIncompleteError) {
+    //   this.downloadMethod(sign);
+    // } else {
+
+    // }
   }
   downloadMethod(sign) {
     if (!this.examinerId) {
@@ -633,7 +639,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   }
 
   onDemandSubmit() {
-    if (this.isIncompleteError) {
+    this.onDemandService.getCorresIncomplete(this.claim_id, this.billableId).subscribe(res => {
       if (!this.examinerId) {
         this.alertService.openSnackBar('Please select Examiner', "error");
         return;
@@ -749,15 +755,15 @@ export class BillingCorrespondanceComponent implements OnInit {
       } else {
         this.getOndemandDocs(data);
       }
-    } else {
+    }, error => {
       const dialogRef = this.dialog.open(BillingAlertComponent, {
         width: '500px',
-        data: { title: 'Incomplete Information', incompleteInformation: this.incompleteInformation, ok: true }
+        data: { title: 'Incomplete Information', incompleteInformation: error.error.data, ok: true }
       });
       dialogRef.afterClosed().subscribe(result => {
         return
       })
-    }
+    })
   }
   getOndemandDocs(data) {
     this.onDemandService.onDemandCorrespondence(data).subscribe(record => {
