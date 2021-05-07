@@ -352,7 +352,7 @@
                         <td>
                             <mat-form-field appearance="outline" class="w-100">
                                 <input matInput type="number" (keypress)="numberOnly($event)"
-                                formControlName="no_of_pages_declared" autocomplete="off"
+                                formControlName="no_of_pages_declared" min="1" autocomplete="off"
                                     placeholder="Pages Declared">
                             </mat-form-field>
                         </td>
