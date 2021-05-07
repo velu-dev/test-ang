@@ -358,7 +358,7 @@
         .notes {
             @media only screen and (max-width: 568px) {
                 margin-top: 20px;
-             }
+            }
         }
     }
 }
@@ -371,9 +371,14 @@
     mat-card-content {
         .user-detail {
             min-height: auto !important;
-            overflow-x: hidden;
+            max-height: 260px;
             .text-center {
                 text-align: center !important;
+            }
+            th {
+                position: sticky;
+                top: 0; /* Don't forget this, required for the stickiness */
+                box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
             }
             tr {
                 td {
@@ -384,6 +389,9 @@
                         }
                         .mat-form-field .mat-form-field-wrapper .mat-form-field-subscript-wrapper {
                             min-height: 0 !important;
+                        }
+                        .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon-button, .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button {
+                            top: 4px;
                         }
                     }
                 }

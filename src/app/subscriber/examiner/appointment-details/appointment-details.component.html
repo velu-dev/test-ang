@@ -83,7 +83,7 @@
 
 <div class="action-info w-100" fxLayout="row wrap p-t-0">
     <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
-        <div class="logo-caption text-left"> <span class="primary">Simple</span><span class="ternary">Service</span>™
+        <div class="logo-caption text-left"> <span class="primary">Simple</span><span class="ternary">Service</span><sup>®</sup>
             <span class="note p-l-10">This would be a brief description on the benefits of these services</span>
         </div>
     </div>
@@ -352,7 +352,7 @@
                         <td>
                             <mat-form-field appearance="outline" class="w-100">
                                 <input matInput type="number" (keypress)="numberOnly($event)"
-                                formControlName="no_of_pages_declared" autocomplete="off"
+                                formControlName="no_of_pages_declared" min="1" autocomplete="off"
                                     placeholder="Pages Declared">
                             </mat-form-field>
                         </td>
@@ -377,10 +377,8 @@
                             </mat-form-field>
                         </td>
                         <td class="text-center">
-                            <a class="text-success m-r-20" (click)="doneRow(group, i)">Save</a>
-                            <a class="text-danger m-l-10" (click)="cancelRow(group,i)">
-                                Cancel
-                            </a>
+                            <a class="text-success" (click)="doneRow(group, i)">Save</a>
+                            <a class="text-danger m-l-10" (click)="cancelRow(group,i)">Cancel</a>
                         </td>
                     </tr>
 
@@ -395,12 +393,8 @@
                             {{group.get('date_received').value | date:'MM-dd-yyyy'}}
                         </td>
                         <td class="text-center">
-                            <a class="text-success" (click)="editRow(group,i)">
-                                Edit
-                            </a>
-                            <a class="text-danger m-l-10" (click)="deleteRow(i,group)">
-                                Remove
-                            </a>
+                            <a class="text-success" (click)="editRow(group,i)">Edit</a>
+                            <a class="text-danger m-l-10" (click)="deleteRow(i,group)">Remove</a>
                         </td>
                     </tr>
                 </ng-container>

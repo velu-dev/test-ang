@@ -18,6 +18,21 @@
             }
         }
         mat-card-content {
+            .table-filter {
+                width: $width-100;
+                input {
+                    width: 50% !important;
+                    @media only screen and (max-width: 568px) {
+                        width: 100% !important;
+                    }
+                }
+                mat-icon {
+                    left: 50%;
+                    @media only screen and (max-width: 568px) {
+                        left: 80%;
+                    }
+                }
+            }
             .vertical-fixed {
                 min-height: 197px !important;
                 max-height: 197px !important;
