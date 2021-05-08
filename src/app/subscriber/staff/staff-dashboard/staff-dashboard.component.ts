@@ -57,6 +57,7 @@ export class StaffDashboardComponent implements OnInit {
       })
       this.dashboardData = res.data.splitted_record;
       this.selectedTile = status;
+      this.selectedData = res.all_record.length;
       this.allData = res.data.all_record;
       this.dataSource = new MatTableDataSource(res.data.all_record);
       this.dataSource.paginator = this.paginator;
@@ -106,7 +107,8 @@ export class StaffDashboardComponent implements OnInit {
       } else {
         this.isCloseId = element.appointment_id;
         this.isCloseIds.push(element.appointment_id);
-        if (this.isCloseIds.length - 1 == this.dashboardData.length) {
+        console.log()
+        if (this.isCloseIds.length == this.selectedData) {
           this.isExpandAll = false;
         }
       }
@@ -124,6 +126,7 @@ export class StaffDashboardComponent implements OnInit {
     }
 
   }
+  selectedData: any;
   getDashboardData(status?) {
     var filteredData = [];
     if (this.selectedTile == status) {
@@ -138,6 +141,7 @@ export class StaffDashboardComponent implements OnInit {
         }
       })
     }
+    this.selectedData = filteredData.length;
     this.dataSource = new MatTableDataSource(filteredData);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
