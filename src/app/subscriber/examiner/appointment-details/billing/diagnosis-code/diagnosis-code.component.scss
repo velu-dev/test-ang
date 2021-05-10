@@ -21,13 +21,16 @@
             .table-filter {
                 width: $width-100;
                 input {
-                    width: 50% !important;
+                    width: calc(100% - 48px) !important;
                     @media only screen and (max-width: 568px) {
                         width: 100% !important;
                     }
                 }
                 mat-icon {
-                    left: 50%;
+                    left: calc(100% - 60px);
+                    @media screen and (max-width: 1024px) and (min-width: 568px) {
+                        left: 91%;
+                      }
                     @media only screen and (max-width: 568px) {
                         left: 80%;
                     }

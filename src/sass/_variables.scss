@@ -80,6 +80,7 @@ $light_green: #b5cc18;
 $icon-gray: #a7a7a7;
 $text-light: #707070;
 $mat-tree: #4d4f5c;
+$dark_gray_1: #e2e2e2;
 
 //alert colors
 $text-success: rgb(3, 90, 6);
@@ -214,6 +215,11 @@ $btn-primary-shadow: 0px 3px 5px #2e5eaf;
 
 //table shadow
 $box-shadow: 0px 0px 5px #b3c5de9c;
+
+// Font-weight
+.font-weight-600 {
+  font-weight: $font-weight-bold !important;
+}
 
 .text-center {
   text-align: center;
@@ -923,6 +929,12 @@ input:-webkit-autofill {
   color: $text-gray;
   background-color: $light-color;
   border-color: $light-color;
+}
+.filled-darkgray-1 {
+  @extend .btn_;
+  color: $text-gray;
+  background-color: $dark_gray_1;
+  border-color: $dark_gray_1;
 }
 
 .filled-lightgray-1 {

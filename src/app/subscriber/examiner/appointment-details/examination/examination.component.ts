@@ -112,6 +112,10 @@ export class ExaminationComponent implements OnInit {
   ngOnInit() {
   }
   downloadForms() {
+    if (this.selection.selected.length == 0) {
+      this.alertService.openSnackBar('Please select Document(s)', "error");
+      return;
+    }
     let ids = { documents_ids: this.selection.selected.map(res => res['id']) }
     this.ondemandService.downloadBillingDoc(this.claim_id, this.billableId, ids).subscribe(res => {
       if (res.status) {
