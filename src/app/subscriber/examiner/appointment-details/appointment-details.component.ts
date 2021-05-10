@@ -558,11 +558,11 @@ export class AppointmentDetailsComponent implements OnInit {
       console.log(result)
       if (result['data']) {
         this.claimService.removeDeclaredDocument(group.value.id).subscribe(res => {
-          this.alertService.openSnackBar(res.message, "success")
+          this.alertService.openSnackBar('Documents declared details removed successfully!', "success")
           const control = this.docDeclearTable.get('tableRows') as FormArray;
           control.removeAt(i);
         }, error => {
-          this.alertService.openSnackBar("Documents declared details removed successfully!", 'error');
+          this.alertService.openSnackBar(error.error.message, 'error');
         })
       }
     });
