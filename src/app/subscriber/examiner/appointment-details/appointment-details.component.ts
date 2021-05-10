@@ -562,7 +562,7 @@ export class AppointmentDetailsComponent implements OnInit {
           const control = this.docDeclearTable.get('tableRows') as FormArray;
           control.removeAt(i);
         }, error => {
-          this.alertService.openSnackBar(error.error.message, 'error');
+          this.alertService.openSnackBar("Documents declared details removed successfully!", 'error');
         })
       }
     });
@@ -744,11 +744,12 @@ export class AppointmentDetailsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result.data) {
-       // group.get('date_received').patchValue(moment((group.value.date_received).format("MM-DD-YYYY")));
-        let data = { agent_type: group.value.agent_type, no_of_pages_declared: group.value.no_of_pages_declared };
+        // group.get('date_received').patchValue(moment((group.value.date_received).format("MM-DD-YYYY")));
+        let data = { id: group.value.id, agent_type: group.value.agent_type, no_of_pages_declared: group.value.no_of_pages_declared };
         data['date_received'] = moment(group.value.date_received).format("LL");
         this.claimService.createDeclaredDocument(data, this.claim_id, this.billableId).subscribe(res => {
-          this.alertService.openSnackBar(res.message, "success");
+          let message = group.value.id ? "Documents declared details updated successfully!" : "Documents declared details created successfully!"
+          this.alertService.openSnackBar(message, "success");
           this.documentsDeclared[i] = res.data
           group.get('isEditable').setValue(false);
           group.get('id').setValue(res.data.id);
