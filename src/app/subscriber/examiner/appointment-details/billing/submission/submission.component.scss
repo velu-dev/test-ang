@@ -72,6 +72,10 @@
         border: none;
         box-shadow: none;
         padding: 0;
+        a.disabled {
+            cursor: default !important;
+            opacity: .5;
+        }
     }
     .add-custom {
         color: $ternary !important;
