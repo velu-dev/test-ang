@@ -137,7 +137,7 @@
                         <span *ngIf="column == 'report_submission_due_date'"
                             class="no-wrap-td">{{element?.report_submission_due_date | date:'MM-dd-yyyy'}}</span>
 
-                        <span *ngIf="column == 'critical'"
+                        <span *ngIf="column == 'is_critical'"
                             [ngClass]="{'text-primary': element?.is_critical}"><b>{{element?.is_critical ?
                                 element?.is_critical :
                                 "-"}}</b></span>
