@@ -1,209 +1,208 @@
-            <!-- ===== Examination Submission Documents ==== -->
-            <div fxlayout="row wrap" class="m-t-30 submission-document">
-                <mat-card>
-                    <mat-card-header fxLayout="row wrap">
-                        <!-- <div class="content-wrapper-main-title" fxFlex="50">{{billDocumentList?.exam_procedure_name}}
+<!-- ===== Examination Submission Documents ==== -->
+<div fxlayout="row wrap" class="m-t-30 submission-document">
+    <mat-card>
+        <mat-card-header fxLayout="row wrap">
+            <!-- <div class="content-wrapper-main-title" fxFlex="50">{{billDocumentList?.exam_procedure_name}}
                             Examination Submission Documents
                             <span class="custom-info"
                                 matTooltip="The QME 122 - Declaration of service form will be created when the Report Documents are Downloaded or Billed on Demand."
                                 matTooltipPosition="above"><i class="material-icons-outlined">info</i></span>
                         </div> -->
-                        <div class="content-wrapper-main-title" fxFlex="50">{{billDocumentList?.exam_procedure_name}}
-                            Examination Submission Documents
-                            <span class="custom-info" (click)="billDocumentList?.exam_procedure_name?.toLowerCase()?.includes('psych')? openPopup(regulation?.regulationsForBillingSubmissionDocPsych?.title, regulation?.regulationsForBillingSubmissionDocPsych?.codes) : openPopup(regulation?.regulationsForBillingSubmissionDoc?.title, regulation?.regulationsForBillingSubmissionDoc?.codes)"><i class="material-icons-outlined">info</i><sup>Regulations</sup></span>
-                        </div>
-                        <div class="content-wrapper-main-title bill-status" fxFlex="50">{{review}} Bill Submission</div>
-                    </mat-card-header>
-                    <mat-divider></mat-divider>
-                    <mat-card-content>
-                        <div fxLayout="row wrap">
-                            <div fxFlex="100">See <span>these directions</span> provided by the state of California.
-                            </div>
-                            <div fxFlex="100">Complete the following documents by downloading them, filling them and
-                                uploading
-                                them below:
-                            </div>
-                            <div>
-                                <ul *ngFor="let doc of this.billDocumentList?.document_info">
-                                    <li> {{doc}}</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </mat-card-content>
-                </mat-card>
+            <div class="content-wrapper-main-title" fxFlex="50">{{billDocumentList?.exam_procedure_name}}
+                Examination Submission Documents
+                <span class="custom-info"
+                    (click)="billDocumentList?.exam_procedure_name?.toLowerCase()?.includes('psych')? openPopup(regulation?.regulationsForBillingSubmissionDocPsych?.title, regulation?.regulationsForBillingSubmissionDocPsych?.codes) : openPopup(regulation?.regulationsForBillingSubmissionDoc?.title, regulation?.regulationsForBillingSubmissionDoc?.codes)"><i
+                        class="material-icons-outlined">info</i><sup>Regulations</sup></span>
             </div>
-            <!-- ===== Documents ==== -->
-            <div class="documents">
-                <mat-card>
-                    <mat-card-header>
-                    </mat-card-header>
-                    <mat-card-content>
-                        <div class="info-alert m-t-20">
-                            <i class="fa fa-info-circle p-r-5"></i>Uploaded documents should not exceed 300 dpi
-                        </div>
-                        <div fxLayout="row wrap" class="w-100">
-                            <div fxFlex="70" fxFlex.sm="100" fxFlex.xs="100" class="note">
-                                <mat-icon>info</mat-icon> Note : Supported file formats: .pdf, .doc, .docx
-                            </div>
-                            <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100" >
-                                <input type="file" #uploader hidden (change)="addFile($event,true)" multiple
-                                    accept=".pdf, .doc, .docx" required>
-                                <button mat-raised-button class="float-right filled-gray m-r-5 m-b-5"
-                                    (click)="uploader.click()"><i class="fa fa-file-medical p-r-10"></i> Add Custom
-                                    Document</button>
-                            </div>
-                            <div class="user-detail vertical-fixed default-cursor" fxFlex="100">
-                                <table mat-table [dataSource]="documentsData" multiTemplateDataRows
-                                    class="mat-elevation-z8 user-table">
-                                    <ng-container matColumnDef="{{column}}"
-                                        *ngFor="let column of columnsToDisplay2; let i=index">
-                                        <th mat-header-cell *matHeaderCellDef>{{columnName2[i]}} </th>
-                                        <td mat-cell *matCellDef="let element;let j">
-                                            <span *ngIf="i == 0 && isMobile">
-                                                <mat-icon mat-raised-button
-                                                    [ngClass]="{'table-expand': expandId2 == j, 'expand-close': !(expandId2 == j)}">
-                                                    {{ expandId2 == j ? 'remove_circle' : 'add_circle'}}
-                                                </mat-icon>
-                                            </span>
-                                            <div> <span *ngIf="column == 'doc_image'" class="file_type_icon">
-                                                    <!-- <img [src]="element?.file_name | fileType" alt=""> -->
-                                                </span>
-                                                <span *ngIf="column == 'file_name'">{{element?.form_name}}</span>
-                                                <span *ngIf="column == 'partial'">
-
-                                                    <a class="text-ternary m-r-10"
-                                                        (click)="getGenerateBillingForm(element?.partial_document?.id)"
-                                                        *ngIf="element?.partial_document">Generate & Download
-                                                        <i class="fas fa-download"></i></a>
-                                                </span>
-                                                <span *ngIf="column == 'complete'">
-                                                    <a class="text-ternary m-r-10"
-                                                        (click)="element?.completed_document?.isCompleteOnly ? getGenerateBillingForm(element?.completed_document?.id) : download(element?.completed_document)"
-                                                        *ngIf="element?.completed_document">{{element?.completed_document?.isCompleteOnly
-                                                        ? 'Generate & Download' :
-                                                        element?.completed_document?.file_name}}
-                                                        <i class="fas fa-download"></i></a>
-
-                                                    <a *ngIf="!element?.completed_document && element?.form_action_type != 'C' && element?.form_action_type != 'X'"
-                                                        class="m-r-10 no-wrap-td" (click)="uploader.click()">
-                                                        Upload Completed Form
-                                                        <i class="fa fa-upload m-b-3"></i>
-                                                    </a>
-                                                    <input type="file" #uploader hidden
-                                                        (change)="addCompleteDoc($event,element)" hidden
-                                                        accept=".pdf, .doc, .docx" required>
-                                                </span>
-                                                <span *ngIf="column == 'document_type'">{{element?.document_type |
-                                                    titlecase}}</span>
-                                                <span *ngIf="column == 'updatedAt'">{{element?.updatedAt |
-                                                    date:'MM-dd-yyyy
-                                                    hh:mm a'}}</span>
-                                                <span *ngIf="column == 'action'">
-                                                    <input type="file" #uploader hidden
-                                                        (change)="addCompleteDoc($event,element)" hidden
-                                                        accept=".pdf, .doc, .docx" required>
-                                                    <a *ngIf="element?.form_action_type != 'C' && element?.form_action_type != 'X' && element?.completed_document"
-                                                        class="text-danger no-wrap-td"
-                                                        (click)=" element?.completed_document ? uploader.click() : ''">Remove
-                                                        and Reupload
-                                                    </a>
-                                                    <a *ngIf="element?.form_name == 'Custom'" class="text-danger no-wrap-td"
-                                                        (click)="deleteDocument(element?.completed_document,true)">Remove
-                                                    </a>
-                                                </span>
-                                            </div>
-                                        </td>
-                                    </ng-container>
-                                    <ng-container matColumnDef="expandedDetail">
-                                        <td mat-cell *matCellDef="let element;let k = index"
-                                            [attr.colspan]="columnsToDisplay2.length">
-                                            <div class="detail" [@detailExpand]="expandId2 == k ? 'expanded' : 'collapsed'">
-                                                <div class="responsive-table">
-                                                    <div>
-                                                        <span>File Name</span>
-                                                        <span> {{element?.form_name}} </span>
-                                                    </div>
-                                                    <div>
-                                                        <span>Download Partial Document</span>
-                                                        <span> <a class="text-ternary m-r-10"
-                                                                (click)="getGenerateBillingForm(element?.partial_document?.id)"
-                                                                *ngIf="element?.partial_document">Generate & Download
-                                                                <i class="fas fa-download"></i></a></span>
-                                                    </div>
-                                                    <div>
-                                                        <span>Complete</span>
-                                                        <span> <a class="text-ternary m-r-10"
-                                                                (click)="element?.completed_document?.isCompleteOnly ? getGenerateBillingForm(element?.completed_document?.id) : download(element?.completed_document)"
-                                                                *ngIf="element?.completed_document">{{element?.completed_document?.isCompleteOnly
-                                                                ? 'Generate & Download' :
-                                                                element?.completed_document?.file_name}}
-                                                                <i class="fas fa-download"></i></a>
-
-                                                            <a *ngIf="!element?.completed_document && element?.form_action_type != 'C' && element?.form_action_type != 'X'"
-                                                                class="m-r-10 no-wrap-td" (click)="uploader.click()">
-                                                                Upload Completed Form
-                                                                <i class="fa fa-upload m-b-3"></i>
-                                                            </a>
-                                                            <input type="file" #uploader hidden
-                                                                (change)="addCompleteDoc($event,element)" hidden
-                                                                accept=".pdf, .doc, .docx" required></span>
-                                                    </div>
-                                                    <div>
-                                                        <span>Action</span>
-                                                        <span> <input type="file" #uploader hidden
-                                                                (change)="addCompleteDoc($event,element)" hidden
-                                                                accept=".pdf, .doc, .docx" required>
-                                                            <a *ngIf="element?.form_action_type != 'C' && element?.form_action_type != 'X' && element?.completed_document"
-                                                                class="text-danger no-wrap-td"
-                                                                (click)=" element?.completed_document ? uploader.click() : ''">Remove
-                                                                and Reupload
-                                                            </a>
-                                                            <a *ngIf="element?.form_name == 'Custom'"
-                                                                class="text-danger no-wrap-td"
-                                                                (click)="deleteDocument(element?.completed_document,true)">Remove
-                                                            </a> </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </ng-container>
-                                    <tr mat-header-row *matHeaderRowDef="columnsToDisplay2;sticky :true"></tr>
-                                    <tr mat-row *matRowDef="let element;let i = index; columns: columnsToDisplay2;" class="row"
-                                        [class.row]="expandedElement === element" (click)="openElementBill(i)">
-                                    </tr>
-                                    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row">
-                                    </tr>
-                                </table>
-                                <app-nodata *ngIf="documentsData?.filteredData?.length == 0"></app-nodata>
-                            </div>
-                        </div>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-
-
-            <div class="border-dashed-blue m-b-20 m-t-30"></div>
-
-            <!-- ===== actions ==== -->
-            <div class="ondamand-actions m-t-30 m-b-30" fxLayout="row wrap">
-                <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-left">
-                    <button mat-stroked-button class="filled-lightgray huge-btn m-b-5 font-weight-600" (click)="VMC1500Submit()">View
-                        CMS
-                        1500</button>
-
+            <div class="content-wrapper-main-title bill-status" fxFlex="50">{{review}} Bill Submission</div>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+            <div fxLayout="row wrap">
+                <div fxFlex="100">See <span>these directions</span> provided by the state of California.
                 </div>
-                <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-center" *ngIf="billType != 3">
-                    <button mat-stroked-button class="filled-success huge-btn m-b-5" (click)="openBillOnDemand()">Submit
-                        Bill
-                        and Report</button>
+                <div fxFlex="100">Complete the following documents by downloading them, filling them and
+                    uploading
+                    them below:
                 </div>
-
-                <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-center" *ngIf="billType == 3">
-                    <button mat-stroked-button class="filled-success huge-btn m-b-5" (click)="downloadMethod()">Download Bill and
-                        Report</button>
+                <div>
+                    <ul *ngFor="let doc of this.billDocumentList?.document_info">
+                        <li> {{doc}}</li>
+                    </ul>
                 </div>
             </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+<!-- ===== Documents ==== -->
+<div class="documents">
+    <mat-card>
+        <mat-card-header>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="info-alert m-t-20">
+                <i class="fa fa-info-circle p-r-5"></i>Uploaded documents should not exceed 300 dpi
+            </div>
+            <div fxLayout="row wrap" class="w-100">
+                <div fxFlex="70" fxFlex.sm="100" fxFlex.xs="100" class="note">
+                    <mat-icon>info</mat-icon> Note : Supported file formats: .pdf, .doc, .docx
+                </div>
+                <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100">
+                    <input type="file" #uploader hidden (change)="addFile($event,true)" multiple
+                        accept=".pdf, .doc, .docx" required>
+                    <button mat-raised-button class="float-right filled-gray m-r-5 m-b-5" (click)="uploader.click()"><i
+                            class="fa fa-file-medical p-r-10"></i> Add Custom
+                        Document</button>
+                </div>
+                <div class="user-detail vertical-fixed default-cursor" fxFlex="100">
+                    <table mat-table [dataSource]="documentsData" multiTemplateDataRows
+                        class="mat-elevation-z8 user-table">
+                        <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay2; let i=index">
+                            <th mat-header-cell *matHeaderCellDef>{{columnName2[i]}} </th>
+                            <td mat-cell *matCellDef="let element;let j">
+                                <span *ngIf="i == 0 && isMobile">
+                                    <mat-icon mat-raised-button
+                                        [ngClass]="{'table-expand': expandId2 == j, 'expand-close': !(expandId2 == j)}">
+                                        {{ expandId2 == j ? 'remove_circle' : 'add_circle'}}
+                                    </mat-icon>
+                                </span>
+                                <div> <span *ngIf="column == 'doc_image'" class="file_type_icon">
+                                        <!-- <img [src]="element?.file_name | fileType" alt=""> -->
+                                    </span>
+                                    <span *ngIf="column == 'file_name'">{{element?.form_name}}</span>
+                                    <span *ngIf="column == 'partial'">
 
-            <div class="border-dashed-blue m-b-20 m-t-20"></div>
+                                        <a class="text-ternary m-r-10"
+                                            (click)="getGenerateBillingForm(element?.partial_document?.id)"
+                                            *ngIf="element?.partial_document">Generate & Download
+                                            <i class="fas fa-download"></i></a>
+                                    </span>
+                                    <span *ngIf="column == 'complete'">
+                                        <a class="text-ternary m-r-10"
+                                            (click)="element?.completed_document?.isCompleteOnly ? getGenerateBillingForm(element?.completed_document?.id) : download(element?.completed_document)"
+                                            *ngIf="element?.completed_document">{{element?.completed_document?.isCompleteOnly
+                                            ? 'Generate & Download' :
+                                            element?.completed_document?.file_name}}
+                                            <i class="fas fa-download"></i></a>
 
-            
+                                        <a *ngIf="!element?.completed_document && element?.form_action_type != 'C' && element?.form_action_type != 'X'"
+                                            class="m-r-10 no-wrap-td" (click)="uploader.click()">
+                                            Upload Completed Form
+                                            <i class="fa fa-upload m-b-3"></i>
+                                        </a>
+                                        <input type="file" #uploader hidden (change)="addCompleteDoc($event,element)"
+                                            hidden accept=".pdf, .doc, .docx" required>
+                                    </span>
+                                    <span *ngIf="column == 'document_type'">{{element?.document_type |
+                                        titlecase}}</span>
+                                    <span *ngIf="column == 'updatedAt'">{{element?.updatedAt |
+                                        date:'MM-dd-yyyy
+                                        hh:mm a'}}</span>
+                                    <span *ngIf="column == 'action'">
+                                        <input type="file" #uploader hidden (change)="addCompleteDoc($event,element)"
+                                            hidden accept=".pdf, .doc, .docx" required>
+                                        <a *ngIf="element?.form_action_type != 'C' && element?.form_action_type != 'X' && element?.completed_document"
+                                            class="text-danger no-wrap-td"
+                                            [ngClass]="element.is_onDemand_Created ? 'disable' : 'enable'"
+                                            (click)=" element?.completed_document ? deleteDocument(element?.completed_document,true) : ''">Remove
+                                            <!-- Remove and Reupload-->
+                                        </a>
+                                        <a *ngIf="element?.form_name == 'Custom'" class="text-danger no-wrap-td"
+                                            (click)="deleteDocument(element?.completed_document,true)">Remove
+                                        </a>
+                                    </span>
+                                </div>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="expandedDetail">
+                            <td mat-cell *matCellDef="let element;let k = index"
+                                [attr.colspan]="columnsToDisplay2.length">
+                                <div class="detail" [@detailExpand]="expandId2 == k ? 'expanded' : 'collapsed'">
+                                    <div class="responsive-table">
+                                        <div>
+                                            <span>File Name</span>
+                                            <span> {{element?.form_name}} </span>
+                                        </div>
+                                        <div>
+                                            <span>Download Partial Document</span>
+                                            <span> <a class="text-ternary m-r-10"
+                                                    (click)="getGenerateBillingForm(element?.partial_document?.id)"
+                                                    *ngIf="element?.partial_document">Generate & Download
+                                                    <i class="fas fa-download"></i></a></span>
+                                        </div>
+                                        <div>
+                                            <span>Complete</span>
+                                            <span> <a class="text-ternary m-r-10"
+                                                    (click)="element?.completed_document?.isCompleteOnly ? getGenerateBillingForm(element?.completed_document?.id) : download(element?.completed_document)"
+                                                    *ngIf="element?.completed_document">{{element?.completed_document?.isCompleteOnly
+                                                    ? 'Generate & Download' :
+                                                    element?.completed_document?.file_name}}
+                                                    <i class="fas fa-download"></i></a>
+
+                                                <a *ngIf="!element?.completed_document && element?.form_action_type != 'C' && element?.form_action_type != 'X'"
+                                                    class="m-r-10 no-wrap-td" (click)="uploader.click()">
+                                                    Upload Completed Form
+                                                    <i class="fa fa-upload m-b-3"></i>
+                                                </a>
+                                                <input type="file" #uploader hidden
+                                                    (change)="addCompleteDoc($event,element)" hidden
+                                                    accept=".pdf, .doc, .docx" required></span>
+                                        </div>
+                                        <div>
+                                            <span>Action</span>
+                                            <span> <input type="file" #uploader hidden
+                                                    (change)="addCompleteDoc($event,element)" hidden
+                                                    accept=".pdf, .doc, .docx" required>
+                                                <a *ngIf="element?.form_action_type != 'C' && element?.form_action_type != 'X' && element?.completed_document"
+                                                    class="text-danger no-wrap-td"
+                                                    [ngClass]="element.is_onDemand_Created ? 'disable' : 'enable'"
+                                                    (click)=" element?.completed_document ? deleteDocument(element?.completed_document,true) : ''">Remove
+                                                    <!-- Remove and Reupload-->
+                                                </a>
+                                                <a *ngIf="element?.form_name == 'Custom'" class="text-danger no-wrap-td"
+                                                    (click)="deleteDocument(element?.completed_document,true)">Remove
+                                                </a> </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="columnsToDisplay2;sticky :true"></tr>
+                        <tr mat-row *matRowDef="let element;let i = index; columns: columnsToDisplay2;" class="row"
+                            [class.row]="expandedElement === element" (click)="openElementBill(i)">
+                        </tr>
+                        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row">
+                        </tr>
+                    </table>
+                    <app-nodata *ngIf="documentsData?.filteredData?.length == 0"></app-nodata>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+
+<div class="border-dashed-blue m-b-20 m-t-30"></div>
+
+<!-- ===== actions ==== -->
+<div class="ondamand-actions m-t-30 m-b-30" fxLayout="row wrap">
+    <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-left">
+        <button mat-stroked-button class="filled-lightgray huge-btn m-b-5 font-weight-600"
+            (click)="VMC1500Submit()">View
+            CMS
+            1500</button>
+
+    </div>
+    <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-center" *ngIf="billType != 3">
+        <button mat-stroked-button class="filled-success huge-btn m-b-5" (click)="openBillOnDemand()">Submit
+            Bill
+            and Report</button>
+    </div>
+
+    <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-center" *ngIf="billType == 3">
+        <button mat-stroked-button class="filled-success huge-btn m-b-5" (click)="downloadMethod()">Download Bill and
+            Report</button>
+    </div>
+</div>
+
+<div class="border-dashed-blue m-b-20 m-t-20"></div>
