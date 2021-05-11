@@ -79,6 +79,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   isIncompleteError = true;
   incompleteInformation: any;
   isExpandDetail = true;
+  isIME: boolean = false;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild('popupMenu', { static: false }) popupMenu: MatMenuTrigger;
@@ -116,6 +117,9 @@ export class BillingCorrespondanceComponent implements OnInit {
         this.cookieService.set('claimNumber', details.data.claim_number)
         this.intercom.setBillableItem(details.data.exam_procedure_name);
         this.cookieService.set('billableItem', details.data.exam_procedure_name)
+        if (details.data && details.data.exam_procedure_name.includes('IME')) {
+          this.isIME = true;
+        }
       }, error => {
 
       })

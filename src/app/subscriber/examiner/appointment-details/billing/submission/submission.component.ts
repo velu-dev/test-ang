@@ -31,6 +31,7 @@ export class SubmissionComponent implements OnInit {
   @Input() review: string;
   @Input() states: string;
   @Input() billType: any;
+  @Input() isIME: boolean;
   @Output() getBillingDetails = new EventEmitter();
   billDocumentList: any;
   documentsData: any = new MatTableDataSource([]);

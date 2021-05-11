@@ -1253,7 +1253,7 @@
                     <mat-card-header>
                         <mat-panel-title>
                             <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Information<span
-                                    class="custom-info"
+                                    class="custom-info" *ngIf="!isIME"
                                     (click)="isDeposition ? openPopup(regulation?.regulationsForDepositionItemIntake?.title, regulation?.regulationsForDepositionItemIntake?.codes) : openPopup(regulation?.regulationsForBillableItemIntake?.title, regulation?.regulationsForBillableItemIntake?.codes)"><i
                                         class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
                         </mat-panel-title>

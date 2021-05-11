@@ -236,6 +236,7 @@ export class NewClaimComponent implements OnInit {
   isAddressSearched = false;
   regulation = regulation;
   minInjuryDate: any;
+  isIME: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -1092,6 +1093,11 @@ export class NewClaimComponent implements OnInit {
       if (this.claimChanges)
         this.submitClaim('tab')
       this.titleName = " Billable Item";
+      if (this.claim.get(['claim_details', 'exam_type_id']).value == 3) {
+        this.isIME = true;
+      } else {
+        this.isIME = false;
+      }
     }
   }
   isClaimCreated = false;

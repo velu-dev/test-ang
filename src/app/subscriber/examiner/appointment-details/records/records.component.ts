@@ -59,6 +59,7 @@ export class RecordsComponent implements OnInit {
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   statusBarValues = { value: null, status: '', class: '' }
   service_provider_name: any = null;
+  isIME: boolean = false;
   constructor(private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -85,6 +86,9 @@ export class RecordsComponent implements OnInit {
         this.cookieService.set('claimNumber', details.data.claim_number)
         this.intercom.setBillableItem(details.data.exam_procedure_name);
         this.cookieService.set('billableItem', details.data.exam_procedure_name)
+        if (details.data && details.data.exam_procedure_name.includes('IME')) {
+          this.isIME = true;
+        }
         if (details.data.procedure_type == "Deposition") {
           this.router.navigate(['**']);
         }

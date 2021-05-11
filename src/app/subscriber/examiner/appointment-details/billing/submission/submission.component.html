@@ -10,7 +10,7 @@
                         </div> -->
                         <div class="content-wrapper-main-title" fxFlex="50">{{billDocumentList?.exam_procedure_name}}
                             Examination Submission Documents
-                            <span class="custom-info" (click)="billDocumentList?.exam_procedure_name?.toLowerCase()?.includes('psych')? openPopup(regulation?.regulationsForBillingSubmissionDocPsych?.title, regulation?.regulationsForBillingSubmissionDocPsych?.codes) : openPopup(regulation?.regulationsForBillingSubmissionDoc?.title, regulation?.regulationsForBillingSubmissionDoc?.codes)"><i class="material-icons-outlined">info</i><sup>Regulations</sup></span>
+                            <span *ngIf="!isIME" class="custom-info" (click)="billDocumentList?.exam_procedure_name?.toLowerCase()?.includes('psych')? openPopup(regulation?.regulationsForBillingSubmissionDocPsych?.title, regulation?.regulationsForBillingSubmissionDocPsych?.codes) : openPopup(regulation?.regulationsForBillingSubmissionDoc?.title, regulation?.regulationsForBillingSubmissionDoc?.codes)"><i class="material-icons-outlined">info</i><sup>Regulations</sup></span>
                         </div>
                         <div class="content-wrapper-main-title bill-status" fxFlex="50">{{review}} Bill Submission</div>
                     </mat-card-header>
