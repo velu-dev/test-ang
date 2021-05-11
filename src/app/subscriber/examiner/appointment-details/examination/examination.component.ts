@@ -48,6 +48,7 @@ export class ExaminationComponent implements OnInit {
   billableId: any;
   examinationDocuments: any;
   uploadedDocument: any = new MatTableDataSource([]);
+  isIME: boolean = false;
   constructor(private claimService: ClaimService, private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
     private ondemandService: OnDemandService, private alertService: AlertService, public dialog: MatDialog, private intercom: IntercomService,
     private cookieService: CookieService, public router: Router) {
@@ -66,6 +67,9 @@ export class ExaminationComponent implements OnInit {
         this.cookieService.set('claimNumber', details.data.claim_number)
         this.intercom.setBillableItem(details.data.exam_procedure_name);
         this.cookieService.set('billableItem', details.data.exam_procedure_name);
+        if (details.data && details.data.exam_procedure_name.includes('IME')) {
+          this.isIME = true;
+        }
         if (details.data.procedure_type == "Deposition") {
           this.router.navigate(['**']);
         } else if (details.data.procedure_type == "Supplemental") {

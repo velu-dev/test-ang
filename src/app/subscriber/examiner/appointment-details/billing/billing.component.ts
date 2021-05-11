@@ -105,6 +105,7 @@ export class BilllableBillingComponent implements OnInit {
   voidType: any;
   paidStatusData: any;
   tabIndex: number = 0;
+  isIME: boolean = false;
   constructor(private logger: NGXLogger, private claimService: ClaimService, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService,
     public dialog: MatDialog,
@@ -133,7 +134,10 @@ export class BilllableBillingComponent implements OnInit {
         this.intercom.setClaimNumber(details.data.claim_number);
         this.cookieService.set('claimNumber', details.data.claim_number)
         this.intercom.setBillableItem(details.data.exam_procedure_name);
-        this.cookieService.set('billableItem', details.data.exam_procedure_name)
+        this.cookieService.set('billableItem', details.data.exam_procedure_name);
+        if (details.data && details.data.exam_procedure_name.includes('IME')) {
+          this.isIME = true;
+        }
       }, error => {
 
       })

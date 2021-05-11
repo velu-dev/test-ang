@@ -190,6 +190,7 @@ export class AppointmentDetailsComponent implements OnInit {
   today = new Date();
   mode: boolean;
   docDeclearTable: FormGroup;
+  isIME: boolean = false;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -402,6 +403,9 @@ export class AppointmentDetailsComponent implements OnInit {
         // })
         this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
           console.log(response)
+          if (response && response.data && response.data.exam_type_code.includes('IME')) {
+            this.isIME = true
+          }
           this.intercom.setClaimant(response.data.claimant_name.first_name + ' ' + response.data.claimant_name.last_name);
           this.cookieService.set('claimDetails', response.data.claimant_name.first_name + ' ' + response.data.claimant_name.last_name)
           this.intercom.setClaimNumber(response.data.claim_details.claim_number);
