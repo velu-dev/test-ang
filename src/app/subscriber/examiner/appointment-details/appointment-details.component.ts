@@ -591,8 +591,9 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   changeDateType(date) {
     if (date) {
+      let time = this.billableData.appointment.duration ? this.billableData.appointment.duration : 60
       this.billable_item.patchValue({
-        appointment: { duration: 60 }
+        appointment: { duration: time }
       })
       let timezone = moment.tz.guess();
       return this.appointment_scheduled_date_time = moment(date.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
