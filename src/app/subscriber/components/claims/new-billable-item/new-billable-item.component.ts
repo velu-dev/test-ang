@@ -287,6 +287,9 @@ export class NewBillableItemComponent implements OnInit {
   }
   changeDateType(date) {
     if (date) {
+      this.billable_item.patchValue({
+        appointment: { duration: 60 }
+      })
       let timezone = moment.tz.guess();
       return this.appointment_scheduled_date_time = moment(date.toString()).tz(timezone).format('MM-DD-YYYY hh:mm A z')
     } else {
