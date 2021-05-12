@@ -103,12 +103,12 @@
                                             hidden accept=".pdf, .doc, .docx" required>
                                         <a *ngIf="element?.form_action_type != 'C' && element?.form_action_type != 'X' && element?.completed_document"
                                             class="text-danger no-wrap-td"
-                                            [ngClass]="element.is_ondemand_created ? 'disabled' : ''"
-                                            (click)="!element?.is_ondemand_created ? deleteDocument(element?.completed_document,true) : ''">Remove
+                                            [ngClass]="is_ondemand_created ? 'disabled' : ''"
+                                            (click)="!is_ondemand_created ? deleteDocument(element?.completed_document,true) : ''">Remove
                                             <!-- Remove and Reupload-->
                                         </a>
-                                        <a *ngIf="element?.form_name == 'Custom'" class="text-danger no-wrap-td" [ngClass]="element.is_ondemand_created ? 'disabled' : ''"
-                                            (click)="!element?.is_ondemand_created ? deleteDocument(element?.completed_document,true): ''">Remove
+                                        <a *ngIf="element?.form_name == 'Custom'" class="text-danger no-wrap-td" [ngClass]="is_ondemand_created ? 'disabled' : ''"
+                                            (click)="!is_ondemand_created ? deleteDocument(element?.completed_document,true): ''">Remove
                                         </a>
                                     </span>
                                 </div>
@@ -155,12 +155,12 @@
                                                     accept=".pdf, .doc, .docx" required>
                                                 <a *ngIf="element?.form_action_type != 'C' && element?.form_action_type != 'X' && element?.completed_document"
                                                     class="text-danger no-wrap-td"
-                                                    [ngClass]="element.is_ondemand_created ? 'disabled' : ''"
-                                                    (click)="!element?.is_ondemand_created ? deleteDocument(element?.completed_document,true) : ''">Remove
+                                                    [ngClass]="is_ondemand_created ? 'disabled' : ''"
+                                                    (click)="!is_ondemand_created ? deleteDocument(element?.completed_document,true) : ''">Remove
                                                     <!-- Remove and Reupload-->
                                                 </a>
-                                                <a *ngIf="element?.form_name == 'Custom'" class="text-danger no-wrap-td" [ngClass]="element.is_ondemand_created ? 'disabled' : ''"
-                                                    (click)="!element?.is_ondemand_created ? deleteDocument(element?.completed_document,true): ''">Remove
+                                                <a *ngIf="element?.form_name == 'Custom'" class="text-danger no-wrap-td" [ngClass]="is_ondemand_created ? 'disabled' : ''"
+                                                    (click)="!is_ondemand_created ? deleteDocument(element?.completed_document,true): ''">Remove
                                                 </a> </span>
                                         </div>
                                     </div>

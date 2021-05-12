@@ -62,12 +62,13 @@ export class SubmissionComponent implements OnInit {
       this.columnsToDisplay2 = ['doc_image', 'file_name', 'partial', 'complete', "action"]
     }
   }
-
+  is_ondemand_created: boolean = false;
   getBillDocument() {
     this.billingService.getBillDocument(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, this.billType).subscribe(doc => {
       this.billDocumentList = doc.data
       if (doc.data) {
         if (doc.data.document_list) {
+          this.is_ondemand_created = doc.data.is_ondemand_created;
           this.documentsData = new MatTableDataSource(doc.data.document_list);
         }
       }
