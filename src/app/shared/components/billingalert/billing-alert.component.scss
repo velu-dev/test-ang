@@ -123,4 +123,17 @@
             }
         }
     }
+    .billing-alert {
+        margin-top: 10px;
+        background-color: $warning-bg;
+        font-size: $font-size-1;
+        color: $warning;
+        border: 1px solid $warning-border;
+        padding: 5px 10px;
+        border-radius: 3px;
+        display: flex;
+        i {
+            padding: 5px 5px 0 0;
+        }
+    }
 }
