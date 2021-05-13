@@ -73,7 +73,12 @@ export class DeoComponent implements OnInit {
   private _filteDeu(value: string): any[] {
     const filterValue = value.toLowerCase();
 
-    return this.deuDetails.filter(deu => deu.deu_office.toLowerCase().indexOf(filterValue) === 0);
+    return this.deuDetails.filter(deu => this.matchValue(deu, filterValue));
+  }
+  matchValue(data, value) {
+    return Object.keys(data).map((key) => {
+      return new RegExp(value, 'gi').test(data[key]);
+    }).some(result => result);
   }
 
   ngOnInit() {
