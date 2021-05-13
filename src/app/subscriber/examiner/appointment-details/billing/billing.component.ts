@@ -630,7 +630,7 @@ export class billingOnDemandDialog {
     }, error => {
       const dialogRef = this.dialog.open(BillingAlertComponent, {
         width: '500px',
-        data: { title: 'Incomplete Information', message: "Without the information listed above the bill will be rejected. Please, enter the missing information.", incompleteInformation: error.error.data, warning: true }
+        data: { title: 'Incomplete Information', message: "Without the information listed above the bill will be rejected.<br/>Please, enter the missing information.", incompleteInformation: error.error.data, warning: true }
       });
       dialogRef.afterClosed().subscribe(result => {
         return
