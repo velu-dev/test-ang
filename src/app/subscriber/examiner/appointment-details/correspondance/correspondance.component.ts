@@ -763,6 +763,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       const dialogRef = this.dialog.open(BillingAlertComponent, {
         width: '500px',
         data: { title: 'Incomplete Information', incompleteInformation: error.error.data, ok: true }
+        // data: { title: 'Incomplete Information', message: "Without the information listed above the correspondence documents will not be delivered. Please, enter the missing information.", incompleteInformation: error.error.data, warning: true }
       });
       dialogRef.afterClosed().subscribe(result => {
         return

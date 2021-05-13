@@ -7,7 +7,7 @@
 </div> -->
 
 <div class="confirm-dialog error-alert">
-  <div mat-dialog-title class="mat-card-title">
+  <div mat-dialog-title class="mat-card-title m-b-0">
     <img [src]="error" alt="alert" class="text-center hide-mobile">
     <div class="inline">
       <div class="p-l-10">{{data?.title}}</div>
@@ -36,10 +36,15 @@
       </div>
     </div>
   </div>
+  <div class="billing-alert" *ngIf="data?.warning">
+    <i class="fas fa-exclamation-triangle"></i><span [innerHtml]="data?.message"></span>
+  </div>
   <div mat-dialog-actions class="disable-actions text-center p-t-15" fxFlex="80">
+    <button mat-stroked-button (click)="onNoClick()" *ngIf="data?.warning" class="filled-lightgray m-r-5">Close</button>
     <button mat-stroked-button (click)="onNoClick()" *ngIf="data?.ok" class="yes m-r-5">OK</button>
     <button mat-stroked-button (click)="onNoClick()" *ngIf="data?.cancel" class="no m-r-5">Cancel</button>
-    <button mat-stroked-button (click)="onProceedClick()" *ngIf="data?.proceed" class="yes m-r-5">Proceed Anyway</button>
+    <button mat-stroked-button (click)="onProceedClick()" *ngIf="data?.proceed" class="yes m-r-5">Proceed
+      Anyway</button>
   </div>
 </div>
 
