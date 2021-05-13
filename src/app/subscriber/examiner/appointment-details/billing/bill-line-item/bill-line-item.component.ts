@@ -358,14 +358,14 @@ export class BillLineItemComponent implements OnInit {
     moidfier = moidfier ? moidfier.replace(/,/g, '-') : null;
     let data = {
       id: group.value.id,
-      item_description: group.value.item_description,
-      procedure_code: group.value.procedure_code,
+      item_description: group.get('item_description').value,
+      procedure_code: group.get('procedure_code').value,
       modifier: moidfier,
-      units: group.value.units,
+      units: group.get('units').value,
       charge: group.get('charge').value ? parseFloat(group.get('charge').value).toFixed(2) : group.get('charge').value,
       total_charge: this.calculateTotal(),
-      unit_type: group.value.unitType,
-      unit_short_code: this.getUnitCode(group.value.unitType)
+      unit_type: group.get('unitType').value,
+      unit_short_code: this.getUnitCode(group.get('unitType').value)
     }
 
     this.billingService.createBillLine(this.paramsId.billingId, this.paramsId.billId, this.paramsId.claim_id, data).subscribe(line => {
@@ -427,6 +427,7 @@ export class BillLineItemComponent implements OnInit {
         group.get('modifierList').updateValueAndValidity();
         group.get('modifier').updateValueAndValidity();
       } else {
+        group.get('unitType').patchValue('Units');
         group.get('is_excess_pages').patchValue(false);
         group.get('modifier').enable();
         group.get('modifier').updateValueAndValidity();
