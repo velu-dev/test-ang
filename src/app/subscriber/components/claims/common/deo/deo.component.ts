@@ -18,7 +18,7 @@ export class DeoComponent implements OnInit {
   @Input('fromPop') fromPop = false;
   attroneylist = [];
   @Input('state') states;
-  filteredDeu: Observable<any[]>;
+  filteredDeu: any = [];
   deuCtrl = new FormControl('', Validators.compose([Validators.pattern("^[a-zA-Z0-9-&/' ]{0,100}$")]));
   deuDetails = [];
   deuId = "";
@@ -48,7 +48,8 @@ export class DeoComponent implements OnInit {
     })
     this.claimService.getDeuDetails().subscribe(res => {
       this.deuDetails = res.data;
-      this.filteredDeu = this.deuCtrl.valueChanges
+      this.filteredDeu = this.deuDetails;
+      this.deuCtrl.valueChanges
         .pipe(
           startWith(''),
           map(deu => deu ? this._filteDeu(deu) : this.deuDetails.slice())
@@ -56,15 +57,20 @@ export class DeoComponent implements OnInit {
       this.deuCtrl.valueChanges
         .pipe(
           debounceTime(300),
-        ).subscribe(res => {
+        ).subscribe(val => {
           if (this.deuCtrl.errors) {
             return
           } else {
-            this.filteredDeu = this.deuCtrl.valueChanges
-              .pipe(
-                startWith(''),
-                map(deu => deu ? this._filteDeu(deu) : this.deuDetails.slice())
-              );
+            if (val) {
+              this.filteredDeu = this._filteDeu(val)
+            } else {
+              this.filteredDeu = this.deuDetails.slice()
+            }
+            // this.filteredDeu = this.deuCtrl.valueChanges
+            //   .pipe(
+            //     startWith(''),
+            //     map(deu => deu ? this._filteDeu(deu) : this.deuDetails.slice())
+            //   );
           }
         })
     })

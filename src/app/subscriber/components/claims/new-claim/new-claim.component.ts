@@ -265,24 +265,12 @@ export class NewClaimComponent implements OnInit {
         ).subscribe(val => {
           if (this.deuCtrl.errors) {
             return
-          } else {
+          } else { 
             if (val) {
               this.filteredDeu = this._filteDeu(val)
             } else {
               this.filteredDeu = this.deuDetails.slice()
             }
-            // this.deuCtrl.valueChanges
-            //   .pipe(
-            //     startWith(''),
-            //     map(deu => {
-            //       if (deu) {
-            //         this.filteredDeu = this._filteDeu(deu)
-            //       }
-            //       else {
-            //         this.filteredDeu = this.deuDetails.slice()
-            //       }
-            //     })
-            //   );
           }
         })
     })
