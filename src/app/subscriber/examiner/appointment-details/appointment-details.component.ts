@@ -220,7 +220,6 @@ export class AppointmentDetailsComponent implements OnInit {
     //     }
     //   })
     // })
-    this.loadDatas();
     this.getDocumentDeclareData();
     this.claimService.listExaminar().subscribe(res => {
       this.examinarList = res.data;
@@ -591,7 +590,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   changeDateType(date) {
     if (date) {
-      let time = this.billableData.appointment.duration ? this.billableData.appointment.duration : 60
+      let time = this.billable_item.get(["appointment", "duration"]).value ? this.billable_item.get(["appointment", "duration"]).value : 60
       this.billable_item.patchValue({
         appointment: { duration: time }
       })
@@ -690,6 +689,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.docDeclearTable = this.formBuilder.group({
       tableRows: this.formBuilder.array([])
     });
+    this.loadDatas();
   }
 
   initiateForm(): FormGroup {
