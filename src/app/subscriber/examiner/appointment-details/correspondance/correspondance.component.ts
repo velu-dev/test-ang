@@ -99,12 +99,12 @@ export class BillingCorrespondanceComponent implements OnInit {
         claim_id: params.claim_id,
         billable_item_id: params.billId
       }
-      // this.onDemandService.getCorresIncomplete(this.claim_id, this.billableId).subscribe(res => {
-      //   this.isIncompleteError = true;
-      // }, error => {
-      //   this.isIncompleteError = false;
-      //   this.incompleteInformation = error.error.data;
-      // })
+      this.onDemandService.getCorresIncomplete(this.claim_id, this.billableId, []).subscribe(res => {
+        this.isIncompleteError = true;
+      }, error => {
+        this.isIncompleteError = false;
+        this.incompleteInformation = error.error.data;
+      })
       this.onDemandService.getTrackingTable(this.claim_id, this.billableId).subscribe(res => {
         this.dataSource1 = new MatTableDataSource(res.data)
         this.dataSource1.paginator = this.paginator;
@@ -330,24 +330,28 @@ export class BillingCorrespondanceComponent implements OnInit {
     this.changeColors("#E6E6E6");
   }
   downloadForms(sign) {
-    // this.onDemandService.getCorresIncomplete(this.claim_id, this.billableId).subscribe(res => {
+    let ids = [];
+    this.selection1.selected.map(res => {
+      ids.push(res.id)
+    })
+    this.onDemandService.getCorresIncomplete(this.claim_id, this.billableId, ids).subscribe(res => {
       this.downloadMethod(sign);
-    // }, error => {
-    //   const dialogRef = this.dialog.open(BillingAlertComponent, {
-    //     width: '500px',
-    //     data: { title: 'Incomplete Information', incompleteInformation: error.error.data, ok: false, cancel: true, proceed: true }
-    //   });
-    //   dialogRef.afterClosed().subscribe(result => {
-    //     if (result.data) {
-    //       this.downloadMethod(sign);
-    //     }
-    //   })
-    // })
-    // if (this.isIncompleteError) {
-    //   this.downloadMethod(sign);
-    // } else {
+    }, error => {
+      const dialogRef = this.dialog.open(BillingAlertComponent, {
+        width: '500px',
+        data: { title: 'Incomplete Information', incompleteInformation: error.error.data, ok: false, cancel: true, proceed: true }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result.data) {
+          this.downloadMethod(sign);
+        }
+      })
+    })
+    if (this.isIncompleteError) {
+      this.downloadMethod(sign);
+    } else {
 
-    // }
+    }
   }
   downloadMethod(sign) {
     if (!this.examinerId) {
@@ -643,7 +647,11 @@ export class BillingCorrespondanceComponent implements OnInit {
   }
 
   onDemandSubmit() {
-    // this.onDemandService.getCorresIncomplete(this.claim_id, this.billableId).subscribe(res => {
+    let ids = [];
+    this.selection1.selected.map(res => {
+      ids.push(res.id)
+    })
+    this.onDemandService.getCorresIncomplete(this.claim_id, this.billableId, ids).subscribe(res => {
       if (!this.examinerId) {
         this.alertService.openSnackBar('Please select Examiner', "error");
         return;
@@ -759,16 +767,16 @@ export class BillingCorrespondanceComponent implements OnInit {
       } else {
         this.getOndemandDocs(data);
       }
-  //   }, error => {
-  //     const dialogRef = this.dialog.open(BillingAlertComponent, {
-  //       width: '500px',
-  //       data: { title: 'Incomplete Information', incompleteInformation: error.error.data, ok: true }
-  //       // data: { title: 'Incomplete Information', message: "Without the information listed above the correspondence documents will not be delivered. Please, enter the missing information.", incompleteInformation: error.error.data, warning: true }
-  //     });
-  //     dialogRef.afterClosed().subscribe(result => {
-  //       return
-  //     })
-  //   })
+    }, error => {
+      const dialogRef = this.dialog.open(BillingAlertComponent, {
+        width: '500px',
+        data: { title: 'Incomplete Information', incompleteInformation: error.error.data, ok: true }
+        // data: { title: 'Incomplete Information', message: "Without the information listed above the correspondence documents will not be delivered. Please, enter the missing information.", incompleteInformation: error.error.data, warning: true }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        return
+      })
+    })
   }
   getOndemandDocs(data) {
     this.onDemandService.onDemandCorrespondence(data).subscribe(record => {
