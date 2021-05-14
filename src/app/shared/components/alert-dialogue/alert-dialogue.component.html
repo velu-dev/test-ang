@@ -11,7 +11,7 @@
   <div mat-dialog-title class="mat-card-title">
     <img [src]="alert" alt="alert" class="text-center" *ngIf="data.type =='warning'">
     <img [src]="info" alt="alert" class="text-center" *ngIf="data.type=='info'">
-    <div class="inline">
+    <div class="inline" cdkFocusInitial>
       {{data?.title}}
       <div class="mat-card-description" [innerHtml]="data?.message">
       </div>
