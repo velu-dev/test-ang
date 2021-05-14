@@ -172,7 +172,7 @@ export class NewClaimantComponent implements OnInit {
       handedness: [null],
       primary_language_spoken: [null],
       certified_interpreter_required: [null],
-      ssn: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      ssn: ["999999999", Validators.compose([Validators.required, Validators.pattern('[0-9]+')])],
       phone_no_1: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       phone_ext1: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       organization_id: [null],
