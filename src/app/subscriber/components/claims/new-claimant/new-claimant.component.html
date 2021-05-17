@@ -100,10 +100,10 @@
 
         <mat-form-field appearance="outline" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3"
           fxFlex.sm="50" fxFlex.xs="100">
-          <mat-label>Social Security Number</mat-label>
+          <mat-label>Social Security Number*</mat-label>
           <input matInput mask="000-00-0000" placeholder="999-99-9999" formControlName="ssn" autocomplete="off">
           <mat-error *ngIf="isClaimantSubmited">Please enter valid SSN</mat-error>
-          <mat-hint>Note : Default value (999-99-9999) can be changed.</mat-hint>
+          <mat-hint>Note: If a SSN is not available, report a default 9- digit code of 999-99-9999.</mat-hint>
         </mat-form-field>
 
         <div fxFlex="50" fxFlex.md="50" fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50"
