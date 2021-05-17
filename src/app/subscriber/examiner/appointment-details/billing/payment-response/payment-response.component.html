@@ -5,7 +5,7 @@
     </mat-card-header> -->
     <mat-card-content class="m-b-10">
         <form [formGroup]="paymentForm" fxLayout="row wrap">
-            <div class="user-detail m-t-10" formArrayName="payments">
+            <div class="user-detail m-t-10 hide-mobile" formArrayName="payments">
                 <table class="table res-table pay-response">
                     <thead>
                         <tr>
@@ -362,8 +362,8 @@
             </div>
 
 
-<!-- Payment Response Mobile UI-->
-            <!-- <div class="bill-line-mobile show-mobile w-100">
+<!--Payment Response Mobile UI-->
+             <div class="bill-line-mobile show-mobile w-100">
                 <form [formGroup]="paymentForm">
                     <table formArrayName="payments">
                         <tbody>
@@ -726,7 +726,7 @@
                         </tbody>
                     </table>
                 </form>
-            </div> -->
+            </div>
 
 
 
