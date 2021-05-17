@@ -259,6 +259,7 @@ export class NewClaimantComponent implements OnInit {
       this.languageStatus = res['data'][0].certified_interpreter_required;
       this.claimNumber = res['data'][0].claim_numbers.map(data => data.claim_number);
       this.changeState(res['data'][0].state, res['data'][0].state_code);
+      res['data'][0].ssn = res['data'][0].ssn ? res['data'][0].ssn : "999999999";
       this.claimantForm.patchValue(res['data'][0])
     }, error => {
 
