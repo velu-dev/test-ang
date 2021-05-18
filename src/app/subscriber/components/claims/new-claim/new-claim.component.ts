@@ -265,7 +265,7 @@ export class NewClaimComponent implements OnInit {
         ).subscribe(val => {
           if (this.deuCtrl.errors) {
             return
-          } else { 
+          } else {
             if (val) {
               this.filteredDeu = this._filteDeu(val)
             } else {
@@ -1172,6 +1172,7 @@ export class NewClaimComponent implements OnInit {
           claim_id: res.data.id
         })
         this.claimService.getClaim(this.claimId).subscribe(res => {
+          console.log(res.data)
           this.injuryInfodata = res.data.claim_injuries;
           this.dataSource = new MatTableDataSource(this.injuryInfodata);
           this.claim.patchValue({
@@ -1199,6 +1200,7 @@ export class NewClaimComponent implements OnInit {
       })
     } else {
       claim['claim_injuries'] = this.injuryInfodata;
+      console.log(this.injuryInfodata)
       this.claimService.updateClaimAll(claim, this.claimId).subscribe(res => {
         this.examtypeChange(this.claimId, this.claim.value.claim_details);
         let examtype = "";
@@ -1604,12 +1606,14 @@ export class NewClaimComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.loader.show();
       if (result) {
+        console.log(result)
         this.dataSource = new MatTableDataSource([]);
         this.logger.log("success");
         localStorage.removeItem("editingInjury");
         let a = 0;
         for (var i in result['body_part_id']) {
           var part = {
+            id: result['id'] ? result['id'] : null,
             body_part_id: [result['body_part_id'][i]],
             date_of_injury: new Date(result['date_of_injury']).toDateString(),
             continuous_trauma: result['continuous_trauma'],
@@ -2414,7 +2418,8 @@ export class InjuryDialog {
           }
         })
       })
-      // this.injuryInfo.id = data['injuryData'].body_part_id;
+      console.log(data['injuryData'])
+      this.injuryInfo.id = data['injuryData'].id ? data['injuryData'].id : null;
       this.injuryInfo.body_part_id = data['injuryData'].body_part_id;
       this.injuryInfo.date_of_injury = data['injuryData'].date_of_injury ? new Date(data['injuryData'].date_of_injury) : "";
       this.injuryInfo.continuous_trauma = data['injuryData'].continuous_trauma;
@@ -2549,6 +2554,7 @@ export class InjuryDialog {
         return
       }
     }
+    console.log(this.injuryInfo)
     this.dialogRef.close(this.injuryInfo)
 
   }
