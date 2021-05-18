@@ -162,6 +162,12 @@ export class NewExaminerUserComponent implements OnInit {
         this.updateFormData(params_res.id)
       }
     })
+    this.route.queryParams.subscribe(res =>{
+      if(res.state == 'next'){
+        this.tab = 1;
+        this.tabIndex = 1;
+      }
+    })
 
     this.route.params.subscribe(params_res => {
       if (params_res.status == 1) {
@@ -633,7 +639,7 @@ export class NewExaminerUserComponent implements OnInit {
               baseUrl = "/admin/users";
               break;
           }
-          this.router.navigate([baseUrl + "/examiner", this.examinerId])
+          this.router.navigate([baseUrl + "/examiner", this.examinerId], { queryParams: { state: 'next' }, queryParamsHandling: 'merge', })
           this.tabIndex = 1;
         } else if (status == 'close') {
           // this._location.back();

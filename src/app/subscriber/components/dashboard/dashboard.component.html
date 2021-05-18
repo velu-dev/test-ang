@@ -140,7 +140,7 @@
                         <span *ngIf="column == 'is_critical'"
                             [ngClass]="{'text-primary': element?.is_critical}"><b>{{element?.is_critical ?
                                 element?.is_critical :
-                                "-"}}</b></span>
+                                "-"}} {{(expandId == element.appointment_id || isExpandAll) && !(isCloseIds.includes(element.appointment_id))}}</b></span>
                     </div>
                 </td>
             </ng-container>
