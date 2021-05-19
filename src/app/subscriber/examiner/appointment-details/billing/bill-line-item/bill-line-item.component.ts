@@ -862,5 +862,13 @@ export class BillLineItemComponent implements OnInit {
       group.patchValue(formData)
     }
   }
+  expandId: any;
+  openElement(element) {
+    if (this.expandId && this.expandId == element) {
+      this.expandId = null;
+    } else {
+      this.expandId = element;
+    }
+  }
 
 }

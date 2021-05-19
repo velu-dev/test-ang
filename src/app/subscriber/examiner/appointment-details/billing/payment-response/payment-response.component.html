@@ -372,12 +372,14 @@
                                 <tr>
                                     <td>
                                         <mat-accordion>
-                                            <mat-expansion-panel>
+                                            <mat-expansion-panel (click)="openElement(payment.get('id').value)">
                                                 <mat-expansion-panel-header>
                                                     <mat-panel-title>
-                                                        <mat-icon class="expand-close p-t-0" [ngClass]="{'text-success': expandId != payment.get('id').value, 'text-danger' : expandId == payment.get('id').value}"
-                                                       >add_circle</mat-icon>
-                                                        <b>Bill # :</b> {{payment.get('bill_no').value}}
+                                                        <mat-icon class="pointer"
+                                                        [ngClass]="{'text-danger': expandId != payment.get('id').value, 'text-success' : expandId == payment.get('id').value}"
+                                                        >{{expandId
+                                                        == payment.get('id').value ? 'add_circle' : 'remove_circle'}}</mat-icon>
+                                                        <b class="p-l-10">Bill # :</b> {{payment.get('bill_no').value}}
                                                     </mat-panel-title>
                                                 </mat-expansion-panel-header>
                                                 <mat-card>
@@ -427,7 +429,7 @@
     
                                     </td>
                                 </tr>
-                                <tr formArrayName="reviews" *ngIf="expandId == payment.get('id').value">
+                                <tr formArrayName="reviews">
                                     <td colspan="10">
                                         <div class="detail m-t-5"
                                             *ngFor="let review of paymentReviews(payIndex).controls; let reviewIndex=index;let last = last" style="background-color: #f8f8f8;padding: 10px;border: 1px solid #a2a1a1;">
@@ -569,7 +571,7 @@
                                                         class="expand-details editable"
                                                         *ngIf="review.get('void_type_id').value != 3">
 
-                                                        <div class="flex">
+                                                        <div class="flex" class="m-b-20">
                                                             <div class="bill-property">Explanation of Review{{review.get('file')?.errors?.required ? '*' : ''}}</div>
                                                             <div class="editable">
                                                                 <p *ngIf="review.get('file_name').value" fxFlex="100"
