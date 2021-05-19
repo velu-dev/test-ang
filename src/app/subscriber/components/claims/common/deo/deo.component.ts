@@ -83,7 +83,9 @@ export class DeoComponent implements OnInit {
   }
   matchValue(data, value) {
     return Object.keys(data).map((key) => {
-      return new RegExp(value, 'gi').test(data[key]);
+      if (key == 'deu_office' || key == 'code') {
+        return new RegExp(value, 'gi').test(data[key]);
+      }
     }).some(result => result);
   }
 
