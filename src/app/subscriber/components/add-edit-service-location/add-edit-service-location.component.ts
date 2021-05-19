@@ -246,7 +246,7 @@ export class AddEditServiceLocationComponent implements OnInit {
     }
   }
 
-  selectEmpAddress(street) {
+  selectAddress(street) {
     let state_id: any;
     this.states.map(state => {
       if (state.state_code == street.state) {
