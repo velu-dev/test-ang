@@ -100,8 +100,22 @@
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Street Address 1</mat-label>
-                            <input matInput placeholder="Street Address 1" formControlName="street1" autocomplete="off">
-                            <mat-error *ngIf="mailingSubmit">Please enter valid address</mat-error>
+                            <input matInput id="street-input" [matAutocomplete]="streetAutocomplete"
+                                #trigger="matAutocompleteTrigger" formControlName="street1"
+                                placeholder="Street Address 1" class="p-l-10">
+                            <mat-autocomplete #streetAutocomplete="matAutocomplete">
+                                <mat-option *ngFor="let address of streetEmpAddressList" [value]="address.street_line"
+                                    (click)="selectMAddress(address)">
+                                    {{address?.street_line}} {{address?.secondary}} {{address?.city}}
+                                    {{address?.state}}
+                                    {{address?.zipcode}}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <mat-hint *ngIf="isBAddressError"><i class="fas fa-info-circle"></i> The address
+                                autocomplete service is temporarily unavailable. Our team is working to fix it.
+                            </mat-hint>
+                            <!-- <input matInput placeholder="Street Address 1" formControlName="street1" autocomplete="off">
+                            <mat-error *ngIf="mailingSubmit">Please enter valid address</mat-error> -->
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
@@ -369,8 +383,22 @@
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Street Address 1</mat-label>
-                            <input matInput placeholder="Street Address 1" formControlName="street1" autocomplete="off">
-                            <mat-error *ngIf="billingSubmit">Please enter valid address</mat-error>
+                            <input matInput id="street-input" [matAutocomplete]="streetAutocomplete"
+                                #trigger="matAutocompleteTrigger" formControlName="street1"
+                                placeholder="Street Address 1" class="p-l-10">
+                            <mat-autocomplete #streetAutocomplete="matAutocomplete">
+                                <mat-option *ngFor="let address of streetBAddressList" [value]="address.street_line"
+                                    (click)="selectBAddress(address)">
+                                    {{address?.street_line}} {{address?.secondary}} {{address?.city}}
+                                    {{address?.state}}
+                                    {{address?.zipcode}}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <mat-hint *ngIf="isBAddressError"><i class="fas fa-info-circle"></i> The address
+                                autocomplete service is temporarily unavailable. Our team is working to fix it.
+                            </mat-hint>
+                            <!-- <input matInput placeholder="Street Address 1" formControlName="street1" autocomplete="off"> -->
+                            <!-- <mat-error *ngIf="billingSubmit">Please enter valid address</mat-error> -->
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
@@ -907,8 +935,8 @@
                                     <div fxFlex="100"
                                         *ngFor="let item of ['Same as Billing Provider NPI Number','Same as Rendering Provider NPI Number'];  let i = index">
                                         <mat-checkbox [checked]="selected === i" (change)="selected = i"
-                                            [disabled]="providerPresent(item)"
-                                            (change)="npiChange($event,i)">{{item}}</mat-checkbox>
+                                            [disabled]="providerPresent(item)" (change)="npiChange($event,i)">{{item}}
+                                        </mat-checkbox>
                                     </div>
 
                                     <mat-form-field fxFlex="100" class="m-t-20">

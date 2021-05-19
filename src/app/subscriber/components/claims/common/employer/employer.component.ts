@@ -4,6 +4,7 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { MatDialog } from '@angular/material';
 import { stat } from 'fs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-employer',
@@ -19,6 +20,9 @@ export class EmployerComponent implements OnInit {
   @Input('state') states;
   employerEdit = false;
   id: any;
+  streetEmpAddressList = [];
+  isEmpAddressError = false;
+  isEmpAddressSearched = false;
   constructor(public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.employer = this.formBuilder.group({
       id: [],
@@ -42,6 +46,41 @@ export class EmployerComponent implements OnInit {
           this.employer.get("phone_ext").disable();
         }
     })
+    this.employer.get('street1').valueChanges
+    .pipe(
+      debounceTime(500),
+    ).subscribe(key => {
+      if (key && typeof (key) == 'string')
+        key = key.trim();
+      this.isEmpAddressSearched = true;
+      if (key)
+        this.claimService.searchAddress(key).subscribe(address => {
+          this.streetEmpAddressList = address.suggestions;
+          this.isEmpAddressError = false;
+        }, error => {
+          if (error.status == 0)
+            this.isEmpAddressError = true;
+          this.streetEmpAddressList = [];
+        })
+    })
+    
+  }
+  selectAddress(street) {
+    let state_id: any;
+    this.states.map(state => {
+      if (state.state_code == street.state) {
+        state_id = state.id;
+      }
+    })
+
+    this.employer.patchValue({
+      street1: street.street_line,
+      street2: "",
+      city: street.city,
+      state: state_id,
+      zip_code: street.zipcode
+    })
+    this.changeState("", street.state)
   }
   ngOnInit() {
     if (this.fromPop) {

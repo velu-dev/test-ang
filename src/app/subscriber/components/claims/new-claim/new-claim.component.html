@@ -144,7 +144,8 @@
                                 <input matInput mask="000-00-0000" placeholder="999-99-9999" formControlName="ssn"
                                     autocomplete="off">
                                 <mat-error *ngIf="isClaimantSubmited">Please enter valid SSN</mat-error>
-                                <mat-hint>Note: If a SSN is not available, report a default 9- digit code of 999-99-9999.</mat-hint>
+                                <mat-hint>Note: If a SSN is not available, report a default 9- digit code of
+                                    999-99-9999.</mat-hint>
                             </mat-form-field>
 
                             <div fxFlex="100" fxFlex.md="33.3" fxFlex.lg="33.3" fxFlex.xl="33.3" fxFlex.sm="50"
@@ -207,8 +208,8 @@
 
                                 <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
                                     <mat-label>Ext</mat-label>
-                                    <input matInput type="text" placeholder="Ext" autocomplete="off" (keypress)="numberOnly($event)"
-                                        formControlName="phone_ext1">
+                                    <input matInput type="text" placeholder="Ext" autocomplete="off"
+                                        (keypress)="numberOnly($event)" formControlName="phone_ext1">
                                     <mat-error>Please enter valid Extension</mat-error>
                                 </mat-form-field>
                             </div>
@@ -730,9 +731,25 @@
 
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                 fxFlex.xs="100">
+
                                 <mat-label>Street Address 1</mat-label>
+                                <input matInput id="street-input" [matAutocomplete]="streetAutocomplete"
+                                    #trigger="matAutocompleteTrigger" formControlName="street1"
+                                    placeholder="Street Address 1" class="p-l-10">
+                                <mat-autocomplete #streetAutocomplete="matAutocomplete">
+                                    <mat-option *ngFor="let address of streetEmpAddressList" [value]="address.street_line"
+                                        (click)="selectAddress(address)">
+                                        {{address?.street_line}} {{address?.secondary}} {{address?.city}}
+                                        {{address?.state}}
+                                        {{address?.zipcode}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                                <mat-hint *ngIf="isEmpAddressError"><i class="fas fa-info-circle"></i> The address
+                                    autocomplete service is temporarily unavailable. Our team is working to fix it.
+                                </mat-hint>
+                                <!-- <mat-label>Street Address 1</mat-label>
                                 <textarea matInput placeholder="Street Address 1" cdkTextareaAutosize
-                                    cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1" formControlName="street1"></textarea>
+                                    cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1" formControlName="street1"></textarea> -->
                             </mat-form-field>
 
                             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
@@ -1339,7 +1356,7 @@
                                 </mat-form-field>
 
                                 <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25"
-                                    fxFlex.xs="100" *ngIf="!isSuplimental"  class="duration">
+                                    fxFlex.xs="100" *ngIf="!isSuplimental" class="duration">
                                     <mat-label>Duration</mat-label>
                                     <input matInput type="number" placeholder="Minutes" min="1" max="450" maxlength="3"
                                         formControlName="duration" autocomplete="off">

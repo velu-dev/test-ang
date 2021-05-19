@@ -7,6 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import * as globals from './../../../globals';
+import { debounceTime } from 'rxjs/operators';
+import { ClaimService } from '../../service/claim.service';
 
 @Component({
   selector: 'app-add-edit-service-location',
@@ -28,6 +30,10 @@ export class AddEditServiceLocationComponent implements OnInit {
   user: any;
   examiner_list: any;
   baseUrl: any;
+  streetAddressList = [];
+  isAddressError = false;
+  isAddressSearched = false;
+  
   constructor(private subscriberService: SubscriberService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
@@ -35,7 +41,8 @@ export class AddEditServiceLocationComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private cookieService: CookieService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private claimService: ClaimService
   ) {
     this.subscriberService.seedData('state').subscribe(response => {
       this.states = response['data'];
@@ -152,6 +159,25 @@ export class AddEditServiceLocationComponent implements OnInit {
       //national_provider_identifier: [null],
       is_active: ['true'],
     })
+    this.locationForm.get('street1').valueChanges
+    .pipe(
+      debounceTime(500),
+    ).subscribe(key => {
+      if (key && typeof (key) == 'string')
+        key = key.trim();
+      this.isAddressSearched = true;
+      if (key)
+        this.claimService.searchAddress(key).subscribe(address => {
+          this.streetAddressList = address.suggestions;
+          this.isAddressError = false;
+        }, error => {
+          if (error.status == 0)
+            this.isAddressError = true;
+          this.streetAddressList = [];
+        })
+    })
+    
+    
     this.locationForm.get("phone_no").valueChanges.subscribe(res => {
       if (this.locationForm.get("phone_no").value && this.locationForm.get("phone_no").valid) {
         this.locationForm.get("phone_ext1").enable();
@@ -218,6 +244,24 @@ export class AddEditServiceLocationComponent implements OnInit {
         this.baseUrl = "/";
         break;
     }
+  }
+
+  selectEmpAddress(street) {
+    let state_id: any;
+    this.states.map(state => {
+      if (state.state_code == street.state) {
+        state_id = state.id;
+      }
+    })
+
+    this.locationForm.patchValue({
+      street1: street.street_line,
+      street2: "",
+      city: street.city,
+      state: state_id,
+      zip_code: street.zipcode
+    })
+    this.changeState("", street.state)
   }
   serviceState: any;
   changeState(state, state_code?) {

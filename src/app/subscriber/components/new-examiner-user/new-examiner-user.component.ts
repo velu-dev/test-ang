@@ -20,6 +20,7 @@ import { IntercomService } from 'src/app/services/intercom.service';
 import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/alert-dialog.component';
 import * as globals from '../../../globals';
 import { saveAs } from 'file-saver';
+import { ClaimService } from '../../service/claim.service';
 @Component({
   selector: 'app-new-examiner-user',
   templateUrl: './new-examiner-user.component.html',
@@ -94,6 +95,17 @@ export class NewExaminerUserComponent implements OnInit {
   //@ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   private paginator: MatPaginator;
   private sort: MatSort;
+
+  //Search Street address 1
+  // Mailing address
+  streetMAddressList = [];
+  isMAddressError = false;
+  isMAddressSearched = false;
+
+  // Billing Provider
+  streetBAddressList = [];
+  isBAddressError = false;
+  isBAddressSearched = false;
   @ViewChild(MatSort, { static: false }) set matSort(ms: MatSort) {
     this.sort = ms;
     this.setDataSourceAttributes();
@@ -121,6 +133,7 @@ export class NewExaminerUserComponent implements OnInit {
     private subscriberService: SubscriberService,
     private examinerService: ExaminerService,
     private intercom: IntercomService,
+    private claimService: ClaimService,
     public dialog: MatDialog) {
 
 
@@ -162,8 +175,8 @@ export class NewExaminerUserComponent implements OnInit {
         this.updateFormData(params_res.id)
       }
     })
-    this.route.queryParams.subscribe(res =>{
-      if(res.state == 'next'){
+    this.route.queryParams.subscribe(res => {
+      if (res.state == 'next') {
         this.tab = 1;
         this.tabIndex = 1;
       }
@@ -452,7 +465,40 @@ export class NewExaminerUserComponent implements OnInit {
     //   this.dataSource = new MatTableDataSource([]);
     // })
   }
+  selectMAddress(street) {
+    let state_id: any;
+    this.states.map(state => {
+      if (state.state_code == street.state) {
+        state_id = state.id;
+      }
+    })
 
+    this.mailingAddressForm.patchValue({
+      street1: street.street_line,
+      street2: "",
+      city: street.city,
+      state: state_id,
+      zip_code: street.zipcode
+    })
+    this.changeState("", 'mailing', street.state)
+  }
+  selectBAddress(street) {
+    let state_id: any;
+    this.states.map(state => {
+      if (state.state_code == street.state) {
+        state_id = state.id;
+      }
+    })
+
+    this.billingProviderForm.patchValue({
+      street1: street.street_line,
+      street2: "",
+      city: street.city,
+      state: state_id,
+      zip_code: street.zipcode
+    })
+    this.changeState("", 'cms', street.state)
+  }
   formInit() {
 
     this.mailingAddressForm = this.formBuilder.group({
@@ -471,6 +517,24 @@ export class NewExaminerUserComponent implements OnInit {
       contact_person: [""],
       notes: [""],
     })
+    this.mailingAddressForm.get('street1').valueChanges
+      .pipe(
+        debounceTime(500),
+      ).subscribe(key => {
+        if (key && typeof (key) == 'string')
+          key = key.trim();
+        this.isMAddressSearched = true;
+        if (key)
+          this.claimService.searchAddress(key).subscribe(address => {
+            this.streetMAddressList = address.suggestions;
+            this.isMAddressError = false;
+          }, error => {
+            if (error.status == 0)
+              this.isMAddressError = true;
+            this.streetMAddressList = [];
+          })
+      })
+
     this.mailingAddressForm.get("phone_no1").valueChanges.subscribe(res => {
       if (this.mailingAddressForm.get("phone_no1").value && this.mailingAddressForm.get("phone_no1").valid) {
         this.mailingAddressForm.get("phone_ext1").enable();
@@ -510,6 +574,23 @@ export class NewExaminerUserComponent implements OnInit {
       file: [''],
       isFileChanged: [false]
 
+    })
+    this.billingProviderForm.get('street1').valueChanges
+    .pipe(
+      debounceTime(500),
+    ).subscribe(key => {
+      if (key && typeof (key) == 'string')
+        key = key.trim();
+      this.isBAddressSearched = true;
+      if (key)
+        this.claimService.searchAddress(key).subscribe(address => {
+          this.streetBAddressList = address.suggestions;
+          this.isBAddressError = false;
+        }, error => {
+          if (error.status == 0)
+            this.isBAddressError = true;
+          this.streetBAddressList = [];
+        })
     })
     this.billingProviderForm.get("phone_no1").valueChanges.subscribe(res => {
       if (this.billingProviderForm.get("phone_no1").value && this.billingProviderForm.get("phone_no1").valid) {

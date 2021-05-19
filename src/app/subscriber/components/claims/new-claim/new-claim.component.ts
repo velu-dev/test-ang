@@ -232,8 +232,11 @@ export class NewClaimComponent implements OnInit {
   supplementalOtherIndex: number;
   pastTwoYearDate = moment().subtract(2, 'year');
   streetAddressList = [];
+  streetEmpAddressList = [];
   isAddressError = false;
+  isEmpAddressError = false;
   isAddressSearched = false;
+  isEmpAddressSearched = false;
   regulation = regulation;
   minInjuryDate: any;
   isIME: boolean = false;
@@ -968,6 +971,23 @@ export class NewClaimComponent implements OnInit {
             this.streetAddressList = [];
           })
       })
+      this.claim.get(['Employer', 'street1']).valueChanges
+      .pipe(
+        debounceTime(500),
+      ).subscribe(key => {
+        if (key && typeof (key) == 'string')
+          key = key.trim();
+        this.isEmpAddressSearched = true;
+        if (key)
+          this.claimService.searchAddress(key).subscribe(address => {
+            this.streetEmpAddressList = address.suggestions;
+            this.isEmpAddressError = false;
+          }, error => {
+            if (error.status == 0)
+              this.isEmpAddressError = true;
+            this.streetEmpAddressList = [];
+          })
+      })
   }
   // private _filterAttroney(value: string, data) {
   //   console.log(value)
@@ -1020,6 +1040,23 @@ export class NewClaimComponent implements OnInit {
       zip_code: street.zipcode
     })
     this.changeState("", 'claimant', street.state)
+  }
+  selectEmpAddress(street) {
+    let state_id: any;
+    this.states.map(state => {
+      if (state.state_code == street.state) {
+        state_id = state.id;
+      }
+    })
+
+    this.claim.get('Employer').patchValue({
+      street1: street.street_line,
+      street2: "",
+      city: street.city,
+      state: state_id,
+      zip_code: street.zipcode
+    })
+    this.changeState("", 'emp', street.state)
   }
 
   advanceSearchSubmit(auto) {
