@@ -222,12 +222,13 @@
                         <tr>
                             <td>
                                 <mat-accordion>
-                                    <mat-expansion-panel>
+                                    <mat-expansion-panel (click)="openElement(lateResData?.id)">
                                         <mat-expansion-panel-header>
                                             <mat-panel-title>
-                                                <mat-icon class="expand-close p-t-0"
-                                                    [ngClass]="{'text-success': expandId != lateResData?.id, 'text-danger' : expandId == lateResData?.id}">
-                                                    add_circle</mat-icon>
+                                                <mat-icon class="pointer"
+                                                        [ngClass]="{'text-success': expandId != lateResData?.id, 'text-danger' : expandId == lateResData?.id}"
+                                                        >{{expandId
+                                                        == lateResData?.id ? 'remove_circle' : 'add_circle'}}</mat-icon>
                                                 <b>Bill # :</b> {{lateResData?.bill_no}}
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>

@@ -63,6 +63,9 @@
             .reason-for-request {
                 margin-top: 15px;
                 padding: 10px;
+                @media only screen and (max-width: 568px) {
+                    padding: 0px;
+                }
                 .checkbox {
                     background-color: $white;
                     padding: 10px;
