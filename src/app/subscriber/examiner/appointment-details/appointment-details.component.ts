@@ -237,7 +237,7 @@ export class AppointmentDetailsComponent implements OnInit {
         this.columnName = ["", "Name", "Action"]
         this.displayedColumnsForDocuments = ['is_expand', 'file_name', "action"]
       } else {
-        this.columnName = ["", "Name", "Uploaded On ", "Download On Demand Proof of Service", "Action"]
+        this.columnName = ["", "Name", "Uploaded On ", "Download On Demand" + '\n' + "Proof of Service", "Action"]
         this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'updatedAt', 'pfs', 'action']
       }
 
@@ -1294,7 +1294,7 @@ export class AppointmentDetailsComponent implements OnInit {
         this.displayedColumnsForDocuments = ['is_expand', 'file_name']
       }
       else {
-        this.columnName = ["", "Name", "Uploaded On ", "Download On Demand Proof of Service", "Action"]
+        this.columnName = ["", "Name", "Uploaded On ", "Download On Demand" + '\n' + "Proof of Service", "Action"]
         this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'updatedAt', 'pfs', 'action']
       }
     } else {

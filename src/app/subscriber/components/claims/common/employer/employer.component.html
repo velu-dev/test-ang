@@ -37,8 +37,7 @@
                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                     <mat-label>Street Address 1{{fromPop ? "*" : ""}}</mat-label>
                     <input matInput id="street-input" [matAutocomplete]="streetAutocomplete"
-                        #trigger="matAutocompleteTrigger" formControlName="street1" placeholder="Street Address 1"
-                        class="p-l-10">
+                        #trigger="matAutocompleteTrigger" formControlName="street1" placeholder="Street Address 1">
                     <mat-autocomplete #streetAutocomplete="matAutocomplete">
                         <mat-option *ngFor="let address of streetEmpAddressList" [value]="address.street_line"
                             (click)="selectAddress(address)">

@@ -247,7 +247,7 @@
                                     autocomplete="off"></textarea> -->
                                 <input matInput id="street-input" [matAutocomplete]="streetCAutocomplete"
                                     #trigger="matAutocompleteTrigger" formControlName="street1"
-                                    placeholder="Street Address 1" class="p-l-10">
+                                    placeholder="Street Address 1">
                                 <mat-autocomplete #streetCAutocomplete="matAutocomplete">
                                     <mat-option *ngFor="let address of streetAddressList" [value]="address.street_line"
                                         (click)="selectAddress(address)">
@@ -735,7 +735,7 @@
                                 <mat-label>Street Address 1</mat-label>
                                 <input matInput id="street-input" [matAutocomplete]="streetEAutocomplete"
                                     #trigger="matAutocompleteTrigger" formControlName="street1"
-                                    placeholder="Street Address 1" class="p-l-10">
+                                    placeholder="Street Address 1">
                                 <mat-autocomplete #streetEAutocomplete="matAutocomplete">
                                     <mat-option *ngFor="let address of streetEmpAddressList" [value]="address.street_line"
                                         (click)="selectEmpAddress(address)">
