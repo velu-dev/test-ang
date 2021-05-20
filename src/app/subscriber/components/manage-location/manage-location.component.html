@@ -21,7 +21,7 @@
                 placeholder="Search by Location Name, address, etc.">
             <mat-icon>search</mat-icon>
         </div>
-        <span class="custom-info gap" (click)="openPopup(regulation?.regulationsForServiceLocation?.title, regulation?.regulationsForServiceLocation?.codes)"><i class="material-icons-outlined">info</i><sup>Regulations</sup></span>
+        <span class="custom-info regulation gap" (click)="openPopup(regulation?.regulationsForServiceLocation?.title, regulation?.regulationsForServiceLocation?.codes)"><i class="material-icons-outlined">info</i><sup>Regulations</sup></span>
         <span class="spacer"></span>
         <button mat-stroked-button class="outline-success float-right" [routerLink]="[router.url +'/add-location']"
             routerLinkActive="router-link-active">
