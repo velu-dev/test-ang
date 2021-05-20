@@ -220,7 +220,7 @@ export class AppointmentDetailsComponent implements OnInit {
     //     }
     //   })
     // })
-    this.getDocumentDeclareData();
+    //this.getDocumentDeclareData();
     this.claimService.listExaminar().subscribe(res => {
       this.examinarList = res.data;
     })
@@ -690,6 +690,7 @@ export class AppointmentDetailsComponent implements OnInit {
       tableRows: this.formBuilder.array([])
     });
     this.loadDatas();
+    this.getDocumentDeclareData();
   }
 
   initiateForm(): FormGroup {
