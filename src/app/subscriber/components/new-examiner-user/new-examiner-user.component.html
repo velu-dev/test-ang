@@ -100,10 +100,10 @@
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Street Address 1</mat-label>
-                            <input matInput id="street-input" [matAutocomplete]="streetAutocomplete"
+                            <input matInput id="street-input" [matAutocomplete]="streetMAutocomplete"
                                 #trigger="matAutocompleteTrigger" formControlName="street1"
-                                placeholder="Street Address 1" class="p-l-10">
-                            <mat-autocomplete #streetAutocomplete="matAutocomplete">
+                                placeholder="Street Address 1">
+                            <mat-autocomplete #streetMAutocomplete="matAutocomplete">
                                 <mat-option *ngFor="let address of streetMAddressList" [value]="address.street_line"
                                     (click)="selectMAddress(address)">
                                     {{address?.street_line}} {{address?.secondary}} {{address?.city}}
@@ -383,10 +383,10 @@
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Street Address 1</mat-label>
-                            <input matInput id="street-input" [matAutocomplete]="streetAutocomplete"
+                            <input matInput id="street-input" [matAutocomplete]="streetBAutocomplete"
                                 #trigger="matAutocompleteTrigger" formControlName="street1"
-                                placeholder="Street Address 1" class="p-l-10">
-                            <mat-autocomplete #streetAutocomplete="matAutocomplete">
+                                placeholder="Street Address 1">
+                            <mat-autocomplete #streetBAutocomplete="matAutocomplete">
                                 <mat-option *ngFor="let address of streetBAddressList" [value]="address.street_line"
                                     (click)="selectBAddress(address)">
                                     {{address?.street_line}} {{address?.secondary}} {{address?.city}}

@@ -40,8 +40,7 @@
                         </mat-icon>
                     </span>
                     <div (click)="openrouteElement(element)">
-                        <span *ngIf="column == 'procedure_type_name'">{{element?.exam_procedure_type}} -
-                            {{element?.exam_procedure_name }}</span>
+                        <span *ngIf="column == 'procedure_type_name'">{{element?.exam_procedure_name }}</span>
                         <span
                             *ngIf="column == 'appointment_scheduled_date_time'">{{element?.appointment_scheduled_date_time
                             | date:'MM-dd-yyyy'}}</span>

@@ -1045,7 +1045,7 @@ export class NewClaimComponent implements OnInit {
     let state_id: any;
     this.states.map(state => {
       if (state.state_code == street.state) {
-        state_id = state.id;
+        state_id = state.state;
       }
     })
 
@@ -1714,6 +1714,7 @@ export class NewClaimComponent implements OnInit {
           claimant_date_of_birth: this.claimant.value.date_of_birth,
         }
       }
+      this.claimant.patchValue({ssn: "999999999"})
       this.claimService.searchbyEams(this.emasSearchInput.value.replace(/\s/g, ''), data).subscribe(res => {
         if (res.data) {
           this.isEdit = false;

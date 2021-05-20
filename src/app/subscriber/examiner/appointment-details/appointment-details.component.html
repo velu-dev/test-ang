@@ -139,7 +139,7 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <span *ngIf="!isIME" class="custom-info"
+                    <span *ngIf="!isIME" class="custom-info regulation"
                         (click)="openPopupRegulation(regulation?.regulationsForAppointmentNotification?.title, regulation?.regulationsForAppointmentNotification?.codes)"><i
                             class="material-icons-outlined">info</i><sup>Regulations</sup></span>
                     <mat-form-field appearance="outline" fxFlex="100" class="notes">
@@ -201,7 +201,7 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <span *ngIf="!isIME" class="custom-info" (click)="openPopupRegulation(regulation?.regulationsForAppointmentNotification?.title, regulation?.regulationsForAppointmentNotification?.codes)"><i
+                    <span *ngIf="!isIME" class="custom-info regulation" (click)="openPopupRegulation(regulation?.regulationsForAppointmentNotification?.title, regulation?.regulationsForAppointmentNotification?.codes)"><i
                             class="material-icons-outlined">info</i><sup>Regulations</sup></span>
                     <mat-form-field appearance="outline" fxFlex="100" class="notes">
                         <mat-label>Notes</mat-label>
@@ -237,7 +237,7 @@
 
 <mat-card class="documents-declared m-b-20">
     <mat-card-header>
-        <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Documents Declared<span *ngIf="!isIME" class="custom-info"  (click)="openPopupRegulation(regulation?.regulationsForDeclarationOfPagesReceived?.title, regulation?.regulationsForDeclarationOfPagesReceived?.codes)"> <i
+        <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Documents Declared<span *ngIf="!isIME" class="custom-info regulation"  (click)="openPopupRegulation(regulation?.regulationsForDeclarationOfPagesReceived?.title, regulation?.regulationsForDeclarationOfPagesReceived?.codes)"> <i
                     class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
         <span class="spacer"></span>
         <span>
@@ -411,7 +411,7 @@
     <form [formGroup]="billable_item" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
         <mat-card-header>
             <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Information<span
-                    class="custom-info" *ngIf="!isIME" (click)="examinationDetails?.procedure_type == 'Deposition' ? openPopupRegulation(regulation?.regulationsForDepositionItemIntake?.title, regulation?.regulationsForDepositionItemIntake?.codes) : openPopupRegulation(regulation?.regulationsForBillableItemIntake?.title, regulation?.regulationsForBillableItemIntake?.codes)">
+                    class="custom-info regulation" *ngIf="!isIME" (click)="examinationDetails?.procedure_type == 'Deposition' ? openPopupRegulation(regulation?.regulationsForDepositionItemIntake?.title, regulation?.regulationsForDepositionItemIntake?.codes) : openPopupRegulation(regulation?.regulationsForBillableItemIntake?.title, regulation?.regulationsForBillableItemIntake?.codes)">
                     <i class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
             <span class="spacer"></span>
             <span *ngIf="!(isExamTypeChanged) || !(isFreeze)">
@@ -653,7 +653,7 @@
 
 <mat-card class="document-info m-t-25" *ngIf="examinationDetails?.procedure_type != 'Cancellation'">
     <mat-card-header>
-        <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Documents<span *ngIf="!isIME" class="custom-info"
+        <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Documents<span *ngIf="!isIME" class="custom-info regulation"
                 (click)="openPopupRegulation(regulation?.regulationsForBillableItemDocuments?.title, regulation?.regulationsForBillableItemDocuments?.codes)"><i
                     class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
     </mat-card-header>

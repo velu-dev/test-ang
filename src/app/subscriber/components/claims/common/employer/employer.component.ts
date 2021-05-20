@@ -69,7 +69,7 @@ export class EmployerComponent implements OnInit {
     let state_id: any;
     this.states.map(state => {
       if (state.state_code == street.state) {
-        state_id = state.id;
+        state_id = state.state;
       }
     })
 
