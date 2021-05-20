@@ -58,7 +58,7 @@
                                 <div fxLayout="row wrap" class="w-100">
                                     <div fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="50">
                                         <div class="content-wrapper-main-title p-t-10 m-b-10 p-l-10"> Claimant<span
-                                                class="custom-info"
+                                                class="custom-info regulation"
                                                 (click)="openPopup(regulation?.regulationsForClaimantIntake?.title, regulation?.regulationsForClaimantIntake?.codes)"><i
                                                     class="material-icons-outlined">info</i><sup>Regulations</sup></span>
                                         </div>
@@ -1271,7 +1271,7 @@
                     <mat-card-header>
                         <mat-panel-title>
                             <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Information<span
-                                    class="custom-info" *ngIf="!isIME"
+                                    class="custom-info regulation" *ngIf="!isIME"
                                     (click)="isDeposition ? openPopup(regulation?.regulationsForDepositionItemIntake?.title, regulation?.regulationsForDepositionItemIntake?.codes) : openPopup(regulation?.regulationsForBillableItemIntake?.title, regulation?.regulationsForBillableItemIntake?.codes)"><i
                                         class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
                         </mat-panel-title>
