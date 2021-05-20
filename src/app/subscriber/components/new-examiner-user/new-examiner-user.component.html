@@ -102,7 +102,7 @@
                             <mat-label>Street Address 1</mat-label>
                             <input matInput id="street-input" [matAutocomplete]="streetMAutocomplete"
                                 #trigger="matAutocompleteTrigger" formControlName="street1"
-                                placeholder="Street Address 1" class="p-l-10">
+                                placeholder="Street Address 1">
                             <mat-autocomplete #streetMAutocomplete="matAutocomplete">
                                 <mat-option *ngFor="let address of streetMAddressList" [value]="address.street_line"
                                     (click)="selectMAddress(address)">
@@ -385,7 +385,7 @@
                             <mat-label>Street Address 1</mat-label>
                             <input matInput id="street-input" [matAutocomplete]="streetBAutocomplete"
                                 #trigger="matAutocompleteTrigger" formControlName="street1"
-                                placeholder="Street Address 1" class="p-l-10">
+                                placeholder="Street Address 1">
                             <mat-autocomplete #streetBAutocomplete="matAutocomplete">
                                 <mat-option *ngFor="let address of streetBAddressList" [value]="address.street_line"
                                     (click)="selectBAddress(address)">
