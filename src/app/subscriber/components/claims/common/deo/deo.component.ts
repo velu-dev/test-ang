@@ -47,6 +47,10 @@ export class DeoComponent implements OnInit {
         }
     })
     this.claimService.getDeuDetails().subscribe(res => {
+      console.log(res.data);
+      res.data.map(ii =>{
+        ii['name'] = ii.code + " - " + ii.deu_office
+      })
       this.deuDetails = res.data;
       this.filteredDeu = this.deuDetails;
       this.deuCtrl.valueChanges
