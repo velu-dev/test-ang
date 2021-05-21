@@ -204,6 +204,14 @@
                             <tr *ngIf="group.get('isEditable').value" [formGroupName]="i" (click)="rowSelected(group)"
                                 class="editable-bill">
                                 <td>
+                                    <mat-accordion>
+                                    <mat-expansion-panel [expanded]="true" hideToggle>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                <mat-icon class="pointer text-danger">remove_circle</mat-icon>
+                                                <b class="p-l-10">Item :</b> {{group.get('item_description').value}}
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
                                     <mat-card>
                                         <div class="flex">
                                             <div class="bill-property">Item</div>
@@ -321,6 +329,8 @@
                                             </div>
                                         </div>
                                     </mat-card>
+                                </mat-expansion-panel>
+                                </mat-accordion>
                                 </td>
                             </tr>
                             <tr>
