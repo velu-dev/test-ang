@@ -11,6 +11,9 @@ import { RegulationDialogueComponent } from 'src/app/shared/components/regulatio
 import { UserService } from 'src/app/shared/services/user.service';
 import * as regulation from 'src/app/shared/services/regulations';
 import { IntercomService } from 'src/app/services/intercom.service';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 @Component({
   selector: 'app-submission',
   templateUrl: './submission.component.html',
@@ -46,21 +49,31 @@ export class SubmissionComponent implements OnInit {
   columnsToDisplay2 = [];
   expandedElement;
   regulation = regulation;
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
   constructor(public billingService: BillingService,
     private alertService: AlertService,
     public dialog: MatDialog,
     private intercom: IntercomService,
-    public userService: UserService) { }
+    public userService: UserService,
+    private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit() {
     this.getBillDocument();
-    if (this.isMobile) {
-      this.columnName2 = ["", "File Name"]
-      this.columnsToDisplay2 = ['is_expand', 'file_name']
-    } else {
-      this.columnName2 = ["", "File Name", "Download Partial Document", "Complete", "Action"]
-      this.columnsToDisplay2 = ['doc_image', 'file_name', 'partial', 'complete', "action"]
-    }
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
+      if (this.isMobile) {
+        console.log("dfihdsfiusdiudhsifhisdfiudfiu")
+        this.columnName2 = ["", "File Name"]
+        this.columnsToDisplay2 = ['is_expand', 'file_name']
+      } else {
+        this.columnName2 = ["", "File Name", "Download Partial Document", "Complete", "Action"]
+        this.columnsToDisplay2 = ['doc_image', 'file_name', 'partial', 'complete', "action"]
+      }
+    });
   }
   is_ondemand_created: boolean = false;
   getBillDocument() {

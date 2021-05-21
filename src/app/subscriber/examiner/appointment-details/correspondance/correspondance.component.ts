@@ -380,24 +380,25 @@ export class BillingCorrespondanceComponent implements OnInit {
         documents_ids.push(res.id)
       }
     });
-    if (documents_ids.includes(3) || documents_ids.includes(5) || documents_ids.includes(16)) {
-      if ((this.statusOfAppointment.IsEmptyAppointmentDate || this.statusOfAppointment.isEmptyDuration || this.statusOfAppointment.isEmptyLocation) && this.correspondData.exam_procedure_type.toLowerCase() != 'supplemental') {
-        const dialogRef = this.dialog.open(AlertDialogueComponent, {
-          width: '500px', data: { title: "Appointment Information Incomplete", message: "Please check the appointment date, time and location.", yes: true, no: true, type: "warning" }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          if (result.data) {
-            this.getDocs(documents_ids, custom_documents_ids, signHide);
-          } else {
-            return
-          }
-        })
-      } else {
-        this.getDocs(documents_ids, custom_documents_ids, signHide);
-      }
-    } else {
-      this.getDocs(documents_ids, custom_documents_ids, signHide);
-    }
+    // if (documents_ids.includes(3) || documents_ids.includes(5) || documents_ids.includes(16)) {
+    //   if ((this.statusOfAppointment.IsEmptyAppointmentDate || this.statusOfAppointment.isEmptyDuration || this.statusOfAppointment.isEmptyLocation) && this.correspondData.exam_procedure_type.toLowerCase() != 'supplemental') {
+    //     const dialogRef = this.dialog.open(AlertDialogueComponent, {
+    //       width: '500px', data: { title: "Appointment Information Incomplete", message: "Please check the appointment date, time and location.", yes: true, no: true, type: "warning" }
+    //     });
+    //     dialogRef.afterClosed().subscribe(result => {
+    //       if (result.data) {
+    //         this.getDocs(documents_ids, custom_documents_ids, signHide);
+    //       } else {
+    //         return
+    //       }
+    //     })
+    //   } else {
+    //     this.getDocs(documents_ids, custom_documents_ids, signHide);
+    //   }
+    // } else {
+    //   this.getDocs(documents_ids, custom_documents_ids, signHide);
+    // }
+    this.getDocs(documents_ids, custom_documents_ids, signHide);
   }
   getDocs(documents_ids, custom_documents_ids, signHide) {
     let recipientsDocuments_ids: any = [];
@@ -435,35 +436,35 @@ export class BillingCorrespondanceComponent implements OnInit {
     }
 
     if (addressEmpty) {
+      // const dialogRef = this.dialog.open(AlertDialogueComponent, {
+      //   width: '500px',
+      //   data: { title: signHide ? "Download" : 'E-Sign & Download', message: "Recipient address seems to be incomplete. Do you want to proceed further?", yes: true, no: true, type: "info", info: true, warning: true }
+      // });
+      // dialogRef.afterClosed().subscribe(result => {
+      //   if (result.data) {
       const dialogRef = this.dialog.open(AlertDialogueComponent, {
-        width: '500px',
-        data: { title: signHide ? "Download" : 'E-Sign & Download', message: "Recipient address seems to be incomplete. Do you want to proceed further?", yes: true, no: true, type: "info", info: true, warning: true }
+        width: '500px', data: { title: "Confirm", message: "We are assuming you are processing Correspondence Manually, Instead of 'Mail On-demand'.", yes: false, proceed: true, no: true, type: "warning" }
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result.data) {
-          const dialogRef = this.dialog.open(AlertDialogueComponent, {
-            width: '500px', data: { title: "Confirm", message: "We are assuming you are processing Correspondence Manually, Instead of 'Mail On-demand'.", yes: false, proceed: true, no: true, type: "warning" }
-          });
-          dialogRef.afterClosed().subscribe(result => {
-            if (result.data) {
-              console.log("Need to update with api");
-              this.downloadCorrespondance(docDeatils);
-              documents_ids = [];
-              custom_documents_ids = [];
-              recipientsDocuments_ids = [];
-              recipientsCustom_documents_ids = [];
-            } else {
-              this.downloadCorrespondance(docDeatils);
-              documents_ids = [];
-              custom_documents_ids = [];
-              recipientsDocuments_ids = [];
-              recipientsCustom_documents_ids = [];
-            }
-          })
+          console.log("Need to update with api");
+          this.downloadCorrespondance(docDeatils);
+          documents_ids = [];
+          custom_documents_ids = [];
+          recipientsDocuments_ids = [];
+          recipientsCustom_documents_ids = [];
         } else {
-          return;
+          this.downloadCorrespondance(docDeatils);
+          documents_ids = [];
+          custom_documents_ids = [];
+          recipientsDocuments_ids = [];
+          recipientsCustom_documents_ids = [];
         }
       })
+      //   } else {
+      //     return;
+      //   }
+      // })
     } else {
       // this.onDemandService.downloadCorrespondanceForm(this.claim_id, this.billableId, docDeatils).subscribe(res => {
       //   if (res.status) {
@@ -741,32 +742,33 @@ export class BillingCorrespondanceComponent implements OnInit {
       //   }
       // }
 
-      if (addressEmpty) {
-        const dialogRef = this.dialog.open(AlertDialogueComponent, {
-          width: '500px',
-          data: { title: "Mail On Demand", message: "Recipient address seems to be incomplete. Please fill out the required fields and try again!", ok: true, no: false, type: "warning", warning: true }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          return
-        })
-        return;
-      }
-      if (documents_ids.includes(3) || documents_ids.includes(5) || documents_ids.includes(16)) {
-        console.log(this.statusOfAppointment)
-        if (this.statusOfAppointment.IsEmptyAppointmentDate || this.statusOfAppointment.isEmptyDuration || this.statusOfAppointment.isEmptyLocation) {
-          const dialogRef = this.dialog.open(AlertDialogueComponent, {
-            width: '500px', data: { title: "Appointment Information Incomplete", message: "Please, check appointment date, time and location.", ok: true, no: false, type: "warning", warning: true }
-          });
-          dialogRef.afterClosed().subscribe(result => {
-            return
+      // if (addressEmpty) {
+      //   const dialogRef = this.dialog.open(AlertDialogueComponent, {
+      //     width: '500px',
+      //     data: { title: "Mail On Demand", message: "Recipient address seems to be incomplete. Please fill out the required fields and try again!", ok: true, no: false, type: "warning", warning: true }
+      //   });
+      //   dialogRef.afterClosed().subscribe(result => {
+      //     return
+      //   })
+      //   return;
+      // }
+      // if (documents_ids.includes(3) || documents_ids.includes(5) || documents_ids.includes(16)) {
+      //   console.log(this.statusOfAppointment)
+      //   if (this.statusOfAppointment.IsEmptyAppointmentDate || this.statusOfAppointment.isEmptyDuration || this.statusOfAppointment.isEmptyLocation) {
+      //     const dialogRef = this.dialog.open(AlertDialogueComponent, {
+      //       width: '500px', data: { title: "Appointment Information Incomplete", message: "Please, check appointment date, time and location.", ok: true, no: false, type: "warning", warning: true }
+      //     });
+      //     dialogRef.afterClosed().subscribe(result => {
+      //       return
 
-          })
-          return
-        }
-        this.getOndemandDocs(data);
-      } else {
-        this.getOndemandDocs(data);
-      }
+      //     })
+      //     return
+      //   }
+      //   this.getOndemandDocs(data);
+      // } else {
+      //   this.getOndemandDocs(data);
+      // }
+      this.getOndemandDocs(data);
     }, error => {
       const dialogRef = this.dialog.open(BillingAlertComponent, {
         width: '500px',
