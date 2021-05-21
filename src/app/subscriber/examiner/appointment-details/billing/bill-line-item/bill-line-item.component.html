@@ -205,10 +205,10 @@
                                 class="editable-bill">
                                 <td>
                                     <mat-accordion>
-                                    <mat-expansion-panel [expanded]="true" hideToggle>
+                                    <mat-expansion-panel [expanded]="true">
                                         <mat-expansion-panel-header>
                                             <mat-panel-title>
-                                                <mat-icon class="pointer text-danger">remove_circle</mat-icon>
+                                                <!-- <mat-icon class="pointer text-danger">remove_circle</mat-icon> -->
                                                 <b class="p-l-10">Item :</b> {{group.get('item_description').value}}
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
@@ -340,10 +340,10 @@
                                         <mat-expansion-panel (click)="openElement(group.get('id').value)">
                                             <mat-expansion-panel-header>
                                                 <mat-panel-title>
-                                                    <mat-icon class="pointer"
+                                                    <!-- <mat-icon class="pointer"
                                                     [ngClass]="{'text-success': expandId != group.get('id').value, 'text-danger' : expandId == group.get('id').value}"
                                                     >{{expandId
-                                                    == group.get('id').value ? 'remove_circle' : 'add_circle'}}</mat-icon>
+                                                    == group.get('id').value ? 'remove_circle' : 'add_circle'}}</mat-icon> -->
                                                     <b class="p-l-10">Item :</b> {{group.get('item_description').value}}
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
