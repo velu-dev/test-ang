@@ -115,7 +115,7 @@
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="expandedDetail">
-                            <td mat-cell *matCellDef="let element;let k = index"
+                            <td mat-cell *matCellDef="let element;let k"
                                 [attr.colspan]="columnsToDisplay2.length">
                                 <div class="detail" [@detailExpand]="expandId2 == k ? 'expanded' : 'collapsed'">
                                     <div class="responsive-table">
@@ -168,8 +168,8 @@
                             </td>
                         </ng-container>
                         <tr mat-header-row *matHeaderRowDef="columnsToDisplay2;sticky :true"></tr>
-                        <tr mat-row *matRowDef="let element;let i = index; columns: columnsToDisplay2;" class="row"
-                            [class.row]="expandedElement === element" (click)="openElementBill(i)">
+                        <tr mat-row *matRowDef="let element;let i; columns: columnsToDisplay2;" class="row"
+                            [class.row]="expandedElement == element" (click)="openElementBill(i)">
                         </tr>
                         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row">
                         </tr>
