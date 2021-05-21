@@ -6,6 +6,9 @@ import { BillingService } from 'src/app/subscriber/service/billing.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { saveAs } from 'file-saver';
 import { IntercomService } from 'src/app/services/intercom.service';
+import { Observable } from 'rxjs';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map, shareReplay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-billing-document',
@@ -31,15 +34,22 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
   expandIdDoc: any;
   expandedElement;
   subscription: any;
-  constructor(private claimService: ClaimService, public billingService: BillingService, private alertService: AlertService, private intercom: IntercomService) {
-    if (this.isMobile) {
-      this.columnsNameDoc = ["", "File Name"]
-      this.columnsToDisplayDoc = ['is_expand', 'file_name']
-    } else {
-      this.columnsNameDoc = ["", "Ref #", "File Name", "Action", "Date", "Recipients", "Download" + '\n' + "Sent Documents", "Further Information"]
-      this.columnsToDisplayDoc = ['doc_image', 'request_reference_id', 'file_name', 'action', "date", "recipients", 'download', 'payor_response_message']
-    }
-
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
+  constructor(private claimService: ClaimService, public billingService: BillingService, private alertService: AlertService, private intercom: IntercomService, private breakpointObserver: BreakpointObserver) {
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
+      if (this.isMobile) {
+        this.columnsNameDoc = ["", "File Name"]
+        this.columnsToDisplayDoc = ['is_expand', 'file_name']
+      } else {
+        this.columnsNameDoc = ["", "Ref #", "File Name", "Action", "Date", "Recipients", "Download" + '\n' + "Sent Documents", "Further Information"]
+        this.columnsToDisplayDoc = ['doc_image', 'request_reference_id', 'file_name', 'action', "date", "recipients", 'download', 'payor_response_message']
+      }
+    });
     this.subscription = this.intercom.getBillDocChange().subscribe(res => {
       this.getDocument();
     })
