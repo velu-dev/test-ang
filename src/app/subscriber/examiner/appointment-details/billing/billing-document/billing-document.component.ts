@@ -72,10 +72,10 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
 
   openElementDoc(element) {
     if (this.isMobile) {
-      if (this.expandIdDoc && this.expandIdDoc == element.document_id) {
+      if (this.expandIdDoc && this.expandIdDoc == element.on_demand_service_request_id) {
         this.expandIdDoc = null;
       } else {
-        this.expandIdDoc = element.document_id;
+        this.expandIdDoc = element.on_demand_service_request_id;
       }
     }
   }
