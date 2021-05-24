@@ -120,7 +120,7 @@ export class ExaminationComponent implements OnInit {
       this.alertService.openSnackBar('Please select Document(s)', "error");
       return;
     }
-    let ids = { documents_ids: this.selection.selected.map(res => res['id']) }
+    let ids = { documents_ids: this.selection.selected.map(res => res['id']), examiner_detail_id: this.billingData.examiner_detail_id}
     this.ondemandService.downloadBillingDoc(this.claim_id, this.billableId, ids).subscribe(res => {
       if (res.status) {
         res.data.map(data => {

@@ -625,7 +625,7 @@ export class SubscriberSettingsComponent implements OnInit {
       tail_name = "records";
     } else if (nodeType == "Transcription and Compilation") {
       tail_name = "reports";
-    } else if (nodeType == "Correspondance") {
+    } else if (nodeType == "Correspondence") {
       tail_name = node.examiner_id ? "correspondence/" + node.examiner_id : "correspondence";
     } else if (nodeType == "Billing") {
       tail_name = node.bill_id ? "billing/" + node.bill_id : "billing";
