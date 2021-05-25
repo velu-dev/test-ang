@@ -101,6 +101,7 @@ export class ManagerDashboardComponent implements OnInit {
   expandId: any;
   isCloseId: any;
   isCloseIds = [];
+  isExpandIds = [];
   openElement(element) {
     if (this.isExpandAll) {
       if (this.isCloseIds.includes(element.appointment_id)) {
@@ -120,7 +121,12 @@ export class ManagerDashboardComponent implements OnInit {
       if (this.expandId && this.expandId == element.appointment_id) {
         this.expandId = null;
       } else {
+        this.isExpandIds = []
         this.expandId = element.appointment_id;
+        this.isExpandIds.push(element.appointment_id);
+        if (this.isExpandIds.length == this.selectedData) {
+          this.isExpandAll = true;
+        }
         let index = this.isCloseIds.indexOf(element.appointment_id)
         this.isCloseIds.splice(index, 1)
       }

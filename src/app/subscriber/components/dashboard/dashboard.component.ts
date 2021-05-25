@@ -155,6 +155,7 @@ export class DashboardComponent implements OnInit {
   expandId: any;
   isCloseId: any;
   isCloseIds = [];
+  isExpandIds = [];
   openElement(element) {
     if (this.isExpandAll) {
       if (this.isCloseIds.includes(element.appointment_id)) {
@@ -163,10 +164,11 @@ export class DashboardComponent implements OnInit {
       } else {
         this.isCloseId = element.appointment_id;
         this.isCloseIds.push(element.appointment_id);
-        console.log(this.isCloseIds.length, this.selectedData)
         if (this.isCloseIds.length == this.selectedData) {
           this.isExpandAll = false;
         }
+        let index = this.isExpandIds.indexOf(element.appointment_id)
+        this.isExpandIds.splice(index, 1)
       }
       this.expandId = null;
     } else {
@@ -175,7 +177,12 @@ export class DashboardComponent implements OnInit {
       if (this.expandId && this.expandId == element.appointment_id) {
         this.expandId = null;
       } else {
+        this.isExpandIds = []
         this.expandId = element.appointment_id;
+        this.isExpandIds.push(element.appointment_id);
+        if (this.isExpandIds.length == this.selectedData) {
+          this.isExpandAll = true;
+        }
         let index = this.isCloseIds.indexOf(element.appointment_id)
         this.isCloseIds.splice(index, 1)
 
