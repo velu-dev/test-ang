@@ -284,7 +284,7 @@ tr.detail-row {
   min-height: 290px;
   max-height: 290px;
   overflow: auto;
-  overflow-x: hidden;
+  // overflow-x: hidden;
   box-shadow: $shadow-style-one;
   @media only screen and (max-width: 568px) {
     min-height: 150px;
