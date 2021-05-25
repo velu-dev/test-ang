@@ -1072,7 +1072,7 @@ input:-webkit-autofill {
   mat-card-content {
     max-height: 80vh;
     overflow-y: auto;
-    overflow-x: hidden;
+    // overflow-x: hidden;
     @media only screen and (max-width: 568px) {
       max-height: 60vh;
     }
@@ -1221,7 +1221,7 @@ input:-webkit-autofill {
   mat-card-content {
     max-height: 80vh;
     overflow-y: auto;
-    overflow-x: hidden;
+    // overflow-x: hidden;
     @media only screen and (max-width: 568px) {
       max-height: 60vh;
     }
