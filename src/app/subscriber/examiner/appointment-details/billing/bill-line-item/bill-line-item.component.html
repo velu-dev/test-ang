@@ -208,8 +208,10 @@
                                     <mat-expansion-panel [expanded]="true">
                                         <mat-expansion-panel-header>
                                             <mat-panel-title>
-                                                <!-- <mat-icon class="pointer text-danger">remove_circle</mat-icon> -->
-                                                <b class="p-l-10">Item :</b> {{group.get('item_description').value}}
+                                                <div class="inline-title">
+                                                    <div><b>Item</b></div>
+                                                    <div>{{group.get('item_description').value}}</div>
+                                               </div>
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
                                     <mat-card>
