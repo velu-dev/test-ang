@@ -305,16 +305,16 @@
                                         </div>
                                         <div class="flex">
                                             <div class="bill-property">Payment</div>
-                                            <div class="editable">{{group.value.payment? '$ ' :
-                                                ''}}{{group.value.payment | number : '1.2-2'}}</div>
+                                            <div class="editable"> {{group.get('payment').value > -1 ? '$ ' : ''}}{{group.get('payment').value
+                                                | number : '1.2-2'}}
+                                            </div>
                                         </div>
                                         <div class="flex">
                                             <div class="bill-property">Balance</div>
                                             <div class="editable">
                                                 <span class="text-danger">
-                                                    {{group.get('charge').value? '$ ' : ''}}{{group.get('charge').value
-                                                    - group.value.payment | number :
-                                                    '1.2-2'}}</span>
+                                                    {{group.get('charge').value > -1 ? '$ ' : ''}}{{(group.get('charge').value)
+                                            | number : '1.2-2'}}</span>
                                             </div>
                                         </div>
                                         <div class="flex">
@@ -340,11 +340,10 @@
                                         <mat-expansion-panel (click)="openElement(group.get('id').value)">
                                             <mat-expansion-panel-header>
                                                 <mat-panel-title>
-                                                    <!-- <mat-icon class="pointer"
-                                                    [ngClass]="{'text-success': expandId != group.get('id').value, 'text-danger' : expandId == group.get('id').value}"
-                                                    >{{expandId
-                                                    == group.get('id').value ? 'remove_circle' : 'add_circle'}}</mat-icon> -->
-                                                    <b class="p-l-10">Item :</b> {{group.get('item_description').value}}
+                                                   <div class="inline-title">
+                                                        <div><b>Item</b></div>
+                                                        <div>{{group.get('item_description').value}}</div>
+                                                   </div>
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
                                             <mat-card>
@@ -378,14 +377,14 @@
                                                 <div class="flex">
                                                     <div class="bill-property">Payment</div>
                                                     <div class="value">
-                                                        {{group.get('payment').value? '$ ' :
-                                                        ''}}{{group.get('payment').value | number : '1.2-2'}}</div>
+                                                        {{group.get('payment').value > -1 ? '$ ' : ''}}{{group.get('payment').value
+                                                        | number : '1.2-2'}}</div>
                                                 </div>
                                                 <div class="flex">
                                                     <div class="bill-property">Balance</div>
-                                                    <div class="value">
-                                                        {{group.get('charge').value? '$ ' :
-                                                        ''}}{{(group.get('charge').value) | number : '1.2-2'}}</div>
+                                                    <div class="value text-danger">
+                                                        {{group.get('charge').value > -1 ? '$ ' : ''}}{{(group.get('charge').value)
+                                            | number : '1.2-2'}}</div>
                                                 </div>
                                                 <div class="flex">
                                                     <div class="bill-property">Action </div>
@@ -409,7 +408,7 @@
                             <td>
                                 <mat-card>
                                     <div class="grid-list">
-                                        <div><b>Total Charge </b></div>
+                                        <div><b>Total Charge</b></div>
                                         <div>{{calculateTotal()? '$ ' : ''}}{{calculateTotal() | number : '1.2-2'}}
                                         </div>
                                     </div>
@@ -421,7 +420,7 @@
                                     </div>
 
                                     <div class="grid-list">
-                                        <div><b>Total Balance: </b></div>
+                                        <div><b>Total Balance</b></div>
                                         <div class="text-danger">
                                             {{calculateTotalBal()? '$ ' : ''}}{{calculateTotalBal() | number : '1.2-2'}}
                                         </div>
@@ -859,9 +858,12 @@
                                                     <mat-expansion-panel-header>
                                                         <mat-panel-title>
                                                             <mat-checkbox value="false" formControlName="reviewShow" (click)="$event.stopPropagation()"
-                                                             (change)="reviewCheck($event.checked, group, getFormControls.controls)">
+                                                             (change)="reviewCheck($event.checked, group, getFormControls.controls)" class="m-r-5">
                                                            </mat-checkbox>
-                                                            <b class="p-l-10">Item :</b> {{group.get('item_description').value}}
+                                                            <div class="inline-title">
+                                                                <div><b>Item</b></div>
+                                                                <div>{{group.get('item_description').value}}</div>
+                                                           </div>
                                                         </mat-panel-title>
                                                     </mat-expansion-panel-header>
                                                     <mat-card>

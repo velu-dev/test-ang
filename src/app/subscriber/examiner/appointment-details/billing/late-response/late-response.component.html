@@ -229,7 +229,10 @@
                                                         [ngClass]="{'text-success': expandId != lateResData?.id, 'text-danger' : expandId == lateResData?.id}"
                                                         >{{expandId
                                                         == lateResData?.id ? 'remove_circle' : 'add_circle'}}</mat-icon>
-                                                <b>Bill # :</b> {{lateResData?.bill_no}}
+                                                <div class="inline-title">
+                                                    <div><b>Bill #</b></div>
+                                                    <div>{{lateResData?.bill_no}}</div>
+                                               </div>
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
                                         <mat-card>
@@ -267,7 +270,7 @@
                                             </div>
                                             <div class="flex">
                                                 <div class="bill-property">Status </div>
-                                                <div class="value">{{lateResData?.bill_paid_status}}</div>
+                                                <div class="value text-success">{{lateResData?.bill_paid_status}}</div>
                                             </div>
                                             <div class="flex">
                                                 <div class="bill-property">Action </div>

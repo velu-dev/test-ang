@@ -374,9 +374,10 @@ tr.detail-row {
         .mat-form-field.mat-form-field-appearance-outline .mat-form-field-infix {
           padding: 5px 0 10px 0;
         }
-        .mat-form-field-appearance-outline .mat-form-field-prefix, .mat-form-field-appearance-outline .mat-form-field-suffix {
+        .mat-form-field-appearance-outline .mat-form-field-prefix,
+        .mat-form-field-appearance-outline .mat-form-field-suffix {
           top: 0 !important;
-      }
+        }
         mat-form-field {
           width: 100%;
           .mat-form-field-wrapper {
@@ -469,7 +470,7 @@ tr.detail-row {
   border: 1px solid $light-color;
 }
 
-.bill-response-mobile  {
+.bill-response-mobile {
   table {
     width: 100%;
     tbody {
@@ -484,6 +485,26 @@ tr.detail-row {
             .mat-expansion-panel {
               .mat-expansion-panel-header {
                 padding-left: 5px !important;
+                min-height: 48px !important;
+                height: 100% !important;
+                .mat-expansion-panel-header-title {
+                  .inline-title {
+                    display: inline-flex;
+                    div {
+                      &:first-child {
+                        min-width: 50px;
+                        position: relative;
+                        &::after {
+                          content: ":";
+                          display: inline-block;
+                          position: absolute;
+                          top: 0;
+                          right: 5px;
+                        }
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -501,8 +522,8 @@ tr.detail-row {
                   content: ":";
                   float: right;
                   position: absolute;
-                  top: 6;
-                  right: 0;
+                  top: 4px;
+                  right: 4px;
                 }
               }
               div.value {
@@ -517,7 +538,7 @@ tr.detail-row {
   }
 }
 
-.bill-response-mobile  {
+.bill-response-mobile {
   .editable-bill {
     td {
       mat-card {
@@ -526,7 +547,7 @@ tr.detail-row {
           display: flex;
           div.bill-property {
             padding: 5px 2px;
-            width: 35%;
+            width: 100px !important;
             font-weight: bold;
             position: relative;
             overflow-wrap: break-word;
@@ -534,8 +555,8 @@ tr.detail-row {
               content: ":";
               float: right;
               position: absolute;
-              top: 6;
-              right: 0;
+              top: 4px !important;
+              right: 4px;
             }
           }
           div.editable {

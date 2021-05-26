@@ -83,14 +83,16 @@
                                         <div [ngSwitch]="element.action"><span>Action</span>
                                             <p *ngSwitchCase="'MD'">Downloaded</p>
                                             <p *ngSwitchCase="'MES'">E-Sign Downloaded</p>
-                                            <p *ngSwitchCase="'SFTP'"><span
-                                                    *ngIf="!element?.isdtm_request">Billed On Demand</span>
-                                                <span *ngIf="element?.isdtm_request">Mailed On Demand</span>
+                                            <p *ngSwitchCase="'SFTP'">
+                                                <b *ngIf="!element?.isdtm_request">Billed On Demand</b>
+                                                <b *ngIf="element?.isdtm_request">Mailed On Demand</b>
                                             </p>
                                         </div>
                                         <div><span>Date</span>{{element?.date_of_request | date:'MM-dd-yyyy'}}
                                         </div>
-                                        <div><span>Recipients</span></div>
+
+                                        <div><span>Recipients</span><div  *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}{{!last
+                                            ? ', ' : ''}}</div></div>
                                         <div><span>Download Sent Documents </span><a class="text-success"
                                                 (click)="downloadDocumet(element?.send,element)">Download</a>
                                         </div>
