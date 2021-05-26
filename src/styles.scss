@@ -61,7 +61,7 @@ button:focus {
 }
 
 .mat-sort-header-button:disabled,
-.mat-sort-header-button[disabled]{
+.mat-sort-header-button[disabled] {
   color: $white !important;
   &:hover {
     color: $white !important;
@@ -69,7 +69,7 @@ button:focus {
 }
 
 button:disabled,
-button[disabled]{
+button[disabled] {
   color: rgba(0, 0, 0, 0.26) !important;
   &:hover {
     color: rgba(0, 0, 0, 0.26) !important;
@@ -837,7 +837,7 @@ mat-progress-bar {
     word-break: break-word;
     img {
       max-width: 50px;
-      padding: 10px 10px 0 0 ;
+      padding: 10px 10px 0 0;
     }
     .inline {
       max-width: 85%;
@@ -1032,15 +1032,27 @@ mat-progress-bar {
     }
   }
 }
-//Mat-tab 
-.mat-tab-label, .mat-tab-link {
+//Mat-tab
+.mat-tab-label,
+.mat-tab-link {
   font-weight: 600;
 }
 //Mat-tab active color
-  .mat-option.mat-active {
-    background: $info-bg !important; 
-    border: 1px solid $info-border;
+.mat-option.mat-active {
+  background: $info-bg !important;
+  border: 1px solid $info-border;
+}
+.mat-option {
+  border: 1px solid transparent;
+}
+// Payment response mobile prefix icon change
+.grid-list-form {
+  .value {
+    .mat-form-field {
+      width: 100%;
+      .mat-form-field-prefix {
+        top: 0 !important;
+      }
+    }
   }
-  .mat-option {
-    border: 1px solid transparent;
-  }
+}
