@@ -1127,7 +1127,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.billable_item.get('appointment').get('duration').updateValueAndValidity();
   }
   submitBillableItem() {
-    this.todayDate.appointment = new Date();
+    // this.todayDate.appointment = new Date();
     if (this.billable_item.value.appointment.appointment_scheduled_date_time) {
       this.billable_item.get('appointment').get('duration').setValidators([Validators.compose([Validators.required, Validators.pattern('[0-9]+'), Validators.min(1), Validators.max(450)])]);
     } else {
@@ -1156,7 +1156,8 @@ export class AppointmentDetailsComponent implements OnInit {
     let billable_item_date: any;
     if (this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value) {
       billable_item_date = moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).add(1, 'minute')
-      if (!(moment(billable_item_date).isSameOrAfter(moment.now()))) {
+      if (!(moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).isSameOrAfter(moment().set('second', 0)))) {
+        this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).setErrors({'incorrect': true})
         return
       }
     }
@@ -1324,7 +1325,9 @@ export class AppointmentDetailsComponent implements OnInit {
       this.todayDate.intake = new Date();
       this.todayDate.intake = new Date();
     } else {
-      this.todayDate.appointment = new Date();
+      let date = new Date();
+      date.setSeconds(0);
+      this.todayDate.appointment = date;
     }
   }
   VserviceLocation() {
