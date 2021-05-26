@@ -347,11 +347,11 @@ export class BillingCorrespondanceComponent implements OnInit {
         }
       })
     })
-    if (this.isIncompleteError) {
-      this.downloadMethod(sign);
-    } else {
+    // if (this.isIncompleteError) {
+    //   this.downloadMethod(sign);
+    // } else {
 
-    }
+    // }
   }
   downloadMethod(sign) {
     if (!this.examinerId) {
