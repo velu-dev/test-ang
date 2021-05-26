@@ -372,14 +372,17 @@
                                 <tr>
                                     <td>
                                         <mat-accordion>
-                                            <mat-expansion-panel (click)="openElement(payment.get('id').value)">
+                                            <mat-expansion-panel (click)="openElement(payment.get('id').value)" hideToggle>
                                                 <mat-expansion-panel-header>
                                                     <mat-panel-title>
-                                                        <mat-icon class="pointer"
+                                                        <mat-icon class="pointer m-r-5"
                                                         [ngClass]="{'text-danger': expandId != payment.get('id').value, 'text-success' : expandId == payment.get('id').value}"
                                                         >{{expandId
                                                         == payment.get('id').value ? 'add_circle' : 'remove_circle'}}</mat-icon>
-                                                        <b class="p-l-10">Bill # :</b> {{payment.get('bill_no').value}}
+                                                   <div class="inline-title">
+                                                        <div><b>Bill # </b></div>
+                                                        <div>{{payment.get('bill_no').value}}</div>
+                                                   </div>
                                                     </mat-panel-title>
                                                 </mat-expansion-panel-header>
                                                 <mat-card>
@@ -405,7 +408,7 @@
                                                     </div>
                                                     <div class="flex">
                                                         <div class="bill-property">Payment</div>
-                                                        <div class="value">{{payment.get('payment').value ? '$ ' : ''}}{{payment.get('payment').value | number : '1.2-2'}}}</div>
+                                                        <div class="value">{{payment.get('payment').value ? '$ ' : ''}}{{payment.get('payment').value | number : '1.2-2'}}</div>
                                                     </div>
                                                     <div class="flex">
                                                         <div class="bill-property">Balance</div>
@@ -577,15 +580,15 @@
                                                                 <p *ngIf="review.get('file_name').value" fxFlex="100"
                                                                     class="w-100">
                                                                     {{review.get('file_name').value}}</p>
-                                                                <button type="button" class="filled-gray mini-btn"
-                                                                    mat-raised-button
-                                                                    [disabled]="review.get('file_name').disabled"
-                                                                    (click)="uploader.click()">{{!review.get('file_name').value
-                                                                    ? 'Upload' : 'Reupload'}}</button>
-                                                                <input type="file" #uploader hidden
-                                                                    (change)="addEOR($event,review)"
-                                                                    accept=".pdf, .jpg, .jpeg, .png" required>
                                                             </div>
+                                                            <button type="button" class="filled-gray mini-btn"
+                                                            mat-raised-button
+                                                            [disabled]="review.get('file_name').disabled"
+                                                            (click)="uploader.click()">{{!review.get('file_name').value
+                                                            ? 'Upload' : 'Reupload'}}</button>
+                                                        <input type="file" #uploader hidden
+                                                            (change)="addEOR($event,review)"
+                                                            accept=".pdf, .jpg, .jpeg, .png" required>
                                                         </div>
 
                                                         <div class="grid-list-form">

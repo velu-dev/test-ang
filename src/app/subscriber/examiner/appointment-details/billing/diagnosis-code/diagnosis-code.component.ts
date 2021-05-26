@@ -1,4 +1,4 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
@@ -11,8 +11,9 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 import { BillingService } from 'src/app/subscriber/service/billing.service';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { Location } from '@angular/common';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, map, shareReplay } from 'rxjs/operators';
 import { animate, style, transition, trigger, state } from '@angular/animations';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-diagnosis-code',
@@ -39,6 +40,11 @@ export class DiagnosisCodeComponent implements OnInit {
   columnsToDisplay = [];
   columnName = [];
   expandedElement;
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  .pipe(
+    map(result => result.matches),
+    shareReplay()
+  );
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(private logger: NGXLogger,
     private claimService: ClaimService,
@@ -53,7 +59,8 @@ export class DiagnosisCodeComponent implements OnInit {
     private cookieService: CookieService) { }
 
   ngOnInit() {
-
+    this.isHandset$.subscribe(res => {
+      this.isMobile = res;
     if (this.isMobile) {
       this.columnName = ["", "Code", "Action"]
       this.columnsToDisplay = ['is_expand', 'code', 'action']
@@ -61,6 +68,7 @@ export class DiagnosisCodeComponent implements OnInit {
       this.columnName = ["Code", "Name", "Action"]
       this.columnsToDisplay = ['code', 'name', 'action']
     }
+  });
 
     this.icdData = this.billingData && this.billingData.billing_diagnosis_code ? this.billingData.billing_diagnosis_code : [];
     this.IcdDataSource = new MatTableDataSource(this.icdData);
@@ -160,10 +168,10 @@ export class DiagnosisCodeComponent implements OnInit {
 
   openElement(element) {
     if (this.isMobile)
-      if (this.icdExpandID && this.icdExpandID == element.id) {
+      if (this.icdExpandID && this.icdExpandID == element.code) {
         this.icdExpandID = null;
       } else {
-        this.icdExpandID = element.id;
+        this.icdExpandID = element.code;
       }
   }
 
