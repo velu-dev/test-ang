@@ -17,9 +17,9 @@ import { RegulationDialogueComponent } from 'src/app/shared/components/regulatio
 import { UserService } from 'src/app/shared/services/user.service';
 import * as regulation from 'src/app/shared/services/regulations';
 export const MY_CUSTOM_FORMATS = {
-  parseInput: 'MM-DD-YYYY hh:mm A Z',
-  fullPickerInput: 'MM-DD-YYYY hh:mm A Z',
-  datePickerInput: 'MM-DD-YYYY hh:mm A Z',
+  parseInput: 'MM-DD-YYYY hh:mm A z',
+  fullPickerInput: 'MM-DD-YYYY hh:mm A z',
+  datePickerInput: 'MM-DD-YYYY hh:mm A z',
   timePickerInput: 'LT',
   monthYearLabel: 'MMM YYYY',
   dateA11yLabel: 'LL',
@@ -397,17 +397,17 @@ export class NewBillableItemComponent implements OnInit {
       // })
     }
   }
-
   todayDate = { appointment: new Date(), intake: new Date() };
   minDate: any;
   pickerOpened(type) {
     if (type = 'intake') {
       let date = moment();
       this.minDate = date.subtract(1, 'year');
-      let ddate = date.add(1, 'minute');
       this.todayDate.intake = new Date();
     } else {
-      this.todayDate.appointment = new Date();
+      let date = new Date();
+      date.setSeconds(0);
+      this.todayDate.appointment = date;
     }
   }
   VserviceLocation() {
@@ -484,7 +484,6 @@ export class NewBillableItemComponent implements OnInit {
   }
 
   submitBillableItem() {
-    this.todayDate.appointment = new Date();
     this.submitBill();
   }
   submitBill() {
@@ -505,10 +504,11 @@ export class NewBillableItemComponent implements OnInit {
       if (this.billable_item.get(key).value && typeof (this.billable_item.get(key).value) == 'string')
         this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim())
     });
-    let billable_item_date: any;
+    // let billable_item_date: any;
     if (this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value) {
-      billable_item_date = moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).add(1, 'minute')
-      if (!(moment(billable_item_date).isSameOrAfter(moment.now()))) {
+      // billable_item_date = .add(1, 'minute')
+      if (!(moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).isSameOrAfter(moment().set('second', 0)))) {
+        this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).setErrors({'incorrect': true})
         return
       }
     }

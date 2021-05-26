@@ -136,9 +136,8 @@
                         *ngIf="!isSuplimental">
                         <mat-label>Date & Time</mat-label>
                         <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" [min]="todayDate.appointment"
-                            formControlName="appointment_scheduled_date_time" autocomplete="off"
-                            [owlDateTime]="appointment" [value]="appointment_scheduled_date_time"
-                            (dateTimeChange)="changeDateType(billable_item?.value?.appointment?.appointment_scheduled_date_time)">
+                            formControlName="appointment_scheduled_date_time" autocomplete="off" [value]="appointment_scheduled_date_time"
+                            [owlDateTime]="appointment" (dateTimeChange)="changeDateType(billable_item?.value?.appointment?.appointment_scheduled_date_time)">
                         <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment">
                         </mat-datepicker-toggle>
                         <owl-date-time (afterPickerOpen)="pickerOpened('app')" [hour12Timer]="true" #appointment>

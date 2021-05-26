@@ -308,7 +308,7 @@ export class NewClaimComponent implements OnInit {
             this.changeState(claimant.data[0].state, 'claimant', claimant.data[0].state_code);
             console.log("claimant state", claimant.data[0].state)
             this.claimant.patchValue(claimant.data[0]);
-            this.claimant.patchValue({ssn: "999999999"})
+            this.claimant.patchValue({ ssn: "999999999" })
             this.isclaimantfill = true;
             this.isClaimantFilled = false;
             this.claim.patchValue({
@@ -972,7 +972,7 @@ export class NewClaimComponent implements OnInit {
             this.streetAddressList = [];
           })
       })
-      this.claim.get(['Employer', 'street1']).valueChanges
+    this.claim.get(['Employer', 'street1']).valueChanges
       .pipe(
         debounceTime(500),
       ).subscribe(key => {
@@ -1306,7 +1306,7 @@ export class NewClaimComponent implements OnInit {
   //   })
   // }
   submitBillableItem(state?) {
-    this.todayDate.appointment = new Date();
+    // this.todayDate.appointment = new Date();
     this.currentTab = "billable_item"
     this.isBillSubmited = true;
     if (this.isSuplimental) {
@@ -1322,7 +1322,8 @@ export class NewClaimComponent implements OnInit {
     let billable_item_date: any;
     if (this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value) {
       billable_item_date = moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).add(1, 'minute')
-      if (!(moment(billable_item_date).isSameOrAfter(moment.now()))) {
+      if (!(moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).isSameOrAfter(moment().set("second", 0)))) {
+        this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).setErrors({'incorrect': true})
         return
       }
     }
@@ -1715,7 +1716,7 @@ export class NewClaimComponent implements OnInit {
           claimant_date_of_birth: this.claimant.value.date_of_birth,
         }
       }
-      this.claimant.patchValue({ssn: "999999999"})
+      this.claimant.patchValue({ ssn: "999999999" })
       this.claimService.searchbyEams(this.emasSearchInput.value.replace(/\s/g, ''), data).subscribe(res => {
         if (res.data) {
           this.isEdit = false;
@@ -1992,7 +1993,9 @@ export class NewClaimComponent implements OnInit {
       this.minDate = date.subtract(1, 'year');
       this.todayDate.intake = new Date();
     } else {
-      this.todayDate.appointment = new Date();
+      let date = new Date();
+      date.setSeconds(0);
+      this.todayDate.appointment = date;
     }
   }
   getErrorCount(container: FormGroup): number {
