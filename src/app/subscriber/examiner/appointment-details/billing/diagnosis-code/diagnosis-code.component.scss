@@ -39,6 +39,10 @@
             .vertical-fixed {
                 min-height: 197px !important;
                 max-height: 197px !important;
+                @media only screen and (max-width: 568px) {
+                    min-height: auto !important;
+                    max-height: 300px !important;
+                }
             }
         }
     }

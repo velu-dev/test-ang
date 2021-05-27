@@ -208,8 +208,10 @@
                                     <mat-expansion-panel [expanded]="true">
                                         <mat-expansion-panel-header>
                                             <mat-panel-title>
-                                                <!-- <mat-icon class="pointer text-danger">remove_circle</mat-icon> -->
-                                                <b class="p-l-10">Item :</b> {{group.get('item_description').value}}
+                                                <div class="inline-title">
+                                                    <div><b>Item</b></div>
+                                                    <div>{{group.get('item_description').value}}</div>
+                                               </div>
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
                                     <mat-card>
@@ -300,6 +302,7 @@
                                                 <mat-form-field appearance="outline" class="w-100">
                                                     <input matInput min="0" type="number" autocomplete="off"
                                                         formControlName="charge" (change)="setTwoNumberDecimal($event)">
+                                                        <span matPrefix>$&nbsp;</span>
                                                 </mat-form-field>
                                             </div>
                                         </div>
@@ -313,8 +316,9 @@
                                             <div class="bill-property">Balance</div>
                                             <div class="editable">
                                                 <span class="text-danger">
-                                                    {{group.get('charge').value > -1 ? '$ ' : ''}}{{(group.get('charge').value)
-                                            | number : '1.2-2'}}</span>
+                                                    {{group.get('charge').value > -1 ? '$ ' :
+                                                ''}}{{group.get('charge').value - group.value.payment | number :
+                                                '1.2-2'}}</span>
                                             </div>
                                         </div>
                                         <div class="flex">

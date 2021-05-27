@@ -184,10 +184,18 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.selection.clear();
       this.selection1.clear();
     }
+    this.onDemandService.getCorresIncomplete(this.claim_id, this.billableId, []).subscribe(res => {
+      this.isIncompleteError = true;
+    }, error => {
+      this.isIncompleteError = false;
+      this.incompleteInformation = error.error.data;
+    })
     this.onDemandService.getCorrespondingData(this.claim_id, this.billableId).subscribe(res => {
       this.selection1.clear();
       this.selection.clear();
       this.correspondData = res;
+
+      console.log(res)
       this.changeColors(res.on_demand_status_color_code);
       if (res.examiner_user_id) {
         this.examinerId = res.examiner_user_id;
