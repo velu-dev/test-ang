@@ -1056,3 +1056,11 @@ mat-progress-bar {
     }
   }
 }
+.editable {
+  .mat-form-field {
+    width: 100%;
+    .mat-form-field-prefix {
+      top: 0 !important;
+    }
+  }
+}
