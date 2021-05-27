@@ -954,9 +954,11 @@ export class AppointmentDetailsComponent implements OnInit {
   billableCancel() {
     this.billable_item.disable();
     this.billable_item.patchValue(this.billableData);
+    this.changeDateType(this.billableData.appointment.appointment_scheduled_date_time)
     if (this.billableData.appointment.is_virtual_location) {
       this.VserviceLocation();
       this.service_location_name = '0';
+
       this.billable_item.patchValue({
         appointment: {
           examiner_service_location_id: "0",
@@ -1157,7 +1159,7 @@ export class AppointmentDetailsComponent implements OnInit {
     if (this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value) {
       billable_item_date = moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).add(1, 'minute')
       if (!(moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).isSameOrAfter(moment().set('second', 0)))) {
-        this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).setErrors({'incorrect': true})
+        this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).setErrors({ 'incorrect': true })
         return
       }
     }

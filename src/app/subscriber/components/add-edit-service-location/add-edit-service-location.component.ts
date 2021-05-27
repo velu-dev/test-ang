@@ -33,7 +33,7 @@ export class AddEditServiceLocationComponent implements OnInit {
   streetAddressList = [];
   isAddressError = false;
   isAddressSearched = false;
-  
+
   constructor(private subscriberService: SubscriberService,
     private formBuilder: FormBuilder,
     private alertService: AlertService,
@@ -110,11 +110,11 @@ export class AddEditServiceLocationComponent implements OnInit {
       state_code: location.state_code,
       zip_code: location.zip_code,
       phone_no: location.phone_no,
-      phone_ext1: location.phone_ext1,
       fax_no: location.fax_no,
       email: location.email,
       primary_contact: location.primary_contact,
       primary_contact_phone: location.primary_contact_phone,
+      phone_ext1: location.phone_ext1,
       alternate_contact_1: location.alternate_contact_1,
       alternate_contact_1_phone: location.alternate_contact_1_phone,
       phone_ext2: location.phone_ext2,
@@ -127,7 +127,9 @@ export class AddEditServiceLocationComponent implements OnInit {
       is_active: location.is_active.toString(),
     }
     this.changeState(data.state, data.state_code)
+    console.log(this.locationForm.value)
     this.locationForm.patchValue(data);
+    console.log(this.locationForm.value)
     this.dataSource = new MatTableDataSource(location.examiner_list ? location.examiner_list : []);
     this.examiner_list = location.examiner_list ? location.examiner_list : [];
     this.locationForm.disable();
@@ -143,62 +145,66 @@ export class AddEditServiceLocationComponent implements OnInit {
       state: [null, Validators.required],
       zip_code: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       phone_no: [null],
-      phone_ext1: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       fax_no: [null],
       email: [null, Validators.compose([Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
       primary_contact: [""],
+      phone_ext1: ["", Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       primary_contact_phone: [""],
       alternate_contact_1: [""],
       alternate_contact_1_phone: [""],
-      phone_ext2: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+      phone_ext2: ["", Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       alternate_contact_2: [""],
       alternate_contact_2_phone: [""],
-      phone_ext3: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+      phone_ext3: ["", Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       notes: [null],
       service_code_id: [null, Validators.required],
       //national_provider_identifier: [null],
       is_active: ['true'],
     })
     this.locationForm.get('street1').valueChanges
-    .pipe(
-      debounceTime(500),
-    ).subscribe(key => {
-      if (key && typeof (key) == 'string')
-        key = key.trim();
-      this.isAddressSearched = true;
-      if (key)
-        this.claimService.searchAddress(key).subscribe(address => {
-          this.streetAddressList = address.suggestions;
-          this.isAddressError = false;
-        }, error => {
-          if (error.status == 0)
-            this.isAddressError = true;
-          this.streetAddressList = [];
-        })
-    })
-    
-    
-    this.locationForm.get("phone_no").valueChanges.subscribe(res => {
-      if (this.locationForm.get("phone_no").value && this.locationForm.get("phone_no").valid) {
-        this.locationForm.get("phone_ext1").enable();
-      } else {
-        this.locationForm.get("phone_ext1").reset();
-        this.locationForm.get("phone_ext1").disable();
-      }
-    })
+      .pipe(
+        debounceTime(500),
+      ).subscribe(key => {
+        if (key && typeof (key) == 'string')
+          key = key.trim();
+        this.isAddressSearched = true;
+        if (key)
+          this.claimService.searchAddress(key).subscribe(address => {
+            this.streetAddressList = address.suggestions;
+            this.isAddressError = false;
+          }, error => {
+            if (error.status == 0)
+              this.isAddressError = true;
+            this.streetAddressList = [];
+          })
+      })
+
+
+    // this.locationForm.get("phone_no").valueChanges.subscribe(res => {
+    //   if (this.locationForm.get("phone_no").value && this.locationForm.get("phone_no").valid) {
+    //     this.locationForm.get("phone_ext1").enable();
+    //   } else {
+    //     this.locationForm.get("phone_ext1").reset();
+    //     this.locationForm.get("phone_ext1").disable();
+    //   }
+    // })
     this.locationForm.get("primary_contact_phone").valueChanges.subscribe(res => {
       if (this.locationForm.get("primary_contact_phone").value && this.locationForm.get("primary_contact_phone").valid) {
         this.locationForm.get("phone_ext1").enable();
       } else {
-        this.locationForm.get("phone_ext1").reset();
+        console.log(String(res).length != 10, String(res).length)
+        if (String(res).length != 10)
+          this.locationForm.get("phone_ext1").reset();
         this.locationForm.get("phone_ext1").disable();
       }
     })
     this.locationForm.get("alternate_contact_1_phone").valueChanges.subscribe(res => {
+      console.log(res, this.locationForm.get("alternate_contact_1_phone").value, this.locationForm.get("alternate_contact_1_phone").valid);
       if (this.locationForm.get("alternate_contact_1_phone").value && this.locationForm.get("alternate_contact_1_phone").valid) {
         this.locationForm.get("phone_ext2").enable();
       } else {
-        this.locationForm.get("phone_ext2").reset();
+        if (String(res).length != 10)
+          this.locationForm.get("phone_ext2").reset();
         this.locationForm.get("phone_ext2").disable();
       }
     })
@@ -206,7 +212,8 @@ export class AddEditServiceLocationComponent implements OnInit {
       if (this.locationForm.get("alternate_contact_2_phone").value && this.locationForm.get("alternate_contact_2_phone").valid) {
         this.locationForm.get("phone_ext3").enable();
       } else {
-        this.locationForm.get("phone_ext3").reset();
+        if (String(res).length != 10)
+          this.locationForm.get("phone_ext3").reset();
         this.locationForm.get("phone_ext3").disable();
       }
     })
@@ -357,12 +364,12 @@ export class AddEditServiceLocationComponent implements OnInit {
   edit() {
     this.editStatus = true;
     this.locationForm.enable();
-    if (this.locationForm.get("phone_no").value && this.locationForm.get("phone_no").valid) {
-      this.locationForm.get("phone_ext1").enable();
-    } else {
-      this.locationForm.get("phone_ext1").reset();
-      this.locationForm.get("phone_ext1").disable();
-    }
+    // if (this.locationForm.get("phone_no").value && this.locationForm.get("phone_no").valid) {
+    //   this.locationForm.get("phone_ext1").enable();
+    // } else {
+    //   this.locationForm.get("phone_ext1").reset();
+    //   this.locationForm.get("phone_ext1").disable();
+    // }
     if (this.locationForm.get("primary_contact_phone").value && this.locationForm.get("primary_contact_phone").valid) {
       this.locationForm.get("phone_ext1").enable();
     } else {
