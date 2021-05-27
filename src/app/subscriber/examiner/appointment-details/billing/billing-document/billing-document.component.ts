@@ -30,6 +30,9 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
   @Input() billType: any;
   columnsNameDoc = [];
   columnsToDisplayDoc = [];
+  dataSource1: any;
+  columnsToDisplays = [];
+  columnNames = [];
   dataSourceDocList = new MatTableDataSource([]);
   expandIdDoc: any;
   expandedElement;
@@ -48,6 +51,14 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
       } else {
         this.columnsNameDoc = ["", "Ref #", "File Name", "Action", "Date", "Recipients", "Download" + '\n' + "Sent Documents", "Further Information"]
         this.columnsToDisplayDoc = ['doc_image', 'request_reference_id', 'file_name', 'action', "date", "recipients", 'download', 'payor_response_message']
+      }
+      this.isMobile = res;
+      if (res) {
+        this.columnNames = ["", "Ref #"]
+        this.columnsToDisplays = ['is_expand', 'request_reference_id']
+      } else {
+        this.columnNames = ["Ref #", "Receiver Name", "Tracking Number", "Details"]
+        this.columnsToDisplays = ['request_reference_id', 'receiver_name', "tracking_number", "more"]
       }
     });
     this.subscription = this.intercom.getBillDocChange().subscribe(res => {
@@ -79,7 +90,12 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
       }
     }
   }
-
+  expandId2: any;
+  openElement2(element) {
+    if (this.isMobile) {
+      this.expandId2 = element.id;
+    }
+  }
   downloadDocumet(element, details?) {
     this.billingService.downloadOndemandDocuments({ file_url: element.file_url }).subscribe(res => {
       this.alertService.openSnackBar("File downloaded successfully", "success");
@@ -92,3 +108,6 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
 
 
 }
+// const ELEMENT_DATA = [
+//   { "id": 132, "request_reference_id": "46895", "receiver_name": "dfasdad", "tracking_number": "", "more": "" }
+// }
