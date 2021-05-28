@@ -62,7 +62,7 @@
                                                 <div class="grid-list">
                                                     <div>Explanation of Review</div>
                                                     <div class="value"><a class="text-ternary"
-                                                            (click)="download(review.get('file_url').value)">{{review.get('file_name').value}}</a>
+                                                            (click)="download({file_url:review.get('file_url').value,file_name:review.get('file_name').value})">{{review.get('file_name').value}}</a>
                                                     </div>
                                                 </div>
                                                 <div class="grid-list">
@@ -450,7 +450,7 @@
                                                         <div class="grid-list">
                                                             <div>Explanation of Review</div>
                                                             <div class="value"><a class="text-ternary"
-                                                                    (click)="download(review.get('file_url').value)">{{review.get('file_name').value}}</a>
+                                                                    (click)="download({file_url:review.get('file_url').value,file_name:review.get('file_name').value})">{{review.get('file_name').value}}</a>
                                                             </div>
                                                         </div>
                                                         <div class="grid-list">

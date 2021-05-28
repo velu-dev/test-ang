@@ -80,9 +80,9 @@
                                         <div class="no-wrap-td" *ngIf="element?.action == 'SFTP'"><span>Ref
                                                 #</span><span> {{element?.request_reference_id}} </span></div>
                                         <div [ngSwitch]="element.action"><span>Action</span>
-                                            <p *ngSwitchCase="'MD'">Downloaded</p>
-                                            <p *ngSwitchCase="'MES'">E-Sign Downloaded</p>
-                                            <p *ngSwitchCase="'SFTP'">
+                                            <p *ngSwitchCase="'MD'" class="margin-0">Downloaded</p>
+                                            <p *ngSwitchCase="'MES'" class="margin-0">E-Sign Downloaded</p>
+                                            <p *ngSwitchCase="'SFTP'" class="margin-0">
                                                 <b *ngIf="!element?.isdtm_request">Billed On Demand</b>
                                                 <b *ngIf="element?.isdtm_request">Mailed On Demand</b>
                                             </p>
@@ -91,9 +91,9 @@
                                         </div>
 
                                         <div><span>Recipients</span>
-                                            <div *ngFor="let rec of element?.recipients;let last = last;">
-                                                {{rec?.name}}{{!last
-                                                ? ', ' : ''}}</div>
+                                            <p class="margin-0 w-100">
+                                                <a *ngFor="let rec of element?.recipients;let last = last;">{{rec?.name}}{{!last
+                                                    ? ', ' : ''}}</a><br/></p>
                                         </div>
                                         <div><span>Download Sent Documents </span><a class="text-success"
                                                 (click)="downloadDocumet(element?.send,element)">Download</a>
