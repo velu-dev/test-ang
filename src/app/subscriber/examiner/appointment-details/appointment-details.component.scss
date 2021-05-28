@@ -360,6 +360,19 @@
                 margin-top: 20px;
             }
         }
+        .cancel-reason {
+            padding: 10px;
+            color: $light;
+            background-color: $light-bg;
+            border: 1px solid $light-border;
+            border-radius: 5px;
+            width: $width-100;
+            .reason {
+                font-size: $font-size-1;
+                font-weight: $font-weight-bold;
+                padding-bottom: 5px;
+            }
+        }
     }
 }
 .documents-declared {
