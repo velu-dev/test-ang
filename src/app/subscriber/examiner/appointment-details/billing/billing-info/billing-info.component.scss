@@ -33,12 +33,18 @@
 }
 .bill-id {
     text-align: left;
+    @media only screen and (max-width: 568px) {
+        text-align: center;
+    }
     span {
         font-weight: $font-weight-bold;
     }
 }
 .submission-date {
     text-align: right;
+    @media only screen and (max-width: 568px) {
+        text-align: center;
+    }
     span {
         font-weight: $font-weight-bold;
     }
@@ -60,6 +66,15 @@
         box-shadow: $shadow-style-one !important;
         &:hover {
             box-shadow: $shadow-style-one-hover;
+        }
+        mat-card-content {
+            .provider-information {
+                .margin-20 {
+                    @media only screen and (max-width: 568px) {
+                        margin-top: 20px;
+                    }
+                }
+            }
         }
     }
     .grid-list {
