@@ -14,14 +14,17 @@ import { TokenInterceptorService } from './shared/interceptors/token-interceptor
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { MaterialModule } from './shared/material.module';
-import { NgxMaskModule } from 'ngx-mask';
+import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment'
 import { MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { IntercomService } from './services/intercom.service'
 import { BreadcrumbModule } from 'xng-breadcrumb';
 import { RouterExtService } from './services/router.service';
-
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
+const maskConfig: Partial<IConfig> = {
+  validation: false,
+};
 @NgModule({
   declarations: [
     AppComponent,

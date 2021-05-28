@@ -1856,6 +1856,7 @@ export class NewClaimComponent implements OnInit {
       zip_code: null
     });
     this.changeState(attroney.state, 'aa');
+    attroney.phone = this.claimService.removeFormat(attroney.phone)
     // this.selectedAAttorney = attroney.id;
     delete attroney['id'];
     this.claim.patchValue({
@@ -1879,6 +1880,7 @@ export class NewClaimComponent implements OnInit {
     });
     this.changeState(attroney.state, 'da');
     delete attroney['id'];
+    attroney.phone = this.claimService.removeFormat(attroney.phone)
     this.claim.patchValue({
       DefenseAttorney: attroney
     })

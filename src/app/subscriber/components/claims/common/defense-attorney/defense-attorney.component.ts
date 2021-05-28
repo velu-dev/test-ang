@@ -127,6 +127,7 @@ export class DefenseAttorneyComponent implements OnInit {
   }
   defAttornety(da) {
     delete da.id;
+    da.phone = this.claimService.removeFormat(da.phone)
     this.DefanceAttorney.reset();
     this.DefanceAttorney.patchValue(da)
     this.changeState(da.state);
