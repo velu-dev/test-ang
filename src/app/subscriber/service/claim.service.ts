@@ -171,4 +171,10 @@ export class ClaimService {
     // this.headers = new HttpHeaders().set("Access-Control-Allow-Origin", "http://localhost:4200/");
     return this.http.get('https://us-autocomplete-pro.api.smartystreets.com/lookup?key=' + environment.smartyStreetsAPIKey + '&search=' + input, { headers: this.headers })
   }
+  removeFormat(phone) {
+    var tel = phone;
+    tel = tel.replace(/\D+/g, "");
+    phone = tel;
+    return phone;
+  }
 }

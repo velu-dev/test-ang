@@ -124,6 +124,7 @@ export class ApplicationAttorneyComponent implements OnInit {
   }
   appAttorney(aa) {
     delete aa.id;
+    aa.phone = this.claimService.removeFormat(aa.phone)
     this.ApplicantAttorney.reset();
     this.ApplicantAttorney.patchValue(aa);
     this.changeState(aa.state);
