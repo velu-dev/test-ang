@@ -248,9 +248,9 @@
                                 <input matInput id="street-input" [matAutocomplete]="streetCAutocomplete"
                                     #trigger="matAutocompleteTrigger" formControlName="street1"
                                     placeholder="Street Address 1">
-                                <mat-autocomplete #streetCAutocomplete="matAutocomplete">
+                                <mat-autocomplete #streetCAutocomplete="matAutocomplete"  (selectionChange)="selectAddress($event)">
                                     <mat-option *ngFor="let address of streetAddressList" [value]="address.street_line"
-                                        (click)="selectAddress(address)">
+                                       >
                                         {{address?.street_line}} {{address?.secondary}} {{address?.city}}
                                         {{address?.state}}
                                         {{address?.zipcode}}
