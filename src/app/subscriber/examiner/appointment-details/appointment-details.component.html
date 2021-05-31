@@ -147,6 +147,10 @@
                         <textarea formControlName="examination_notes" matInput placeholder="Notes" cdkTextareaAutosize
                             cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
                     </mat-form-field>
+                    <!-- <div class="cancel-reason">
+                         <div class="reason">Cancelled Suplimental</div>
+                         <div class="description">Cancelled Reason Will Comes Here...</div>
+                    </div> -->
                 </div>
                 <div *ngIf="isExaminationStatusEdit" class="text-center w-100">
                     <button mat-stroked-button class="outline-danger" (click)="cancel()">Cancel</button>

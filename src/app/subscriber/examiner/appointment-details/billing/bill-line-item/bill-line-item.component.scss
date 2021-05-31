@@ -54,6 +54,10 @@
     }
     .mat-radio-group {
         float: right;
+        @media only screen and (max-width: 568px) {
+            float: left;
+            margin-top:5px
+        }
     }
 }
 .sbr_ {
@@ -78,6 +82,9 @@
         }
     }
     table.supporting-docs {
+        @media only screen and (max-width: 568px) {
+        table-layout: auto !important;
+        }
         th {
             border: 1px solid transparent !important;
             &:first-child {
