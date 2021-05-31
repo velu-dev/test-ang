@@ -125,6 +125,15 @@ export class DefenseAttorneyComponent implements OnInit {
       }
     })
   }
+  getDA(value) {
+    this.dattroneyGroupOptions.map(group => {
+      group.data.map(res => {
+        if (res.company_name == value) {
+          this.defAttornety(res)
+        }
+      })
+    })
+  }
   defAttornety(da) {
     delete da.id;
     da.phone = this.claimService.removeFormat(da.phone)

@@ -123,6 +123,15 @@ export class ClaimAdminComponent implements OnInit {
       }
     })
   }
+  getCA(value) {
+    this.claimAdminGroupOptions.map(group => {
+      group.data.map(res => {
+        if (res.company_name == value) {
+          this.appClaimAdmin(res)
+        }
+      })
+    })
+  }
   appClaimAdmin(aa) {
     delete aa.id;
     this.claimAdminForm.reset();

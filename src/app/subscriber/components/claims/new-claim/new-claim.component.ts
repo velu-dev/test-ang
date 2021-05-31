@@ -1323,7 +1323,7 @@ export class NewClaimComponent implements OnInit {
     if (this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value) {
       billable_item_date = moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).add(1, 'minute')
       if (!(moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).isSameOrAfter(moment().set("second", 0)))) {
-        this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).setErrors({'incorrect': true})
+        this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).setErrors({ 'incorrect': true })
         return
       }
     }
@@ -1841,6 +1841,15 @@ export class NewClaimComponent implements OnInit {
     this.isAddressSelected = true;
     this.selectedExaminarAddress = address;
   }
+  getAA(value) {
+    this.aattroneyGroupOptions.map(group => {
+      group.data.map(res => {
+        if (res.company_name == value) {
+          this.appAttorney(res)
+        }
+      })
+    })
+  }
   selectedAAttorney: any;
   appAttorney(attroney) {
     this.claim.get('ApplicantAttorney').patchValue({
@@ -1864,6 +1873,15 @@ export class NewClaimComponent implements OnInit {
     })
     // }
   }
+  getDA(value) {
+    this.dattroneyGroupOptions.map(group => {
+      group.data.map(res => {
+        if (res.company_name == value) {
+          this.defAttornety(res)
+        }
+      })
+    })
+  }
   selectedDAttorney: any;
   defAttornety(attroney) {
     this.claim.get('DefenseAttorney').patchValue({
@@ -1885,6 +1903,15 @@ export class NewClaimComponent implements OnInit {
       DefenseAttorney: attroney
     })
     // }
+  }
+  getCA(value) {
+    this.claimAdminGroupOptions.map(group => {
+      group.data.map(res => {
+        if (res.company_name == value) {
+          this.appClaimAdmin(res)
+        }
+      })
+    })
   }
   appClaimAdmin(claimadmin) {
     this.claim.get("InsuranceAdjuster").patchValue({
@@ -2160,6 +2187,13 @@ export class NewClaimComponent implements OnInit {
   deletecorrespondence(data) {
     this.openDialog('remove', data);
   }
+  getEmp(value) {
+    this.empDetails.map(res => {
+        if (res.name == value) {
+          this.appEmployer(res)
+        }
+    })
+  }
   appEmployer(employer) {
     this.changeState(employer.state, 'emp')
     this.claim.patchValue({
@@ -2184,6 +2218,13 @@ export class NewClaimComponent implements OnInit {
         }, error => {
           this.logger.log(error);
         })
+      }
+    })
+  }
+  getDeuOffice(value) {
+    this.filteredDeu.map(res => {
+      if (res.deu_office == value) {
+        this.deuSelect(res)
       }
     })
   }

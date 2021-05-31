@@ -583,7 +583,7 @@
                                     matTooltipPosition="above" class="clear">
                                     <mat-icon>close</mat-icon>
                                 </button>
-                                <mat-autocomplete #caAuto="matAutocomplete">
+                                <mat-autocomplete #caAuto="matAutocomplete"  (optionSelected)='getCA($event.option.value)'>
                                     <mat-optgroup *ngFor="let group of claimAdminGroupOptions " [label]="group.name">
                                         <mat-option (click)="appClaimAdmin(claim_admin)"
                                             *ngFor="let claim_admin of group.data" [value]="claim_admin.company_name">
@@ -699,7 +699,7 @@
                                     matTooltipPosition="above" class="clear">
                                     <mat-icon>close</mat-icon>
                                 </button>
-                                <mat-autocomplete #empAuto="matAutocomplete">
+                                <mat-autocomplete #empAuto="matAutocomplete"  (optionSelected)='getEmp($event.option.value)'>
                                     <mat-option (click)="appEmployer(employer)" *ngFor="let employer of empDetails"
                                         [value]="employer.name">
                                         {{employer.name}}
@@ -847,7 +847,7 @@
                                     matTooltipPosition="above" class="clear">
                                     <mat-icon>close</mat-icon>
                                 </button>
-                                <mat-autocomplete #aaAuto="matAutocomplete">
+                                <mat-autocomplete #aaAuto="matAutocomplete"  (optionSelected)='getAA($event.option.value)'>
                                     <mat-optgroup *ngFor="let group of aattroneyGroupOptions" [label]="group.name">
                                         <!-- [disabled]="selectedDAttorney == aa.id" -->
                                         <mat-option (click)="appAttorney(aa)" *ngFor="let aa of group.data"
@@ -963,7 +963,7 @@
                                     matTooltipPosition="above" class="clear">
                                     <mat-icon>close</mat-icon>
                                 </button>
-                                <mat-autocomplete #daAuto="matAutocomplete">
+                                <mat-autocomplete #daAuto="matAutocomplete"  (optionSelected)='getDA($event.option.value)'>
                                     <mat-optgroup *ngFor="let group of dattroneyGroupOptions" [label]="group.name">
                                         <!-- [disabled]="selectedAAttorney == aa.id" -->
                                         <mat-option (click)="defAttornety(aa)" *ngFor="let aa of group.data"
@@ -1092,7 +1092,7 @@
                                     <mat-icon>close</mat-icon>
                                 </button>
                                 <mat-error>Please enter a valid office name</mat-error>
-                                <mat-autocomplete #deuAuto="matAutocomplete">
+                                <mat-autocomplete #deuAuto="matAutocomplete"  (optionSelected)='getDeuOffice($event.option.value)'>
                                     <mat-option *ngFor="let deu of filteredDeu" (click)="deuSelect(deu)"
                                         [value]="deu.deu_office">
                                         <span>{{deu.code}} - {{deu.deu_office}}</span>

@@ -335,6 +335,13 @@ export class HeaderComponent implements OnInit {
     }
 
   }
-
-
+  getPosts(value) {
+    this.filteredClaimants.map(res => {
+      console.log(res._id == value)
+      if (res._id == String(value)) {
+        this.claimantCtrl.setValue(res._source._clmd_lname)
+        this.searchClick(res)
+      }
+    })
+  }
 }

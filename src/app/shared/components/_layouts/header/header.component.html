@@ -2,37 +2,49 @@
     <mat-toolbar-row>
         <button [ngClass]="{'opened': isOpen, 'closed': !isOpen}" type="button" aria-label="Toggle sidenav"
             mat-icon-button (click)="openSidenav()" class="toggle_ show-mobile">
-            <mat-icon aria-label="Side nav menu icon" [matTooltip]="isOpen ? 'Collapse' : 'Expand'" matTooltipPosition="right">menu</mat-icon>
+            <mat-icon aria-label="Side nav menu icon" [matTooltip]="isOpen ? 'Collapse' : 'Expand'"
+                matTooltipPosition="right">menu</mat-icon>
         </button>
         <div [ngClass]="{'opened': isOpen, 'closed': !isOpen}" class="hide-mobile"></div>
         <img [src]="nav_logo" alt="logo" class="p-l-5 simplexam-logo">
-        <div [ngClass]="{'overlay': isSearch,'hide-mobile': !isSearch}" *ngIf="isSearch" (click)="isSearch = !isSearch"></div>
-        <div class="searchable-dropdown m-t-5 m-l-15 hide-mobile" [ngClass]="{'custom-dropdown': isSearch}" *ngIf="user?.role_id != 1">
+        <div [ngClass]="{'overlay': isSearch,'hide-mobile': !isSearch}" *ngIf="isSearch" (click)="isSearch = !isSearch">
+        </div>
+        <div class="searchable-dropdown m-t-5 m-l-15 hide-mobile" [ngClass]="{'custom-dropdown': isSearch}"
+            *ngIf="user?.role_id != 1">
             <form class="example-form">
                 <mat-form-field appearance="outline" hideRequiredMarker="hideRequiredControl.auto"
                     floatLabel="floatLabelControl.auto" class="claim-search">
                     <input matInput placeholder="Search for Claimant" aria-label="Search for Claimant"
                         [matAutocomplete]="auto" [formControl]="claimantCtrl">
-                    <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option *ngFor="let claimant of filteredClaimants" (click)="searchClick(claimant); isSearch = false" [value]="claimant._source?.clmd_lname"
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)='getPosts($event.option.value)'>
+                        <mat-option *ngFor="let claimant of filteredClaimants"
+                            (click)="searchClick(claimant); isSearch = false" [value]="claimant._id"
                             class="custom-option">
                             <ul>
                                 <li>
-                                    <div class="cn">{{claimant?._source?.clmd_lname}} {{claimant?._source?.clmd_fname}}</div>
+                                    <div class="cn">{{claimant?._source?.clmd_lname}} {{claimant?._source?.clmd_fname}}
+                                    </div>
                                 </li>
                                 <li>
                                     <p>
-                                       <span class="ex_na" title="{{claimant?._source?.ex_last_name}} {{claimant?._source?.ex_first_name}}{{claimant?._source?.suffix ? ', '+ claimant?._source?.suffix : ''}}">{{claimant?._source?.ex_last_name}} {{claimant?._source?.ex_first_name}}{{claimant?._source?.suffix ? ', '+ claimant?._source?.suffix : ''}}</span>
-                                       <span>
-                                        <strong class="mw" title="{{claimant?._source?.claim_number}}">Claim #</strong>: {{claimant?._source?.claim_number}}
-                                      </span>
+                                        <span class="ex_na"
+                                            title="{{claimant?._source?.ex_last_name}} {{claimant?._source?.ex_first_name}}{{claimant?._source?.suffix ? ', '+ claimant?._source?.suffix : ''}}">{{claimant?._source?.ex_last_name}}
+                                            {{claimant?._source?.ex_first_name}}{{claimant?._source?.suffix ? ', '+
+                                            claimant?._source?.suffix : ''}}</span>
+                                        <span>
+                                            <strong class="mw" title="{{claimant?._source?.claim_number}}">Claim
+                                                #</strong>: {{claimant?._source?.claim_number}}
+                                        </span>
                                     </p>
                                 </li>
                                 <li>
                                     <p>
-                                        <span title="{{claimant?._source?.exam_procedure_name}}">{{claimant?._source?.exam_procedure_name}}</span>
+                                        <span
+                                            title="{{claimant?._source?.exam_procedure_name}}">{{claimant?._source?.exam_procedure_name}}</span>
                                         <span>
-                                            <strong class="mw" title="{{claimant?._source?.date_of_service | date:'MM-dd-yyyy'}}">DOS</strong>: {{claimant?._source?.date_of_service | date:'MM-dd-yyyy'}}
+                                            <strong class="mw"
+                                                title="{{claimant?._source?.date_of_service | date:'MM-dd-yyyy'}}">DOS</strong>:
+                                            {{claimant?._source?.date_of_service | date:'MM-dd-yyyy'}}
                                         </span>
                                     </p>
                                 </li>

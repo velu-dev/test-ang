@@ -33,7 +33,7 @@
                     matTooltipPosition="above" class="clear">
                     <mat-icon>close</mat-icon>
                 </button>
-                <mat-autocomplete #daAuto="matAutocomplete">
+                <mat-autocomplete #daAuto="matAutocomplete"  (optionSelected)='getDA($event.option.value)'>
                     <mat-optgroup *ngFor="let group of dattroneyGroupOptions" [label]="group.name">
                         <mat-option (click)="defAttornety(attroney)" *ngFor="let attroney of group.data"
                             [value]="attroney.company_name">

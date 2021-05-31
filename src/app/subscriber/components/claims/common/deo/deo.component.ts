@@ -203,8 +203,14 @@ export class DeoComponent implements OnInit {
       this.alertService.openSnackBar(error.error.message, "error")
     })
   }
+  getDeuOffice(value) {
+    this.filteredDeu.map(res => {
+      if (res.deu_office == value) {
+        this.deuSelect(res)
+      }
+    })
+  }
   deuSelect(deu) {
-    console.log(deu)
     deu.id = this.deuId;
     this.DEU.reset();
     this.DEU.patchValue(deu)

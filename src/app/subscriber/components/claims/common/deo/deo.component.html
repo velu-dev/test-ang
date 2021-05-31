@@ -38,7 +38,7 @@
                     <mat-icon>close</mat-icon>
                 </button>
                 <mat-error>Please enter a valid office name</mat-error>
-                <mat-autocomplete #deuAuto="matAutocomplete">
+                <mat-autocomplete #deuAuto="matAutocomplete" (optionSelected)='getDeuOffice($event.option.value)'>
                     <mat-option *ngFor="let deu of filteredDeu" (click)="deuSelect(deu)"
                         [value]="deu.deu_office">
                         <span>{{deu.code}} - {{deu.deu_office}}</span>

@@ -122,6 +122,15 @@ export class ApplicationAttorneyComponent implements OnInit {
 
     return data;
   }
+  getAA(value) {
+    this.dattroneyGroupOptions.map(group => {
+      group.data.map(res => {
+        if (res.company_name == value) {
+          this.appAttorney(res)
+        }
+      })
+    })
+  }
   appAttorney(aa) {
     delete aa.id;
     aa.phone = this.claimService.removeFormat(aa.phone)
