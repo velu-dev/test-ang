@@ -738,7 +738,7 @@
                                     placeholder="Street Address 1">
                                 <mat-autocomplete #streetEAutocomplete="matAutocomplete">
                                     <mat-option *ngFor="let address of streetEmpAddressList" [value]="address.street_line"
-                                        (click)="selectEmpAddress(address)">
+                                        (click)="selectEmpAddress(address)" (onSelectionChange)="selectEmpAddress(address)">
                                         {{address?.street_line}} {{address?.secondary}} {{address?.city}}
                                         {{address?.state}}
                                         {{address?.zipcode}}
