@@ -105,7 +105,7 @@
                                 placeholder="Street Address 1">
                             <mat-autocomplete #streetMAutocomplete="matAutocomplete">
                                 <mat-option *ngFor="let address of streetMAddressList" [value]="address.street_line"
-                                    (click)="selectMAddress(address)">
+                                    (click)="selectMAddress(address)" (onSelectionChange)="selectMAddress(address)">
                                     {{address?.street_line}} {{address?.secondary}} {{address?.city}}
                                     {{address?.state}}
                                     {{address?.zipcode}}
@@ -388,7 +388,7 @@
                                 placeholder="Street Address 1">
                             <mat-autocomplete #streetBAutocomplete="matAutocomplete">
                                 <mat-option *ngFor="let address of streetBAddressList" [value]="address.street_line"
-                                    (click)="selectBAddress(address)">
+                                    (click)="selectBAddress(address)" (onSelectionChange)="selectBAddress(address)">
                                     {{address?.street_line}} {{address?.secondary}} {{address?.city}}
                                     {{address?.state}}
                                     {{address?.zipcode}}
@@ -871,7 +871,8 @@
                                     [formControl]="addresssearch" class="p-l-10" autocomplete="off">
                                 <mat-autocomplete #addressAutocomplete="matAutocomplete">
                                     <mat-option *ngFor="let option of (filteredOptions | async)"
-                                        (click)="addressOnChange(option)" value="{{option?.service_location_name }}">
+                                        (click)="addressOnChange(option)" (onSelectionChange)="addressOnChange(option)"
+                                        value="{{option?.service_location_name }}">
                                         {{option?.service_location_name}} - {{option?.street1 }} {{option?.street2 }}
                                         {{option?.city}}
                                         {{option?.state_code }} {{option?.zip_code }}

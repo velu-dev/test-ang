@@ -11,7 +11,7 @@
                 <input matInput placeholder="Search Existing Service Locations" [matAutocomplete]="addressAutocomplete"
                     [formControl]="addresssearch" class="p-l-10" autocomplete="off">
                 <mat-autocomplete #addressAutocomplete="matAutocomplete">
-                    <mat-option *ngFor="let option of filteredOptions?.data" (click)="addressOnChange(option)"
+                    <mat-option *ngFor="let option of filteredOptions?.data" (onSelectionChange)="addressOnChange(addressOnChange)" (click)="addressOnChange(option)"
                         [value]="option.city">
                         {{option?.service_location_name}} - {{option?.street1 }} {{option?.street2 }} {{option?.city}}
                         {{option?.state_name }} {{option?.zip_code }}
