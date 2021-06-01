@@ -18,7 +18,7 @@
                                             [formControl]="searchInput" class="p-l-10">
                                         <mat-autocomplete #claimantAutocomplete="matAutocomplete">
                                             <mat-option *ngFor="let option of filteredClaimant?.data"
-                                                (click)="selectClaimant(option)">
+                                                (click)="selectClaimant(option)" (onSelectionChange)="selectClaimant(option)">
                                                 <span><strong>Full Name:</strong> {{option.first_name}}
                                                     {{option.middle_name}} {{option.last_name}} <strong>DOB:</strong>
                                                     {{option.date_of_birth | date:'MM-dd-yyyy' }}</span>
@@ -250,7 +250,7 @@
                                     placeholder="Street Address 1">
                                 <mat-autocomplete #streetCAutocomplete="matAutocomplete">
                                     <mat-option *ngFor="let address of streetAddressList" [value]="address.street_line"
-                                        (click)="selectAddress(address)">
+                                        (click)="selectAddress(address)" (onSelectionChange)="selectAddress(address)">
                                         {{address?.street_line}} {{address?.secondary}} {{address?.city}}
                                         {{address?.state}}
                                         {{address?.zipcode}}
@@ -583,7 +583,7 @@
                                     matTooltipPosition="above" class="clear">
                                     <mat-icon>close</mat-icon>
                                 </button>
-                                <mat-autocomplete #caAuto="matAutocomplete"  (optionSelected)='getCA($event.option.value)'>
+                                <mat-autocomplete #caAuto="matAutocomplete" (optionSelected)='getCA($event.option.value)'>
                                     <mat-optgroup *ngFor="let group of claimAdminGroupOptions " [label]="group.name">
                                         <mat-option (click)="appClaimAdmin(claim_admin)"
                                             *ngFor="let claim_admin of group.data" [value]="claim_admin.company_name">

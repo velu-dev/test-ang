@@ -535,6 +535,9 @@ export class NewClaimComponent implements OnInit {
     this.tabIndex = event.index;
     this.searchStatus = false;
   }
+  getClaimant(id) {
+    console.log(id)
+  }
   isClaimantEdit = false;
   selectClaimant(option) {
     console.log(option)
@@ -2189,9 +2192,9 @@ export class NewClaimComponent implements OnInit {
   }
   getEmp(value) {
     this.empDetails.map(res => {
-        if (res.name == value) {
-          this.appEmployer(res)
-        }
+      if (res.name == value) {
+        this.appEmployer(res)
+      }
     })
   }
   appEmployer(employer) {
