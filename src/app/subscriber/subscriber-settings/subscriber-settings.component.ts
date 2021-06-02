@@ -11,7 +11,7 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 import { ClaimService } from '../service/claim.service';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, debounceTime } from 'rxjs/operators';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { ImageCroppedEvent, base64ToFile, Dimensions } from 'ngx-image-cropper';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatTableDataSource, MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material';
@@ -149,6 +149,9 @@ export class SubscriberSettingsComponent implements OnInit {
   roleId: any;
   selectedDate = "";
   month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  streetAddressList = [];
+  isAddressError = false;
+  isAddressSearched = false;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -270,6 +273,7 @@ export class SubscriberSettingsComponent implements OnInit {
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
   billings: FormGroup;
+  subscriberAddress: FormGroup;
   ngOnInit() {
     this.billings = this.formBuilder.group({
       name: ["", Validators.compose([Validators.required, Validators.pattern("^(?=.*?[A-z])[a-zA-Z\-,. ]+")])],
@@ -285,6 +289,55 @@ export class SubscriberSettingsComponent implements OnInit {
       address_country: ["US"]
       // })
     })
+    this.subscriberAddress = this.formBuilder.group({
+      id: [null],
+      street1: [null],
+      street2: [null],
+      city: [null],
+      state: [null],
+      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      phone_no1: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      phone_ext1: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+      phone_no2: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      phone_ext2: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+      fax_no: null,
+      email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+      contact_person: [null],
+      notes: [null]
+    })
+    this.subscriberAddress.get("phone_no1").valueChanges.subscribe(res => {
+      if (this.subscriberAddress.get("phone_no1").value && this.subscriberAddress.get("phone_no1").valid) {
+        this.subscriberAddress.get("phone_ext1").enable();
+      } else {
+        this.subscriberAddress.get("phone_ext1").reset();
+        this.subscriberAddress.get("phone_ext1").disable();
+      }
+    })
+    this.subscriberAddress.get("phone_no2").valueChanges.subscribe(res => {
+      if (this.subscriberAddress.get("phone_no2").value && this.subscriberAddress.get("phone_no2").valid) {
+        this.subscriberAddress.get("phone_ext2").enable();
+      } else {
+        this.subscriberAddress.get("phone_ext2").reset();
+        this.subscriberAddress.get("phone_ext2").disable();
+      }
+    })
+    this.subscriberAddress.get("street1").valueChanges
+      .pipe(
+        debounceTime(500),
+      ).subscribe(key => {
+        if (key && typeof (key) == 'string')
+          key = key.trim();
+        this.isAddressSearched = true;
+        if (key)
+          this.claimService.searchAddress(key).subscribe(address => {
+            this.streetAddressList = address.suggestions;
+            this.isAddressError = false;
+          }, error => {
+            if (error.status == 0)
+              this.isAddressError = true;
+            this.streetAddressList = [];
+          })
+      })
     let user = JSON.parse(this.cookieService.get('user'));
     this.currentUser = user;
     this.userPasswrdForm = this.formBuilder.group({
@@ -328,7 +381,30 @@ export class SubscriberSettingsComponent implements OnInit {
     })
 
   }
-
+  selectAddress(street) {
+    let state_id: any;
+    this.states.map(state => {
+      if (state.state_code == street.state) {
+        state_id = state.id;
+      }
+    })
+    this.subscriberAddress.patchValue({
+      street1: street.street_line,
+      street2: "",
+      city: street.city,
+      state: state_id,
+      zip_code: street.zipcode
+    })
+    this.changeState(street.state, "subscriber")
+  }
+  isSubFormSubmitted = false;
+  submitSubscriberAddress() {
+    this.isSubFormSubmitted = true;
+    if (this.subscriberAddress.invalid) {
+      return
+    }
+    console.log(this.subscriberAddress.value)
+  }
   selectedTabChange(event) {
     if (event.index == 3) {
       this.userService.subscriptionCharges().subscribe(res => {
@@ -499,7 +575,11 @@ export class SubscriberSettingsComponent implements OnInit {
     // });
   }
   cardState: any;
-  changeState(state_code?) {
+  subscriberState: any;
+  changeState(state_code?, type?) {
+    if (type == 'subscriber') {
+      this.subscriberState = state_code;
+    }
     if (state_code) {
       this.cardState = state_code;
       return
