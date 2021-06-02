@@ -294,7 +294,7 @@ export class SubscriberSettingsComponent implements OnInit {
       street1: [null],
       street2: [null],
       city: [null],
-      state: [null],
+      state_id: [null],
       zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       phone_no1: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       phone_ext1: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
@@ -305,6 +305,7 @@ export class SubscriberSettingsComponent implements OnInit {
       contact_person: [null],
       notes: [null]
     })
+    this.getAddress();
     this.subscriberAddress.get("phone_no1").valueChanges.subscribe(res => {
       if (this.subscriberAddress.get("phone_no1").value && this.subscriberAddress.get("phone_no1").valid) {
         this.subscriberAddress.get("phone_ext1").enable();
@@ -381,6 +382,14 @@ export class SubscriberSettingsComponent implements OnInit {
     })
 
   }
+  getAddress(){
+    this.userService.getSubscriberAddress().subscribe(res => {
+      if (res.status) {
+        this.changeState(res.data.state_id, 'subscriber')
+        this.subscriberAddress.patchValue(res.data)
+      }
+    })
+  }
   selectAddress(street) {
     let state_id: any;
     this.states.map(state => {
@@ -403,7 +412,12 @@ export class SubscriberSettingsComponent implements OnInit {
     if (this.subscriberAddress.invalid) {
       return
     }
-    console.log(this.subscriberAddress.value)
+    this.userService.subscriberaddress(this.subscriberAddress.value).subscribe(res => {
+      this.alertService.openSnackBar(res.message, 'success');
+      this.getAddress();
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, "error")
+    })
   }
   selectedTabChange(event) {
     if (event.index == 3) {
@@ -578,7 +592,11 @@ export class SubscriberSettingsComponent implements OnInit {
   subscriberState: any;
   changeState(state_code?, type?) {
     if (type == 'subscriber') {
-      this.subscriberState = state_code;
+      this.states.map(res => {
+        if (res.id == state_code) {
+          this.subscriberState = res.state_code;
+        }
+      })
     }
     if (state_code) {
       this.cardState = state_code;
