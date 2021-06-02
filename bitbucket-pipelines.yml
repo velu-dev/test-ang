@@ -2,7 +2,7 @@ image: node:alpine
 
 pipelines:
   branches:
-    develop:
+    past-date-feature:
       - step:
           name: Initial step
           script:
@@ -31,7 +31,7 @@ pipelines:
               AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
               AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
               AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
-              S3_BUCKET: $S3_BUCKET
+              S3_BUCKET: $S3_BUCKET_PD
               DELETE_FLAG: 'true'
               COMMAND: 'upload'
               LOCAL_PATH: 'dist'
@@ -42,5 +42,5 @@ pipelines:
               AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
               AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
               AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
-              DISTRIBUTION_ID: $DISTRIBUTION_ID
+              DISTRIBUTION_ID: $DISTRIBUTION_ID_PD
           - echo "CloudFront Invalidation Completed!"  
