@@ -60,7 +60,7 @@ import { RecordsComponent } from './examiner/appointment-details/records/records
 import { ExaminationComponent } from './examiner/appointment-details/examination/examination.component';
 import { ReportComponent } from './examiner/appointment-details/report/report.component';
 import { BillingCorrespondanceComponent, CustomDocuments, CustomRecipient, AddAddress, MailOnDemandConfirm } from './examiner/appointment-details/correspondance/correspondance.component';
-import { BilllableBillingComponent, billingOnDemandDialog, BillingCustomRecipient} from './examiner/appointment-details/billing/billing.component';
+import { BilllableBillingComponent, billingOnDemandDialog, BillingCustomRecipient } from './examiner/appointment-details/billing/billing.component';
 import { OnDemandService } from './service/on-demand.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { BillingService } from './service/billing.service';
@@ -75,6 +75,7 @@ import { BillingDocumentComponent } from './examiner/appointment-details/billing
 import { BillingInfoComponent } from './examiner/appointment-details/billing/billing-info/billing-info.component';
 import { SubmissionComponent } from './examiner/appointment-details/billing/submission/submission.component';
 import { LateResponseComponent } from './examiner/appointment-details/billing/late-response/late-response.component';
+import { DxCheckBoxModule, DxDataGridComponent, DxFileUploaderModule, DxHtmlEditorModule, DxProgressBarModule, DxToolbarComponent, DxToolbarModule } from 'devextreme-angular';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -160,8 +161,7 @@ import { LateResponseComponent } from './examiner/appointment-details/billing/la
     BillingDocumentComponent,
     BillingInfoComponent,
     SubmissionComponent,
-    LateResponseComponent
-   
+    LateResponseComponent,
   ],
   entryComponents: [
     ClaimantPopupComponent,
@@ -198,7 +198,8 @@ import { LateResponseComponent } from './examiner/appointment-details/billing/la
     FullCalendarModule,
     ImageCropperModule,
     NgxSpinnerModule,
-    NgxMatSelectSearchModule
+    NgxMatSelectSearchModule,
+    DxFileUploaderModule, DxProgressBarModule,DxHtmlEditorModule , DxCheckBoxModule, DxToolbarModule
   ],
   providers: [
     SubscriberUserService,

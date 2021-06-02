@@ -21,6 +21,7 @@ import { MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { IntercomService } from './services/intercom.service'
 import { BreadcrumbModule } from 'xng-breadcrumb';
 import { RouterExtService } from './services/router.service';
+import { DxDataGridComponent, DxFileUploaderModule, DxProgressBarModule } from 'devextreme-angular';
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 const maskConfig: Partial<IConfig> = {
   validation: false,
@@ -40,6 +41,7 @@ const maskConfig: Partial<IConfig> = {
     RecaptchaFormsModule,
     RecaptchaModule,
     // RecaptchaV3Module,
+    DxFileUploaderModule, DxProgressBarModule,
     NgxSpinnerModule,
     _LayoutModule,
     StoreModule.forRoot(reducers, {
