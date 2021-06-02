@@ -1,21 +1,21 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://dev01api.simplexam.com/', //dev
+  baseUrl: 'https://pd01api.simplexam.com/', //pd
   searchUrl: 'https://dev01esapi.simplexam.com/elastic/search',
   cookieSecure : true,
   smartyStreetsAPIKey: "75184436999002492",
   Amplify: {
     Auth: {
-      identityPoolId: 'us-west-2:e5dd97f0-5920-4932-bd14-c26fa8f988c0',
+      identityPoolId: 'us-west-2:5fb1a6ae-6ac6-42d4-bb16-cd142debe7b9',
       region: 'us-west-2',
       identityPoolRegion: 'us-west-2',
-      userPoolId: 'us-west-2_sfn3xuu3h',
-      userPoolWebClientId: '7gogn57qok12n2qpid9vo43107',
+      userPoolId: 'us-west-2_aQ0qNXHJW',
+      userPoolWebClientId: '1r37muhb5fv6l74rpnrh269ds3',
       mandatorySignIn: true,
       authenticationFlowType: 'USER_SRP_AUTH',
       cookieStorage: {
         // REQUIRED - Cookie domain (only required if cookieStorage is provided)
-        domain: 'dev01app.simplexam.com', //dev server
+        domain: 'pd01api.simplexam.com', //pd server
         // OPTIONAL - Cookie path
         path: '/',
         // OPTIONAL - Cookie expiration in days

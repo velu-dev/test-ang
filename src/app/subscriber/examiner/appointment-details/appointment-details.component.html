@@ -464,7 +464,7 @@
                         <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100"
                             *ngIf="!isSuplimental">
                             <mat-label>Date & Time</mat-label>
-                            <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" [min]="todayDate.appointment"
+                            <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM"
                                 formControlName="appointment_scheduled_date_time"
                                 [value]="appointment_scheduled_date_time"
                                 (dateTimeChange)="changeDateType(billable_item?.value?.appointment?.appointment_scheduled_date_time)"
