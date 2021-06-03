@@ -219,6 +219,11 @@ export class SubscriberSettingsComponent implements OnInit {
     })
     // this.dataSourceList.data = TREE_DATA
 
+    this.claimService.seedData('state').subscribe(response => {
+      this.states = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
   }
   cardCount = 0;
   listCard() {
@@ -375,14 +380,10 @@ export class SubscriberSettingsComponent implements OnInit {
       });
     }
 
-    this.claimService.seedData('state').subscribe(response => {
-      this.states = response['data'];
-    }, error => {
-      console.log("error", error)
-    })
+
 
   }
-  getAddress(){
+  getAddress() {
     this.userService.getSubscriberAddress().subscribe(res => {
       if (res.status) {
         this.changeState(res.data.state_id, 'subscriber')
@@ -592,11 +593,12 @@ export class SubscriberSettingsComponent implements OnInit {
   subscriberState: any;
   changeState(state_code?, type?) {
     if (type == 'subscriber') {
-      this.states.map(res => {
-        if (res.id == state_code) {
-          this.subscriberState = res.state_code;
-        }
-      })
+      if (this.states)
+        this.states.map(res => {
+          if (res.id == state_code) {
+            this.subscriberState = res.state_code;
+          }
+        })
     }
     if (state_code) {
       this.cardState = state_code;
