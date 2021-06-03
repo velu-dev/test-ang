@@ -474,11 +474,11 @@ export class AppointmentDetailsComponent implements OnInit {
 
           this.examinationStatusForm.patchValue(response.data.appointments);
           this.examinationStatusForm.patchValue({ notes: '', examination_notes: '' });
-          if (moment(response.data.appointments.appointment_scheduled_date_time) < moment()) {
-            this.appointmentStatus = true;
-          } else {
-            this.appointmentStatus = false;
-          }
+          // if (moment(response.data.appointments.appointment_scheduled_date_time) < moment()) {
+          //   this.appointmentStatus = true;
+          // } else {
+          //   this.appointmentStatus = false;
+          // }
           this.claimant_name = response.data.claimant_name.first_name + " " + response.data.claimant_name.middle_name + " " + response.data.claimant_name.last_name;
           this.examiner_id = response.data.appointments.examiner_id;
           this.examinationDetails = response['data'];
@@ -1156,13 +1156,13 @@ export class AppointmentDetailsComponent implements OnInit {
       }
     });
     let billable_item_date: any;
-    if (this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value) {
-      billable_item_date = moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).add(1, 'minute')
-      if (!(moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).isSameOrAfter(moment().set('second', 0)))) {
-        this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).setErrors({ 'incorrect': true })
-        return
-      }
-    }
+    // if (this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value) {
+    //   billable_item_date = moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).add(1, 'minute')
+    //   if (!(moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).isSameOrAfter(moment().set('second', 0)))) {
+    //     this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).setErrors({ 'incorrect': true })
+    //     return
+    //   }
+    // }
     if (this.billable_item.invalid) {
       return;
     }

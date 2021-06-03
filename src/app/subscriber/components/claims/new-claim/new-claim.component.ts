@@ -1323,13 +1323,13 @@ export class NewClaimComponent implements OnInit {
         this.billable_item.get(key).setValue(this.billable_item.get(key).value.trim())
     });
     let billable_item_date: any;
-    if (this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value) {
-      billable_item_date = moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).add(1, 'minute')
-      if (!(moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).isSameOrAfter(moment().set("second", 0)))) {
-        this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).setErrors({ 'incorrect': true })
-        return
-      }
-    }
+    // if (this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value) {
+    //   billable_item_date = moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).add(1, 'minute')
+    //   if (!(moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).isSameOrAfter(moment().set("second", 0)))) {
+    //     this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).setErrors({ 'incorrect': true })
+    //     return
+    //   }
+    // }
     if (this.billable_item.invalid) {
       return;
     }
