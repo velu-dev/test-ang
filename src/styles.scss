@@ -532,11 +532,12 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   }
 }
 .fc-button-primary:disabled {
+  color: $white !important;
   background-color: $secondary;
   border-color: $secondary;
   &:hover {
-    color: $secondary;
-    background-color: $secondary;
+    color: $white !important;
+    background-color: $secondary !important;
     cursor: pointer;
   }
 }
