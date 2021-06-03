@@ -971,7 +971,7 @@
                         </span>
                         <div>
                             <span *ngIf="column == 'module'">{{element?.module}}</span>
-                            <span *ngIf="column == 'task'">{{element?.action_details}}</span>
+                            <span *ngIf="column == 'action_details'">{{element?.action_details}}</span>
                             <span *ngIf="column == 'created_by'">{{(element?.created_by?.first_name ?
                                 element?.created_by?.first_name : "") + " "
                                 +(element?.created_by?.last_name ? element?.created_by?.last_name :
