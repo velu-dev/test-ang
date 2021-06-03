@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   baseUrl: 'https://pd01api.simplexam.com/', //pd
-  searchUrl: 'https://dev01esapi.simplexam.com/elastic/search',
+  searchUrl: 'https://pd01esapi.simplexam.com/elastic/search',
   cookieSecure : true,
   smartyStreetsAPIKey: "75184436999002492",
   Amplify: {
@@ -15,7 +15,7 @@ export const environment = {
       authenticationFlowType: 'USER_SRP_AUTH',
       cookieStorage: {
         // REQUIRED - Cookie domain (only required if cookieStorage is provided)
-        domain: 'pd01api.simplexam.com', //pd server
+        domain: 'pd01app.simplexam.com', //pd server
         // OPTIONAL - Cookie path
         path: '/',
         // OPTIONAL - Cookie expiration in days
