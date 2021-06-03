@@ -131,9 +131,7 @@
                                 <!-- <div><span>Bill #</span><span> {{element?.agent_short_code}}{{element?.bill_no}}</span></div> -->
                                 <div><span>Claim #</span><span>{{element?.claim_number}}</span></div>
                                 <div><span>Claimant Name</span><span>{{element?.claimant_name}}</span></div>
-                                <div><span>Date of Birth</span><span>{{element?.claimant_date_of_birth |
-                                        date:'MM-dd-yyyy'}},
-                                    </span></div>
+                                <div><span>Date of Birth</span><span>{{element?.claimant_date_of_birth}}</span></div>
                                 <div><span>Examiner</span><span>{{element?.examiner_name}}</span></div>
                                 <div><span>Bill Total</span><span>{{element?.invoice_amt? '$ ' :
                                         ''}}{{element?.invoice_amt | number : '1.2-2'}}</span>
