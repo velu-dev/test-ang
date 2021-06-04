@@ -812,6 +812,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.alertService.openSnackBar(res.message, "success");
       this.examinationStatusForm.patchValue({ examination_status: res.data.examination_status, examination_notes: res.data.examination_notes })
       this.examinationDetails.appointments = { examination_notes: res.data.examination_notes, examination_status: res.data.examination_status };
+      this.loadDatas();
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
