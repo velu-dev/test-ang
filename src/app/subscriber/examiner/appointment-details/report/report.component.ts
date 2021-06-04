@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Observable } from 'rxjs';
@@ -55,6 +55,7 @@ export class ReportComponent implements OnInit {
   statusBarValues = { value: null, status: '', class: '' }
   claim_id: any;
   billable_item_id: any;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   constructor(private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -153,6 +154,7 @@ export class ReportComponent implements OnInit {
       // })
       this.dataSoruceOut = new MatTableDataSource(report.documents_sent_and_received);
       this.dataSoruceIn = new MatTableDataSource(inFile);
+      this.dataSoruceOut.sort = this.sort;
       this.rushRequest = false;
       this.statusBarChanges(this.reportData.on_demand_status)
     }, error => {
