@@ -47,6 +47,8 @@ export class HistoryComponent implements OnInit {
   ids: any;
   statusBarValues = { value: null, status: '', class: '' }
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild('MatSortTracking', { static: true }) sortTracking: MatSort;
+  
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
     private onDemandService: OnDemandService, private alertService: AlertService, private intercom: IntercomService,
     public dialog: MatDialog, private cookieService: CookieService, public router: Router, private claimService: ClaimService) {
@@ -134,6 +136,7 @@ export class HistoryComponent implements OnInit {
         this.inFile.push(inFile);
       })
       this.dataSource = new MatTableDataSource(this.inFile);
+      this.dataSource.sort = this.sort;
 
       this.statusBarChanges(this.historyData.on_demand_status_id)
     }, error => {
@@ -144,7 +147,7 @@ export class HistoryComponent implements OnInit {
   getHistoryCallTracking() {
     this.onDemandService.getHistoryCallTracking(this.paramsId.claim_id, this.paramsId.billId).subscribe(history => {
       this.historyTrackingDatasource = new MatTableDataSource(history.data ? history.data : []);
-      this.historyTrackingDatasource.sort = this.sort;
+      this.historyTrackingDatasource.sort = this.sortTracking;
     }, error => {
       this.dataSource = new MatTableDataSource([])
     })
