@@ -306,6 +306,7 @@ export class AppointmentDetailsComponent implements OnInit {
   examinerId = null;
   examinerName = "";
   isFreeze: boolean = false;
+  supplemenalStatus = { examination_status: null, examination_notes: "" }
   loadDatas() {
     this.procedureTypeList = [];
     this.modifiers = [];
@@ -471,7 +472,7 @@ export class AppointmentDetailsComponent implements OnInit {
               }
             }
           })
-
+          this.supplemenalStatus = { examination_status: response.data.appointments.examination_status, examination_notes: response.data.appointments.examination_notes }
           this.examinationStatusForm.patchValue(response.data.appointments);
           this.examinationStatusForm.patchValue({ notes: '', examination_notes: '' });
           if (moment(response.data.appointments.appointment_scheduled_date_time) < moment()) {
@@ -796,6 +797,24 @@ export class AppointmentDetailsComponent implements OnInit {
     } else {
       this.billable_item.get(["intake_call", "phone_ext"]).disable();
     }
+  }
+  supplementalreopen(status?) {
+    let notes = this.examinationStatusForm.value.examination_notes ? this.examinationStatusForm.value.examination_notes.trim() : "";
+    notes = status ? notes : "";
+    let id = status ? this.cancelSupplemental[0].id : null
+    this.examinationStatusForm.patchValue({ id: this.billableId, notes: notes, examination_status: id })
+    let data = this.examinationStatusForm.value
+    data['appointment_id'] = this.appointmentId
+    this.examinerService.updateExaminationStatus(data).subscribe(res => {
+      this.examinationStatusForm.disable()
+      this.isExaminationStatusEdit = false;
+      this.supplemenalStatus = res.data;
+      this.alertService.openSnackBar(res.message, "success");
+      this.examinationStatusForm.patchValue({ examination_status: res.data.examination_status, examination_notes: res.data.examination_notes })
+      this.examinationDetails.appointments = { examination_notes: res.data.examination_notes, examination_status: res.data.examination_status };
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
   }
   examinationStatusSubmit() {
     if (this.examinationStatusForm.invalid) {

@@ -83,7 +83,8 @@
 
 <div class="action-info w-100" fxLayout="row wrap p-t-0">
     <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
-        <div class="logo-caption text-left"> <span class="primary">Simple</span><span class="ternary">Service</span><sup>®</sup>
+        <div class="logo-caption text-left"> <span class="primary">Simple</span><span
+                class="ternary">Service</span><sup>®</sup>
             <span class="note p-l-10">This would be a brief description on the benefits of these services</span>
         </div>
     </div>
@@ -176,56 +177,60 @@
 <mat-card class="exam-status" *ngIf="isSuplimental">
     <div class="exam-info w-100" fxLayout="row wrap" *ngIf="isDisplayStatus.status">
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="show-mobile show-sm">
-            <span *ngIf="!isExamTypeChanged || !isFreeze">
-                <button *ngIf="!isExaminationStatusEdit"
-                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze"
-                    mat-raised-button (click)="changeEditStatus()" class="filled-gray edit_btn">Close</button>
-                <button *ngIf="isExaminationStatusEdit"
-                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze"
-                    type="submit" mat-raised-button (click)="examinationStatusSubmit()"
-                    class="filled-success edit_btn">Save</button>
+            <span>
+                <button *ngIf="!isExaminationStatusEdit" mat-raised-button (click)="changeEditStatus()"
+                    class="filled-gray edit_btn">Close</button>
+                <button *ngIf="isExaminationStatusEdit" type="submit" mat-raised-button
+                    (click)="supplementalreopen(16)" class="filled-success edit_btn">Save</button>
             </span>
         </div>
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
             <form [formGroup]="examinationStatusForm">
                 <div fxLayout="row wrap" class="examination-status">
-                    <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100" class="p-t-15 p-r-10">{{isDisplayStatus.name}}
-                        Status</div>
-                    <mat-form-field appearance="outline" fxFlex="70" fxFlex.sm="100" fxFlex.xs="100">
-                        <mat-label>Choose an option</mat-label>
-                        <mat-select formControlName="examination_status">
-                            <mat-option *ngFor="let examination_status of cancelSupplemental"
-                                [value]="examination_status.id">
-                                {{examination_status[isDisplayStatus.isExaminar ? 'examination_status' :
-                                'examination_status']}}
-                            </mat-option>
-                        </mat-select>
+                    <!-- <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100" class="p-t-15 p-r-10">{{isDisplayStatus.name}}
+                        Status</div> -->
+                    <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100" class="p-t-15 p-r-10">Supplemental
+                        {{supplemenalStatus.examination_status == 16 ?
+                        "Cancelled" : ""}} <span *ngIf="!isIME" class="custom-info supplemental regulation"
+                            (click)="openPopupRegulation(regulation?.regulationsForAppointmentNotification?.title, regulation?.regulationsForAppointmentNotification?.codes)"><i
+                                class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
+
+                    <mat-form-field *ngIf="isExaminationStatusEdit && supplemenalStatus.examination_status != 16 && supplemenalStatus.examination_status != 35"
+                        appearance="outline" fxFlex="100" class="notes">
+                        <mat-label>Cancel Reason</mat-label>
+                        <textarea formControlName="examination_notes" matInput placeholder="Cancel Reason"
+                            cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
                     </mat-form-field>
-                    <span *ngIf="!isIME" class="custom-info regulation" (click)="openPopupRegulation(regulation?.regulationsForAppointmentNotification?.title, regulation?.regulationsForAppointmentNotification?.codes)"><i
-                            class="material-icons-outlined">info</i><sup>Regulations</sup></span>
-                    <mat-form-field appearance="outline" fxFlex="100" class="notes">
-                        <mat-label>Notes</mat-label>
-                        <textarea formControlName="examination_notes" matInput placeholder="Notes" cdkTextareaAutosize
-                            cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
-                    </mat-form-field>
+                    <div class="cancel-reason" *ngIf="supplemenalStatus.examination_status == 16 || supplemenalStatus.examination_status == 35">
+                        <div class="reason">Cancelled Reason</div>
+                        <div class="description">{{supplemenalStatus.examination_notes}}</div>
+                    </div>
                 </div>
                 <div *ngIf="isExaminationStatusEdit" class="text-center w-100">
                     <button mat-stroked-button class="outline-danger" (click)="cancel()">Cancel</button>
                     <button mat-stroked-button class="m-l-10 outline-success" type="submit"
-                        (click)="examinationStatusSubmit()">Save
+                        (click)="supplementalreopen(16)">Save
                     </button>
                 </div>
             </form>
         </div>
 
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-            <span *ngIf="!(isExamTypeChanged) || !(isFreeze)">
-                <button *ngIf="!isExaminationStatusEdit" mat-raised-button (click)="changeEditStatus()"
+            <span>
+                <button *ngIf="supplemenalStatus.examination_status != 16 && supplemenalStatus.examination_status != 35" mat-raised-button
+                    (click)="changeEditStatus()" [disabled]="isExaminationStatusEdit"
+                    class="filled-gray edit_btn hide-mobile hide-sm">Cancel
+                    Supplemental</button>
+                <button *ngIf="supplemenalStatus.examination_status == 16 || supplemenalStatus.examination_status == 35" mat-raised-button
+                    (click)="supplementalreopen(null)" class="filled-gray edit_btn hide-mobile hide-sm">Reopen
+                    Supplemental</button>
+                <!-- <button *ngIf="!isExaminationStatusEdit" mat-raised-button (click)="changeEditStatus()"
                     class="filled-gray edit_btn hide-mobile hide-sm"
                     [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze">Close</button>
                 <button *ngIf="isExaminationStatusEdit" mat-raised-button (click)="examinationStatusSubmit()"
                     class="filled-success edit_btn hide-mobile hide-sm"
-                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze">Save</button><br /><br />
+                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze">Save</button> -->
+                <br /><br />
             </span>
         </div>
     </div>
@@ -233,55 +238,14 @@
 
 
 
-
-
-
-
-<!-- <mat-card class="exam-status">
-    <div class="exam-info w-100" fxLayout="row wrap" >
-        <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="show-mobile show-sm">
-            <span>
-                <button mat-raised-button class="filled-gray edit_btn">Cancel Supplemental</button>
-            </span>
-        </div>
-        <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-            <form>
-                <div fxLayout="row wrap" class="examination-status">
-                    <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100" class="p-t-15 p-r-10">Supplemental    <span *ngIf="!isIME" class="custom-info supplemental regulation" (click)="openPopupRegulation(regulation?.regulationsForAppointmentNotification?.title, regulation?.regulationsForAppointmentNotification?.codes)"><i
-                        class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
-                    <mat-form-field appearance="outline" fxFlex="100" class="notes m-t-10">
-                        <mat-label>Notes</mat-label>
-                        <textarea matInput placeholder="Notes" cdkTextareaAutosize
-                            cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
-                    </mat-form-field>
-                     <div class="cancel-reason">
-                         <div class="reason">Cancelled Suplimental</div>
-                         <div class="description">Cancelled Reason Will Comes Here...</div>
-                    </div>
-                </div>
-                <div class="text-center w-100 m-t-20">
-                    <button mat-stroked-button class="outline-danger">Cancel</button>
-                    <button mat-stroked-button class="m-l-10 outline-success">Save
-                    </button>
-                </div>
-            </form>
-        </div>
-
-        <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-            <span >
-                <button mat-raised-button class="filled-gray edit_btn hide-mobile hide-sm">Cancel Supplemental</button>
-            </span>
-        </div>
-    </div>
-</mat-card> -->
-
-
 <div class="border-dashed-blue m-b-50"></div>
 
 <mat-card class="documents-declared m-b-20">
     <mat-card-header>
-        <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Documents Declared<span *ngIf="!isIME" class="custom-info regulation"  (click)="openPopupRegulation(regulation?.regulationsForDeclarationOfPagesReceived?.title, regulation?.regulationsForDeclarationOfPagesReceived?.codes)"> <i
-                    class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
+        <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Documents Declared<span *ngIf="!isIME"
+                class="custom-info regulation"
+                (click)="openPopupRegulation(regulation?.regulationsForDeclarationOfPagesReceived?.title, regulation?.regulationsForDeclarationOfPagesReceived?.codes)">
+                <i class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
         <span class="spacer"></span>
         <span>
             <button type="button" class="filled-gray m-b-5" mat-raised-button (click)="addRow()">Add</button>
@@ -382,69 +346,70 @@
 
         <div class="user-detail m-t-5">
             <form [formGroup]="docDeclearTable">
-            <table class="table table-border res-table" [ngClass]="{'table-dark': mode}" *ngIf="getFormControls.controls.length > 0">
-                <thead class="text-nowrap">
-                    <th>Pages Declared</th>
-                    <th>Submitting Party</th>
-                    <th>Date Received</th>
-                    <th class="text-center">Action</th>
-                </thead>
-                <tbody>
-                    <ng-container formArrayName="tableRows" *ngFor="let group of getFormControls.controls ; let i=index">
-                    <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
-                        <td>
-                            <mat-form-field appearance="outline" class="w-100">
-                                <input matInput type="number" (keypress)="numberOnly($event)"
-                                formControlName="no_of_pages_declared" min="1" autocomplete="off"
-                                    placeholder="Pages Declared">
-                            </mat-form-field>
-                        </td>
-                        <td>
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-select placeholder="Select Submitting Party"
-                                formControlName="agent_type">
-                                    <mat-option *ngFor="let party of SubmittingParty" [value]="party.name">
-                                        {{party.name}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </td>
-                        <td>
-                            <mat-form-field appearance="outline" class="mat-date-picker">
-                                <input matInput type="text" placeholder="Date Received"
-                                formControlName="date_received" autocomplete="off" [min]="minimumDate"
-                                    [matDatepicker]="date_received" [max]="today">
-                                <mat-datepicker-toggle matSuffix [for]="date_received">
-                                </mat-datepicker-toggle>
-                                <mat-datepicker #date_received></mat-datepicker>
-                            </mat-form-field>
-                        </td>
-                        <td class="text-center">
-                            <a class="text-success" (click)="doneRow(group, i)">Save</a>
-                            <a class="text-danger m-l-10" (click)="cancelRow(group,i)">Cancel</a>
-                        </td>
-                    </tr>
+                <table class="table table-border res-table" [ngClass]="{'table-dark': mode}"
+                    *ngIf="getFormControls.controls.length > 0">
+                    <thead class="text-nowrap">
+                        <th>Pages Declared</th>
+                        <th>Submitting Party</th>
+                        <th>Date Received</th>
+                        <th class="text-center">Action</th>
+                    </thead>
+                    <tbody>
+                        <ng-container formArrayName="tableRows"
+                            *ngFor="let group of getFormControls.controls ; let i=index">
+                            <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
+                                <td>
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <input matInput type="number" (keypress)="numberOnly($event)"
+                                            formControlName="no_of_pages_declared" min="1" autocomplete="off"
+                                            placeholder="Pages Declared">
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-select placeholder="Select Submitting Party" formControlName="agent_type">
+                                            <mat-option *ngFor="let party of SubmittingParty" [value]="party.name">
+                                                {{party.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field appearance="outline" class="mat-date-picker">
+                                        <input matInput type="text" placeholder="Date Received"
+                                            formControlName="date_received" autocomplete="off" [min]="minimumDate"
+                                            [matDatepicker]="date_received" [max]="today">
+                                        <mat-datepicker-toggle matSuffix [for]="date_received">
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #date_received></mat-datepicker>
+                                    </mat-form-field>
+                                </td>
+                                <td class="text-center">
+                                    <a class="text-success" (click)="doneRow(group, i)">Save</a>
+                                    <a class="text-danger m-l-10" (click)="cancelRow(group,i)">Cancel</a>
+                                </td>
+                            </tr>
 
-                    <tr *ngIf="!group.get('isEditable').value" [formGroupName]="i" class="values">
-                        <td>
-                            {{group.get('no_of_pages_declared').value}}
-                        </td>
-                        <td>
-                            {{group.get('agent_type').value}}
-                        </td>
-                        <td>
-                            {{group.get('date_received').value | date:'MM-dd-yyyy'}}
-                        </td>
-                        <td class="text-center">
-                            <a class="text-success" (click)="editRow(group,i)">Edit</a>
-                            <a class="text-danger m-l-10" (click)="deleteRow(i,group)">Remove</a>
-                        </td>
-                    </tr>
-                </ng-container>
-                </tbody>
-            </table>
-            <app-nodata *ngIf="getFormControls?.controls?.length == 0"></app-nodata>
-        </form>
+                            <tr *ngIf="!group.get('isEditable').value" [formGroupName]="i" class="values">
+                                <td>
+                                    {{group.get('no_of_pages_declared').value}}
+                                </td>
+                                <td>
+                                    {{group.get('agent_type').value}}
+                                </td>
+                                <td>
+                                    {{group.get('date_received').value | date:'MM-dd-yyyy'}}
+                                </td>
+                                <td class="text-center">
+                                    <a class="text-success" (click)="editRow(group,i)">Edit</a>
+                                    <a class="text-danger m-l-10" (click)="deleteRow(i,group)">Remove</a>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+                <app-nodata *ngIf="getFormControls?.controls?.length == 0"></app-nodata>
+            </form>
         </div>
     </mat-card-content>
 </mat-card>
@@ -454,7 +419,8 @@
     <form [formGroup]="billable_item" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
         <mat-card-header>
             <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Information<span
-                    class="custom-info regulation" *ngIf="!isIME" (click)="examinationDetails?.procedure_type == 'Deposition' ? openPopupRegulation(regulation?.regulationsForDepositionItemIntake?.title, regulation?.regulationsForDepositionItemIntake?.codes) : openPopupRegulation(regulation?.regulationsForBillableItemIntake?.title, regulation?.regulationsForBillableItemIntake?.codes)">
+                    class="custom-info regulation" *ngIf="!isIME"
+                    (click)="examinationDetails?.procedure_type == 'Deposition' ? openPopupRegulation(regulation?.regulationsForDepositionItemIntake?.title, regulation?.regulationsForDepositionItemIntake?.codes) : openPopupRegulation(regulation?.regulationsForBillableItemIntake?.title, regulation?.regulationsForBillableItemIntake?.codes)">
                     <i class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
             <span class="spacer"></span>
             <span *ngIf="!(isExamTypeChanged) || !(isFreeze)">
@@ -1000,7 +966,8 @@
                 matSort #MatSortActivity="matSort">
                 <ng-container matColumnDef="{{column}}"
                     *ngFor="let column of activityDisplayedColumnsForDocuments; let i=index">
-                    <th mat-header-cell *matHeaderCellDef> <span mat-sort-header [disabled]="activityColumnName[i] == ''">{{activityColumnName[i]}}</span></th>
+                    <th mat-header-cell *matHeaderCellDef> <span mat-sort-header
+                            [disabled]="activityColumnName[i] == ''">{{activityColumnName[i]}}</span></th>
                     <td mat-cell *matCellDef="let element">
                         <span *ngIf="i == 0 && isMobile">
                             <mat-icon mat-raised-button
