@@ -355,6 +355,9 @@
                 top: 50px;
             }
         }
+        .custom-info.supplemental {
+            position: inherit !important;
+        }
         .notes {
             @media only screen and (max-width: 568px) {
                 margin-top: 20px;

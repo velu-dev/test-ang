@@ -147,10 +147,6 @@
                         <textarea formControlName="examination_notes" matInput placeholder="Notes" cdkTextareaAutosize
                             cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
                     </mat-form-field>
-                    <!-- <div class="cancel-reason">
-                         <div class="reason">Cancelled Suplimental</div>
-                         <div class="description">Cancelled Reason Will Comes Here...</div>
-                    </div> -->
                 </div>
                 <div *ngIf="isExaminationStatusEdit" class="text-center w-100">
                     <button mat-stroked-button class="outline-danger" (click)="cancel()">Cancel</button>
@@ -231,11 +227,54 @@
                     class="filled-success edit_btn hide-mobile hide-sm"
                     [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze">Save</button><br /><br />
             </span>
-            <!-- <button mat-raised-button class="filled-gray calender_btn" (click)="openCalendar()">View on
-                Calendar</button> -->
         </div>
     </div>
 </mat-card>
+
+
+
+
+
+
+
+<!-- <mat-card class="exam-status">
+    <div class="exam-info w-100" fxLayout="row wrap" >
+        <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="show-mobile show-sm">
+            <span>
+                <button mat-raised-button class="filled-gray edit_btn">Cancel Supplemental</button>
+            </span>
+        </div>
+        <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
+            <form>
+                <div fxLayout="row wrap" class="examination-status">
+                    <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100" class="p-t-15 p-r-10">Supplemental    <span *ngIf="!isIME" class="custom-info supplemental regulation" (click)="openPopupRegulation(regulation?.regulationsForAppointmentNotification?.title, regulation?.regulationsForAppointmentNotification?.codes)"><i
+                        class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
+                    <mat-form-field appearance="outline" fxFlex="100" class="notes m-t-10">
+                        <mat-label>Notes</mat-label>
+                        <textarea matInput placeholder="Notes" cdkTextareaAutosize
+                            cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
+                    </mat-form-field>
+                     <div class="cancel-reason">
+                         <div class="reason">Cancelled Suplimental</div>
+                         <div class="description">Cancelled Reason Will Comes Here...</div>
+                    </div>
+                </div>
+                <div class="text-center w-100 m-t-20">
+                    <button mat-stroked-button class="outline-danger">Cancel</button>
+                    <button mat-stroked-button class="m-l-10 outline-success">Save
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
+            <span >
+                <button mat-raised-button class="filled-gray edit_btn hide-mobile hide-sm">Cancel Supplemental</button>
+            </span>
+        </div>
+    </div>
+</mat-card> -->
+
 
 <div class="border-dashed-blue m-b-50"></div>
 
@@ -961,7 +1000,7 @@
                 matSort #MatSortActivity="matSort">
                 <ng-container matColumnDef="{{column}}"
                     *ngFor="let column of activityDisplayedColumnsForDocuments; let i=index">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{activityColumnName[i]}} </th>
+                    <th mat-header-cell *matHeaderCellDef> <span mat-sort-header [disabled]="activityColumnName[i] == ''">{{activityColumnName[i]}}</span></th>
                     <td mat-cell *matCellDef="let element">
                         <span *ngIf="i == 0 && isMobile">
                             <mat-icon mat-raised-button

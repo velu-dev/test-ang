@@ -1,5 +1,5 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatSort, MatTableDataSource } from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { BillingService } from 'src/app/subscriber/service/billing.service';
@@ -31,6 +31,7 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
   columnsNameDoc = [];
   columnsToDisplayDoc = [];
   dataSource1: any;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   columnsToDisplays = [];
   columnNames = [];
   dataSourceDocList = new MatTableDataSource([]);
@@ -73,6 +74,7 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
   getDocument() {
     this.billingService.getSendRecDocument(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, this.billType).subscribe(document => {
       this.dataSourceDocList = new MatTableDataSource(document.data);
+      this.dataSourceDocList.sort = this.sort;
     })
   }
 
