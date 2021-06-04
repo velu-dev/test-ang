@@ -187,21 +187,19 @@
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
             <form [formGroup]="examinationStatusForm">
                 <div fxLayout="row wrap" class="examination-status">
-                    <!-- <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100" class="p-t-15 p-r-10">{{isDisplayStatus.name}}
-                        Status</div> -->
-                    <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100" class="p-t-15 p-r-10">Supplemental
+                    <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100" class="m-t-0 p-r-10">Supplemental
                         {{supplemenalStatus.examination_status == 16 ?
                         "Cancelled" : ""}} <span *ngIf="!isIME" class="custom-info supplemental regulation"
                             (click)="openPopupRegulation(regulation?.regulationsForAppointmentNotification?.title, regulation?.regulationsForAppointmentNotification?.codes)"><i
                                 class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
 
                     <mat-form-field *ngIf="isExaminationStatusEdit && supplemenalStatus.examination_status != 16 && supplemenalStatus.examination_status != 35"
-                        appearance="outline" fxFlex="100" class="notes">
+                        appearance="outline" fxFlex="100" class="notes m-t-15">
                         <mat-label>Cancel Reason</mat-label>
                         <textarea formControlName="examination_notes" matInput placeholder="Cancel Reason"
-                            cdkTextareaAutosize cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
+                            cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2"></textarea>
                     </mat-form-field>
-                    <div class="cancel-reason" *ngIf="supplemenalStatus.examination_status == 16 || supplemenalStatus.examination_status == 35">
+                    <div class="cancel-reason supplemental w-100" *ngIf="supplemenalStatus.examination_status == 16 || supplemenalStatus.examination_status == 35">
                         <div class="reason">Cancelled Reason</div>
                         <div class="description">{{supplemenalStatus.examination_notes}}</div>
                     </div>
@@ -223,14 +221,7 @@
                     Supplemental</button>
                 <button *ngIf="supplemenalStatus.examination_status == 16 || supplemenalStatus.examination_status == 35" mat-raised-button
                     (click)="supplementalreopen(null)" class="filled-gray edit_btn hide-mobile hide-sm">Reopen
-                    Supplemental</button>
-                <!-- <button *ngIf="!isExaminationStatusEdit" mat-raised-button (click)="changeEditStatus()"
-                    class="filled-gray edit_btn hide-mobile hide-sm"
-                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze">Close</button>
-                <button *ngIf="isExaminationStatusEdit" mat-raised-button (click)="examinationStatusSubmit()"
-                    class="filled-success edit_btn hide-mobile hide-sm"
-                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze">Save</button> -->
-                <br /><br />
+                    Supplemental</button><br /><br />
             </span>
         </div>
     </div>
