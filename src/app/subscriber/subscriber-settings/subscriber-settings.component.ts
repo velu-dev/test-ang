@@ -386,6 +386,7 @@ export class SubscriberSettingsComponent implements OnInit {
   getAddress() {
     this.userService.getSubscriberAddress().subscribe(res => {
       if (res.status) {
+        console.log(res.data.state_id)
         this.changeState(res.data.state_id, 'subscriber')
         this.subscriberAddress.patchValue(res.data)
       }
@@ -405,6 +406,7 @@ export class SubscriberSettingsComponent implements OnInit {
       state_id: state_id,
       zip_code: street.zipcode
     })
+    console.log(street, state_id)
     this.changeState(street.state, "subscriber")
   }
   isSubFormSubmitted = false;
@@ -595,7 +597,7 @@ export class SubscriberSettingsComponent implements OnInit {
     if (type == 'subscriber') {
       if (this.states)
         this.states.map(res => {
-          if (res.id == state_code) {
+          if (res.state_code == state_code || res.id == state_code) {
             this.subscriberState = res.state_code;
           }
         })
