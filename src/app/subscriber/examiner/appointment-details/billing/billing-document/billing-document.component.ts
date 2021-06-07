@@ -108,6 +108,14 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
     })
   }
 
+  downloadDocumetPOF(element) {
+    this.billingService.downloadOndemandDocuments({ file_url: element.file_url }).subscribe(res => {
+      this.alertService.openSnackBar("File downloaded successfully", "success");
+      saveAs(res.signed_file_url, element.file_name);
+      //this.getDocument();
+    })
+  }
+
 
 }
 // const ELEMENT_DATA = [
