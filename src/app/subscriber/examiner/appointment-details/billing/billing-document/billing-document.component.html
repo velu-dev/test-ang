@@ -49,6 +49,7 @@
                                     element?.payor_response_message[0]?._attributes?.MessageText :
                                     element?.payor_response_message?._attributes?.MessageText}}
                                 </span>
+                                <span *ngIf="column == 'proof_of_service'"></span>
                             </div>
                             <div *ngIf="element?.action == 'POST PAYMENT PAPER EOR'">
                                 <span *ngIf="column == 'doc_image'" class="file_type_icon">

@@ -50,8 +50,8 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
         this.columnsNameDoc = ["", "File Name"]
         this.columnsToDisplayDoc = ['is_expand', 'file_name']
       } else {
-        this.columnsNameDoc = ["", "Ref #", "File Name", "Action", "Date", "Recipients", "Download" + '\n' + "Sent Documents", "Further Information"]
-        this.columnsToDisplayDoc = ['doc_image', 'request_reference_id', 'file_name', 'action', "date", "recipients", 'download', 'payor_response_message']
+        this.columnsNameDoc = ["", "Ref #", "File Name", "Action", "Date", "Recipients", "Download" + '\n' + "Sent Documents", "Download On Demand" + '\n' + "Proof of Service", "Further Information"]
+        this.columnsToDisplayDoc = ['doc_image', 'request_reference_id', 'file_name', 'action', "date", "recipients", 'download', 'proof_of_service', 'payor_response_message']
       }
       this.isMobile = res;
       if (res) {
