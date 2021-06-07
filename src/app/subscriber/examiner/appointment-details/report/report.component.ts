@@ -28,7 +28,7 @@ import * as moment from 'moment-timezone';
 })
 export class ReportComponent implements OnInit {
 
-  displayedColumns: string[] = ['select', 'name', 'simple_service_origin', 'action'];
+  displayedColumns: string[] = ['select', 'file_name', 'simple_service_origin', 'action'];
   dataSource: any = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -55,7 +55,7 @@ export class ReportComponent implements OnInit {
   statusBarValues = { value: null, status: '', class: '' }
   claim_id: any;
   billable_item_id: any;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -287,8 +287,13 @@ export class ReportComponent implements OnInit {
     // }
 
     let document_ids = []
+    let custom_documents_ids = [];
     this.selection.selected.map(res => {
-      document_ids.push(res.document_id)
+      if (res.form_number) {
+        document_ids.push(res.document_id)
+      } else {
+        custom_documents_ids.push(res.document_id)
+      }
     })
 
     // if (document_ids.length == 1) {
@@ -298,7 +303,7 @@ export class ReportComponent implements OnInit {
     //   this.getReport();
     //   return;
     // }
-    this.onDemandService.reportDownload(this.paramsId.claim_id, this.paramsId.billId, { documents_ids: document_ids }).subscribe(record => {
+    this.onDemandService.reportDownload(this.paramsId.claim_id, this.paramsId.billId, { documents_ids: document_ids, custom_documents_ids: custom_documents_ids, examiner_id: this.reportData.examiner_user_id }).subscribe(record => {
       saveAs(record.data.file_url, record.data.file_name, '_self');
       this.alertService.openSnackBar("File downloaded successfully", 'success');
       this.selection.clear();
