@@ -1065,3 +1065,13 @@ mat-progress-bar {
     }
   }
 }
+
+//Tracking and Tracing
+.traking-details {
+  .more-btn {
+      background: none;
+      border: none;
+      color: $text-gray;
+      cursor: pointer;
+  }
+}
