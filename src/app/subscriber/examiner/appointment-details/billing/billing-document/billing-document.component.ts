@@ -83,7 +83,7 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
       this.DTMtableData.sort = this.sort;
     })
   }
-  tracingpopupData = {};
+  tracingpopupData:any = {};
   openTracing(element) {
     this.tracingpopupData = {};
     this.onDemandService.getTracingPopUp(element.id, this.paramsId.claim_id, this.paramsId.billId).subscribe(res => {
