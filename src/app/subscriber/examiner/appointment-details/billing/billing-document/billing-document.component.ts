@@ -9,6 +9,7 @@ import { IntercomService } from 'src/app/services/intercom.service';
 import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
+import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
 
 @Component({
   selector: 'app-billing-document',
@@ -30,8 +31,8 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
   @Input() billType: any;
   columnsNameDoc = [];
   columnsToDisplayDoc = [];
-  dataSource1: any;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  DTMtableData: any;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   columnsToDisplays = [];
   columnNames = [];
   dataSourceDocList = new MatTableDataSource([]);
@@ -43,7 +44,7 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
       map(result => result.matches),
       shareReplay()
     );
-  constructor(private claimService: ClaimService, public billingService: BillingService, private alertService: AlertService, private intercom: IntercomService, private breakpointObserver: BreakpointObserver) {
+  constructor(private onDemandService: OnDemandService, private claimService: ClaimService, public billingService: BillingService, private alertService: AlertService, private intercom: IntercomService, private breakpointObserver: BreakpointObserver) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (this.isMobile) {
@@ -68,6 +69,7 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log(this.paramsId)
     this.getDocument();
   }
 
@@ -76,8 +78,21 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
       this.dataSourceDocList = new MatTableDataSource(document.data);
       this.dataSourceDocList.sort = this.sort;
     })
+    this.billingService.getDtmData({ claim_id: this.paramsId.claim_id, billable_item_id: this.paramsId.billId, bill_id: this.paramsId.billingId }).subscribe(res => {
+      this.DTMtableData = new MatTableDataSource(res.data);
+      this.DTMtableData.sort = this.sort;
+    })
   }
-
+  tracingpopupData = {};
+  openTracing(element) {
+    this.tracingpopupData = {};
+    this.onDemandService.getTracingPopUp(element.id, this.paramsId.claim_id, this.paramsId.billId).subscribe(res => {
+      this.tracingpopupData = res.data;
+      //this.popupMenu.openMenu();
+    }, error => {
+      console.log(error);
+    })
+  }
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }

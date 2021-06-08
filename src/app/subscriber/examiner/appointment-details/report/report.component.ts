@@ -342,9 +342,14 @@ export class ReportComponent implements OnInit {
   onDemandSubmit() {
     // return;
     let document_ids = []
-    this.selection.selected.map(res => {
-      document_ids.push(res.document_id)
-    })
+    let custom_documents_ids = []
+      this.selection.selected.map(res => {
+        if (res.form_number) {
+          document_ids.push(res.document_id)
+        } else {
+          custom_documents_ids.push(res.document_id)
+        }
+      })
     if (document_ids.length == 0) {
       this.alertService.openSnackBar("Please select a file", 'error');
       return
@@ -353,7 +358,8 @@ export class ReportComponent implements OnInit {
       claim_id: this.paramsId.claim_id,
       service_priority: this.rushRequest ? "rush" : 'normal',
       service_description: "",
-      document_ids: document_ids,
+      documents_ids: document_ids,
+      custom_documents_ids: custom_documents_ids,
       document_category_id: this.reportData.documents[0].document_category_id,
       billable_item_id: this.paramsId.billId,
       service_request_type_id: this.reportData.documents[0].service_request_type_id,
