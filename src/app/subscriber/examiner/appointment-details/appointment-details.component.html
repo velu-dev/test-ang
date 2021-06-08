@@ -478,7 +478,7 @@
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100"
-                            *ngIf="!isSuplimental">
+                            *ngIf="!isSuplimental && !billable_item?.disabled">
                             <mat-label>Date & Time</mat-label>
                             <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" [min]="todayDate.appointment"
                                 formControlName="appointment_scheduled_date_time"
@@ -491,6 +491,15 @@
                             <owl-date-time (afterPickerOpen)="pickerOpened('app')" [hour12Timer]="true" #appointment>
                             </owl-date-time>
                             <mat-error>Please enter valid date & time</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100"
+                            *ngIf="!isSuplimental && billable_item?.disabled">
+                            <mat-label>Date & Time</mat-label>
+                            <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" [min]="todayDate.appointment"
+                                formControlName="appointment_scheduled_date_time"
+                                [value]="appointment_scheduled_date_time">
+                        
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100"
