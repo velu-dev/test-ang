@@ -12,7 +12,7 @@
                     <div class="table-filter m-b-10">
                         <input [formControl]="icdCtrl" [matAutocomplete]="auto" placeholder="Search by code or name">
                         <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option (click)="selectICD(icd)" (onSelectionChange)="selectICD(icd)" [title]="icd[1]" *ngFor="let icd of filteredICD"
+                            <mat-option (onSelectionChange)="selectICD(icd)" [title]="icd[1]" *ngFor="let icd of filteredICD"
                                 [value]="icd[1]">
                                 {{icd[0] + " "+ icd[1]}}
                             </mat-option>
