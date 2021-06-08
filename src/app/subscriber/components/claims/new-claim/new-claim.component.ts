@@ -307,8 +307,8 @@ export class NewClaimComponent implements OnInit {
             this.primary_language_spoken = claimant.data[0].primary_language_spoken ? true : false;
             this.changeState(claimant.data[0].state, 'claimant', claimant.data[0].state_code);
             console.log("claimant state", claimant.data[0].state)
-            this.claimant.patchValue(claimant.data[0]);
             this.claimant.patchValue({ ssn: "999999999" })
+            this.claimant.patchValue(claimant.data[0]);
             this.isclaimantfill = true;
             this.isClaimantFilled = false;
             this.claim.patchValue({
