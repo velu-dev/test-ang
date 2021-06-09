@@ -178,11 +178,12 @@
     <div class="exam-info w-100" fxLayout="row wrap" *ngIf="isDisplayStatus.status">
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="show-mobile show-sm">
             <span>
-                <button *ngIf="supplemenalStatus.examination_status != 16 && supplemenalStatus.examination_status != 35" mat-raised-button (click)="changeEditStatus()"
-                    class="filled-gray edit_btn" [disabled]="isExaminationStatusEdit">Cancel
+                <button *ngIf="supplemenalStatus.examination_status != 16 && supplemenalStatus.examination_status != 35"
+                    mat-raised-button (click)="changeEditStatus()" class="filled-gray edit_btn"
+                    [disabled]="isExaminationStatusEdit">Cancel
                     Supplemental</button>
-                <button *ngIf="supplemenalStatus.examination_status == 16 || supplemenalStatus.examination_status == 35" type="submit" mat-raised-button (click)="supplementalreopen(16)"
-                class="filled-gray edit_btn">Reopen
+                <button *ngIf="supplemenalStatus.examination_status == 16 || supplemenalStatus.examination_status == 35"
+                    type="submit" mat-raised-button (click)="supplementalreopen(16)" class="filled-gray edit_btn">Reopen
                     Supplemental</button>
                 <!-- <button *ngIf="supplemenalStatus.examination_status != 16 && supplemenalStatus.examination_status != 35"
                     mat-raised-button (click)="changeEditStatus()" [disabled]="isExaminationStatusEdit"
@@ -499,7 +500,7 @@
                             <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" [min]="todayDate.appointment"
                                 formControlName="appointment_scheduled_date_time"
                                 [value]="appointment_scheduled_date_time">
-                        
+
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100"
@@ -779,7 +780,7 @@
 
                 <div class="user-detail  vertical-fixed default-cursor">
                     <table mat-table [dataSource]="documentsData" multiTemplateDataRows
-                        class="mat-elevation-z8 user-table" matSort>
+                        class="mat-elevation-z8 user-table" matSort #docSort="matSort">
                         <ng-container matColumnDef="{{column}}"
                             *ngFor="let column of displayedColumnsForDocuments; let i=index">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header
@@ -794,8 +795,8 @@
                                 <div>
                                     <span *ngIf="column == 'doc_image'" class="file_type_icon"><img
                                             [src]="element?.file_name | fileType" alt=""></span>
-                                    <span *ngIf="column == 'file_name'"> {{element.file_name}} </span>
-                                    <span *ngIf="column == 'updatedAt'">{{element.updatedAt | date:'MM-dd-yyyy hh:mm
+                                    <span *ngIf="column == 'file_name'"> {{element?.file_name}} </span>
+                                    <span *ngIf="column == 'updatedAt'">{{element?.updatedAt | date:'MM-dd-yyyy hh:mm
                                         a'}}</span>
                                     <span *ngIf="column == 'pfs' && element?.proof_of_service_file_name">
                                         <a target="_self" class="text-success"
@@ -998,10 +999,7 @@
                         <div>
                             <span *ngIf="column == 'module'">{{element?.module}}</span>
                             <span *ngIf="column == 'action_details'">{{element?.action_details}}</span>
-                            <span *ngIf="column == 'created_by'">{{(element?.created_by?.first_name ?
-                                element?.created_by?.first_name : "") + " "
-                                +(element?.created_by?.last_name ? element?.created_by?.last_name :
-                                "")+(element?.created_by?.suffix ?(", "+element?.created_by?.suffix) : "" )}}</span>
+                            <span *ngIf="column == 'created_by'">{{element?.created_by}}</span>
                             <span *ngIf="column == 'createdAt'">{{element?.createdAt == "-" ? element?.createdAt :
                                 (element?.createdAt |
                                 date:'MM-dd-yyyy h:mm a')}}</span>
@@ -1021,10 +1019,7 @@
                             [@detailExpand]="actionLogexpandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="responsive-table">
                                 <div><span>Type</span>{{element?.module}} </div>
-                                <div><span>Created By</span>{{(element?.created_by?.first_name ?
-                                    element?.created_by?.first_name : "") + " "
-                                    +(element?.created_by?.last_name ? element?.created_by?.last_name :
-                                    "")+(element?.created_by?.suffix ?(", "+element?.created_by?.suffix) : "" )}}</div>
+                                <div><span>Created By</span>{{element?.created_by}}</div>
                                 <div><span>Created At</span>{{element?.createdAt == "-" ? element?.createdAt :
                                     (element?.createdAt |
                                     date:'MM-dd-yyyy h:mm a')}}</div>

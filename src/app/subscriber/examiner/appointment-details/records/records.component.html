@@ -174,7 +174,7 @@
       <p class="description">This table lists the record documents that were sent to be summarized.</p>
 
       <div class="user-detail vertical-fixed default-cursor">
-        <table mat-table [dataSource]="dataSoruceOut" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
+        <table mat-table [dataSource]="dataSoruceOut" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort #docSort="matSort">
           <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
             <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">
               {{columnName[i]}}</th>

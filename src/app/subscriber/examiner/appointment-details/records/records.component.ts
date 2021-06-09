@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Observable } from 'rxjs';
@@ -31,7 +31,7 @@ import * as regulation from 'src/app/shared/services/regulations';
   ],
 })
 export class RecordsComponent implements OnInit {
-
+  @ViewChild('docSort', { static: false }) Docsort: MatSort;
   displayedColumns: string[] = ['select', 'name', 'doc_pages', 'action'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
@@ -164,6 +164,7 @@ export class RecordsComponent implements OnInit {
 
       // })
       this.dataSoruceOut = new MatTableDataSource(record.documents_sent_and_received);
+      this.dataSoruceOut.sort = this.Docsort;
       this.dataSoruceIn = new MatTableDataSource(inFile)
       this.rushRequest = false;
       this.statusBarChanges(this.recordData.on_demand_status)

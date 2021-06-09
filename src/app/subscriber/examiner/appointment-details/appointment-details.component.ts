@@ -89,10 +89,11 @@ export class AppointmentDetailsComponent implements OnInit {
   documentsData: any = [];
   displayedColumns = ['doc_image', 'doc_name', 'date', 'action'];
   dataSource: any = [];
-  @ViewChild('MatSortActivity', { static: true }) sort: MatSort;
-  @ViewChild('MatPaginatorActivity', { static: true }) paginator: MatPaginator;
-  @ViewChild('MatSortNote', { static: true }) sortNote: MatSort;
-  @ViewChild('MatPaginatorNote', { static: true }) paginatorNote: MatPaginator;
+  @ViewChild('docSort', { static: false }) Docsort: MatSort;
+  @ViewChild('MatSortActivity', { static: false }) sort: MatSort;
+  @ViewChild('MatPaginatorActivity', { static: false }) paginator: MatPaginator;
+  @ViewChild('MatSortNote', { static: false }) sortNote: MatSort;
+  @ViewChild('MatPaginatorNote', { static: false }) paginatorNote: MatPaginator;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   xls = globals.xls
   xls_1 = globals.xls_1
@@ -297,6 +298,12 @@ export class AppointmentDetailsComponent implements OnInit {
     })
 
     this.claimService.getActivityLog(this.claim_id, this.billableId).subscribe(res => {
+      res.data.map(user => {
+        user.created_by = (user.created_by.first_name ? user.created_by.first_name : "") + " "
+          + (user.created_by.last_name ? user.created_by.last_name :
+            "") + (user.created_by.suffix ? (", " + user.created_by.suffix) : "")
+      })
+      console.log(res.data);
       this.activityLog = new MatTableDataSource(res.data);
       this.activityLog.sort = this.sort;
       this.activityLog.paginator = this.paginator;
@@ -1333,7 +1340,7 @@ export class AppointmentDetailsComponent implements OnInit {
     }
 
     this.documentsData = new MatTableDataSource(this.tabData);
-    this.documentsData.sort = this.sort;
+    this.documentsData.sort = this.Docsort;
     this.documentsData.filterPredicate = function (data, filter: string): boolean {
       return data.file_name.toLowerCase().includes(filter) || (data.updatedAt && moment(data.updatedAt).format("MM-DD-YYYY hh:mm a").includes(filter));
     };
@@ -1529,6 +1536,8 @@ export class AppointmentDetailsComponent implements OnInit {
             i = i + 1;
           })
           this.documentsData = new MatTableDataSource(this.tabData);
+          this.documentsData.sort = this.Docsort;
+          this.documentsData.paginator = this.paginator;
           this.getDocumentData();
           this.loadActivity();
           this.alertService.openSnackBar("File deleted successfully", 'success');
