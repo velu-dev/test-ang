@@ -46,8 +46,11 @@
                     </div>
                 </div>
 
+                <!-- <div fxFlex="100">
+                    <mat-checkbox class="checkbox_ m-t-0">Subscriber Address is a Service Location</mat-checkbox>
+                </div> -->
                 <div fxFlex="100" *ngIf="this.pageStatus == 2">
-                    <mat-checkbox [disabled]="!isMailingAddressPresent" class="checkbox_ m-t-0"
+                    <mat-checkbox [disabled]="!isMailingAddressPresent" class="checkbox_ m-t-10"
                         (change)="sameAsMailling($event)">
                         Mailing Address is also a
                         Service Location</mat-checkbox>

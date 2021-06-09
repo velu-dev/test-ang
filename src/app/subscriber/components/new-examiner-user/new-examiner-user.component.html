@@ -97,6 +97,9 @@
                                 address in the forms.
                             </div>
                         </div>
+                        <!-- <div fxFlex="100">
+                            <mat-checkbox class="checkbox_ m-t-0">Same as Subscriber Address</mat-checkbox>
+                        </div> -->
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Street Address 1</mat-label>
@@ -374,9 +377,12 @@
                                 <mat-error *ngIf="billingSubmit">Please enter valid billing provider name</mat-error>
                             </mat-form-field>
                         </div>
+                        <!-- <div fxFlex="100">
+                            <mat-checkbox class="checkbox_ m-t-0">Same as Subscriber Address</mat-checkbox>
+                        </div> -->
 
                         <div fxFlex="100">
-                            <mat-checkbox (change)="sameAsMailling($event)" class="checkbox_ m-t-0">Same as Mailing
+                            <mat-checkbox (change)="sameAsMailling($event)" class="checkbox_ m-t-10">Same as Mailing
                                 Address</mat-checkbox>
                         </div>
 
