@@ -1,1 +1,47 @@
-<p>I am PopUP</p>
+<div class="drag-and-drop-file-upload">
+    <mat-card-header class="card-header">
+        <div class="content-wrapper-main-title">Upload your files here</div>
+        <span class="spacer"></span>
+        <button mat-icon-button (click)="onNoClick()"><i class="fa fa-close"></i></button>
+    </mat-card-header>
+    <div class="container">
+        <div class="custom-drag-and-drap">
+            <img [src]="file_upload" alt="File Upload">
+            <h2>Drag and drop</h2>
+            <p>( Supported file formats : .pdf, .doc, .docx )<br /><span>Max file size : 500 MB</span></p>
+            <div>Or</div>
+            <button mat-raised-button class="filled-ternary">Upload from your computer</button>
+        </div>
+        <div class="uploaded-files">
+            <ul>
+                <li>
+                    <img [src]="pdf" alt="File Upload">
+                    <div class="filename">Simplexam | Billing-payment_response_and_late_response-development-progress.pdf </div>
+                    <a class="text-danger">Remove</a>
+                </li>
+
+                <li>
+                    <img [src]="pdf" alt="File Upload">
+                    <div class="filename">Simplexam | Billing-payment_response_and_late_response-development-progress.pdf </div>
+                    <a class="text-danger">Remove</a>
+                </li>
+
+                <li>
+                    <img [src]="pdf" alt="File Upload">
+                    <div class="filename">Simplexam | Billing-payment_response_and_late_response-development-progress.pdf </div>
+                    <a class="text-danger">Remove</a>
+                </li>
+
+                <li>
+                    <img [src]="pdf" alt="File Upload">
+                    <div class="filename">Simplexam | Billing-payment_response_and_late_response-development-progress.pdf </div>
+                    <a class="text-danger">Remove</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="text-center m-b-20">
+        <button mat-stroked-button class="outline-danger" (click)="onNoClick()">Cancel</button>
+        <button mat-stroked-button class="m-l-10 outline-success">Save</button>
+    </div>
+</div>

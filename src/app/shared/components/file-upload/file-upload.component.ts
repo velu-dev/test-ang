@@ -16,6 +16,8 @@ export class FileUploadComponent implements OnInit {
   progressVisible = false;
   progressValue = 0;
 
+  file_upload = globals.file_upload
+  pdf = globals.pdf
 
   constructor(
     public dialog: MatDialog,

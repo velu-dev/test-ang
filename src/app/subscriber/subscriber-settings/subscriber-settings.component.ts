@@ -386,8 +386,9 @@ export class SubscriberSettingsComponent implements OnInit {
   }
   openPopUp() {
     const dialogRef = this.dialog.open(FileUploadComponent, {
-      width: '500px',
-      data: { name: 'make this card the default card', address: true, title: "" }
+      width: '800px',
+      data: { name: 'make this card the default card', address: true, title: "" },
+      panelClass: 'custom-drag-and-drop',
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {

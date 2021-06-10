@@ -1,25 +1,76 @@
 @import "variables";
 
-// .user-disable {
-//   .mat-card-title {
-//     text-align: center;
-//   }
-//   .disable-actions {
-//     text-align: center;
-//     .btn {
-//       border-radius: 50px;
-//       font-size: $font-size-1;
-//       box-shadow: $box-shadow-3;
-//       font-weight: $font-weight-bold;
-//       height: 35px;
-//       cursor: pointer;
-//       &:hover {
-//         box-shadow: $box-shadow-1;
-//       }
-//       &:focus, &::-moz-focus-inner {
-//         outline: none !important;
-//         border: none !important;
-//       }
-//     }
-//   }
-// }
+.drag-and-drop-file-upload {
+    .card-header {
+        background-color: $info-bg;
+        border: 1px solid;
+        border-color: $info-border;
+        padding: 8px 10px;
+        .content-wrapper-main-title {
+            color: $info;
+            padding-top: 10px;
+            margin-bottom: 0px;
+        }
+    }
+    .container {
+        margin: 30px 0 20px 0;
+        width: $width-100;
+        min-height: 50vh;
+        .custom-drag-and-drap {
+            border: 2px dashed $primary;
+            border-radius: 5px;
+            width: 90%;
+            margin: 0px auto;
+            padding: 40px 0px;
+            text-align: center;
+            display: block;
+            box-shadow: $box-shadow-1;
+            h2 {
+                margin: 5px 0;
+                font-weight: 300;
+            }
+            p {
+                font-size: $font-size-1;
+                font-weight: $font-weight-medium;
+                margin: 5px 0;
+                span {
+                    font-weight: $font-weight-base;
+                    font-size: $font-size-7
+                }
+            }
+            div {
+                color: $light-gray;
+                margin: 5px 0;
+            }
+        }
+        .uploaded-files {
+            width: 90%;
+            margin: 0px auto;
+            ul {
+                padding-left: 0;
+                li {
+                    list-style-type: none;
+                    margin-bottom: 8px;
+                    color: $light;
+                    background-color: $light-bg;
+                    border: 1px solid $light-border;
+                    border-radius: 5px;
+                    padding:8px 10px;
+                    display:flex;
+                    img {
+                        max-width: 25px;
+                        padding-right: 10px;
+                    }
+                    .filename {
+                        min-width: 85%;
+                        font-size: $font-size-1;
+                    }
+                    a {
+                        float:right;
+                        font-size: $font-size-1;
+                    }
+                }
+            }
+        }
+    }
+}
