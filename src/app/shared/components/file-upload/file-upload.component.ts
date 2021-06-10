@@ -9,6 +9,9 @@ import * as globals from '../../../globals';
 export class FileUploadComponent implements OnInit {
   info = globals.info
   alert = globals.alert
+  file_upload = globals.file_upload
+  pdf = globals.pdf
+
   constructor(
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<FileUploadComponent>,
