@@ -75,6 +75,7 @@ import { BillingDocumentComponent } from './examiner/appointment-details/billing
 import { BillingInfoComponent } from './examiner/appointment-details/billing/billing-info/billing-info.component';
 import { SubmissionComponent } from './examiner/appointment-details/billing/submission/submission.component';
 import { LateResponseComponent } from './examiner/appointment-details/billing/late-response/late-response.component';
+import { FileUploadComponent } from '../shared/components/file-upload/file-upload.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -160,7 +161,8 @@ import { LateResponseComponent } from './examiner/appointment-details/billing/la
     BillingDocumentComponent,
     BillingInfoComponent,
     SubmissionComponent,
-    LateResponseComponent
+    LateResponseComponent,
+    FileUploadComponent
    
   ],
   entryComponents: [
@@ -184,7 +186,8 @@ import { LateResponseComponent } from './examiner/appointment-details/billing/la
     SecondBillReview,
     MailOnDemandConfirm,
     EditResponse,
-    LateResponse
+    LateResponse,
+    FileUploadComponent
     // DefenseAttorneyComponent,
     // ApplicationAttorneyComponent,
     // DeoComponent,

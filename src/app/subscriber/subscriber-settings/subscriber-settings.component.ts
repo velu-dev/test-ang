@@ -23,6 +23,7 @@ import { StripeService } from '../service/stripe.service';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { saveAs } from 'file-saver';
+import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 
 /*Treeview*/
 interface PaymentHistroy {
@@ -382,6 +383,17 @@ export class SubscriberSettingsComponent implements OnInit {
 
 
 
+  }
+  openPopUp() {
+    const dialogRef = this.dialog.open(FileUploadComponent, {
+      width: '500px',
+      data: { name: 'make this card the default card', address: true, title: "" }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        
+      }
+    })
   }
   getAddress() {
     this.userService.getSubscriberAddress().subscribe(res => {

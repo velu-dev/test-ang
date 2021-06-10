@@ -93,6 +93,10 @@
                                                 mat-stroked-button class="upload_btn outline-success m-t-3">Upload
                                             </button>
 
+                                            <!-- <button matSuffix type="button" mat-stroked-button (click)="openPopUp()"
+                                                class="upload_btn outline-success m-t-3">Open PopUp
+                                            </button> -->
+
                                             <div fxFlex="100" *ngIf="!signData" class="m-t-20">
                                                 <div class="empty-image m-l-10">
                                                     No image uploaded
@@ -777,7 +781,9 @@
                                 <div fxFlex="50" class="text-right m-b-5">
                                     <button (click)="expandAll()" mat-raised-button
                                         class="filled-gray mini-btn m-t-15 font-weight-600">
-                                        <i [ngClass]="isExpanded ? 'fas fa-minus p-r-5' : 'fas fa-plus p-r-5'"></i>{{isExpanded ? "Collapse All" : "Expand All"}}
+                                        <i
+                                            [ngClass]="isExpanded ? 'fas fa-minus p-r-5' : 'fas fa-plus p-r-5'"></i>{{isExpanded
+                                        ? "Collapse All" : "Expand All"}}
                                     </button>
                                 </div>
                                 <div class="divider"></div>
@@ -968,7 +974,8 @@
                                 </mat-form-field>
 
                                 <div class="text-center w-100 m-t-10 action">
-                                    <button mat-stroked-button type="button" (click)="cancel()" class="outline-danger">Cancel</button>
+                                    <button mat-stroked-button type="button" (click)="cancel()"
+                                        class="outline-danger">Cancel</button>
                                     <button mat-stroked-button class="m-l-10 outline-success">Save</button>
                                 </div>
                             </form>
