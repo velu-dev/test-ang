@@ -41,7 +41,7 @@ import { AlertDialogueComponent } from './components/alert-dialogue/alert-dialog
 import { BillingAlertComponent } from './components/billingalert/billing-alert.component';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { RegulationDialogueComponent } from './components/regulation-dialogue/regulation-dialogue.component';
-import { DxCheckBoxModule, DxDataGridComponent, DxFileUploaderModule, DxHtmlEditorModule, DxProgressBarModule, DxToolbarComponent, DxToolbarModule } from 'devextreme-angular';
+// import { DxCheckBoxModule, DxDataGridComponent, DxFileUploaderModule, DxHtmlEditorModule, DxProgressBarModule, DxToolbarComponent, DxToolbarModule } from 'devextreme-angular';
 export const MY_MOMENT_FORMATS = {
   parseInput: 'MM-DD-YYYY HH:mm A z',
   fullPickerInput: 'MM-DD-YYYY HH:mm A z',
@@ -89,7 +89,7 @@ export const MY_MOMENT_FORMATS = {
     BreadcrumbModule,
     NgxMatSelectSearchModule,
     MaterialModule,
-    DxFileUploaderModule, DxProgressBarModule, DxHtmlEditorModule, DxCheckBoxModule, DxToolbarModule
+    // DxFileUploaderModule, DxProgressBarModule, DxHtmlEditorModule, DxCheckBoxModule, DxToolbarModule
   ],
   exports: [
     MaterialModule,
@@ -117,7 +117,7 @@ export const MY_MOMENT_FORMATS = {
     AlertDialogComponent,
     BreadcrumbModule,
     NgxMatSelectSearchModule,
-    DxFileUploaderModule, DxProgressBarModule, DxHtmlEditorModule, DxCheckBoxModule, DxToolbarModule
+    // DxFileUploaderModule, DxProgressBarModule, DxHtmlEditorModule, DxCheckBoxModule, DxToolbarModule
   ],
   providers: [
     CognitoService,
