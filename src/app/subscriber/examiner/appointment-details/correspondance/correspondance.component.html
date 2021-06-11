@@ -2,7 +2,7 @@
   <div fxLayout="row wrap" class="ondemand-status p-t-20">
     <div fxFlex="100" class="container">
       <div class="main-title">Mail On Demand <span *ngIf="!isIME" class="custom-info regulation" (click)="openPopup(regulation?.regulationsForCorrespondence?.title, regulation?.regulationsForCorrespondence?.codes)"><i class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
-      <p class="description">View the progress of Correspondence Mail On Demand service here.</p>
+      <p class="description">View the progress of Mailing Mail On Demand service here.</p>
       <mat-progress-bar mode="determinate" class="p-l-0" value="{{statusBarValues?.value}}" class="progress">
       </mat-progress-bar>
       <div class="text-center">{{correspondData?.on_demand_status}}</div>
