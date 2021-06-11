@@ -576,22 +576,22 @@ export class NewExaminerUserComponent implements OnInit {
 
     })
     this.billingProviderForm.get('street1').valueChanges
-    .pipe(
-      debounceTime(500),
-    ).subscribe(key => {
-      if (key && typeof (key) == 'string')
-        key = key.trim();
-      this.isBAddressSearched = true;
-      if (key)
-        this.claimService.searchAddress(key).subscribe(address => {
-          this.streetBAddressList = address.suggestions;
-          this.isBAddressError = false;
-        }, error => {
-          if (error.status == 0)
-            this.isBAddressError = true;
-          this.streetBAddressList = [];
-        })
-    })
+      .pipe(
+        debounceTime(500),
+      ).subscribe(key => {
+        if (key && typeof (key) == 'string')
+          key = key.trim();
+        this.isBAddressSearched = true;
+        if (key)
+          this.claimService.searchAddress(key).subscribe(address => {
+            this.streetBAddressList = address.suggestions;
+            this.isBAddressError = false;
+          }, error => {
+            if (error.status == 0)
+              this.isBAddressError = true;
+            this.streetBAddressList = [];
+          })
+      })
     this.billingProviderForm.get("phone_no1").valueChanges.subscribe(res => {
       if (this.billingProviderForm.get("phone_no1").value && this.billingProviderForm.get("phone_no1").valid) {
         this.billingProviderForm.get("phone_ext1").enable();
@@ -1395,9 +1395,41 @@ export class NewExaminerUserComponent implements OnInit {
         return this.states[i].state_code;
       }
   }
+  addressesCheck = { mailing_as_subscriber: false, billing_as_subsciber: false, billing_as_mailing: false }
+  subscriberMailAddress: any;
+  sameAsSubscriber(e, type) {
+    if (e.checked) {
+      this.userService.getSubscriberAddress().subscribe(res => {
+        delete res.data.id;
+        this.subscriberMailAddress = res.data;
+        if (type == 'mailing') {
+          this.changeState("", 'mailing', res.data.state_code)
+          this.mailingAddressForm.patchValue(res.data);
+          this.states.map(state => {
+            if (res.data.state_id == state.id) {
+              console.log(state)
+              this.mailingAddressForm.patchValue({ state: state.id });
+            }
+          })
+        }
+        if (type == 'billing') {
+          this.addressesCheck.billing_as_mailing = false
+          this.changeState("", 'cms', res.data.state_code)
+          this.billingProviderForm.patchValue(res.data);
+          this.states.map(state => {
+            if (res.data.state_id == state.id) {
+              console.log(state)
+              this.billingProviderForm.patchValue({ state: state.id });
+            }
+          })
+        }
+      })
+    }
+  }
 
   sameAsMailling(e) {
     if (e.checked) {
+      this.addressesCheck.billing_as_subsciber = false;
       let addAddress = {
         street1: this.mailingAddressForm.value.street1,
         street2: this.mailingAddressForm.value.street2,

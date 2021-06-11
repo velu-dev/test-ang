@@ -387,12 +387,13 @@ export class SubscriberSettingsComponent implements OnInit {
   openPopUp() {
     const dialogRef = this.dialog.open(FileUploadComponent, {
       width: '800px',
-      data: { name: 'make this card the default card', address: true, title: "" },
+      data: { name: 'make this card the default card', address: true, isMultiple: false },
       panelClass: 'custom-drag-and-drop',
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        
+        console.log(result)
+        this.fileChangeEvent(null, result.files)
       }
     })
   }
@@ -849,11 +850,13 @@ export class SubscriberSettingsComponent implements OnInit {
 
   }
 
-  fileChangeEvent(event: any): void {
-    let fileName = event.target.files[0].name;
+  fileChangeEvent(event: any, files?): void {
+    let file = files ? files : event.target.files
+    let fileName = file[0].name;
+    fileName = file ? file[0].name : null;
     let fileTypes = ['png', 'jpg', 'jpeg']
-    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
-      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
+    if (fileTypes.includes(file.name.split('.').pop().toLowerCase())) {
+      var FileSize = file.size / 1024 / 1024; // in MB
       if (FileSize >= 3.5) {
         this.fileUpload.nativeElement.value = "";
         //this.alertService.openSnackBar("File size is too large", 'error');
@@ -861,7 +864,7 @@ export class SubscriberSettingsComponent implements OnInit {
         this.openDialog(title, 'File size should be upto 3MB !')
         return;
       }
-      this.selectedFile = event.target.files[0].name;
+      this.selectedFile = file.name;
       this.openSign(event);
     } else {
       this.selectedFile = null;
