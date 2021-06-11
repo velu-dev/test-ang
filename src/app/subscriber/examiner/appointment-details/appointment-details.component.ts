@@ -1100,7 +1100,7 @@ export class AppointmentDetailsComponent implements OnInit {
   openPopup() {
     const dialogRef = this.dialog.open(AlertDialogueComponent, {
       width: '500px',
-      data: { title: 'No values provided for appointment date & time and duration', message: "correspondence is not allowed", yes: false, ok: true, no: false, type: "info", info: true }
+      data: { title: 'No values provided for appointment date & time and duration', message: "Mailing is not allowed", yes: false, ok: true, no: false, type: "info", info: true }
     });
     dialogRef.afterClosed().subscribe(result => {
       return
