@@ -277,8 +277,8 @@
                         <div fxFlex="100">
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
                                 fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Tax ID</mat-label>
-                                <input matInput placeholder="Tax ID"
+                                <mat-label>{{billingProviderForm.value.is_person ? 'SSN' : 'EIN'}}</mat-label>
+                                <input matInput [placeholder]="billingProviderForm.value.is_person ? 'SSN' : 'EIN'"
                                     [mask]="billingProviderForm.value.is_person ? '000-00-0000' : '00-0000000'"
                                     formControlName="tax_id" autocomplete="off">
                                 <mat-error *ngIf="billingSubmit">Please enter valid tax ID</mat-error>
