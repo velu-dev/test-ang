@@ -1424,6 +1424,39 @@ export class NewExaminerUserComponent implements OnInit {
           })
         }
       })
+    } else {
+      if (type == 'billing') {
+        let addresEmpty = {
+          street1: null,
+          street2: null,
+          city: null,
+          state: null,
+          zip_code: null,
+          phone_no1: null,
+          phone_ext1: null,
+          fax_no: null
+        }
+        this.billingProviderForm.patchValue(addresEmpty);
+      }
+      if (type == 'mailing') {
+        let data = {
+          first_name: null,
+          street1: null,
+          street2: null,
+          city: null,
+          state: null,
+          zip_code: null,
+          phone_no1: null,
+          phone_ext1: null,
+          phone_no2: null,
+          phone_ext2: null,
+          fax_no: null,
+          email: null,
+          contact_person: null,
+          notes: null,
+        }
+        this.mailingAddressForm.patchValue(data);
+      }
     }
   }
 
