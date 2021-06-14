@@ -771,7 +771,7 @@ export class AppointmentDetailsComponent implements OnInit {
           this.documentsDeclared[i] = res.data
           group.get('isEditable').setValue(false);
           group.get('id').setValue(res.data.id);
-
+          this.loadActivity();
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');
         })
