@@ -97,6 +97,12 @@
                                 address in the forms.
                             </div>
                         </div>
+                        <div fxFlex="100">
+                            <mat-checkbox (change)="sameAsSubscriber($event, 'mailing')"
+                                [(ngModel)]="addressesCheck.mailing_as_subscriber" [ngModelOptions]="{standalone: true}"
+                                class="checkbox_ m-t-0">Same as
+                                Subscriber Address</mat-checkbox>
+                        </div>
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Street Address 1</mat-label>
@@ -274,8 +280,8 @@
                         <div fxFlex="100">
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
                                 fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Tax ID</mat-label>
-                                <input matInput placeholder="Tax ID"
+                                <mat-label>{{billingProviderForm.value.is_person ? 'SSN' : 'EIN'}}</mat-label>
+                                <input matInput [placeholder]="billingProviderForm.value.is_person ? 'SSN' : 'EIN'"
                                     [mask]="billingProviderForm.value.is_person ? '000-00-0000' : '00-0000000'"
                                     formControlName="tax_id" autocomplete="off">
                                 <mat-error *ngIf="billingSubmit">Please enter valid tax ID</mat-error>
@@ -374,10 +380,17 @@
                                 <mat-error *ngIf="billingSubmit">Please enter valid billing provider name</mat-error>
                             </mat-form-field>
                         </div>
+                        <div fxFlex="100">
+                            <mat-checkbox (change)="sameAsSubscriber($event, 'billing');" class="checkbox_ m-t-0"
+                                [(ngModel)]="addressesCheck.billing_as_subsciber" [ngModelOptions]="{standalone: true}">
+                                Same as Subscriber Address</mat-checkbox>
+                        </div>
 
                         <div fxFlex="100">
-                            <mat-checkbox (change)="sameAsMailling($event)" class="checkbox_ m-t-0">Same as Mailing
+                            <mat-checkbox (change)="sameAsMailling($event)"
+                                class="checkbox_ m-t-10" [(ngModel)]="addressesCheck.billing_as_mailing" [ngModelOptions]="{standalone: true}">Same as Mailing
                                 Address</mat-checkbox>
+                                <!--  -->
                         </div>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"

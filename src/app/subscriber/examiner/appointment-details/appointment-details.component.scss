@@ -355,6 +355,9 @@
                 top: 50px;
             }
         }
+        .custom-info.supplemental {
+            position: inherit !important;
+        }
         .notes {
             @media only screen and (max-width: 568px) {
                 margin-top: 20px;
@@ -367,6 +370,7 @@
             border: 1px solid $light-border;
             border-radius: 5px;
             width: $width-100;
+            margin-top: 15px;
             .reason {
                 font-size: $font-size-1;
                 font-weight: $font-weight-bold;
@@ -391,7 +395,7 @@
             th {
                 position: sticky;
                 top: 0; /* Don't forget this, required for the stickiness */
-                z-index: 9999;
+                z-index: 1;
                 box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
             }
             tr {

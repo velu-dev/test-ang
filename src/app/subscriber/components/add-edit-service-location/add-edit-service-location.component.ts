@@ -9,6 +9,8 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 import * as globals from './../../../globals';
 import { debounceTime } from 'rxjs/operators';
 import { ClaimService } from '../../service/claim.service';
+import { UserService } from 'src/app/shared/services/user.service';
+import { SubscriberUserService } from '../../service/subscriber-user.service';
 
 @Component({
   selector: 'app-add-edit-service-location',
@@ -42,7 +44,8 @@ export class AddEditServiceLocationComponent implements OnInit {
     private router: Router,
     private cookieService: CookieService,
     public dialog: MatDialog,
-    private claimService: ClaimService
+    private claimService: ClaimService,
+    private userService: SubscriberUserService
   ) {
     this.subscriberService.seedData('state').subscribe(response => {
       this.states = response['data'];
@@ -360,7 +363,58 @@ export class AddEditServiceLocationComponent implements OnInit {
     }
 
   }
-
+  addressesCheck = { mailing_as_subscriber: false, billing_as_subsciber: false, billing_as_mailing: false }
+  subscriberMailAddress: any;
+  sameAsSubscriber(e, type) {
+    if (e.checked) {
+      this.addressesCheck.billing_as_mailing = false
+      this.userService.getSubscriberAddress().subscribe(res => {
+        delete res.data.id;
+        this.subscriberMailAddress = res.data;
+        console.log(res.data)
+        this.changeState("", res.data.state_code)
+        this.locationForm.patchValue(res.data);
+        this.locationForm.patchValue({
+          primary_contact: res.data.contact_person,
+          primary_contact_phone: res.data.phone_no1,
+          phone_ext1: res.data.phone_ext1,
+          alternate_contact_1: res.data.alternate_contact_1,
+          alternate_contact_1_phone: res.data.phone_no2,
+          phone_ext2: res.data.phone_ext2,
+          alternate_contact_2: res.data.phone_ext2,
+          alternate_contact_2_phone: res.data.alternate_contact_2_phone,
+          phone_ext3: res.data.phone_ext3
+        })
+        this.states.map(state => {
+          if (res.data.state_id == state.id) {
+            this.locationForm.patchValue({ state: state.id });
+          }
+        })
+      })
+    } else {
+      let addresEmpty = {
+        street1: null,
+        street2: null,
+        city: null,
+        state: null,
+        zip_code: null,
+        phone_no: null,
+        phone_ext: null,
+        fax_no: null,
+        email: null,
+        primary_contact: "",
+        primary_contact_phone: "",
+        alternate_contact_1_phone: "",
+        phone_ext1: "",
+        alternate_contact_1: "",
+        phone_ext2: "",
+        phone_ext3: "",
+        alternate_contact_2: "",
+        alternate_contact_2_phone: "",
+      }
+      this.locationForm.patchValue(addresEmpty)
+    }
+  }
   edit() {
     this.editStatus = true;
     this.locationForm.enable();
@@ -435,6 +489,7 @@ export class AddEditServiceLocationComponent implements OnInit {
   sameAsMailling(e) {
     console.log(this.maillingAddress)
     if (e.checked) {
+      this.addressesCheck.billing_as_subsciber = true;
       if (!this.maillingAddress) {
         this.locationForm.patchValue(this.maillingAddress);
         this.locationForm.patchValue({
@@ -451,6 +506,7 @@ export class AddEditServiceLocationComponent implements OnInit {
         this.changeState(this.maillingAddress.state, this.maillingAddress.state_code)
 
       } else {
+        this.addressesCheck.billing_as_subsciber = false;
         this.locationForm.patchValue({
           primary_contact: this.maillingAddress.contact_person,
           primary_contact_phone: this.maillingAddress.phone_no1,

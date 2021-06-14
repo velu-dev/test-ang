@@ -43,6 +43,8 @@ export const api_endpoint = {
     getExaminerUser: 'subscriber/examiner/details/',
     postUninvite: 'subscriber/uninvite-user/',
     getBreadcrumbDetails: 'billable-item/claimant-claim-details',
+    getSubscriberAddress: 'subscriber/address-details',
+    addSubscriberAddress: 'subscriber/add-address',
 
     //examiner
     createMailingAddress: 'subscriber/examiner/mailing-address-create/',
@@ -168,7 +170,7 @@ export const api_endpoint = {
     //Corresponding
     getcorrespondence_data: "billing/ondemand/correspondence/",
     getTracking: "service-requests/correspondence/tracking/",
-    tracingPopup: "service-requests/correspondence/tracing/",
+    tracingPopup: "service-requests/tracing/",
     getCorresIncomplete: "billing/correspondence-incomplete-information/",
     document_upload: "examinations/document-upload",
     create_custom_recipient: "billing/ondemand/correspondence/add-custom-recipient/",
@@ -179,6 +181,7 @@ export const api_endpoint = {
     uploadExaminationFile: "billing/ondemand/examination-upload",
     listExaminationUploadedDocs: "billing/ondemand/examination-document-list/",
     uploadCustomDoc: 'billing/custom-document-upload',
+    dtmGetdata: 'service-requests/billing/tracking/',
 
     //billing
     createbill: 'billing/create/',

@@ -76,6 +76,7 @@ import { BillingInfoComponent } from './examiner/appointment-details/billing/bil
 import { SubmissionComponent } from './examiner/appointment-details/billing/submission/submission.component';
 import { LateResponseComponent } from './examiner/appointment-details/billing/late-response/late-response.component';
 import { DxCheckBoxModule, DxDataGridComponent, DxFileUploaderModule, DxHtmlEditorModule, DxProgressBarModule, DxToolbarComponent, DxToolbarModule } from 'devextreme-angular';
+import { FileUploadComponent } from '../shared/components/file-upload/file-upload.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -162,6 +163,8 @@ import { DxCheckBoxModule, DxDataGridComponent, DxFileUploaderModule, DxHtmlEdit
     BillingInfoComponent,
     SubmissionComponent,
     LateResponseComponent,
+    FileUploadComponent
+   
   ],
   entryComponents: [
     ClaimantPopupComponent,
@@ -184,7 +187,8 @@ import { DxCheckBoxModule, DxDataGridComponent, DxFileUploaderModule, DxHtmlEdit
     SecondBillReview,
     MailOnDemandConfirm,
     EditResponse,
-    LateResponse
+    LateResponse,
+    FileUploadComponent
     // DefenseAttorneyComponent,
     // ApplicationAttorneyComponent,
     // DeoComponent,

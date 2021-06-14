@@ -10,6 +10,7 @@ import { User } from 'src/app/shared/model/user.model';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { Location } from '@angular/common';
+import * as moment from 'moment';
 export interface PeriodicElement {
   bill_no: string;
   claim_no: string;
@@ -65,6 +66,12 @@ export class BillingComponent implements OnInit {
       this.isMobile = res;
     })
     this.claimService.getBillings().subscribe(res => {
+      res.data.map(data => {
+        data['bill_no'] = data.agent_short_code + data.bill_no;
+        data['examiner_name'] = data.examiner_last_name + " " + data.examiner_first_name + " " + (data.examiner_suffix ? ',' + data.examiner_suffix : '');
+        data['claimant_name'] = data.claimant_last_name + " " + data.claimant_first_name
+        data['claimant_date_of_birth'] = moment(data.claimant_date_of_birth).format('MM-DD-YYYY')
+      })
       this.dataSource = new MatTableDataSource(res.data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -77,7 +84,7 @@ export class BillingComponent implements OnInit {
         this.displayedColumns = ['is_expand', 'bill_no', 'status']
       } else {
         this.columnName = ["Bill #", "Claim #", "Claimant Name", "Date of Birth", "Examiner", "Bill Total", "Status"]
-        this.displayedColumns = ['bill_no', 'claim_number', 'claimant_first_name', "date_of_birth", "examiner_first_name", "paid_amt", "status"]
+        this.displayedColumns = ['bill_no', 'claim_number', 'claimant_name', "claimant_date_of_birth", "examiner_name", "paid_amt", "status"]
       }
     })
   }

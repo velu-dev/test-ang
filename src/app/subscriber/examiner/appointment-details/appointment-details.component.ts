@@ -89,10 +89,11 @@ export class AppointmentDetailsComponent implements OnInit {
   documentsData: any = [];
   displayedColumns = ['doc_image', 'doc_name', 'date', 'action'];
   dataSource: any = [];
-  @ViewChild('MatSortActivity', { static: true }) sort: MatSort;
-  @ViewChild('MatPaginatorActivity', { static: true }) paginator: MatPaginator;
-  @ViewChild('MatSortNote', { static: true }) sortNote: MatSort;
-  @ViewChild('MatPaginatorNote', { static: true }) paginatorNote: MatPaginator;
+  @ViewChild('docSort', { static: false }) Docsort: MatSort;
+  @ViewChild('MatSortActivity', { static: false }) sort: MatSort;
+  @ViewChild('MatPaginatorActivity', { static: false }) paginator: MatPaginator;
+  @ViewChild('MatSortNote', { static: false }) sortNote: MatSort;
+  @ViewChild('MatPaginatorNote', { static: false }) paginatorNote: MatPaginator;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   xls = globals.xls
   xls_1 = globals.xls_1
@@ -115,7 +116,7 @@ export class AppointmentDetailsComponent implements OnInit {
   noteDisable: boolean = false;
   saveButtonStatus: boolean = false;
   file = '';
-  procedureTypeStatus = [{ name: "Correspondence", progress_name: 'correspondence', icon: "far fa-folder-open", for: ["E", "S", "D"], url: "/correspondence" }, { name: "History", progress_name: 'history', icon: "fa fa-history", for: ["E"], url: "/history" }, { name: "Records", progress_name: 'record', icon: "far fa-list-alt", for: ["E", "S"], url: "/records" }, { name: "Examination Documents", progress_name: 'examination', icon: "far fa-edit", for: ["E"], url: "/examination" }, { name: "Transcription & Compilation", progress_name: 'transcription', icon: "fa fa-tasks", for: ["E", "S", "D"], url: "/reports" }, { name: "Billing", progress_name: 'billing', icon: "fa fa-usd", for: ["E", "S", "D"], url: "/billing", billing: true }];
+  procedureTypeStatus = [{ name: "Mailing", progress_name: 'correspondence', icon: "far fa-folder-open", for: ["E", "S", "D"], url: "/correspondence" }, { name: "History", progress_name: 'history', icon: "fa fa-history", for: ["E"], url: "/history" }, { name: "Records", progress_name: 'record', icon: "far fa-list-alt", for: ["E", "S"], url: "/records" }, { name: "Examination Documents", progress_name: 'examination', icon: "far fa-edit", for: ["E"], url: "/examination" }, { name: "Transcription & Compilation", progress_name: 'transcription', icon: "fa fa-tasks", for: ["E", "S", "D"], url: "/reports" }, { name: "Billing", progress_name: 'billing', icon: "fa fa-usd", for: ["E", "S", "D"], url: "/billing", billing: true }];
   procedureTypeList = [];
   forms = [
     { name: "QME-110", group: "QME", value: "110" },
@@ -243,10 +244,10 @@ export class AppointmentDetailsComponent implements OnInit {
 
       if (res) {
         this.activityColumnName = ["", "Action"]
-        this.activityDisplayedColumnsForDocuments = ['is_expand', 'task']
+        this.activityDisplayedColumnsForDocuments = ['is_expand', 'action_details']
       } else {
         this.activityColumnName = ["", "Type", "Action", "Created By", "Created At", "Updated By", "Updated At"]
-        this.activityDisplayedColumnsForDocuments = ["status", 'module', 'task', 'created_by', "createdAt", "updated_by", 'updatedAt']
+        this.activityDisplayedColumnsForDocuments = ["status", 'module', 'action_details', 'created_by', "createdAt", "updated_by", 'updatedAt']
       }
       if (res) {
         this.notecolumnName = ["", "Notes"]
@@ -297,6 +298,12 @@ export class AppointmentDetailsComponent implements OnInit {
     })
 
     this.claimService.getActivityLog(this.claim_id, this.billableId).subscribe(res => {
+      res.data.map(user => {
+        user.created_by = (user.created_by.first_name ? user.created_by.first_name : "") + " "
+          + (user.created_by.last_name ? user.created_by.last_name :
+            "") + (user.created_by.suffix ? (", " + user.created_by.suffix) : "")
+      })
+      console.log(res.data);
       this.activityLog = new MatTableDataSource(res.data);
       this.activityLog.sort = this.sort;
       this.activityLog.paginator = this.paginator;
@@ -306,6 +313,7 @@ export class AppointmentDetailsComponent implements OnInit {
   examinerId = null;
   examinerName = "";
   isFreeze: boolean = false;
+  supplemenalStatus = { examination_status: null, examination_notes: "" }
   loadDatas() {
     this.procedureTypeList = [];
     this.modifiers = [];
@@ -471,7 +479,7 @@ export class AppointmentDetailsComponent implements OnInit {
               }
             }
           })
-
+          this.supplemenalStatus = { examination_status: response.data.appointments.examination_status, examination_notes: response.data.appointments.examination_notes }
           this.examinationStatusForm.patchValue(response.data.appointments);
           this.examinationStatusForm.patchValue({ notes: '', examination_notes: '' });
           if (moment(response.data.appointments.appointment_scheduled_date_time) < moment()) {
@@ -560,10 +568,11 @@ export class AppointmentDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)
       if (result['data']) {
-        this.claimService.removeDeclaredDocument(group.value.id).subscribe(res => {
+        this.claimService.removeDeclaredDocument(group.value.id, { claim_id: this.claim_id, billable_item_id: this.billableId }).subscribe(res => {
           this.alertService.openSnackBar('Documents declared details removed successfully!', "success")
           const control = this.docDeclearTable.get('tableRows') as FormArray;
           control.removeAt(i);
+          this.loadActivity();
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');
         })
@@ -796,6 +805,25 @@ export class AppointmentDetailsComponent implements OnInit {
     } else {
       this.billable_item.get(["intake_call", "phone_ext"]).disable();
     }
+  }
+  supplementalreopen(status?) {
+    let notes = this.examinationStatusForm.value.examination_notes ? this.examinationStatusForm.value.examination_notes.trim() : "";
+    notes = status ? notes : "";
+    let id = status ? this.cancelSupplemental[0].id : null
+    this.examinationStatusForm.patchValue({ id: this.billableId, notes: notes, examination_status: id })
+    let data = this.examinationStatusForm.value
+    data['appointment_id'] = this.appointmentId
+    this.examinerService.updateExaminationStatus(data).subscribe(res => {
+      this.examinationStatusForm.disable()
+      this.isExaminationStatusEdit = false;
+      this.supplemenalStatus = res.data;
+      this.alertService.openSnackBar(res.message, "success");
+      this.examinationStatusForm.patchValue({ examination_status: res.data.examination_status, examination_notes: res.data.examination_notes })
+      this.examinationDetails.appointments = { examination_notes: res.data.examination_notes, examination_status: res.data.examination_status };
+      this.loadDatas();
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
   }
   examinationStatusSubmit() {
     if (this.examinationStatusForm.invalid) {
@@ -1072,7 +1100,7 @@ export class AppointmentDetailsComponent implements OnInit {
   openPopup() {
     const dialogRef = this.dialog.open(AlertDialogueComponent, {
       width: '500px',
-      data: { title: 'No values provided for appointment date & time and duration', message: "correspondence is not allowed", yes: false, ok: true, no: false, type: "info", info: true }
+      data: { title: 'No values provided for appointment date & time and duration', message: "Mailing is not allowed", yes: false, ok: true, no: false, type: "info", info: true }
     });
     dialogRef.afterClosed().subscribe(result => {
       return
@@ -1301,6 +1329,15 @@ export class AppointmentDetailsComponent implements OnInit {
         this.columnName = ["", "Name", "Uploaded On ", "Download On Demand" + '\n' + "Proof of Service", "Action"]
         this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'updatedAt', 'pfs', 'action']
       }
+    } else if (this.tabIndexDetails.index == 5) { // billing Tab
+      if (this.isMobile) {
+        this.columnName = ["", "Name"]
+        this.displayedColumnsForDocuments = ['is_expand', 'file_name']
+      }
+      else {
+        this.columnName = ["", "Name", "Submission", "Type", "Download Sent Documents", "Download Proof of Service"]
+        this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'bill_submission_type', 'type', 'pfs', 'proof_of_service_file_name']
+      }
     } else {
       if (this.isMobile) {
         this.columnName = ["", "Name"]
@@ -1313,7 +1350,7 @@ export class AppointmentDetailsComponent implements OnInit {
     }
 
     this.documentsData = new MatTableDataSource(this.tabData);
-    this.documentsData.sort = this.sort;
+    this.documentsData.sort = this.Docsort;
     this.documentsData.filterPredicate = function (data, filter: string): boolean {
       return data.file_name.toLowerCase().includes(filter) || (data.updatedAt && moment(data.updatedAt).format("MM-DD-YYYY hh:mm a").includes(filter));
     };
@@ -1509,6 +1546,8 @@ export class AppointmentDetailsComponent implements OnInit {
             i = i + 1;
           })
           this.documentsData = new MatTableDataSource(this.tabData);
+          this.documentsData.sort = this.Docsort;
+          this.documentsData.paginator = this.paginator;
           this.getDocumentData();
           this.loadActivity();
           this.alertService.openSnackBar("File deleted successfully", 'success');
