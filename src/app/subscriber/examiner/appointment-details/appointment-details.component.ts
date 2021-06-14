@@ -1329,6 +1329,15 @@ export class AppointmentDetailsComponent implements OnInit {
         this.columnName = ["", "Name", "Uploaded On ", "Download On Demand" + '\n' + "Proof of Service", "Action"]
         this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'updatedAt', 'pfs', 'action']
       }
+    } else if (this.tabIndexDetails.index == 5) { // billing Tab
+      if (this.isMobile) {
+        this.columnName = ["", "Name"]
+        this.displayedColumnsForDocuments = ['is_expand', 'file_name']
+      }
+      else {
+        this.columnName = ["", "Name", "Submission", "Type", "Download Sent Documents", "Download Proof of Service"]
+        this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'bill_submission_type', 'type', 'pfs', 'proof_of_service_file_name']
+      }
     } else {
       if (this.isMobile) {
         this.columnName = ["", "Name"]
