@@ -160,6 +160,7 @@ export class SubscriberSettingsComponent implements OnInit {
   isMultiline: boolean = true;
 
 
+  value: any[] = [];
 
 
   constructor(
@@ -267,6 +268,9 @@ export class SubscriberSettingsComponent implements OnInit {
   onUploadStarted() {
     this.imageSource = "";
     this.progressVisible = true;
+  }
+  submit() {
+    console.log(this.value)
   }
   cardCount = 0;
   listCard() {

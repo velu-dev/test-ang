@@ -207,10 +207,25 @@
                                 <dx-file-uploader #fileUploader dialogTrigger="#dropzone-external"
                                     dropZone="#dropzone-external" [multiple]="true" uploadMode="instantly"
                                     uploadUrl="https://js.devexpress.com/Demos/NetCore/FileUploader/Upload"
-                                    [visible]="false" (onDropZoneEnter)="onDropZoneEnter($event)"
+                                    [(value)]="value" [visible]="false" (onDropZoneEnter)="onDropZoneEnter($event)"
                                     (onDropZoneLeave)="onDropZoneLeave($event)" (onUploaded)="onUploaded($event)"
                                     (onProgress)="onProgress($event)" (onUploadStarted)="onUploadStarted($event)">
                                 </dx-file-uploader>
+                                <div class="content">
+                                    <div *ngIf="value.length > 0">
+                                        <h4>Selected Files</h4>
+                                    </div>
+                                    <div *ngFor="let file of value">
+                                        <div class="selected-item">
+                                            Name:
+                                            <span>{{file.name}}</span><br /> Size:
+                                            <span>{{file.size}}</span>bytes<br /> Type:
+                                            <span>{{file.type}}</span><br /> Last Modified Date:
+                                            <span>{{file.lastModifiedDate}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button (click)="submit()">submit</button>
                             </div>
                             <dx-html-editor height="725px">
                                 <dxo-toolbar [multiline]="isMultiline">

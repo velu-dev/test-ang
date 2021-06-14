@@ -167,14 +167,20 @@
                                     date:'MM-dd-yyyy'}}
                                 </div>
                             </section>
-                            <section>
-                                <span
+                            <section class="navigation">
+                                <span class="box-layout" *ngFor="let dummy of [1,2,3,4,5]">
+                                    <div (click)="openAlert()">
+                                        <span>{{dummy}}</span>
+                                        sdffdsfsdsfd
+                                    </div>
+                                </span>
+                                <!-- <span class="box-layout"
                                     *ngFor="let type of dispalySimpleservice(element?.procedure_type)">
-                                    <div (click)="openExtract(element, type.progress_name )" style="background-color: red;margin-right: 10px;">
+                                    <div (click)="openExtract(element, type.progress_name )">
                                         <span>{{type?.name}}</span>
                                         {{element[type?.status]}}
                                     </div>
-                                </span>
+                                </span> -->
                                 <!-- <span class="box-layout"
                                     *ngIf="element.procedure_type == 'Evaluation' || element.procedure_type  == 'Reevaluation' || element.procedure_type =='Deposition' || element.procedure_type == 'Supplemental' || element.procedure_type == 'IMERecords'">
                                     <div (click)="openExtract(element, 'correspondence' )">
@@ -231,4 +237,13 @@
         <app-nodata *ngIf="dataSource?.filteredData?.length == 0"></app-nodata>
     </div>
     <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+
+    <section class="navigation">
+        <span class="box-layout" *ngFor="let dummy of [1,2,3,4,5]">
+            <div (click)="openAlert()">
+                <span>{{dummy}}</span>
+                sdffdsfsdsfd
+            </div>
+        </span>
+    </section>
 </div>

@@ -198,6 +198,9 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['subscriber/new-intake'])
     }
   }
+  openAlert(){
+    alert("Hi")
+  }
   openExtract(element, type) {
 
     this.intercom.setClaimant(element.claimant_first_name + ' ' + element.claimant_last_name);
