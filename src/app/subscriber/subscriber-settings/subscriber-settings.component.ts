@@ -269,7 +269,7 @@ export class SubscriberSettingsComponent implements OnInit {
     this.progressValue = e.bytesLoaded / e.bytesTotal * 100;
   }
 
-  onUploadStarted() {
+  onUploadStarted(e) {
     this.imageSource = "";
     this.progressVisible = true;
   }
