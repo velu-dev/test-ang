@@ -205,8 +205,7 @@
                                     </dx-progress-bar>
                                 </div>
                                 <dx-file-uploader #fileUploader dialogTrigger="#dropzone-external"
-                                    dropZone="#dropzone-external" [multiple]="true"
-                                    [allowedFileExtensions]="['.jpg', '.jpeg', '.gif', '.png']" uploadMode="instantly"
+                                    dropZone="#dropzone-external" [multiple]="true" uploadMode="instantly"
                                     uploadUrl="https://js.devexpress.com/Demos/NetCore/FileUploader/Upload"
                                     [visible]="false" (onDropZoneEnter)="onDropZoneEnter($event)"
                                     (onDropZoneLeave)="onDropZoneLeave($event)" (onUploaded)="onUploaded($event)"
@@ -218,8 +217,12 @@
                                     <dxi-item name="undo"></dxi-item>
                                     <dxi-item name="redo"></dxi-item>
                                     <dxi-item name="separator"></dxi-item>
-                                    <dxi-item name="size" [acceptedValues]="['8pt', '10pt', '12pt', '14pt', '18pt', '24pt', '36pt']"></dxi-item>
-                                    <dxi-item name="font" [acceptedValues]="['Arial', 'Courier New', 'Georgia', 'Impact', 'Lucida Console', 'Tahoma', 'Times New Roman', 'Verdana']"></dxi-item>
+                                    <dxi-item name="size"
+                                        [acceptedValues]="['8pt', '10pt', '12pt', '14pt', '18pt', '24pt', '36pt']">
+                                    </dxi-item>
+                                    <dxi-item name="font"
+                                        [acceptedValues]="['Arial', 'Courier New', 'Georgia', 'Impact', 'Lucida Console', 'Tahoma', 'Times New Roman', 'Verdana']">
+                                    </dxi-item>
                                     <dxi-item name="separator"></dxi-item>
                                     <dxi-item name="bold"></dxi-item>
                                     <dxi-item name="italic"></dxi-item>
@@ -255,18 +258,14 @@
                                     <dxi-item name="insertColumnRight"></dxi-item>
                                     <dxi-item name="deleteColumn"></dxi-item>
                                 </dxo-toolbar>
-                                <dxo-media-resizing
-                                    [enabled]=true>
+                                <dxo-media-resizing [enabled]=true>
                                 </dxo-media-resizing>
                             </dx-html-editor>
-                            
+
                             <div class="options">
                                 <div class="caption">Options</div>
                                 <div class="option">
-                                    <dx-check-box
-                                        text="Multiline toolbar"
-                                        [(value)]="isMultiline"
-                                    ></dx-check-box>
+                                    <dx-check-box text="Multiline toolbar" [(value)]="isMultiline"></dx-check-box>
                                 </div>
                             </div>
                         </div>
