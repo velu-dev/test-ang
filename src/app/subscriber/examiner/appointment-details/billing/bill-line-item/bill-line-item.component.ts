@@ -55,6 +55,7 @@ export class BillLineItemComponent implements OnInit {
   fileList = [];
   fileName: any = []
   support_documents = [];
+  oneUnitProcedure = ['ml201', 'ml202', 'ml203']
   constructor(private logger: NGXLogger,
     private claimService: ClaimService,
     private breakpointObserver: BreakpointObserver,
@@ -334,10 +335,15 @@ export class BillLineItemComponent implements OnInit {
 
     }
     group.get('isEditable').setValue(true);
+    console.log(group.get('procedure_code').value)
+
     if (group.value.is_auto_generate && this.newFeeScheduleStatus) {
       group.get('procedure_code').disable();
       group.get('unitType').disable();
       group.get('charge').disable();
+      if (this.oneUnitProcedure.includes(group.get('procedure_code').value.toLowerCase())) {
+        group.get('units').disable();
+      }
     }
   }
 

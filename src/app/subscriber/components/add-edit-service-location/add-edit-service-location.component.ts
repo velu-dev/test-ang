@@ -371,8 +371,20 @@ export class AddEditServiceLocationComponent implements OnInit {
       this.userService.getSubscriberAddress().subscribe(res => {
         delete res.data.id;
         this.subscriberMailAddress = res.data;
+        console.log(res.data)
         this.changeState("", res.data.state_code)
         this.locationForm.patchValue(res.data);
+        this.locationForm.patchValue({
+          primary_contact: res.data.contact_person,
+          primary_contact_phone: res.data.phone_no1,
+          phone_ext1: res.data.phone_ext1,
+          alternate_contact_1: res.data.alternate_contact_1,
+          alternate_contact_1_phone: res.data.phone_no2,
+          phone_ext2: res.data.phone_ext2,
+          alternate_contact_2: res.data.phone_ext2,
+          alternate_contact_2_phone: res.data.alternate_contact_2_phone,
+          phone_ext3: res.data.phone_ext3
+        })
         this.states.map(state => {
           if (res.data.state_id == state.id) {
             this.locationForm.patchValue({ state: state.id });
