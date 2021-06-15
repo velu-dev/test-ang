@@ -907,11 +907,11 @@ export class SubscriberSettingsComponent implements OnInit {
 
   fileChangeEvent(event: any, files?): void {
     let file = files ? files : event.target.files
-    let fileName = file[0].name;
-    fileName = file ? file[0].name : null;
+    let fileName = event.target.files[0].name;
+    fileName = event.target.files ? event.target.files[0].name : null;
     let fileTypes = ['png', 'jpg', 'jpeg']
-    if (fileTypes.includes(file.name.split('.').pop().toLowerCase())) {
-      var FileSize = file.size / 1024 / 1024; // in MB
+    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
+      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
       if (FileSize >= 3.5) {
         this.fileUpload.nativeElement.value = "";
         //this.alertService.openSnackBar("File size is too large", 'error');
@@ -919,7 +919,7 @@ export class SubscriberSettingsComponent implements OnInit {
         this.openDialog(title, 'File size should be upto 3MB !')
         return;
       }
-      this.selectedFile = file.name;
+      this.selectedFile = event.target.files[0].name;
       this.openSign(event);
     } else {
       this.selectedFile = null;
