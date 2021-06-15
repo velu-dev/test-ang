@@ -96,9 +96,9 @@
               </button>
             </th>
             <td mat-cell *matCellDef="let element" class="p-l-0">{{element.form_name}}
-              <span class="default-select" *ngIf="element?.is_mandatory">
+              <!-- <span class="default-select" *ngIf="element?.is_mandatory">
                 <img [src]="default_select" alt="Default select">
-              </span>
+              </span> -->
               <span class="custom-list" *ngIf="element.doc_type == 'custom'">
                 <!-- <a  class="text-success" >Edit</a> -->
                 <a class="text-danger m-l-10"

@@ -440,17 +440,17 @@ export class SubscriberSettingsComponent implements OnInit {
 
   }
   openPopUp() {
-    // const dialogRef = this.dialog.open(FileUploadComponent, {
-    //   width: '800px',
-    //   data: { name: 'make this card the default card', address: true, isMultiple: false },
-    //   panelClass: 'custom-drag-and-drop',
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   if (result['data']) {
-    //     console.log(result)
-    //     this.fileChangeEvent(null, result.files)
-    //   }
-    // })
+    const dialogRef = this.dialog.open(FileUploadComponent, {
+      width: '800px',
+      data: { name: 'make this card the default card', address: true, isMultiple: false },
+      panelClass: 'custom-drag-and-drop',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        console.log(result)
+        this.fileChangeEvent(null, result.files)
+      }
+    })
   }
   getAddress() {
     this.userService.getSubscriberAddress().subscribe(res => {
