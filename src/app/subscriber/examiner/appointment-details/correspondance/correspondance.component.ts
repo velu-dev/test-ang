@@ -338,6 +338,19 @@ export class BillingCorrespondanceComponent implements OnInit {
     this.changeColors("#E6E6E6");
   }
   downloadForms(sign) {
+    if (!this.examinerId) {
+      this.alertService.openSnackBar('Please select Examiner', "error");
+      return;
+    }
+    if (this.selection.selected.length == 0) {
+      this.alertService.openSnackBar('Please select Document(s)', "error");
+      return;
+    }
+    if (this.selection1.selected.length > 12) {
+      this.alertService.openSnackBar('Maximum 12 Recipients Allowed', "error");
+      return;
+    }
+
     let ids = [];
     this.selection1.selected.map(res => {
       ids.push(res.id)
@@ -362,18 +375,6 @@ export class BillingCorrespondanceComponent implements OnInit {
     // }
   }
   downloadMethod(sign) {
-    if (!this.examinerId) {
-      this.alertService.openSnackBar('Please select Examiner', "error");
-      return;
-    }
-    if (this.selection.selected.length == 0) {
-      this.alertService.openSnackBar('Please select Document(s)', "error");
-      return;
-    }
-    if (this.selection1.selected.length > 12) {
-      this.alertService.openSnackBar('Maximum 12 Recipients Allowed', "error");
-      return;
-    }
 
     let signHide = false;
     if (sign) {
@@ -656,31 +657,33 @@ export class BillingCorrespondanceComponent implements OnInit {
   }
 
   onDemandSubmit() {
+
+    if (!this.examinerId) {
+      this.alertService.openSnackBar('Please select Examiner', "error");
+      return;
+    }
+    if (this.selection.selected.length == 0 && this.selection1.selected.length == 0) {
+      this.alertService.openSnackBar('Please select Document(s) & Recipient(s)', "error");
+      return;
+    }
+    if (this.selection.selected.length == 0) {
+      this.alertService.openSnackBar('Please select Document(s)', "error");
+      return;
+    }
+    if (this.selection1.selected.length == 0) {
+      this.alertService.openSnackBar('Please select Recipient(s)', "error");
+      return;
+    }
+    if (this.selection1.selected.length > 12) {
+      this.alertService.openSnackBar('Maximum 12 Recipients Allowed', "error");
+      return;
+    }
     let ids = [];
     this.selection1.selected.map(res => {
       ids.push(res.id)
     })
+
     this.onDemandService.getCorresIncomplete(this.claim_id, this.billableId, ids).subscribe(res => {
-      if (!this.examinerId) {
-        this.alertService.openSnackBar('Please select Examiner', "error");
-        return;
-      }
-      if (this.selection.selected.length == 0 && this.selection1.selected.length == 0) {
-        this.alertService.openSnackBar('Please select Document(s) & Recipient(s)', "error");
-        return;
-      }
-      if (this.selection.selected.length == 0) {
-        this.alertService.openSnackBar('Please select Document(s)', "error");
-        return;
-      }
-      if (this.selection1.selected.length == 0) {
-        this.alertService.openSnackBar('Please select Recipient(s)', "error");
-        return;
-      }
-      if (this.selection1.selected.length > 12) {
-        this.alertService.openSnackBar('Maximum 12 Recipients Allowed', "error");
-        return;
-      }
 
 
       let documents_ids: any = [];
