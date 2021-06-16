@@ -1292,6 +1292,7 @@ export class AppointmentDetailsComponent implements OnInit {
     // this.billable_item.value.appointment.examiner_id = this.examinerId;
     this.billable_item.value.documents_received = selectedOrderIds;
     this.billable_item.value.id = this.examinationDetails.appointments.id
+    this.billable_item.value.intake_call.call_date = moment(this.billable_item.get(['intake_call', 'call_date']).value).format("MM-DD-YYYY");
     this.examinerService.updateBillableItem(this.billableData.id, this.billable_item.value).subscribe(res => {
       this.isEditBillableItem = false;
       this.billable_item.disable();
