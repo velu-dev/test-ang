@@ -1337,7 +1337,7 @@ export class AppointmentDetailsComponent implements OnInit {
       }
       else {
         this.columnName = ["", "Name", "Submission", "Type", "Download Sent Documents", "Download Proof of Service"]
-        this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'bill_submission_type', 'type', 'pfs', 'proof_of_service_file_name']
+        this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'bill_submission_type', 'type', 'send', 'pfs']
       }
     } else {
       if (this.isMobile) {

@@ -807,7 +807,7 @@
                                         <a *ngIf="element?.isdtm_request">Mailed On Demand</a>
                                     </span>
                                     <span *ngIf="column == 'bill_submission_type'">
-                                        {{element?.bill_submission_type}}
+                                        {{element?.bill_submission_type ? element?.bill_submission_type : 'First'}}
                                     </span>
                                     <span *ngIf="column == 'action' && !element?.proof_of_service_file_name"
                                         class="text-center no-wrap-td">
