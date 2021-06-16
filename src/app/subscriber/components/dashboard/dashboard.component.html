@@ -168,17 +168,17 @@
                                 </div>
                             </section>
                             <section class="navigation">
-                                <span class="box-layout"
+                                <!-- <span class="box-layout"
                                     *ngFor="let type of dispalySimpleservice(element?.procedure_type)">
                                     <div (click)="openExtract(element, type.progress_name )">
                                         <span>{{type?.name}}</span>
                                         {{element[type?.status]}}
                                     </div>
-                                </span>
-                                <!-- <span class="box-layout"
+                                </span> -->
+                                <span class="box-layout"
                                     *ngIf="element.procedure_type == 'Evaluation' || element.procedure_type  == 'Reevaluation' || element.procedure_type =='Deposition' || element.procedure_type == 'Supplemental' || element.procedure_type == 'IMERecords'">
                                     <div (click)="openExtract(element, 'correspondence' )">
-                                        <span>Correspondence</span>
+                                        <span>Appointment Notification</span>
                                         {{element['correspondence_status']}}
                                     </div>
                                 </span>
@@ -216,7 +216,7 @@
                                         <span>Billing</span>
                                         {{element['bill_on_demand_status']}}
                                     </div>
-                                </span> -->
+                                </span>
                             </section>
                         </div>
                     </div>
