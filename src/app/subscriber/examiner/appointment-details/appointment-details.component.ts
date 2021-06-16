@@ -1292,6 +1292,7 @@ export class AppointmentDetailsComponent implements OnInit {
     // this.billable_item.value.appointment.examiner_id = this.examinerId;
     this.billable_item.value.documents_received = selectedOrderIds;
     this.billable_item.value.id = this.examinationDetails.appointments.id
+    this.billable_item.value.intake_call.call_date = this.billable_item.get(['intake_call', 'call_date']).value ? moment(this.billable_item.get(['intake_call', 'call_date']).value).format("MM-DD-YYYY") : null;
     this.examinerService.updateBillableItem(this.billableData.id, this.billable_item.value).subscribe(res => {
       this.isEditBillableItem = false;
       this.billable_item.disable();
@@ -1336,7 +1337,7 @@ export class AppointmentDetailsComponent implements OnInit {
       }
       else {
         this.columnName = ["", "Name", "Submission", "Type", "Download Sent Documents", "Download Proof of Service"]
-        this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'bill_submission_type', 'type', 'pfs', 'proof_of_service_file_name']
+        this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'bill_submission_type', 'type', 'send', 'pfs']
       }
     } else {
       if (this.isMobile) {

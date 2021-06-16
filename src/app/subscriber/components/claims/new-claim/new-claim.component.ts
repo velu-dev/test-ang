@@ -1346,6 +1346,7 @@ export class NewClaimComponent implements OnInit {
     // this.billable_item.value.exam_type.is_psychiatric = this.isChecked;
     this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
     this.billable_item.value.documents_received = selectedOrderIds;
+    this.billable_item.value.intake_call.call_date = this.billable_item.get(['intake_call', 'call_date']).value ? moment(this.billable_item.get(['intake_call', 'call_date']).value).format("MM-DD-YYYY") : null;
     this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
       this.alertService.openSnackBar(res.message, "success");
       //this._location.back();

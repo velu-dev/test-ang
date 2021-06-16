@@ -520,6 +520,7 @@ export class NewBillableItemComponent implements OnInit {
     this.billable_item.value.claimant_id = this.claimantId;
     this.billable_item.value.claim_id = +this.claimId;
     this.billable_item.value.documents_received = selectedOrderIds
+    this.billable_item.value.intake_call.call_date = this.billable_item.get(['intake_call', 'call_date']).value ? moment(this.billable_item.get(['intake_call', 'call_date']).value).format("MM-DD-YYYY") : null;
     if (!this.isEdit) {
       console.log(this.claimantId, this.billable_item.value)
       this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
