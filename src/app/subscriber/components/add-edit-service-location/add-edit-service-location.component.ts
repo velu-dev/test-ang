@@ -137,8 +137,15 @@ export class AddEditServiceLocationComponent implements OnInit {
     this.examiner_list = location.examiner_list ? location.examiner_list : [];
     this.locationForm.disable();
   }
-
+  isSubscriberAddressPresent: boolean = false;
+  subscriberAddress: any;
   ngOnInit() {
+    this.userService.getSubscriberAddress().subscribe(res => {
+      if (res.data) {
+        this.subscriberAddress = res.data;
+        this.isSubscriberAddressPresent = true;
+      }
+    }, error => { })
     this.locationForm = this.formBuilder.group({
       id: [null],
       service_location_name: [null, Validators.required],
@@ -368,29 +375,28 @@ export class AddEditServiceLocationComponent implements OnInit {
   sameAsSubscriber(e, type) {
     if (e.checked) {
       this.addressesCheck.billing_as_mailing = false
-      this.userService.getSubscriberAddress().subscribe(res => {
-        delete res.data.id;
-        this.subscriberMailAddress = res.data;
-        console.log(res.data)
-        this.changeState("", res.data.state_code)
-        this.locationForm.patchValue(res.data);
-        this.locationForm.patchValue({
-          primary_contact: res.data.contact_person,
-          primary_contact_phone: res.data.phone_no1,
-          phone_ext1: res.data.phone_ext1,
-          alternate_contact_1: res.data.alternate_contact_1,
-          alternate_contact_1_phone: res.data.phone_no2,
-          phone_ext2: res.data.phone_ext2,
-          alternate_contact_2: res.data.phone_ext2,
-          alternate_contact_2_phone: res.data.alternate_contact_2_phone,
-          phone_ext3: res.data.phone_ext3
-        })
-        this.states.map(state => {
-          if (res.data.state_id == state.id) {
-            this.locationForm.patchValue({ state: state.id });
-          }
-        })
+      // this.userService.getSubscriberAddress().subscribe(res => {
+      delete this.subscriberAddress.id;
+      this.subscriberMailAddress = this.subscriberAddress;
+      this.changeState("", this.subscriberAddress.state_code)
+      this.locationForm.patchValue(this.subscriberAddress);
+      this.locationForm.patchValue({
+        primary_contact: this.subscriberAddress.contact_person,
+        primary_contact_phone: this.subscriberAddress.phone_no1,
+        phone_ext1: this.subscriberAddress.phone_ext1,
+        alternate_contact_1: this.subscriberAddress.alternate_contact_1,
+        alternate_contact_1_phone: this.subscriberAddress.phone_no2,
+        phone_ext2: this.subscriberAddress.phone_ext2,
+        alternate_contact_2: this.subscriberAddress.phone_ext2,
+        alternate_contact_2_phone: this.subscriberAddress.alternate_contact_2_phone,
+        phone_ext3: this.subscriberAddress.phone_ext3
       })
+      this.states.map(state => {
+        if (this.subscriberAddress.state_id == state.id) {
+          this.locationForm.patchValue({ state: state.id });
+        }
+      })
+      // })
     } else {
       let addresEmpty = {
         street1: null,

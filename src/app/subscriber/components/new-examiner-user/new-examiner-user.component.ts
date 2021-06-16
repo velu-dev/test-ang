@@ -202,8 +202,17 @@ export class NewExaminerUserComponent implements OnInit {
     const filterValue = value == undefined ? '' : value && value.toLowerCase();
     return this.taxonomyList.filter(option => option.codeName.toLowerCase().includes(filterValue));
   }
-
+  isSubscriberAddressPresent: boolean = false;
+  subscriberAddress: any;
   ngOnInit() {
+    this.userService.getSubscriberAddress().subscribe(res => {
+      if (res.data) {
+        this.isSubscriberAddressPresent = true;
+        this.subscriberAddress = res.data;
+      }
+    }, error => {
+
+    })
     this.intercom.setExaminerPage(true)
     this.userService.verifyRole().subscribe(role => {
       this.sameAsExaminer = role.status;
@@ -1399,31 +1408,31 @@ export class NewExaminerUserComponent implements OnInit {
   subscriberMailAddress: any;
   sameAsSubscriber(e, type) {
     if (e.checked) {
-      this.userService.getSubscriberAddress().subscribe(res => {
-        delete res.data.id;
-        this.subscriberMailAddress = res.data;
-        if (type == 'mailing') {
-          this.changeState("", 'mailing', res.data.state_code)
-          this.mailingAddressForm.patchValue(res.data);
-          this.states.map(state => {
-            if (res.data.state_id == state.id) {
-              console.log(state)
-              this.mailingAddressForm.patchValue({ state: state.id });
-            }
-          })
-        }
-        if (type == 'billing') {
-          this.addressesCheck.billing_as_mailing = false
-          this.changeState("", 'cms', res.data.state_code)
-          this.billingProviderForm.patchValue(res.data);
-          this.states.map(state => {
-            if (res.data.state_id == state.id) {
-              console.log(state)
-              this.billingProviderForm.patchValue({ state: state.id });
-            }
-          })
-        }
-      })
+      // this.userService.getSubscriberAddress().subscribe(res => {
+      delete this.subscriberAddress.id;
+      this.subscriberMailAddress = this.subscriberAddress;
+      if (type == 'mailing') {
+        this.changeState("", 'mailing', this.subscriberAddress.state_code)
+        this.mailingAddressForm.patchValue(this.subscriberAddress);
+        this.states.map(state => {
+          if (this.subscriberAddress.state_id == state.id) {
+            console.log(state)
+            this.mailingAddressForm.patchValue({ state: state.id });
+          }
+        })
+      }
+      if (type == 'billing') {
+        this.addressesCheck.billing_as_mailing = false
+        this.changeState("", 'cms', this.subscriberAddress.state_code)
+        this.billingProviderForm.patchValue(this.subscriberAddress);
+        this.states.map(state => {
+          if (this.subscriberAddress.state_id == state.id) {
+            console.log(state)
+            this.billingProviderForm.patchValue({ state: state.id });
+          }
+        })
+      }
+      // })
     } else {
       if (type == 'billing') {
         let addresEmpty = {
