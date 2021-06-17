@@ -10,15 +10,17 @@
             [ngClass]="isDropZoneActive ? ['dx-theme-accent-as-border-color', 'dropzone-active'] : ['dx-theme-border-color']">
             <img [src]="file_upload" alt="File Upload">
             <h2>Drag and drop</h2>
-            <p>( Supported file formats : {{fileType | json}})<br /><span>Max file size : {{data.fileSize}} MB</span></p>
+            <p>( Supported file formats : {{fileType | json}})<br /><span>Max file size : {{data.fileSize}} MB</span>
+            </p>
             <div>Or</div>
             <button mat-raised-button class="filled-ternary">Upload from your computer</button>
         </div>
         <dx-file-uploader #fileUploader style="display: none;" dialogTrigger="#dropzone-external"
-            dropZone="#dropzone-external" [multiple]="isMultiple" [accept]="fileType" [maxFileSize]="fileSize"
-            uploadMode="instantly" [visible]="false" (onDropZoneEnter)="onDropZoneEnter($event)"
-            (onDropZoneLeave)="onDropZoneLeave($event)" (onUploaded)="onUploaded($event)"
-            (onProgress)="onProgress($event)" (onUploadStarted)="onUploadStarted($event)"></dx-file-uploader>
+            dropZone="#dropzone-external" [multiple]="isMultiple" [allowedFileExtensions]="fileType" [accept]="fileType"
+            [maxFileSize]="fileSize" uploadMode="instantly" [visible]="false"
+            (onDropZoneEnter)="onDropZoneEnter($event)" (onDropZoneLeave)="onDropZoneLeave($event)"
+            (onUploaded)="onUploaded($event)" (onProgress)="onProgress($event)"
+            (onUploadStarted)="onUploadStarted($event)"></dx-file-uploader>
         <div class="uploaded-files">
             <div class="sub-title">Attached Files</div>
             <ul>
@@ -32,6 +34,7 @@
     </div>
     <div class="text-center m-b-20">
         <button mat-stroked-button class="outline-danger" (click)="onNoClick()">Cancel</button>
-        <button mat-stroked-button class="m-l-10 outline-success" (click)="okProceed()">Save</button>
+        <button mat-stroked-button [disabled]="files.length ==0" class="m-l-10 outline-success"
+            (click)="okProceed()">Save</button>
     </div>
 </div>

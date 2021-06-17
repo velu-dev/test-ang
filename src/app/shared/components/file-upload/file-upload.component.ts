@@ -46,6 +46,7 @@ export class FileUploadComponent implements OnInit {
   }
 
   onUploaded(e) {
+    console.log(e)
     const file = e.file;
     const fileReader = new FileReader();
     fileReader.onload = () => {
@@ -66,7 +67,7 @@ export class FileUploadComponent implements OnInit {
   }
   error = "";
   onUploadStarted(e) {
-    console.log(this.fileType, e.file)
+    console.log(e)
     if (this.fileType.includes(('.' + e.file.name.split('.').pop().toLowerCase()))) {
       var FileSize = e.file.size / 1024 / 1024; // in MB
       let actualFileSize = (this.fileSize / (1024 * 1024));
