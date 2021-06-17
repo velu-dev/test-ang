@@ -72,11 +72,11 @@ export class FileUploadComponent implements OnInit {
       var FileSize = e.file.size / 1024 / 1024; // in MB
       let actualFileSize = (this.fileSize / (1024 * 1024));
       if (FileSize > actualFileSize) {
-        this.error = "file size wrong";
+        this.error = "File size is too large. Contact your organization's Simplexam Admin";
         return
       }
     } else {
-      this.error = "File type wrong";
+      this.error = "<b>Uploaded file format is not accepted</b> " + ' ( ' + e.file.name + ' ).';
       return
     }
     this.error = ""

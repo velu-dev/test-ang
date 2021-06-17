@@ -5,7 +5,6 @@
         <button mat-icon-button (click)="onNoClick()"><i class="fa fa-close"></i></button>
     </mat-card-header>
     <div class="container widget-container flex-box">
-        <p class="error" *ngIf="error != ''">{{error}}</p>
         <div class="custom-drag-and-drap flex-box" id="dropzone-external"
             [ngClass]="isDropZoneActive ? ['dx-theme-accent-as-border-color', 'dropzone-active'] : ['dx-theme-border-color']">
             <img [src]="file_upload" alt="File Upload">
@@ -21,7 +20,8 @@
             (onDropZoneEnter)="onDropZoneEnter($event)" (onDropZoneLeave)="onDropZoneLeave($event)"
             (onUploaded)="onUploaded($event)" (onProgress)="onProgress($event)"
             (onUploadStarted)="onUploadStarted($event)"></dx-file-uploader>
-        <div class="uploaded-files">
+        <div class="upload-error" *ngIf="error != ''" [innerHTML]="error"></div>
+        <div class="uploaded-files" *ngIf="files.length !=0">
             <div class="sub-title">Attached Files</div>
             <ul>
                 <li *ngFor="let file of files; let i = index">

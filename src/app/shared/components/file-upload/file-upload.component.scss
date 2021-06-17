@@ -43,6 +43,17 @@
                 margin: 5px 0;
             }
         }
+        .upload-error {
+            width: 88%;
+            margin: 0px auto;
+            margin-top: 20px;
+            border: 1px solid;
+            border-radius: 3px;
+            padding: 10px;
+            color: $error;
+            background-color: $error-bg;
+            border-color: $error-border;
+        }
         .uploaded-files {
             width: 90%;
             margin: 0px auto;
