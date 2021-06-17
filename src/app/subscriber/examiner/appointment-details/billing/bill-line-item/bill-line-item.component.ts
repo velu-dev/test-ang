@@ -237,7 +237,7 @@ export class BillLineItemComponent implements OnInit {
       modifierList: [[]],
       modifier: ['', Validators.compose([Validators.pattern('^[0-9]{2}(?:-[0-9]{2})?(?:-[0-9]{2})?(?:-[0-9]{2})?$')])],
       unitType: [''],
-      units: ['', Validators.compose([Validators.required, Validators.min(1), Validators.pattern('^(0|[0-9]{1,100}\d*)$')])],
+      units: ['', Validators.compose([Validators.required, Validators.min(1), Validators.max(9999), Validators.pattern('^(0|[0-9]{1,100}\d*)$')])],
       charge: ['', Validators.compose([Validators.required, Validators.min(0), Validators.max(99999999.99)])],
       payment: [0],
       balance: [0],
@@ -341,7 +341,8 @@ export class BillLineItemComponent implements OnInit {
       group.get('procedure_code').disable();
       group.get('unitType').disable();
       group.get('charge').disable();
-      if (this.oneUnitProcedure.includes(group.get('procedure_code').value.toLowerCase())) {
+      console.log(group.get('billing_code_details').value.is_unit_modifiable)
+      if (!group.get('billing_code_details').value.is_unit_modifiable) {
         group.get('units').disable();
       }
     }
@@ -475,7 +476,7 @@ export class BillLineItemComponent implements OnInit {
         item.unit_price = item.billing_code_details.unit_price ? item.billing_code_details.unit_price : 0;
         item.filteredmodifier = item.modifier_seed_data && item.modifier_seed_data.length ? item.modifier_seed_data.map(data => data.modifier_code) : [];
         item.modifierTotal = 0
-        let modData = item.modifier_seed_data.map((e, i) => {
+        let modData = item.modifier_seed_data && item.modifier_seed_data.map((e, i) => {
           let presentMod = modifier.includes(e.modifier_code)
           if (presentMod) {
             let modIndex = modifier.findIndex(m => m == e.modifier_code)
