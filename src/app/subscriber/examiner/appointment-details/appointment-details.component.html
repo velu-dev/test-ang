@@ -809,6 +809,10 @@
                                     <span *ngIf="column == 'bill_submission_type'">
                                         {{element?.bill_submission_type ? element?.bill_submission_type : 'First'}}
                                     </span>
+                                    <span *ngIf="column == 'send'">
+                                        <a class="text-success"
+                                        (click)="$event.stopPropagation();downloadDocumetSend(element?.send)">Download</a>
+                                    </span>
                                     <span *ngIf="column == 'action' && !element?.proof_of_service_file_name"
                                         class="text-center no-wrap-td">
                                         <a target="_self" class="text-success"

@@ -1469,6 +1469,16 @@ export class AppointmentDetailsComponent implements OnInit {
     })
   }
 
+  downloadDocumetSend(element) {
+    this.examinerService.downloadOndemandDocuments({ file_url: element.file_url }).subscribe(res => {
+      this.alertService.openSnackBar("File downloaded successfully", "success");
+      this.claimService.updateActionLog({ type: "Intake", "document_category_id": 6, "claim_id": this.claim_id, "billable_item_id": this.billableId, "documents_ids": [element.id] }, true).subscribe(log => {
+        this.loadActivity();
+      })
+      saveAs(res.signed_file_url, element.file_name);
+    })
+  }
+
   applyFilter(filterValue: string) {
     this.documentsData.filter = filterValue.trim().toLowerCase();
   }
