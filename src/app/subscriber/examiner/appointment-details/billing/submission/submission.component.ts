@@ -14,6 +14,7 @@ import { IntercomService } from 'src/app/services/intercom.service';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 @Component({
   selector: 'app-submission',
   templateUrl: './submission.component.html',
@@ -91,12 +92,12 @@ export class SubmissionComponent implements OnInit {
   }
 
 
-  addFile(event, status?) {
+  addFile(file, status?) {
     this.selectedFiles = null;
     this.selectedFile = null;
     this.file = []
-    this.selectedFiles = event.target.files;
-
+    this.selectedFiles = file;
+    console.log(file, status)
     let fileTypes = ['pdf', 'doc', 'docx']
 
     for (let i = 0; i < this.selectedFiles.length; i++) {
@@ -122,7 +123,22 @@ export class SubmissionComponent implements OnInit {
     }
 
   }
-
+  openUploadPopUp(isMultiple, type, data?, callback?, fileSize?) {
+    const dialogRef = this.dialog.open(FileUploadComponent, {
+      width: '800px',
+      data: { name: 'make this card the default card', address: true, isMultiple: isMultiple, fileType: type, fileSize: fileSize },
+      panelClass: 'custom-drag-and-drop',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        if (callback == 'addCompleteDoc') {
+          this.addCompleteDoc(result.files, data)
+        } else if (callback == 'addFile') {
+          this.addFile(result.files, true)
+        }
+      }
+    })
+  }
   uploadFile(status?) {
     if (!this.selectedFile) {
       this.errors.file.isError = true;
@@ -137,6 +153,8 @@ export class SubmissionComponent implements OnInit {
     for (let i = 0; i < this.selectedFiles.length; i++) {
       this.formData.append('file', this.selectedFiles[i]);
     }
+    // console.log(this.selectedFiles);
+    // return
     this.billingService.uploadCustomDoc(this.formData).subscribe(res => {
       this.selectedFile = null;
       this.fileUpload.nativeElement.value = "";
@@ -235,27 +253,27 @@ export class SubmissionComponent implements OnInit {
 
   docSelectedFile: File;
   docFormData = new FormData()
-  addCompleteDoc(event, pid) {
+  addCompleteDoc(file, pid) {
     this.docSelectedFile = null;
     let fileTypes = ['pdf', 'doc', 'docx'];
-    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
-      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
+    if (fileTypes.includes(file[0].name.split('.').pop().toLowerCase())) {
+      var FileSize = file[0].size / 1024 / 1024; // in MB
       if (FileSize > 501) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
-          data: { title: event.target.files[0].name, message: "File size is too large. Contact your organization's Simplexam Admin", yes: false, ok: true, no: false, type: "info", info: true }
+          data: { title: file[0].name, message: "File size is too large. Contact your organization's Simplexam Admin", yes: false, ok: true, no: false, type: "info", info: true }
         });
         dialogRef.afterClosed().subscribe(result => {
         })
-        // this.alertService.openSnackBar(event.target.files[0].name + " file too long", 'error');
+        // this.alertService.openSnackBar(file[0].name + " file too long", 'error');
         return;
       }
-      this.file = event.target.files[0].name;
-      this.docSelectedFile = event.target.files[0];
+      this.file = file[0].name;
+      this.docSelectedFile = file[0];
       this.BillingCompleteDocSubmit(pid)
     } else {
       this.docSelectedFile = null;
-      this.alertService.openSnackBar(event.target.files[0].name + " file is not accepted", 'error');
+      this.alertService.openSnackBar(file[0].name + " file is not accepted", 'error');
     }
 
   }

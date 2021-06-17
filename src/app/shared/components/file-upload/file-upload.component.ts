@@ -16,6 +16,8 @@ export class FileUploadComponent implements OnInit {
   progressVisible = false;
   progressValue = 0;
   isMultiple = false
+  fileSize = 0;
+  fileType = [];
   file_upload = "/assets/images/cloud-upload.svg"
   pdf = '/assets/images/pdf.svg'
   files = []
@@ -23,7 +25,9 @@ export class FileUploadComponent implements OnInit {
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<FileUploadComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.isMultiple = data.isMultiple
+    this.isMultiple = data.isMultiple;
+    this.fileType = data.fileType;
+    this.fileSize = data.fileSize * 1024 * 1024;
     dialogRef.disableClose = true;
     this.onDropZoneEnter = this.onDropZoneEnter.bind(this);
     this.onDropZoneLeave = this.onDropZoneLeave.bind(this);
@@ -60,9 +64,28 @@ export class FileUploadComponent implements OnInit {
     console.log(e)
     this.progressValue = e.bytesLoaded / e.bytesTotal * 100;
   }
-
+  error = "";
   onUploadStarted(e) {
-    this.files.push(e.file);
+    console.log(this.fileType, e.file)
+    if (this.fileType.includes(('.' + e.file.name.split('.').pop().toLowerCase()))) {
+      var FileSize = e.file.size / 1024 / 1024; // in MB
+      let actualFileSize = (this.fileSize / (1024 * 1024));
+      if (FileSize > actualFileSize) {
+        this.error = "file size wrong";
+        return
+      }
+    } else {
+      this.error = "File type wrong";
+      return
+    }
+    this.error = ""
+    if (this.isMultiple) {
+      this.files.push(e.file);
+    } else {
+      this.files = [];
+      this.files.push(e.file);
+    }
+
     this.imageSource = "";
     this.progressVisible = true;
   }

@@ -5,16 +5,17 @@
         <button mat-icon-button (click)="onNoClick()"><i class="fa fa-close"></i></button>
     </mat-card-header>
     <div class="container widget-container flex-box">
+        <p class="error" *ngIf="error != ''">{{error}}</p>
         <div class="custom-drag-and-drap flex-box" id="dropzone-external"
             [ngClass]="isDropZoneActive ? ['dx-theme-accent-as-border-color', 'dropzone-active'] : ['dx-theme-border-color']">
             <img [src]="file_upload" alt="File Upload">
             <h2>Drag and drop</h2>
-            <p>( Supported file formats : .pdf, .doc, .docx )<br /><span>Max file size : 500 MB</span></p>
+            <p>( Supported file formats : {{fileType | json}})<br /><span>Max file size : {{data.fileSize}} MB</span></p>
             <div>Or</div>
             <button mat-raised-button class="filled-ternary">Upload from your computer</button>
         </div>
         <dx-file-uploader #fileUploader style="display: none;" dialogTrigger="#dropzone-external"
-            dropZone="#dropzone-external" [multiple]="isMultiple" [allowedFileExtensions]="['.jpg', '.jpeg', '.png']"
+            dropZone="#dropzone-external" [multiple]="isMultiple" [accept]="fileType" [maxFileSize]="fileSize"
             uploadMode="instantly" [visible]="false" (onDropZoneEnter)="onDropZoneEnter($event)"
             (onDropZoneLeave)="onDropZoneLeave($event)" (onUploaded)="onUploaded($event)"
             (onProgress)="onProgress($event)" (onUploadStarted)="onUploadStarted($event)"></dx-file-uploader>

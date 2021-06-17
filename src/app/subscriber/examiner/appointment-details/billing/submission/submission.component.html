@@ -50,7 +50,8 @@
                 <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100">
                     <input type="file" #uploader hidden (change)="addFile($event,true)" multiple
                         accept=".pdf, .doc, .docx" required>
-                    <button mat-raised-button class="float-right filled-gray m-r-5 m-b-5" (click)="uploader.click()"><i
+                    <button mat-raised-button class="float-right filled-gray m-r-5 m-b-5"
+                        (click)="openUploadPopUp(false, ['.pdf', '.doc', '.docx'], element, 'addFile', '30')"><i
                             class="fa fa-file-medical p-r-10"></i> Add Custom
                         Document</button>
                 </div>
@@ -86,7 +87,8 @@
                                             <i class="fas fa-download"></i></a>
 
                                         <a *ngIf="!element?.completed_document && element?.form_action_type != 'C' && element?.form_action_type != 'X'"
-                                            class="m-r-10 no-wrap-td" (click)="uploader.click()">
+                                            class="m-r-10 no-wrap-td"
+                                            (click)="openUploadPopUp(false, ['.pdf', '.doc', '.docx'], element, 'addCompleteDoc', '501')">
                                             Upload Completed Form
                                             <i class="fa fa-upload m-b-3"></i>
                                         </a>
@@ -107,7 +109,8 @@
                                             (click)="!is_ondemand_created ? deleteDocument(element?.completed_document,true) : ''">Remove
                                             <!-- Remove and Reupload-->
                                         </a>
-                                        <a *ngIf="element?.form_name == 'Custom'" class="text-danger no-wrap-td" [ngClass]="is_ondemand_created ? 'disabled' : ''"
+                                        <a *ngIf="element?.form_name == 'Custom'" class="text-danger no-wrap-td"
+                                            [ngClass]="is_ondemand_created ? 'disabled' : ''"
                                             (click)="!is_ondemand_created ? deleteDocument(element?.completed_document,true): ''">Remove
                                         </a>
                                     </span>
@@ -115,8 +118,7 @@
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="expandedDetail">
-                            <td mat-cell *matCellDef="let element;let k"
-                                [attr.colspan]="columnsToDisplay2.length">
+                            <td mat-cell *matCellDef="let element;let k" [attr.colspan]="columnsToDisplay2.length">
                                 <div class="detail" [@detailExpand]="expandId2 == k ? 'expanded' : 'collapsed'">
                                     <div class="responsive-table">
                                         <div>
@@ -159,7 +161,8 @@
                                                     (click)="!is_ondemand_created ? deleteDocument(element?.completed_document,true) : ''">Remove
                                                     <!-- Remove and Reupload-->
                                                 </a>
-                                                <a *ngIf="element?.form_name == 'Custom'" class="text-danger no-wrap-td" [ngClass]="is_ondemand_created ? 'disabled' : ''"
+                                                <a *ngIf="element?.form_name == 'Custom'" class="text-danger no-wrap-td"
+                                                    [ngClass]="is_ondemand_created ? 'disabled' : ''"
                                                     (click)="!is_ondemand_created ? deleteDocument(element?.completed_document,true): ''">Remove
                                                 </a> </span>
                                         </div>
