@@ -20,7 +20,8 @@ export class FileUploadComponent implements OnInit {
   fileType = [];
   file_upload = "/assets/images/cloud-upload.svg"
   pdf = '/assets/images/pdf.svg'
-  files = []
+  files = [];
+  value: any = [];
   constructor(
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<FileUploadComponent>,
