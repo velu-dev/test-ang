@@ -15,12 +15,12 @@
             <button mat-raised-button class="filled-ternary">Upload from your computer</button>
         </div>
         <dx-file-uploader #fileUploader style="display: none;" dialogTrigger="#dropzone-external"
-            dropZone="#dropzone-external" [multiple]="isMultiple" [accept]="fileType" [maxFileSize]="fileSize"
-            uploadMode="instantly" [visible]="false" (onDropZoneEnter)="onDropZoneEnter($event)"
-            (onDropZoneLeave)="onDropZoneLeave($event)" (onUploaded)="onUploaded($event)"
-            (onProgress)="onProgress($event)" (onUploadStarted)="onUploadStarted($event)"></dx-file-uploader>
+            dropZone="#dropzone-external" [multiple]="isMultiple" [accept]="fileType.join()" uploadMode="instantly"
+            [visible]="false" (onDropZoneEnter)="onDropZoneEnter($event)" (onDropZoneLeave)="onDropZoneLeave($event)"
+            (onUploaded)="onUploaded($event)" (onProgress)="onProgress($event)"
+            (onUploadStarted)="onUploadStarted($event)"></dx-file-uploader>
         <div class="upload-error" *ngIf="error != ''" [innerHTML]="error"></div>
-        <div class="uploaded-files"  *ngIf="files.length !=0">
+        <div class="uploaded-files" *ngIf="files.length !=0">
             <div class="sub-title">Attached Files</div>
             <ul>
                 <li *ngFor="let file of files; let i = index">

@@ -194,6 +194,11 @@ export class SubscriberSettingsComponent implements OnInit {
         this.columnsToDisplay = ['invoice_number', 'amount', "status", "date", "action",]
       }
     })
+    this.claimService.seedData('state').subscribe(response => {
+      this.states = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
     this.listCard();
     this.userService.getProfile().subscribe(res => {
       this.user = res.data;

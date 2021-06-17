@@ -21,7 +21,6 @@ export class FileUploadComponent implements OnInit {
   file_upload = "/assets/images/cloud-upload.svg"
   pdf = '/assets/images/pdf.svg'
   files = [];
-  value: any = [];
   constructor(
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<FileUploadComponent>,
@@ -42,12 +41,18 @@ export class FileUploadComponent implements OnInit {
   }
 
   onDropZoneLeave(e) {
+    console.log(e)
     if (e.dropZoneElement.id === "dropzone-external")
       this.isDropZoneActive = false;
   }
 
   onUploaded(e) {
-    console.log(e)
+    var FileSize = e.file.size / 1024 / 1024; // in MB
+    let actualFileSize = (this.fileSize / (1024 * 1024));
+    if (FileSize > actualFileSize) {
+      this.error = "File size is too large. Contact your organization's Simplexam Admin";
+      return
+    }
     const file = e.file;
     const fileReader = new FileReader();
     fileReader.onload = () => {
@@ -63,7 +68,12 @@ export class FileUploadComponent implements OnInit {
   }
 
   onProgress(e) {
-    console.log(e)
+    var FileSize = e.file.size / 1024 / 1024; // in MB
+    let actualFileSize = (this.fileSize / (1024 * 1024));
+    if (FileSize > actualFileSize) {
+      this.error = "File size is too large. Contact your organization's Simplexam Admin";
+      return
+    }
     this.progressValue = e.bytesLoaded / e.bytesTotal * 100;
   }
   error = "";
