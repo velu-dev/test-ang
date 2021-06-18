@@ -24,6 +24,7 @@ import { RegulationDialogueComponent } from 'src/app/shared/components/regulatio
 import { UserService } from 'src/app/shared/services/user.service';
 import * as regulation from 'src/app/shared/services/regulations';
 import { BillingAlertComponent } from 'src/app/shared/components/billingalert/billing-alert.component';
+import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 @Component({
   selector: 'app-billing-correspondance',
   templateUrl: './correspondance.component.html',
@@ -277,14 +278,22 @@ export class BillingCorrespondanceComponent implements OnInit {
     });
   }
   openDialog(): void {
-    const dialogRef = this.dialog.open(CustomDocuments, {
+    const dialogRef = this.dialog.open(FileUploadComponent, {
       width: '800px',
-      data: { claim_id: this.claim_id, billable_id: this.billableId }
+      data: { message: 'Uploaded documents should not exceed 300 dpi', address: true, isMultiple: true, fileType: ['.pdf', '.doc', '.docx'], fileSize: 30 },
+      panelClass: 'custom-drag-and-drop',
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.onDemandService.uploadDocument(result).subscribe(res => {
+      if (result['data']) {
+        let formData = new FormData()
+        formData.append("document_category_id", "10");
+        formData.append('claim_id', this.claim_id);
+        formData.append('bill_item_id', this.billableId);
+        for (let i = 0; i < result.files.length; i++) {
+          formData.append('file', result.files[i]);
+        }
+        // console.log("result", result)
+        this.onDemandService.uploadDocument(formData).subscribe(res => {
           if (res.status) {
             this.alertService.openSnackBar(res.message, "success");
             this.getData();
@@ -293,11 +302,28 @@ export class BillingCorrespondanceComponent implements OnInit {
           }
         })
       }
-      // if (result) {
-      //   this.getData();
-      // }
-      // this.animal = result;
-    });
+    })
+    // const dialogRef = this.dialog.open(CustomDocuments, {
+    //   width: '800px',
+    //   data: { claim_id: this.claim_id, billable_id: this.billableId }
+    // });
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result) {
+    //     this.onDemandService.uploadDocument(result).subscribe(res => {
+    //       if (res.status) {
+    //         this.alertService.openSnackBar(res.message, "success");
+    //         this.getData();
+    //       } else {
+    //         this.alertService.openSnackBar(res.message, "error");
+    //       }
+    //     })
+    //   }
+    //   // if (result) {
+    //   //   this.getData();
+    //   // }
+    //   // this.animal = result;
+    // });
   }
   openPopup(title, value) {
     let data = this.userService.getRegulation(value)

@@ -47,6 +47,8 @@ export class FileUploadComponent implements OnInit {
   }
 
   onUploaded(e) {
+
+    console.log(e.file)
     var FileSize = e.file.size / 1024 / 1024; // in MB
     let actualFileSize = (this.fileSize / (1024 * 1024));
     if (FileSize > actualFileSize) {
