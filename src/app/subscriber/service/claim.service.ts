@@ -177,4 +177,8 @@ export class ClaimService {
     phone = tel;
     return phone;
   }
+
+  removeDocumentDeclared(documents_declared_id, document_id): Observable<any> {
+    return this.http.delete(environment.baseUrl + api_endpoint.removeDocumentDeclared + documents_declared_id + '/' + document_id)
+  }
 }

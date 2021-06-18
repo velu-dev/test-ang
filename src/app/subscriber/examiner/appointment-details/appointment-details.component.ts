@@ -570,8 +570,9 @@ export class AppointmentDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)
       if (result['data']) {
-        this.claimService.removeDeclaredDocument(group.value.id, { claim_id: this.claim_id, billable_item_id: this.billableId }).subscribe(res => {
+        this.claimService.removeDeclaredDocument(group.get('id').value, { claim_id: this.claim_id, billable_item_id: this.billableId }).subscribe(res => {
           this.alertService.openSnackBar('Documents declared details removed successfully!', "success")
+          this.documentsDeclared.splice(i,1)
           const control = this.docDeclearTable.get('tableRows') as FormArray;
           control.removeAt(i);
           this.loadActivity();
@@ -707,11 +708,13 @@ export class AppointmentDetailsComponent implements OnInit {
   initiateForm(): FormGroup {
     return this.formBuilder.group({
       id: [],
-      no_of_pages_declared: ['', Validators.required],
-      agent_type: ['', [Validators.required]],
-      date_received: ["", [Validators.required]],
-      file_name: ["", [Validators.required]],
+      no_of_pages_declared: [''],
+      agent_type: [''],
+      date_received: [""],
+      file_name: [""],
       file: [""],
+      document_id: [""],
+      correspodence_received_file_url: [""],
       isEditable: [true]
     });
   }
@@ -758,6 +761,26 @@ export class AppointmentDetailsComponent implements OnInit {
         group.get(key).setValue(group.get(key).value.trim())
     });
     console.log(group.value)
+    if (group.value.no_of_pages_declared || group.value.agent_type || group.value.date_received) {
+      group.get('no_of_pages_declared').setValidators([Validators.required])
+      group.get('agent_type').setValidators([Validators.required])
+      group.get('date_received').setValidators([Validators.required])
+      group.get('file_name').setValidators([])
+      group.get('file_name').updateValueAndValidity();
+      group.get('no_of_pages_declared').updateValueAndValidity();
+      group.get('agent_type').updateValueAndValidity();
+      group.get('date_received').updateValueAndValidity();
+    } else {
+      group.get('file_name').setValidators([Validators.required])
+      group.get('file_name').updateValueAndValidity();
+
+      group.get('no_of_pages_declared').setValidators([])
+      group.get('agent_type').setValidators([])
+      group.get('date_received').setValidators([])
+      group.get('no_of_pages_declared').updateValueAndValidity();
+      group.get('agent_type').updateValueAndValidity();
+      group.get('date_received').updateValueAndValidity();
+    }
     if (group.status == "INVALID") {
       group.markAllAsTouched();
       return;
@@ -774,11 +797,11 @@ export class AppointmentDetailsComponent implements OnInit {
           agent_type: group.value.agent_type,
           no_of_pages_declared: group.value.no_of_pages_declared
         };
-        data['date_received'] = moment(group.value.date_received).format("LL");
+        data['date_received'] = group.value.date_received ? moment(group.value.date_received).format("LL") : '';
         this.formDataDoc.append('id', data.id ? data.id : '');
-        this.formDataDoc.append('agent_type', data.agent_type);
-        this.formDataDoc.append('no_of_pages_declared', data.no_of_pages_declared);
-        this.formDataDoc.append('date_received', data['date_received']);
+        this.formDataDoc.append('agent_type', data.agent_type ? data.agent_type : '');
+        this.formDataDoc.append('no_of_pages_declared', data.no_of_pages_declared ? data.no_of_pages_declared : '');
+        this.formDataDoc.append('date_received', data['date_received'] ? data['date_received'] : '');
         this.formDataDoc.append('file', group.value.file);
         this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe(res => {
           let message = group.value.id ? "Documents declared details updated successfully!" : "Documents declared details created successfully!"
@@ -813,6 +836,8 @@ export class AppointmentDetailsComponent implements OnInit {
         console.log(result.files)
         group.get('file_name').patchValue(null);
         group.get('file').patchValue(null);
+        group.get('file_name').patchValue(result.files[0].name);
+        group.get('file').patchValue(result.files[0]);
       }
     })
 
@@ -827,6 +852,64 @@ export class AppointmentDetailsComponent implements OnInit {
     group.patchValue(this.documentsDeclared[i]);
     group.get('isEditable').setValue(false);
   }
+
+  downloadDocDeclare(group, i) {
+    if (group.get('document_id').value)
+      this.examinerService.downloadOndemandDocuments({ file_url: group.get('correspodence_received_file_url').value }).subscribe(res => {
+        this.alertService.openSnackBar("File downloaded successfully", "success");
+        // this.claimService.updateActionLog({ type: "Intake", "document_category_id": 6, "claim_id": this.claim_id, "billable_item_id": this.billableId, "documents_ids": [element.id] }, true).subscribe(log => {
+        //   this.loadActivity();
+        // })
+        saveAs(res.signed_file_url, group.get('file_name').value);
+      })
+  }
+
+  removeDocDeclare(group, i) {
+
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '500px',
+      data: { name: 'remove', address: true, title: group.get('file_name').value }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        if (group.get('document_id').value) {
+          this.claimService.removeDocumentDeclared(group.get('id').value, group.get('document_id').value).subscribe(res => {
+            group.get('file_name').patchValue(null);
+            group.get('file').patchValue(null);
+            group.get('document_id').patchValue(null);
+            group.get('correspodence_received_file_url').patchValue(null);
+            this.alertService.openSnackBar("File deleted successfully", 'success');
+          }, error => {
+            this.alertService.openSnackBar(error.error.message, 'error');
+          })
+        } else {
+          group.get('file_name').patchValue(null);
+          group.get('file').patchValue(null);
+          group.get('document_id').patchValue(null);
+          group.get('correspodence_received_file_url').patchValue(null);
+        }
+
+        if (!group.get('no_of_pages_declared').value && !group.get('agent_type').value && !group.get('date_received').value && !group.get('file_name').value) {
+          if (group.get('id').value) {
+            this.claimService.removeDeclaredDocument(group.get('id').value, { claim_id: this.claim_id, billable_item_id: this.billableId }).subscribe(res => {
+              this.alertService.openSnackBar('Documents declared details removed successfully!', "success")
+              this.documentsDeclared.splice(i,1)
+              const control = this.docDeclearTable.get('tableRows') as FormArray;
+              control.removeAt(i);
+              this.loadActivity();
+            }, error => {
+              this.alertService.openSnackBar(error.error.message, 'error');
+            })
+            return
+          }
+          const control = this.docDeclearTable.get('tableRows') as FormArray;
+          control.removeAt(i);
+        }
+
+      }
+    })
+  }
+
   isExaminationStatusEdit = false;
   changeEditStatus() {
     this.examinationStatusForm.enable();

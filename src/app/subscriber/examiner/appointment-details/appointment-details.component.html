@@ -313,10 +313,13 @@
                                     </mat-form-field>
                                 </td>
 
-                                <td>
+                                <td *ngIf="!group.get('file_name').value">
                                     <button type="button" mat-raised-button class="mini-btn filled-gray" (click)="addFileDoc($event,group,i)">Upload</button>
-                                    <!-- <input type="file" #uploaderDoc hidden (change)="addFileDoc($event,group,i)" hidden accept=".pdf, .doc, .docx"
-                                    required> -->
+                                </td>
+                                <td  *ngIf="group.get('file_name').value">
+                                    <a class="text-ternary display-block" (click)="downloadDocDeclare(group,i)">
+                                        {{group.get('file_name').value}}</a>
+                                    <button type="button" mat-raised-button class="mini-btn filled-gray" (click)="removeDocDeclare(group,i)">Remove</button>
                                 </td>
                                 <td class="text-center">
                                     <a class="text-success" (click)="doneRow(group, i)">Save</a>
@@ -334,9 +337,12 @@
                                 <td>
                                     {{group.get('date_received').value | date:'MM-dd-yyyy'}}
                                 </td>
-                                <td>
-                                    <a class="text-ternary display-block">{{group.get('file_name').value}}</a>
-                                    <button mat-raised-button class="mini-btn filled-gray">Remove</button>
+                                <td *ngIf="group.get('file_name').value">
+                                    <a class="text-ternary display-block" (click)="downloadDocDeclare(group,i)">{{group.get('file_name').value}}</a>
+                                    <button type="button" mat-raised-button class="mini-btn filled-gray" (click)="removeDocDeclare(group,i)">Remove</button>
+                                </td>
+                                <td *ngIf="!group.get('file_name').value">
+                                    <button type="button" mat-raised-button class="mini-btn filled-gray" disabled>Upload</button>
                                 </td>
                                 <td class="text-center">
                                     <a class="text-success" (click)="editRow(group,i)">Edit</a>
