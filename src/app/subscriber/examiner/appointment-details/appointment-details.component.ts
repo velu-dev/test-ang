@@ -24,6 +24,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
 import { UserService } from 'src/app/shared/services/user.service';
 import * as regulation from 'src/app/shared/services/regulations';
+import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 export interface PeriodicElement1 {
   file_name: string;
   date: string;
@@ -95,6 +96,7 @@ export class AppointmentDetailsComponent implements OnInit {
   @ViewChild('MatSortNote', { static: false }) sortNote: MatSort;
   @ViewChild('MatPaginatorNote', { static: false }) paginatorNote: MatPaginator;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
+  @ViewChild('uploaderDoc', { static: false }) fileUploadDoc: ElementRef;
   xls = globals.xls
   xls_1 = globals.xls_1
   status_complete = globals.status_complete
@@ -708,6 +710,8 @@ export class AppointmentDetailsComponent implements OnInit {
       no_of_pages_declared: ['', Validators.required],
       agent_type: ['', [Validators.required]],
       date_received: ["", [Validators.required]],
+      file_name: ["", [Validators.required]],
+      file: [""],
       isEditable: [true]
     });
   }
@@ -746,7 +750,9 @@ export class AppointmentDetailsComponent implements OnInit {
     group.get('isEditable').setValue(true);
   }
 
+  formDataDoc = new FormData()
   doneRow(group: FormGroup, i) {
+    this.formDataDoc = new FormData()
     Object.keys(group.controls).forEach((key) => {
       if (group.get(key).value && typeof (group.get(key).value) == 'string')
         group.get(key).setValue(group.get(key).value.trim())
@@ -763,9 +769,18 @@ export class AppointmentDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result.data) {
         // group.get('date_received').patchValue(moment((group.value.date_received).format("MM-DD-YYYY")));
-        let data = { id: group.value.id, agent_type: group.value.agent_type, no_of_pages_declared: group.value.no_of_pages_declared };
+        let data = {
+          id: group.value.id,
+          agent_type: group.value.agent_type,
+          no_of_pages_declared: group.value.no_of_pages_declared
+        };
         data['date_received'] = moment(group.value.date_received).format("LL");
-        this.claimService.createDeclaredDocument(data, this.claim_id, this.billableId).subscribe(res => {
+        this.formDataDoc.append('id', data.id ? data.id : '');
+        this.formDataDoc.append('agent_type', data.agent_type);
+        this.formDataDoc.append('no_of_pages_declared', data.no_of_pages_declared);
+        this.formDataDoc.append('date_received', data['date_received']);
+        this.formDataDoc.append('file', group.value.file);
+        this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe(res => {
           let message = group.value.id ? "Documents declared details updated successfully!" : "Documents declared details created successfully!"
           this.alertService.openSnackBar(message, "success");
           this.documentsDeclared[i] = res.data
@@ -780,6 +795,27 @@ export class AppointmentDetailsComponent implements OnInit {
       }
     })
     return
+
+  }
+
+
+
+  errorsDoc = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
+  addFileDoc(event, group, i) {
+
+    const dialogRef = this.dialog.open(FileUploadComponent, {
+      width: '800px',
+      data: { name: 'make this card the default card', address: true, isMultiple: false, fileType: ['.pdf', '.doc', '.docx'], fileSize: 30 },
+      panelClass: 'custom-drag-and-drop',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        console.log(result.files)
+        group.get('file_name').patchValue(null);
+        group.get('file').patchValue(null);
+      }
+    })
+
 
   }
 
@@ -1835,6 +1871,7 @@ export class AppointmentDetailsComponent implements OnInit {
       })
     }
   }
+
 }
 
 @Component({
