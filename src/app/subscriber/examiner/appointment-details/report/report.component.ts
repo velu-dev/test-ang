@@ -14,6 +14,7 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { IntercomService } from 'src/app/services/intercom.service';
 import * as moment from 'moment-timezone';
+import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
@@ -239,7 +240,24 @@ export class ReportComponent implements OnInit {
       }
     }
   }
+  openPopupDialogue() {
+    const dialogRef = this.dialog.open(FileUploadComponent, {
+      width: '800px',
+      data: { isMultiple: true, fileType: ['.pdf', '.doc', '.doc', '.mp3', '.wav', '.m4a', '.wma', '.dss', '.ds2', '.dct'], fileSize: 3073 },
+      panelClass: 'custom-drag-and-drop',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.selectedFiles = result.files;
+        result.files.map(res => {
+          this.selectedFile = res;
+          this.file.push(res.name);
+        })
+        this.uploadFile();
+      }
+    })
 
+  }
   uploadFile() {
     if (!this.selectedFile) {
       //this.alertService.openSnackBar("Please select file", 'error');
@@ -258,7 +276,7 @@ export class ReportComponent implements OnInit {
     this.onDemandService.postDocument(this.formData).subscribe(res => {
       this.selectedFile = null;
       this.selectedFiles = null;
-      this.fileUpload.nativeElement.value = "";
+      // this.fileUpload.nativeElement.value = "";
       this.formData = new FormData();
       this.file = [];
       this.getReport();
@@ -343,13 +361,13 @@ export class ReportComponent implements OnInit {
     // return;
     let document_ids = []
     let custom_documents_ids = []
-      this.selection.selected.map(res => {
-        if (res.form_number) {
-          document_ids.push(res.document_id)
-        } else {
-          custom_documents_ids.push(res.document_id)
-        }
-      })
+    this.selection.selected.map(res => {
+      if (res.form_number) {
+        document_ids.push(res.document_id)
+      } else {
+        custom_documents_ids.push(res.document_id)
+      }
+    })
     if (document_ids.length == 0) {
       this.alertService.openSnackBar("Please select a file", 'error');
       return

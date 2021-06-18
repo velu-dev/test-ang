@@ -17,6 +17,7 @@ import * as moment from 'moment-timezone';
 import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
 import { UserService } from 'src/app/shared/services/user.service';
 import * as regulation from 'src/app/shared/services/regulations';
+import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 
 @Component({
   selector: 'app-records',
@@ -139,6 +140,24 @@ export class RecordsComponent implements OnInit {
     this.styleElement.type = "text/css";
     this.styleElement.appendChild(document.createTextNode(css));
     head.appendChild(this.styleElement);
+  }
+  openPopupDialogue() {
+    const dialogRef = this.dialog.open(FileUploadComponent, {
+      width: '800px',
+      data: { isMultiple: true, fileType: ['.pdf', '.doc', '.docx'], fileSize: 3073 },
+      panelClass: 'custom-drag-and-drop',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.selectedFiles = result.files;
+        result.files.map(res => {
+          this.selectedFile = res;
+          this.file.push(res.name);
+        })
+        this.uploadFile();
+      }
+    })
+
   }
   getRecord() {
     this.onDemandService.getRecords(this.paramsId.claim_id, this.paramsId.billId).subscribe(record => {
@@ -270,7 +289,7 @@ export class RecordsComponent implements OnInit {
     this.onDemandService.postDocument(this.formData).subscribe(res => {
       this.selectedFile = null;
       this.selectedFiles = null;
-      this.fileUpload.nativeElement.value = "";
+      // this.fileUpload.nativeElement.value = "";
       this.formData = new FormData();
       this.file = [];
       this.getRecord();
