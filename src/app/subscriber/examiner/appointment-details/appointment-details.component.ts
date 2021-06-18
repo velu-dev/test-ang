@@ -711,7 +711,7 @@ export class AppointmentDetailsComponent implements OnInit {
       no_of_pages_declared: [''],
       agent_type: [''],
       date_received: [""],
-      file_name: ["", Validators.required],
+      file_name: [""],
       file: [""],
       document_id: [""],
       correspodence_received_file_url: [""],
