@@ -112,7 +112,6 @@ export const api_endpoint = {
     billableItemSingle: 'claim/billable-item/',
     claimantBillable: 'claim/claimant-claim-item-list/',
 
-
     //seed data
     seedData: 'claim/seed-data/',
     bodyParts: "seed-data/body_part",
@@ -155,6 +154,7 @@ export const api_endpoint = {
     updateExamType: "billable-item/update-examination-status/",
     getNotes: 'notes/',
     addNotes: 'notes/add-note',
+    removeDocumentDeclared: 'examinations/remove-declared-document/',
 
     //on-demand
     getRecords: 'billing/ondemand/records/',
