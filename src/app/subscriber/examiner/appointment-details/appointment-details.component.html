@@ -265,96 +265,7 @@
     </mat-card-header>
     <mat-divider> </mat-divider>
     <mat-card-content>
-        <!-- <div class="user-detail m-t-5">
-            <table class="table table-border res-table" [ngClass]="{'table-dark': mode}">
-                <thead class="text-nowrap">
-                    <th>Pages Declared</th>
-                    <th>Submitting Party</th>
-                    <th>Date Received</th>
-                    <th class="text-center">Action</th>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let documents of documentsDeclared; let i=index">
-                        <td>
-                            <mat-form-field appearance="outline" class="w-100"
-                                *ngIf="isEditDocument && editedDocumentIndex == i">
-                                <input matInput name="page" type="number" (keypress)="numberOnly($event)"
-                                    [(ngModel)]="documentDeclared.no_of_pages_declared" #page="ngModel"
-                                    autocomplete="off" placeholder="Pages Declared">
-                            </mat-form-field>
-                            <span
-                                *ngIf="!(isEditDocument && editedDocumentIndex == i)">{{documents.no_of_pages_declared}}</span>
-                        </td>
-                        <td>
-                            <mat-form-field appearance="outline" class="w-100"
-                                *ngIf="isEditDocument && editedDocumentIndex == i">
-                                <mat-select placeholder="Select Submitting Party" name="party"
-                                    [(ngModel)]="documentDeclared.agent_type" #party="ngModel">
-                                    <mat-option *ngFor="let party of SubmittingParty" [value]="party.name">
-                                        {{party.name}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <span *ngIf="!(isEditDocument && editedDocumentIndex == i)">{{documents.agent_type}}</span>
-                        </td>
-                        <td>
-                            <mat-form-field appearance="outline" class="mat-date-picker"
-                                *ngIf="isEditDocument && editedDocumentIndex == i">
-                                <input matInput type="text" placeholder="Date Received" name="date"
-                                    [(ngModel)]="documentDeclared.date_received" autocomplete="off" [min]="minimumDate"
-                                    [matDatepicker]="date_received" #date="ngModel">
-                                <mat-datepicker-toggle matSuffix [for]="date_received">
-                                </mat-datepicker-toggle>
-                                <mat-datepicker #date_received></mat-datepicker>
-                            </mat-form-field>
-                            <span *ngIf="!(isEditDocument && editedDocumentIndex == i)">{{documents.date_received |
-                                date:'MM-dd-yyyy'}}</span>
-                        </td>
-                        <td class="text-center">
-                            <a class="text-success m-r-20" *ngIf="isEditDocument && editedDocumentIndex == i"
-                                (click)="createDocumentsDeclared()">Save</a>
-                            <a class="text-success m-r-20" *ngIf="!(isEditDocument && editedDocumentIndex == i)"
-                                (click)="editDocumentDeclared(documents, i)">Edit</a>
-                            <a class="text-danger" *ngIf="!isEditDocument"
-                                (click)="removeDocument(documents)">Remove</a>
-                            <a class="text-danger" *ngIf="isEditDocument" (click)="cancelDoc()">Cancel</a>
-                        </td>
-                    </tr>
-                    <tr *ngIf="isAddDoc">
-                        <td>
-                            <mat-form-field appearance="outline" class="w-100">
-                                <input matInput type="number" (keypress)="numberOnly($event)"
-                                    [(ngModel)]="documentDeclared.no_of_pages_declared" autocomplete="off"
-                                    placeholder="Pages Declared">
-                            </mat-form-field>
-                        </td>
-                        <td>
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-select placeholder="Select Submitting Party"
-                                    [(ngModel)]="documentDeclared.agent_type">
-                                    <mat-option *ngFor="let party of SubmittingParty" [value]="party.name">
-                                        {{party.name}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </td>
-                        <td>
-                            <mat-form-field appearance="outline" class="mat-date-picker">
-                                <input matInput type="text" placeholder="Date Received"
-                                    [(ngModel)]="documentDeclared.date_received" autocomplete="off" [min]="minimumDate"
-                                    [matDatepicker]="date_received">
-                                <mat-datepicker-toggle matSuffix [for]="date_received">
-                                </mat-datepicker-toggle>
-                                <mat-datepicker #date_received></mat-datepicker>
-                            </mat-form-field>
-                        </td>
-                        <td class="text-center">
-                            <a class="text-success m-r-20" (click)="createDocumentsDeclared()">Save</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div> -->
+<!---Documents decleared-->
         <div fxLayout="row wrap" *ngIf="getFormControls.controls.length > 0">
             <div fxFlex="100" class="p-l-0 note">
                 <mat-icon>info</mat-icon> Note : Correspondence uploaded here will be included with the billing submission documents according to regulation 9793(L)
@@ -403,7 +314,9 @@
                                 </td>
 
                                 <td>
-                                    <button mat-raised-button class="mini-btn filled-gray">Upload</button>
+                                    <button type="button" mat-raised-button class="mini-btn filled-gray" (click)="addFileDoc($event,group,i)">Upload</button>
+                                    <!-- <input type="file" #uploaderDoc hidden (change)="addFileDoc($event,group,i)" hidden accept=".pdf, .doc, .docx"
+                                    required> -->
                                 </td>
                                 <td class="text-center">
                                     <a class="text-success" (click)="doneRow(group, i)">Save</a>
@@ -422,7 +335,7 @@
                                     {{group.get('date_received').value | date:'MM-dd-yyyy'}}
                                 </td>
                                 <td>
-                                    <a class="text-ternary display-block">Uploaded File Name Comes Here.PDF</a>
+                                    <a class="text-ternary display-block">{{group.get('file_name').value}}</a>
                                     <button mat-raised-button class="mini-btn filled-gray">Remove</button>
                                 </td>
                                 <td class="text-center">
@@ -815,9 +728,12 @@
                                         <a target="_self" class="text-success"
                                             (click)="$event.stopPropagation();download({exam_report_file_url : element?.proof_of_service_file_url, file_name : element?.proof_of_service_file_name})">Download</a>
                                     </span>
-                                    <span *ngIf="column == 'type'">
-                                        <a *ngIf="!element?.isdtm_request">Billed On Demand</a>
-                                        <a *ngIf="element?.isdtm_request">Mailed On Demand</a>
+                                    <span *ngIf="column == 'type'" class="no-wrap-td" [ngSwitch]="element?.action">
+                                        <span *ngSwitchCase="'BD'">Downloaded</span>
+                                        <span *ngSwitchCase="'MES'">E-Sign Downloaded</span>
+                                        <span *ngSwitchCase="'SFTP'"><span *ngIf="!element?.isdtm_request">Billed On
+                                                Demand</span>
+                                            <span *ngIf="element?.isdtm_request">Mailed On Demand</span></span>
                                     </span>
                                     <span *ngIf="column == 'bill_submission_type'">
                                         {{element?.bill_submission_type ? element?.bill_submission_type : 'First'}}
