@@ -572,7 +572,7 @@ export class AppointmentDetailsComponent implements OnInit {
       if (result['data']) {
         this.claimService.removeDeclaredDocument(group.get('id').value, { claim_id: this.claim_id, billable_item_id: this.billableId }).subscribe(res => {
           this.alertService.openSnackBar('Documents declared details removed successfully!', "success")
-          this.documentsDeclared.splice(i,1)
+          this.documentsDeclared.splice(i, 1)
           const control = this.docDeclearTable.get('tableRows') as FormArray;
           control.removeAt(i);
           this.loadActivity();
@@ -807,6 +807,7 @@ export class AppointmentDetailsComponent implements OnInit {
           let message = group.value.id ? "Documents declared details updated successfully!" : "Documents declared details created successfully!"
           this.alertService.openSnackBar(message, "success");
           this.documentsDeclared[i] = res.data
+          group.patchValue(res.data)
           group.get('isEditable').setValue(false);
           group.get('id').setValue(res.data.id);
           this.loadActivity();
@@ -893,7 +894,7 @@ export class AppointmentDetailsComponent implements OnInit {
           if (group.get('id').value) {
             this.claimService.removeDeclaredDocument(group.get('id').value, { claim_id: this.claim_id, billable_item_id: this.billableId }).subscribe(res => {
               this.alertService.openSnackBar('Documents declared details removed successfully!', "success")
-              this.documentsDeclared.splice(i,1)
+              this.documentsDeclared.splice(i, 1)
               const control = this.docDeclearTable.get('tableRows') as FormArray;
               control.removeAt(i);
               this.loadActivity();
