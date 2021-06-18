@@ -5,11 +5,17 @@
         <button mat-icon-button (click)="onNoClick()"><i class="fa fa-close"></i></button>
     </mat-card-header>
     <div class="container widget-container flex-box">
+
+        <div fxLayout="row" class="w-100" *ngIf="data.message">
+            <div class="info-alert m-t-20">
+                <i class="fa fa-info-circle p-r-5"></i>{{data?.message}}
+            </div>
+        </div>
         <div class="custom-drag-and-drap flex-box" id="dropzone-external"
             [ngClass]="isDropZoneActive ? ['dx-theme-accent-as-border-color', 'dropzone-active'] : ['dx-theme-border-color']">
             <img [src]="file_upload" alt="File Upload">
             <h2>Drag and drop</h2>
-            <p>( Supported file formats : {{fileType | json}})<br /><span>Max file size : {{data.fileSize}} MB</span>
+            <p>( Supported file formats : {{fileType.join()}})<br /><span>Max file size : {{data.fileSize}} MB</span>
             </p>
             <div>Or</div>
             <button mat-raised-button class="filled-ternary">Upload from your computer</button>
