@@ -17,7 +17,7 @@
         width: $width-100;
         min-height: 50vh;
         .custom-drag-and-drap {
-            border: 2px dashed $primary;
+            border: 2px dashed $primary !important;
             border-radius: 5px;
             width: 90%;
             margin: 0px auto;
