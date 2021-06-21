@@ -15,6 +15,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { animate, style, transition, trigger, state } from '@angular/animations';
 import { saveAs } from 'file-saver';
 import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
+import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 
 @Component({
   selector: 'app-bill-line-item',
@@ -750,7 +751,25 @@ export class BillLineItemComponent implements OnInit {
       console.log(error);
     })
   }
-
+  openUploadPopUp(isMultiple, type, data?, callback?, fileSize?) {
+    const dialogRef = this.dialog.open(FileUploadComponent, {
+      width: '800px',
+      data: { name: 'make this card the default card', address: true, isMultiple: isMultiple, fileType: type, fileSize: fileSize },
+      panelClass: 'custom-drag-and-drop',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        if (callback == 'upload') {
+          result.files.map(file => {
+            this.fileName.push({ file_name: file.name })
+            this.fileList.push(file)
+          })
+        } else if (callback == 'reupload') {
+          this.reuploadFile(result.files, data.file, data.i)
+        }
+      }
+    })
+  }
 
   addFile(event) {
     // this.selectedFiles = null
@@ -816,9 +835,9 @@ export class BillLineItemComponent implements OnInit {
 
   }
 
-  reuploadFile(event, file, index) {
+  reuploadFile(files, file, index) {
 
-    let selectedFiles = event.target.files;
+    let selectedFiles = files;
     let fileTypes = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png'];
 
 

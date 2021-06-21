@@ -21,6 +21,7 @@ import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/ale
 import * as globals from '../../../globals';
 import { saveAs } from 'file-saver';
 import { ClaimService } from '../../service/claim.service';
+import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 @Component({
   selector: 'app-new-examiner-user',
   templateUrl: './new-examiner-user.component.html',
@@ -941,15 +942,30 @@ export class NewExaminerUserComponent implements OnInit {
 
   billingSelectedFile: File;
 
-
+  openUploadPopUp(isMultiple, type, data?, callback?, fileSize?) {
+    const dialogRef = this.dialog.open(FileUploadComponent, {
+      width: '800px',
+      data: { name: 'make this card the default card', address: true, isMultiple: isMultiple, fileType: type, fileSize: fileSize },
+      panelClass: 'custom-drag-and-drop',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        if (callback == 'billing') {
+          this.addFile(result.files)
+        } else if (callback == 'rendering') {
+          
+        }
+      }
+    })
+  }
   errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
-  addFile(event) {
+  addFile(files) {
 
     this.billingSelectedFile = null;
     let fileTypes = ['pdf']
 
-    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
-      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
+    if (fileTypes.includes(files[0].name.split('.').pop().toLowerCase())) {
+      var FileSize = files[0].size / 1024 / 1024; // in MB
       if (FileSize > 30) {
         this.errors.file.isError = true;
         this.errors.file.error = "File size is too large";
@@ -958,16 +974,16 @@ export class NewExaminerUserComponent implements OnInit {
       }
       this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
       this.errors.doc_type.error = "";
-      this.file = event.target.files[0].name;
-      this.billingSelectedFile = event.target.files[0];
+      this.file = files[0].name;
+      this.billingSelectedFile = files[0];
       this.billingProviderForm.get('isFileChanged').patchValue(true);
       this.billingProviderForm.get('file').patchValue(this.billingSelectedFile);
       this.w9Url = null;
-      this.fileUploadBilling.nativeElement.value = "";
+      // this.fileUploadBilling.nativeElement.value = "";
     } else {
       this.billingSelectedFile = null;
       this.errors.file.isError = true;
-      this.fileUploadBilling.nativeElement.value = "";
+      // this.fileUploadBilling.nativeElement.value = "";
       this.errors.file.error = "This file type is not accepted";
       this.alertService.openSnackBar("This file type is not accepted", 'error');
     }
