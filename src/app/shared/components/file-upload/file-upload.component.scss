@@ -13,15 +13,16 @@
         }
     }
     .container {
-        margin: 30px 0 20px 0;
+        margin: 20px 0 15px 0;
         width: $width-100;
         min-height: 50vh;
+        max-height: 85vh;
         .custom-drag-and-drap {
             border: 2px dashed $primary !important;
             border-radius: 5px;
             width: 90%;
             margin: 0px auto;
-            padding: 40px 0px;
+            padding: 25px 0px;
             text-align: center;
             display: block;
             box-shadow: $box-shadow-1;
@@ -59,7 +60,7 @@
             margin: 0px auto;
             margin-top: 20px;
             ul {
-                max-height: 250px;
+                max-height: 185px;
                 overflow: auto;
                 padding-left: 0;
                 margin: 0;
