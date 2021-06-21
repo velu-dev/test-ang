@@ -754,7 +754,11 @@ export class AppointmentDetailsComponent implements OnInit {
   addRow(status) {
     let newRowStatus = true
     for (var j in this.getFormControls.controls) {
-      if (this.getFormControls.controls[j].status == 'INVALID') {
+      // if (this.getFormControls.controls[j].status == 'INVALID') {
+      //   newRowStatus = false;
+      // }
+      if(!this.getFormControls.controls[j].get('no_of_pages_declared').value && !this.getFormControls.controls[j].get('agent_type').value && 
+      !this.getFormControls.controls[j].get('date_received').value && !this.getFormControls.controls[j].get('file_name').value && !this.getFormControls.controls[j].get('id').value){
         newRowStatus = false;
       }
     }
