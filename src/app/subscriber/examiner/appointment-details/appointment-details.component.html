@@ -265,10 +265,11 @@
     </mat-card-header>
     <mat-divider> </mat-divider>
     <mat-card-content>
-<!---Documents decleared-->
+        <!---Documents decleared-->
         <div fxLayout="row wrap" *ngIf="getFormControls.controls.length > 0">
             <div fxFlex="100" class="p-l-0 note">
-                <mat-icon>info</mat-icon> Note : Correspondence uploaded here will be included with the billing submission documents according to regulation 9793(L)
+                <mat-icon>info</mat-icon> Note : Correspondence uploaded here will be included with the billing
+                submission documents according to regulation 9793(L)
             </div>
         </div>
         <div class="user-detail">
@@ -314,12 +315,14 @@
                                 </td>
 
                                 <td *ngIf="!group.get('file_name').value">
-                                    <button type="button" mat-raised-button class="mini-btn filled-gray" (click)="addFileDoc($event,group,i)">Upload</button>
+                                    <button type="button" mat-raised-button class="mini-btn filled-gray"
+                                        (click)="addFileDoc($event,group,i)">Upload</button>
                                 </td>
-                                <td  *ngIf="group.get('file_name').value">
+                                <td *ngIf="group.get('file_name').value">
                                     <a class="text-ternary display-block" (click)="downloadDocDeclare(group,i)">
                                         {{group.get('file_name').value}}</a>
-                                    <button type="button" mat-raised-button class="mini-btn filled-gray" (click)="removeDocDeclare(group,i)">Remove</button>
+                                    <button type="button" mat-raised-button class="mini-btn filled-gray"
+                                        (click)="removeDocDeclare(group,i)">Remove</button>
                                 </td>
                                 <td class="text-center">
                                     <a class="text-success" (click)="doneRow(group, i)">Save</a>
@@ -329,16 +332,19 @@
 
                             <tr *ngIf="!group.get('isEditable').value" [formGroupName]="i" class="values">
                                 <td>
-                                    {{group.get('no_of_pages_declared').value ? group.get('no_of_pages_declared').value : '-'}}
+                                    {{group.get('no_of_pages_declared').value ? group.get('no_of_pages_declared').value
+                                    : '-'}}
                                 </td>
                                 <td>
                                     {{group.get('agent_type').value ? group.get('agent_type').value : '-'}}
                                 </td>
                                 <td>
-                                    {{group.get('date_received').value ? (group.get('date_received').value | date:'MM-dd-yyyy') : '-'}}
+                                    {{group.get('date_received').value ? (group.get('date_received').value |
+                                    date:'MM-dd-yyyy') : '-'}}
                                 </td>
                                 <td *ngIf="group.get('file_name').value">
-                                    <a class="text-ternary display-block" (click)="downloadDocDeclare(group,i)">{{group.get('file_name').value}}</a>
+                                    <a class="text-ternary display-block"
+                                        (click)="downloadDocDeclare(group,i)">{{group.get('file_name').value}}</a>
                                     <!-- <button type="button" [disabled]="!group.get('isEditable').value" mat-raised-button class="mini-btn filled-gray" (click)="removeDocDeclare(group,i)">Remove</button> -->
                                 </td>
                                 <td *ngIf="!group.get('file_name').value">
@@ -641,10 +647,11 @@
                 </mat-form-field>
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_"
                     *ngIf="documentType == null || documentType != 6">
-                    <button type="button" mat-stroked-button class="filled-gray" (click)="uploader.click()">Select
+                    <button type="button" mat-stroked-button class="filled-gray"
+                        (click)="openUploadPopUp(false,['.pdf', '.doc', '.docx'], '', '',  30)">Select
                         File
                     </button>
-                    <mat-form-field appearance="standard">
+                    <!-- <mat-form-field appearance="standard">
                         <input matInput [(ngModel)]="file" readonly placeholder="No file chosen">
                         <input type="file" #uploader hidden (change)="addFile($event)" hidden accept=".pdf, .doc, .docx"
                             required>
@@ -652,13 +659,14 @@
                         <mat-hint *ngIf="errors.file.isError">
                             <mat-error>{{errors.file.error}}</mat-error>
                         </mat-hint>
-                    </mat-form-field>
+                    </mat-form-field> -->
                 </div>
 
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_"
                     *ngIf="documentType == 6">
-                    <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
-                    <mat-form-field appearance="standard" class="p-l-10 w-100  custom-br">
+                    <button mat-raised-button class="filled-gray"
+                        (click)="openUploadPopUp(false,['.pdf', '.doc', '.docx'], '', '6',  30)">Select File</button>
+                    <!-- <mat-form-field appearance="standard" class="p-l-10 w-100  custom-br">
                         <input matInput value="{{file | ellipsis:50}}" readonly placeholder="No file chosen">
                         <input type="file" #uploader hidden (change)="addFile($event)" multiple
                             accept=".pdf, .doc, .docx, .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct" required>
@@ -667,14 +675,14 @@
                         <mat-hint *ngIf="errors.file.isError">
                             <mat-error>{{errors.file.error}}</mat-error>
                         </mat-hint>
-                    </mat-form-field>
+                    </mat-form-field> -->
                 </div>
 
 
-                <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+                <!-- <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
                     <button mat-stroked-button type="button" (click)="uploadFile()" class="filled-gray p-r-20">Add
                     </button>
-                </div>
+                </div> -->
 
             </div>
             <!-- <div fxLayout="row wrap" *ngIf="isExamTypeChanged" fxFlex="100" class="document-file-upload w-100">
@@ -747,7 +755,7 @@
                                     </span>
                                     <span *ngIf="column == 'send'">
                                         <a class="text-success"
-                                        (click)="$event.stopPropagation();downloadDocumetSend(element?.send)">Download</a>
+                                            (click)="$event.stopPropagation();downloadDocumetSend(element?.send)">Download</a>
                                     </span>
                                     <span *ngIf="column == 'action' && !element?.proof_of_service_file_name"
                                         class="text-center no-wrap-td">
