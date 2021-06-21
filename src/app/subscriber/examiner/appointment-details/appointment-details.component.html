@@ -88,7 +88,7 @@
             <span class="note p-l-10">This would be a brief description on the benefits of these services</span>
         </div>
     </div>
-    <div *ngFor="let status of procedureTypeList" fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100">
+    <div *ngFor="let status of procedureTypeList" fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" [hidden]="status?.skip">
         <div class="simple-card" *ngIf="!(status.name === 'Billing' && role == '4')"
             [ngClass]="{'billing-status-active bg_light': status.name === 'Billing'}" (click)="clickNav(status.url)">
             <i [class]="status.icon"></i>
@@ -764,7 +764,7 @@
                             <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumnsForDocuments.length">
                                 <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                                     <div class="responsive-table">
-                                        <div *ngIf="this.tabIndexDetails.index == 0"><span>Download On Demand Proof of
+                                        <div *ngIf="this.tabIndexDetails.index == 1"><span>Download On Demand Proof of
                                                 Service</span>
                                             <span>
                                                 <a target="_self" class="text-success"

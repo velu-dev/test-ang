@@ -118,7 +118,14 @@ export class AppointmentDetailsComponent implements OnInit {
   noteDisable: boolean = false;
   saveButtonStatus: boolean = false;
   file = '';
-  procedureTypeStatus = [{ name: "Mailing", progress_name: 'correspondence', icon: "far fa-folder-open", for: ["E", "S", "D"], url: "/correspondence" }, { name: "History", progress_name: 'history', icon: "fa fa-history", for: ["E"], url: "/history" }, { name: "Records", progress_name: 'record', icon: "far fa-list-alt", for: ["E", "S"], url: "/records" }, { name: "Examination Documents", progress_name: 'examination', icon: "far fa-edit", for: ["E"], url: "/examination" }, { name: "Transcription & Compilation", progress_name: 'transcription', icon: "fa fa-tasks", for: ["E", "S", "D"], url: "/reports" }, { name: "Billing", progress_name: 'billing', icon: "fa fa-usd", for: ["E", "S", "D"], url: "/billing", billing: true }];
+  procedureTypeStatus = [
+    { name: "Correspondence", progress_name: 'correspondence_rec', icon: "far fa-folder-open", for: [], url: "", skip: true },
+    { name: "Mailing", progress_name: 'correspondence', icon: "far fa-folder-open", for: ["E", "S", "D"], url: "/correspondence" },
+    { name: "History", progress_name: 'history', icon: "fa fa-history", for: ["E"], url: "/history" },
+    { name: "Records", progress_name: 'record', icon: "far fa-list-alt", for: ["E", "S"], url: "/records" },
+    { name: "Examination Documents", progress_name: 'examination', icon: "far fa-edit", for: ["E"], url: "/examination" },
+    { name: "Transcription & Compilation", progress_name: 'transcription', icon: "fa fa-tasks", for: ["E", "S", "D"], url: "/reports" },
+    { name: "Billing", progress_name: 'billing', icon: "fa fa-usd", for: ["E", "S", "D"], url: "/billing", billing: true }];
   procedureTypeList = [];
   forms = [
     { name: "QME-110", group: "QME", value: "110" },
@@ -279,10 +286,13 @@ export class AppointmentDetailsComponent implements OnInit {
   getDocumentDeclareData() {
     console.log("sadasddasdasd --11")
     this.claimService.getDocumentsDeclared(this.claim_id, this.billableId).subscribe(res => {
+      this.docDeclearTable = this.formBuilder.group({
+        tableRows: this.formBuilder.array([])
+      });
       if (res.data) {
         this.documentsDeclared = res.data;
         res.data.map((item, i) => {
-          this.addRow();
+          this.addRow(true);
           console.log(item)
           this.getFormControls.controls[i].patchValue(item)
           this.getFormControls.controls[i].get('isEditable').patchValue(false)
@@ -423,8 +433,8 @@ export class AppointmentDetailsComponent implements OnInit {
           this.cookieService.set('billableItem', response.data.exam_procedure_name)
           this.appointmentId = response.data.appointments.id;
           if (response.data.appointments.examiner_id) {
-            this.procedureTypeStatus[1].url = "/history/" + response.data.appointments.examiner_id;
-            this.procedureTypeStatus[0].url = "/correspondence/" + response.data.appointments.examiner_id
+            this.procedureTypeStatus[2].url = "/history/" + response.data.appointments.examiner_id;
+            this.procedureTypeStatus[1].url = "/correspondence/" + response.data.appointments.examiner_id
           }
 
           this.progressStatus = response.data.progress_status
@@ -455,6 +465,7 @@ export class AppointmentDetailsComponent implements OnInit {
           }
 
           this.procedureTypeList = [];
+          this.procedureTypeList.push(this.procedureTypeStatus[0])
           this.procedureTypeStatus.map(pro => {
             if (response.data.procedure_type == "Evaluation" || response.data.procedure_type == "Reevaluation") {
               // if (!(response.data.exam_procedure_type == "IMERECS")) {
@@ -711,11 +722,12 @@ export class AppointmentDetailsComponent implements OnInit {
       no_of_pages_declared: [''],
       agent_type: [''],
       date_received: [""],
-      file_name: [""],
+      file_name: ["", Validators.required],
       file: [""],
       document_id: [""],
       correspodence_received_file_url: [""],
-      isEditable: [true]
+      isEditable: [true],
+      is_upload: [false]
     });
   }
 
@@ -724,7 +736,7 @@ export class AppointmentDetailsComponent implements OnInit {
     return control;
   }
 
-  addRow() {
+  addRow(status) {
     let newRowStatus = true
     for (var j in this.getFormControls.controls) {
       if (this.getFormControls.controls[j].status == 'INVALID') {
@@ -732,7 +744,7 @@ export class AppointmentDetailsComponent implements OnInit {
       }
     }
 
-    if (!newRowStatus) {
+    if (!newRowStatus && !status) {
       this.alertService.openSnackBar("Please fill existing data", 'error');
       return;
     }
@@ -785,39 +797,55 @@ export class AppointmentDetailsComponent implements OnInit {
       group.markAllAsTouched();
       return;
     }
-    const dialogRef = this.dialog.open(AlertDialogueComponent, {
-      width: '500px',
-      data: { title: 'Page Declared', message: "Is this the correct number of pages declared? <br/><b>*The excess pages will be added to the bill as a line item</b>.", proceed: true, no: true, type: "info", info: true }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result.data) {
-        // group.get('date_received').patchValue(moment((group.value.date_received).format("MM-DD-YYYY")));
-        let data = {
-          id: group.value.id,
-          agent_type: group.value.agent_type,
-          no_of_pages_declared: group.value.no_of_pages_declared
-        };
-        data['date_received'] = group.value.date_received ? moment(group.value.date_received).format("LL") : '';
-        this.formDataDoc.append('id', data.id ? data.id : '');
-        this.formDataDoc.append('agent_type', data.agent_type ? data.agent_type : '');
-        this.formDataDoc.append('no_of_pages_declared', data.no_of_pages_declared ? data.no_of_pages_declared : '');
-        this.formDataDoc.append('date_received', data['date_received'] ? data['date_received'] : '');
-        this.formDataDoc.append('file', group.value.file);
-        this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe(res => {
-          let message = group.value.id ? "Documents declared details updated successfully!" : "Documents declared details created successfully!"
-          this.alertService.openSnackBar(message, "success");
-          this.documentsDeclared[i] = res.data
-          group.patchValue(res.data)
-          group.get('isEditable').setValue(false);
-          group.get('id').setValue(res.data.id);
-          this.loadActivity();
-        }, error => {
-          this.alertService.openSnackBar(error.error.message, 'error');
-        })
-      } else {
-        return;
-      }
-    })
+    let data = {
+      id: group.value.id,
+      agent_type: group.value.agent_type,
+      no_of_pages_declared: group.value.no_of_pages_declared
+    };
+    data['date_received'] = group.value.date_received ? moment(group.value.date_received).format("LL") : '';
+    this.formDataDoc.append('id', data.id ? data.id : '');
+    this.formDataDoc.append('agent_type', data.agent_type ? data.agent_type : '');
+    this.formDataDoc.append('no_of_pages_declared', data.no_of_pages_declared ? data.no_of_pages_declared : '');
+    this.formDataDoc.append('date_received', data['date_received'] ? data['date_received'] : '');
+    if(data.id) this.formDataDoc.append('document_id', group.value.document_id ? group.value.document_id : '');
+    this.formDataDoc.append('file', group.value.file);
+    this.formDataDoc.append('is_upload', group.value.is_upload);
+    if (group.value.no_of_pages_declared || group.value.agent_type || group.value.date_received) {
+      const dialogRef = this.dialog.open(AlertDialogueComponent, {
+        width: '500px',
+        data: { title: 'Page Declared', message: "Is this the correct number of pages declared? <br/><b>*The excess pages will be added to the bill as a line item</b>.", proceed: true, no: true, type: "info", info: true }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result.data) {
+          // group.get('date_received').patchValue(moment((group.value.date_received).format("MM-DD-YYYY")));
+          this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe(res => {
+            let message = group.value.id ? "Documents declared details updated successfully!" : "Documents declared details created successfully!"
+            this.alertService.openSnackBar(message, "success");
+            this.documentsDeclared[i] = res.data
+            group.patchValue(res.data)
+            group.get('isEditable').setValue(false);
+            group.get('id').setValue(res.data.id);
+            this.loadActivity();
+          }, error => {
+            this.alertService.openSnackBar(error.error.message, 'error');
+          })
+        } else {
+          return;
+        }
+      })
+    } else {
+      this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe(res => {
+        let message = group.value.id ? "Documents declared details updated successfully!" : "Documents declared details created successfully!"
+        this.alertService.openSnackBar(message, "success");
+        this.documentsDeclared[i] = res.data
+        group.patchValue(res.data)
+        group.get('isEditable').setValue(false);
+        group.get('id').setValue(res.data.id);
+        this.loadActivity();
+      }, error => {
+        this.alertService.openSnackBar(error.error.message, 'error');
+      })
+    }
     return
 
   }
@@ -839,6 +867,7 @@ export class AppointmentDetailsComponent implements OnInit {
         group.get('file').patchValue(null);
         group.get('file_name').patchValue(result.files[0].name);
         group.get('file').patchValue(result.files[0]);
+        group.get('is_upload').patchValue(true)
       }
     })
 
@@ -1441,7 +1470,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.filterValue = '';
     this.documentsData = new MatTableDataSource([])
     this.tabData = this.documentTabData ? this.documentTabData[event ? event.tab.textLabel.toLowerCase() : ''] : [];
-    if (this.tabIndexDetails.index == 0) {
+    if (this.tabIndexDetails.index == 1) {
       if (this.isMobile) {
         this.columnName = ["", "Name"]
         this.displayedColumnsForDocuments = ['is_expand', 'file_name']
@@ -1450,7 +1479,7 @@ export class AppointmentDetailsComponent implements OnInit {
         this.columnName = ["", "Name", "Uploaded On ", "Download On Demand" + '\n' + "Proof of Service", "Action"]
         this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'updatedAt', 'pfs', 'action']
       }
-    } else if (this.tabIndexDetails.index == 5) { // billing Tab
+    } else if (this.tabIndexDetails.index == 6) { // billing Tab
       if (this.isMobile) {
         this.columnName = ["", "Name"]
         this.displayedColumnsForDocuments = ['is_expand', 'file_name']
@@ -1560,6 +1589,31 @@ export class AppointmentDetailsComponent implements OnInit {
     this.formData.append('document_category_id', this.documentType);
     this.formData.append('claim_id', this.claim_id);
     this.formData.append('bill_item_id', this.billableId.toString());
+    if (this.documentType == 12) {
+      this.formDataDoc = new FormData();
+      this.formDataDoc.append('id', '');
+      this.formDataDoc.append('agent_type', '');
+      this.formDataDoc.append('no_of_pages_declared', '');
+      this.formDataDoc.append('date_received', '');
+      this.formDataDoc.append('file', this.selectedFile);
+      this.formDataDoc.append('is_upload', 'true');
+      this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe(res => {
+        this.selectedFile = null;
+        this.fileUpload.nativeElement.value = "";
+        this.documentType = null;
+        this.formData = new FormData();
+        this.file = "";
+        this.getDocumentData();
+        this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
+        this.alertService.openSnackBar("File added successfully", 'success');
+        this.getDocumentDeclareData();
+      }, error => {
+        this.fileUpload.nativeElement.value = "";
+        this.selectedFile = null;
+        this.alertService.openSnackBar(error.error.message, 'error');
+      })
+      return;
+    }
     this.examinerService.postDocument(this.formData).subscribe(res => {
       this.selectedFile = null;
       this.fileUpload.nativeElement.value = "";
@@ -1668,23 +1722,44 @@ export class AppointmentDetailsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        this.examinerService.deleteDocument(data.id, true).subscribe(res => {
-          let i = 0;
-          this.tabData.map(dd => {
-            if (dd.id == data.id) {
-              this.tabData.splice(i, 1)
-            }
-            i = i + 1;
+        console.log(data);
+        if (data.documents_declared_id) {
+          this.claimService.removeDocumentDeclared(data.documents_declared_id, data.id).subscribe(res => {
+            let i = 0;
+            this.tabData.map(dd => {
+              if (dd.id == data.id) {
+                this.tabData.splice(i, 1)
+              }
+              i = i + 1;
+            })
+            this.documentsData = new MatTableDataSource(this.tabData);
+            this.documentsData.sort = this.Docsort;
+            this.documentsData.paginator = this.paginator;
+            this.getDocumentData();
+            this.loadActivity();
+            this.alertService.openSnackBar("File deleted successfully", 'success');
+          }, error => {
+            this.alertService.openSnackBar(error.error.message, 'error');
           })
-          this.documentsData = new MatTableDataSource(this.tabData);
-          this.documentsData.sort = this.Docsort;
-          this.documentsData.paginator = this.paginator;
-          this.getDocumentData();
-          this.loadActivity();
-          this.alertService.openSnackBar("File deleted successfully", 'success');
-        }, error => {
-          this.alertService.openSnackBar(error.error.message, 'error');
-        })
+        } else {
+          this.examinerService.deleteDocument(data.id, true).subscribe(res => {
+            let i = 0;
+            this.tabData.map(dd => {
+              if (dd.id == data.id) {
+                this.tabData.splice(i, 1)
+              }
+              i = i + 1;
+            })
+            this.documentsData = new MatTableDataSource(this.tabData);
+            this.documentsData.sort = this.Docsort;
+            this.documentsData.paginator = this.paginator;
+            this.getDocumentData();
+            this.loadActivity();
+            this.alertService.openSnackBar("File deleted successfully", 'success');
+          }, error => {
+            this.alertService.openSnackBar(error.error.message, 'error');
+          })
+        }
       }
     })
 
