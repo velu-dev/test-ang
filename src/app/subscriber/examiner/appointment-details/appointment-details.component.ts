@@ -751,7 +751,7 @@ export class AppointmentDetailsComponent implements OnInit {
     return control;
   }
 
-  addRow(status) {
+  addRow(status?) {
     let newRowStatus = true
     for (var j in this.getFormControls.controls) {
       // if (this.getFormControls.controls[j].status == 'INVALID') {
