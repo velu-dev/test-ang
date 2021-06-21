@@ -587,6 +587,7 @@ export class AppointmentDetailsComponent implements OnInit {
           const control = this.docDeclearTable.get('tableRows') as FormArray;
           control.removeAt(i);
           this.loadActivity();
+          this.getDocumentData();
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');
         })
@@ -736,7 +737,7 @@ export class AppointmentDetailsComponent implements OnInit {
       no_of_pages_declared: [''],
       agent_type: [''],
       date_received: [""],
-      file_name: ["", Validators.required],
+      file_name: [""],
       file: [""],
       document_id: [""],
       correspodence_received_file_url: [""],
@@ -839,7 +840,8 @@ export class AppointmentDetailsComponent implements OnInit {
             group.patchValue(res.data)
             group.get('isEditable').setValue(false);
             group.get('id').setValue(res.data.id);
-            this.loadActivity();
+           // this.loadActivity();
+            this.getDocumentData();
           }, error => {
             this.alertService.openSnackBar(error.error.message, 'error');
           })
@@ -855,7 +857,8 @@ export class AppointmentDetailsComponent implements OnInit {
         group.patchValue(res.data)
         group.get('isEditable').setValue(false);
         group.get('id').setValue(res.data.id);
-        this.loadActivity();
+       // this.loadActivity();
+        this.getDocumentData();
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })
@@ -923,6 +926,7 @@ export class AppointmentDetailsComponent implements OnInit {
             group.get('document_id').patchValue(null);
             group.get('correspodence_received_file_url').patchValue(null);
             this.alertService.openSnackBar("File deleted successfully", 'success');
+            this.getDocumentData();
           }, error => {
             this.alertService.openSnackBar(error.error.message, 'error');
           })
@@ -941,6 +945,7 @@ export class AppointmentDetailsComponent implements OnInit {
               const control = this.docDeclearTable.get('tableRows') as FormArray;
               control.removeAt(i);
               this.loadActivity();
+              this.getDocumentData();
             }, error => {
               this.alertService.openSnackBar(error.error.message, 'error');
             })
@@ -1613,7 +1618,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.formDataDoc.append('is_upload', 'true');
       this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe(res => {
         this.selectedFile = null;
-        this.fileUpload.nativeElement.value = "";
+       // this.fileUpload.nativeElement.value = "";
         this.documentType = null;
         this.formData = new FormData();
         this.file = "";
@@ -1622,7 +1627,7 @@ export class AppointmentDetailsComponent implements OnInit {
         this.alertService.openSnackBar("File added successfully", 'success');
         this.getDocumentDeclareData();
       }, error => {
-        this.fileUpload.nativeElement.value = "";
+        //this.fileUpload.nativeElement.value = "";
         this.selectedFile = null;
         this.alertService.openSnackBar(error.error.message, 'error');
       })
@@ -1638,7 +1643,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
       this.alertService.openSnackBar("File added successfully", 'success');
     }, error => {
-      this.fileUpload.nativeElement.value = "";
+      //this.fileUpload.nativeElement.value = "";
       this.selectedFile = null;
     })
   }
@@ -1751,6 +1756,7 @@ export class AppointmentDetailsComponent implements OnInit {
             this.documentsData.paginator = this.paginator;
             this.getDocumentData();
             this.loadActivity();
+            this.getDocumentDeclareData()
             this.alertService.openSnackBar("File deleted successfully", 'success');
           }, error => {
             this.alertService.openSnackBar(error.error.message, 'error');
