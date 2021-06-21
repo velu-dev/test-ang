@@ -757,8 +757,8 @@ export class AppointmentDetailsComponent implements OnInit {
       // if (this.getFormControls.controls[j].status == 'INVALID') {
       //   newRowStatus = false;
       // }
-      if(!this.getFormControls.controls[j].get('no_of_pages_declared').value && !this.getFormControls.controls[j].get('agent_type').value && 
-      !this.getFormControls.controls[j].get('date_received').value && !this.getFormControls.controls[j].get('file_name').value && !this.getFormControls.controls[j].get('id').value){
+      if (!this.getFormControls.controls[j].get('no_of_pages_declared').value && !this.getFormControls.controls[j].get('agent_type').value &&
+        !this.getFormControls.controls[j].get('date_received').value && !this.getFormControls.controls[j].get('file_name').value && !this.getFormControls.controls[j].get('id').value) {
         newRowStatus = false;
       }
     }
@@ -826,8 +826,8 @@ export class AppointmentDetailsComponent implements OnInit {
     this.formDataDoc.append('agent_type', data.agent_type ? data.agent_type : '');
     this.formDataDoc.append('no_of_pages_declared', data.no_of_pages_declared ? data.no_of_pages_declared : '');
     this.formDataDoc.append('date_received', data['date_received'] ? data['date_received'] : '');
-    if(data.id) this.formDataDoc.append('document_id', group.value.document_id ? group.value.document_id : '');
-    this.formDataDoc.append('file', group.value.file);
+    this.formDataDoc.append('document_id', group.value.document_id ? group.value.document_id : '');
+    this.formDataDoc.append('file', group.value.file ? group.value.file : '');
     this.formDataDoc.append('is_upload', group.value.is_upload);
     if (group.value.no_of_pages_declared || group.value.agent_type || group.value.date_received) {
       const dialogRef = this.dialog.open(AlertDialogueComponent, {
@@ -844,7 +844,7 @@ export class AppointmentDetailsComponent implements OnInit {
             group.patchValue(res.data)
             group.get('isEditable').setValue(false);
             group.get('id').setValue(res.data.id);
-           // this.loadActivity();
+            // this.loadActivity();
             this.getDocumentData();
           }, error => {
             this.alertService.openSnackBar(error.error.message, 'error');
@@ -861,7 +861,7 @@ export class AppointmentDetailsComponent implements OnInit {
         group.patchValue(res.data)
         group.get('isEditable').setValue(false);
         group.get('id').setValue(res.data.id);
-       // this.loadActivity();
+        // this.loadActivity();
         this.getDocumentData();
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
@@ -929,8 +929,12 @@ export class AppointmentDetailsComponent implements OnInit {
             group.get('file').patchValue(null);
             group.get('document_id').patchValue(null);
             group.get('correspodence_received_file_url').patchValue(null);
+            group.get('is_upload').patchValue(false);
             this.alertService.openSnackBar("File deleted successfully", 'success');
             this.getDocumentData();
+            if (!group.get('no_of_pages_declared').value && !group.get('agent_type').value && !group.get('date_received').value) {
+              this.getDocumentDeclareData()
+            }
           }, error => {
             this.alertService.openSnackBar(error.error.message, 'error');
           })
@@ -938,6 +942,7 @@ export class AppointmentDetailsComponent implements OnInit {
           group.get('file_name').patchValue(null);
           group.get('file').patchValue(null);
           group.get('document_id').patchValue(null);
+          group.get('is_upload').patchValue(false);
           group.get('correspodence_received_file_url').patchValue(null);
         }
 
@@ -1622,7 +1627,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.formDataDoc.append('is_upload', 'true');
       this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe(res => {
         this.selectedFile = null;
-       // this.fileUpload.nativeElement.value = "";
+        // this.fileUpload.nativeElement.value = "";
         this.documentType = null;
         this.formData = new FormData();
         this.file = "";
