@@ -845,7 +845,19 @@ export class NewExaminerUserComponent implements OnInit {
     }
   }
 
-
+  openSignature() {
+    const dialogRef = this.dialog.open(FileUploadComponent, {
+      width: '800px',
+      data: { name: 'make this card the default card', address: true, isMultiple: false, fileType: ['.png', '.jpg', '.jpeg'] },
+      panelClass: 'custom-drag-and-drop',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        console.log(result)
+        this.openSign(result.files[0])
+      }
+    })
+  }
   openAlertDialog(title, subTitle) {
     const dialogRef = this.dialog.open(AlertDialogComponent, {
       width: '450px',
@@ -869,7 +881,7 @@ export class NewExaminerUserComponent implements OnInit {
         this.renderingForm.patchValue({ is_new_signature: true })
         this.signData = result;
       }
-      this.fileUpload.nativeElement.value = "";
+      // this.fileUpload.nativeElement.value = "";
     });
   }
 

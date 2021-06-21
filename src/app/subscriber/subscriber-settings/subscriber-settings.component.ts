@@ -444,19 +444,6 @@ export class SubscriberSettingsComponent implements OnInit {
 
 
   }
-  openPopUp() {
-    const dialogRef = this.dialog.open(FileUploadComponent, {
-      width: '800px',
-      data: { name: 'make this card the default card', address: true, isMultiple: false },
-      panelClass: 'custom-drag-and-drop',
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result['data']) {
-        console.log(result)
-        this.fileChangeEvent(null, result.files)
-      }
-    })
-  }
   getAddress() {
     this.userService.getSubscriberAddress().subscribe(res => {
       if (res.status) {
@@ -933,7 +920,19 @@ export class SubscriberSettingsComponent implements OnInit {
       this.openDialog('This file type is not accepted', 'Supported File Formats are JPEG/JPG/PNG !')
     }
   }
-
+  openSignature() {
+    const dialogRef = this.dialog.open(FileUploadComponent, {
+      width: '800px',
+      data: { name: 'make this card the default card', address: true, isMultiple: false, fileType: ['.png', '.jpg', '.jpeg'] },
+      panelClass: 'custom-drag-and-drop',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        console.log(result)
+        this.openSign(result.files[0])
+      }
+    })
+  }
   openSign(e): void {
     const dialogRef = this.dialog.open(SignPopupComponent, {
       width: '800px',
@@ -951,7 +950,7 @@ export class SubscriberSettingsComponent implements OnInit {
         this.signData = result;
       }
       console.log(this.signData)
-      this.fileUpload.nativeElement.value = "";
+      // this.fileUpload.nativeElement.value = "";
     });
   }
 

@@ -16,6 +16,7 @@ import { IntercomService } from 'src/app/services/intercom.service';
 import { SignPopupComponent } from '../../subscriber-settings/subscriber-settings.component';
 import { MatDialog } from '@angular/material';
 import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/alert-dialog.component';
+import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 
 @Component({
   selector: 'app-examiner-setting',
@@ -216,7 +217,18 @@ export class ExaminerSettingComponent implements OnInit {
 
   selectedFile: any = null;
   signData: any = null;
-
+  openSignature() {
+    const dialogRef = this.dialog.open(FileUploadComponent, {
+      width: '800px',
+      data: { name: 'make this card the default card', address: true, isMultiple: false, fileType: ['.png', '.jpg', '.jpeg'] },
+      panelClass: 'custom-drag-and-drop',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.openSign(result.files[0])
+      }
+    })
+  }
   openSign(e): void {
     const dialogRef = this.dialog.open(SignPopupComponent, {
       // height: '800px',

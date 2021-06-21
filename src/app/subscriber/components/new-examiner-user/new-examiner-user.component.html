@@ -718,11 +718,11 @@
                                                 <input matInput [title]="selectedFile" readonly
                                                     [value]="selectedFile | ellipsis:50" placeholder="No file chosen"
                                                     value="12345" autocomplete="off">
-                                                <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
-                                                    (change)="fileChangeEvent($event)" id="uploadFile">
+                                                <!-- <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
+                                                    (change)="fileChangeEvent($event)" id="uploadFile"> -->
 
                                             </mat-form-field>
-                                            <button matSuffix type="button" (click)="uploader.click()"
+                                            <button matSuffix type="button" (click)="openSignature()"
                                                 mat-stroked-button class="upload_btn outline-success">Upload
                                             </button>
                                         </div>
