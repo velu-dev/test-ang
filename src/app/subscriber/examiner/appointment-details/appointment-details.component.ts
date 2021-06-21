@@ -594,6 +594,20 @@ export class AppointmentDetailsComponent implements OnInit {
     });
 
   }
+  openUploadPopUp(isMultiple, type, data?, callback?, fileSize?) {
+    const dialogRef = this.dialog.open(FileUploadComponent, {
+      width: '800px',
+      data: { name: 'make this card the default card', address: true, isMultiple: isMultiple, fileType: type, fileSize: fileSize },
+      panelClass: 'custom-drag-and-drop',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.file = result.files[0].name;
+        this.selectedFile = result.files[0];
+        this.uploadFile();
+      }
+    })
+  }
   cancelDoc() {
     this.isEditDocument = false;
     this.editedDocumentIndex = null;
@@ -1616,7 +1630,7 @@ export class AppointmentDetailsComponent implements OnInit {
     }
     this.examinerService.postDocument(this.formData).subscribe(res => {
       this.selectedFile = null;
-      this.fileUpload.nativeElement.value = "";
+      // this.fileUpload.nativeElement.value = "";
       this.documentType = null;
       this.formData = new FormData();
       this.file = "";
@@ -1931,7 +1945,7 @@ export class AppointmentDetailsComponent implements OnInit {
 
   docChange(e) {
     this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } };
-    this.fileUpload.nativeElement.value = "";
+    // this.fileUpload.nativeElement.value = "";
     this.selectedFile = null;
     this.file = null;
   }
