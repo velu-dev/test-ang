@@ -577,7 +577,7 @@ export class BillLineItemComponent implements OnInit {
     }
     let modify = group.value.modifierList;
     modify.push(event.option.viewValue)
-    group.get('modifierList').setValue(modify)
+    group.get('modifierList').setValue(modify.sort(function(a, b){return a-b}))
   }
 
   rowSelected(group: FormGroup) {

@@ -284,7 +284,6 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   documentsDeclared = [];
   getDocumentDeclareData() {
-    console.log("sadasddasdasd --11")
     this.claimService.getDocumentsDeclared(this.claim_id, this.billableId).subscribe(res => {
       this.docDeclearTable = this.formBuilder.group({
         tableRows: this.formBuilder.array([])
@@ -829,7 +828,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.formDataDoc.append('document_id', group.value.document_id ? group.value.document_id : '');
     this.formDataDoc.append('file', group.value.file ? group.value.file : '');
     this.formDataDoc.append('is_upload', group.value.is_upload);
-    if (group.value.no_of_pages_declared || group.value.agent_type || group.value.date_received) {
+    if ((group.value.no_of_pages_declared || group.value.agent_type || group.value.date_received) && this.examinationDetails.procedure_type != "Deposition") {
       const dialogRef = this.dialog.open(AlertDialogueComponent, {
         width: '500px',
         data: { title: 'Page Declared', message: "Is this the correct number of pages declared? <br/><b>*The excess pages will be added to the bill as a line item</b>.", proceed: true, no: true, type: "info", info: true }
