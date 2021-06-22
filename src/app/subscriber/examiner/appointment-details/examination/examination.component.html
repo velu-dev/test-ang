@@ -79,7 +79,7 @@
         *ngIf="!(billingData?.is_exam_type_changed || billingData?.isExaminerDisabled)">
         <div fxFlex="50" class="upload-file" fxFlex.sm="100" fxFlex.xs="100"
           *ngIf="!alldocuments?.is_exam_type_changed && !alldocuments?.isExaminerDisabled">
-          <button mat-raised-button class="filled-gray" (click)="openPopupDialogue()">Select File</button>
+          <button mat-raised-button class="filled-ternary" (click)="openPopupDialogue()">Upload File</button>
           <!-- <mat-form-field appearance="standard" class="p-l-10 w-100">
             <input matInput readonly value="{{file | ellipsis:50}}" placeholder="No file chosen">
             <input type="file" #uploader multiple (change)="addFile($event)" hidden accept=".pdf, .doc, .docx" required>
@@ -96,7 +96,7 @@
         </div> -->
       </div>
 
-      <div class="user-detail vertical-fixed default-cursor m-t-20">
+      <div class="user-detail vertical-fixed default-cursor m-t-10">
         <table mat-table [dataSource]="uploadedDocument" multiTemplateDataRows class="mat-elevation-z8 user-table"
           matSort>
           <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
