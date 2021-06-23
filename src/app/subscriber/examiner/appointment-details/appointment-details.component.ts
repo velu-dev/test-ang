@@ -715,6 +715,9 @@ export class AppointmentDetailsComponent implements OnInit {
         }
         if (!res.data[0].duration) {
           this.billable_item.get(['appointment', 'duration']).disable();
+          if (res.data[0].duration == null) {
+            this.billable_item.get(['appointment', 'duration']).enable();
+          }
         }
         if (!res.data[0].location) {
           this.billable_item.get(['appointment', 'examiner_service_location_id']).disable();
@@ -1236,6 +1239,7 @@ export class AppointmentDetailsComponent implements OnInit {
     let data = this.examinationStatusForm.value
     data['appointment_id'] = this.appointmentId
     this.examinerService.updateExaminationStatus(data).subscribe(res => {
+      this.getDisabledFields();
       this.examinationStatusForm.disable()
       this.isExaminationStatusEdit = false;
       this.alertService.openSnackBar(this.isDisplayStatus.name + ' details updated Successfully', "success");
@@ -1436,6 +1440,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.billable_item.get('appointment').get('duration').updateValueAndValidity();
   }
   submitBillableItem() {
+    console.log(this.billable_item.errors)
     // this.todayDate.appointment = new Date();
     if (this.billable_item.value.appointment.appointment_scheduled_date_time) {
       this.billable_item.get('appointment').get('duration').setValidators([Validators.compose([Validators.required, Validators.pattern('[0-9]+'), Validators.min(1), Validators.max(450)])]);
@@ -1467,6 +1472,7 @@ export class AppointmentDetailsComponent implements OnInit {
       billable_item_date = moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).add(1, 'minute')
       if (!(moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).isSameOrAfter(moment().set('second', 0)))) {
         this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).setErrors({ 'incorrect': true })
+        this.alertService.openSnackBar("Please select valid appointment date", "error");
         return
       }
     }
