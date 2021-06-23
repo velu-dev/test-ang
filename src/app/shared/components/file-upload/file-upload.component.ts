@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import * as globals from '../../../globals'
+import { AlertService } from '../../services/alert.service';
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',
@@ -22,6 +23,7 @@ export class FileUploadComponent implements OnInit {
   pdf = '/assets/images/pdf.svg'
   files = [];
   constructor(
+    private alertService: AlertService,
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<FileUploadComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -79,21 +81,29 @@ export class FileUploadComponent implements OnInit {
     this.progressValue = e.bytesLoaded / e.bytesTotal * 100;
   }
   error = "";
+  fileName = [];
   onUploadStarted(e) {
-    console.log(e)
+    console.log(e.file)
     if (this.fileType.includes(('.' + e.file.name.split('.').pop().toLowerCase()))) {
       var FileSize = e.file.size / 1024 / 1024; // in MB
       let actualFileSize = (this.fileSize / (1024 * 1024));
       if (FileSize > actualFileSize) {
         this.error = "File size is too large. Contact your organization's Simplexam Admin";
         return
+      } else {
+        this.error = "";
       }
     } else {
       this.error = "<b>Uploaded file format is not accepted</b> " + ' ( ' + e.file.name + ' ).';
       return
     }
-    this.error = ""
+    this.error = "";
     if (this.isMultiple) {
+      if (this.fileName.includes(e.file.name)) {
+        this.alertService.openSnackBar('File is already exist!', 'error')
+        return
+      }
+      this.fileName.push(e.file.name);
       this.files.push(e.file);
     } else {
       this.files = [];

@@ -243,7 +243,7 @@ export class ReportComponent implements OnInit {
   openPopupDialogue() {
     const dialogRef = this.dialog.open(FileUploadComponent, {
       width: '800px',
-      data: { isMultiple: true, fileType: ['.pdf', '.doc', '.doc', '.mp3', '.wav', '.m4a', '.wma', '.dss', '.ds2', '.dct'], fileSize: 3073 },
+      data: { isMultiple: true, fileType: ['.pdf', '.doc', '.docx', '.mp3', '.wav', '.m4a', '.wma', '.dss', '.ds2', '.dct'], fileSize: 3073 },
       panelClass: 'custom-drag-and-drop',
     });
     dialogRef.afterClosed().subscribe(result => {

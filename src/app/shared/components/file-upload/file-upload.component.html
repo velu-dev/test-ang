@@ -15,7 +15,7 @@
             [ngClass]="isDropZoneActive ? ['dx-theme-accent-as-border-color', 'dropzone-active'] : ['dx-theme-border-color']">
             <img [src]="file_upload" alt="File Upload">
             <h2>Drag and drop</h2>
-            <p>( Supported file formats : {{fileType.join()}})<br /><span>Max file size : {{data.fileSize}} MB</span>
+            <p>( Supported file formats : {{fileType.join()}} )<br /><span>Max file size : {{data.fileSize}} MB</span>
             </p>
             <div>Or</div>
             <button mat-raised-button class="filled-ternary">Upload from your computer</button>
@@ -30,7 +30,8 @@
             <div class="sub-title">Attached Files</div>
             <ul>
                 <li *ngFor="let file of files; let i = index">
-                    <img [src]="pdf" alt="File Upload">
+                    <img [src]="file?.type.split('/')[1] | fileType" alt="File Upload">
+                    <!-- <img [src]="pdf" alt="File Upload"> -->
                     <div class="filename">{{file.name}} </div>
                     <a class="text-danger" (click)="remove(i)">Remove</a>
                 </li>
