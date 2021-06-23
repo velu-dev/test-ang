@@ -671,86 +671,88 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   getDisabledFields() {
     this.claimService.getFormDisabled(this.claim_id, this.billableId, this.examinationStatusForm.get('examination_status').value).subscribe(res => {
-      let data = {
-        examination_status: res.data[0].examination_status,
-        notes: false,
-        exam_type: {
-          exam_procedure_type_id: res.data[0].exam_procedure_type
-        },
-        appointment: {
-          examiner_id: res.data[0].examiner,
-          appointment_scheduled_date_time: res.data[0].date_and_time,
-          duration: res.data[0].duration,
-          examiner_service_location_id: res.data[0].location
-        },
-        documents_received: res.data[0].items_received,
-        intake_call: {
-          caller_name: res.data[0].intake_caller,
-          caller_affiliation: res.data[0].requesting_party,
-          call_date: res.data[0].request_receipt_date,
-          call_type: res.data[0].communication_type,
-          caller_phone: res.data[0].intake_contact_phone,
-          phone_ext: res.data[0].ext,
-          caller_fax: res.data[0].intake_contact_fax,
-          caller_email: res.data[0].intake_contact_email,
-          notes: res.data[0].intake_notes,
-        }
-      }
-      console.log(data);
       if (res.data) {
-        if (!res.data[0].examination_status) {
-          this.examinationStatusForm.get('examination_status').disable();
-        }
-        if (!res.data[0].notes) {
-          this.examinationStatusForm.get('examination_notes').disable();
-        }
-        if (!res.data[0].exam_procedure_type) {
-          this.billable_item.get(['exam_type', 'exam_procedure_type_id']).disable();
-        }
-        if (!res.data[0].examiner) {
-          this.billable_item.get(['appointment', 'examiner_id']).disable();
-        }
-        if (!res.data[0].date_and_time) {
-          this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).disable();
-        }
-        if (!res.data[0].duration) {
-          this.billable_item.get(['appointment', 'duration']).disable();
-          if (res.data[0].duration == null) {
-            this.billable_item.get(['appointment', 'duration']).enable();
+        let data = {
+          examination_status: res.data[0].examination_status,
+          notes: false,
+          exam_type: {
+            exam_procedure_type_id: res.data[0].exam_procedure_type
+          },
+          appointment: {
+            examiner_id: res.data[0].examiner,
+            appointment_scheduled_date_time: res.data[0].date_and_time,
+            duration: res.data[0].duration,
+            examiner_service_location_id: res.data[0].location
+          },
+          documents_received: res.data[0].items_received,
+          intake_call: {
+            caller_name: res.data[0].intake_caller,
+            caller_affiliation: res.data[0].requesting_party,
+            call_date: res.data[0].request_receipt_date,
+            call_type: res.data[0].communication_type,
+            caller_phone: res.data[0].intake_contact_phone,
+            phone_ext: res.data[0].ext,
+            caller_fax: res.data[0].intake_contact_fax,
+            caller_email: res.data[0].intake_contact_email,
+            notes: res.data[0].intake_notes,
           }
         }
-        if (!res.data[0].location) {
-          this.billable_item.get(['appointment', 'examiner_service_location_id']).disable();
-        }
-        if (!res.data[0].intake_caller) {
-          this.billable_item.get(['intake_call', 'caller_name']).disable();
-        }
-        if (!res.data[0].requesting_party) {
-          this.billable_item.get(['intake_call', 'caller_affiliation']).disable();
-        }
-        if (!res.data[0].items_received) {
-          this.billable_item.get('documents_received').disable();
-        }
-        if (!res.data[0].request_receipt_date) {
-          this.billable_item.get(['intake_call', 'call_date']).disable();
-        }
-        if (!res.data[0].communication_type) {
-          this.billable_item.get(['intake_call', 'call_type']).disable();
-        }
-        if (!res.data[0].intake_contact_phone) {
-          this.billable_item.get(['intake_call', 'caller_phone']).disable();
-        }
-        if (!res.data[0].ext) {
-          this.billable_item.get(['intake_call', 'phone_ext']).disable();
-        }
-        if (!res.data[0].intake_contact_fax) {
-          this.billable_item.get(['intake_call', 'caller_fax']).disable();
-        }
-        if (!res.data[0].intake_contact_email) {
-          this.billable_item.get(['intake_call', 'caller_email']).disable();
-        }
-        if (!res.data[0].intake_notes) {
-          this.billable_item.get(['intake_call', 'notes']).disable();
+        console.log(data);
+        if (res.data) {
+          if (!res.data[0].examination_status) {
+            // this.examinationStatusForm.get('examination_status').disable();
+          }
+          if (!res.data[0].notes) {
+            this.examinationStatusForm.get('examination_notes').disable();
+          }
+          if (!res.data[0].exam_procedure_type) {
+            this.billable_item.get(['exam_type', 'exam_procedure_type_id']).disable();
+          }
+          if (!res.data[0].examiner) {
+            this.billable_item.get(['appointment', 'examiner_id']).disable();
+          }
+          if (!res.data[0].date_and_time) {
+            this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).disable();
+          }
+          if (!res.data[0].duration) {
+            this.billable_item.get(['appointment', 'duration']).disable();
+            if (res.data[0].duration == null) {
+              this.billable_item.get(['appointment', 'duration']).enable();
+            }
+          }
+          if (!res.data[0].location) {
+            this.billable_item.get(['appointment', 'examiner_service_location_id']).disable();
+          }
+          if (!res.data[0].intake_caller) {
+            this.billable_item.get(['intake_call', 'caller_name']).disable();
+          }
+          if (!res.data[0].requesting_party) {
+            this.billable_item.get(['intake_call', 'caller_affiliation']).disable();
+          }
+          if (!res.data[0].items_received) {
+            this.billable_item.get('documents_received').disable();
+          }
+          if (!res.data[0].request_receipt_date) {
+            this.billable_item.get(['intake_call', 'call_date']).disable();
+          }
+          if (!res.data[0].communication_type) {
+            this.billable_item.get(['intake_call', 'call_type']).disable();
+          }
+          if (!res.data[0].intake_contact_phone) {
+            this.billable_item.get(['intake_call', 'caller_phone']).disable();
+          }
+          if (!res.data[0].ext) {
+            this.billable_item.get(['intake_call', 'phone_ext']).disable();
+          }
+          if (!res.data[0].intake_contact_fax) {
+            this.billable_item.get(['intake_call', 'caller_fax']).disable();
+          }
+          if (!res.data[0].intake_contact_email) {
+            this.billable_item.get(['intake_call', 'caller_email']).disable();
+          }
+          if (!res.data[0].intake_notes) {
+            this.billable_item.get(['intake_call', 'notes']).disable();
+          }
         }
       }
     })
@@ -837,7 +839,7 @@ export class AppointmentDetailsComponent implements OnInit {
   initiateForm(): FormGroup {
     return this.formBuilder.group({
       id: [],
-      no_of_pages_declared: ['',Validators.compose([Validators.min(1),Validators.max(99999999)])],
+      no_of_pages_declared: ['', Validators.compose([Validators.min(1), Validators.max(99999999)])],
       agent_type: [''],
       date_received: [""],
       file_name: [""],
@@ -896,7 +898,7 @@ export class AppointmentDetailsComponent implements OnInit {
     });
     console.log(group.value)
     if (group.value.no_of_pages_declared || group.value.agent_type || group.value.date_received) {
-      group.get('no_of_pages_declared').setValidators([Validators.required,Validators.min(1),Validators.max(99999999)])
+      group.get('no_of_pages_declared').setValidators([Validators.required, Validators.min(1), Validators.max(99999999)])
       group.get('agent_type').setValidators([Validators.required])
       group.get('date_received').setValidators([Validators.required])
       group.get('file_name').setValidators([])
@@ -908,7 +910,7 @@ export class AppointmentDetailsComponent implements OnInit {
       group.get('file_name').setValidators([Validators.required])
       group.get('file_name').updateValueAndValidity();
 
-      group.get('no_of_pages_declared').setValidators([Validators.min(1),Validators.max(99999999)])
+      group.get('no_of_pages_declared').setValidators([Validators.min(1), Validators.max(99999999)])
       group.get('agent_type').setValidators([])
       group.get('date_received').setValidators([])
       group.get('no_of_pages_declared').updateValueAndValidity();
@@ -964,7 +966,7 @@ export class AppointmentDetailsComponent implements OnInit {
         group.patchValue(res.data)
         group.get('isEditable').setValue(false);
         group.get('id').setValue(res.data.id);
-         this.loadActivity();
+        this.loadActivity();
         this.getDocumentData();
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
@@ -1235,7 +1237,8 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   updateExamStatus() {
-    this.examinationStatusForm.patchValue({ id: this.billableId, notes: this.examinationStatusForm.value.examination_notes.trim() })
+    let notes = this.examinationStatusForm.value.examination_notes ? this.examinationStatusForm.value.examination_notes.trim() : "";
+    this.examinationStatusForm.patchValue({ id: this.billableId, notes: notes })
     let data = this.examinationStatusForm.value
     data['appointment_id'] = this.appointmentId
     this.examinerService.updateExaminationStatus(data).subscribe(res => {
@@ -1472,8 +1475,8 @@ export class AppointmentDetailsComponent implements OnInit {
       billable_item_date = moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).add(1, 'minute')
       if (!(moment(this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).value).isSameOrAfter(moment().set('second', 0)))) {
         this.billable_item.get(["appointment", "appointment_scheduled_date_time"]).setErrors({ 'incorrect': true })
-        this.alertService.openSnackBar("Please select valid appointment date", "error");
-        return
+        // this.alertService.openSnackBar("Please select valid appointment date", "error");
+        // return
       }
     }
     if (this.billable_item.invalid) {
