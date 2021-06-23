@@ -401,6 +401,9 @@
             tr {
                 td {
                     padding-top: 5px !important;
+                    white-space: break-spaces;
+                    word-break: break-all;
+
                     ::ng-deep {
                         mat-form-field .mat-form-field-wrapper {
                             padding-bottom: 0 !important;
@@ -408,7 +411,8 @@
                         .mat-form-field .mat-form-field-wrapper .mat-form-field-subscript-wrapper {
                             min-height: 0 !important;
                         }
-                        .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon-button, .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button {
+                        .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon-button,
+                        .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button {
                             top: 4px;
                         }
                     }
@@ -469,7 +473,7 @@
             }
         }
         div {
-            .filled-gray {
+            .filled-ternary {
                 margin-top: 23px;
                 vertical-align: top;
                 @media only screen and (max-width: 568px) {

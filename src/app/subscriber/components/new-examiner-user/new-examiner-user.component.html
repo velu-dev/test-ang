@@ -294,7 +294,7 @@
                                 <div class="title">W-9 Form</div>
                                 <button type="button" mat-raised-button
                                     (click)="openUploadPopUp(false, ['.pdf'], '', 'billing', 30)"
-                                    class="filled-gray">{{file ? 'Reupload' : 'Upload'}}</button>
+                                    class="filled-ternary">{{file ? 'Reupload' : 'Upload File'}}</button>
                                 <!-- <input type="file" #uploaderBilling (change)="addFile($event)" hidden accept=".pdf"
                                     required> -->
                                 <div fxLayout="row wrap" *ngIf="file" class="w9-doc-filename">

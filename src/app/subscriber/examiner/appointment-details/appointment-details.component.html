@@ -255,7 +255,7 @@
 
 <mat-card class="documents-declared m-b-20">
     <mat-card-header>
-        <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Correspondence/ Documents Declared<span *ngIf="!isIME"
+        <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Correspondence / Documents Declared<span *ngIf="!isIME"
                 class="custom-info regulation"
                 (click)="openPopupRegulation(regulation?.regulationsForDeclarationOfPagesReceived?.title, regulation?.regulationsForDeclarationOfPagesReceived?.codes)">
                 <i class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
@@ -378,11 +378,11 @@
             <!-- *ngIf="!(isExamTypeChanged) || !(isFreeze)" -->
             <span>
                 <!-- [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze" -->
-                <button type="button" class="filled-gray m-b-5"
-                    *ngIf="!isEditBillableItem" (click)="editBillable()" mat-raised-button>Edit</button>
+                <button type="button" class="filled-gray m-b-5" *ngIf="!isEditBillableItem" (click)="editBillable()"
+                    mat-raised-button>Edit</button>
                 <!-- [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze" -->
-                    <button class="filled-success m-b-5"
-                    *ngIf="isEditBillableItem" (click)="submitBillableItem()" mat-raised-button>Save</button>
+                <button class="filled-success m-b-5" *ngIf="isEditBillableItem" (click)="submitBillableItem()"
+                    mat-raised-button>Save</button>
             </span>
         </mat-card-header>
         <mat-divider> </mat-divider>
@@ -649,35 +649,42 @@
                 </mat-form-field>
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_"
                     *ngIf="documentType == null || documentType != 6">
-                    <button type="button" mat-stroked-button class="filled-gray"
+                    <!-- <button type="button" mat-stroked-button class="filled-gray"
                         (click)="openUploadPopUp(false,['.pdf', '.doc', '.docx'], '', '',  30)">Select
                         File
-                    </button>
-                    <mat-form-field appearance="standard">
+                    </button> -->
+                    <!-- <mat-form-field appearance="standard"> -->
+                    <button type="button" mat-stroked-button class="filled-ternary"
+                        (click)="openUploadPopUp(false,['.pdf', '.doc', '.docx'], '', '',  30)">Upload File</button>
+                    <!-- <mat-form-field appearance="standard">
                         <input matInput [(ngModel)]="file" readonly placeholder="No file chosen">
-                        <!-- <input type="file" #uploader hidden (change)="addFile($event)" hidden accept=".pdf, .doc, .docx"
-                            required> -->
+                        <input type="file" #uploader hidden (change)="addFile($event)" hidden accept=".pdf, .doc, .docx"
+                            required>
                         <mat-hint>Supported file formats: .pdf, .doc, .docx</mat-hint>
                         <mat-hint *ngIf="errors.file.isError">
                             <mat-error>{{errors.file.error}}</mat-error>
                         </mat-hint>
-                    </mat-form-field>
+                    </mat-form-field> -->
                 </div>
 
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_"
                     *ngIf="documentType == 6">
-                    <button mat-raised-button class="filled-gray"
-                        (click)="openUploadPopUp(false,['.pdf', '.doc', '.docx'], '', '6',  30)">Select File</button>
-                    <mat-form-field appearance="standard" class="p-l-10 w-100  custom-br">
+                    <!-- <button mat-raised-button class="filled-gray"
+                        (click)="openUploadPopUp(false,['.pdf', '.doc', '.docx'], '', '6',  30)">Select File</button> -->
+                    <!-- <mat-form-field appearance="standard" class="p-l-10 w-100  custom-br"> -->
+                    <button mat-raised-button class="filled-ternary"
+                        (click)="openUploadPopUp(false,['.pdf', '.doc', '.docx'], '', '6',  30)">Upload
+                        File</button>
+                    <!-- <mat-form-field appearance="standard" class="p-l-10 w-100  custom-br">
                         <input matInput value="{{file | ellipsis:50}}" readonly placeholder="No file chosen">
-                        <!-- <input type="file" #uploader hidden (change)="addFile($event)" multiple
-                            accept=".pdf, .doc, .docx, .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct" required> -->
+                         <input type="file" #uploader hidden (change)="addFile($event)" multiple
+                            accept=".pdf, .doc, .docx, .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct" required> 
                         <mat-hint>Supported file formats: .pdf, .doc, .docx, .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct
                         </mat-hint>
                         <mat-hint *ngIf="errors.file.isError">
                             <mat-error>{{errors.file.error}}</mat-error>
                         </mat-hint>
-                    </mat-form-field>
+                    </mat-form-field> -->
                 </div>
 
 

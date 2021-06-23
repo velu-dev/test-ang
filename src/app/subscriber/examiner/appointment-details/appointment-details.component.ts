@@ -284,7 +284,6 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   documentsDeclared = [];
   getDocumentDeclareData() {
-    console.log("sadasddasdasd --11")
     this.claimService.getDocumentsDeclared(this.claim_id, this.billableId).subscribe(res => {
       this.docDeclearTable = this.formBuilder.group({
         tableRows: this.formBuilder.array([])
@@ -852,7 +851,7 @@ export class AppointmentDetailsComponent implements OnInit {
     return control;
   }
 
-  addRow(status) {
+  addRow(status?) {
     let newRowStatus = true
     for (var j in this.getFormControls.controls) {
       // if (this.getFormControls.controls[j].status == 'INVALID') {
@@ -927,10 +926,10 @@ export class AppointmentDetailsComponent implements OnInit {
     this.formDataDoc.append('agent_type', data.agent_type ? data.agent_type : '');
     this.formDataDoc.append('no_of_pages_declared', data.no_of_pages_declared ? data.no_of_pages_declared : '');
     this.formDataDoc.append('date_received', data['date_received'] ? data['date_received'] : '');
-    if (data.id) this.formDataDoc.append('document_id', group.value.document_id ? group.value.document_id : '');
-    this.formDataDoc.append('file', group.value.file);
+    this.formDataDoc.append('document_id', group.value.document_id ? group.value.document_id : '');
+    this.formDataDoc.append('file', group.value.file ? group.value.file : '');
     this.formDataDoc.append('is_upload', group.value.is_upload);
-    if (group.value.no_of_pages_declared || group.value.agent_type || group.value.date_received) {
+    if ((group.value.no_of_pages_declared || group.value.agent_type || group.value.date_received) && this.examinationDetails.procedure_type != "Deposition") {
       const dialogRef = this.dialog.open(AlertDialogueComponent, {
         width: '500px',
         data: { title: 'Page Declared', message: "Is this the correct number of pages declared? <br/><b>*The excess pages will be added to the bill as a line item</b>.", proceed: true, no: true, type: "info", info: true }
@@ -1030,8 +1029,12 @@ export class AppointmentDetailsComponent implements OnInit {
             group.get('file').patchValue(null);
             group.get('document_id').patchValue(null);
             group.get('correspodence_received_file_url').patchValue(null);
+            group.get('is_upload').patchValue(false);
             this.alertService.openSnackBar("File deleted successfully", 'success');
             this.getDocumentData();
+            if (!group.get('no_of_pages_declared').value && !group.get('agent_type').value && !group.get('date_received').value) {
+              this.getDocumentDeclareData()
+            }
           }, error => {
             this.alertService.openSnackBar(error.error.message, 'error');
           })
@@ -1039,6 +1042,7 @@ export class AppointmentDetailsComponent implements OnInit {
           group.get('file_name').patchValue(null);
           group.get('file').patchValue(null);
           group.get('document_id').patchValue(null);
+          group.get('is_upload').patchValue(false);
           group.get('correspodence_received_file_url').patchValue(null);
         }
 

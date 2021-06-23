@@ -317,6 +317,7 @@ export class SubmissionComponent implements OnInit {
     this.billingService.billingDownloadAll(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, this.billType, {}).subscribe(doc => {
       saveAs(doc.data.file_url, doc.data.file_name, '_self');
       this.alertService.openSnackBar("Document(s) downloaded successfully", "success");
+      this.intercom.setBillDocChange(true);
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error");
     })
