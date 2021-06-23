@@ -155,6 +155,7 @@ export const api_endpoint = {
     getNotes: 'notes/',
     addNotes: 'notes/add-note',
     removeDocumentDeclared: 'examinations/remove-declared-document/',
+    getFormDisabled: "examinations/get-allow-columns/",
 
     //on-demand
     getRecords: 'billing/ondemand/records/',

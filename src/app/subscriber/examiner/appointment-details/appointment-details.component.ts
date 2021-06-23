@@ -651,7 +651,108 @@ export class AppointmentDetailsComponent implements OnInit {
     })
 
   }
-
+  disableFields = {
+    examination_status: false,
+    notes: false,
+    exam_procedure_type: false,
+    examiner: false,
+    date_and_time: false,
+    duration: false,
+    location: false,
+    intake_caller: false,
+    requesting_party: false,
+    items_received: false,
+    request_receipt_date: false,
+    communication_type: false,
+    intake_contact_phone: false,
+    ext: false,
+    intake_contact_fax: false,
+    intake_contact_email: false,
+    intake_notes: false,
+  }
+  getDisabledFields() {
+    this.claimService.getFormDisabled(this.claim_id, this.billableId, this.examinationStatusForm.get('examination_status').value).subscribe(res => {
+      let data = {
+        examination_status: res.data[0].examination_status,
+        notes: false,
+        exam_type: {
+          exam_procedure_type_id: res.data[0].exam_procedure_type
+        },
+        appointment: {
+          examiner_id: res.data[0].examiner,
+          appointment_scheduled_date_time: res.data[0].date_and_time,
+          duration: res.data[0].duration,
+          examiner_service_location_id: res.data[0].location
+        },
+        documents_received: res.data[0].items_received,
+        intake_call: {
+          caller_name: res.data[0].intake_caller,
+          caller_affiliation: res.data[0].requesting_party,
+          call_date: res.data[0].request_receipt_date,
+          call_type: res.data[0].communication_type,
+          caller_phone: res.data[0].intake_contact_phone,
+          phone_ext: res.data[0].ext,
+          caller_fax: res.data[0].intake_contact_fax,
+          caller_email: res.data[0].intake_contact_email,
+          notes: res.data[0].intake_notes,
+        }
+      }
+      console.log(data);
+      if (res.data) {
+        if (!res.data[0].examination_status) {
+          this.examinationStatusForm.get('examination_status').disable();
+        }
+        if (!res.data[0].notes) {
+          this.examinationStatusForm.get('examination_notes').disable();
+        }
+        if (!res.data[0].exam_procedure_type) {
+          this.billable_item.get(['exam_type', 'exam_procedure_type_id']).disable();
+        }
+        if (!res.data[0].examiner) {
+          this.billable_item.get(['appointment', 'examiner_id']).disable();
+        }
+        if (!res.data[0].date_and_time) {
+          this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).disable();
+        }
+        if (!res.data[0].duration) {
+          this.billable_item.get(['appointment', 'duration']).disable();
+        }
+        if (!res.data[0].location) {
+          this.billable_item.get(['appointment', 'examiner_service_location_id']).disable();
+        }
+        if (!res.data[0].intake_caller) {
+          this.billable_item.get(['intake_call', 'caller_name']).disable();
+        }
+        if (!res.data[0].requesting_party) {
+          this.billable_item.get(['intake_call', 'caller_affiliation']).disable();
+        }
+        if (!res.data[0].items_received) {
+          this.billable_item.get('documents_received').disable();
+        }
+        if (!res.data[0].request_receipt_date) {
+          this.billable_item.get(['intake_call', 'call_date']).disable();
+        }
+        if (!res.data[0].communication_type) {
+          this.billable_item.get(['intake_call', 'call_type']).disable();
+        }
+        if (!res.data[0].intake_contact_phone) {
+          this.billable_item.get(['intake_call', 'caller_phone']).disable();
+        }
+        if (!res.data[0].ext) {
+          this.billable_item.get(['intake_call', 'phone_ext']).disable();
+        }
+        if (!res.data[0].intake_contact_fax) {
+          this.billable_item.get(['intake_call', 'caller_fax']).disable();
+        }
+        if (!res.data[0].intake_contact_email) {
+          this.billable_item.get(['intake_call', 'caller_email']).disable();
+        }
+        if (!res.data[0].intake_notes) {
+          this.billable_item.get(['intake_call', 'notes']).disable();
+        }
+      }
+    })
+  }
   ngOnInit() {
     this.billable_item = this.formBuilder.group({
       id: [{ value: '', disable: true }],
@@ -687,6 +788,12 @@ export class AppointmentDetailsComponent implements OnInit {
       }),
 
     })
+    this.examinationStatusForm = this.formBuilder.group({
+      id: "",
+      examination_status: [{ value: "", disabled: true }, Validators.required],
+      examination_notes: [{ value: "", disabled: true }],
+      notes: ['']
+    })
     this.billable_item.get(["appointment", "conference_phone"]).valueChanges.subscribe(res => {
       if (this.billable_item.get(["appointment", "conference_phone"]).value && this.billable_item.get(["appointment", "conference_phone"]).valid) {
         this.billable_item.get(["appointment", "phone_ext"]).enable();
@@ -712,12 +819,6 @@ export class AppointmentDetailsComponent implements OnInit {
     this.notesForm = this.formBuilder.group({
       notes: [null],
       bill_item_id: [this.billableId]
-    })
-    this.examinationStatusForm = this.formBuilder.group({
-      id: "",
-      examination_status: [{ value: "", disabled: true }, Validators.required],
-      examination_notes: [{ value: "", disabled: true }],
-      notes: ['']
     })
     this.examinerService.seedData('document_category').subscribe(type => {
       this.documentList = type['data']
@@ -757,8 +858,8 @@ export class AppointmentDetailsComponent implements OnInit {
       // if (this.getFormControls.controls[j].status == 'INVALID') {
       //   newRowStatus = false;
       // }
-      if(!this.getFormControls.controls[j].get('no_of_pages_declared').value && !this.getFormControls.controls[j].get('agent_type').value && 
-      !this.getFormControls.controls[j].get('date_received').value && !this.getFormControls.controls[j].get('file_name').value && !this.getFormControls.controls[j].get('id').value){
+      if (!this.getFormControls.controls[j].get('no_of_pages_declared').value && !this.getFormControls.controls[j].get('agent_type').value &&
+        !this.getFormControls.controls[j].get('date_received').value && !this.getFormControls.controls[j].get('file_name').value && !this.getFormControls.controls[j].get('id').value) {
         newRowStatus = false;
       }
     }
@@ -826,7 +927,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.formDataDoc.append('agent_type', data.agent_type ? data.agent_type : '');
     this.formDataDoc.append('no_of_pages_declared', data.no_of_pages_declared ? data.no_of_pages_declared : '');
     this.formDataDoc.append('date_received', data['date_received'] ? data['date_received'] : '');
-    if(data.id) this.formDataDoc.append('document_id', group.value.document_id ? group.value.document_id : '');
+    if (data.id) this.formDataDoc.append('document_id', group.value.document_id ? group.value.document_id : '');
     this.formDataDoc.append('file', group.value.file);
     this.formDataDoc.append('is_upload', group.value.is_upload);
     if (group.value.no_of_pages_declared || group.value.agent_type || group.value.date_received) {
@@ -844,7 +945,7 @@ export class AppointmentDetailsComponent implements OnInit {
             group.patchValue(res.data)
             group.get('isEditable').setValue(false);
             group.get('id').setValue(res.data.id);
-           // this.loadActivity();
+            // this.loadActivity();
             this.getDocumentData();
           }, error => {
             this.alertService.openSnackBar(error.error.message, 'error');
@@ -861,7 +962,7 @@ export class AppointmentDetailsComponent implements OnInit {
         group.patchValue(res.data)
         group.get('isEditable').setValue(false);
         group.get('id').setValue(res.data.id);
-       // this.loadActivity();
+        // this.loadActivity();
         this.getDocumentData();
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
@@ -965,6 +1066,7 @@ export class AppointmentDetailsComponent implements OnInit {
 
   isExaminationStatusEdit = false;
   changeEditStatus() {
+    this.getDisabledFields();
     this.examinationStatusForm.enable();
     this.isExaminationStatusEdit = true;
     if (this.billable_item.get(["appointment", "conference_phone"]).value && this.billable_item.get(["appointment", "conference_phone"]).valid) {
@@ -1314,6 +1416,7 @@ export class AppointmentDetailsComponent implements OnInit {
     }
   }
   editBillable() {
+    this.getDisabledFields();
     this.isEditBillableItem = true;
     this.billable_item.enable();
     if (this.billableData.isExaminerDisabled) {
@@ -1465,7 +1568,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.billable_item.value.documents_received = selectedOrderIds;
     this.billable_item.value.id = this.examinationDetails.appointments.id
     this.billable_item.value.intake_call.call_date = this.billable_item.get(['intake_call', 'call_date']).value ? moment(this.billable_item.get(['intake_call', 'call_date']).value).format("MM-DD-YYYY") : null;
-    this.examinerService.updateBillableItem(this.billableData.id, this.billable_item.value).subscribe(res => {
+    this.examinerService.updateBillableItem(this.billableData.id, this.billable_item.getRawValue()).subscribe(res => {
       this.isEditBillableItem = false;
       this.billable_item.disable();
       this.alertService.openSnackBar(res.message, "success");
@@ -1622,7 +1725,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.formDataDoc.append('is_upload', 'true');
       this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe(res => {
         this.selectedFile = null;
-       // this.fileUpload.nativeElement.value = "";
+        // this.fileUpload.nativeElement.value = "";
         this.documentType = null;
         this.formData = new FormData();
         this.file = "";

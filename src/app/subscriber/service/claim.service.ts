@@ -181,4 +181,7 @@ export class ClaimService {
   removeDocumentDeclared(documents_declared_id, document_id): Observable<any> {
     return this.http.delete(environment.baseUrl + api_endpoint.removeDocumentDeclared + documents_declared_id + '/' + document_id)
   }
+  getFormDisabled(claim_id, billable_item_id, examination_status_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getFormDisabled + claim_id + "/" + billable_item_id + "/" + examination_status_id)
+  }
 }
