@@ -715,9 +715,10 @@ export class AppointmentDetailsComponent implements OnInit {
         }
         if (!res.data[0].duration) {
           this.billable_item.get(['appointment', 'duration']).disable();
-          if (res.data[0].duration == null) {
-            this.billable_item.get(['appointment', 'duration']).enable();
-          }
+          // if (res.data[0].duration == null) {
+          //   this.billable_item.get(['appointment', 'duration']).enable();
+          // }
+          
         }
         if (!res.data[0].location) {
           this.billable_item.get(['appointment', 'examiner_service_location_id']).disable();
