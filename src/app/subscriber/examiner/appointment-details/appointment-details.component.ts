@@ -834,7 +834,7 @@ export class AppointmentDetailsComponent implements OnInit {
   initiateForm(): FormGroup {
     return this.formBuilder.group({
       id: [],
-      no_of_pages_declared: [''],
+      no_of_pages_declared: ['',Validators.compose([Validators.min(1),Validators.max(99999999)])],
       agent_type: [''],
       date_received: [""],
       file_name: [""],
@@ -893,7 +893,7 @@ export class AppointmentDetailsComponent implements OnInit {
     });
     console.log(group.value)
     if (group.value.no_of_pages_declared || group.value.agent_type || group.value.date_received) {
-      group.get('no_of_pages_declared').setValidators([Validators.required])
+      group.get('no_of_pages_declared').setValidators([Validators.required,Validators.min(1),Validators.max(99999999)])
       group.get('agent_type').setValidators([Validators.required])
       group.get('date_received').setValidators([Validators.required])
       group.get('file_name').setValidators([])
@@ -905,7 +905,7 @@ export class AppointmentDetailsComponent implements OnInit {
       group.get('file_name').setValidators([Validators.required])
       group.get('file_name').updateValueAndValidity();
 
-      group.get('no_of_pages_declared').setValidators([])
+      group.get('no_of_pages_declared').setValidators([Validators.min(1),Validators.max(99999999)])
       group.get('agent_type').setValidators([])
       group.get('date_received').setValidators([])
       group.get('no_of_pages_declared').updateValueAndValidity();
@@ -944,7 +944,7 @@ export class AppointmentDetailsComponent implements OnInit {
             group.patchValue(res.data)
             group.get('isEditable').setValue(false);
             group.get('id').setValue(res.data.id);
-            // this.loadActivity();
+            this.loadActivity();
             this.getDocumentData();
           }, error => {
             this.alertService.openSnackBar(error.error.message, 'error');
@@ -961,7 +961,7 @@ export class AppointmentDetailsComponent implements OnInit {
         group.patchValue(res.data)
         group.get('isEditable').setValue(false);
         group.get('id').setValue(res.data.id);
-        // this.loadActivity();
+         this.loadActivity();
         this.getDocumentData();
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
