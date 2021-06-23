@@ -671,36 +671,36 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   getDisabledFields() {
     this.claimService.getFormDisabled(this.claim_id, this.billableId, this.examinationStatusForm.get('examination_status').value).subscribe(res => {
-      if (res.data) {
-        let data = {
-          examination_status: res.data[0].examination_status,
-          notes: false,
-          exam_type: {
-            exam_procedure_type_id: res.data[0].exam_procedure_type
-          },
-          appointment: {
-            examiner_id: res.data[0].examiner,
-            appointment_scheduled_date_time: res.data[0].date_and_time,
-            duration: res.data[0].duration,
-            examiner_service_location_id: res.data[0].location
-          },
-          documents_received: res.data[0].items_received,
-          intake_call: {
-            caller_name: res.data[0].intake_caller,
-            caller_affiliation: res.data[0].requesting_party,
-            call_date: res.data[0].request_receipt_date,
-            call_type: res.data[0].communication_type,
-            caller_phone: res.data[0].intake_contact_phone,
-            phone_ext: res.data[0].ext,
-            caller_fax: res.data[0].intake_contact_fax,
-            caller_email: res.data[0].intake_contact_email,
-            notes: res.data[0].intake_notes,
-          }
-        }
-        console.log(data);
+      console.log(res)
+      if (res.status) {
+        // let data = {
+        //   examination_status: res.data[0].examination_status,
+        //   notes: false,
+        //   exam_type: {
+        //     exam_procedure_type_id: res.data[0].exam_procedure_type
+        //   },
+        //   appointment: {
+        //     examiner_id: res.data[0].examiner,
+        //     appointment_scheduled_date_time: res.data[0].date_and_time,
+        //     duration: res.data[0].duration,
+        //     examiner_service_location_id: res.data[0].location
+        //   },
+        //   documents_received: res.data[0].items_received,
+        //   intake_call: {
+        //     caller_name: res.data[0].intake_caller,
+        //     caller_affiliation: res.data[0].requesting_party,
+        //     call_date: res.data[0].request_receipt_date,
+        //     call_type: res.data[0].communication_type,
+        //     caller_phone: res.data[0].intake_contact_phone,
+        //     phone_ext: res.data[0].ext,
+        //     caller_fax: res.data[0].intake_contact_fax,
+        //     caller_email: res.data[0].intake_contact_email,
+        //     notes: res.data[0].intake_notes,
+        //   }
+        // }
         if (res.data) {
           if (!res.data[0].examination_status) {
-            // this.examinationStatusForm.get('examination_status').disable();
+            this.examinationStatusForm.get('examination_status').disable();
           }
           if (!res.data[0].notes) {
             this.examinationStatusForm.get('examination_notes').disable();
