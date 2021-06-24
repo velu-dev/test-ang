@@ -1169,69 +1169,69 @@ export class AppointmentDetailsComponent implements OnInit {
         })
         return
       }
-      if (this.examinationStatusForm.value.examination_status == 5 && this.examinationDetails.appointments.examination_status == 2) {
-        const dialogRef = this.dialog.open(AlertDialogueComponent, {
-          width: '500px',
-          data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘Rescheduled’ is selected & System will freeze the appointment section. Would you like you save the status?", yes: true, no: true, type: "info", info: true }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          if (result.data) {
-            this.updateExamStatus()
-          } else {
-            return;
-          }
-        })
-        return
-      }
+      // if (this.examinationStatusForm.value.examination_status == 5 && this.examinationDetails.appointments.examination_status == 2) {
+      //   const dialogRef = this.dialog.open(AlertDialogueComponent, {
+      //     width: '500px',
+      //     data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘Rescheduled’ is selected & System will freeze the appointment section. Would you like you save the status?", yes: true, no: true, type: "info", info: true }
+      //   });
+      //   dialogRef.afterClosed().subscribe(result => {
+      //     if (result.data) {
+      //       this.updateExamStatus()
+      //     } else {
+      //       return;
+      //     }
+      //   })
+      //   return
+      // }
 
-      if (this.examinationStatusForm.value.examination_status == 6 && this.examinationDetails.appointments.examination_status == 2) {
-        const dialogRef = this.dialog.open(AlertDialogueComponent, {
-          width: '500px',
-          data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘Cancelled – send bill’ is selected & System will freeze the appointment section. Would you like you save the status?", yes: true, no: true, type: "info", info: true }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          if (result.data) {
-            this.updateExamStatus()
-          } else {
-            return;
-          }
-        })
-        return
-      }
+      // if (this.examinationStatusForm.value.examination_status == 6 && this.examinationDetails.appointments.examination_status == 2) {
+      //   const dialogRef = this.dialog.open(AlertDialogueComponent, {
+      //     width: '500px',
+      //     data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘Cancelled – send bill’ is selected & System will freeze the appointment section. Would you like you save the status?", yes: true, no: true, type: "info", info: true }
+      //   });
+      //   dialogRef.afterClosed().subscribe(result => {
+      //     if (result.data) {
+      //       this.updateExamStatus()
+      //     } else {
+      //       return;
+      //     }
+      //   })
+      //   return
+      // }
 
-      if (this.examinationStatusForm.value.examination_status == 7 && this.examinationDetails.appointments.examination_status == 2) {
-        const dialogRef = this.dialog.open(AlertDialogueComponent, {
-          width: '500px',
-          data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘Cancelled – no bill’ is selected & System will freeze the appointment section. Would you like you save the status?", yes: true, no: true, type: "info", info: true }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          if (result.data) {
-            this.updateExamStatus()
-          } else {
-            return;
-          }
-        })
-        return
-      }
+      // if (this.examinationStatusForm.value.examination_status == 7 && this.examinationDetails.appointments.examination_status == 2) {
+      //   const dialogRef = this.dialog.open(AlertDialogueComponent, {
+      //     width: '500px',
+      //     data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘Cancelled – no bill’ is selected & System will freeze the appointment section. Would you like you save the status?", yes: true, no: true, type: "info", info: true }
+      //   });
+      //   dialogRef.afterClosed().subscribe(result => {
+      //     if (result.data) {
+      //       this.updateExamStatus()
+      //     } else {
+      //       return;
+      //     }
+      //   })
+      //   return
+      // }
 
-      if (this.examinationStatusForm.value.examination_status == 8 && this.examinationDetails.appointments.examination_status == 2) {
-        const dialogRef = this.dialog.open(AlertDialogueComponent, {
-          width: '500px',
-          data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘No show’ is selected & System will freeze the appointment section. Would you like you save the status?", yes: true, no: true, type: "info", info: true }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          if (result.data) {
-            this.updateExamStatus()
-          } else {
-            return;
-          }
-        })
-        return
-      }
-      if (this.examinationStatusForm.value.examination_status == 9 && this.examinationDetails.appointments.examination_status == 2) {
-        this.alertService.openSnackBar('Please change the ‘Date & Time’ to current date', 'error');
-        return
-      }
+      // if (this.examinationStatusForm.value.examination_status == 8 && this.examinationDetails.appointments.examination_status == 2) {
+      //   const dialogRef = this.dialog.open(AlertDialogueComponent, {
+      //     width: '500px',
+      //     data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘No show’ is selected & System will freeze the appointment section. Would you like you save the status?", yes: true, no: true, type: "info", info: true }
+      //   });
+      //   dialogRef.afterClosed().subscribe(result => {
+      //     if (result.data) {
+      //       this.updateExamStatus()
+      //     } else {
+      //       return;
+      //     }
+      //   })
+      //   return
+      // }
+      // if (this.examinationStatusForm.value.examination_status == 9 && this.examinationDetails.appointments.examination_status == 2) {
+      //   this.alertService.openSnackBar('Please change the ‘Date & Time’ to current date', 'error');
+      //   return
+      // }
 
     }
     this.updateExamStatus()
