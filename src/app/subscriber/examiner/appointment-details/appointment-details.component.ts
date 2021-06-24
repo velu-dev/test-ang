@@ -716,9 +716,9 @@ export class AppointmentDetailsComponent implements OnInit {
           }
           if (!res.data[0].duration) {
             this.billable_item.get(['appointment', 'duration']).disable();
-            if (res.data[0].duration == null) {
-              this.billable_item.get(['appointment', 'duration']).enable();
-            }
+            // if (res.data[0].duration == null) {
+            //   this.billable_item.get(['appointment', 'duration']).enable();
+            // }
           }
           if (!res.data[0].location) {
             this.billable_item.get(['appointment', 'examiner_service_location_id']).disable();
@@ -1523,23 +1523,21 @@ export class AppointmentDetailsComponent implements OnInit {
         console.log("rerere7")
         return
       }
-      if (!this.billableData.appointment.appointment_scheduled_date_time) {
-        if (((this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value != this.billableData.appointment.appointment_scheduled_date_time) || (this.billable_item.get(['appointment', 'duration']).value != this.billableData.appointment.duration)) && (this.examinationStatusForm.getRawValue().examination_status != 12)) {
-          const dialogRef = this.dialog.open(AlertDialogueComponent, {
-            width: '500px',
-            data: { title: 'Examination', message: "This updates the Examination Status as 'Awaiting Deposition'!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
-          });
-          dialogRef.afterClosed().subscribe(result => {
-            if (result.data) {
-              this.updateBillableItem();
-            } else {
-              console.log("rerere3")
-              return;
-            }
-          })
-          console.log("rerere6")
-          return
-        }
+      if (((this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value != this.billableData.appointment.appointment_scheduled_date_time) || (this.billable_item.get(['appointment', 'duration']).value != this.billableData.appointment.duration)) && (this.examinationStatusForm.getRawValue().examination_status != 12)) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: 'Examination', message: "This updates the Examination Status as 'Awaiting Deposition'!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result.data) {
+            this.updateBillableItem();
+          } else {
+            console.log("rerere3")
+            return;
+          }
+        })
+        console.log("rerere6")
+        return
       }
     }
 
