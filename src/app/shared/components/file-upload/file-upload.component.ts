@@ -27,6 +27,7 @@ export class FileUploadComponent implements OnInit {
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<FileUploadComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
+      console.log(data)
     this.isMultiple = data.isMultiple;
     this.fileType = data.fileType;
     this.fileSize = data.fileSize * 1024 * 1024;
