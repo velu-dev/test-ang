@@ -1,6 +1,8 @@
 @import "variables";
 
 .drag-and-drop-file-upload {
+    max-height: 90vh;
+    overflow: auto;
     .card-header {
         background-color: $info-bg;
         border: 1px solid;
@@ -81,6 +83,7 @@
                     .filename {
                         min-width: 85%;
                         font-size: $font-size-1;
+                        word-break: break-all;
                     }
                     a {
                         float:right;
