@@ -428,7 +428,7 @@
                                 (dateTimeChange)="changeDateType(billable_item?.value?.appointment?.appointment_scheduled_date_time)"
                                 autocomplete="off" [owlDateTime]="appointment">
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"
-                                [disabled]="!isEditBillableItem">
+                                [disabled]="!isEditBillableItem || this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).disabled">
                             </mat-datepicker-toggle>
                             <owl-date-time (afterPickerOpen)="pickerOpened('app')" [hour12Timer]="true" #appointment>
                             </owl-date-time>
