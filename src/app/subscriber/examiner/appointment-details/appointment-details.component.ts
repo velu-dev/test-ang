@@ -315,7 +315,6 @@ export class AppointmentDetailsComponent implements OnInit {
           + (user.created_by.last_name ? user.created_by.last_name :
             "") + (user.created_by.suffix ? (", " + user.created_by.suffix) : "")
       })
-      console.log(res.data);
       this.activityLog = new MatTableDataSource(res.data);
       this.activityLog.sort = this.sort;
       this.activityLog.paginator = this.paginator;
@@ -1466,7 +1465,9 @@ export class AppointmentDetailsComponent implements OnInit {
     this.billable_item.get('appointment').get('duration').updateValueAndValidity();
   }
   submitBillableItem() {
-    // this.todayDate.appointment = new Date();
+    if (this.billable_item.invalid) {
+      return;
+    }
     if (this.billable_item.value.appointment.appointment_scheduled_date_time) {
       this.billable_item.get('appointment').get('duration').setValidators([Validators.compose([Validators.required, Validators.pattern('[0-9]+'), Validators.min(1), Validators.max(450)])]);
     } else {
@@ -1496,10 +1497,6 @@ export class AppointmentDetailsComponent implements OnInit {
       this.is_appointment_date_change = false;
     } else {
       this.is_appointment_date_change = true;
-    }
-    if (this.billable_item.invalid) {
-      console.log("rerere")
-      return;
     }
     if (this.examinationDetails.bill_id) {
       if (this.billableData.exam_type.exam_procedure_type_id != this.billable_item.get(['exam_type', 'exam_procedure_type_id']).value) {
@@ -1602,7 +1599,9 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   updateBillableItem() {
-
+    if (this.billable_item.invalid) {
+      return
+    }
     let selectedOrderIds = []
     if (this.isSuplimental) {
       selectedOrderIds = this.billable_item.value.documents_received
