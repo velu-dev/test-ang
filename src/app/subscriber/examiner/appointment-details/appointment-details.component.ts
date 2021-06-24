@@ -1131,6 +1131,17 @@ export class AppointmentDetailsComponent implements OnInit {
           }
         })
         return
+      } else {
+        if (!this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value) {
+          const dialogRef = this.dialog.open(AlertDialogueComponent, {
+            width: '500px', data: { title: "Deposition", message: "Please select appointment date and time", ok: true, no: false, type: "warning", warning: true }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            return
+
+          })
+          return
+        }
       }
     }
     if (this.examinationDetails.procedure_type == "Evaluation" || this.examinationDetails.procedure_type == "Reevaluation") {
@@ -1157,6 +1168,17 @@ export class AppointmentDetailsComponent implements OnInit {
 
         })
         return
+      }
+      if (this.examinationStatusForm.value.examination_status != 1) {
+        if (!this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value) {
+          const dialogRef = this.dialog.open(AlertDialogueComponent, {
+            width: '500px', data: { title: "Examination", message: "Please select appointment date and time", ok: true, no: false, type: "warning", warning: true }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            return
+          })
+          return
+        }
       }
       if (this.examinationStatusForm.value.examination_status == 10 && moment(this.examinationDetails.appointments.appointment_scheduled_date_time) >= moment()) {
         //this.alertService.openSnackBar('Future appointment status cannot be changed to ATTENDED.', 'error');
@@ -1444,7 +1466,6 @@ export class AppointmentDetailsComponent implements OnInit {
     this.billable_item.get('appointment').get('duration').updateValueAndValidity();
   }
   submitBillableItem() {
-    console.log(this.billable_item.errors)
     // this.todayDate.appointment = new Date();
     if (this.billable_item.value.appointment.appointment_scheduled_date_time) {
       this.billable_item.get('appointment').get('duration').setValidators([Validators.compose([Validators.required, Validators.pattern('[0-9]+'), Validators.min(1), Validators.max(450)])]);
@@ -1477,13 +1498,13 @@ export class AppointmentDetailsComponent implements OnInit {
       this.is_appointment_date_change = true;
     }
     if (this.billable_item.invalid) {
+      console.log("rerere")
       return;
     }
     if (this.examinationDetails.bill_id) {
       if (this.billableData.exam_type.exam_procedure_type_id != this.billable_item.get(['exam_type', 'exam_procedure_type_id']).value) {
-        console.log(this.billableData.exam_type.exam_procedure_type_id)
-        console.log(this.billable_item.get(['exam_type', 'exam_procedure_type_id']).value)
         this.alertService.openSnackBar("Billing already created for this billable Item", "error");
+        console.log("rerere1")
         return;
       }
     }
@@ -1498,9 +1519,11 @@ export class AppointmentDetailsComponent implements OnInit {
           if (result.data) {
             this.updateBillableItem();
           } else {
+            console.log("rerere2")
             return;
           }
         })
+        console.log("rerere7")
         return
       }
 
@@ -1513,9 +1536,11 @@ export class AppointmentDetailsComponent implements OnInit {
           if (result.data) {
             this.updateBillableItem();
           } else {
+            console.log("rerere3")
             return;
           }
         })
+        console.log("rerere6")
         return
       }
     }
@@ -1531,27 +1556,47 @@ export class AppointmentDetailsComponent implements OnInit {
           if (result.data) {
             this.updateBillableItem();
           } else {
+            console.log("rerere4")
             return;
           }
         })
+        console.log("rerere5")
         return
       }
 
-
-      if (((this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value != this.billableData.appointment.appointment_scheduled_date_time) || (this.billable_item.get(['appointment', 'duration']).value != this.billableData.appointment.duration)) && (this.examinationStatusForm.getRawValue().examination_status != 2)) {
-        const dialogRef = this.dialog.open(AlertDialogueComponent, {
-          width: '500px',
-          data: { title: 'Examination', message: "This updates the Examination Status as 'Not Confirmed'!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          if (result.data) {
-            this.updateBillableItem();
-          } else {
-            return;
-          }
-        })
-        return
+      if (!this.billableData.appointment.appointment_scheduled_date_time) {
+        if (((this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value != this.billableData.appointment.appointment_scheduled_date_time) || (this.billable_item.get(['appointment', 'duration']).value != this.billableData.appointment.duration)) && (this.examinationStatusForm.getRawValue().examination_status != 2)) {
+          const dialogRef = this.dialog.open(AlertDialogueComponent, {
+            width: '500px',
+            data: { title: 'Examination', message: "This updates the Examination Status as 'Not Confirmed'!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            if (result.data) {
+              this.updateBillableItem();
+            } else {
+              console.log("rerere8")
+              return;
+            }
+          })
+          console.log("rerere9")
+          return
+        }
       }
+      if ((this.examinationStatusForm.getRawValue().examination_status != 1)) {
+        if (!this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value) {
+          const dialogRef = this.dialog.open(AlertDialogueComponent, {
+            width: '500px',
+            data: { title: 'Examination', message: "Please select appointment date and time", yes: false, no: false, ok: true, type: "warning", info: true }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            console.log("rerere10")
+            return
+          })
+          console.log("rerere11")
+          return
+        }
+      }
+
     }
     this.updateBillableItem();
   }
