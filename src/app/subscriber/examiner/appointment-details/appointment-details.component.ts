@@ -77,6 +77,7 @@ const ELEMENT_DATA1: PeriodicElement1[] = [
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
+      state('void', style({ height: '0px', minHeight: '0' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ]
@@ -2127,10 +2128,10 @@ export class AppointmentDetailsComponent implements OnInit {
   expandId: any;
   openElement(element) {
     if (this.isMobile) {
-      if (this.expandId && this.expandId == element.id) {
+      if (this.expandId && this.expandId == (element.id ? element.id : element.document_id)) {
         this.expandId = null;
       } else {
-        this.expandId = element.id;
+        this.expandId = (element.id ? element.id : element.document_id);
       }
     }
   }
