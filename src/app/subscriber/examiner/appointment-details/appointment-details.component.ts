@@ -1264,6 +1264,8 @@ export class AppointmentDetailsComponent implements OnInit {
     let data = this.examinationStatusForm.value
     data['appointment_id'] = this.appointmentId
     this.examinerService.updateExaminationStatus(data).subscribe(res => {
+      this.isEditBillableItem = false;
+      this.billable_item.disable();
       this.getDisabledFields();
       this.examinationStatusForm.disable()
       this.isExaminationStatusEdit = false;
