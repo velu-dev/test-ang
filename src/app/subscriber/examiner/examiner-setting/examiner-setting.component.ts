@@ -220,7 +220,7 @@ export class ExaminerSettingComponent implements OnInit {
   openSignature() {
     const dialogRef = this.dialog.open(FileUploadComponent, {
       width: '800px',
-      data: { name: 'make this card the default card', address: true, isMultiple: false, fileType: ['.png', '.jpg', '.jpeg'], fileSize: 3 },
+      data: { name: 'make this card the default card', address: true, isMultiple: false, fileType: ['.png', '.jpg', '.jpeg'], fileSize: 3, splMsg: "Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio, 600*150 pixels & Maximum File Size: 3 MB" },
       panelClass: 'custom-drag-and-drop',
     });
     dialogRef.afterClosed().subscribe(result => {

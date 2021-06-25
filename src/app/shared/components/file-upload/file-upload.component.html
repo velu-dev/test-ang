@@ -15,7 +15,9 @@
             [ngClass]="isDropZoneActive ? ['dx-theme-accent-as-border-color', 'dropzone-active'] : ['dx-theme-border-color']">
             <img [src]="file_upload" alt="File Upload">
             <h2>Drag and drop</h2>
-            <p>( Supported file formats : {{fileType.join()}} )<br /><span>Max file size : {{data.fileSize}} MB</span>
+            <p *ngIf="data.splMsg">{{data.splMsg}}</p>
+            <p *ngIf="!data.splMsg">( Supported file formats : {{fileType.join()}} )<br /><span>Max file size :
+                    {{data.fileSize}} MB</span>
             </p>
             <div>Or</div>
             <button mat-raised-button class="filled-ternary">Upload from your computer</button>
