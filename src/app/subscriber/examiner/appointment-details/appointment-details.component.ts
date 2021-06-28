@@ -670,10 +670,13 @@ export class AppointmentDetailsComponent implements OnInit {
     intake_contact_email: false,
     intake_notes: false,
   }
+  disabledFields = {}
+  // statusSaveDisable = false;
   getDisabledFields() {
     this.claimService.getFormDisabled(this.claim_id, this.billableId, this.examinationStatusForm.get('examination_status').value).subscribe(res => {
       console.log(res)
       if (res && res.data) {
+
         // let data = {
         //   examination_status: res.data[0].examination_status,
         //   notes: false,
@@ -699,7 +702,11 @@ export class AppointmentDetailsComponent implements OnInit {
         //     notes: res.data[0].intake_notes,
         //   }
         // }
+        this.disabledFields = res.data[0];
         if (res.data.length > 0) {
+          // if (!this.disabledFields['examination_status'] && !this.disabledFields['notes']) {
+          //   this.saveButtonStatus = true
+          // }
           if (!res.data[0].examination_status) {
             this.examinationStatusForm.get('examination_status').disable();
           }
@@ -1470,9 +1477,6 @@ export class AppointmentDetailsComponent implements OnInit {
     this.billable_item.get('appointment').get('duration').updateValueAndValidity();
   }
   submitBillableItem() {
-    if (this.billable_item.invalid) {
-      return;
-    }
     if (this.billable_item.value.appointment.appointment_scheduled_date_time) {
       this.billable_item.get('appointment').get('duration').setValidators([Validators.compose([Validators.required, Validators.pattern('[0-9]+'), Validators.min(1), Validators.max(450)])]);
     } else {
@@ -1526,33 +1530,32 @@ export class AppointmentDetailsComponent implements OnInit {
       if (!this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value && this.billableData.appointment.appointment_scheduled_date_time && this.examinationStatusForm.get('examination_status').value != 11) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
-          data: { title: 'Examination', message: "This updates the Examination Status as 'Awaiting Deposition Date' & remove the Duration!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+          // change no deposition date
+          //change examination to deposition
+          data: { title: 'Deposition', message: "This updates the Deposition Status as 'No Date' & remove the Duration!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
         });
         dialogRef.afterClosed().subscribe(result => {
           if (result.data) {
             this.updateBillableItem();
           } else {
-            console.log("rerere2")
             return;
           }
         })
-        console.log("rerere7")
         return
       }
+
       if (((this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value != this.billableData.appointment.appointment_scheduled_date_time) || (this.billable_item.get(['appointment', 'duration']).value != this.billableData.appointment.duration)) && (this.examinationStatusForm.getRawValue().examination_status != 12)) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
-          data: { title: 'Examination', message: "This updates the Examination Status as 'Awaiting Deposition'!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+          data: { title: 'Deposition', message: "This updates the Deposition Status as 'No Confirmed'!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
         });
         dialogRef.afterClosed().subscribe(result => {
           if (result.data) {
             this.updateBillableItem();
           } else {
-            console.log("rerere3")
             return;
           }
         })
-        console.log("rerere6")
         return
       }
     }
@@ -1568,11 +1571,9 @@ export class AppointmentDetailsComponent implements OnInit {
           if (result.data) {
             this.updateBillableItem();
           } else {
-            console.log("rerere4")
             return;
           }
         })
-        console.log("rerere5")
         return
       }
 
@@ -1586,11 +1587,9 @@ export class AppointmentDetailsComponent implements OnInit {
             if (result.data) {
               this.updateBillableItem();
             } else {
-              console.log("rerere8")
               return;
             }
           })
-          console.log("rerere9")
           return
         }
       }
@@ -1601,7 +1600,6 @@ export class AppointmentDetailsComponent implements OnInit {
             data: { title: 'Examination', message: "Please select appointment date and time", yes: false, no: false, ok: true, type: "warning", info: true }
           });
           dialogRef.afterClosed().subscribe(result => {
-            console.log("rerere10")
             return
           })
           console.log("rerere11")

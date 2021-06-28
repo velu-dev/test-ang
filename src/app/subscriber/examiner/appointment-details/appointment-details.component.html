@@ -534,7 +534,7 @@
                             <mat-error>Please enter valid date & time</mat-error> -->
 
                             <input matInput placeholder="MM-DD-YYYY" autocomplete="off" [matDatepicker]="call_date"
-                                 [max]="todayDate.intake" formControlName="call_date">
+                                [max]="todayDate.intake" formControlName="call_date">
                             <mat-datepicker-toggle matSuffix [for]="call_date"></mat-datepicker-toggle>
                             <mat-datepicker #call_date [disabled]="!isEditBillableItem"></mat-datepicker>
                             <mat-error>Please enter valid date</mat-error>
@@ -779,7 +779,8 @@
                         </ng-container>
                         <ng-container matColumnDef="expandedDetail">
                             <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumnsForDocuments.length">
-                                <div class="detail" [@detailExpand]="expandId == (element?.id ? element.id : element?.document_id) ? 'expanded' : 'collapsed'">
+                                <div class="detail"
+                                    [@detailExpand]="expandId == (element?.id ? element.id : element?.document_id) ? 'expanded' : 'collapsed'">
                                     <div class="responsive-table">
                                         <div *ngIf="this.tabIndexDetails.index == 1"><span>Download On Demand Proof of
                                                 Service</span>
