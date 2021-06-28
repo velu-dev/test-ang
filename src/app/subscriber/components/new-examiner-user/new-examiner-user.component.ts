@@ -1106,10 +1106,12 @@ export class NewExaminerUserComponent implements OnInit {
     this.userService.updateRenderingProvider(this.examinerId, this.renderingForm.value).subscribe(render => {
       this.licenseChangeStatus = false;
       if (!this.renderingForm.value.id) {
+        this.renderingForm.get('id').patchValue(render.data.id)
         this.alertService.openSnackBar("Rendering provider added successfully", 'success');
       } else {
         this.alertService.openSnackBar("Rendering provider updated successfully", 'success');
       }
+      this.renderingForm.get('license_details').patchValue(null)
       this.updateFormData(this.examinerId);
       this.renderingForm.markAsUntouched();
       this.renderingForm.updateValueAndValidity();
