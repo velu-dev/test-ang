@@ -1080,3 +1080,26 @@ mat-progress-bar {
       cursor: pointer;
   }
 }
+// Past Date and Time 
+
+.past-date-and-time {
+  .mat-form-field {
+    padding-bottom: 0 !important;
+    .mat-form-field-subscript-wrapper {
+      min-height: 0;
+    }
+    .mat-form-field-wrapper {
+      margin-bottom: 0;
+    }
+  }
+  div {
+    .note {
+      margin-top: 0 !important;
+      color: $ternary;
+      display: flex;
+      mat-icon {
+        padding-right: 5px;
+      }
+    }
+  }
+}

@@ -1339,30 +1339,38 @@
                                     </mat-select>
                                     <mat-error *ngIf="isBillSubmited">Please select Examiner</mat-error>
                                 </mat-form-field>
+                                <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="past-date-and-time">
+                                    <div fxLayout="row wrap">
+                                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                                fxFlex.xs="100" *ngIf="!isSuplimental">
+                                                <mat-label>Date & Time</mat-label>
+                                                <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM"
+                                                    formControlName="appointment_scheduled_date_time" autocomplete="off"
+                                                    [owlDateTime]="appointment" [value]="appointment_scheduled_date_time"
+                                                    (dateTimeChange)="changeDateType(billable_item?.value?.appointment?.appointment_scheduled_date_time)">
+                                                <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment">
+                                                </mat-datepicker-toggle>
+                                                <owl-date-time (afterPickerOpen)="pickerOpened('app')" [hour12Timer]="true"
+                                                    #appointment>
+                                                </owl-date-time>
+                                                <mat-error>Please enter valid date & time</mat-error>
+                                            </mat-form-field>
 
-                                <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25"
-                                    fxFlex.xs="100" *ngIf="!isSuplimental">
-                                    <mat-label>Date & Time</mat-label>
-                                    <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM"
-                                        formControlName="appointment_scheduled_date_time" autocomplete="off"
-                                        [owlDateTime]="appointment" [value]="appointment_scheduled_date_time"
-                                        (dateTimeChange)="changeDateType(billable_item?.value?.appointment?.appointment_scheduled_date_time)">
-                                    <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment">
-                                    </mat-datepicker-toggle>
-                                    <owl-date-time (afterPickerOpen)="pickerOpened('app')" [hour12Timer]="true"
-                                        #appointment>
-                                    </owl-date-time>
-                                    <mat-error>Please enter valid date & time</mat-error>
-                                </mat-form-field>
-
-                                <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25"
-                                    fxFlex.xs="100" *ngIf="!isSuplimental" class="duration">
-                                    <mat-label>Duration</mat-label>
-                                    <input matInput type="number" placeholder="Minutes" min="1" max="450" maxlength="3"
-                                        formControlName="duration" autocomplete="off">
-                                    <span matSuffix>Minutes</span>
-                                    <mat-error>Please enter a valid duration between 1 to 450 minutes</mat-error>
-                                </mat-form-field>
+                                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                                fxFlex.xs="100" *ngIf="!isSuplimental" class="duration">
+                                                <mat-label>Duration</mat-label>
+                                                <input matInput type="number" placeholder="Minutes" min="1" max="450" maxlength="3"
+                                                    formControlName="duration" autocomplete="off">
+                                                <span matSuffix>Minutes</span>
+                                                <mat-error>Please enter a valid duration between 1 to 450 minutes</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div fxLayout="row wrap">
+                                            <div fxFlex="100" class="note">
+                                                <mat-icon>info</mat-icon>For past dates of service the appointment standing is automatically changed to “attended” and the billable item standing is changed to “Bill Report”
+                                            </div>
+                                        </div>
+                                    </div>
 
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100" *ngIf="!isSuplimental">
