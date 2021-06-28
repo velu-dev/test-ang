@@ -1,3 +1,12 @@
+<!-- <mat-card class="m-b-20">
+    <mat-card-content class="text-center">
+        <div class="sub-title w-100">Drag and Drop File Upload</div>
+        <button matSuffix type="button" mat-stroked-button (click)="openPopUp()"
+            class="outline-success m-t-15">Upload</button>
+    </mat-card-content>
+</mat-card> -->
+
+
 <div fxLayout="column" fxLayoutGap="25px">
     <div fxLayout="row wrap" class="d-cards">
         <div fxFlex="100" fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100" fxLayout="column">
@@ -70,8 +79,8 @@
                                     </mat-form-field>
                                     <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                                         fxFlex.xs="100">Signature
-                                        <br /> <small>
-                                            Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio, 600*150
+                                        <br /> <small class="note p-l-0">
+                                            <mat-icon>info</mat-icon>Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio, 600*150
                                             pixels & Maximum File Size: 3 MB
                                         </small>
                                     </div>
@@ -82,16 +91,19 @@
                                                 hideRequiredMarker="hideRequiredControl.auto"
                                                 floatLabel="floatLabelControl.auto">
                                                 <input matInput [title]="selectedFile ? selectedFile : ''" readonly
-                                                    [value]="selectedFile | ellipsis:50" placeholder="No file chosen"
-                                                    value="12345">
-                                                <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
-                                                    (change)="fileChangeEvent($event)" id="uploadFile">
+                                                    [value]="selectedFile | ellipsis:50" placeholder="No file chosen">
+                                                <!-- <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
+                                                    (change)="fileChangeEvent($event)" id="uploadFile"> -->
 
                                             </mat-form-field>
 
-                                            <button matSuffix type="button" (click)="uploader.click()"
-                                                mat-stroked-button class="upload_btn outline-success m-t-3">Upload
+                                            <button matSuffix type="button" (click)="openSignature()" mat-stroked-button
+                                                class="upload_btn outline-success m-t-3">Upload
                                             </button>
+
+                                            <!-- <button matSuffix type="button" mat-stroked-button (click)="openPopUp()"
+                                                class="upload_btn outline-success m-t-3">Open PopUp
+                                            </button> -->
 
                                             <div fxFlex="100" *ngIf="!signData" class="m-t-20">
                                                 <div class="empty-image m-l-10">
@@ -247,8 +259,8 @@
                                     <div class="sub-title p-l-10" fxFlex="100" fxFlex.md="100" fxFlex.sm="100"
                                         fxFlex.xs="100">Signature
 
-                                        <br /><small>
-                                            Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio, 600*150
+                                        <br /><small class="note p-l-0">
+                                            <mat-icon>info</mat-icon>Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio, 600*150
                                             pixels & Maximum File Size: 3 MB
                                         </small>
                                     </div>
@@ -259,14 +271,10 @@
                                                 hideRequiredMarker="hideRequiredControl.auto"
                                                 floatLabel="floatLabelControl.auto" class="w-100">
                                                 <input matInput [title]="selectedFile ? selectedFile : ''" readonly
-                                                    [value]="selectedFile | ellipsis:50" placeholder="No file chosen"
-                                                    value="12345">
-                                                <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
-                                                    (change)="fileChangeEvent($event)" id="uploadFile">
-
+                                                    [value]="selectedFile | ellipsis:50" placeholder="No file chosen">
                                             </mat-form-field>
-                                            <button matSuffix type="button" (click)="uploader.click()"
-                                                mat-stroked-button class="upload_btn outline-success">Upload
+                                            <button matSuffix type="button" (click)="openSignature()" mat-stroked-button
+                                                class="upload_btn outline-success">Upload
                                                 <!-- <span class="fa fa-upload"></span> -->
                                             </button>
 
@@ -725,7 +733,7 @@
                             </mat-card-content>
                         </div>
                     </mat-tab>
-                    <mat-tab  *ngIf="roleId == 2">
+                    <mat-tab *ngIf="roleId == 2">
                         <ng-template mat-tab-label>
                             Payment History
                         </ng-template>
@@ -745,8 +753,10 @@
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
-                                <div *ngIf="isDataAvailable" fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="text-right">
-                                    <button (click)="downloadCSV()" mat-raised-button class="filled-gray m-t-15 font-weight-600">Download CSV</button>
+                                <div *ngIf="isDataAvailable" fxFlex="50" fxFlex.sm="100" fxFlex.xs="100"
+                                    class="text-right">
+                                    <button (click)="downloadCSV()" mat-raised-button
+                                        class="filled-gray m-t-15 font-weight-600">Download CSV</button>
                                 </div>
                             </div>
                             <div fxLayout="row wrap" class="no-data" fxFlex="100" *ngIf="!isDataAvailable">
@@ -775,7 +785,9 @@
                                 <div fxFlex="50" class="text-right m-b-5">
                                     <button (click)="expandAll()" mat-raised-button
                                         class="filled-gray mini-btn m-t-15 font-weight-600">
-                                        <i [ngClass]="isExpanded ? 'fas fa-minus p-r-5' : 'fas fa-plus p-l-5'"></i> {{isExpanded ? "Collapse All" : "Expand All"}}
+                                        <i
+                                            [ngClass]="isExpanded ? 'fas fa-minus p-r-5' : 'fas fa-plus p-r-5'"></i>{{isExpanded
+                                        ? "Collapse All" : "Expand All"}}
                                     </button>
                                 </div>
                                 <div class="divider"></div>
@@ -827,6 +839,150 @@
                                     </mat-tree-node>
                                 </mat-tree>
                             </div>
+                        </mat-card-content>
+                    </mat-tab>
+                    <!-- ######~~~~~ Address ~~~~~##### -->
+                    <mat-tab *ngIf="roleId == 2">
+                        <ng-template mat-tab-label>
+                            Address
+                        </ng-template>
+                        <mat-card-content>
+                            <form fxLayout="row wrap" class="m-t-10"
+                                (keydown.enter)="$event.target.tagName == 'TEXTAREA'" [formGroup]="subscriberAddress"
+                                (ngSubmit)="submitSubscriberAddress()">
+                                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
+                                    fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                                    <mat-label>Street Address 1</mat-label>
+                                    <input matInput id="street-input" [matAutocomplete]="streetCAutocomplete"
+                                        #trigger="matAutocompleteTrigger" formControlName="street1"
+                                        placeholder="Street Address 1">
+                                    <mat-autocomplete #streetCAutocomplete="matAutocomplete">
+                                        <mat-option *ngFor="let address of streetAddressList"
+                                            [value]="address.street_line" (click)="selectAddress(address)"
+                                            (onSelectionChange)="selectAddress(address)">
+                                            {{address?.street_line}} {{address?.secondary}} {{address?.city}}
+                                            {{address?.state}}
+                                            {{address?.zipcode}}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                    <mat-hint *ngIf="isAddressError"><i class="fas fa-info-circle"></i> The address
+                                        autocomplete service is temporarily unavailable. Our team is working to fix it.
+                                    </mat-hint>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
+                                    fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                                    <mat-label>Street Address 2</mat-label>
+                                    <input matInput placeholder="Street Address 2" formControlName="street2"
+                                        autocomplete="off">
+                                    <mat-error *ngIf="isSubFormSubmitted">Please enter valid address</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
+                                    fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                                    <mat-label>City</mat-label>
+                                    <input matInput placeholder="City" formControlName="city" autocomplete="off">
+                                    <mat-error *ngIf="isSubFormSubmitted">Please enter valid city</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
+                                    fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                                    <mat-label>State</mat-label>
+                                    <mat-select formControlName="state_id"
+                                        (selectionChange)="changeState($event.value, 'subscriber')">
+                                        <mat-select-trigger>
+                                            {{subscriberState}}
+                                        </mat-select-trigger>
+                                        <mat-option *ngFor="let state of states" [value]="state.id">
+                                            {{state.state_code}} -
+                                            {{state.state}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="isSubFormSubmitted">Please enter valid state</mat-error>
+                                </mat-form-field>
+
+
+                                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
+                                    fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                                    <mat-label>Zip Code</mat-label>
+                                    <input matInput placeholder="Zip Code" mask="9{10}" [dropSpecialCharacters]="false"
+                                        formControlName="zip_code" autocomplete="off">
+                                    <mat-error *ngIf="isSubFormSubmitted">Please enter valid zip code</mat-error>
+                                </mat-form-field>
+
+                                <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50"
+                                    fxFlex.xs="100">
+                                    <mat-form-field appearance="outline" fxFlex="70" class="phone">
+                                        <mat-label>Phone 1</mat-label>
+                                        <input matInput autocomplete="off" (keypress)="numberOnly($event)"
+                                            mask="(000) 000-0000" formControlName="phone_no1">
+                                        <mat-error *ngIf="isSubFormSubmitted">Please enter valid phone</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                                        <mat-label>Ext</mat-label>
+                                        <input matInput type="text" (keypress)="numberOnly($event)"
+                                            formControlName="phone_ext1">
+                                        <mat-error *ngIf="isSubFormSubmitted">Please enter valid Extension</mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                                <div fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50" fxFlex.sm="50"
+                                    fxFlex.xs="100">
+                                    <mat-form-field appearance="outline" fxFlex="70" class="phone">
+                                        <mat-label>Phone 2</mat-label>
+                                        <input matInput placeholder="Phone 2" (keypress)="numberOnly($event)"
+                                            mask="(000) 000-0000" formControlName="phone_no2">
+                                        <mat-error *ngIf="isSubFormSubmitted">Please enter valid phone</mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
+                                        <mat-label>Ext</mat-label>
+                                        <input matInput type="text" placeholder="Ext" (keypress)="numberOnly($event)"
+                                            formControlName="phone_ext2">
+                                        <mat-error *ngIf="isSubFormSubmitted">Please enter valid Extension</mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
+                                    fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                                    <mat-label>Fax</mat-label>
+                                    <input matInput placeholder="Fax" formControlName="fax_no"
+                                        (keypress)="numberOnly($event)" mask="(000) 000-0000" autocomplete="off">
+                                    <mat-error *ngIf="isSubFormSubmitted">Please enter valid fax</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
+                                    fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                                    <mat-label>Contact Email</mat-label>
+                                    <input matInput placeholder="Contact Email" formControlName="email"
+                                        autocomplete="off">
+                                    <mat-error *ngIf="isSubFormSubmitted">Please enter valid email</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
+                                    fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
+                                    <mat-label>Contact Person</mat-label>
+                                    <input matInput placeholder="Contact Person" formControlName="contact_person"
+                                        autocomplete="off">
+                                    <mat-error *ngIf="isSubFormSubmitted">Please enter valid contact person</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="100" fxFlex.xl="50"
+                                    fxFlex.md="100" fxFlex.sm="100" fxFlex.xs="100">
+                                    <mat-label>Notes</mat-label>
+                                    <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows="1"
+                                        formControlName="notes" cdkAutosizeMaxRows="1" placeholder="Notes"
+                                        autocomplete="off"></textarea>
+                                    <mat-error *ngIf="isSubFormSubmitted">Please enter valid notes</mat-error>
+                                </mat-form-field>
+
+                                <div class="text-center w-100 m-t-10 action">
+                                    <button mat-stroked-button type="button" (click)="cancel()"
+                                        class="outline-danger">Cancel</button>
+                                    <button mat-stroked-button class="m-l-10 outline-success">Save</button>
+                                </div>
+                            </form>
                         </mat-card-content>
                     </mat-tab>
                 </mat-tab-group>

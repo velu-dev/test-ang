@@ -297,36 +297,41 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 }
 
 // FIle Upload
-
-.file-upload {
-  margin-top: 10px;
-  border: 1px dashed $primarycolor;
-  padding: 30px 50px;
-  background-color: $bg-light-blue;
-  border-radius: 5px;
-  color: $white;
-  vertical-align: middle;
-  box-shadow: $box-shadow-5;
-  p {
-    vertical-align: middle;
-    color: $primarycolor;
-    text-align: center;
-  }
-  .input {
-    padding: 8px 25px;
-    color: $white;
-    background-color: $primarycolor;
-    box-shadow: $box-shadow-5;
-    border-radius: 3px;
-    text-align: center;
-    margin: 0px auto;
-    max-width: 50px;
-    display: block;
-    &:focus {
-      outline: none;
-    }
-  }
+.custom-drag-and-drop {
+  .mat-dialog-container {
+  padding: 0px !important;
+  
 }
+}
+// .file-upload {
+//   margin-top: 10px;
+//   border: 1px dashed $primarycolor;
+//   padding: 30px 50px;
+//   background-color: $bg-light-blue;
+//   border-radius: 5px;
+//   color: $white;
+//   vertical-align: middle;
+//   box-shadow: $box-shadow-5;
+//   p {
+//     vertical-align: middle;
+//     color: $primarycolor;
+//     text-align: center;
+//   }
+//   .input {
+//     padding: 8px 25px;
+//     color: $white;
+//     background-color: $primarycolor;
+//     box-shadow: $box-shadow-5;
+//     border-radius: 3px;
+//     text-align: center;
+//     margin: 0px auto;
+//     max-width: 50px;
+//     display: block;
+//     &:focus {
+//       outline: none;
+//     }
+//   }
+// }
 // @media not all and (min-resolution: 0.001dpcm) {
 //   @supports (-webkit-appearance: none) and (stroke-color: transparent) {
 //     .mat-form-field-outline-end {
@@ -532,11 +537,12 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   }
 }
 .fc-button-primary:disabled {
+  color: $white !important;
   background-color: $secondary;
   border-color: $secondary;
   &:hover {
-    color: $secondary;
-    background-color: $secondary;
+    color: $white !important;
+    background-color: $secondary !important;
     cursor: pointer;
   }
 }
@@ -1062,5 +1068,15 @@ mat-progress-bar {
     .mat-form-field-prefix {
       top: 0 !important;
     }
+  }
+}
+
+//Tracking and Tracing
+.traking-details {
+  .more-btn {
+      background: none;
+      border: none;
+      color: $text-gray;
+      cursor: pointer;
   }
 }

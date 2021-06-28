@@ -876,6 +876,7 @@ input:-webkit-autofill {
 .btn_ {
   height: 40px;
   min-width: 100px;
+  font-weight: $font-weight-bold;
   // &:disabled {
   //   background-color: inherit !important;
   //   color: $disabled;

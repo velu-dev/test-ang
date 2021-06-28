@@ -1,5 +1,5 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatSort, MatTableDataSource } from '@angular/material';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { BillingService } from 'src/app/subscriber/service/billing.service';
@@ -9,6 +9,7 @@ import { IntercomService } from 'src/app/services/intercom.service';
 import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
+import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
 
 @Component({
   selector: 'app-billing-document',
@@ -30,7 +31,8 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
   @Input() billType: any;
   columnsNameDoc = [];
   columnsToDisplayDoc = [];
-  dataSource1: any;
+  DTMtableData: any;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   columnsToDisplays = [];
   columnNames = [];
   dataSourceDocList = new MatTableDataSource([]);
@@ -42,15 +44,15 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
       map(result => result.matches),
       shareReplay()
     );
-  constructor(private claimService: ClaimService, public billingService: BillingService, private alertService: AlertService, private intercom: IntercomService, private breakpointObserver: BreakpointObserver) {
+  constructor(private onDemandService: OnDemandService, private claimService: ClaimService, public billingService: BillingService, private alertService: AlertService, private intercom: IntercomService, private breakpointObserver: BreakpointObserver) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (this.isMobile) {
         this.columnsNameDoc = ["", "File Name"]
         this.columnsToDisplayDoc = ['is_expand', 'file_name']
       } else {
-        this.columnsNameDoc = ["", "Ref #", "File Name", "Action", "Date", "Recipients", "Download" + '\n' + "Sent Documents", "Further Information"]
-        this.columnsToDisplayDoc = ['doc_image', 'request_reference_id', 'file_name', 'action', "date", "recipients", 'download', 'payor_response_message']
+        this.columnsNameDoc = ["", "Ref #", "File Name", "Type", "Date", "Recipients", "Download" + '\n' + "Sent Documents", "Download" + '\n' + "Proof of Service", "Further Information"]
+        this.columnsToDisplayDoc = ['doc_image', 'request_reference_id', 'file_name', 'action', "date", "recipients", 'download', 'proof_of_service', 'payor_response_message']
       }
       this.isMobile = res;
       if (res) {
@@ -67,15 +69,30 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log(this.paramsId)
     this.getDocument();
   }
 
   getDocument() {
     this.billingService.getSendRecDocument(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, this.billType).subscribe(document => {
       this.dataSourceDocList = new MatTableDataSource(document.data);
+      this.dataSourceDocList.sort = this.sort;
+    })
+    this.billingService.getDtmData({ claim_id: this.paramsId.claim_id, billable_item_id: this.paramsId.billId, bill_id: this.paramsId.billingId }).subscribe(res => {
+      this.DTMtableData = new MatTableDataSource(res.data);
+      this.DTMtableData.sort = this.sort;
     })
   }
-
+  tracingpopupData:any = {};
+  openTracing(element) {
+    this.tracingpopupData = {};
+    this.onDemandService.getTracingPopUp(element.id, this.paramsId.claim_id, this.paramsId.billId).subscribe(res => {
+      this.tracingpopupData = res.data;
+      //this.popupMenu.openMenu();
+    }, error => {
+      console.log(error);
+    })
+  }
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
@@ -103,6 +120,14 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
       })
       saveAs(res.signed_file_url, element.file_name);
       this.getDocument();
+    })
+  }
+
+  downloadDocumetPOF(element) {
+    this.billingService.downloadOndemandDocuments({ file_url: element.file_url }).subscribe(res => {
+      this.alertService.openSnackBar("File downloaded successfully", "success");
+      saveAs(res.signed_file_url, element.file_name);
+      //this.getDocument();
     })
   }
 

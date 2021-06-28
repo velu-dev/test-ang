@@ -24,6 +24,7 @@ import { RegulationDialogueComponent } from 'src/app/shared/components/regulatio
 import { UserService } from 'src/app/shared/services/user.service';
 import * as regulation from 'src/app/shared/services/regulations';
 import { BillingAlertComponent } from 'src/app/shared/components/billingalert/billing-alert.component';
+import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 @Component({
   selector: 'app-billing-correspondance',
   templateUrl: './correspondance.component.html',
@@ -201,16 +202,16 @@ export class BillingCorrespondanceComponent implements OnInit {
         this.examinerId = res.examiner_user_id;
       }
       this.statusOfAppointment = { isEmptyNoDate: !res.is_appointment_no_date_present, IsEmptyAppointmentDate: !res.is_appointment_date_time_present, isEmptyDuration: !res.is_appointment_duration_present, isEmptyLocation: !res.is_appointment_location_present }
-      res.documents.map(doc => {
-        if (doc.is_mandatory) {
-          this.selection.select(doc);
-        }
-      })
-      res.recipient.map(doc => {
-        if (doc.is_mandatory) {
-          this.selection1.select(doc);
-        }
-      })
+      // res.documents.map(doc => {
+      //   if (doc.is_mandatory) {
+      //     this.selection.select(doc);
+      //   }
+      // })
+      // res.recipient.map(doc => {
+      //   if (doc.is_mandatory) {
+      //     this.selection1.select(doc);
+      //   }
+      // })
       this.documents = new MatTableDataSource(res.documents);
       this.recipients = new MatTableDataSource(res.recipient);
       this.sentDocuments = new MatTableDataSource(res.documents_sent_and_received);
@@ -277,14 +278,22 @@ export class BillingCorrespondanceComponent implements OnInit {
     });
   }
   openDialog(): void {
-    const dialogRef = this.dialog.open(CustomDocuments, {
+    const dialogRef = this.dialog.open(FileUploadComponent, {
       width: '800px',
-      data: { claim_id: this.claim_id, billable_id: this.billableId }
+      data: { message: 'Uploaded documents should not exceed 300 dpi', address: true, isMultiple: true, fileType: ['.pdf', '.doc', '.docx'], fileSize: 30 },
+      panelClass: 'custom-drag-and-drop',
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.onDemandService.uploadDocument(result).subscribe(res => {
+      if (result['data']) {
+        let formData = new FormData()
+        formData.append("document_category_id", "10");
+        formData.append('claim_id', this.claim_id);
+        formData.append('bill_item_id', this.billableId);
+        for (let i = 0; i < result.files.length; i++) {
+          formData.append('file', result.files[i]);
+        }
+        // console.log("result", result)
+        this.onDemandService.uploadDocument(formData).subscribe(res => {
           if (res.status) {
             this.alertService.openSnackBar(res.message, "success");
             this.getData();
@@ -293,11 +302,28 @@ export class BillingCorrespondanceComponent implements OnInit {
           }
         })
       }
-      // if (result) {
-      //   this.getData();
-      // }
-      // this.animal = result;
-    });
+    })
+    // const dialogRef = this.dialog.open(CustomDocuments, {
+    //   width: '800px',
+    //   data: { claim_id: this.claim_id, billable_id: this.billableId }
+    // });
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result) {
+    //     this.onDemandService.uploadDocument(result).subscribe(res => {
+    //       if (res.status) {
+    //         this.alertService.openSnackBar(res.message, "success");
+    //         this.getData();
+    //       } else {
+    //         this.alertService.openSnackBar(res.message, "error");
+    //       }
+    //     })
+    //   }
+    //   // if (result) {
+    //   //   this.getData();
+    //   // }
+    //   // this.animal = result;
+    // });
   }
   openPopup(title, value) {
     let data = this.userService.getRegulation(value)
@@ -338,6 +364,19 @@ export class BillingCorrespondanceComponent implements OnInit {
     this.changeColors("#E6E6E6");
   }
   downloadForms(sign) {
+    if (!this.examinerId) {
+      this.alertService.openSnackBar('Please select Examiner', "error");
+      return;
+    }
+    if (this.selection.selected.length == 0) {
+      this.alertService.openSnackBar('Please select Document(s)', "error");
+      return;
+    }
+    if (this.selection1.selected.length > 12) {
+      this.alertService.openSnackBar('Maximum 12 Recipients Allowed', "error");
+      return;
+    }
+
     let ids = [];
     this.selection1.selected.map(res => {
       ids.push(res.id)
@@ -362,18 +401,6 @@ export class BillingCorrespondanceComponent implements OnInit {
     // }
   }
   downloadMethod(sign) {
-    if (!this.examinerId) {
-      this.alertService.openSnackBar('Please select Examiner', "error");
-      return;
-    }
-    if (this.selection.selected.length == 0) {
-      this.alertService.openSnackBar('Please select Document(s)', "error");
-      return;
-    }
-    if (this.selection1.selected.length > 12) {
-      this.alertService.openSnackBar('Maximum 12 Recipients Allowed', "error");
-      return;
-    }
 
     let signHide = false;
     if (sign) {
@@ -451,7 +478,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       // dialogRef.afterClosed().subscribe(result => {
       //   if (result.data) {
       const dialogRef = this.dialog.open(AlertDialogueComponent, {
-        width: '500px', data: { title: "Confirm", message: "We are assuming you are processing Correspondence Manually, Instead of 'Mail On-demand'.", yes: false, proceed: true, no: true, type: "warning" }
+        width: '500px', data: { title: "Confirm", message: "We are assuming you are processing Mailing Manually, Instead of 'Mail On-demand'.", yes: false, proceed: true, no: true, type: "warning" }
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result.data) {
@@ -491,7 +518,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       //   }
       // });
       const dialogRef = this.dialog.open(AlertDialogueComponent, {
-        width: '500px', data: { title: "Confirm", message: "We are assuming you are processing Correspondence Manually, Instead of Mail On-demand.", yes: false, proceed: true, no: true, type: "warning" }
+        width: '500px', data: { title: "Confirm", message: "We are assuming you are processing Mailing Manually, Instead of Mail On-demand.", yes: false, proceed: true, no: true, type: "warning" }
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result.data) {
@@ -656,31 +683,33 @@ export class BillingCorrespondanceComponent implements OnInit {
   }
 
   onDemandSubmit() {
+
+    if (!this.examinerId) {
+      this.alertService.openSnackBar('Please select Examiner', "error");
+      return;
+    }
+    if (this.selection.selected.length == 0 && this.selection1.selected.length == 0) {
+      this.alertService.openSnackBar('Please select Document(s) & Recipient(s)', "error");
+      return;
+    }
+    if (this.selection.selected.length == 0) {
+      this.alertService.openSnackBar('Please select Document(s)', "error");
+      return;
+    }
+    if (this.selection1.selected.length == 0) {
+      this.alertService.openSnackBar('Please select Recipient(s)', "error");
+      return;
+    }
+    if (this.selection1.selected.length > 12) {
+      this.alertService.openSnackBar('Maximum 12 Recipients Allowed', "error");
+      return;
+    }
     let ids = [];
     this.selection1.selected.map(res => {
       ids.push(res.id)
     })
+
     this.onDemandService.getCorresIncomplete(this.claim_id, this.billableId, ids).subscribe(res => {
-      if (!this.examinerId) {
-        this.alertService.openSnackBar('Please select Examiner', "error");
-        return;
-      }
-      if (this.selection.selected.length == 0 && this.selection1.selected.length == 0) {
-        this.alertService.openSnackBar('Please select Document(s) & Recipient(s)', "error");
-        return;
-      }
-      if (this.selection.selected.length == 0) {
-        this.alertService.openSnackBar('Please select Document(s)', "error");
-        return;
-      }
-      if (this.selection1.selected.length == 0) {
-        this.alertService.openSnackBar('Please select Recipient(s)', "error");
-        return;
-      }
-      if (this.selection1.selected.length > 12) {
-        this.alertService.openSnackBar('Maximum 12 Recipients Allowed', "error");
-        return;
-      }
 
 
       let documents_ids: any = [];

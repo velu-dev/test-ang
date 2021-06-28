@@ -28,6 +28,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/devextreme/dist/css/dx.light.css",
               "src/styles.scss"
             ],
             "stylePreprocessorOptions": {
@@ -58,7 +59,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "5mb",
-                  "maximumError": "6mb"
+                  "maximumError": "8mb"
                 },
                 {
                   "type": "anyComponentStyle",

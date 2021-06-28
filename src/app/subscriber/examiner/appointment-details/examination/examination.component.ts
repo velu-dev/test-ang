@@ -13,6 +13,7 @@ import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.c
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
+import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 export interface PeriodicElement {
   name: string;
 }
@@ -120,7 +121,16 @@ export class ExaminationComponent implements OnInit {
       this.alertService.openSnackBar('Please select Document(s)', "error");
       return;
     }
-    let ids = { documents_ids: this.selection.selected.map(res => res['id']), examiner_detail_id: this.billingData.examiner_detail_id}
+    let documents_ids = []
+    let custom_documents_ids = []
+    this.selection.selected.map(res => {
+      if (res.form_number) {
+        documents_ids.push(res.id)
+      } else {
+        custom_documents_ids.push(res.id)
+      }
+    })
+    let ids = { documents_ids: documents_ids, custom_documents_ids: custom_documents_ids, examiner_detail_id: this.billingData.examiner_detail_id }
     this.ondemandService.downloadBillingDoc(this.claim_id, this.billableId, ids).subscribe(res => {
       if (res.status) {
         res.data.map(data => {
@@ -170,6 +180,24 @@ export class ExaminationComponent implements OnInit {
       }
     }
   }
+  openPopupDialogue() {
+    const dialogRef = this.dialog.open(FileUploadComponent, {
+      width: '800px',
+      data: { isMultiple: true, fileType: ['.pdf', '.doc', '.docx'], fileSize: 3073 },
+      panelClass: 'custom-drag-and-drop',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.selectedFiles = result.files;
+        result.files.map(res => {
+          this.selectedFile = res;
+          this.file.push(res.name);
+        })
+        this.uploadFile();
+      }
+    })
+
+  }
   uploadFile() {
     let formData = new FormData();
     if (!this.selectedFile) {
@@ -188,7 +216,7 @@ export class ExaminationComponent implements OnInit {
       if (res.status) {
         this.alertService.openSnackBar(res.message, 'success');
         this.selectedFile = null;
-        this.fileUpload.nativeElement.value = "";
+        // this.fileUpload.nativeElement.value = "";
         formData = new FormData();
         this.file = [];
         // this.alldocuments.push(res.data);

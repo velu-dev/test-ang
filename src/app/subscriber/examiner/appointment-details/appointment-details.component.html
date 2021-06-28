@@ -83,11 +83,12 @@
 
 <div class="action-info w-100" fxLayout="row wrap p-t-0">
     <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100">
-        <div class="logo-caption text-left"> <span class="primary">Simple</span><span class="ternary">Service</span><sup>®</sup>
+        <div class="logo-caption text-left"> <span class="primary">Simple</span><span
+                class="ternary">Service</span><sup>®</sup>
             <span class="note p-l-10">This would be a brief description on the benefits of these services</span>
         </div>
     </div>
-    <div *ngFor="let status of procedureTypeList" fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100">
+    <div *ngFor="let status of procedureTypeList" fxFlex="33.3" fxFlex.sm="50" fxFlex.xs="100" [hidden]="status?.skip">
         <div class="simple-card" *ngIf="!(status.name === 'Billing' && role == '4')"
             [ngClass]="{'billing-status-active bg_light': status.name === 'Billing'}" (click)="clickNav(status.url)">
             <i [class]="status.icon"></i>
@@ -114,14 +115,14 @@
 <mat-card class="exam-status" *ngIf="!isSuplimental">
     <div class="exam-info w-100" fxLayout="row wrap" *ngIf="isDisplayStatus.status">
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="show-mobile show-sm">
-            <span *ngIf="!isExamTypeChanged || !isFreeze">
-                <button *ngIf="!isExaminationStatusEdit"
-                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze"
-                    mat-raised-button (click)="changeEditStatus()" class="filled-gray edit_btn">Edit</button>
-                <button *ngIf="isExaminationStatusEdit"
-                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze"
-                    type="submit" mat-raised-button (click)="examinationStatusSubmit()"
-                    class="filled-success edit_btn">Save</button>
+            <!--  *ngIf="!isExamTypeChanged || !isFreeze" -->
+            <span>
+                <!-- [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze" -->
+                <button *ngIf="!isExaminationStatusEdit" mat-raised-button (click)="changeEditStatus()"
+                    class="filled-gray edit_btn">Edit</button>
+                <!-- [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze" -->
+                <button *ngIf="isExaminationStatusEdit" type="submit" mat-raised-button
+                    (click)="examinationStatusSubmit()" class="filled-success edit_btn">Save</button>
             </span>
         </div>
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
@@ -147,10 +148,6 @@
                         <textarea formControlName="examination_notes" matInput placeholder="Notes" cdkTextareaAutosize
                             cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
                     </mat-form-field>
-                    <!-- <div class="cancel-reason">
-                         <div class="reason">Cancelled Suplimental</div>
-                         <div class="description">Cancelled Reason Will Comes Here...</div>
-                    </div> -->
                 </div>
                 <div *ngIf="isExaminationStatusEdit" class="text-center w-100">
                     <button mat-stroked-button class="outline-danger" (click)="cancel()">Cancel</button>
@@ -162,13 +159,14 @@
         </div>
 
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-            <span *ngIf="!isFreeze">
+            <!--  *ngIf="!isFreeze" -->
+            <span>
+                <!-- [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze" -->
                 <button *ngIf="!isExaminationStatusEdit" mat-raised-button (click)="changeEditStatus()"
-                    class="filled-gray edit_btn hide-mobile hide-sm"
-                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze">Edit</button>
+                    class="filled-gray edit_btn hide-mobile hide-sm">Edit</button>
+                <!-- [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze" -->
                 <button *ngIf="isExaminationStatusEdit" mat-raised-button (click)="examinationStatusSubmit()"
-                    class="filled-success edit_btn hide-mobile hide-sm"
-                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze">Save</button><br /><br />
+                    class="filled-success edit_btn hide-mobile hide-sm">Save</button><br /><br />
             </span>
             <button mat-raised-button class="filled-gray calender_btn" (click)="openCalendar()">View on
                 Calendar</button>
@@ -180,69 +178,87 @@
 <mat-card class="exam-status" *ngIf="isSuplimental">
     <div class="exam-info w-100" fxLayout="row wrap" *ngIf="isDisplayStatus.status">
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="show-mobile show-sm">
-            <span *ngIf="!isExamTypeChanged || !isFreeze">
-                <button *ngIf="!isExaminationStatusEdit"
-                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze"
-                    mat-raised-button (click)="changeEditStatus()" class="filled-gray edit_btn">Close</button>
-                <button *ngIf="isExaminationStatusEdit"
-                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze"
-                    type="submit" mat-raised-button (click)="examinationStatusSubmit()"
-                    class="filled-success edit_btn">Save</button>
+            <span>
+                <button *ngIf="supplemenalStatus.examination_status != 16 && supplemenalStatus.examination_status != 35"
+                    mat-raised-button (click)="changeEditStatus()" class="filled-gray edit_btn"
+                    [disabled]="isExaminationStatusEdit">Cancel
+                    Supplemental</button>
+                <button *ngIf="supplemenalStatus.examination_status == 16 || supplemenalStatus.examination_status == 35"
+                    type="submit" mat-raised-button (click)="supplementalreopen(16)" class="filled-gray edit_btn">Reopen
+                    Supplemental</button>
+                <!-- <button *ngIf="supplemenalStatus.examination_status != 16 && supplemenalStatus.examination_status != 35"
+                    mat-raised-button (click)="changeEditStatus()" [disabled]="isExaminationStatusEdit"
+                    class="filled-gray edit_btn hide-mobile hide-sm">Cancel
+                    Supplemental</button>
+                <button *ngIf="supplemenalStatus.examination_status == 16 || supplemenalStatus.examination_status == 35"
+                    mat-raised-button (click)="supplementalreopen(null)"
+                    class="filled-gray edit_btn hide-mobile hide-sm">Reopen
+                    Supplemental</button> -->
             </span>
         </div>
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
             <form [formGroup]="examinationStatusForm">
                 <div fxLayout="row wrap" class="examination-status">
-                    <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100" class="p-t-15 p-r-10">{{isDisplayStatus.name}}
-                        Status</div>
-                    <mat-form-field appearance="outline" fxFlex="70" fxFlex.sm="100" fxFlex.xs="100">
-                        <mat-label>Choose an option</mat-label>
-                        <mat-select formControlName="examination_status">
-                            <mat-option *ngFor="let examination_status of cancelSupplemental"
-                                [value]="examination_status.id">
-                                {{examination_status[isDisplayStatus.isExaminar ? 'examination_status' :
-                                'examination_status']}}
-                            </mat-option>
-                        </mat-select>
+                    <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100" class="m-t-0 p-r-10">Supplemental
+                        {{supplemenalStatus.examination_status == 16 ?
+                        "Cancelled" : ""}} <span *ngIf="!isIME" class="custom-info supplemental regulation"
+                            (click)="openPopupRegulation(regulation?.regulationsForAppointmentNotification?.title, regulation?.regulationsForAppointmentNotification?.codes)"><i
+                                class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
+
+                    <mat-form-field
+                        *ngIf="isExaminationStatusEdit && supplemenalStatus.examination_status != 16 && supplemenalStatus.examination_status != 35"
+                        appearance="outline" fxFlex="100" class="notes m-t-15">
+                        <mat-label>Cancel Reason</mat-label>
+                        <textarea formControlName="examination_notes" matInput placeholder="Cancel Reason"
+                            cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="2"></textarea>
                     </mat-form-field>
-                    <span *ngIf="!isIME" class="custom-info regulation" (click)="openPopupRegulation(regulation?.regulationsForAppointmentNotification?.title, regulation?.regulationsForAppointmentNotification?.codes)"><i
-                            class="material-icons-outlined">info</i><sup>Regulations</sup></span>
-                    <mat-form-field appearance="outline" fxFlex="100" class="notes">
-                        <mat-label>Notes</mat-label>
-                        <textarea formControlName="examination_notes" matInput placeholder="Notes" cdkTextareaAutosize
-                            cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
-                    </mat-form-field>
+                    <div class="cancel-reason supplemental w-100"
+                        *ngIf="supplemenalStatus.examination_status == 16 || supplemenalStatus.examination_status == 35">
+                        <div class="reason">Cancelled Reason: {{supplemenalStatus.examination_notes ? "" : " -"}}</div>
+                        <div class="description">{{supplemenalStatus.examination_notes}}</div>
+                    </div>
                 </div>
                 <div *ngIf="isExaminationStatusEdit" class="text-center w-100">
                     <button mat-stroked-button class="outline-danger" (click)="cancel()">Cancel</button>
                     <button mat-stroked-button class="m-l-10 outline-success" type="submit"
-                        (click)="examinationStatusSubmit()">Save
+                        (click)="supplementalreopen(16)">Save
                     </button>
                 </div>
             </form>
         </div>
 
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
-            <span *ngIf="!(isExamTypeChanged) || !(isFreeze)">
-                <button *ngIf="!isExaminationStatusEdit" mat-raised-button (click)="changeEditStatus()"
+            <span>
+                <button *ngIf="supplemenalStatus.examination_status != 16 && supplemenalStatus.examination_status != 35"
+                    mat-raised-button (click)="changeEditStatus()" [disabled]="isExaminationStatusEdit"
+                    class="filled-gray edit_btn hide-mobile hide-sm">Cancel
+                    Supplemental</button>
+                <button *ngIf="supplemenalStatus.examination_status == 16 || supplemenalStatus.examination_status == 35"
+                    mat-raised-button (click)="supplementalreopen(null)"
+                    class="filled-gray edit_btn hide-mobile hide-sm">Reopen
+                    Supplemental</button>
+                <!-- <button *ngIf="!isExaminationStatusEdit" mat-raised-button (click)="changeEditStatus()"
                     class="filled-gray edit_btn hide-mobile hide-sm"
                     [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze">Close</button>
                 <button *ngIf="isExaminationStatusEdit" mat-raised-button (click)="examinationStatusSubmit()"
                     class="filled-success edit_btn hide-mobile hide-sm"
-                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze">Save</button><br /><br />
+                    [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze">Save</button> -->
+                <br /><br />
             </span>
-            <!-- <button mat-raised-button class="filled-gray calender_btn" (click)="openCalendar()">View on
-                Calendar</button> -->
         </div>
     </div>
 </mat-card>
+
+
 
 <div class="border-dashed-blue m-b-50"></div>
 
 <mat-card class="documents-declared m-b-20">
     <mat-card-header>
-        <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Documents Declared<span *ngIf="!isIME" class="custom-info regulation"  (click)="openPopupRegulation(regulation?.regulationsForDeclarationOfPagesReceived?.title, regulation?.regulationsForDeclarationOfPagesReceived?.codes)"> <i
-                    class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
+        <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Correspondence / Documents Declared<span *ngIf="!isIME"
+                class="custom-info regulation"
+                (click)="openPopupRegulation(regulation?.regulationsForDeclarationOfPagesReceived?.title, regulation?.regulationsForDeclarationOfPagesReceived?.codes)">
+                <i class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
         <span class="spacer"></span>
         <span>
             <button type="button" class="filled-gray m-b-5" mat-raised-button (click)="addRow()">Add</button>
@@ -250,162 +266,102 @@
     </mat-card-header>
     <mat-divider> </mat-divider>
     <mat-card-content>
-        <!-- <div class="user-detail m-t-5">
-            <table class="table table-border res-table" [ngClass]="{'table-dark': mode}">
-                <thead class="text-nowrap">
-                    <th>Pages Declared</th>
-                    <th>Submitting Party</th>
-                    <th>Date Received</th>
-                    <th class="text-center">Action</th>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let documents of documentsDeclared; let i=index">
-                        <td>
-                            <mat-form-field appearance="outline" class="w-100"
-                                *ngIf="isEditDocument && editedDocumentIndex == i">
-                                <input matInput name="page" type="number" (keypress)="numberOnly($event)"
-                                    [(ngModel)]="documentDeclared.no_of_pages_declared" #page="ngModel"
-                                    autocomplete="off" placeholder="Pages Declared">
-                            </mat-form-field>
-                            <span
-                                *ngIf="!(isEditDocument && editedDocumentIndex == i)">{{documents.no_of_pages_declared}}</span>
-                        </td>
-                        <td>
-                            <mat-form-field appearance="outline" class="w-100"
-                                *ngIf="isEditDocument && editedDocumentIndex == i">
-                                <mat-select placeholder="Select Submitting Party" name="party"
-                                    [(ngModel)]="documentDeclared.agent_type" #party="ngModel">
-                                    <mat-option *ngFor="let party of SubmittingParty" [value]="party.name">
-                                        {{party.name}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                            <span *ngIf="!(isEditDocument && editedDocumentIndex == i)">{{documents.agent_type}}</span>
-                        </td>
-                        <td>
-                            <mat-form-field appearance="outline" class="mat-date-picker"
-                                *ngIf="isEditDocument && editedDocumentIndex == i">
-                                <input matInput type="text" placeholder="Date Received" name="date"
-                                    [(ngModel)]="documentDeclared.date_received" autocomplete="off" [min]="minimumDate"
-                                    [matDatepicker]="date_received" #date="ngModel">
-                                <mat-datepicker-toggle matSuffix [for]="date_received">
-                                </mat-datepicker-toggle>
-                                <mat-datepicker #date_received></mat-datepicker>
-                            </mat-form-field>
-                            <span *ngIf="!(isEditDocument && editedDocumentIndex == i)">{{documents.date_received |
-                                date:'MM-dd-yyyy'}}</span>
-                        </td>
-                        <td class="text-center">
-                            <a class="text-success m-r-20" *ngIf="isEditDocument && editedDocumentIndex == i"
-                                (click)="createDocumentsDeclared()">Save</a>
-                            <a class="text-success m-r-20" *ngIf="!(isEditDocument && editedDocumentIndex == i)"
-                                (click)="editDocumentDeclared(documents, i)">Edit</a>
-                            <a class="text-danger" *ngIf="!isEditDocument"
-                                (click)="removeDocument(documents)">Remove</a>
-                            <a class="text-danger" *ngIf="isEditDocument" (click)="cancelDoc()">Cancel</a>
-                        </td>
-                    </tr>
-                    <tr *ngIf="isAddDoc">
-                        <td>
-                            <mat-form-field appearance="outline" class="w-100">
-                                <input matInput type="number" (keypress)="numberOnly($event)"
-                                    [(ngModel)]="documentDeclared.no_of_pages_declared" autocomplete="off"
-                                    placeholder="Pages Declared">
-                            </mat-form-field>
-                        </td>
-                        <td>
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-select placeholder="Select Submitting Party"
-                                    [(ngModel)]="documentDeclared.agent_type">
-                                    <mat-option *ngFor="let party of SubmittingParty" [value]="party.name">
-                                        {{party.name}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </td>
-                        <td>
-                            <mat-form-field appearance="outline" class="mat-date-picker">
-                                <input matInput type="text" placeholder="Date Received"
-                                    [(ngModel)]="documentDeclared.date_received" autocomplete="off" [min]="minimumDate"
-                                    [matDatepicker]="date_received">
-                                <mat-datepicker-toggle matSuffix [for]="date_received">
-                                </mat-datepicker-toggle>
-                                <mat-datepicker #date_received></mat-datepicker>
-                            </mat-form-field>
-                        </td>
-                        <td class="text-center">
-                            <a class="text-success m-r-20" (click)="createDocumentsDeclared()">Save</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div> -->
-
-        <div class="user-detail m-t-5">
+        <!---Documents decleared-->
+        <div fxLayout="row wrap" *ngIf="getFormControls.controls.length > 0">
+            <div fxFlex="100" class="p-l-0 note">
+                <mat-icon>info</mat-icon> Note : Correspondence uploaded here will be included with the billing
+                submission documents according to regulation 9793(L)
+            </div>
+        </div>
+        <div class="user-detail">
             <form [formGroup]="docDeclearTable">
-            <table class="table table-border res-table" [ngClass]="{'table-dark': mode}" *ngIf="getFormControls.controls.length > 0">
-                <thead class="text-nowrap">
-                    <th>Pages Declared</th>
-                    <th>Submitting Party</th>
-                    <th>Date Received</th>
-                    <th class="text-center">Action</th>
-                </thead>
-                <tbody>
-                    <ng-container formArrayName="tableRows" *ngFor="let group of getFormControls.controls ; let i=index">
-                    <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
-                        <td>
-                            <mat-form-field appearance="outline" class="w-100">
-                                <input matInput type="number" (keypress)="numberOnly($event)"
-                                formControlName="no_of_pages_declared" min="1" autocomplete="off"
-                                    placeholder="Pages Declared">
-                            </mat-form-field>
-                        </td>
-                        <td>
-                            <mat-form-field appearance="outline" class="w-100">
-                                <mat-select placeholder="Select Submitting Party"
-                                formControlName="agent_type">
-                                    <mat-option *ngFor="let party of SubmittingParty" [value]="party.name">
-                                        {{party.name}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </td>
-                        <td>
-                            <mat-form-field appearance="outline" class="mat-date-picker">
-                                <input matInput type="text" placeholder="Date Received"
-                                formControlName="date_received" autocomplete="off" [min]="minimumDate"
-                                    [matDatepicker]="date_received" [max]="today">
-                                <mat-datepicker-toggle matSuffix [for]="date_received">
-                                </mat-datepicker-toggle>
-                                <mat-datepicker #date_received></mat-datepicker>
-                            </mat-form-field>
-                        </td>
-                        <td class="text-center">
-                            <a class="text-success" (click)="doneRow(group, i)">Save</a>
-                            <a class="text-danger m-l-10" (click)="cancelRow(group,i)">Cancel</a>
-                        </td>
-                    </tr>
+                <table class="table table-border res-table" [ngClass]="{'table-dark': mode}"
+                    *ngIf="getFormControls.controls.length > 0">
+                    <thead class="text-nowrap">
+                        <th>Pages Declared</th>
+                        <th>Submitting Party</th>
+                        <th>Date Received</th>
+                        <th>Upload</th>
+                        <th class="text-center">Action</th>
+                    </thead>
+                    <tbody>
+                        <ng-container formArrayName="tableRows"
+                            *ngFor="let group of getFormControls.controls ; let i=index">
+                            <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
+                                <td>
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <input matInput type="number" (keypress)="numberOnly($event)"
+                                            formControlName="no_of_pages_declared" min="1" autocomplete="off"
+                                            placeholder="Pages Declared">
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-select placeholder="Select Submitting Party" formControlName="agent_type">
+                                            <mat-option *ngFor="let party of SubmittingParty" [value]="party.name">
+                                                {{party.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field appearance="outline" class="mat-date-picker">
+                                        <input matInput type="text" placeholder="Date Received"
+                                            formControlName="date_received" autocomplete="off" [min]="minimumDate"
+                                            [matDatepicker]="date_received" [max]="today">
+                                        <mat-datepicker-toggle matSuffix [for]="date_received">
+                                        </mat-datepicker-toggle>
+                                        <mat-datepicker #date_received></mat-datepicker>
+                                    </mat-form-field>
+                                </td>
 
-                    <tr *ngIf="!group.get('isEditable').value" [formGroupName]="i" class="values">
-                        <td>
-                            {{group.get('no_of_pages_declared').value}}
-                        </td>
-                        <td>
-                            {{group.get('agent_type').value}}
-                        </td>
-                        <td>
-                            {{group.get('date_received').value | date:'MM-dd-yyyy'}}
-                        </td>
-                        <td class="text-center">
-                            <a class="text-success" (click)="editRow(group,i)">Edit</a>
-                            <a class="text-danger m-l-10" (click)="deleteRow(i,group)">Remove</a>
-                        </td>
-                    </tr>
-                </ng-container>
-                </tbody>
-            </table>
-            <app-nodata *ngIf="getFormControls?.controls?.length == 0"></app-nodata>
-        </form>
+                                <td *ngIf="!group.get('file_name').value">
+                                    <button type="button" mat-raised-button class="mini-btn filled-gray"
+                                        (click)="addFileDoc($event,group,i)">Upload</button>
+                                </td>
+                                <td *ngIf="group.get('file_name').value">
+                                    <a class="text-ternary display-block" (click)="downloadDocDeclare(group,i)">
+                                        {{group.get('file_name').value}}</a>
+                                    <button type="button" mat-raised-button class="mini-btn filled-gray"
+                                        (click)="removeDocDeclare(group,i)">Remove</button>
+                                </td>
+                                <td class="text-center">
+                                    <a class="text-success" (click)="doneRow(group, i)">Save</a>
+                                    <a class="text-danger m-l-10" (click)="cancelRow(group,i)">Cancel</a>
+                                </td>
+                            </tr>
+
+                            <tr *ngIf="!group.get('isEditable').value" [formGroupName]="i" class="values">
+                                <td>
+                                    {{group.get('no_of_pages_declared').value ? group.get('no_of_pages_declared').value
+                                    : '-'}}
+                                </td>
+                                <td>
+                                    {{group.get('agent_type').value ? group.get('agent_type').value : '-'}}
+                                </td>
+                                <td>
+                                    {{group.get('date_received').value ? (group.get('date_received').value |
+                                    date:'MM-dd-yyyy') : '-'}}
+                                </td>
+                                <td *ngIf="group.get('file_name').value">
+                                    <a class="text-ternary display-block"
+                                        (click)="downloadDocDeclare(group,i)">{{group.get('file_name').value}}</a>
+                                    <!-- <button type="button" [disabled]="!group.get('isEditable').value" mat-raised-button class="mini-btn filled-gray" (click)="removeDocDeclare(group,i)">Remove</button> -->
+                                </td>
+                                <td *ngIf="!group.get('file_name').value">
+                                    -
+                                    <!-- <button type="button" mat-raised-button class="mini-btn filled-gray" disabled>Upload</button> -->
+                                </td>
+                                <td class="text-center">
+                                    <a class="text-success" (click)="editRow(group,i)">Edit</a>
+                                    <a class="text-danger m-l-10" (click)="deleteRow(i,group)">Remove</a>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+                <app-nodata *ngIf="getFormControls?.controls?.length == 0"></app-nodata>
+            </form>
         </div>
     </mat-card-content>
 </mat-card>
@@ -415,16 +371,18 @@
     <form [formGroup]="billable_item" (keydown.enter)="$event.target.tagName == 'TEXTAREA'">
         <mat-card-header>
             <div class="sub-title p-l-10 w-100 p-t-10 p-b-10">Billable Item - Intake Information<span
-                    class="custom-info regulation" *ngIf="!isIME" (click)="examinationDetails?.procedure_type == 'Deposition' ? openPopupRegulation(regulation?.regulationsForDepositionItemIntake?.title, regulation?.regulationsForDepositionItemIntake?.codes) : openPopupRegulation(regulation?.regulationsForBillableItemIntake?.title, regulation?.regulationsForBillableItemIntake?.codes)">
+                    class="custom-info regulation" *ngIf="!isIME"
+                    (click)="examinationDetails?.procedure_type == 'Deposition' ? openPopupRegulation(regulation?.regulationsForDepositionItemIntake?.title, regulation?.regulationsForDepositionItemIntake?.codes) : openPopupRegulation(regulation?.regulationsForBillableItemIntake?.title, regulation?.regulationsForBillableItemIntake?.codes)">
                     <i class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
             <span class="spacer"></span>
-            <span *ngIf="!(isExamTypeChanged) || !(isFreeze)">
-                <button type="button" class="filled-gray m-b-5"
-                    [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze"
-                    *ngIf="!isEditBillableItem" (click)="editBillable()" mat-raised-button>Edit</button>
-                <button class="filled-success m-b-5"
-                    [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze"
-                    *ngIf="isEditBillableItem" (click)="submitBillableItem()" mat-raised-button>Save</button>
+            <!-- *ngIf="!(isExamTypeChanged) || !(isFreeze)" -->
+            <span>
+                <!-- [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze" -->
+                <button type="button" class="filled-gray m-b-5" *ngIf="!isEditBillableItem" (click)="editBillable()"
+                    mat-raised-button>Edit</button>
+                <!-- [disabled]="appointmentStatus || disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze" -->
+                <button class="filled-success m-b-5" *ngIf="isEditBillableItem" (click)="submitBillableItem()"
+                    mat-raised-button>Save</button>
             </span>
         </mat-card-header>
         <mat-divider> </mat-divider>
@@ -462,7 +420,7 @@
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100"
-                            *ngIf="!isSuplimental">
+                            *ngIf="!isSuplimental && !billable_item?.disabled">
                             <mat-label>Date & Time</mat-label>
                             <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM"
                                 formControlName="appointment_scheduled_date_time"
@@ -470,11 +428,20 @@
                                 (dateTimeChange)="changeDateType(billable_item?.value?.appointment?.appointment_scheduled_date_time)"
                                 autocomplete="off" [owlDateTime]="appointment">
                             <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"
-                                [disabled]="!isEditBillableItem">
+                                [disabled]="!isEditBillableItem || this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).disabled">
                             </mat-datepicker-toggle>
                             <owl-date-time (afterPickerOpen)="pickerOpened('app')" [hour12Timer]="true" #appointment>
                             </owl-date-time>
                             <mat-error>Please enter valid date & time</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100"
+                            *ngIf="!isSuplimental && billable_item?.disabled">
+                            <mat-label>Date & Time</mat-label>
+                            <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM" [min]="todayDate.appointment"
+                                formControlName="appointment_scheduled_date_time"
+                                [value]="appointment_scheduled_date_time">
+
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="25" fxFlex.md="25" fxFlex.sm="25" fxFlex.xs="100"
@@ -682,10 +649,14 @@
                 </mat-form-field>
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_"
                     *ngIf="documentType == null || documentType != 6">
-                    <button type="button" mat-stroked-button class="filled-gray" (click)="uploader.click()">Select
+                    <!-- <button type="button" mat-stroked-button class="filled-gray"
+                        (click)="openUploadPopUp(false,['.pdf', '.doc', '.docx'], '', '',  30)">Select
                         File
-                    </button>
-                    <mat-form-field appearance="standard">
+                    </button> -->
+                    <!-- <mat-form-field appearance="standard"> -->
+                    <button type="button" mat-stroked-button class="filled-ternary"
+                        (click)="openUploadPopUp(false,['.pdf', '.doc', '.docx'], '', '',  30)">Upload File</button>
+                    <!-- <mat-form-field appearance="standard">
                         <input matInput [(ngModel)]="file" readonly placeholder="No file chosen">
                         <input type="file" #uploader hidden (change)="addFile($event)" hidden accept=".pdf, .doc, .docx"
                             required>
@@ -693,29 +664,34 @@
                         <mat-hint *ngIf="errors.file.isError">
                             <mat-error>{{errors.file.error}}</mat-error>
                         </mat-hint>
-                    </mat-form-field>
+                    </mat-form-field> -->
                 </div>
 
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_"
                     *ngIf="documentType == 6">
-                    <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
-                    <mat-form-field appearance="standard" class="p-l-10 w-100  custom-br">
+                    <!-- <button mat-raised-button class="filled-gray"
+                        (click)="openUploadPopUp(false,['.pdf', '.doc', '.docx'], '', '6',  30)">Select File</button> -->
+                    <!-- <mat-form-field appearance="standard" class="p-l-10 w-100  custom-br"> -->
+                    <button mat-raised-button class="filled-ternary"
+                        (click)="openUploadPopUp(false,['.pdf', '.doc', '.docx', '.mp3', '.wav', '.m4a', '.wma', '.dss', '.ds2', '.dct'], '', '6',  30)">Upload
+                        File</button>
+                    <!-- <mat-form-field appearance="standard" class="p-l-10 w-100  custom-br">
                         <input matInput value="{{file | ellipsis:50}}" readonly placeholder="No file chosen">
-                        <input type="file" #uploader hidden (change)="addFile($event)" multiple
-                            accept=".pdf, .doc, .docx, .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct" required>
+                         <input type="file" #uploader hidden (change)="addFile($event)" multiple
+                            accept=".pdf, .doc, .docx, .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct" required> 
                         <mat-hint>Supported file formats: .pdf, .doc, .docx, .mp3, .wav, .m4a, .wma, .dss, .ds2, .dct
                         </mat-hint>
                         <mat-hint *ngIf="errors.file.isError">
                             <mat-error>{{errors.file.error}}</mat-error>
                         </mat-hint>
-                    </mat-form-field>
+                    </mat-form-field> -->
                 </div>
 
 
-                <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
+                <!-- <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
                     <button mat-stroked-button type="button" (click)="uploadFile()" class="filled-gray p-r-20">Add
                     </button>
-                </div>
+                </div> -->
 
             </div>
             <!-- <div fxLayout="row wrap" *ngIf="isExamTypeChanged" fxFlex="100" class="document-file-upload w-100">
@@ -754,7 +730,7 @@
 
                 <div class="user-detail  vertical-fixed default-cursor">
                     <table mat-table [dataSource]="documentsData" multiTemplateDataRows
-                        class="mat-elevation-z8 user-table" matSort>
+                        class="mat-elevation-z8 user-table" matSort #docSort="matSort">
                         <ng-container matColumnDef="{{column}}"
                             *ngFor="let column of displayedColumnsForDocuments; let i=index">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header
@@ -769,12 +745,26 @@
                                 <div>
                                     <span *ngIf="column == 'doc_image'" class="file_type_icon"><img
                                             [src]="element?.file_name | fileType" alt=""></span>
-                                    <span *ngIf="column == 'file_name'"> {{element.file_name}} </span>
-                                    <span *ngIf="column == 'updatedAt'">{{element.updatedAt | date:'MM-dd-yyyy hh:mm
+                                    <span *ngIf="column == 'file_name'"> {{element?.file_name}} </span>
+                                    <span *ngIf="column == 'updatedAt'">{{element?.updatedAt | date:'MM-dd-yyyy hh:mm
                                         a'}}</span>
                                     <span *ngIf="column == 'pfs' && element?.proof_of_service_file_name">
                                         <a target="_self" class="text-success"
                                             (click)="$event.stopPropagation();download({exam_report_file_url : element?.proof_of_service_file_url, file_name : element?.proof_of_service_file_name})">Download</a>
+                                    </span>
+                                    <span *ngIf="column == 'type'" class="no-wrap-td" [ngSwitch]="element?.action">
+                                        <span *ngSwitchCase="'BD'">Downloaded</span>
+                                        <span *ngSwitchCase="'MES'">E-Sign Downloaded</span>
+                                        <span *ngSwitchCase="'SFTP'"><span *ngIf="!element?.isdtm_request">Billed On
+                                                Demand</span>
+                                            <span *ngIf="element?.isdtm_request">Mailed On Demand</span></span>
+                                    </span>
+                                    <span *ngIf="column == 'bill_submission_type'">
+                                        {{element?.bill_submission_type ? element?.bill_submission_type : 'First'}}
+                                    </span>
+                                    <span *ngIf="column == 'send'">
+                                        <a class="text-success"
+                                            (click)="$event.stopPropagation();downloadDocumetSend(element?.send)">Download</a>
                                     </span>
                                     <span *ngIf="column == 'action' && !element?.proof_of_service_file_name"
                                         class="text-center no-wrap-td">
@@ -789,9 +779,9 @@
                         </ng-container>
                         <ng-container matColumnDef="expandedDetail">
                             <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumnsForDocuments.length">
-                                <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
+                                <div class="detail" [@detailExpand]="expandId == (element?.id ? element.id : element?.document_id) ? 'expanded' : 'collapsed'">
                                     <div class="responsive-table">
-                                        <div *ngIf="this.tabIndexDetails.index == 0"><span>Download On Demand Proof of
+                                        <div *ngIf="this.tabIndexDetails.index == 1"><span>Download On Demand Proof of
                                                 Service</span>
                                             <span>
                                                 <a target="_self" class="text-success"
@@ -961,7 +951,8 @@
                 matSort #MatSortActivity="matSort">
                 <ng-container matColumnDef="{{column}}"
                     *ngFor="let column of activityDisplayedColumnsForDocuments; let i=index">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{activityColumnName[i]}} </th>
+                    <th mat-header-cell *matHeaderCellDef> <span mat-sort-header
+                            [disabled]="activityColumnName[i] == ''">{{activityColumnName[i]}}</span></th>
                     <td mat-cell *matCellDef="let element">
                         <span *ngIf="i == 0 && isMobile">
                             <mat-icon mat-raised-button
@@ -971,11 +962,8 @@
                         </span>
                         <div>
                             <span *ngIf="column == 'module'">{{element?.module}}</span>
-                            <span *ngIf="column == 'task'">{{element?.action_details}}</span>
-                            <span *ngIf="column == 'created_by'">{{(element?.created_by?.first_name ?
-                                element?.created_by?.first_name : "") + " "
-                                +(element?.created_by?.last_name ? element?.created_by?.last_name :
-                                "")+(element?.created_by?.suffix ?(", "+element?.created_by?.suffix) : "" )}}</span>
+                            <span *ngIf="column == 'action_details'">{{element?.action_details}}</span>
+                            <span *ngIf="column == 'created_by'">{{element?.created_by}}</span>
                             <span *ngIf="column == 'createdAt'">{{element?.createdAt == "-" ? element?.createdAt :
                                 (element?.createdAt |
                                 date:'MM-dd-yyyy h:mm a')}}</span>
@@ -995,10 +983,7 @@
                             [@detailExpand]="actionLogexpandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="responsive-table">
                                 <div><span>Type</span>{{element?.module}} </div>
-                                <div><span>Created By</span>{{(element?.created_by?.first_name ?
-                                    element?.created_by?.first_name : "") + " "
-                                    +(element?.created_by?.last_name ? element?.created_by?.last_name :
-                                    "")+(element?.created_by?.suffix ?(", "+element?.created_by?.suffix) : "" )}}</div>
+                                <div><span>Created By</span>{{element?.created_by}}</div>
                                 <div><span>Created At</span>{{element?.createdAt == "-" ? element?.createdAt :
                                     (element?.createdAt |
                                     date:'MM-dd-yyyy h:mm a')}}</div>

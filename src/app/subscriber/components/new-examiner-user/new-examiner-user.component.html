@@ -97,6 +97,13 @@
                                 address in the forms.
                             </div>
                         </div>
+                        <div fxFlex="100">
+                            <mat-checkbox [disabled]="!isSubscriberAddressPresent"
+                                (change)="sameAsSubscriber($event, 'mailing')"
+                                [(ngModel)]="addressesCheck.mailing_as_subscriber" [ngModelOptions]="{standalone: true}"
+                                class="checkbox_ m-t-0">Same as
+                                Subscriber Address</mat-checkbox>
+                        </div>
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
                             fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Street Address 1</mat-label>
@@ -274,8 +281,8 @@
                         <div fxFlex="100">
                             <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50"
                                 fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
-                                <mat-label>Tax ID</mat-label>
-                                <input matInput placeholder="Tax ID"
+                                <mat-label>{{billingProviderForm.value.is_person ? 'SSN' : 'EIN'}}</mat-label>
+                                <input matInput [placeholder]="billingProviderForm.value.is_person ? 'SSN' : 'EIN'"
                                     [mask]="billingProviderForm.value.is_person ? '000-00-0000' : '00-0000000'"
                                     formControlName="tax_id" autocomplete="off">
                                 <mat-error *ngIf="billingSubmit">Please enter valid tax ID</mat-error>
@@ -285,10 +292,11 @@
                         <div fxLayout="row" class="w-100 upload-w9 m-b-20">
                             <div fxFlex="50" class="upload" fxFlex.sm="100" fxFlex.xs="100">
                                 <div class="title">W-9 Form</div>
-                                <button type="button" mat-raised-button (click)="uploaderBilling.click()"
-                                    class="filled-gray">{{file ? 'Reupload' : 'Upload'}}</button>
-                                <input type="file" #uploaderBilling (change)="addFile($event)" hidden accept=".pdf"
-                                    required>
+                                <button type="button" mat-raised-button
+                                    (click)="openUploadPopUp(false, ['.pdf'], '', 'billing', 30)"
+                                    class="filled-ternary">{{file ? 'Reupload' : 'Upload File'}}</button>
+                                <!-- <input type="file" #uploaderBilling (change)="addFile($event)" hidden accept=".pdf"
+                                    required> -->
                                 <div fxLayout="row wrap" *ngIf="file" class="w9-doc-filename">
                                     <div>
                                         <a (click)="downloadDocumet({file_name:file,file_url:w9Url})" [routerLink]="[]"
@@ -374,10 +382,19 @@
                                 <mat-error *ngIf="billingSubmit">Please enter valid billing provider name</mat-error>
                             </mat-form-field>
                         </div>
+                        <div fxFlex="100">
+                            <mat-checkbox [disabled]="!isSubscriberAddressPresent"
+                                (change)="sameAsSubscriber($event, 'billing');" class="checkbox_ m-t-0"
+                                [(ngModel)]="addressesCheck.billing_as_subsciber" [ngModelOptions]="{standalone: true}">
+                                Same as Subscriber Address</mat-checkbox>
+                        </div>
 
                         <div fxFlex="100">
-                            <mat-checkbox (change)="sameAsMailling($event)" class="checkbox_ m-t-0">Same as Mailing
+                            <mat-checkbox (change)="sameAsMailling($event)" class="checkbox_ m-t-10"
+                                [(ngModel)]="addressesCheck.billing_as_mailing" [ngModelOptions]="{standalone: true}">
+                                Same as Mailing
                                 Address</mat-checkbox>
+                            <!--  -->
                         </div>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
@@ -687,8 +704,8 @@
                                 </mat-form-field>
                                 <div class="sub-title p-l-10" fxFlex="100">
                                     Signature
-                                    <br /> <small>
-                                        Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio, 600*150 pixels &
+                                    <br /> <small class="note p-l-0">
+                                        <mat-icon>info</mat-icon>Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio, 600*150 pixels &
                                         Maximum File Size: 3 MB
                                     </small>
                                 </div>
@@ -701,11 +718,11 @@
                                                 <input matInput [title]="selectedFile" readonly
                                                     [value]="selectedFile | ellipsis:50" placeholder="No file chosen"
                                                     value="12345" autocomplete="off">
-                                                <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
-                                                    (change)="fileChangeEvent($event)" id="uploadFile">
+                                                <!-- <input type="file" #uploader accept=".png, .jpg, .jpeg" hidden
+                                                    (change)="fileChangeEvent($event)" id="uploadFile"> -->
 
                                             </mat-form-field>
-                                            <button matSuffix type="button" (click)="uploader.click()"
+                                            <button matSuffix type="button" (click)="openSignature()"
                                                 mat-stroked-button class="upload_btn outline-success">Upload
                                             </button>
                                         </div>

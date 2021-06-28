@@ -24,6 +24,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
 import { UserService } from 'src/app/shared/services/user.service';
 import * as regulation from 'src/app/shared/services/regulations';
+import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 export interface PeriodicElement1 {
   file_name: string;
   date: string;
@@ -76,6 +77,7 @@ const ELEMENT_DATA1: PeriodicElement1[] = [
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
       state('expanded', style({ height: '*' })),
+      state('void', style({ height: '0px', minHeight: '0' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ]
@@ -89,11 +91,13 @@ export class AppointmentDetailsComponent implements OnInit {
   documentsData: any = [];
   displayedColumns = ['doc_image', 'doc_name', 'date', 'action'];
   dataSource: any = [];
-  @ViewChild('MatSortActivity', { static: true }) sort: MatSort;
-  @ViewChild('MatPaginatorActivity', { static: true }) paginator: MatPaginator;
-  @ViewChild('MatSortNote', { static: true }) sortNote: MatSort;
-  @ViewChild('MatPaginatorNote', { static: true }) paginatorNote: MatPaginator;
+  @ViewChild('docSort', { static: false }) Docsort: MatSort;
+  @ViewChild('MatSortActivity', { static: false }) sort: MatSort;
+  @ViewChild('MatPaginatorActivity', { static: false }) paginator: MatPaginator;
+  @ViewChild('MatSortNote', { static: false }) sortNote: MatSort;
+  @ViewChild('MatPaginatorNote', { static: false }) paginatorNote: MatPaginator;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
+  @ViewChild('uploaderDoc', { static: false }) fileUploadDoc: ElementRef;
   xls = globals.xls
   xls_1 = globals.xls_1
   status_complete = globals.status_complete
@@ -115,7 +119,14 @@ export class AppointmentDetailsComponent implements OnInit {
   noteDisable: boolean = false;
   saveButtonStatus: boolean = false;
   file = '';
-  procedureTypeStatus = [{ name: "Correspondence", progress_name: 'correspondence', icon: "far fa-folder-open", for: ["E", "S", "D"], url: "/correspondence" }, { name: "History", progress_name: 'history', icon: "fa fa-history", for: ["E"], url: "/history" }, { name: "Records", progress_name: 'record', icon: "far fa-list-alt", for: ["E", "S"], url: "/records" }, { name: "Examination Documents", progress_name: 'examination', icon: "far fa-edit", for: ["E"], url: "/examination" }, { name: "Transcription & Compilation", progress_name: 'transcription', icon: "fa fa-tasks", for: ["E", "S", "D"], url: "/reports" }, { name: "Billing", progress_name: 'billing', icon: "fa fa-usd", for: ["E", "S", "D"], url: "/billing", billing: true }];
+  procedureTypeStatus = [
+    { name: "Correspondence", progress_name: 'correspondence_rec', icon: "far fa-folder-open", for: [], url: "", skip: true },
+    { name: "Mailing", progress_name: 'correspondence', icon: "far fa-folder-open", for: ["E", "S", "D"], url: "/correspondence" },
+    { name: "History", progress_name: 'history', icon: "fa fa-history", for: ["E"], url: "/history" },
+    { name: "Records", progress_name: 'record', icon: "far fa-list-alt", for: ["E", "S"], url: "/records" },
+    { name: "Examination Documents", progress_name: 'examination', icon: "far fa-edit", for: ["E"], url: "/examination" },
+    { name: "Transcription & Compilation", progress_name: 'transcription', icon: "fa fa-tasks", for: ["E", "S", "D"], url: "/reports" },
+    { name: "Billing", progress_name: 'billing', icon: "fa fa-usd", for: ["E", "S", "D"], url: "/billing", billing: true }];
   procedureTypeList = [];
   forms = [
     { name: "QME-110", group: "QME", value: "110" },
@@ -191,6 +202,7 @@ export class AppointmentDetailsComponent implements OnInit {
   mode: boolean;
   docDeclearTable: FormGroup;
   isIME: boolean = false;
+  is_appointment_date_change: boolean = false;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -243,10 +255,10 @@ export class AppointmentDetailsComponent implements OnInit {
 
       if (res) {
         this.activityColumnName = ["", "Action"]
-        this.activityDisplayedColumnsForDocuments = ['is_expand', 'task']
+        this.activityDisplayedColumnsForDocuments = ['is_expand', 'action_details']
       } else {
         this.activityColumnName = ["", "Type", "Action", "Created By", "Created At", "Updated By", "Updated At"]
-        this.activityDisplayedColumnsForDocuments = ["status", 'module', 'task', 'created_by', "createdAt", "updated_by", 'updatedAt']
+        this.activityDisplayedColumnsForDocuments = ["status", 'module', 'action_details', 'created_by', "createdAt", "updated_by", 'updatedAt']
       }
       if (res) {
         this.notecolumnName = ["", "Notes"]
@@ -274,12 +286,14 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   documentsDeclared = [];
   getDocumentDeclareData() {
-    console.log("sadasddasdasd --11")
     this.claimService.getDocumentsDeclared(this.claim_id, this.billableId).subscribe(res => {
+      this.docDeclearTable = this.formBuilder.group({
+        tableRows: this.formBuilder.array([])
+      });
       if (res.data) {
         this.documentsDeclared = res.data;
         res.data.map((item, i) => {
-          this.addRow();
+          this.addRow(true);
           console.log(item)
           this.getFormControls.controls[i].patchValue(item)
           this.getFormControls.controls[i].get('isEditable').patchValue(false)
@@ -297,6 +311,11 @@ export class AppointmentDetailsComponent implements OnInit {
     })
 
     this.claimService.getActivityLog(this.claim_id, this.billableId).subscribe(res => {
+      res.data.map(user => {
+        user.created_by = (user.created_by.first_name ? user.created_by.first_name : "") + " "
+          + (user.created_by.last_name ? user.created_by.last_name :
+            "") + (user.created_by.suffix ? (", " + user.created_by.suffix) : "")
+      })
       this.activityLog = new MatTableDataSource(res.data);
       this.activityLog.sort = this.sort;
       this.activityLog.paginator = this.paginator;
@@ -306,6 +325,7 @@ export class AppointmentDetailsComponent implements OnInit {
   examinerId = null;
   examinerName = "";
   isFreeze: boolean = false;
+  supplemenalStatus = { examination_status: null, examination_notes: "" }
   loadDatas() {
     this.procedureTypeList = [];
     this.modifiers = [];
@@ -413,8 +433,8 @@ export class AppointmentDetailsComponent implements OnInit {
           this.cookieService.set('billableItem', response.data.exam_procedure_name)
           this.appointmentId = response.data.appointments.id;
           if (response.data.appointments.examiner_id) {
-            this.procedureTypeStatus[1].url = "/history/" + response.data.appointments.examiner_id;
-            this.procedureTypeStatus[0].url = "/correspondence/" + response.data.appointments.examiner_id
+            this.procedureTypeStatus[2].url = "/history/" + response.data.appointments.examiner_id;
+            this.procedureTypeStatus[1].url = "/correspondence/" + response.data.appointments.examiner_id
           }
 
           this.progressStatus = response.data.progress_status
@@ -445,6 +465,7 @@ export class AppointmentDetailsComponent implements OnInit {
           }
 
           this.procedureTypeList = [];
+          this.procedureTypeList.push(this.procedureTypeStatus[0])
           this.procedureTypeStatus.map(pro => {
             if (response.data.procedure_type == "Evaluation" || response.data.procedure_type == "Reevaluation") {
               // if (!(response.data.exam_procedure_type == "IMERECS")) {
@@ -471,7 +492,7 @@ export class AppointmentDetailsComponent implements OnInit {
               }
             }
           })
-
+          this.supplemenalStatus = { examination_status: response.data.appointments.examination_status, examination_notes: response.data.appointments.examination_notes }
           this.examinationStatusForm.patchValue(response.data.appointments);
           this.examinationStatusForm.patchValue({ notes: '', examination_notes: '' });
           // if (moment(response.data.appointments.appointment_scheduled_date_time) < moment()) {
@@ -560,16 +581,33 @@ export class AppointmentDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)
       if (result['data']) {
-        this.claimService.removeDeclaredDocument(group.value.id).subscribe(res => {
+        this.claimService.removeDeclaredDocument(group.get('id').value, { claim_id: this.claim_id, billable_item_id: this.billableId }).subscribe(res => {
           this.alertService.openSnackBar('Documents declared details removed successfully!', "success")
+          this.documentsDeclared.splice(i, 1)
           const control = this.docDeclearTable.get('tableRows') as FormArray;
           control.removeAt(i);
+          this.loadActivity();
+          this.getDocumentData();
         }, error => {
           this.alertService.openSnackBar(error.error.message, 'error');
         })
       }
     });
 
+  }
+  openUploadPopUp(isMultiple, type, data?, callback?, fileSize?) {
+    const dialogRef = this.dialog.open(FileUploadComponent, {
+      width: '800px',
+      data: { name: 'make this card the default card', address: true, isMultiple: isMultiple, fileType: type, fileSize: fileSize },
+      panelClass: 'custom-drag-and-drop',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.file = result.files[0].name;
+        this.selectedFile = result.files[0];
+        this.uploadFile();
+      }
+    })
   }
   cancelDoc() {
     this.isEditDocument = false;
@@ -613,7 +651,115 @@ export class AppointmentDetailsComponent implements OnInit {
     })
 
   }
-
+  disableFields = {
+    examination_status: false,
+    notes: false,
+    exam_procedure_type: false,
+    examiner: false,
+    date_and_time: false,
+    duration: false,
+    location: false,
+    intake_caller: false,
+    requesting_party: false,
+    items_received: false,
+    request_receipt_date: false,
+    communication_type: false,
+    intake_contact_phone: false,
+    ext: false,
+    intake_contact_fax: false,
+    intake_contact_email: false,
+    intake_notes: false,
+  }
+  getDisabledFields() {
+    this.claimService.getFormDisabled(this.claim_id, this.billableId, this.examinationStatusForm.get('examination_status').value).subscribe(res => {
+      console.log(res)
+      if (res && res.data) {
+        // let data = {
+        //   examination_status: res.data[0].examination_status,
+        //   notes: false,
+        //   exam_type: {
+        //     exam_procedure_type_id: res.data[0].exam_procedure_type
+        //   },
+        //   appointment: {
+        //     examiner_id: res.data[0].examiner,
+        //     appointment_scheduled_date_time: res.data[0].date_and_time,
+        //     duration: res.data[0].duration,
+        //     examiner_service_location_id: res.data[0].location
+        //   },
+        //   documents_received: res.data[0].items_received,
+        //   intake_call: {
+        //     caller_name: res.data[0].intake_caller,
+        //     caller_affiliation: res.data[0].requesting_party,
+        //     call_date: res.data[0].request_receipt_date,
+        //     call_type: res.data[0].communication_type,
+        //     caller_phone: res.data[0].intake_contact_phone,
+        //     phone_ext: res.data[0].ext,
+        //     caller_fax: res.data[0].intake_contact_fax,
+        //     caller_email: res.data[0].intake_contact_email,
+        //     notes: res.data[0].intake_notes,
+        //   }
+        // }
+        if (res.data.length > 0) {
+          if (!res.data[0].examination_status) {
+            this.examinationStatusForm.get('examination_status').disable();
+          }
+          if (!res.data[0].notes) {
+            this.examinationStatusForm.get('examination_notes').disable();
+          }
+          if (!res.data[0].exam_procedure_type) {
+            this.billable_item.get(['exam_type', 'exam_procedure_type_id']).disable();
+          }
+          if (!res.data[0].examiner) {
+            this.billable_item.get(['appointment', 'examiner_id']).disable();
+          }
+          if (!res.data[0].date_and_time) {
+            this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).disable();
+          }
+          if (res.data[0].duration != null) {
+            if (!res.data[0].duration) {
+              this.billable_item.get(['appointment', 'duration']).disable();
+              // if (res.data[0].duration == null) {
+              //   this.billable_item.get(['appointment', 'duration']).enable();
+              // }
+            }
+          }
+          if (!res.data[0].location) {
+            this.billable_item.get(['appointment', 'examiner_service_location_id']).disable();
+          }
+          if (!res.data[0].intake_caller) {
+            this.billable_item.get(['intake_call', 'caller_name']).disable();
+          }
+          if (!res.data[0].requesting_party) {
+            this.billable_item.get(['intake_call', 'caller_affiliation']).disable();
+          }
+          if (!res.data[0].items_received) {
+            this.billable_item.get('documents_received').disable();
+          }
+          if (!res.data[0].request_receipt_date) {
+            this.billable_item.get(['intake_call', 'call_date']).disable();
+          }
+          if (!res.data[0].communication_type) {
+            this.billable_item.get(['intake_call', 'call_type']).disable();
+          }
+          if (!res.data[0].intake_contact_phone) {
+            this.billable_item.get(['intake_call', 'caller_phone']).disable();
+          }
+          if (!res.data[0].ext) {
+            this.billable_item.get(['intake_call', 'phone_ext']).disable();
+          }
+          if (!res.data[0].intake_contact_fax) {
+            this.billable_item.get(['intake_call', 'caller_fax']).disable();
+          }
+          if (!res.data[0].intake_contact_email) {
+            this.billable_item.get(['intake_call', 'caller_email']).disable();
+          }
+          if (!res.data[0].intake_notes) {
+            this.billable_item.get(['intake_call', 'notes']).disable();
+          }
+        }
+      }
+    })
+  }
   ngOnInit() {
     this.billable_item = this.formBuilder.group({
       id: [{ value: '', disable: true }],
@@ -649,6 +795,12 @@ export class AppointmentDetailsComponent implements OnInit {
       }),
 
     })
+    this.examinationStatusForm = this.formBuilder.group({
+      id: "",
+      examination_status: [{ value: "", disabled: true }, Validators.required],
+      examination_notes: [{ value: "", disabled: true }],
+      notes: ['']
+    })
     this.billable_item.get(["appointment", "conference_phone"]).valueChanges.subscribe(res => {
       if (this.billable_item.get(["appointment", "conference_phone"]).value && this.billable_item.get(["appointment", "conference_phone"]).valid) {
         this.billable_item.get(["appointment", "phone_ext"]).enable();
@@ -675,12 +827,6 @@ export class AppointmentDetailsComponent implements OnInit {
       notes: [null],
       bill_item_id: [this.billableId]
     })
-    this.examinationStatusForm = this.formBuilder.group({
-      id: "",
-      examination_status: [{ value: "", disabled: true }, Validators.required],
-      examination_notes: [{ value: "", disabled: true }],
-      notes: ['']
-    })
     this.examinerService.seedData('document_category').subscribe(type => {
       this.documentList = type['data']
     })
@@ -696,10 +842,15 @@ export class AppointmentDetailsComponent implements OnInit {
   initiateForm(): FormGroup {
     return this.formBuilder.group({
       id: [],
-      no_of_pages_declared: ['', Validators.required],
-      agent_type: ['', [Validators.required]],
-      date_received: ["", [Validators.required]],
-      isEditable: [true]
+      no_of_pages_declared: ['', Validators.compose([Validators.min(1), Validators.max(99999999)])],
+      agent_type: [''],
+      date_received: [""],
+      file_name: [""],
+      file: [""],
+      document_id: [""],
+      correspodence_received_file_url: [""],
+      isEditable: [true],
+      is_upload: [false]
     });
   }
 
@@ -708,15 +859,19 @@ export class AppointmentDetailsComponent implements OnInit {
     return control;
   }
 
-  addRow() {
+  addRow(status?) {
     let newRowStatus = true
     for (var j in this.getFormControls.controls) {
-      if (this.getFormControls.controls[j].status == 'INVALID') {
+      // if (this.getFormControls.controls[j].status == 'INVALID') {
+      //   newRowStatus = false;
+      // }
+      if (!this.getFormControls.controls[j].get('no_of_pages_declared').value && !this.getFormControls.controls[j].get('agent_type').value &&
+        !this.getFormControls.controls[j].get('date_received').value && !this.getFormControls.controls[j].get('file_name').value && !this.getFormControls.controls[j].get('id').value) {
         newRowStatus = false;
       }
     }
 
-    if (!newRowStatus) {
+    if (!newRowStatus && !status) {
       this.alertService.openSnackBar("Please fill existing data", 'error');
       return;
     }
@@ -737,40 +892,114 @@ export class AppointmentDetailsComponent implements OnInit {
     group.get('isEditable').setValue(true);
   }
 
+  formDataDoc = new FormData()
   doneRow(group: FormGroup, i) {
+    this.formDataDoc = new FormData()
     Object.keys(group.controls).forEach((key) => {
       if (group.get(key).value && typeof (group.get(key).value) == 'string')
         group.get(key).setValue(group.get(key).value.trim())
     });
     console.log(group.value)
+    if (group.value.no_of_pages_declared || group.value.agent_type || group.value.date_received) {
+      group.get('no_of_pages_declared').setValidators([Validators.required, Validators.min(1), Validators.max(99999999)])
+      group.get('agent_type').setValidators([Validators.required])
+      group.get('date_received').setValidators([Validators.required])
+      group.get('file_name').setValidators([])
+      group.get('file_name').updateValueAndValidity();
+      group.get('no_of_pages_declared').updateValueAndValidity();
+      group.get('agent_type').updateValueAndValidity();
+      group.get('date_received').updateValueAndValidity();
+    } else {
+      group.get('file_name').setValidators([Validators.required])
+      group.get('file_name').updateValueAndValidity();
+
+      group.get('no_of_pages_declared').setValidators([Validators.min(1), Validators.max(99999999)])
+      group.get('agent_type').setValidators([])
+      group.get('date_received').setValidators([])
+      group.get('no_of_pages_declared').updateValueAndValidity();
+      group.get('agent_type').updateValueAndValidity();
+      group.get('date_received').updateValueAndValidity();
+    }
     if (group.status == "INVALID") {
       group.markAllAsTouched();
       return;
     }
-    const dialogRef = this.dialog.open(AlertDialogueComponent, {
-      width: '500px',
-      data: { title: 'Page Declared', message: "Is this the correct number of pages declared? <br/><b>*The excess pages will be added to the bill as a line item</b>.", proceed: true, no: true, type: "info", info: true }
+    let data = {
+      id: group.value.id,
+      agent_type: group.value.agent_type,
+      no_of_pages_declared: group.value.no_of_pages_declared
+    };
+    data['date_received'] = group.value.date_received ? moment(group.value.date_received).format("LL") : '';
+    this.formDataDoc.append('id', data.id ? data.id : '');
+    this.formDataDoc.append('agent_type', data.agent_type ? data.agent_type : '');
+    this.formDataDoc.append('no_of_pages_declared', data.no_of_pages_declared ? data.no_of_pages_declared : '');
+    this.formDataDoc.append('date_received', data['date_received'] ? data['date_received'] : '');
+    this.formDataDoc.append('document_id', group.value.document_id ? group.value.document_id : '');
+    this.formDataDoc.append('file', group.value.file ? group.value.file : '');
+    this.formDataDoc.append('is_upload', group.value.is_upload);
+    if ((group.value.no_of_pages_declared || group.value.agent_type || group.value.date_received) && this.examinationDetails.procedure_type != "Deposition") {
+      const dialogRef = this.dialog.open(AlertDialogueComponent, {
+        width: '500px',
+        data: { title: 'Page Declared', message: "Is this the correct number of pages declared? <br/><b>*The excess pages will be added to the bill as a line item</b>.", proceed: true, no: true, type: "info", info: true }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result.data) {
+          // group.get('date_received').patchValue(moment((group.value.date_received).format("MM-DD-YYYY")));
+          this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe(res => {
+            let message = group.value.id ? "Documents declared details updated successfully!" : "Documents declared details created successfully!"
+            this.alertService.openSnackBar(message, "success");
+            this.documentsDeclared[i] = res.data
+            group.patchValue(res.data)
+            group.get('isEditable').setValue(false);
+            group.get('id').setValue(res.data.id);
+            this.loadActivity();
+            this.getDocumentData();
+          }, error => {
+            this.alertService.openSnackBar(error.error.message, 'error');
+          })
+        } else {
+          return;
+        }
+      })
+    } else {
+      this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe(res => {
+        let message = group.value.id ? "Documents declared details updated successfully!" : "Documents declared details created successfully!"
+        this.alertService.openSnackBar(message, "success");
+        this.documentsDeclared[i] = res.data
+        group.patchValue(res.data)
+        group.get('isEditable').setValue(false);
+        group.get('id').setValue(res.data.id);
+        this.loadActivity();
+        this.getDocumentData();
+      }, error => {
+        this.alertService.openSnackBar(error.error.message, 'error');
+      })
+    }
+    return
+
+  }
+
+
+
+  errorsDoc = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
+  addFileDoc(event, group, i) {
+
+    const dialogRef = this.dialog.open(FileUploadComponent, {
+      width: '800px',
+      data: { name: 'make this card the default card', address: true, isMultiple: false, fileType: ['.pdf', '.doc', '.docx'], fileSize: 30 },
+      panelClass: 'custom-drag-and-drop',
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result.data) {
-        // group.get('date_received').patchValue(moment((group.value.date_received).format("MM-DD-YYYY")));
-        let data = { id: group.value.id, agent_type: group.value.agent_type, no_of_pages_declared: group.value.no_of_pages_declared };
-        data['date_received'] = moment(group.value.date_received).format("LL");
-        this.claimService.createDeclaredDocument(data, this.claim_id, this.billableId).subscribe(res => {
-          let message = group.value.id ? "Documents declared details updated successfully!" : "Documents declared details created successfully!"
-          this.alertService.openSnackBar(message, "success");
-          this.documentsDeclared[i] = res.data
-          group.get('isEditable').setValue(false);
-          group.get('id').setValue(res.data.id);
-
-        }, error => {
-          this.alertService.openSnackBar(error.error.message, 'error');
-        })
-      } else {
-        return;
+      if (result['data']) {
+        console.log(result.files)
+        group.get('file_name').patchValue(null);
+        group.get('file').patchValue(null);
+        group.get('file_name').patchValue(result.files[0].name);
+        group.get('file').patchValue(result.files[0]);
+        group.get('is_upload').patchValue(true)
       }
     })
-    return
+
 
   }
 
@@ -782,8 +1011,74 @@ export class AppointmentDetailsComponent implements OnInit {
     group.patchValue(this.documentsDeclared[i]);
     group.get('isEditable').setValue(false);
   }
+
+  downloadDocDeclare(group, i) {
+    if (group.get('document_id').value)
+      this.examinerService.downloadOndemandDocuments({ file_url: group.get('correspodence_received_file_url').value }).subscribe(res => {
+        this.alertService.openSnackBar("File downloaded successfully", "success");
+        // this.claimService.updateActionLog({ type: "Intake", "document_category_id": 6, "claim_id": this.claim_id, "billable_item_id": this.billableId, "documents_ids": [element.id] }, true).subscribe(log => {
+        //   this.loadActivity();
+        // })
+        saveAs(res.signed_file_url, group.get('file_name').value);
+      })
+  }
+
+  removeDocDeclare(group, i) {
+
+    const dialogRef = this.dialog.open(DialogueComponent, {
+      width: '500px',
+      data: { name: 'remove', address: true, title: group.get('file_name').value }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        if (group.get('document_id').value) {
+          this.claimService.removeDocumentDeclared(group.get('id').value, group.get('document_id').value).subscribe(res => {
+            group.get('file_name').patchValue(null);
+            group.get('file').patchValue(null);
+            group.get('document_id').patchValue(null);
+            group.get('correspodence_received_file_url').patchValue(null);
+            group.get('is_upload').patchValue(false);
+            this.alertService.openSnackBar("File deleted successfully", 'success');
+            this.getDocumentData();
+            if (!group.get('no_of_pages_declared').value && !group.get('agent_type').value && !group.get('date_received').value) {
+              this.getDocumentDeclareData()
+            }
+          }, error => {
+            this.alertService.openSnackBar(error.error.message, 'error');
+          })
+        } else {
+          group.get('file_name').patchValue(null);
+          group.get('file').patchValue(null);
+          group.get('document_id').patchValue(null);
+          group.get('is_upload').patchValue(false);
+          group.get('correspodence_received_file_url').patchValue(null);
+        }
+
+        if (!group.get('no_of_pages_declared').value && !group.get('agent_type').value && !group.get('date_received').value && !group.get('file_name').value) {
+          if (group.get('id').value) {
+            this.claimService.removeDeclaredDocument(group.get('id').value, { claim_id: this.claim_id, billable_item_id: this.billableId }).subscribe(res => {
+              this.alertService.openSnackBar('Documents declared details removed successfully!', "success")
+              this.documentsDeclared.splice(i, 1)
+              const control = this.docDeclearTable.get('tableRows') as FormArray;
+              control.removeAt(i);
+              this.loadActivity();
+              this.getDocumentData();
+            }, error => {
+              this.alertService.openSnackBar(error.error.message, 'error');
+            })
+            return
+          }
+          const control = this.docDeclearTable.get('tableRows') as FormArray;
+          control.removeAt(i);
+        }
+
+      }
+    })
+  }
+
   isExaminationStatusEdit = false;
   changeEditStatus() {
+    this.getDisabledFields();
     this.examinationStatusForm.enable();
     this.isExaminationStatusEdit = true;
     if (this.billable_item.get(["appointment", "conference_phone"]).value && this.billable_item.get(["appointment", "conference_phone"]).valid) {
@@ -796,6 +1091,25 @@ export class AppointmentDetailsComponent implements OnInit {
     } else {
       this.billable_item.get(["intake_call", "phone_ext"]).disable();
     }
+  }
+  supplementalreopen(status?) {
+    let notes = this.examinationStatusForm.value.examination_notes ? this.examinationStatusForm.value.examination_notes.trim() : "";
+    notes = status ? notes : "";
+    let id = status ? this.cancelSupplemental[0].id : null
+    this.examinationStatusForm.patchValue({ id: this.billableId, notes: notes, examination_status: id })
+    let data = this.examinationStatusForm.value
+    data['appointment_id'] = this.appointmentId
+    this.examinerService.updateExaminationStatus(data).subscribe(res => {
+      this.examinationStatusForm.disable()
+      this.isExaminationStatusEdit = false;
+      this.supplemenalStatus = res.data;
+      this.alertService.openSnackBar(res.message, "success");
+      this.examinationStatusForm.patchValue({ examination_status: res.data.examination_status, examination_notes: res.data.examination_notes })
+      this.examinationDetails.appointments = { examination_notes: res.data.examination_notes, examination_status: res.data.examination_status };
+      this.loadDatas();
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, 'error');
+    })
   }
   examinationStatusSubmit() {
     if (this.examinationStatusForm.invalid) {
@@ -819,6 +1133,17 @@ export class AppointmentDetailsComponent implements OnInit {
           }
         })
         return
+      } else {
+        if (!this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value) {
+          const dialogRef = this.dialog.open(AlertDialogueComponent, {
+            width: '500px', data: { title: "Deposition", message: "Please select appointment date and time", ok: true, no: false, type: "warning", warning: true }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            return
+
+          })
+          return
+        }
       }
     }
     if (this.examinationDetails.procedure_type == "Evaluation" || this.examinationDetails.procedure_type == "Reevaluation") {
@@ -846,6 +1171,17 @@ export class AppointmentDetailsComponent implements OnInit {
         })
         return
       }
+      if (this.examinationStatusForm.value.examination_status != 1) {
+        if (!this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value) {
+          const dialogRef = this.dialog.open(AlertDialogueComponent, {
+            width: '500px', data: { title: "Examination", message: "Please select appointment date and time", ok: true, no: false, type: "warning", warning: true }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            return
+          })
+          return
+        }
+      }
       if (this.examinationStatusForm.value.examination_status == 10 && moment(this.examinationDetails.appointments.appointment_scheduled_date_time) >= moment()) {
         //this.alertService.openSnackBar('Future appointment status cannot be changed to ATTENDED.', 'error');
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
@@ -857,79 +1193,83 @@ export class AppointmentDetailsComponent implements OnInit {
         })
         return
       }
-      if (this.examinationStatusForm.value.examination_status == 5 && this.examinationDetails.appointments.examination_status == 2) {
-        const dialogRef = this.dialog.open(AlertDialogueComponent, {
-          width: '500px',
-          data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘Rescheduled’ is selected & System will freeze the appointment section. Would you like you save the status?", yes: true, no: true, type: "info", info: true }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          if (result.data) {
-            this.updateExamStatus()
-          } else {
-            return;
-          }
-        })
-        return
-      }
+      // if (this.examinationStatusForm.value.examination_status == 5 && this.examinationDetails.appointments.examination_status == 2) {
+      //   const dialogRef = this.dialog.open(AlertDialogueComponent, {
+      //     width: '500px',
+      //     data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘Rescheduled’ is selected & System will freeze the appointment section. Would you like you save the status?", yes: true, no: true, type: "info", info: true }
+      //   });
+      //   dialogRef.afterClosed().subscribe(result => {
+      //     if (result.data) {
+      //       this.updateExamStatus()
+      //     } else {
+      //       return;
+      //     }
+      //   })
+      //   return
+      // }
 
-      if (this.examinationStatusForm.value.examination_status == 6 && this.examinationDetails.appointments.examination_status == 2) {
-        const dialogRef = this.dialog.open(AlertDialogueComponent, {
-          width: '500px',
-          data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘Cancelled – send bill’ is selected & System will freeze the appointment section. Would you like you save the status?", yes: true, no: true, type: "info", info: true }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          if (result.data) {
-            this.updateExamStatus()
-          } else {
-            return;
-          }
-        })
-        return
-      }
+      // if (this.examinationStatusForm.value.examination_status == 6 && this.examinationDetails.appointments.examination_status == 2) {
+      //   const dialogRef = this.dialog.open(AlertDialogueComponent, {
+      //     width: '500px',
+      //     data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘Cancelled – send bill’ is selected & System will freeze the appointment section. Would you like you save the status?", yes: true, no: true, type: "info", info: true }
+      //   });
+      //   dialogRef.afterClosed().subscribe(result => {
+      //     if (result.data) {
+      //       this.updateExamStatus()
+      //     } else {
+      //       return;
+      //     }
+      //   })
+      //   return
+      // }
 
-      if (this.examinationStatusForm.value.examination_status == 7 && this.examinationDetails.appointments.examination_status == 2) {
-        const dialogRef = this.dialog.open(AlertDialogueComponent, {
-          width: '500px',
-          data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘Cancelled – no bill’ is selected & System will freeze the appointment section. Would you like you save the status?", yes: true, no: true, type: "info", info: true }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          if (result.data) {
-            this.updateExamStatus()
-          } else {
-            return;
-          }
-        })
-        return
-      }
+      // if (this.examinationStatusForm.value.examination_status == 7 && this.examinationDetails.appointments.examination_status == 2) {
+      //   const dialogRef = this.dialog.open(AlertDialogueComponent, {
+      //     width: '500px',
+      //     data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘Cancelled – no bill’ is selected & System will freeze the appointment section. Would you like you save the status?", yes: true, no: true, type: "info", info: true }
+      //   });
+      //   dialogRef.afterClosed().subscribe(result => {
+      //     if (result.data) {
+      //       this.updateExamStatus()
+      //     } else {
+      //       return;
+      //     }
+      //   })
+      //   return
+      // }
 
-      if (this.examinationStatusForm.value.examination_status == 8 && this.examinationDetails.appointments.examination_status == 2) {
-        const dialogRef = this.dialog.open(AlertDialogueComponent, {
-          width: '500px',
-          data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘No show’ is selected & System will freeze the appointment section. Would you like you save the status?", yes: true, no: true, type: "info", info: true }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          if (result.data) {
-            this.updateExamStatus()
-          } else {
-            return;
-          }
-        })
-        return
-      }
-      if (this.examinationStatusForm.value.examination_status == 9 && this.examinationDetails.appointments.examination_status == 2) {
-        this.alertService.openSnackBar('Please change the ‘Date & Time’ to current date', 'error');
-        return
-      }
+      // if (this.examinationStatusForm.value.examination_status == 8 && this.examinationDetails.appointments.examination_status == 2) {
+      //   const dialogRef = this.dialog.open(AlertDialogueComponent, {
+      //     width: '500px',
+      //     data: { title: 'Examination', message: "Appointment is scheduled for 1st time but ‘No show’ is selected & System will freeze the appointment section. Would you like you save the status?", yes: true, no: true, type: "info", info: true }
+      //   });
+      //   dialogRef.afterClosed().subscribe(result => {
+      //     if (result.data) {
+      //       this.updateExamStatus()
+      //     } else {
+      //       return;
+      //     }
+      //   })
+      //   return
+      // }
+      // if (this.examinationStatusForm.value.examination_status == 9 && this.examinationDetails.appointments.examination_status == 2) {
+      //   this.alertService.openSnackBar('Please change the ‘Date & Time’ to current date', 'error');
+      //   return
+      // }
 
     }
     this.updateExamStatus()
   }
 
   updateExamStatus() {
-    this.examinationStatusForm.patchValue({ id: this.billableId, notes: this.examinationStatusForm.value.examination_notes.trim() })
+    let notes = this.examinationStatusForm.value.examination_notes ? this.examinationStatusForm.value.examination_notes.trim() : "";
+    this.examinationStatusForm.patchValue({ id: this.billableId, notes: notes })
     let data = this.examinationStatusForm.value
     data['appointment_id'] = this.appointmentId
     this.examinerService.updateExaminationStatus(data).subscribe(res => {
+      this.isEditBillableItem = false;
+      this.billable_item.disable();
+      this.getDisabledFields();
       this.examinationStatusForm.disable()
       this.isExaminationStatusEdit = false;
       this.alertService.openSnackBar(this.isDisplayStatus.name + ' details updated Successfully', "success");
@@ -1072,7 +1412,7 @@ export class AppointmentDetailsComponent implements OnInit {
   openPopup() {
     const dialogRef = this.dialog.open(AlertDialogueComponent, {
       width: '500px',
-      data: { title: 'No values provided for appointment date & time and duration', message: "correspondence is not allowed", yes: false, ok: true, no: false, type: "info", info: true }
+      data: { title: 'No values provided for appointment date & time and duration', message: "Mailing is not allowed", yes: false, ok: true, no: false, type: "info", info: true }
     });
     dialogRef.afterClosed().subscribe(result => {
       return
@@ -1114,6 +1454,7 @@ export class AppointmentDetailsComponent implements OnInit {
     }
   }
   editBillable() {
+    this.getDisabledFields();
     this.isEditBillableItem = true;
     this.billable_item.enable();
     if (this.billableData.isExaminerDisabled) {
@@ -1129,7 +1470,9 @@ export class AppointmentDetailsComponent implements OnInit {
     this.billable_item.get('appointment').get('duration').updateValueAndValidity();
   }
   submitBillableItem() {
-    // this.todayDate.appointment = new Date();
+    if (this.billable_item.invalid) {
+      return;
+    }
     if (this.billable_item.value.appointment.appointment_scheduled_date_time) {
       this.billable_item.get('appointment').get('duration').setValidators([Validators.compose([Validators.required, Validators.pattern('[0-9]+'), Validators.min(1), Validators.max(450)])]);
     } else {
@@ -1166,15 +1509,21 @@ export class AppointmentDetailsComponent implements OnInit {
     if (this.billable_item.invalid) {
       return;
     }
+    if (moment(this.billableData.appointment.appointment_scheduled_date_time).isSameOrBefore(moment(this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value))) {
+      this.is_appointment_date_change = false;
+    } else {
+      this.is_appointment_date_change = true;
+    }
     if (this.examinationDetails.bill_id) {
-      if (this.billableData.exam_type.exam_procedure_type_id != this.billable_item.value.exam_type.exam_procedure_type_id) {
+      if (this.billableData.exam_type.exam_procedure_type_id != this.billable_item.get(['exam_type', 'exam_procedure_type_id']).value) {
         this.alertService.openSnackBar("Billing already created for this billable Item", "error");
+        console.log("rerere1")
         return;
       }
     }
 
     if (this.examinationDetails.procedure_type == "Deposition") {
-      if (!this.billable_item.value.appointment.appointment_scheduled_date_time && this.billableData.appointment.appointment_scheduled_date_time && this.examinationStatusForm.value.examination_status != 11) {
+      if (!this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value && this.billableData.appointment.appointment_scheduled_date_time && this.examinationStatusForm.get('examination_status').value != 11) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
           data: { title: 'Examination', message: "This updates the Examination Status as 'Awaiting Deposition Date' & remove the Duration!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
@@ -1183,13 +1532,14 @@ export class AppointmentDetailsComponent implements OnInit {
           if (result.data) {
             this.updateBillableItem();
           } else {
+            console.log("rerere2")
             return;
           }
         })
+        console.log("rerere7")
         return
       }
-
-      if (((this.billable_item.value.appointment.appointment_scheduled_date_time != this.billableData.appointment.appointment_scheduled_date_time) || (this.billable_item.value.appointment.duration != this.billableData.appointment.duration)) && (this.examinationStatusForm.getRawValue().examination_status != 12)) {
+      if (((this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value != this.billableData.appointment.appointment_scheduled_date_time) || (this.billable_item.get(['appointment', 'duration']).value != this.billableData.appointment.duration)) && (this.examinationStatusForm.getRawValue().examination_status != 12)) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
           data: { title: 'Examination', message: "This updates the Examination Status as 'Awaiting Deposition'!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
@@ -1198,16 +1548,18 @@ export class AppointmentDetailsComponent implements OnInit {
           if (result.data) {
             this.updateBillableItem();
           } else {
+            console.log("rerere3")
             return;
           }
         })
+        console.log("rerere6")
         return
       }
     }
 
     if (this.examinationDetails.procedure_type == "Evaluation" || this.examinationDetails.procedure_type == "Reevaluation") {
 
-      if (!this.billable_item.value.appointment.appointment_scheduled_date_time && this.billableData.appointment.appointment_scheduled_date_time && this.examinationStatusForm.value.examination_status != 1) {
+      if (!this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value && this.billableData.appointment.appointment_scheduled_date_time && this.examinationStatusForm.get('examination_status').value != 1) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
           data: { title: 'Examination', message: "This updates the Examination Status as 'No Date' & remove the Duration!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
@@ -1216,35 +1568,55 @@ export class AppointmentDetailsComponent implements OnInit {
           if (result.data) {
             this.updateBillableItem();
           } else {
+            console.log("rerere4")
             return;
           }
         })
+        console.log("rerere5")
         return
       }
 
-
-      if (((this.billable_item.value.appointment.appointment_scheduled_date_time != this.billableData.appointment.appointment_scheduled_date_time) || (this.billable_item.value.appointment.duration != this.billableData.appointment.duration)) && (this.examinationStatusForm.getRawValue().examination_status != 2)) {
-        const dialogRef = this.dialog.open(AlertDialogueComponent, {
-          width: '500px',
-          data: { title: 'Examination', message: "This updates the Examination Status as 'Not Confirmed'!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          if (result.data) {
-            this.updateBillableItem();
-          } else {
-            return;
-          }
-        })
-        return
+      if (!this.billableData.appointment.appointment_scheduled_date_time) {
+        if (((this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value != this.billableData.appointment.appointment_scheduled_date_time) || (this.billable_item.get(['appointment', 'duration']).value != this.billableData.appointment.duration)) && (this.examinationStatusForm.getRawValue().examination_status != 2)) {
+          const dialogRef = this.dialog.open(AlertDialogueComponent, {
+            width: '500px',
+            data: { title: 'Examination', message: "This updates the Examination Status as 'Not Confirmed'!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            if (result.data) {
+              this.updateBillableItem();
+            } else {
+              console.log("rerere8")
+              return;
+            }
+          })
+          console.log("rerere9")
+          return
+        }
       }
-
+      if ((this.examinationStatusForm.getRawValue().examination_status != 1)) {
+        if (!this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value) {
+          const dialogRef = this.dialog.open(AlertDialogueComponent, {
+            width: '500px',
+            data: { title: 'Examination', message: "Please select appointment date and time", yes: false, no: false, ok: true, type: "warning", info: true }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            console.log("rerere10")
+            return
+          })
+          console.log("rerere11")
+          return
+        }
+      }
 
     }
     this.updateBillableItem();
   }
 
   updateBillableItem() {
-
+    if (this.billable_item.invalid) {
+      return
+    }
     let selectedOrderIds = []
     if (this.isSuplimental) {
       selectedOrderIds = this.billable_item.value.documents_received
@@ -1264,7 +1636,12 @@ export class AppointmentDetailsComponent implements OnInit {
     // this.billable_item.value.appointment.examiner_id = this.examinerId;
     this.billable_item.value.documents_received = selectedOrderIds;
     this.billable_item.value.id = this.examinationDetails.appointments.id
-    this.examinerService.updateBillableItem(this.billableData.id, this.billable_item.value).subscribe(res => {
+    this.billable_item.value.intake_call.call_date = this.billable_item.get(['intake_call', 'call_date']).value ? moment(this.billable_item.get(['intake_call', 'call_date']).value).format("MM-DD-YYYY") : null;
+    let billableData = this.billable_item.getRawValue();
+    billableData['is_appointment_date_change'] = this.is_appointment_date_change;
+    console.log(billableData);
+    // return
+    this.examinerService.updateBillableItem(this.billableData.id, billableData).subscribe(res => {
       this.isEditBillableItem = false;
       this.billable_item.disable();
       this.alertService.openSnackBar(res.message, "success");
@@ -1291,8 +1668,8 @@ export class AppointmentDetailsComponent implements OnInit {
     this.tabIndexDetails = event;
     this.filterValue = '';
     this.documentsData = new MatTableDataSource([])
-    this.tabData = this.documentTabData ? this.documentTabData[event ? event.tab.textLabel.toLowerCase() : ''] : [];
-    if (this.tabIndexDetails.index == 0) {
+    this.tabData = this.documentTabData ? this.documentTabData[event ? (event.tab.textLabel ? event.tab.textLabel.toLowerCase() : "") : ''] : [];
+    if (this.tabIndexDetails.index == 1) {
       if (this.isMobile) {
         this.columnName = ["", "Name"]
         this.displayedColumnsForDocuments = ['is_expand', 'file_name']
@@ -1300,6 +1677,15 @@ export class AppointmentDetailsComponent implements OnInit {
       else {
         this.columnName = ["", "Name", "Uploaded On ", "Download On Demand" + '\n' + "Proof of Service", "Action"]
         this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'updatedAt', 'pfs', 'action']
+      }
+    } else if (this.tabIndexDetails.index == 6) { // billing Tab
+      if (this.isMobile) {
+        this.columnName = ["", "Name"]
+        this.displayedColumnsForDocuments = ['is_expand', 'file_name']
+      }
+      else {
+        this.columnName = ["", "Name", "Submission", "Type", "Download Sent Documents", "Download Proof of Service"]
+        this.displayedColumnsForDocuments = ['doc_image', 'file_name', 'bill_submission_type', 'type', 'send', 'pfs']
       }
     } else {
       if (this.isMobile) {
@@ -1313,7 +1699,7 @@ export class AppointmentDetailsComponent implements OnInit {
     }
 
     this.documentsData = new MatTableDataSource(this.tabData);
-    this.documentsData.sort = this.sort;
+    this.documentsData.sort = this.Docsort;
     this.documentsData.filterPredicate = function (data, filter: string): boolean {
       return data.file_name.toLowerCase().includes(filter) || (data.updatedAt && moment(data.updatedAt).format("MM-DD-YYYY hh:mm a").includes(filter));
     };
@@ -1402,9 +1788,34 @@ export class AppointmentDetailsComponent implements OnInit {
     this.formData.append('document_category_id', this.documentType);
     this.formData.append('claim_id', this.claim_id);
     this.formData.append('bill_item_id', this.billableId.toString());
+    if (this.documentType == 12) {
+      this.formDataDoc = new FormData();
+      this.formDataDoc.append('id', '');
+      this.formDataDoc.append('agent_type', '');
+      this.formDataDoc.append('no_of_pages_declared', '');
+      this.formDataDoc.append('date_received', '');
+      this.formDataDoc.append('file', this.selectedFile);
+      this.formDataDoc.append('is_upload', 'true');
+      this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe(res => {
+        this.selectedFile = null;
+        // this.fileUpload.nativeElement.value = "";
+        this.documentType = null;
+        this.formData = new FormData();
+        this.file = "";
+        this.getDocumentData();
+        this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
+        this.alertService.openSnackBar("File added successfully", 'success');
+        this.getDocumentDeclareData();
+      }, error => {
+        //this.fileUpload.nativeElement.value = "";
+        this.selectedFile = null;
+        this.alertService.openSnackBar(error.error.message, 'error');
+      })
+      return;
+    }
     this.examinerService.postDocument(this.formData).subscribe(res => {
       this.selectedFile = null;
-      this.fileUpload.nativeElement.value = "";
+      // this.fileUpload.nativeElement.value = "";
       this.documentType = null;
       this.formData = new FormData();
       this.file = "";
@@ -1412,7 +1823,7 @@ export class AppointmentDetailsComponent implements OnInit {
       this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
       this.alertService.openSnackBar("File added successfully", 'success');
     }, error => {
-      this.fileUpload.nativeElement.value = "";
+      //this.fileUpload.nativeElement.value = "";
       this.selectedFile = null;
     })
   }
@@ -1423,6 +1834,16 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   downloadDocumet(element) {
     this.examinerService.downloadOndemandDocuments({ file_url: element.exam_report_file_url }).subscribe(res => {
+      this.alertService.openSnackBar("File downloaded successfully", "success");
+      this.claimService.updateActionLog({ type: "Intake", "document_category_id": 6, "claim_id": this.claim_id, "billable_item_id": this.billableId, "documents_ids": [element.id] }, true).subscribe(log => {
+        this.loadActivity();
+      })
+      saveAs(res.signed_file_url, element.file_name);
+    })
+  }
+
+  downloadDocumetSend(element) {
+    this.examinerService.downloadOndemandDocuments({ file_url: element.file_url }).subscribe(res => {
       this.alertService.openSnackBar("File downloaded successfully", "success");
       this.claimService.updateActionLog({ type: "Intake", "document_category_id": 6, "claim_id": this.claim_id, "billable_item_id": this.billableId, "documents_ids": [element.id] }, true).subscribe(log => {
         this.loadActivity();
@@ -1500,21 +1921,45 @@ export class AppointmentDetailsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        this.examinerService.deleteDocument(data.id, true).subscribe(res => {
-          let i = 0;
-          this.tabData.map(dd => {
-            if (dd.id == data.id) {
-              this.tabData.splice(i, 1)
-            }
-            i = i + 1;
+        console.log(data);
+        if (data.documents_declared_id) {
+          this.claimService.removeDocumentDeclared(data.documents_declared_id, data.id).subscribe(res => {
+            let i = 0;
+            this.tabData.map(dd => {
+              if (dd.id == data.id) {
+                this.tabData.splice(i, 1)
+              }
+              i = i + 1;
+            })
+            this.documentsData = new MatTableDataSource(this.tabData);
+            this.documentsData.sort = this.Docsort;
+            this.documentsData.paginator = this.paginator;
+            this.getDocumentData();
+            this.loadActivity();
+            this.getDocumentDeclareData()
+            this.alertService.openSnackBar("File deleted successfully", 'success');
+          }, error => {
+            this.alertService.openSnackBar(error.error.message, 'error');
           })
-          this.documentsData = new MatTableDataSource(this.tabData);
-          this.getDocumentData();
-          this.loadActivity();
-          this.alertService.openSnackBar("File deleted successfully", 'success');
-        }, error => {
-          this.alertService.openSnackBar(error.error.message, 'error');
-        })
+        } else {
+          this.examinerService.deleteDocument(data.id, true).subscribe(res => {
+            let i = 0;
+            this.tabData.map(dd => {
+              if (dd.id == data.id) {
+                this.tabData.splice(i, 1)
+              }
+              i = i + 1;
+            })
+            this.documentsData = new MatTableDataSource(this.tabData);
+            this.documentsData.sort = this.Docsort;
+            this.documentsData.paginator = this.paginator;
+            this.getDocumentData();
+            this.loadActivity();
+            this.alertService.openSnackBar("File deleted successfully", 'success');
+          }, error => {
+            this.alertService.openSnackBar(error.error.message, 'error');
+          })
+        }
       }
     })
 
@@ -1686,7 +2131,7 @@ export class AppointmentDetailsComponent implements OnInit {
 
   docChange(e) {
     this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } };
-    this.fileUpload.nativeElement.value = "";
+    // this.fileUpload.nativeElement.value = "";
     this.selectedFile = null;
     this.file = null;
   }
@@ -1694,10 +2139,10 @@ export class AppointmentDetailsComponent implements OnInit {
   expandId: any;
   openElement(element) {
     if (this.isMobile) {
-      if (this.expandId && this.expandId == element.id) {
+      if (this.expandId && this.expandId == (element.id ? element.id : element.document_id)) {
         this.expandId = null;
       } else {
-        this.expandId = element.id;
+        this.expandId = (element.id ? element.id : element.document_id);
       }
     }
   }
@@ -1785,6 +2230,7 @@ export class AppointmentDetailsComponent implements OnInit {
       })
     }
   }
+
 }
 
 @Component({

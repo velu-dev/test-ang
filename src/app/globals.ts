@@ -35,6 +35,7 @@ export const jcb_card = '/assets/images/jcb.svg'
 export const mastercard_card = '/assets/images/master-card.svg'
 export const unionpay_card = '/assets/images/union-pay.svg'
 export const error = '/assets/images/error.svg'
+export const file_upload = '/assets/images/cloud-upload.svg'
 
 
 export const roles = [{}, {}]

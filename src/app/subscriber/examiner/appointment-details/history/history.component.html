@@ -32,7 +32,7 @@
       <div class="main-title m-b-10">History Call Tracking</div>
       <div class="user-detail vertical-fixed default-cursor mh-auto">
         <table mat-table [dataSource]="historyTrackingDatasource" multiTemplateDataRows
-          class="mat-elevation-z8 user-table" matSort>
+          class="mat-elevation-z8 user-table" matSort #MatSortTracking="matSort">
           <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplays; let i=index">
             <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnNames[i] == 'Action'">
               {{columnNames[i]}} </th>
@@ -95,7 +95,7 @@
             class="material-icons-outlined">info</i></span></div>
       <p class="description">Completed document table. </p>
       <div class="user-detail vertical-fixed default-cursor">
-        <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort>
+        <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort #MatSortDocument="matSort">
           <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
             <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">
               {{columnName[i]}}</th>

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Observable } from 'rxjs';
@@ -17,6 +17,7 @@ import * as moment from 'moment-timezone';
 import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
 import { UserService } from 'src/app/shared/services/user.service';
 import * as regulation from 'src/app/shared/services/regulations';
+import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 
 @Component({
   selector: 'app-records',
@@ -31,7 +32,7 @@ import * as regulation from 'src/app/shared/services/regulations';
   ],
 })
 export class RecordsComponent implements OnInit {
-
+  @ViewChild('docSort', { static: false }) Docsort: MatSort;
   displayedColumns: string[] = ['select', 'name', 'doc_pages', 'action'];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
@@ -140,6 +141,24 @@ export class RecordsComponent implements OnInit {
     this.styleElement.appendChild(document.createTextNode(css));
     head.appendChild(this.styleElement);
   }
+  openPopupDialogue() {
+    const dialogRef = this.dialog.open(FileUploadComponent, {
+      width: '800px',
+      data: { isMultiple: true, fileType: ['.pdf', '.doc', '.docx'], fileSize: 3073 },
+      panelClass: 'custom-drag-and-drop',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.selectedFiles = result.files;
+        result.files.map(res => {
+          this.selectedFile = res;
+          this.file.push(res.name);
+        })
+        this.uploadFile();
+      }
+    })
+
+  }
   getRecord() {
     this.onDemandService.getRecords(this.paramsId.claim_id, this.paramsId.billId).subscribe(record => {
       this.recordData = record;
@@ -164,6 +183,7 @@ export class RecordsComponent implements OnInit {
 
       // })
       this.dataSoruceOut = new MatTableDataSource(record.documents_sent_and_received);
+      this.dataSoruceOut.sort = this.Docsort;
       this.dataSoruceIn = new MatTableDataSource(inFile)
       this.rushRequest = false;
       this.statusBarChanges(this.recordData.on_demand_status)
@@ -269,7 +289,7 @@ export class RecordsComponent implements OnInit {
     this.onDemandService.postDocument(this.formData).subscribe(res => {
       this.selectedFile = null;
       this.selectedFiles = null;
-      this.fileUpload.nativeElement.value = "";
+      // this.fileUpload.nativeElement.value = "";
       this.formData = new FormData();
       this.file = [];
       this.getRecord();

@@ -42,8 +42,8 @@
                     <div (click)="openrouteElement(element)">
                         <span *ngIf="column == 'procedure_type_name'">{{element?.exam_procedure_name }}</span>
                         <span
-                            *ngIf="column == 'appointment_scheduled_date_time'">{{element?.appointment_scheduled_date_time
-                            | date:'MM-dd-yyyy'}}</span>
+                            *ngIf="column == 'appointment_scheduled_date_time'">{{element?.procedure_type?.toLowerCase() == 'supplemental' || element?.procedure_type?.toLowerCase() == 'imerecords' ? (element?.request_receipt_date | date:'MM-dd-yyyy')
+                             : (element?.appointment_scheduled_date_time | date:'MM-dd-yyyy') }}</span>
                         <span *ngIf="column == 'examiner_name'">{{element?.examiner_name}}</span>
                         <span *ngIf="column == 'examiner_name'">{{element?.status}}</span>
                     </div>

@@ -2,7 +2,8 @@
   <div fxLayout="row wrap" class="ondemand-status p-t-20">
     <div fxFlex="100">
       <div class="main-title">Examination Documents <span class="custom-info" matTooltipPosition="above"
-          matTooltip="Download the documents, print them and fill them out, then scan and upload the finished documents in the section below."><i class="material-icons-outlined">info</i></span></div>
+          matTooltip="Download the documents, print them and fill them out, then scan and upload the finished documents in the section below."><i
+            class="material-icons-outlined">info</i></span></div>
       <p class="description">Use the checkboxes to select the documents you wish to download and use during the
         examination.</p>
     </div>
@@ -67,7 +68,8 @@
   <div fxLayout="row wrap" class="send-document">
     <div fxFlex="100">
       <div class="main-title">Completed Documents <span class="custom-info" matTooltipPosition="above"
-          matTooltip="The uploaded documents will be available in to send to transcriptionists and to incorporate into the report that will be billed."><i class="material-icons-outlined">info</i></span></div>
+          matTooltip="The uploaded documents will be available in to send to transcriptionists and to incorporate into the report that will be billed."><i
+            class="material-icons-outlined">info</i></span></div>
       <p class="description">Upload the scanned copies of the documents used in the examination. Use the upload function
         to add the documents to this list.</p>
       <div class="info-alert m-b-10 m-t-10">
@@ -77,8 +79,8 @@
         *ngIf="!(billingData?.is_exam_type_changed || billingData?.isExaminerDisabled)">
         <div fxFlex="50" class="upload-file" fxFlex.sm="100" fxFlex.xs="100"
           *ngIf="!alldocuments?.is_exam_type_changed && !alldocuments?.isExaminerDisabled">
-          <button mat-raised-button class="filled-gray" (click)="uploader.click()">Select File</button>
-          <mat-form-field appearance="standard" class="p-l-10 w-100">
+          <button mat-raised-button class="filled-ternary" (click)="openPopupDialogue()">Upload File</button>
+          <!-- <mat-form-field appearance="standard" class="p-l-10 w-100">
             <input matInput readonly value="{{file | ellipsis:50}}" placeholder="No file chosen">
             <input type="file" #uploader multiple (change)="addFile($event)" hidden accept=".pdf, .doc, .docx" required>
             <mat-hint class="w-100">Supported file formats: .pdf, .doc, .docx
@@ -86,19 +88,20 @@
                 <mat-error>{{error.message}}</mat-error>
               </span>
             </mat-hint>
-          </mat-form-field>
+          </mat-form-field> -->
         </div>
-        <div fxFlex="20" fxFlex.sm="100" fxFlex.xs="100"
+        <!-- <div fxFlex="20" fxFlex.sm="100" fxFlex.xs="100"
           *ngIf="!alldocuments?.is_exam_type_changed && !alldocuments?.isExaminerDisabled">
           <button mat-raised-button type="submit" class="filled-gray m-t-15" (click)="uploadFile()">Add</button>
-        </div>
+        </div> -->
       </div>
 
-      <div class="user-detail vertical-fixed default-cursor m-t-20">
+      <div class="user-detail vertical-fixed default-cursor m-t-10">
         <table mat-table [dataSource]="uploadedDocument" multiTemplateDataRows class="mat-elevation-z8 user-table"
           matSort>
           <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">{{columnName[i]}} </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">
+              {{columnName[i]}} </th>
             <td mat-cell *matCellDef="let element">
               <span *ngIf="i == 0 && isMobile">
                 <mat-icon mat-raised-button
@@ -124,7 +127,8 @@
               <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                 <div class="responsive-table">
                   <!-- <div><span>File Name</span><span> {{element?.file_name}} </span></div> -->
-                  <div class="no-wrap-td"><span>Date Uploaded</span><span> {{element?.updatedAt | date:'MM-dd-yyyy'}}</span></div>
+                  <div class="no-wrap-td"><span>Date Uploaded</span><span> {{element?.updatedAt |
+                      date:'MM-dd-yyyy'}}</span></div>
                   <div><span>Action</span><span>
                       <a class="text-success" (click)="downloadDocument(element)">Download</a>
                       <a *ngIf="!(alldocuments?.is_exam_type_changed || alldocuments?.isExaminerDisabled)"

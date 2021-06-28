@@ -205,136 +205,143 @@
                                 class="editable-bill">
                                 <td>
                                     <mat-accordion>
-                                    <mat-expansion-panel [expanded]="true">
-                                        <mat-expansion-panel-header>
-                                            <mat-panel-title>
-                                                <div class="inline-title">
-                                                    <div><b>Item</b></div>
-                                                    <div>{{group.get('item_description').value}}</div>
-                                               </div>
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header>
-                                    <mat-card>
-                                        <div class="flex">
-                                            <div class="bill-property">Item</div>
-                                            <div class="editable">
-                                                <mat-form-field appearance="outline"
-                                                    *ngIf="!group.get('is_auto_generate').value && i != 0">
-                                                    <input matInput type="text" name="item_description"
-                                                        autocomplete="off" formControlName="item_description"
-                                                        pattern="[a-zA-Z0-9/ -]+">
-                                                </mat-form-field>
-                                                <span *ngIf="group.get('is_auto_generate').value || i == 0">
-                                                    {{group.get('item_description').value}}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="flex">
-                                            <div class="bill-property">Procedure Code</div>
-                                            <div class="editable">
-                                                <mat-form-field appearance="outline">
-                                                    <input matInput type="text"
-                                                        oninput="this.value = this.value.toUpperCase()"
-                                                        (change)="procedureChange($event.target.value,group)"
-                                                        name="procedure_code" autocomplete="off"
-                                                        formControlName="procedure_code" pattern="[a-zA-Z0-9/ -]+">
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                        <div class="flex">
-                                            <div class="bill-property">Modifier</div>
-                                            <div class="editable">
-                                                <mat-form-field class="chip-list">
-                                                    <mat-chip-list #chipList aria-label="Modifier selection"
-                                                        formControlName="modifierList">
-                                                        <mat-chip *ngFor="let modifier of group.value.modifierList"
-                                                            [removable]="removable"
-                                                            (removed)="remove(modifier,group,i)">
-                                                            {{modifier}}
-                                                            <mat-icon matChipRemove *ngIf="removable">cancel
-                                                            </mat-icon>
-                                                        </mat-chip>
-                                                        <input #modifierInput formControlName="modifier"
-                                                            [matAutocomplete]="auto1" [matChipInputFor]="chipList"
-                                                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                                            [matChipInputAddOnBlur]="addOnBlur"
-                                                            #trigger="matAutocompleteTrigger"
-                                                            (matChipInputTokenEnd)="add($event,group)"
-                                                            (click)="openAuto($event,trigger)">
-                                                    </mat-chip-list>
-                                                    <mat-autocomplete #auto1="matAutocomplete"
-                                                        (optionSelected)="selected($event,group,i)">
-                                                        <mat-option
-                                                            *ngFor="let modifier of group.get('is_auto_generate').value || group.get('is_excess_pages').value? group.value.filteredmodifier : filteredmodifier"
-                                                            [value]="modifier">
-                                                            {{modifier}}
-                                                        </mat-option>
-                                                    </mat-autocomplete>
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                        <div class="flex">
-                                            <div class="bill-property">Unit Type</div>
-                                            <div class="editable">
-                                                <mat-form-field appearance="outline" class="w-100">
-                                                    <mat-select formControlName="unitType">
-                                                        <mat-option *ngFor="let unit of unitTypes"
-                                                            [value]="unit.unit_type">
-                                                            {{unit.unit_type}}
-                                                        </mat-option>
-                                                    </mat-select>
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                        <div class="flex">
-                                            <div class="bill-property">Units</div>
-                                            <div class="editable">
-                                                <mat-form-field appearance="outline" class="w-100">
-                                                    <input matInput min="1"
-                                                        (change)="unitChange(group,i,$event.target.value)" type="number"
-                                                        autocomplete="off" formControlName="units">
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                        <div class="flex">
-                                            <div class="bill-property">Charge</div>
-                                            <div class="editable">
-                                                <mat-form-field appearance="outline" class="w-100">
-                                                    <input matInput min="0" type="number" autocomplete="off"
-                                                        formControlName="charge" (change)="setTwoNumberDecimal($event)">
-                                                        <span matPrefix>$&nbsp;</span>
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                        <div class="flex">
-                                            <div class="bill-property">Payment</div>
-                                            <div class="editable"> {{group.get('payment').value > -1 ? '$ ' : ''}}{{group.get('payment').value
-                                                | number : '1.2-2'}}
-                                            </div>
-                                        </div>
-                                        <div class="flex">
-                                            <div class="bill-property">Balance</div>
-                                            <div class="editable">
-                                                <span class="text-danger">
-                                                    {{group.get('charge').value > -1 ? '$ ' :
-                                                ''}}{{group.get('charge').value - group.value.payment | number :
-                                                '1.2-2'}}</span>
-                                            </div>
-                                        </div>
-                                        <div class="flex">
-                                            <div class="bill-property">Action </div>
-                                            <div class="editable">
-                                                <a class="text-success" (click)="doneRow(group,i)">
-                                                    Save
-                                                </a>
-                                                <a class="text-danger m-l-10" (click)="cancelRow(group,i)">
-                                                    Cancel
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </mat-card>
-                                </mat-expansion-panel>
-                                </mat-accordion>
+                                        <mat-expansion-panel [expanded]="true">
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    <div class="inline-title">
+                                                        <div><b>Item</b></div>
+                                                        <div>{{group.get('item_description').value}}</div>
+                                                    </div>
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <mat-card>
+                                                <div class="flex">
+                                                    <div class="bill-property">Item</div>
+                                                    <div class="editable">
+                                                        <mat-form-field appearance="outline"
+                                                            *ngIf="!group.get('is_auto_generate').value && i != 0">
+                                                            <input matInput type="text" name="item_description"
+                                                                autocomplete="off" formControlName="item_description"
+                                                                pattern="[a-zA-Z0-9/ -]+">
+                                                        </mat-form-field>
+                                                        <span *ngIf="group.get('is_auto_generate').value || i == 0">
+                                                            {{group.get('item_description').value}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="flex">
+                                                    <div class="bill-property">Procedure Code</div>
+                                                    <div class="editable">
+                                                        <mat-form-field appearance="outline">
+                                                            <input matInput type="text"
+                                                                oninput="this.value = this.value.toUpperCase()"
+                                                                (change)="procedureChange($event.target.value,group)"
+                                                                name="procedure_code" autocomplete="off"
+                                                                formControlName="procedure_code"
+                                                                pattern="[a-zA-Z0-9/ -]+">
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="flex">
+                                                    <div class="bill-property">Modifier</div>
+                                                    <div class="editable">
+                                                        <mat-form-field class="chip-list">
+                                                            <mat-chip-list #chipList aria-label="Modifier selection"
+                                                                formControlName="modifierList">
+                                                                <mat-chip
+                                                                    *ngFor="let modifier of group.value.modifierList"
+                                                                    [removable]="removable"
+                                                                    (removed)="remove(modifier,group,i)">
+                                                                    {{modifier}}
+                                                                    <mat-icon matChipRemove *ngIf="removable">cancel
+                                                                    </mat-icon>
+                                                                </mat-chip>
+                                                                <input #modifierInput formControlName="modifier"
+                                                                    [matAutocomplete]="auto1"
+                                                                    [matChipInputFor]="chipList"
+                                                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                                    [matChipInputAddOnBlur]="addOnBlur"
+                                                                    #trigger="matAutocompleteTrigger"
+                                                                    (matChipInputTokenEnd)="add($event,group)"
+                                                                    (click)="openAuto($event,trigger)">
+                                                            </mat-chip-list>
+                                                            <mat-autocomplete #auto1="matAutocomplete"
+                                                                (optionSelected)="selected($event,group,i)">
+                                                                <mat-option
+                                                                    *ngFor="let modifier of group.get('is_auto_generate').value || group.get('is_excess_pages').value? group.value.filteredmodifier : filteredmodifier"
+                                                                    [value]="modifier">
+                                                                    {{modifier}}
+                                                                </mat-option>
+                                                            </mat-autocomplete>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="flex">
+                                                    <div class="bill-property">Unit Type</div>
+                                                    <div class="editable">
+                                                        <mat-form-field appearance="outline" class="w-100">
+                                                            <mat-select formControlName="unitType">
+                                                                <mat-option *ngFor="let unit of unitTypes"
+                                                                    [value]="unit.unit_type">
+                                                                    {{unit.unit_type}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="flex">
+                                                    <div class="bill-property">Units</div>
+                                                    <div class="editable">
+                                                        <mat-form-field appearance="outline" class="w-100">
+                                                            <input matInput min="1"
+                                                                (change)="unitChange(group,i,$event.target.value)"
+                                                                type="number" autocomplete="off"
+                                                                formControlName="units">
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="flex">
+                                                    <div class="bill-property">Charge</div>
+                                                    <div class="editable">
+                                                        <mat-form-field appearance="outline" class="w-100">
+                                                            <input matInput min="0" type="number" autocomplete="off"
+                                                                formControlName="charge"
+                                                                (change)="setTwoNumberDecimal($event)">
+                                                            <span matPrefix>$&nbsp;</span>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="flex">
+                                                    <div class="bill-property">Payment</div>
+                                                    <div class="editable"> {{group.get('payment').value > -1 ? '$ ' :
+                                                        ''}}{{group.get('payment').value
+                                                        | number : '1.2-2'}}
+                                                    </div>
+                                                </div>
+                                                <div class="flex">
+                                                    <div class="bill-property">Balance</div>
+                                                    <div class="editable">
+                                                        <span class="text-danger">
+                                                            {{group.get('charge').value > -1 ? '$ ' :
+                                                            ''}}{{group.get('charge').value - group.value.payment |
+                                                            number :
+                                                            '1.2-2'}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="flex">
+                                                    <div class="bill-property">Action </div>
+                                                    <div class="editable">
+                                                        <a class="text-success" (click)="doneRow(group,i)">
+                                                            Save
+                                                        </a>
+                                                        <a class="text-danger m-l-10" (click)="cancelRow(group,i)">
+                                                            Cancel
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </mat-card>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
                                 </td>
                             </tr>
                             <tr>
@@ -344,10 +351,10 @@
                                         <mat-expansion-panel (click)="openElement(group.get('id').value)">
                                             <mat-expansion-panel-header>
                                                 <mat-panel-title>
-                                                   <div class="inline-title">
+                                                    <div class="inline-title">
                                                         <div><b>Item</b></div>
                                                         <div>{{group.get('item_description').value}}</div>
-                                                   </div>
+                                                    </div>
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
                                             <mat-card>
@@ -381,14 +388,16 @@
                                                 <div class="flex">
                                                     <div class="bill-property">Payment</div>
                                                     <div class="value">
-                                                        {{group.get('payment').value > -1 ? '$ ' : ''}}{{group.get('payment').value
+                                                        {{group.get('payment').value > -1 ? '$ ' :
+                                                        ''}}{{group.get('payment').value
                                                         | number : '1.2-2'}}</div>
                                                 </div>
                                                 <div class="flex">
                                                     <div class="bill-property">Balance</div>
                                                     <div class="value text-danger">
-                                                        {{group.get('charge').value > -1 ? '$ ' : ''}}{{(group.get('charge').value)
-                                            | number : '1.2-2'}}</div>
+                                                        {{group.get('charge').value > -1 ? '$ ' :
+                                                        ''}}{{(group.get('charge').value)
+                                                        | number : '1.2-2'}}</div>
                                                 </div>
                                                 <div class="flex">
                                                     <div class="bill-property">Action </div>
@@ -473,7 +482,8 @@
                                 <th>Unit Type</th>
                                 <th>Units</th>
                                 <th>Charge</th>
-                                <th>{{billType == 2 ?  'First Submission Payment' : ""}}{{billType == 3?  'SBR Payment' : ""}}</th>
+                                <th>{{billType == 2 ? 'First Submission Payment' : ""}}{{billType == 3? 'SBR Payment' :
+                                    ""}}</th>
                                 <th>Balance</th>
                                 <th>Action</th>
                             </thead>
@@ -615,17 +625,20 @@
                                     <tr class="reason" *ngIf="group.get('reviewShow').value">
                                         <td colspan="10" [formGroupName]="i">
                                             <div fxLayout="row wrap" class="reason-for-request">
-                                                <div fxFlex="100" *ngIf="!first" >
+                                                <div fxFlex="100" *ngIf="!first">
                                                     <div class="checkbox">
-                                                        <mat-checkbox (change)="BillLineSame(group,i, $event)" class="p-l-10" labelposition="after">Same as
+                                                        <mat-checkbox (change)="BillLineSame(group,i, $event)"
+                                                            class="p-l-10" labelposition="after">Same as
                                                             previous line item</mat-checkbox>
                                                     </div>
                                                 </div>
                                                 <div fxFlex="50">
                                                     <div fxLayout="row wrap" fxFlex="100">
-                                                        <div fxFlex="100" *ngIf="billType == 2">Reason for Requesting Second Bill Review and
+                                                        <div fxFlex="100" *ngIf="billType == 2">Reason for Requesting
+                                                            Second Bill Review and
                                                             Description of Supporting Documentation*</div>
-                                                        <div fxFlex="100" *ngIf="billType == 3">Reason for Requesting Independent Bill Review*</div>    
+                                                        <div fxFlex="100" *ngIf="billType == 3">Reason for Requesting
+                                                            Independent Bill Review*</div>
                                                         <mat-form-field appearance="outline" fxFlex="100">
                                                             <textarea formControlName="bill_request_reason" matInput
                                                                 placeholder="Reason" rows="0"></textarea>
@@ -644,7 +657,8 @@
                                                             </mat-radio-group>
 
                                                         </div>
-                                                        <div fxFlex="100" class="select-1" *ngIf="billType == 2">Supporting Documentation
+                                                        <div fxFlex="100" class="select-1" *ngIf="billType == 2">
+                                                            Supporting Documentation
                                                             Attached?
 
                                                             <mat-radio-group
@@ -677,10 +691,10 @@
                                     </div>
                                     <div fxFlex="50" class="text-right">
                                         <button mat-stroked-button class="filled-ternary m-t-20"
-                                            (click)="uploader.click()">Upload
+                                            (click)="openUploadPopUp(true, ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png'], '', 'upload', 501)">Upload
                                             Supporting Documents</button>
-                                        <input type="file" #uploader hidden (change)="addFile($event)" multiple
-                                            accept=".pdf, .doc, .docx, .jpg, .jpeg, .png" required>
+                                        <!-- <input type="file" #uploader hidden (change)="addFile($event)" multiple
+                                            accept=".pdf, .doc, .docx, .jpg, .jpeg, .png" required> -->
                                     </div>
                                     <div fxFlex="100" class="m-b-20">
                                         <table class="supporting-docs table table-border res-table">
@@ -697,10 +711,10 @@
                                                     <td class="action"><a class="text-danger p-r-10"
                                                             (click)="RemoveFile(file,i)">Remove</a> |
                                                         <a class="text-danger p-l-10"
-                                                            (click)="uploader.click()">Reupload</a>
-                                                        <input type="file" #uploader hidden
+                                                            (click)="openUploadPopUp(false, ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png'], {file: file, i: i}, 'reupload', 501)">Reupload</a>
+                                                        <!--<input type="file" #uploader hidden
                                                             (change)="reuploadFile($event,file,i)"
-                                                            accept=".pdf, .doc, .docx, .jpg, .jpeg, .png" required>
+                                                            accept=".pdf, .doc, .docx, .jpg, .jpeg, .png" required> -->
                                                     </td>
                                                 </tr>
                                                 <tr *ngFor="let file of fileName;let i=index">
@@ -708,10 +722,10 @@
                                                     <td class="action"><a class="text-danger p-r-10"
                                                             (click)="RemoveFile(file,i)">Remove</a> |
                                                         <a class="text-danger p-l-10"
-                                                            (click)="uploader.click()">Reupload</a>
-                                                        <input type="file" #uploader hidden
+                                                            (click)="openUploadPopUp(false, ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png'], {file: file, i: i}, 'reupload', 501)">Reupload</a>
+                                                        <!-- <input type="file" #uploader hidden
                                                             (change)="reuploadFile($event,file,i)"
-                                                            accept=".pdf, .doc, .docx, .jpg, .jpeg, .png" required>
+                                                            accept=".pdf, .doc, .docx, .jpg, .jpeg, .png" required> -->
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -733,141 +747,149 @@
                     <form [formGroup]="userTable">
                         <table>
                             <tbody>
-                                <ng-container  formArrayName="tableRows"
-                                *ngFor="let group of getFormControls.controls ; let i=index;let first=first; let last=last">
+                                <ng-container formArrayName="tableRows"
+                                    *ngFor="let group of getFormControls.controls ; let i=index;let first=first; let last=last">
 
-                                <tr *ngIf="group.get('isEditable').value" [formGroupName]="i"
-                                (click)="rowSelected(group)">
+                                    <tr *ngIf="group.get('isEditable').value" [formGroupName]="i"
+                                        (click)="rowSelected(group)">
 
-                                <mat-card>
-                                    <div class="flex">
-                                        <div class="bill-property">Item Description</div>
-                                        <div class="editable">
-                                            <mat-form-field appearance="outline"
-                                            *ngIf="!group.get('is_auto_generate').value && i != 0">
-                                            <input matInput type="text" name="item_description" autocomplete="off"
-                                                formControlName="item_description" pattern="[a-zA-Z0-9/ -]+">
-                                        </mat-form-field>
-                                        <span *ngIf="group.get('is_auto_generate').value || i == 0">
-                                            {{group.get('item_description').value}}
-                                        </span>
-                                        </div>
-                                    </div>
-                                    <div class="flex">
-                                        <div class="bill-property">Procedure Code</div>
-                                        <div class="editable">
-                                            <mat-form-field appearance="outline">
-                                                <input matInput type="text"
-                                                    oninput="this.value = this.value.toUpperCase()"
-                                                    (change)="procedureChange($event.target.value,group)"
-                                                    name="procedure_code" autocomplete="off"
-                                                    formControlName="procedure_code" pattern="[a-zA-Z0-9/ -]+">
-                                            </mat-form-field>
-                                        </div>
-                                    </div>
-                                    <div class="flex">
-                                        <div class="bill-property">Modifier</div>
-                                        <div class="editable">
-                                            <mat-form-field class="chip-list">
-                                                <mat-chip-list #chipList aria-label="Modifier selection"
-                                                    formControlName="modifierList">
-                                                    <mat-chip *ngFor="let modifier of group.value.modifierList"
-                                                        [removable]="removable" (removed)="remove(modifier,group,i)">
-                                                        {{modifier}}
-                                                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                                                    </mat-chip>
-                                                    <input #modifierInput formControlName="modifier"
-                                                        [matAutocomplete]="auto1" [matChipInputFor]="chipList"
-                                                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                                                        [matChipInputAddOnBlur]="addOnBlur"
-                                                        #trigger="matAutocompleteTrigger"
-                                                        (matChipInputTokenEnd)="add($event,group)"
-                                                        (click)="openAuto($event,trigger)">
-                                                </mat-chip-list>
-                                                <mat-autocomplete #auto1="matAutocomplete"
-                                                    (optionSelected)="selected($event,group,i)">
-                                                    <mat-option
-                                                        *ngFor="let modifier of group.get('is_auto_generate').value || group.get('is_excess_pages').value? group.value.filteredmodifier : filteredmodifier"
-                                                        [value]="modifier">
-                                                        {{modifier}}
-                                                    </mat-option>
-                                                </mat-autocomplete>
-                                            </mat-form-field>
-                                        </div>
-                                    </div>
-                                    <div class="flex">
-                                        <div class="bill-property">Unit Type</div>
-                                        <div class="editable">
-                                            <mat-form-field appearance="outline" class="w-100">
-                                                <mat-select formControlName="unitType">
-                                                    <mat-option *ngFor="let unit of unitTypes" [value]="unit.unit_type">
-                                                        {{unit.unit_type}}
-                                                    </mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                        </div>
-                                    </div>
-                                    <div class="flex">
-                                        <div class="bill-property">Units</div>
-                                        <div class="editable">
-                                            <mat-form-field appearance="outline" class="w-100">
-                                                <input matInput min="1"
-                                                    (change)="unitChange(group,i,$event.target.value)" type="number"
-                                                    autocomplete="off" formControlName="units">
-                                            </mat-form-field>
-                                        </div>
-                                    </div>
-                                    <div class="flex">
-                                        <div class="bill-property">Charge</div>
-                                        <div class="editable">
-                                            <mat-form-field appearance="outline" class="w-100">
-                                                <input matInput min="0" type="number" autocomplete="off"
-                                                    formControlName="charge" (change)="setTwoNumberDecimal($event)">
-                                                <span matPrefix>$&nbsp;</span>
-                                            </mat-form-field>
-                                        </div>
-                                    </div>
-                                    <div class="flex">
-                                        <div class="bill-property">Payment</div>
-                                        <div class="editable"> {{group.get('payment').value > -1 ? '$ ' : ''}}{{group.get('payment').value
-                                            | number : '1.2-2'}}</div>
-                                    </div>
-                                    <div class="flex">
-                                        <div class="bill-property">Balance</div>
-                                        <div class="editable">
-                                            <span class="text-danger">
-                                                {{group.get('charge').value > -1 ? '$ ' :
-                                                ''}}{{group.get('charge').value - group.value.payment | number :
-                                                '1.2-2'}}</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex">
-                                        <div class="bill-property">Action </div>
-                                        <div class="editable">
-                                            <a class="text-success" (click)="doneRow(group,i)">
-                                                Save
-                                            </a>
-                                            <a class="text-danger m-l-10" (click)="cancelRow(group,i)">
-                                                Cancel
-                                            </a>
-                                        </div>
-                                    </div>
-                                </mat-card>
-                                </tr>
+                                        <mat-card>
+                                            <div class="flex">
+                                                <div class="bill-property">Item Description</div>
+                                                <div class="editable">
+                                                    <mat-form-field appearance="outline"
+                                                        *ngIf="!group.get('is_auto_generate').value && i != 0">
+                                                        <input matInput type="text" name="item_description"
+                                                            autocomplete="off" formControlName="item_description"
+                                                            pattern="[a-zA-Z0-9/ -]+">
+                                                    </mat-form-field>
+                                                    <span *ngIf="group.get('is_auto_generate').value || i == 0">
+                                                        {{group.get('item_description').value}}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="flex">
+                                                <div class="bill-property">Procedure Code</div>
+                                                <div class="editable">
+                                                    <mat-form-field appearance="outline">
+                                                        <input matInput type="text"
+                                                            oninput="this.value = this.value.toUpperCase()"
+                                                            (change)="procedureChange($event.target.value,group)"
+                                                            name="procedure_code" autocomplete="off"
+                                                            formControlName="procedure_code" pattern="[a-zA-Z0-9/ -]+">
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="flex">
+                                                <div class="bill-property">Modifier</div>
+                                                <div class="editable">
+                                                    <mat-form-field class="chip-list">
+                                                        <mat-chip-list #chipList aria-label="Modifier selection"
+                                                            formControlName="modifierList">
+                                                            <mat-chip *ngFor="let modifier of group.value.modifierList"
+                                                                [removable]="removable"
+                                                                (removed)="remove(modifier,group,i)">
+                                                                {{modifier}}
+                                                                <mat-icon matChipRemove *ngIf="removable">cancel
+                                                                </mat-icon>
+                                                            </mat-chip>
+                                                            <input #modifierInput formControlName="modifier"
+                                                                [matAutocomplete]="auto1" [matChipInputFor]="chipList"
+                                                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                                [matChipInputAddOnBlur]="addOnBlur"
+                                                                #trigger="matAutocompleteTrigger"
+                                                                (matChipInputTokenEnd)="add($event,group)"
+                                                                (click)="openAuto($event,trigger)">
+                                                        </mat-chip-list>
+                                                        <mat-autocomplete #auto1="matAutocomplete"
+                                                            (optionSelected)="selected($event,group,i)">
+                                                            <mat-option
+                                                                *ngFor="let modifier of group.get('is_auto_generate').value || group.get('is_excess_pages').value? group.value.filteredmodifier : filteredmodifier"
+                                                                [value]="modifier">
+                                                                {{modifier}}
+                                                            </mat-option>
+                                                        </mat-autocomplete>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="flex">
+                                                <div class="bill-property">Unit Type</div>
+                                                <div class="editable">
+                                                    <mat-form-field appearance="outline" class="w-100">
+                                                        <mat-select formControlName="unitType">
+                                                            <mat-option *ngFor="let unit of unitTypes"
+                                                                [value]="unit.unit_type">
+                                                                {{unit.unit_type}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="flex">
+                                                <div class="bill-property">Units</div>
+                                                <div class="editable">
+                                                    <mat-form-field appearance="outline" class="w-100">
+                                                        <input matInput min="1"
+                                                            (change)="unitChange(group,i,$event.target.value)"
+                                                            type="number" autocomplete="off" formControlName="units">
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="flex">
+                                                <div class="bill-property">Charge</div>
+                                                <div class="editable">
+                                                    <mat-form-field appearance="outline" class="w-100">
+                                                        <input matInput min="0" type="number" autocomplete="off"
+                                                            formControlName="charge"
+                                                            (change)="setTwoNumberDecimal($event)">
+                                                        <span matPrefix>$&nbsp;</span>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="flex">
+                                                <div class="bill-property">Payment</div>
+                                                <div class="editable"> {{group.get('payment').value > -1 ? '$ ' :
+                                                    ''}}{{group.get('payment').value
+                                                    | number : '1.2-2'}}</div>
+                                            </div>
+                                            <div class="flex">
+                                                <div class="bill-property">Balance</div>
+                                                <div class="editable">
+                                                    <span class="text-danger">
+                                                        {{group.get('charge').value > -1 ? '$ ' :
+                                                        ''}}{{group.get('charge').value - group.value.payment | number :
+                                                        '1.2-2'}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="flex">
+                                                <div class="bill-property">Action </div>
+                                                <div class="editable">
+                                                    <a class="text-success" (click)="doneRow(group,i)">
+                                                        Save
+                                                    </a>
+                                                    <a class="text-danger m-l-10" (click)="cancelRow(group,i)">
+                                                        Cancel
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </mat-card>
+                                    </tr>
                                     <tr>
                                         <td *ngIf="!group.get('isEditable').value" [formGroupName]="i">
-                                            
+
                                             <mat-accordion class="w-100">
                                                 <mat-expansion-panel>
                                                     <mat-expansion-panel-header>
                                                         <mat-panel-title>
-                                                            <mat-checkbox value="false" formControlName="reviewShow" (click)="$event.stopPropagation()"
-                                                             (change)="reviewCheck($event.checked, group, getFormControls.controls)" class="m-r-5">
-                                                           </mat-checkbox>
+                                                            <mat-checkbox value="false" formControlName="reviewShow"
+                                                                (click)="$event.stopPropagation()"
+                                                                (change)="reviewCheck($event.checked, group, getFormControls.controls)"
+                                                                class="m-r-5">
+                                                            </mat-checkbox>
                                                             <div class="inline-title">
                                                                 <div><b>Item</b></div>
                                                                 <div>{{group.get('item_description').value}}</div>
-                                                           </div>
+                                                            </div>
                                                         </mat-panel-title>
                                                     </mat-expansion-panel-header>
                                                     <mat-card>
@@ -878,7 +900,8 @@
                                                         </div>
                                                         <div class="flex">
                                                             <div class="bill-property">Procedure Code</div>
-                                                            <div class="value">{{group.get('procedure_code').value}}</div>
+                                                            <div class="value">{{group.get('procedure_code').value}}
+                                                            </div>
                                                         </div>
                                                         <div class="flex">
                                                             <div class="bill-property">Modifier</div>
@@ -896,47 +919,54 @@
                                                             <div class="bill-property">Charge</div>
                                                             <div class="value">
                                                                 {{group.get('charge').value? '$ ' :
-                                                                ''}}{{group.get('charge').value | number : '1.2-2'}}</div>
+                                                                ''}}{{group.get('charge').value | number : '1.2-2'}}
+                                                            </div>
                                                         </div>
                                                         <div class="flex">
                                                             <div class="bill-property">Payment</div>
                                                             <div class="value">
-                                                                {{group.get('payment').value > -1 ? '$ ' : ''}}{{group.get('payment').value
+                                                                {{group.get('payment').value > -1 ? '$ ' :
+                                                                ''}}{{group.get('payment').value
                                                                 | number : '1.2-2'}}</div>
                                                         </div>
                                                         <div class="flex">
                                                             <div class="bill-property">Balance</div>
                                                             <div class="value">
-                                                                {{group.get('charge').value > -1 ? '$ ' : ''}}{{(group.get('charge').value)
+                                                                {{group.get('charge').value > -1 ? '$ ' :
+                                                                ''}}{{(group.get('charge').value)
                                                                 | number : '1.2-2'}}</div>
                                                         </div>
                                                         <div class="flex">
                                                             <div class="bill-property">Action </div>
                                                             <div class="value">
-                                                               -
+                                                                -
                                                             </div>
                                                         </div>
                                                     </mat-card>
-        
+
                                                 </mat-expansion-panel>
                                             </mat-accordion>
-        
+
                                         </td>
                                     </tr>
                                     <tr class="reason" *ngIf="group.get('reviewShow').value">
                                         <div [formGroupName]="i">
-                                            <div fxLayout="row wrap" class="reason-for-request m-b-20"  style="background-color: #f8f8f8;padding: 10px;border: 1px solid #a2a1a1;">
-                                                <div fxFlex="100" *ngIf="!first" >
+                                            <div fxLayout="row wrap" class="reason-for-request m-b-20"
+                                                style="background-color: #f8f8f8;padding: 10px;border: 1px solid #a2a1a1;">
+                                                <div fxFlex="100" *ngIf="!first">
                                                     <div class="checkbox">
-                                                        <mat-checkbox (change)="BillLineSame(group,i, $event)" class="p-l-10" labelposition="after">Same as
+                                                        <mat-checkbox (change)="BillLineSame(group,i, $event)"
+                                                            class="p-l-10" labelposition="after">Same as
                                                             previous line item</mat-checkbox>
                                                     </div>
                                                 </div>
                                                 <div fxFlex="100">
                                                     <div fxLayout="row wrap" fxFlex="100">
-                                                        <div fxFlex="100" *ngIf="billType == 2">Reason for Requesting Second Bill Review and
+                                                        <div fxFlex="100" *ngIf="billType == 2">Reason for Requesting
+                                                            Second Bill Review and
                                                             Description of Supporting Documentation*</div>
-                                                        <div fxFlex="100" *ngIf="billType == 3">Reason for Requesting Independent Bill Review*</div>    
+                                                        <div fxFlex="100" *ngIf="billType == 3">Reason for Requesting
+                                                            Independent Bill Review*</div>
                                                         <mat-form-field appearance="outline" fxFlex="100">
                                                             <textarea formControlName="bill_request_reason" matInput
                                                                 placeholder="Reason" rows="0"></textarea>
@@ -945,7 +975,7 @@
                                                 </div>
                                                 <div fxFlex="100">
                                                     <div fxLayout="row wrap" fxFlex="100" class="custom-select m-t-15">
-                                                        <div fxFlex="100" >Service / Good Authorized?
+                                                        <div fxFlex="100">Service / Good Authorized?
 
                                                             <mat-radio-group formControlName="billed_service_authorized"
                                                                 aria-label="Select an option">
@@ -955,7 +985,8 @@
                                                             </mat-radio-group>
 
                                                         </div>
-                                                        <div fxFlex="100" *ngIf="billType == 2" class="m-t-20 m-b-20">Supporting Documentation
+                                                        <div fxFlex="100" *ngIf="billType == 2" class="m-t-20 m-b-20">
+                                                            Supporting Documentation
                                                             Attached?
 
                                                             <mat-radio-group
@@ -1006,7 +1037,7 @@
                                                             (click)="download(file?.exam_report_file_url,file?.file_name)">{{file?.file_name}}</a>
                                                     </td>
                                                     <td class="action"><a class="text-danger p-r-10"
-                                                            (click)="RemoveFile(file,i)">Remove</a><br/>
+                                                            (click)="RemoveFile(file,i)">Remove</a><br />
                                                         <a class="text-danger p-l-10"
                                                             (click)="uploader.click()">Reupload</a>
                                                         <input type="file" #uploader hidden
@@ -1017,7 +1048,7 @@
                                                 <tr *ngFor="let file of fileName;let i=index">
                                                     <td><a class="">{{file?.file_name}}</a></td>
                                                     <td class="action"><a class="text-danger p-r-10"
-                                                            (click)="RemoveFile(file,i)">Remove</a><br/>
+                                                            (click)="RemoveFile(file,i)">Remove</a><br />
                                                         <a class="text-danger p-l-10"
                                                             (click)="uploader.click()">Reupload</a>
                                                         <input type="file" #uploader hidden

@@ -187,5 +187,8 @@ export class BillingService {
   uploadCustomDoc(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.uploadCustomDoc, data)
   }
+  getDtmData(data): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.dtmGetdata + data.claim_id + "/" + data.billable_item_id + "/" + data.bill_id)
+  }
 
 }

@@ -14,6 +14,7 @@ import { BillingService } from 'src/app/subscriber/service/billing.service';
 import { saveAs } from 'file-saver';
 import * as moment from 'moment';
 import { IntercomService } from 'src/app/services/intercom.service';
+import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
@@ -433,25 +434,41 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     review.updateValueAndValidity();
     console.log(review)
   }
-
-  addEOR(event, review?) {
+  openUploadPopUp(isMultiple, type, data?, fileSize?) {
+    const dialogRef = this.dialog.open(FileUploadComponent, {
+      width: '800px',
+      data: { name: 'make this card the default card', address: true, isMultiple: isMultiple, fileType: type, fileSize: fileSize },
+      panelClass: 'custom-drag-and-drop',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        this.addEOR(result.files, data)
+        // if (callback == 'addCompleteDoc') {
+        //   this.addCompleteDoc(result.files, data)
+        // } else if (callback == 'addFile') {
+        //   this.addFile(result.files, true)
+        // }
+      }
+    })
+  }
+  addEOR(files, review?) {
     let fileTypes = ['pdf', 'jpg', 'jpeg', 'png']
 
-    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
-      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
+    if (fileTypes.includes(files[0].name.split('.').pop().toLowerCase())) {
+      var FileSize = files[0].size / 1024 / 1024; // in MB
       if (FileSize > 30) {
-        this.alertService.openSnackBar(event.target.files[0].name + " file too long", 'error');
+        this.alertService.openSnackBar(files[0].name + " file too long", 'error');
         return;
       }
 
       let file = {
-        file: event.target.files[0],
-        file_name: event.target.files[0].name
+        file: files[0],
+        file_name: files[0].name
       }
-      review.get('file').patchValue(event.target.files[0]);
-      review.get('file_name').patchValue(event.target.files[0].name)
+      review.get('file').patchValue(files[0]);
+      review.get('file_name').patchValue(files[0].name)
     } else {
-      this.alertService.openSnackBar(event.target.files[0].name + " file is not accepted", 'error');
+      this.alertService.openSnackBar(files[0].name + " file is not accepted", 'error');
     }
   }
 

@@ -79,8 +79,8 @@ export class ClaimService {
   createDeclaredDocument(data, claim_id, billable_item_id): Observable<any> {
     return this.http.post(environment.baseUrl + "examinations/documents-declared-add/" + claim_id + "/" + billable_item_id, data)
   }
-  removeDeclaredDocument(documents_declared_id): Observable<any> {
-    return this.http.delete(environment.baseUrl + "examinations/documents-declared-remove/" + documents_declared_id)
+  removeDeclaredDocument(documents_declared_id, data): Observable<any> {
+    return this.http.delete(environment.baseUrl + "examinations/documents-declared-remove/" + data.claim_id + "/" + data.billable_item_id + "/" + documents_declared_id,)
   }
   postcorrespondence(data) {
     return this.http.post(environment.baseUrl + api_endpoint.correspondenceUpload, data)
@@ -176,5 +176,12 @@ export class ClaimService {
     tel = tel.replace(/\D+/g, "");
     phone = tel;
     return phone;
+  }
+
+  removeDocumentDeclared(documents_declared_id, document_id): Observable<any> {
+    return this.http.delete(environment.baseUrl + api_endpoint.removeDocumentDeclared + documents_declared_id + '/' + document_id)
+  }
+  getFormDisabled(claim_id, billable_item_id, examination_status_id): Observable<any> {
+    return this.http.get(environment.baseUrl + api_endpoint.getFormDisabled + claim_id + "/" + billable_item_id + "/" + examination_status_id)
   }
 }

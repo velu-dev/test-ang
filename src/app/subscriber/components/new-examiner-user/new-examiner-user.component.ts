@@ -21,6 +21,7 @@ import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/ale
 import * as globals from '../../../globals';
 import { saveAs } from 'file-saver';
 import { ClaimService } from '../../service/claim.service';
+import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 @Component({
   selector: 'app-new-examiner-user',
   templateUrl: './new-examiner-user.component.html',
@@ -202,8 +203,17 @@ export class NewExaminerUserComponent implements OnInit {
     const filterValue = value == undefined ? '' : value && value.toLowerCase();
     return this.taxonomyList.filter(option => option.codeName.toLowerCase().includes(filterValue));
   }
-
+  isSubscriberAddressPresent: boolean = false;
+  subscriberAddress: any;
   ngOnInit() {
+    this.userService.getSubscriberAddress().subscribe(res => {
+      if (res.data) {
+        this.isSubscriberAddressPresent = true;
+        this.subscriberAddress = res.data;
+      }
+    }, error => {
+
+    })
     this.intercom.setExaminerPage(true)
     this.userService.verifyRole().subscribe(role => {
       this.sameAsExaminer = role.status;
@@ -576,22 +586,22 @@ export class NewExaminerUserComponent implements OnInit {
 
     })
     this.billingProviderForm.get('street1').valueChanges
-    .pipe(
-      debounceTime(500),
-    ).subscribe(key => {
-      if (key && typeof (key) == 'string')
-        key = key.trim();
-      this.isBAddressSearched = true;
-      if (key)
-        this.claimService.searchAddress(key).subscribe(address => {
-          this.streetBAddressList = address.suggestions;
-          this.isBAddressError = false;
-        }, error => {
-          if (error.status == 0)
-            this.isBAddressError = true;
-          this.streetBAddressList = [];
-        })
-    })
+      .pipe(
+        debounceTime(500),
+      ).subscribe(key => {
+        if (key && typeof (key) == 'string')
+          key = key.trim();
+        this.isBAddressSearched = true;
+        if (key)
+          this.claimService.searchAddress(key).subscribe(address => {
+            this.streetBAddressList = address.suggestions;
+            this.isBAddressError = false;
+          }, error => {
+            if (error.status == 0)
+              this.isBAddressError = true;
+            this.streetBAddressList = [];
+          })
+      })
     this.billingProviderForm.get("phone_no1").valueChanges.subscribe(res => {
       if (this.billingProviderForm.get("phone_no1").value && this.billingProviderForm.get("phone_no1").valid) {
         this.billingProviderForm.get("phone_ext1").enable();
@@ -835,7 +845,19 @@ export class NewExaminerUserComponent implements OnInit {
     }
   }
 
-
+  openSignature() {
+    const dialogRef = this.dialog.open(FileUploadComponent, {
+      width: '800px',
+      data: { name: 'make this card the default card', address: true, isMultiple: false, fileType: ['.png', '.jpg', '.jpeg'], fileSize: 3, splMsg: "Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio, 600*150 pixels & Maximum File Size: 3 MB" },
+      panelClass: 'custom-drag-and-drop',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        console.log(result)
+        this.openSign(result.files[0])
+      }
+    })
+  }
   openAlertDialog(title, subTitle) {
     const dialogRef = this.dialog.open(AlertDialogComponent, {
       width: '450px',
@@ -859,7 +881,7 @@ export class NewExaminerUserComponent implements OnInit {
         this.renderingForm.patchValue({ is_new_signature: true })
         this.signData = result;
       }
-      this.fileUpload.nativeElement.value = "";
+      // this.fileUpload.nativeElement.value = "";
     });
   }
 
@@ -932,15 +954,30 @@ export class NewExaminerUserComponent implements OnInit {
 
   billingSelectedFile: File;
 
+  openUploadPopUp(isMultiple, type, data?, callback?, fileSize?) {
+    const dialogRef = this.dialog.open(FileUploadComponent, {
+      width: '800px',
+      data: { name: 'make this card the default card', address: true, isMultiple: isMultiple, fileType: type, fileSize: fileSize },
+      panelClass: 'custom-drag-and-drop',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        if (callback == 'billing') {
+          this.addFile(result.files)
+        } else if (callback == 'rendering') {
 
+        }
+      }
+    })
+  }
   errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
-  addFile(event) {
+  addFile(files) {
 
     this.billingSelectedFile = null;
     let fileTypes = ['pdf']
 
-    if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
-      var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
+    if (fileTypes.includes(files[0].name.split('.').pop().toLowerCase())) {
+      var FileSize = files[0].size / 1024 / 1024; // in MB
       if (FileSize > 30) {
         this.errors.file.isError = true;
         this.errors.file.error = "File size is too large";
@@ -949,16 +986,16 @@ export class NewExaminerUserComponent implements OnInit {
       }
       this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
       this.errors.doc_type.error = "";
-      this.file = event.target.files[0].name;
-      this.billingSelectedFile = event.target.files[0];
+      this.file = files[0].name;
+      this.billingSelectedFile = files[0];
       this.billingProviderForm.get('isFileChanged').patchValue(true);
       this.billingProviderForm.get('file').patchValue(this.billingSelectedFile);
       this.w9Url = null;
-      this.fileUploadBilling.nativeElement.value = "";
+      // this.fileUploadBilling.nativeElement.value = "";
     } else {
       this.billingSelectedFile = null;
       this.errors.file.isError = true;
-      this.fileUploadBilling.nativeElement.value = "";
+      // this.fileUploadBilling.nativeElement.value = "";
       this.errors.file.error = "This file type is not accepted";
       this.alertService.openSnackBar("This file type is not accepted", 'error');
     }
@@ -1395,9 +1432,74 @@ export class NewExaminerUserComponent implements OnInit {
         return this.states[i].state_code;
       }
   }
+  addressesCheck = { mailing_as_subscriber: false, billing_as_subsciber: false, billing_as_mailing: false }
+  subscriberMailAddress: any;
+  sameAsSubscriber(e, type) {
+    if (e.checked) {
+      // this.userService.getSubscriberAddress().subscribe(res => {
+      delete this.subscriberAddress.id;
+      this.subscriberMailAddress = this.subscriberAddress;
+      if (type == 'mailing') {
+        this.changeState("", 'mailing', this.subscriberAddress.state_code)
+        this.mailingAddressForm.patchValue(this.subscriberAddress);
+        this.states.map(state => {
+          if (this.subscriberAddress.state_id == state.id) {
+            console.log(state)
+            this.mailingAddressForm.patchValue({ state: state.id });
+          }
+        })
+      }
+      if (type == 'billing') {
+        this.addressesCheck.billing_as_mailing = false
+        this.changeState("", 'cms', this.subscriberAddress.state_code)
+        this.billingProviderForm.patchValue(this.subscriberAddress);
+        this.states.map(state => {
+          if (this.subscriberAddress.state_id == state.id) {
+            console.log(state)
+            this.billingProviderForm.patchValue({ state: state.id });
+          }
+        })
+      }
+      // })
+    } else {
+      if (type == 'billing') {
+        let addresEmpty = {
+          street1: null,
+          street2: null,
+          city: null,
+          state: null,
+          zip_code: null,
+          phone_no1: null,
+          phone_ext1: null,
+          fax_no: null
+        }
+        this.billingProviderForm.patchValue(addresEmpty);
+      }
+      if (type == 'mailing') {
+        let data = {
+          first_name: null,
+          street1: null,
+          street2: null,
+          city: null,
+          state: null,
+          zip_code: null,
+          phone_no1: null,
+          phone_ext1: null,
+          phone_no2: null,
+          phone_ext2: null,
+          fax_no: null,
+          email: null,
+          contact_person: null,
+          notes: null,
+        }
+        this.mailingAddressForm.patchValue(data);
+      }
+    }
+  }
 
   sameAsMailling(e) {
     if (e.checked) {
+      this.addressesCheck.billing_as_subsciber = false;
       let addAddress = {
         street1: this.mailingAddressForm.value.street1,
         street2: this.mailingAddressForm.value.street2,

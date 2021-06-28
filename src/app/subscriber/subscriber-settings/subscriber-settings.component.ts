@@ -11,7 +11,7 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 import { ClaimService } from '../service/claim.service';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, debounceTime } from 'rxjs/operators';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { ImageCroppedEvent, base64ToFile, Dimensions } from 'ngx-image-cropper';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatTableDataSource, MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material';
@@ -23,6 +23,7 @@ import { StripeService } from '../service/stripe.service';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { saveAs } from 'file-saver';
+import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 
 /*Treeview*/
 interface PaymentHistroy {
@@ -149,6 +150,23 @@ export class SubscriberSettingsComponent implements OnInit {
   roleId: any;
   selectedDate = "";
   month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+
+
+  isDropZoneActive = false;
+  imageSource = "";
+  textVisible = true;
+  progressVisible = false;
+  progressValue = 0;
+  isMultiline: boolean = true;
+
+
+  value: any[] = [];
+
+
+  streetAddressList = [];
+  isAddressError = false;
+  isAddressSearched = false;
   constructor(
     private spinnerService: NgxSpinnerService,
     private userService: SubscriberUserService,
@@ -175,6 +193,11 @@ export class SubscriberSettingsComponent implements OnInit {
         this.columnName = ["Invoice Number", "Amount", "Status", "Date", "Action"]
         this.columnsToDisplay = ['invoice_number', 'amount', "status", "date", "action",]
       }
+    })
+    this.claimService.seedData('state').subscribe(response => {
+      this.states = response['data'];
+    }, error => {
+      console.log("error", error)
     })
     this.listCard();
     this.userService.getProfile().subscribe(res => {
@@ -216,6 +239,52 @@ export class SubscriberSettingsComponent implements OnInit {
     })
     // this.dataSourceList.data = TREE_DATA
 
+    this.onDropZoneEnter = this.onDropZoneEnter.bind(this);
+    this.onDropZoneLeave = this.onDropZoneLeave.bind(this);
+    this.onUploaded = this.onUploaded.bind(this);
+    this.onProgress = this.onProgress.bind(this);
+    this.onUploadStarted = this.onUploadStarted.bind(this);
+
+
+  }
+  onDropZoneEnter(e) {
+    if (e.dropZoneElement.id === "dropzone-external")
+      this.isDropZoneActive = true;
+  }
+
+  onDropZoneLeave(e) {
+    if (e.dropZoneElement.id === "dropzone-external")
+      this.isDropZoneActive = false;
+  }
+
+  onUploaded(e) {
+    const file = e.file;
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      this.isDropZoneActive = false;
+      this.imageSource = fileReader.result as string;
+    }
+    fileReader.readAsDataURL(file);
+    this.textVisible = false;
+    this.progressVisible = false;
+    this.progressValue = 0;
+  }
+
+  onProgress(e) {
+    this.progressValue = e.bytesLoaded / e.bytesTotal * 100;
+  }
+
+  onUploadStarted(e) {
+    this.imageSource = "";
+    this.progressVisible = true;
+  }
+  submit() {
+    console.log(this.value)
+    this.claimService.seedData('state').subscribe(response => {
+      this.states = response['data'];
+    }, error => {
+      console.log("error", error)
+    })
   }
   cardCount = 0;
   listCard() {
@@ -270,6 +339,7 @@ export class SubscriberSettingsComponent implements OnInit {
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
   billings: FormGroup;
+  subscriberAddress: FormGroup;
   ngOnInit() {
     this.billings = this.formBuilder.group({
       name: ["", Validators.compose([Validators.required, Validators.pattern("^(?=.*?[A-z])[a-zA-Z\-,. ]+")])],
@@ -285,6 +355,56 @@ export class SubscriberSettingsComponent implements OnInit {
       address_country: ["US"]
       // })
     })
+    this.subscriberAddress = this.formBuilder.group({
+      id: [null],
+      street1: [null],
+      street2: [null],
+      city: [null],
+      state_id: [null],
+      zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
+      phone_no1: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      phone_ext1: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+      phone_no2: [null, Validators.compose([Validators.pattern('[0-9]+')])],
+      phone_ext2: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+      fax_no: null,
+      email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+      contact_person: [null],
+      notes: [null]
+    })
+    this.getAddress();
+    this.subscriberAddress.get("phone_no1").valueChanges.subscribe(res => {
+      if (this.subscriberAddress.get("phone_no1").value && this.subscriberAddress.get("phone_no1").valid) {
+        this.subscriberAddress.get("phone_ext1").enable();
+      } else {
+        this.subscriberAddress.get("phone_ext1").reset();
+        this.subscriberAddress.get("phone_ext1").disable();
+      }
+    })
+    this.subscriberAddress.get("phone_no2").valueChanges.subscribe(res => {
+      if (this.subscriberAddress.get("phone_no2").value && this.subscriberAddress.get("phone_no2").valid) {
+        this.subscriberAddress.get("phone_ext2").enable();
+      } else {
+        this.subscriberAddress.get("phone_ext2").reset();
+        this.subscriberAddress.get("phone_ext2").disable();
+      }
+    })
+    this.subscriberAddress.get("street1").valueChanges
+      .pipe(
+        debounceTime(500),
+      ).subscribe(key => {
+        if (key && typeof (key) == 'string')
+          key = key.trim();
+        this.isAddressSearched = true;
+        if (key)
+          this.claimService.searchAddress(key).subscribe(address => {
+            this.streetAddressList = address.suggestions;
+            this.isAddressError = false;
+          }, error => {
+            if (error.status == 0)
+              this.isAddressError = true;
+            this.streetAddressList = [];
+          })
+      })
     let user = JSON.parse(this.cookieService.get('user'));
     this.currentUser = user;
     this.userPasswrdForm = this.formBuilder.group({
@@ -321,14 +441,48 @@ export class SubscriberSettingsComponent implements OnInit {
       });
     }
 
-    this.claimService.seedData('state').subscribe(response => {
-      this.states = response['data'];
-    }, error => {
-      console.log("error", error)
-    })
+
 
   }
-
+  getAddress() {
+    this.userService.getSubscriberAddress().subscribe(res => {
+      if (res.status) {
+        console.log(res.data.state_id)
+        this.changeState(res.data.state_id, 'subscriber')
+        this.subscriberAddress.patchValue(res.data)
+      }
+    })
+  }
+  selectAddress(street) {
+    let state_id: any;
+    this.states.map(state => {
+      if (state.state_code == street.state) {
+        state_id = state.id;
+      }
+    })
+    this.subscriberAddress.patchValue({
+      street1: street.street_line,
+      street2: "",
+      city: street.city,
+      state_id: state_id,
+      zip_code: street.zipcode
+    })
+    console.log(street, state_id)
+    this.changeState(street.state, "subscriber")
+  }
+  isSubFormSubmitted = false;
+  submitSubscriberAddress() {
+    this.isSubFormSubmitted = true;
+    if (this.subscriberAddress.invalid) {
+      return
+    }
+    this.userService.subscriberaddress(this.subscriberAddress.value).subscribe(res => {
+      this.alertService.openSnackBar(res.message, 'success');
+      this.getAddress();
+    }, error => {
+      this.alertService.openSnackBar(error.error.message, "error")
+    })
+  }
   selectedTabChange(event) {
     if (event.index == 3) {
       this.userService.subscriptionCharges().subscribe(res => {
@@ -499,7 +653,16 @@ export class SubscriberSettingsComponent implements OnInit {
     // });
   }
   cardState: any;
-  changeState(state_code?) {
+  subscriberState: any;
+  changeState(state_code?, type?) {
+    if (type == 'subscriber') {
+      if (this.states)
+        this.states.map(res => {
+          if (res.state_code == state_code || res.id == state_code) {
+            this.subscriberState = res.state_code;
+          }
+        })
+    }
     if (state_code) {
       this.cardState = state_code;
       return
@@ -734,8 +897,10 @@ export class SubscriberSettingsComponent implements OnInit {
 
   }
 
-  fileChangeEvent(event: any): void {
+  fileChangeEvent(event: any, files?): void {
+    let file = files ? files : event.target.files
     let fileName = event.target.files[0].name;
+    fileName = event.target.files ? event.target.files[0].name : null;
     let fileTypes = ['png', 'jpg', 'jpeg']
     if (fileTypes.includes(event.target.files[0].name.split('.').pop().toLowerCase())) {
       var FileSize = event.target.files[0].size / 1024 / 1024; // in MB
@@ -755,7 +920,19 @@ export class SubscriberSettingsComponent implements OnInit {
       this.openDialog('This file type is not accepted', 'Supported File Formats are JPEG/JPG/PNG !')
     }
   }
-
+  openSignature() {
+    const dialogRef = this.dialog.open(FileUploadComponent, {
+      width: '800px',
+      data: { name: 'make this card the default card', address: true, isMultiple: false, fileType: ['.png', '.jpg', '.jpeg'], fileSize: 3, splMsg: "Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio, 600*150 pixels & Maximum File Size: 3 MB" },
+      panelClass: 'custom-drag-and-drop',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result['data']) {
+        console.log(result)
+        this.openSign(result.files[0])
+      }
+    })
+  }
   openSign(e): void {
     const dialogRef = this.dialog.open(SignPopupComponent, {
       width: '800px',
@@ -773,7 +950,7 @@ export class SubscriberSettingsComponent implements OnInit {
         this.signData = result;
       }
       console.log(this.signData)
-      this.fileUpload.nativeElement.value = "";
+      // this.fileUpload.nativeElement.value = "";
     });
   }
 
