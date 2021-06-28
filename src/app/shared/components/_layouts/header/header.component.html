@@ -6,7 +6,7 @@
                 matTooltipPosition="right">menu</mat-icon>
         </button>
         <div [ngClass]="{'opened': isOpen, 'closed': !isOpen}" class="hide-mobile"></div>
-        <img [src]="nav_logo" alt="logo" class="p-l-5 simplexam-logo">
+        <img [src]="nav_logo" alt="logo" class="p-l-5 simplexam-logo" (click)="navegateHome()">
         <div [ngClass]="{'overlay': isSearch,'hide-mobile': !isSearch}" *ngIf="isSearch" (click)="isSearch = !isSearch">
         </div>
         <div class="searchable-dropdown m-t-5 m-l-15 hide-mobile" [ngClass]="{'custom-dropdown': isSearch}"

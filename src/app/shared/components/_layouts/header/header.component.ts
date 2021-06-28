@@ -344,4 +344,33 @@ export class HeaderComponent implements OnInit {
       }
     })
   }
+
+  navegateHome(){
+    let role = this.cookieService.get('role_id')
+    let baseUrl = "";
+    switch (role) {
+      case '1':
+        baseUrl = "/admin/dashboard";
+        break;
+      case '2':
+        baseUrl = "/subscriber/dashboard";
+        break;
+      case '3':
+        baseUrl = "/subscriber/manager/dashboard";
+        break;
+      case '4':
+        baseUrl = "/subscriber/staff/dashboard";
+        break;
+      case '11':
+        baseUrl = "/subscriber/examiner/dashboard";
+        break;
+      case '12':
+        baseUrl = "/subscriber/staff/dashboard";
+        break;
+      default:
+        baseUrl = "/";
+        break;
+    }
+    this.router.navigate([baseUrl]);
+  }
 }
