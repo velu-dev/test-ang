@@ -717,57 +717,57 @@ export class AppointmentDetailsComponent implements OnInit {
             if (res.data[0].examination_status == false) {
               this.examinationStatusForm.get('examination_status').disable();
             }
-            if (res.data[0].notes  == false) {
+            if (res.data[0].notes == false) {
               this.examinationStatusForm.get('examination_notes').disable();
             }
           }
           if (from == 'bill' || from == 'auto') {
-            if (res.data[0].exam_procedure_type  == false) {
+            if (res.data[0].exam_procedure_type == false) {
               this.billable_item.get(['exam_type', 'exam_procedure_type_id']).disable();
             }
-            if (res.data[0].examiner  == false) {
+            if (res.data[0].examiner == false) {
               this.billable_item.get(['appointment', 'examiner_id']).disable();
             }
-            if (res.data[0].date_and_time  == false) {
+            if (res.data[0].date_and_time == false) {
               this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).disable();
             }
-            if (res.data[0].duration  == false) {
+            if (res.data[0].duration == false) {
               this.billable_item.get(['appointment', 'duration']).disable();
               // if (res.data[0].duration == null) {
               //   this.billable_item.get(['appointment', 'duration']).enable();
               // }
             }
-            if (res.data[0].location  == false) {
+            if (res.data[0].location == false) {
               this.billable_item.get(['appointment', 'examiner_service_location_id']).disable();
             }
-            if (res.data[0].intake_caller  == false) {
+            if (res.data[0].intake_caller == false) {
               this.billable_item.get(['intake_call', 'caller_name']).disable();
             }
-            if (res.data[0].requesting_party  == false) {
+            if (res.data[0].requesting_party == false) {
               this.billable_item.get(['intake_call', 'caller_affiliation']).disable();
             }
-            if (res.data[0].items_received  == false) {
+            if (res.data[0].items_received == false) {
               this.billable_item.get('documents_received').disable();
             }
-            if (res.data[0].request_receipt_date  == false) {
+            if (res.data[0].request_receipt_date == false) {
               this.billable_item.get(['intake_call', 'call_date']).disable();
             }
-            if (res.data[0].communication_type  == false) {
+            if (res.data[0].communication_type == false) {
               this.billable_item.get(['intake_call', 'call_type']).disable();
             }
-            if (res.data[0].intake_contact_phone  == false) {
+            if (res.data[0].intake_contact_phone == false) {
               this.billable_item.get(['intake_call', 'caller_phone']).disable();
             }
-            if (res.data[0].ext  == false) {
+            if (res.data[0].ext == false) {
               this.billable_item.get(['intake_call', 'phone_ext']).disable();
             }
-            if (res.data[0].intake_contact_fax  == false) {
+            if (res.data[0].intake_contact_fax == false) {
               this.billable_item.get(['intake_call', 'caller_fax']).disable();
             }
-            if (res.data[0].intake_contact_email  == false) {
+            if (res.data[0].intake_contact_email == false) {
               this.billable_item.get(['intake_call', 'caller_email']).disable();
             }
-            if (res.data[0].intake_notes  == false) {
+            if (res.data[0].intake_notes == false) {
               this.billable_item.get(['intake_call', 'notes']).disable();
             }
           }
@@ -1649,6 +1649,7 @@ export class AppointmentDetailsComponent implements OnInit {
     billableData.intake_call.call_date = this.billable_item.get(['intake_call', 'call_date']).value ? moment(this.billable_item.get(['intake_call', 'call_date']).value).format("MM-DD-YYYY") : null;
     billableData.documents_received = selectedOrderIds;
     billableData['is_appointment_date_change'] = this.is_appointment_date_change;
+    billableData['claimant_id'] = this.billableData.claimant_id;
     console.log(billableData);
     // return
     this.examinerService.updateBillableItem(this.billableData.id, billableData).subscribe(res => {
