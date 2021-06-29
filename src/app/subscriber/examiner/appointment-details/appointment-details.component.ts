@@ -714,60 +714,60 @@ export class AppointmentDetailsComponent implements OnInit {
           //   this.saveButtonStatus = true
           // }
           if (from == 'status' || from == 'auto') {
-            if (res.data[0].examination_status && !res.data[0].examination_status) {
+            if (res.data[0].examination_status == false) {
               this.examinationStatusForm.get('examination_status').disable();
             }
-            if (res.data[0].notes && !res.data[0].notes) {
+            if (res.data[0].notes  == false) {
               this.examinationStatusForm.get('examination_notes').disable();
             }
           }
           if (from == 'bill' || from == 'auto') {
-            if (res.data[0].exam_procedure_type && !res.data[0].exam_procedure_type) {
+            if (res.data[0].exam_procedure_type  == false) {
               this.billable_item.get(['exam_type', 'exam_procedure_type_id']).disable();
             }
-            if (res.data[0].examiner && !res.data[0].examiner) {
+            if (res.data[0].examiner  == false) {
               this.billable_item.get(['appointment', 'examiner_id']).disable();
             }
-            if (res.data[0].date_and_time && !res.data[0].date_and_time) {
+            if (res.data[0].date_and_time  == false) {
               this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).disable();
             }
-            if (res.data[0].duration && !res.data[0].duration) {
+            if (res.data[0].duration  == false) {
               this.billable_item.get(['appointment', 'duration']).disable();
               // if (res.data[0].duration == null) {
               //   this.billable_item.get(['appointment', 'duration']).enable();
               // }
             }
-            if (res.data[0].location && !res.data[0].location) {
+            if (res.data[0].location  == false) {
               this.billable_item.get(['appointment', 'examiner_service_location_id']).disable();
             }
-            if (res.data[0].intake_caller && !res.data[0].intake_caller) {
+            if (res.data[0].intake_caller  == false) {
               this.billable_item.get(['intake_call', 'caller_name']).disable();
             }
-            if (res.data[0].requesting_party && !res.data[0].requesting_party) {
+            if (res.data[0].requesting_party  == false) {
               this.billable_item.get(['intake_call', 'caller_affiliation']).disable();
             }
-            if (res.data[0].items_received && !res.data[0].items_received) {
+            if (res.data[0].items_received  == false) {
               this.billable_item.get('documents_received').disable();
             }
-            if (res.data[0].request_receipt_date && !res.data[0].request_receipt_date) {
+            if (res.data[0].request_receipt_date  == false) {
               this.billable_item.get(['intake_call', 'call_date']).disable();
             }
-            if (res.data[0].communication_type && !res.data[0].communication_type) {
+            if (res.data[0].communication_type  == false) {
               this.billable_item.get(['intake_call', 'call_type']).disable();
             }
-            if (res.data[0].intake_contact_phone && !res.data[0].intake_contact_phone) {
+            if (res.data[0].intake_contact_phone  == false) {
               this.billable_item.get(['intake_call', 'caller_phone']).disable();
             }
-            if (res.data[0].ext && !res.data[0].ext) {
+            if (res.data[0].ext  == false) {
               this.billable_item.get(['intake_call', 'phone_ext']).disable();
             }
-            if (res.data[0].intake_contact_fax && !res.data[0].intake_contact_fax) {
+            if (res.data[0].intake_contact_fax  == false) {
               this.billable_item.get(['intake_call', 'caller_fax']).disable();
             }
-            if (res.data[0].intake_contact_email && !res.data[0].intake_contact_email) {
+            if (res.data[0].intake_contact_email  == false) {
               this.billable_item.get(['intake_call', 'caller_email']).disable();
             }
-            if (res.data[0].intake_notes && !res.data[0].intake_notes) {
+            if (res.data[0].intake_notes  == false) {
               this.billable_item.get(['intake_call', 'notes']).disable();
             }
           }

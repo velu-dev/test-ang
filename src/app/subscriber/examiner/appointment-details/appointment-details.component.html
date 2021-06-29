@@ -454,7 +454,7 @@
                                     <mat-error>Please enter a valid duration between 1 to 450 minutes</mat-error>
                                 </mat-form-field>
                             </div>
-                            <div fxLayout="row wrap">
+                            <div fxLayout="row wrap" *ngIf="!isSuplimental">
                                 <div fxFlex="100" class="note">
                                     <mat-icon>info</mat-icon>For past dates of service the appointment standing is
                                     automatically changed to “attended” and the billable item standing is changed to
