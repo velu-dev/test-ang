@@ -1638,10 +1638,11 @@ export class AppointmentDetailsComponent implements OnInit {
           examiner_service_location_id: null
         }
       })
+      billableData.appointment.examiner_service_location_id = null
     }
     billableData.exam_type.is_psychiatric = this.isChecked;
     billableData.appointment.duration = billableData.appointment.duration == "" ? null : billableData.appointment.duration;
-    billableData.appointment.examiner_id = this.examinerId;
+    // billableData.appointment.examiner_id = this.examinerId;
     console.log(selectedOrderIds)
     billableData.documents_received = selectedOrderIds;
     billableData.id = this.examinationDetails.appointments.id
