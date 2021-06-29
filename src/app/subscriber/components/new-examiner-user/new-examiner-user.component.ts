@@ -423,6 +423,7 @@ export class NewExaminerUserComponent implements OnInit {
 
       this.licenceDataSource = new MatTableDataSource(res.rendering_provider.license_details != null ? res.rendering_provider.license_details : [])
       this.licenseData = res.rendering_provider.license_details != null ? res.rendering_provider.license_details : []
+      console.log( this.licenseData)
       //this.getLocationDetails();
       this.dataSource = new MatTableDataSource(res.service_location != null ? res.service_location : []);
       if (res.service_location != null) {
@@ -1111,7 +1112,14 @@ export class NewExaminerUserComponent implements OnInit {
       } else {
         this.alertService.openSnackBar("Rendering provider updated successfully", 'success');
       }
-      this.renderingForm.get('license_details').patchValue(null)
+      let license_details = []
+      if (render.data.license_details && render.data.license_details.length > 0) {
+        render.data.license_details.map(data => {
+          let details = { id: data.id, license_number: data.state_license_number, state_id: data.state_of_license_id }
+          license_details.push(details)
+        })
+      }
+      this.licenseData = license_details
       this.updateFormData(this.examinerId);
       this.renderingForm.markAsUntouched();
       this.renderingForm.updateValueAndValidity();
