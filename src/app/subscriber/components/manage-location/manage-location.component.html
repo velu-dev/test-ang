@@ -40,7 +40,7 @@
                                 {{ expandId == element.id ? 'remove_circle' : 'add_circle'}}
                             </mat-icon>
                         </span>
-                        <span *ngIf="column == 'service_name'">{{element.service_location_name}}</span>
+                        <span *ngIf="column == 'service_location_name'">{{element.service_location_name}}</span>
                         <span *ngIf="column == 'street1'">{{element.street1}} {{element.street2}} {{element.city}}
                             {{element.state_code}} - {{element.zip_code}}</span>
                         <span *ngIf="column == 'service'">{{element?.service_code}}{{element?.service_name ? ' -
