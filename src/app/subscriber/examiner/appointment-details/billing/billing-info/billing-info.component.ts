@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { MatDialog, MAT_DATE_FORMATS } from '@angular/material';
+import { DateAdapter, MatDialog, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
@@ -30,8 +31,8 @@ export const MY_CUSTOM_FORMATS = {
   selector: 'app-billing-info',
   templateUrl: './billing-info.component.html',
   styleUrls: ['./billing-info.component.scss'],
-  providers: [{ provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
-    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS }]
+  providers: [{ provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] }, { provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
+  { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS }]
 })
 export class BillingInfoComponent implements OnInit, OnDestroy {
   @Input() billingData: any;
@@ -121,7 +122,7 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
   onCancleClick() {
     const dialogRef = this.dialog.open(AlertDialogueComponent, {
       width: '500px',
-      data: { title: 'Date of Service', message: "Date of service goig to empty. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+      data: { title: 'Date of Service', message: "Date of service going to empty. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result.data) {
