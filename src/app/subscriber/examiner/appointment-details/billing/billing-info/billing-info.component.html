@@ -94,13 +94,13 @@
                     <form [formGroup]="dateofServiceForm" (ngSubmit)="dosSubmit()">
                         <div fxLayout="row wrap">
                             <mat-form-field appearance="outline" fxFlex="100">
-                                <input matInput [matDatepicker]="picker"  placeholder="MM-DD-YYYY" formControlName="date_of_service"
+                                <input matInput [matDatepicker]="date_of_service" formControlName="date_of_service"
                                     placeholder="Date of Service">
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-datepicker #picker></mat-datepicker>
+                                <mat-datepicker-toggle matSuffix [for]="date_of_service"></mat-datepicker-toggle>
+                                <mat-datepicker #date_of_service></mat-datepicker>
                             </mat-form-field>
                             <div fxFlex="100" class="text-center">
-                                <button mat-stroked-button type="button" (click)="onCancleClick()"
+                                <button mat-stroked-button type="button" (click)="onCancleClick()" [disabled]="!dateofServiceForm.value.date_of_service"
                                     class="outline-danger">Cancel</button>
                                 <button mat-stroked-button class="outline-success text-center m-l-10">Save</button>
                             </div>

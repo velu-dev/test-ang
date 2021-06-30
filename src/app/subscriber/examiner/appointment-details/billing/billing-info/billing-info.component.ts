@@ -101,7 +101,6 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
     head.appendChild(this.styleElement);
   }
   dosSubmit() {
-    console.log(this.dateofServiceForm.value)
     this.billingService.createDateofService(this.dateofServiceForm.value, this.paramsId.billId).subscribe(res => {
       this.alertService.openSnackBar(res.message, "success");
     }, error => {
@@ -117,7 +116,8 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
       if (result.data) {
         this.dateofServiceForm.patchValue({
           date_of_service: ""
-        })
+        });
+        this.dosSubmit();
       }
     })
   }
