@@ -62,7 +62,7 @@ export class ManageLocationComponent implements OnInit {
         this.columnsToDisplay = ['is_expand', 'examiner_name', "status"]
       } else {
         this.columnName = ["Location Name", "Address", "Service Type", "Phone", "Examiner", "Status"]
-        this.columnsToDisplay = ['service_location_name', 'street1', 'service', 'phone_no', 'examiner_name', "status"]
+        this.columnsToDisplay = ['service_location_name', 'street1', 'service', 'primary_contact_phone', 'examiner_name', "status"]
       }
     })
   }
@@ -74,13 +74,13 @@ export class ManageLocationComponent implements OnInit {
 
   getAddressDetails() {
     this.subscriberService.getLocationDetails().subscribe(response => {
-      this.dataSource = new MatTableDataSource(response['data']);
       response['data'].map(data => {
         data.status = data.is_active == true ? 'Active' : 'Inactive';
         data.examiner_name = data.examiner != null ? data.examiner[0].last_name + ' ' + data.examiner[0].first_name + '' + (data.examiner[0].suffix ? ', ' + data.examiner[0].suffix : '') : null;
         data.service = data.service_name ? data.service_code + ' - ' + data.service_name : '';
         data.service_location_name = data.service_location_name;
       })
+      this.dataSource = new MatTableDataSource(response['data']);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();

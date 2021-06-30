@@ -45,18 +45,14 @@
                             {{element.state_code}} - {{element.zip_code}}</span>
                         <span *ngIf="column == 'service'">{{element?.service_code}}{{element?.service_name ? ' -
                             '+element?.service_name : ''}}</span>
-                        <span *ngIf="column == 'phone_no'" class="no-wrap-td">{{element?.primary_contact_phone ?
+                        <span *ngIf="column == 'primary_contact_phone'" class="no-wrap-td">{{element?.primary_contact_phone ?
                             (element?.primary_contact_phone | mask:'(000) 000-0000') : '' }} {{element?.phone_ext1 ?
                             "Ext: "+element?.phone_ext1 : "" }}</span>
                         <span *ngIf="column == 'examiner_name'">
                             <span
-                                *ngIf="element?.examiner && element?.examiner?.length == 1">{{element?.examiner[0].last_name}}
-                                {{element?.examiner[0].first_name}}{{element?.examiner[0].suffix ? ',
-                                '+element?.examiner[0].suffix : ''}}</span>
+                                *ngIf="element?.examiner && element?.examiner?.length == 1">{{element?.examiner_name}}</span>
                             <span
-                                *ngIf="element?.examiner && element?.examiner?.length != 1">{{element?.examiner[0].last_name}}
-                                {{element?.examiner[0].first_name}}{{element?.examiner[0].suffix ? ',
-                                '+element?.examiner[0].suffix : ''}}<small>,
+                                *ngIf="element?.examiner && element?.examiner?.length != 1">{{element?.examiner_name}}<small>,
                                     (+{{element?.examiner?.length - 1}} more)</small></span>
                             <!-- <small> (+2 more)</small> -->
                         </span>

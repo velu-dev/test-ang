@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MAT_DATE_FORMATS } from '@angular/material';
+import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
 import { AlertService } from 'src/app/shared/services/alert.service';
@@ -16,11 +17,21 @@ export const PICK_FORMATS = {
     monthYearA11yLabel: 'MMMM YYYY',
   }
 };
+export const MY_CUSTOM_FORMATS = {
+  parseInput: 'l LT',
+  fullPickerInput: 'MM-DD-YYYY hh:mm A Z',
+  datePickerInput: 'MM-DD-YYYY hh:mm A Z',
+  timePickerInput: 'LT',
+  monthYearLabel: 'MMM YYYY',
+  dateA11yLabel: 'LL',
+  monthYearA11yLabel: 'MMMM YYYY',
+};
 @Component({
   selector: 'app-billing-info',
   templateUrl: './billing-info.component.html',
   styleUrls: ['./billing-info.component.scss'],
-  providers: [{ provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }]
+  providers: [{ provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS },
+    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS }]
 })
 export class BillingInfoComponent implements OnInit, OnDestroy {
   @Input() billingData: any;
