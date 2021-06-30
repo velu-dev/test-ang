@@ -1,5 +1,5 @@
-  <!-- ===== Bill Status ==== -->
-  <div fxLayout="row wrap" class="p-t-20">
+<!-- ===== Bill Status ==== -->
+<div fxLayout="row wrap" class="p-t-20">
     <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100" class="bill-status">
         <div class="progress">
             <div class="main-title p-l-0">Bill Status</div>
@@ -14,10 +14,10 @@
     </div>
 </div>
 <div fxLayout="row wrap" class="p-t-20">
-    <div fxFlex="50" fxFlex.sm="50" fxFlex.xs="100" >
+    <div fxFlex="50" fxFlex.sm="50" fxFlex.xs="100">
         <div class="bill-id"><span>Bill : </span> {{billingData?.agent_short_code}}{{billingData?.bill_no}}</div>
     </div>
-    <div fxFlex="50" fxFlex.sm="50" fxFlex.xs="100" >
+    <div fxFlex="50" fxFlex.sm="50" fxFlex.xs="100">
         <div class="submission-date"><span>{{review}} Bill Review Submission Date :
             </span>{{billingData?.bill_first_submission_date ? (billingData?.bill_first_submission_date |
             date:'MM-dd-yyyy') : billingData?.on_demand_progress_status}}</div>
@@ -47,8 +47,7 @@
                             <span class="text-danger">
                                 <mat-icon> error</mat-icon> {{incompleteInfo.name}}
                             </span>
-                            <div class="incomplete-details"
-                                *ngIf="isExpandDetail && incompleteInfo?.value?.length > 0">
+                            <div class="incomplete-details" *ngIf="isExpandDetail && incompleteInfo?.value?.length > 0">
                                 <ol>
                                     <li *ngFor="let val of incompleteInfo.value">{{val}}</li>
                                 </ol>
@@ -82,32 +81,36 @@
     </mat-card>
 </div>
 <!-- ===== Date of Service ==== -->
-<!-- <div class="examiner-info">
+<div class="examiner-info"
+    *ngIf=" billingData.procedure_type == 'Supplemental' || billingData.procedure_type == 'IMERecords'">
     <mat-card>
         <mat-card-header>
-            <div class="content-wrapper-main-title">Date of Service</div>
+            <div class="content-wrapper-main-title">{{billingData?.procedure_type}} - Date of Service </div>
         </mat-card-header>
         <mat-divider></mat-divider>
         <mat-card-content>
             <div fxLayout="row wrap" class="p-t-20 provider-information">
                 <div fxFlex="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
-                    <div fxLayout="row wrap">
-                        <mat-form-field appearance="outline" fxFlex="100">
-                            <input matInput [matDatepicker]="picker" placeholder="Date of Service">
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                        </mat-form-field>
-                        <div fxFlex="100" class="text-center">
-                            <button mat-stroked-button type="button" (click)="onNoClick()"
-                                class="outline-danger">Cancel</button>
-                            <button mat-stroked-button class="outline-success text-center m-l-10">Save</button>
+                    <form [formGroup]="dateofServiceForm" (ngSubmit)="dosSubmit()">
+                        <div fxLayout="row wrap">
+                            <mat-form-field appearance="outline" fxFlex="100">
+                                <input matInput [matDatepicker]="picker"  placeholder="MM-DD-YYYY" formControlName="date_of_service"
+                                    placeholder="Date of Service">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                            <div fxFlex="100" class="text-center">
+                                <button mat-stroked-button type="button" (click)="onCancleClick()"
+                                    class="outline-danger">Cancel</button>
+                                <button mat-stroked-button class="outline-success text-center m-l-10">Save</button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </mat-card-content>
     </mat-card>
-</div> -->
+</div>
 
 <!-- ===== Examiner information ==== -->
 <div class="examiner-info">
@@ -134,7 +137,8 @@
                     </div>
                     <div *ngIf="!billingData?.rendering_is_persion">{{billingData?.rendering_provider_name}}</div>
                 </div>
-                <div fxFlex="33.3" fxFlex.xs="100" *ngIf="billingData?.procedure_type != 'Supplemental'" class="margin-20">
+                <div fxFlex="33.3" fxFlex.xs="100" *ngIf="billingData?.procedure_type != 'Supplemental'"
+                    class="margin-20">
                     <div class="p-b-5"><b>Service Location</b> </div>
                     <div *ngIf="!billingData?.is_virtual_location">{{billingData?.service_location_name ?
                         billingData?.service_location_name + ' - ' : ''}}{{billingData?.service_location?.street1 }}

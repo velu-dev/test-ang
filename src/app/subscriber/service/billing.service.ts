@@ -191,4 +191,7 @@ export class BillingService {
     return this.http.get(environment.baseUrl + api_endpoint.dtmGetdata + data.claim_id + "/" + data.billable_item_id + "/" + data.bill_id)
   }
 
+  createDateofService(data, billable_item_id): Observable<any> {
+    return this.http.put(environment.baseUrl + api_endpoint.updatedateOfService + billable_item_id, data)
+  }
 }

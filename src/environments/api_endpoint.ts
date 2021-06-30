@@ -183,6 +183,7 @@ export const api_endpoint = {
     listExaminationUploadedDocs: "billing/ondemand/examination-document-list/",
     uploadCustomDoc: 'billing/custom-document-upload',
     dtmGetdata: 'service-requests/billing/tracking/',
+    updatedateOfService: "billable-item/update-dos/",
 
     //billing
     createbill: 'billing/create/',

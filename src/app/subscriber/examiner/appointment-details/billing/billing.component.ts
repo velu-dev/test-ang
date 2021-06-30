@@ -323,6 +323,7 @@ export class BilllableBillingComponent implements OnInit {
 
   getBillingDetails(status?) {
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId, this.billingId).subscribe(billing => {
+      console.log(billing)
       if (billing.data) {
         this.billingData = billing.data;
         if (!billing.data) {

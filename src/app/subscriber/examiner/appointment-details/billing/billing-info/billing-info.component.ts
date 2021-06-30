@@ -1,11 +1,26 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { MatDialog, MAT_DATE_FORMATS } from '@angular/material';
 import { IntercomService } from 'src/app/services/intercom.service';
+import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
+import { AlertService } from 'src/app/shared/services/alert.service';
 import { BillingService } from 'src/app/subscriber/service/billing.service';
-
+export const PICK_FORMATS = {
+  parse: {
+    dateInput: 'MM-DD-YYYY',
+  },
+  display: {
+    dateInput: 'MM-DD-YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'MM-DD-YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
+  }
+};
 @Component({
   selector: 'app-billing-info',
   templateUrl: './billing-info.component.html',
-  styleUrls: ['./billing-info.component.scss']
+  styleUrls: ['./billing-info.component.scss'],
+  providers: [{ provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS }]
 })
 export class BillingInfoComponent implements OnInit, OnDestroy {
   @Input() billingData: any;
@@ -18,7 +33,8 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
   payerResponse: any = [];
   styleElement: HTMLStyleElement;
   subscription: any;
-  constructor(public billingService: BillingService, private intercom: IntercomService) {
+  dateofServiceForm: any;
+  constructor(public dialog: MatDialog, private formBuilder: FormBuilder, public billingService: BillingService, private intercom: IntercomService, private alertService: AlertService) {
     this.subscription = this.intercom.getBillDiagnosisChange().subscribe(res => {
       this.billingService.getIncompleteInfo(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, { isPopupValidate: false }).subscribe(res => {
         this.isIncompleteError = true;
@@ -35,6 +51,10 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.dateofServiceForm = this.formBuilder.group({
+      claim_id: [this.paramsId.claim_id],
+      date_of_service: [null]
+    });
     this.styleElement = document.createElement("style");
     this.changeColors("#cccccc");
     this.billingService.getIncompleteInfo(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, { isPopupValidate: false }).subscribe(res => {
@@ -43,7 +63,10 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
       this.isIncompleteError = false;
       this.incompleteInformation = error.error.data;
     })
-
+    this.dateofServiceForm.patchValue({
+      claim_id: this.paramsId.claim_id,
+      date_of_service: this.billingData.date_of_service
+    })
     for (let payer in this.billingData.payor_response_messages) {
       if (this.billingData.payor_response_messages[payer].payor_response_status == 'R') {
         if (this.billingData.payor_response_messages[payer].payor_response_message.length) {
@@ -77,5 +100,25 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
     this.styleElement.appendChild(document.createTextNode(css));
     head.appendChild(this.styleElement);
   }
-
+  dosSubmit() {
+    console.log(this.dateofServiceForm.value)
+    this.billingService.createDateofService(this.dateofServiceForm.value, this.paramsId.billId).subscribe(res => {
+      this.alertService.openSnackBar(res.message, "success");
+    }, error => {
+      this.alertService.openSnackBar(error.message.message, 'error');
+    })
+  }
+  onCancleClick() {
+    const dialogRef = this.dialog.open(AlertDialogueComponent, {
+      width: '500px',
+      data: { title: 'Date of Service', message: "Date of service goig to empty. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.data) {
+        this.dateofServiceForm.patchValue({
+          date_of_service: ""
+        })
+      }
+    })
+  }
 }
