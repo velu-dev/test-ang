@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DateAdapter, MatDialog, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import * as moment from 'moment';
 import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
@@ -122,7 +123,7 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
       this.alertService.openSnackBar("Please select date of service", 'error')
       return
     }
-    let data = { "examiner_id": this.billingData.examiner_id, "claimant_id": this.paramsId.claimant_id, "claim_id": this.paramsId.claim_id, "date_of_service": this.dateofServiceForm.get('date_of_service').value }
+    let data = { "examiner_id": this.billingData.examiner_id, "claimant_id": this.paramsId.claimant_id, "claim_id": this.paramsId.claim_id, "date_of_service": moment(this.dateofServiceForm.get('date_of_service').value).format("YYYY-MM-DD") }
     this.billingService.getOverlap(data).subscribe(res => {
       if (res.data) {
         if (res.data.is_overlap) {
@@ -142,6 +143,7 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
     })
   }
   dosSubmit() {
+    this.dateofServiceForm.get('date_of_service').patchValue(moment(this.dateofServiceForm.get('date_of_service').value).format("YYYY-MM-DD"))
     this.billingService.createDateofService(this.dateofServiceForm.value, this.paramsId.billId).subscribe(res => {
       this.alertService.openSnackBar(res.message, "success");;
       this.getIncomplete();
