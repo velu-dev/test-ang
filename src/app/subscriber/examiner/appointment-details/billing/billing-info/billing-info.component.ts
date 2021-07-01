@@ -118,7 +118,10 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
     head.appendChild(this.styleElement);
   }
   saveClicked() {
-    console.log(this.paramsId)
+    if (!this.dateofServiceForm.get('date_of_service').value) {
+      this.alertService.openSnackBar("Please select date of service", 'error')
+      return
+    }
     let data = { "examiner_id": this.billingData.examiner_id, "claimant_id": this.paramsId.claimant_id, "claim_id": this.paramsId.claim_id, "date_of_service": this.dateofServiceForm.get('date_of_service').value }
     this.billingService.getOverlap(data).subscribe(res => {
       if (res.data) {
