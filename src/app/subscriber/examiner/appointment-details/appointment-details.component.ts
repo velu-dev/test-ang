@@ -1522,7 +1522,7 @@ export class AppointmentDetailsComponent implements OnInit {
     if (this.billable_item.invalid) {
       return;
     }
-    if (moment(this.billableData.appointment.appointment_scheduled_date_time).isSameOrBefore(moment(this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value))) {
+    if (moment(this.billableData.appointment.appointment_scheduled_date_time).isSame(moment(this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value))) {
       this.is_appointment_date_change = false;
     } else {
       this.is_appointment_date_change = true;
@@ -1567,6 +1567,21 @@ export class AppointmentDetailsComponent implements OnInit {
         })
         return
       }
+
+      if (moment(this.billableData.appointment.appointment_scheduled_date_time).isBefore(moment()) && moment(this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value).isAfter(moment())) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: 'Deposition', message: "This updates the Deposition Status as 'No Confirmed'!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result.data) {
+            this.updateBillableItem();
+          } else {
+            return;
+          }
+        })
+        return;
+      }
     }
 
     if (this.examinationDetails.procedure_type == "Evaluation" || this.examinationDetails.procedure_type == "Reevaluation") {
@@ -1601,6 +1616,21 @@ export class AppointmentDetailsComponent implements OnInit {
           })
           return
         }
+      }
+
+      if (moment(this.billableData.appointment.appointment_scheduled_date_time).isBefore(moment()) && moment(this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value).isAfter(moment())) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: { title: 'Examination', message: "This updates the Examination Status as 'Not Confirmed'!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result.data) {
+            this.updateBillableItem();
+          } else {
+            return;
+          }
+        })
+        return;
       }
       if ((this.examinationStatusForm.getRawValue().examination_status != 1)) {
         if (!this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value) {
