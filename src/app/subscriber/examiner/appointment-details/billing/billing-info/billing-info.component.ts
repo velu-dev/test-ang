@@ -126,10 +126,10 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
     let data = { "examiner_id": this.billingData.examiner_id, "claimant_id": this.paramsId.claimant_id, "claim_id": this.paramsId.claim_id, "date_of_service": moment(this.dateofServiceForm.get('date_of_service').value).format("YYYY-MM-DD") }
     this.billingService.getOverlap(data).subscribe(res => {
       if (res.data) {
-        if (res.data.is_overlap) {
+        if (!res.data.is_overlap) {
           const dialogRef = this.dialog.open(AlertDialogueComponent, {
             width: '500px',
-            data: { title: 'Date of Service', message: "The Examiner or the Claimant already has an appointment at the selected time.", yes: true, no: true, type: "info", info: true }
+            data: { title: 'Date of Service', message: "There is already a billable item for this claim and date of service.", cancel: true, proceed: true, type: "info", info: true }
           });
           dialogRef.afterClosed().subscribe(result => {
             if (result.data) {

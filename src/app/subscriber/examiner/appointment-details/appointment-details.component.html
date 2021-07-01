@@ -198,8 +198,8 @@
         <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100">
             <form [formGroup]="examinationStatusForm">
                 <div fxLayout="row wrap" class="examination-status">
-                    <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100" class="m-t-0 p-r-10">{{procedureType}}
-                        {{supplemenalStatus.examination_status == 16 ?
+                    <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100" class="m-t-0 p-r-10">{{procedureType ==
+                        'IMERecords' ? "IME Records" : procedureType}} {{supplemenalStatus.examination_status == 16 ?
                         "Cancelled" : ""}} <span *ngIf="!isIME" class="custom-info supplemental regulation"
                             (click)="openPopupRegulation(regulation?.regulationsForAppointmentNotification?.title, regulation?.regulationsForAppointmentNotification?.codes)"><i
                                 class="material-icons-outlined">info</i><sup>Regulations</sup></span></div>
@@ -231,11 +231,11 @@
                 <button *ngIf="supplemenalStatus.examination_status != 16 && supplemenalStatus.examination_status != 35"
                     mat-raised-button (click)="changeEditStatus()" [disabled]="isExaminationStatusEdit"
                     class="filled-gray edit_btn hide-mobile hide-sm">Cancel
-                    {{procedureType}}</button>
+                    {{procedureType == 'IMERecords' ? "IME Records" : procedureType}}</button>
                 <button *ngIf="supplemenalStatus.examination_status == 16 || supplemenalStatus.examination_status == 35"
                     mat-raised-button (click)="supplementalreopen(null)"
                     class="filled-gray edit_btn hide-mobile hide-sm">Reopen
-                    {{procedureType}}</button>
+                    {{procedureType == 'IMERecords' ? "IME Records" : procedureType}}</button>
                 <!-- <button *ngIf="!isExaminationStatusEdit" mat-raised-button (click)="changeEditStatus()"
                     class="filled-gray edit_btn hide-mobile hide-sm"
                     [disabled]="disableExaminationArr.includes(examinationDetails?.appointments?.examination_status) || isFreeze">Close</button>
