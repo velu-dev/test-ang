@@ -184,6 +184,7 @@ export const api_endpoint = {
     uploadCustomDoc: 'billing/custom-document-upload',
     dtmGetdata: 'service-requests/billing/tracking/',
     updatedateOfService: "billable-item/update-dos/",
+    getOverlap: "billing/dos-overlap",
 
     //billing
     createbill: 'billing/create/',

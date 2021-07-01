@@ -194,4 +194,7 @@ export class BillingService {
   createDateofService(data, billable_item_id): Observable<any> {
     return this.http.put(environment.baseUrl + api_endpoint.updatedateOfService + billable_item_id, data)
   }
+  getOverlap(data): Observable<any> {
+    return this.http.post(environment.baseUrl + api_endpoint.getOverlap, data)
+  }
 }

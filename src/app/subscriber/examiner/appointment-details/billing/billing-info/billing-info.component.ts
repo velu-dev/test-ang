@@ -39,6 +39,7 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
   @Input() paramsId: any;
   @Input() isMobile: any;
   @Input() review: string;
+  isDOS = false;
   incompleteInformation: any;
   isIncompleteError: any = true;
   isExpandDetail = true;
@@ -57,11 +58,12 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
     })
 
     this.subscription = this.intercom.getBillingDetails().subscribe(res => {
+      this.examinerId = res.examiner_id;
       this.billingData = res;
       this.ngOnInit();
     })
   }
-
+  examinerId = null;
   ngOnInit() {
     this.dateofServiceForm = this.formBuilder.group({
       claim_id: [this.paramsId.claim_id],
@@ -111,6 +113,25 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
     this.styleElement.type = "text/css";
     this.styleElement.appendChild(document.createTextNode(css));
     head.appendChild(this.styleElement);
+  }
+  saveClicked() {
+    console.log(this.paramsId)
+    let data = { "examiner_id": this.billingData.examiner_id, "claimant_id": this.paramsId.claimant_id, "claim_id": this.paramsId.claim_id, "date_of_service": this.dateofServiceForm.get('date_of_service').value }
+    this.billingService.getOverlap(data).subscribe(res => {
+      if (res.data) {
+        if (res.data.is_overlap) {
+          const dialogRef = this.dialog.open(AlertDialogueComponent, {
+            width: '500px',
+            data: { title: 'Date of Service', message: "The Examiner or the Claimant already has an appointment at the selected time.", yes: true, no: true, type: "info", info: true }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            if (result.data) {
+              this.dosSubmit();
+            }
+          })
+        }
+      }
+    })
   }
   dosSubmit() {
     this.billingService.createDateofService(this.dateofServiceForm.value, this.paramsId.billId).subscribe(res => {

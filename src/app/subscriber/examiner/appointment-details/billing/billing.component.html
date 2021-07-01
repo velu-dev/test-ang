@@ -6,20 +6,22 @@
             [disabled]="!(sbrPaymentStatus?.bill_paid_status?.toLowerCase() == 'partially paid' || sbrPaymentStatus?.bill_paid_status?.toLowerCase() == 'rejected' || secondBillId)">
 
         </mat-tab>
-        <mat-tab label="Independent Bill Review" 
-         [disabled]="!(ibrPaymentStatus?.bill_paid_status?.toLowerCase() == 'partially paid' || ibrPaymentStatus?.bill_paid_status?.toLowerCase() == 'rejected' || independentBillId)">
+        <mat-tab label="Independent Bill Review"
+            [disabled]="!(ibrPaymentStatus?.bill_paid_status?.toLowerCase() == 'partially paid' || ibrPaymentStatus?.bill_paid_status?.toLowerCase() == 'rejected' || independentBillId)">
             <!-- ===== Independent Bill Submission ===== -->
         </mat-tab>
     </mat-tab-group>
 
     <div *ngIf="billingData">
-        <app-billing-info [review]="review" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
+        <app-billing-info [tabIndex]="tabIndex" [review]="review" [paramsId]="paramsId" [billingData]="billingData"
+            [isMobile]="isMobile">
         </app-billing-info>
 
         <app-diagnosis-code [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
         </app-diagnosis-code>
 
-        <app-bill-line-item [review]="review" [billType]="tabIndex + 1" [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
+        <app-bill-line-item [review]="review" [billType]="tabIndex + 1" [paramsId]="paramsId"
+            [billingData]="billingData" [isMobile]="isMobile">
         </app-bill-line-item>
 
         <mat-card class="fbr-pay-response" *ngIf="billingData">
@@ -27,7 +29,8 @@
                 <mat-tab label="Payment response">
                     <mat-card class="fbr-mat-card">
                         <app-payment-response [paramsId]="paramsId" [billingData]="billingData"
-                            (getPaymentStatus)="getPaymentStatus($event)" [voidType]="voidType" [paidStatusData]="paidStatusData">
+                            (getPaymentStatus)="getPaymentStatus($event)" [voidType]="voidType"
+                            [paidStatusData]="paidStatusData">
                         </app-payment-response>
                     </mat-card>
                 </mat-tab>

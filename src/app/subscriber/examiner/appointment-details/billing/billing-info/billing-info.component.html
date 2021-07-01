@@ -81,8 +81,8 @@
     </mat-card>
 </div>
 <!-- ===== Date of Service ==== -->
-<div class="examiner-info">
-    <!-- *ngIf=" billingData.procedure_type == 'Supplemental' || billingData.procedure_type == 'IMERecords'"> -->
+<div class="examiner-info"
+    *ngIf="(billingData.procedure_type == 'Supplemental' || billingData.procedure_type == 'IMERecords') && review == 'First'">
     <mat-card>
         <mat-card-header>
             <div class="content-wrapper-main-title">{{billingData?.procedure_type}} - Date of Service </div>
@@ -91,7 +91,7 @@
         <mat-card-content>
             <div fxLayout="row wrap" class="p-t-20 provider-information">
                 <div fxFlex="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="33.3" fxFlex.sm="50" fxFlex.xs="100">
-                    <form [formGroup]="dateofServiceForm" (ngSubmit)="dosSubmit()">
+                    <form [formGroup]="dateofServiceForm" (ngSubmit)="saveClicked()">
                         <div fxLayout="row wrap">
                             <mat-form-field appearance="outline" fxFlex="100">
                                 <input matInput [matDatepicker]="date_of_service" formControlName="date_of_service"
@@ -100,7 +100,8 @@
                                 <mat-datepicker #date_of_service></mat-datepicker>
                             </mat-form-field>
                             <div fxFlex="100" class="text-center">
-                                <button mat-stroked-button type="button" (click)="onCancleClick()" [disabled]="!dateofServiceForm.value.date_of_service"
+                                <button mat-stroked-button type="button" (click)="onCancleClick()"
+                                    [disabled]="!dateofServiceForm.value.date_of_service"
                                     class="outline-danger">Cancel</button>
                                 <button mat-stroked-button class="outline-success text-center m-l-10">Save</button>
                             </div>
