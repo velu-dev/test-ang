@@ -49,18 +49,21 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
   dateofServiceForm: any;
   constructor(public dialog: MatDialog, private formBuilder: FormBuilder, public billingService: BillingService, private intercom: IntercomService, private alertService: AlertService) {
     this.subscription = this.intercom.getBillDiagnosisChange().subscribe(res => {
-      this.billingService.getIncompleteInfo(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, { isPopupValidate: false }).subscribe(res => {
-        this.isIncompleteError = true;
-      }, error => {
-        this.isIncompleteError = false;
-        this.incompleteInformation = error.error.data;
-      })
+      this.getIncomplete();
     })
 
     this.subscription = this.intercom.getBillingDetails().subscribe(res => {
       this.examinerId = res.examiner_id;
       this.billingData = res;
       this.ngOnInit();
+    })
+  }
+  getIncomplete() {
+    this.billingService.getIncompleteInfo(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, { isPopupValidate: false }).subscribe(res => {
+      this.isIncompleteError = true;
+    }, error => {
+      this.isIncompleteError = false;
+      this.incompleteInformation = error.error.data;
     })
   }
   examinerId = null;
@@ -129,13 +132,16 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
               this.dosSubmit();
             }
           })
+        } else {
+          this.dosSubmit();
         }
       }
     })
   }
   dosSubmit() {
     this.billingService.createDateofService(this.dateofServiceForm.value, this.paramsId.billId).subscribe(res => {
-      this.alertService.openSnackBar(res.message, "success");
+      this.alertService.openSnackBar(res.message, "success");;
+      this.getIncomplete();
     }, error => {
       this.alertService.openSnackBar(error.message.message, 'error');
     })
