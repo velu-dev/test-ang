@@ -143,7 +143,8 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
     })
   }
   dosSubmit() {
-    this.dateofServiceForm.get('date_of_service').patchValue(moment(this.dateofServiceForm.get('date_of_service').value).format("YYYY-MM-DD"))
+    if (this.dateofServiceForm.get('date_of_service').value)
+      this.dateofServiceForm.get('date_of_service').patchValue(moment(this.dateofServiceForm.get('date_of_service').value).format("YYYY-MM-DD"))
     this.billingService.createDateofService(this.dateofServiceForm.value, this.paramsId.billId).subscribe(res => {
       this.alertService.openSnackBar(res.message, "success");;
       this.getIncomplete();
