@@ -1552,26 +1552,27 @@ export class AppointmentDetailsComponent implements OnInit {
         })
         return
       }
-
-      if (((this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value != this.billableData.appointment.appointment_scheduled_date_time) || (this.billable_item.get(['appointment', 'duration']).value != this.billableData.appointment.duration)) && (this.examinationStatusForm.getRawValue().examination_status != 12)) {
-        const dialogRef = this.dialog.open(AlertDialogueComponent, {
-          width: '500px',
-          data: { title: 'Deposition', message: "This updates the Deposition Status as 'No Confirmed'!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          if (result.data) {
-            this.updateBillableItem();
-          } else {
-            return;
-          }
-        })
-        return
+      if (!this.billableData.appointment.appointment_scheduled_date_time) {
+        if (((this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value != this.billableData.appointment.appointment_scheduled_date_time) || (this.billable_item.get(['appointment', 'duration']).value != this.billableData.appointment.duration)) && (this.examinationStatusForm.getRawValue().examination_status != 12)) {
+          const dialogRef = this.dialog.open(AlertDialogueComponent, {
+            width: '500px',
+            data: { title: 'Deposition', message: "This updates the Deposition Status as 'Not Confirmed'!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            if (result.data) {
+              this.updateBillableItem();
+            } else {
+              return;
+            }
+          })
+          return
+        }
       }
 
       if (moment(this.billableData.appointment.appointment_scheduled_date_time).isBefore(moment()) && moment(this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value).isAfter(moment())) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
-          data: { title: 'Deposition', message: "This updates the Deposition Status as 'No Confirmed'!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
+          data: { title: 'Deposition', message: "This updates the Deposition Status as 'Not Confirmed'!.<br/>Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
         });
         dialogRef.afterClosed().subscribe(result => {
           if (result.data) {
