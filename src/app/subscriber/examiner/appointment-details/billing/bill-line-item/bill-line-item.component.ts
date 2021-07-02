@@ -278,6 +278,11 @@ export class BillLineItemComponent implements OnInit {
       }
     }
 
+    if(this.getFormControls.controls && this.getFormControls.controls.length >= 50){
+      this.alertService.openSnackBar("Maximum 50 Bill Line Item will be allowed here!", 'error');
+      return;
+    }
+
 
     const control = this.userTable.get('tableRows') as FormArray;
     control.push(this.initiateForm());
