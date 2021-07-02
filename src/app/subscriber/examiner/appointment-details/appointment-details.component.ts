@@ -522,7 +522,7 @@ export class AppointmentDetailsComponent implements OnInit {
           //   this.documentList.splice(ind, 1);
           // }
           if (this.examinationDetails.procedure_type == "Deposition") {
-            let documentListArr = [6, 8, 9];
+            let documentListArr = [6, 8, 9, 12];
             let documentList: any = this.documentList;
             this.documentList = []
             documentList.map(data => {
