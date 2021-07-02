@@ -1346,7 +1346,7 @@
                                                 <mat-label>Date & Time</mat-label>
                                                 <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM"
                                                     formControlName="appointment_scheduled_date_time" autocomplete="off"
-                                                    [owlDateTime]="appointment" [value]="appointment_scheduled_date_time"
+                                                    [owlDateTime]="appointment" [min]="claimantDetails?.date_of_birth" [value]="appointment_scheduled_date_time"
                                                     (dateTimeChange)="changeDateType(billable_item?.value?.appointment?.appointment_scheduled_date_time)">
                                                 <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment">
                                                 </mat-datepicker-toggle>
