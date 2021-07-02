@@ -59,6 +59,13 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
       this.ngOnInit();
     })
   }
+  ngAfterContentInit() {
+    if (this.review != 'First') {
+      this.dateofServiceForm.disable();
+    } else {
+      this.dateofServiceForm.enable();
+    }
+  }
   getIncomplete() {
     this.billingService.getIncompleteInfo(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, { isPopupValidate: false }).subscribe(res => {
       this.isIncompleteError = true;

@@ -82,10 +82,10 @@
 </div>
 <!-- ===== Date of Service ==== -->
 <div class="examiner-info"
-    *ngIf="(billingData.procedure_type == 'Supplemental' || billingData.procedure_type == 'IMERecords') && review == 'First'">
+    *ngIf="(billingData.procedure_type == 'Supplemental' || billingData.procedure_type == 'IMERecords')">
     <mat-card>
         <mat-card-header>
-            <div class="content-wrapper-main-title">{{billingData?.procedure_type}} - Date of Service </div>
+            <div class="content-wrapper-main-title">{{billingData?.procedure_type}} - Date of Service {{review}}</div>
         </mat-card-header>
         <mat-divider></mat-divider>
         <mat-card-content>
@@ -96,10 +96,11 @@
                             <mat-form-field appearance="outline" fxFlex="100">
                                 <input matInput [matDatepicker]="date_of_service" formControlName="date_of_service"
                                     placeholder="Date of Service">
-                                <mat-datepicker-toggle matSuffix [for]="date_of_service"></mat-datepicker-toggle>
+                                <mat-datepicker-toggle matSuffix [for]="date_of_service" [disabled]="review != 'First'">
+                                </mat-datepicker-toggle>
                                 <mat-datepicker #date_of_service></mat-datepicker>
                             </mat-form-field>
-                            <div fxFlex="100" class="text-center">
+                            <div fxFlex="100" class="text-center" *ngIf="review == 'First'">
                                 <button mat-stroked-button type="button" (click)="onCancleClick()"
                                     [disabled]="!dateofServiceForm.value.date_of_service"
                                     class="outline-danger">Cancel</button>
