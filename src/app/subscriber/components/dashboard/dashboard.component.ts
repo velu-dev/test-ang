@@ -96,6 +96,46 @@ export class DashboardComponent implements OnInit {
   selectedData: any;
   getDashboardData(status?) {
     var filteredData = [];
+    if (status == 'claimant_without_claims') {
+      this.isHandset$.subscribe(res => {
+        this.isMobile = res;
+        if (res) {
+          this.columnName = ["", "Claimant", "Date Of Birth", "Phone"];
+          this.columnsToDisplay = ["is_expand", "date_of_birth", "phone"];
+        } else {
+          this.columnName = ["", "Claimant", "Date Of Birth", "Phone"];
+          this.columnsToDisplay = ["is_expand", "date_of_birth", "phone"];
+        }
+      })
+    }
+    if (status == 'claim_without_billable_item') {
+      this.isHandset$.subscribe(res => {
+        this.isMobile = res;
+        if (res) {
+          this.columnName = ["", "Claimant", "Exam Type"];
+          this.columnsToDisplay = ["is_expand", "claimant_name", "exam_type"];
+        } else {
+          this.columnName = ["", "Claimant", "Exam Type", "Claim Number", "Body Parts"];
+          this.columnsToDisplay = ["is_expand", "claimant_name", "exam_type", "claim_number", "body_parts"];
+        }
+      })
+    }
+    if (status == "awaiting_appointment_details" || status == "submit_correspondence" || status == "confirm_appointment" || status == "bill_report" || status == "collect_on_payment") {
+      this.isHandset$.subscribe(res => {
+        this.isMobile = res;
+        if (res) {
+          this.columnName = ["", "Claimant", "Critical"]
+          this.columnsToDisplay = ['is_expand', 'claimant_first_name', "is_critical"]
+        } else {
+          this.columnName = ["", "Claimant", "Date of Birth", "Examiner", "Exam Procedure Type", "Standing", "Date of Service /" + '\n' + "Date Item Received", "Standing Due Date", "Report Submission" + '\n' + "Due Date", "Critical"]
+          this.columnsToDisplay = ['is_expand', 'claimant_first_name', 'date_of_birth', 'examiner_first_name', "exam_procedure_name", "standing", 'appointment_scheduled_date_time', 'due_date', 'report_submission_due_date', 'is_critical']
+        }
+      })
+    }
+    if (status == 'collect_bills') {
+      this.columnName = ["", "Claimant", "Critical"]
+      this.columnsToDisplay = []
+    }
     if (this.selectedTile == status) {
       this.selectedTile = "";
       filteredData = this.allData;
@@ -198,7 +238,7 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['subscriber/new-intake'])
     }
   }
-  openAlert(){
+  openAlert() {
     alert("Hi")
   }
   openExtract(element, type) {

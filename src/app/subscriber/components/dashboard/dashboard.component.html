@@ -26,8 +26,8 @@
     <div fxLayout="row wrap">
         <div fxFlex="12.5" fxFlex.xl="12.5" fxFlex.lg="12.5" fxFlex.md="12.5" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
             <mat-card matRipple class="simple-card"
-                [ngClass]="{'active': selectedTile == 'awaiting_appointment_details'}"
-                (click)="getDashboardData('awaiting_appointment_details')">
+                [ngClass]="{'active': selectedTile == 'claimant_without_claims'}"
+                (click)="getDashboardData('claimant_without_claims')">
                 <mat-card-content>
                     <h4>Claimants without claims</h4>
                     <ul>
@@ -40,8 +40,8 @@
         </div>
         <div fxFlex="12.5" fxFlex.xl="12.5" fxFlex.lg="12.5" fxFlex.md="12.5" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
             <mat-card matRipple class="simple-card"
-                [ngClass]="{'active': selectedTile == 'awaiting_appointment_details'}"
-                (click)="getDashboardData('awaiting_appointment_details')">
+                [ngClass]="{'active': selectedTile == 'claim_without_billable_item'}"
+                (click)="getDashboardData('claim_without_billable_item')">
                 <mat-card-content>
                     <h4>Claims without billable items</h4>
                     <ul>
@@ -124,8 +124,8 @@
         </div>
 
         <div fxFlex="12.5" fxFlex.xl="12.5" fxFlex.lg="12.5" fxFlex.md="12.5" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
-            <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'collect_on_payment'}"
-                (click)="getDashboardData('collect_on_payment')">
+            <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'collect_bills'}"
+                (click)="getDashboardData('collect_bills')">
                 <mat-card-content>
                     <h4>Closed Bills</h4>
                     <ul>
