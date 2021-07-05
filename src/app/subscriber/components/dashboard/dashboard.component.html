@@ -24,7 +24,35 @@
 
 <div fxLayout="column" fxLayoutGap="25px" class="filter-card">
     <div fxLayout="row wrap">
-        <div fxFlex="20" fxFlex.xl="20" fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
+        <div fxFlex="12.5" fxFlex.xl="12.5" fxFlex.lg="12.5" fxFlex.md="12.5" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
+            <mat-card matRipple class="simple-card"
+                [ngClass]="{'active': selectedTile == 'awaiting_appointment_details'}"
+                (click)="getDashboardData('awaiting_appointment_details')">
+                <mat-card-content>
+                    <h4>Claimants without claims</h4>
+                    <ul>
+                        <li>&nbsp;</li>
+                        <li></li>
+                        <li>345</li>
+                    </ul>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div fxFlex="12.5" fxFlex.xl="12.5" fxFlex.lg="12.5" fxFlex.md="12.5" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
+            <mat-card matRipple class="simple-card"
+                [ngClass]="{'active': selectedTile == 'awaiting_appointment_details'}"
+                (click)="getDashboardData('awaiting_appointment_details')">
+                <mat-card-content>
+                    <h4>Claims without billable items</h4>
+                    <ul>
+                        <li>&nbsp;</li>
+                        <li></li>
+                        <li>43535</li>
+                    </ul>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div fxFlex="12.5" fxFlex.xl="12.5" fxFlex.lg="12.5" fxFlex.md="12.5" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
             <mat-card matRipple class="simple-card"
                 [ngClass]="{'active': selectedTile == 'awaiting_appointment_details'}"
                 (click)="getDashboardData('awaiting_appointment_details')">
@@ -39,7 +67,7 @@
             </mat-card>
         </div>
 
-        <div fxFlex="20" fxFlex.xl="20" fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
+        <div fxFlex="12.5" fxFlex.xl="12.5" fxFlex.lg="12.5" fxFlex.md="12.5" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
             <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'submit_correspondence'}"
                 (click)="getDashboardData('submit_correspondence')">
                 <mat-card-content>
@@ -53,7 +81,7 @@
             </mat-card>
         </div>
 
-        <div fxFlex="20" fxFlex.xl="20" fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
+        <div fxFlex="12.5" fxFlex.xl="12.5" fxFlex.lg="12.5" fxFlex.md="12.5" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
             <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'confirm_appointment'}"
                 (click)="getDashboardData('confirm_appointment')">
                 <mat-card-content>
@@ -67,7 +95,7 @@
             </mat-card>
         </div>
 
-        <div fxFlex="20" fxFlex.xl="20" fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
+        <div fxFlex="12.5" fxFlex.xl="12.5" fxFlex.lg="12.5" fxFlex.md="12.5" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
             <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'bill_report'}"
                 (click)="getDashboardData('bill_report')">
                 <mat-card-content>
@@ -81,7 +109,7 @@
             </mat-card>
         </div>
 
-        <div fxFlex="20" fxFlex.xl="20" fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
+        <div fxFlex="12.5" fxFlex.xl="12.5" fxFlex.lg="12.5" fxFlex.md="12.5" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
             <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'collect_on_payment'}"
                 (click)="getDashboardData('collect_on_payment')">
                 <mat-card-content>
@@ -90,6 +118,20 @@
                         <li>{{criticalCount?.collect_on_payment}}</li>
                         <li></li>
                         <li>{{totalCount?.collect_on_payment}}</li>
+                    </ul>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+        <div fxFlex="12.5" fxFlex.xl="12.5" fxFlex.lg="12.5" fxFlex.md="12.5" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
+            <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'collect_on_payment'}"
+                (click)="getDashboardData('collect_on_payment')">
+                <mat-card-content>
+                    <h4>Closed Bills</h4>
+                    <ul>
+                        <li>0</li>
+                        <li></li>
+                        <li>89</li>
                     </ul>
                 </mat-card-content>
             </mat-card>
