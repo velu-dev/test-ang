@@ -41,7 +41,8 @@
     div {
         div {
             mat-card.simple-card {
-                max-height: 115px;
+                padding: 10px 15px;
+                min-height: 156px;
                 text-align: center;
                 border: 2px solid $black;
                 box-shadow: $box-shadow-7;
@@ -56,7 +57,7 @@
                 }
                 mat-card-content {
                     h4 {
-                        min-height: 42px;
+                        min-height: 75px;
                         margin-bottom: 0;
                         font-size: $font-size-2;
                     }
