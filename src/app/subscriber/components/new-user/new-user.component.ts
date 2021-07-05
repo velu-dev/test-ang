@@ -76,6 +76,7 @@ export class NewUserComponent implements OnInit {
   ) {
 
     this.user = JSON.parse(this.cookieService.get('user'));
+    this.user['role_id'] = this.cookieService.get('role_id')
     if (this.user.organization_type == 'INDV') {
       this.user.company_name = '';
     }

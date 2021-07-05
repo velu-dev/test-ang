@@ -43,11 +43,16 @@
             mat-card.simple-card {
                 padding: 10px 15px;
                 min-height: 156px;
+                max-height: 156px;
                 text-align: center;
                 border: 2px solid $black;
                 box-shadow: $box-shadow-7;
                 cursor: pointer;
                 height: auto;
+                @media screen and (max-width: 1024px) and (min-width: 320px) {
+                    min-height: 108px;
+                    max-height: 108px;
+                }
                 &:hover {
                     background: $light-color;
                     box-shadow: $shadow-style-one;
@@ -60,6 +65,9 @@
                         min-height: 75px;
                         margin-bottom: 0;
                         font-size: $font-size-2;
+                        @media screen and (max-width: 1024px) and (min-width: 320px) {
+                            min-height: auto;
+                        }
                     }
                     ul {
                         padding: 0;
@@ -165,7 +173,6 @@
                                             top: 0;
                                             right: 5px;
                                         }
-                                        
                                     }
                                 }
                             }
