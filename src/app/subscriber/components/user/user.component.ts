@@ -68,7 +68,6 @@ export class UserComponent implements OnInit {
   ) {
     this.user = JSON.parse(this.cookieService.get('user'));
     this.user['role_id'] = this.cookieService.get('role_id')
-    console.log(this.user)
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (this.isMobile) {
