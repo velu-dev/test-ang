@@ -53,6 +53,7 @@ export class AddEditServiceLocationComponent implements OnInit {
       console.log("error", error)
     })
     this.user = JSON.parse(this.cookieService.get('user'));
+    this.user['role_id'] = this.cookieService.get('role_id')
     this.route.params.subscribe(params_res => {
       // this.locationForm.enable();
       // this.editStatus = true;
