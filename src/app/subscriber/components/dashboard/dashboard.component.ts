@@ -113,10 +113,10 @@ export class DashboardComponent implements OnInit {
         this.isMobile = res;
         if (res) {
           this.columnName = ["", "Claimant", "Exam Type"];
-          this.columnsToDisplay = ["is_expand", "claimant_first_name", "exam_type"];
+          this.columnsToDisplay = ["is_expand", "claimant_first_name", "exam_procedure_name"];
         } else {
           this.columnName = ["", "Claimant", "Exam Type", "Claim Number", "Body Parts"];
-          this.columnsToDisplay = ["is_expand", "claimant_first_name", "exam_type", "claim_number", "body_parts"];
+          this.columnsToDisplay = ["is_expand", "claimant_first_name", "exam_procedure_name", "claim_number", "body_parts"];
         }
       })
     }
@@ -139,6 +139,7 @@ export class DashboardComponent implements OnInit {
       this.selectedTile = status;
       this.dashboardData.map(res => {
         if (res.type == status) {
+          console.log(res.data)
           filteredData = res.data;
           return true
         }
@@ -277,7 +278,13 @@ export class DashboardComponent implements OnInit {
     if (billable_id) {
       this.router.navigate(['subscriber/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id])
     } else {
-      this.alertService.openSnackBar("Billable Item ID Not Found", "error");
+      if (this.selectedTile == 'claimants_without_claims') {
+        this.router.navigate(['subscriber/claimants/claimant/' + claimant_id])
+      } else if (this.selectedTile == 'claims_without_billable_item') {
+        this.router.navigate(['subscriber/claimants/claimant/' + claimant_id + '/claim/' + claim_id])
+      } else {
+        this.alertService.openSnackBar("Billable Item ID Not Found", "error");
+      }
     }
   }
 
