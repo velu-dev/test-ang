@@ -78,6 +78,9 @@
                             font-size: $font-size-13;
                             font-weight: bold;
                             padding-bottom: 3px;
+                            @media screen and (max-width: 1200px) and (min-width: 1028px) {
+                                font-size: $font-size-9;
+                            }
                             &:first-child {
                                 color: $primary;
                             }
