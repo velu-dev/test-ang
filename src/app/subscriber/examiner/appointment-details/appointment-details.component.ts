@@ -203,6 +203,7 @@ export class AppointmentDetailsComponent implements OnInit {
   docDeclearTable: FormGroup;
   isIME: boolean = false;
   is_appointment_date_change: boolean = false;
+  isPastDate: boolean = false;
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -357,6 +358,14 @@ export class AppointmentDetailsComponent implements OnInit {
         if (this.billableData.appointment.examiner_service_location_id == null) {
           this.service_location_name = '0';
         }
+
+        //check appoinment date past or future
+        if (this.billableData.appointment.appointment_scheduled_date_time && moment(this.billableData.appointment.appointment_scheduled_date_time).isBefore(moment())) {
+          this.isPastDate = true
+        } else {
+          this.isPastDate = false
+        }
+        console.log("isPastDate", this.isPastDate)
         // this.isExamTypeChanged = bills.data.is_exam_type_changed;
         this.isChecked = bills.data.exam_type.is_psychiatric;
         // this.claimService.getClaim(this.claim_id).subscribe(claim => {
@@ -452,13 +461,33 @@ export class AppointmentDetailsComponent implements OnInit {
             this.isDisplayStatus.isExaminar = true;
             this.isDisplayStatus.isDeposition = false;
             this.claimService.seedData('examination_status').subscribe(curres => {
-              this.examinationStatus = curres.data;
+              let status = []
+              curres.data && curres.data.map(value => {
+                if (this.isPastDate) {
+                  if (value.show_status_for_pastdate_yn) {
+                    status.push(value)
+                  }
+                } else {
+                  status.push(value)
+                }
+              })
+              this.examinationStatus = status;
             });
           } else if (response.data.procedure_type == "Deposition") {
             this.isDisplayStatus.isExaminar = false;
             this.isDisplayStatus.isDeposition = true;
             this.claimService.seedData('deposition_status').subscribe(curres => {
-              this.examinationStatus = curres.data;
+              let status = []
+              curres.data && curres.data.map(value => {
+                if (this.isPastDate) {
+                  if (value.show_status_for_pastdate_yn) {
+                    status.push(value)
+                  }
+                } else {
+                  status.push(value)
+                }
+              })
+              this.examinationStatus = status;
             })
           } else if (response.data.procedure_type == "Supplemental") {
             this.examinerService.seedData('cancel_supplemental_status').subscribe(supp => {
