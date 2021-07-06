@@ -153,10 +153,10 @@ export class ManagerDashboardComponent implements OnInit {
         this.isMobile = res;
         if (res) {
           this.columnName = ["", "Claimant", "Exam Type"];
-          this.columnsToDisplay = ["is_expand", "claimant_first_name", "exam_type"];
+          this.columnsToDisplay = ["is_expand", "claimant_first_name", "exam_type_code"];
         } else {
           this.columnName = ["", "Claimant", "Exam Type", "Claim Number", "Body Parts"];
-          this.columnsToDisplay = ["is_expand", "claimant_first_name", "exam_type", "claim_number", "body_parts"];
+          this.columnsToDisplay = ["is_expand", "claimant_first_name", "exam_type_code", "claim_number", "body_parts"];
         }
       })
     }

@@ -65,7 +65,6 @@ export class DashboardComponent implements OnInit {
         this.totalCount[total.type] = total.total_count
         this.criticalCount[total.type] = total.critical_count
       })
-      console.log(this.totalCount, this.criticalCount)
       this.dashboardData = res.data.splitted_record
       this.allData = res.data.all_record;
       this.selectedData = this.allData.length;
@@ -113,10 +112,10 @@ export class DashboardComponent implements OnInit {
         this.isMobile = res;
         if (res) {
           this.columnName = ["", "Claimant", "Exam Type"];
-          this.columnsToDisplay = ["is_expand", "claimant_first_name", "exam_procedure_name"];
+          this.columnsToDisplay = ["is_expand", "claimant_first_name", "exam_type_code"];
         } else {
           this.columnName = ["", "Claimant", "Exam Type", "Claim Number", "Body Parts"];
-          this.columnsToDisplay = ["is_expand", "claimant_first_name", "exam_procedure_name", "claim_number", "body_parts"];
+          this.columnsToDisplay = ["is_expand", "claimant_first_name", "exam_type_code", "claim_number", "body_parts"];
         }
       })
     }
