@@ -186,7 +186,7 @@
                         <span *ngIf="column == 'phone_no_1'">{{element?.phone_no_1 | mask : "(000) 000-0000"}}</span>
                         <span *ngIf="column == 'body_parts'">{{element?.body_parts ?
                             element?.body_parts[0].body_part_name : ""
-                            }}<small>,
+                            }}<small *ngIf="element?.body_parts">,
                                 (+{{element?.body_parts?.length - 1}} more)</small></span>
 
                         <span *ngIf="column == 'due_date'" class="no-wrap-td">{{element?.due_date |
