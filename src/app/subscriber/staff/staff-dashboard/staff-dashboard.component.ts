@@ -141,10 +141,10 @@ export class StaffDashboardComponent implements OnInit {
         this.isMobile = res;
         if (res) {
           this.columnName = ["", "Claimant", "Date of Birth", "Phone"];
-          this.columnsToDisplay = ["is_expand", "claimant_first_name", "date_of_birth", "Phone_no_1"];
+          this.columnsToDisplay = ["is_expand", "claimant_first_name", "date_of_birth", "phone_no_1"];
         } else {
           this.columnName = ["", "Claimant", "Date of Birth", "Phone"];
-          this.columnsToDisplay = ["is_expand", "claimant_first_name", "date_of_birth", "Phone_no_1"];
+          this.columnsToDisplay = ["is_expand", "claimant_first_name", "date_of_birth", "phone_no_1"];
         }
       })
     }

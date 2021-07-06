@@ -207,6 +207,7 @@
                         <span
                             *ngIf="column == 'appointment_scheduled_date_time'">{{element?.appointment_scheduled_date_time|
                             date:'MM-dd-yyyy'}}</span>
+                        <span *ngIf="column == 'phone_no_1'">{{element?.phone_no_1 | mask : "(000) 000-0000"}}</span>
                         <span *ngIf="column == 'due_date'" class="no-wrap-td">{{element?.due_date |
                             date:'MM-dd-yyyy'}}</span>
                         <span *ngIf="column == 'report_submission_due_date'"
