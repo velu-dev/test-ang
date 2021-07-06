@@ -47,7 +47,37 @@
 
 <div fxLayout="column" fxLayoutGap="25px" class="filter-card">
     <div fxLayout="row wrap">
-        <div fxFlex="20" fxFlex.xl="20" fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
+        <div fxFlex="12.5" fxFlex.xl="12.5" fxFlex.lg="12.5" fxFlex.md="12.5" fxFlex.sm="50" fxFlex.xs="100"
+            class="p-5">
+            <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'claimants_without_claims'}"
+                (click)="getDashboardData('claimants_without_claims')">
+                <mat-card-content>
+                    <h4>Claimants without claims</h4>
+                    <ul>
+                        <li>{{criticalCount?.claimants_without_claims}}</li>
+                        <li></li>
+                        <li>{{totalCount?.claimants_without_claims}}</li>
+                    </ul>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div fxFlex="12.5" fxFlex.xl="12.5" fxFlex.lg="12.5" fxFlex.md="12.5" fxFlex.sm="50" fxFlex.xs="100"
+            class="p-5">
+            <mat-card matRipple class="simple-card"
+                [ngClass]="{'active': selectedTile == 'claims_without_billable_item'}"
+                (click)="getDashboardData('claims_without_billable_item')">
+                <mat-card-content>
+                    <h4>Claims without billable items</h4>
+                    <ul>
+                        <li>{{criticalCount?.claims_without_billable_item}}</li>
+                        <li></li>
+                        <li>{{totalCount?.claims_without_billable_item}}</li>
+                    </ul>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div fxFlex="12.5" fxFlex.xl="12.5" fxFlex.lg="12.5" fxFlex.md="12.5" fxFlex.sm="50" fxFlex.xs="100"
+            class="p-5">
             <mat-card matRipple class="simple-card"
                 [ngClass]="{'active': selectedTile == 'awaiting_appointment_details'}"
                 (click)="getDashboardData('awaiting_appointment_details')">
@@ -62,7 +92,8 @@
             </mat-card>
         </div>
 
-        <div fxFlex="20" fxFlex.xl="20" fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
+        <div fxFlex="12.5" fxFlex.xl="12.5" fxFlex.lg="12.5" fxFlex.md="12.5" fxFlex.sm="50" fxFlex.xs="100"
+            class="p-5">
             <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'submit_correspondence'}"
                 (click)="getDashboardData('submit_correspondence')">
                 <mat-card-content>
@@ -76,7 +107,8 @@
             </mat-card>
         </div>
 
-        <div fxFlex="20" fxFlex.xl="20" fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
+        <div fxFlex="12.5" fxFlex.xl="12.5" fxFlex.lg="12.5" fxFlex.md="12.5" fxFlex.sm="50" fxFlex.xs="100"
+            class="p-5">
             <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'confirm_appointment'}"
                 (click)="getDashboardData('confirm_appointment')">
                 <mat-card-content>
@@ -90,7 +122,8 @@
             </mat-card>
         </div>
 
-        <div fxFlex="20" fxFlex.xl="20" fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
+        <div fxFlex="12.5" fxFlex.xl="12.5" fxFlex.lg="12.5" fxFlex.md="12.5" fxFlex.sm="50" fxFlex.xs="100"
+            class="p-5">
             <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'bill_report'}"
                 (click)="getDashboardData('bill_report')">
                 <mat-card-content>
@@ -104,7 +137,8 @@
             </mat-card>
         </div>
 
-        <div fxFlex="20" fxFlex.xl="20" fxFlex.lg="20" fxFlex.md="20" fxFlex.sm="50" fxFlex.xs="100" class="p-5">
+        <div fxFlex="12.5" fxFlex.xl="12.5" fxFlex.lg="12.5" fxFlex.md="12.5" fxFlex.sm="50" fxFlex.xs="100"
+            class="p-5">
             <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'collect_on_payment'}"
                 (click)="getDashboardData('collect_on_payment')">
                 <mat-card-content>
@@ -113,6 +147,20 @@
                         <li>{{criticalCount?.collect_on_payment}}</li>
                         <li></li>
                         <li>{{totalCount?.collect_on_payment}}</li>
+                    </ul>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div fxFlex="12.5" fxFlex.xl="12.5" fxFlex.lg="12.5" fxFlex.md="12.5" fxFlex.sm="50" fxFlex.xs="100"
+            class="p-5">
+            <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'closed_bills'}"
+                (click)="getDashboardData('closed_bills')">
+                <mat-card-content>
+                    <h4>Closed Bills</h4>
+                    <ul>
+                        <li>{{criticalCount?.closed_bills}}</li>
+                        <li></li>
+                        <li>{{totalCount?.closed_bills}}</li>
                     </ul>
                 </mat-card-content>
             </mat-card>
@@ -136,16 +184,16 @@
                 </span>
                 <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">
                     {{columnName[i]}}</th>
-                <td mat-cell *matCellDef="let element" (click)="i != 0 ? navigateBillableItem(element):''">
+                <td mat-cell *matCellDef="let element; let j" (click)="i != 0 ? navigateBillableItem(element):''">
                     <span *ngIf="i == 0">
                         <!-- <mat-icon mat-raised-button
                             [ngClass]="{'table-expand': expandId == element.appointment_id, 'expand-close': !(expandId == element.appointment_id)}">
                             {{ expandId == element.appointment_id ? 'remove_circle' : 'add_circle'}}
                         </mat-icon> -->
                         <mat-icon mat-raised-button
-                            [ngClass]="{'table-expand': ((expandId == element.appointment_id) || isExpandAll) ||(isCloseId != element.appointment_id)  , 'expand-close': !((expandId == element.appointment_id) || isExpandAll) || (isCloseIds.includes(element.appointment_id)) }">
-                            {{ ((expandId == element.appointment_id) || isExpandAll) &&
-                            !(isCloseIds.includes(element.appointment_id)) ? 'remove_circle' : 'add_circle'}}
+                            [ngClass]="{'table-expand': ((expandId == j) || isExpandAll) ||(isCloseId != j)  , 'expand-close': !((expandId == j) || isExpandAll) || (isCloseIds.includes(j)) }">
+                            {{ ((expandId == j) || isExpandAll) &&
+                            !(isCloseIds.includes(j)) ? 'remove_circle' : 'add_circle'}}
                         </mat-icon>
                     </span>
                     <div>
@@ -171,10 +219,10 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="expandedDetail">
-                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length"
+                <td mat-cell *matCellDef="let element; let k" [attr.colspan]="columnsToDisplay.length"
                     (click)="navigateBillableItem(element)">
                     <div class="detail"
-                        [@detailExpand]="(expandId == element.appointment_id || isExpandAll) && !(isCloseIds.includes(element.appointment_id)) ? 'expanded' : 'collapsed'">
+                        [@detailExpand]="(expandId == k || isExpandAll) && !(isCloseIds.includes(k)) ? 'expanded' : 'collapsed'">
                         <div class="responsive-table">
                             <section class="show-mobile">
                                 <div><span>Claimant</span>{{element?.claimant_first_name}}
@@ -193,7 +241,7 @@
                                 </div>
                                 <!-- <div [ngClass]="{'text-primary': element?.is_critical}"><span>Critical</span>{{element?.is_critical ? "Critical" : "-"}}</div> -->
                             </section>
-                            <section class="navigation" *ngIf="(expandId == element.appointment_id) || isExpandAll">
+                            <section class="navigation" *ngIf="(expandId == k) || isExpandAll">
                                 <!-- <span class="box-layout"
                                     *ngFor="let type of dispalySimpleservice(element?.procedure_type)">
                                     <div (click)="openExtract(element, type.progress_name )">
@@ -266,8 +314,8 @@
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="row"
-                [class.row]="expandedElement === element" (click)="openElement(element)">
+            <tr mat-row *matRowDef="let element;let l; columns: columnsToDisplay;" class="row"
+                [class.row]="expandedElement === element" (click)="openElement(element, l)">
             </tr>
             <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
         </table>

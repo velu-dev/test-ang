@@ -102,14 +102,14 @@ export class ManagerDashboardComponent implements OnInit {
   isCloseId: any;
   isCloseIds = [];
   isExpandIds = [];
-  openElement(element) {
+  openElement(element, ind) {
     if (this.isExpandAll) {
-      if (this.isCloseIds.includes(element.appointment_id)) {
-        let index = this.isCloseIds.indexOf(element.appointment_id)
+      if (this.isCloseIds.includes(ind)) {
+        let index = this.isCloseIds.indexOf(ind)
         this.isCloseIds.splice(index, 1)
       } else {
-        this.isCloseId = element.appointment_id;
-        this.isCloseIds.push(element.appointment_id);
+        this.isCloseId = ind;
+        this.isCloseIds.push(ind);
         if (this.isCloseIds.length == this.selectedData) {
           this.isExpandAll = false;
         }
@@ -118,16 +118,16 @@ export class ManagerDashboardComponent implements OnInit {
     } else {
       this.isCloseId = null;
       this.isExpandAll = false;
-      if (this.expandId && this.expandId == element.appointment_id) {
+      if (this.expandId && this.expandId == ind) {
         this.expandId = null;
       } else {
         this.isExpandIds = []
-        this.expandId = element.appointment_id;
-        this.isExpandIds.push(element.appointment_id);
+        this.expandId = ind;
+        this.isExpandIds.push(ind);
         if (this.isExpandIds.length == this.selectedData) {
           this.isExpandAll = true;
         }
-        let index = this.isCloseIds.indexOf(element.appointment_id)
+        let index = this.isCloseIds.indexOf(ind)
         this.isCloseIds.splice(index, 1)
       }
     }
@@ -136,6 +136,42 @@ export class ManagerDashboardComponent implements OnInit {
   selectedData: any;
   getDashboardData(status?) {
     var filteredData = [];
+    if (status == 'claimants_without_claims') {
+      this.isHandset$.subscribe(res => {
+        this.isMobile = res;
+        if (res) {
+          this.columnName = ["", "Claimant", "Date of Birth", "Phone"];
+          this.columnsToDisplay = ["is_expand", "claimant_first_name", "date_of_birth", "Phone_no_1"];
+        } else {
+          this.columnName = ["", "Claimant", "Date of Birth", "Phone"];
+          this.columnsToDisplay = ["is_expand", "claimant_first_name", "date_of_birth", "Phone_no_1"];
+        }
+      })
+    }
+    if (status == 'claims_without_billable_item') {
+      this.isHandset$.subscribe(res => {
+        this.isMobile = res;
+        if (res) {
+          this.columnName = ["", "Claimant", "Exam Type"];
+          this.columnsToDisplay = ["is_expand", "claimant_first_name", "exam_type"];
+        } else {
+          this.columnName = ["", "Claimant", "Exam Type", "Claim Number", "Body Parts"];
+          this.columnsToDisplay = ["is_expand", "claimant_first_name", "exam_type", "claim_number", "body_parts"];
+        }
+      })
+    }
+    if (status == "awaiting_appointment_details" || status == "submit_correspondence" || status == "confirm_appointment" || status == "bill_report" || status == "collect_on_payment" || status == 'collect_bills') {
+      this.isHandset$.subscribe(res => {
+        this.isMobile = res;
+        if (res) {
+          this.columnName = ["", "Claimant", "Critical"]
+          this.columnsToDisplay = ['is_expand', 'claimant_first_name', "is_critical"]
+        } else {
+          this.columnName = ["", "Claimant", "Date of Birth", "Examiner", "Exam Procedure Type", "Standing", "Date of Service /" + '\n' + "Date Item Received", "Standing Due Date", "Report Submission" + '\n' + "Due Date", "Critical"]
+          this.columnsToDisplay = ['is_expand', 'claimant_first_name', 'date_of_birth', 'examiner_first_name', "exam_procedure_name", "standing", 'appointment_scheduled_date_time', 'due_date', 'report_submission_due_date', 'is_critical']
+        }
+      })
+    }
     if (this.selectedTile == status) {
       this.selectedTile = "";
       filteredData = this.allData;
