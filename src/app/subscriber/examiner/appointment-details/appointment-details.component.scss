@@ -357,6 +357,10 @@
         }
         .custom-info.supplemental {
             position: inherit !important;
+            @media only screen and (max-width: 568px) {
+                position: absolute !important;
+                top: 22px;
+            }
         }
         .notes {
             @media only screen and (max-width: 568px) {
