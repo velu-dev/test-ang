@@ -560,6 +560,26 @@ export class AppointmentDetailsComponent implements OnInit {
               }
             })
           }
+          if (this.examinationDetails.procedure_type == "Supplemental") {
+            let documentListArr = [4, 6, 8, 9, 12];
+            let documentList: any = this.documentList;
+            this.documentList = []
+            documentList.map(data => {
+              if (documentListArr.includes(data.id)) {
+                this.documentList.push(data);
+              }
+            })
+          }
+          if (this.examinationDetails.procedure_type == "IMERecords") {
+            let documentListArr = [4, 6, 8, 9, 12];
+            let documentList: any = this.documentList;
+            this.documentList = []
+            documentList.map(data => {
+              if (documentListArr.includes(data.id)) {
+                this.documentList.push(data);
+              }
+            })
+          }
         }, error => {
           console.log(error)
           this.dataSource = new MatTableDataSource([]);
