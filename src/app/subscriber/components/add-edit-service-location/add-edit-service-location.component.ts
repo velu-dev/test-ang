@@ -159,14 +159,14 @@ export class AddEditServiceLocationComponent implements OnInit {
       fax_no: [null],
       email: [null, Validators.compose([Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
       primary_contact: [""],
-      phone_ext1: ["", Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+      phone_ext1: [{ value: "", disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       primary_contact_phone: [""],
       alternate_contact_1: [""],
       alternate_contact_1_phone: [""],
-      phone_ext2: ["", Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+      phone_ext2: [{ value: "", disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       alternate_contact_2: [""],
       alternate_contact_2_phone: [""],
-      phone_ext3: ["", Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
+      phone_ext3: [{ value: "", disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       notes: [null],
       service_code_id: [null, Validators.required],
       //national_provider_identifier: [null],
@@ -200,6 +200,7 @@ export class AddEditServiceLocationComponent implements OnInit {
     //   }
     // })
     this.locationForm.get("primary_contact_phone").valueChanges.subscribe(res => {
+      console.log(this.locationForm.get("primary_contact_phone").value)
       if (this.locationForm.get("primary_contact_phone").value && this.locationForm.get("primary_contact_phone").valid) {
         this.locationForm.get("phone_ext1").enable();
       } else {
