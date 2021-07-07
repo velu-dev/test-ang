@@ -206,6 +206,7 @@
                         <span
                             *ngIf="column == 'appointment_scheduled_date_time'">{{element?.appointment_scheduled_date_time|
                             date:'MM-dd-yyyy'}}</span>
+                        <span *ngIf="column == 'exam_procedure_name'">{{element?.exam_procedure_name}}</span>
                         <span *ngIf="column == 'exam_type_code'">{{element?.exam_type_code}}</span>
                         <span *ngIf="column == 'claim_number'">{{element?.claim_number}}</span>
                         <span *ngIf="column == 'phone_no_1'">{{element?.phone_no_1 | mask : "(000) 000-0000"}}</span>
