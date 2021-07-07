@@ -59,7 +59,7 @@ export class AppointmentComponent implements OnInit {
         this.columnsToDisplay = ['is_expand', 'location_name']
       } else {
         this.columnName = ["Location Name", "Service Location", "Claimant Name", "Date of Birth", "Examiner", "Appointment Date", "Appointment Time", "Procedure", "Interpreter Needed", "Days Until"]
-        this.columnsToDisplay = ['location_name', 'location', 'claimant_name', 'date_of_birth', 'examiner', 'appointment_date', 'appointment_time', "procedure", 'interperter_needed', 'days_until']
+        this.columnsToDisplay = ['location_name', 'location', 'claimant_name', 'date_of_birth', 'examiner', 'appointment_date', 'appointment_time', "exam_procedure_name", 'interperter_needed', 'days_until']
       }
     })
   }
@@ -72,6 +72,7 @@ export class AppointmentComponent implements OnInit {
     this.examinerService.getExaminationDetails().subscribe(res => {
       console.log(res)
       res['data'].map(data => {
+        data.claimant_name = data.claimant_last_name + " " + data.claimant_first_name
         //data.appointment_scheduled_date_time = data.appointment_scheduled_date_time ? moment(data.appointment_scheduled_date_time).format("MM-DD-YYYY") : '';
         data.location_name = data.is_virtual_location ? "Virtual Service Location" : data.service_location_name
         data.location = data.street1 ? [data.street1, data.street2, data.city, data.state, data.zip_code, data.zip_code_plus_4 ? '- ' + data.zip_code_plus_4 : null].filter(Boolean).join(" ") : ''
