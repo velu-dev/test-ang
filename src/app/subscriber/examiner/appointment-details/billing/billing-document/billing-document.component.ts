@@ -44,6 +44,7 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
       map(result => result.matches),
       shareReplay()
     );
+  @Input() cancellation: boolean;
   constructor(private onDemandService: OnDemandService, private claimService: ClaimService, public billingService: BillingService, private alertService: AlertService, private intercom: IntercomService, private breakpointObserver: BreakpointObserver) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -72,7 +73,10 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
     console.log(this.paramsId)
     this.getDocument();
   }
-
+  is_cancellation = false;
+  ngAfterContentInit() {
+    this.is_cancellation = this.cancellation;
+  }
   getDocument() {
     this.billingService.getSendRecDocument(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, this.billType).subscribe(document => {
       this.dataSourceDocList = new MatTableDataSource(document.data);
@@ -83,7 +87,7 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
       this.DTMtableData.sort = this.sort;
     })
   }
-  tracingpopupData:any = {};
+  tracingpopupData: any = {};
   openTracing(element) {
     this.tracingpopupData = {};
     this.onDemandService.getTracingPopUp(element.id, this.paramsId.claim_id, this.paramsId.billId).subscribe(res => {

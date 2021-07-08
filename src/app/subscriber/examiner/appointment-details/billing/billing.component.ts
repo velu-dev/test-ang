@@ -320,11 +320,12 @@ export class BilllableBillingComponent implements OnInit {
     }
   }
 
-
+  is_cancellation = false;
   getBillingDetails(status?) {
     this.billingService.getBilling(this.paramsId.claim_id, this.paramsId.billId, this.billingId).subscribe(billing => {
-      console.log(billing)
+      console.log("billing data", billing)
       if (billing.data) {
+        this.is_cancellation = billing.data.is_cancellation;
         this.billingData = billing.data;
         if (!billing.data) {
           return;

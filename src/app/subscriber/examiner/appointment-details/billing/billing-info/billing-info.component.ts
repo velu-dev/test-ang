@@ -40,6 +40,7 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
   @Input() paramsId: any;
   @Input() isMobile: any;
   @Input() review: string;
+  @Input() cancellation: boolean;
   isDOS = false;
   incompleteInformation: any;
   isIncompleteError: any = true;
@@ -59,7 +60,9 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
       this.ngOnInit();
     })
   }
+  is_cancellation = false;
   ngAfterContentInit() {
+    this.is_cancellation = this.cancellation;
     if (this.review != 'First') {
       this.dateofServiceForm.disable();
     } else {

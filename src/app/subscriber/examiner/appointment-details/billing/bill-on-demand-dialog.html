@@ -49,7 +49,7 @@
             <!-- Name Column -->
             <ng-container matColumnDef="recipient_type">
                 <th mat-header-cell *matHeaderCellDef>
-                    <button *ngIf="data.billType != 2" mat-stroked-button class="outline-success white-btn float-right m-t-5  m-b-5"
+                    <button *ngIf="data.billType != 2" [disabled]="is_cancellation" mat-stroked-button class="outline-success white-btn float-right m-t-5  m-b-5"
                         (click)="openCustomRecipient()">
                         <i class="fa fa-user-plus p-r-10"></i> Add Custom Recipient
                     </button></th>

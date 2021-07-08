@@ -4,7 +4,7 @@
         <mat-card-header>
             <div class="content-wrapper-main-title">Billing Line Items</div>
             <span class="spacer"></span>
-            <button mat-raised-button class="filled-gray m-b-5" (click)="addRow()">
+            <button [disabled]="is_cancellation" mat-raised-button class="filled-gray m-b-5" (click)="addRow()">
                 Add Billing Line Item
             </button>
         </mat-card-header>
@@ -155,7 +155,7 @@
                                             {{group.get('charge').value > -1 ? '$ ' : ''}}{{(group.get('charge').value)
                                             | number : '1.2-2'}}
                                         </td>
-                                        <td class="no-wrap-td">
+                                        <td class="no-wrap-td" *ngIf="!is_cancellation">
 
                                             <a class="text-success" (click)="editRow(group,i)">
                                                 Edit
@@ -401,7 +401,7 @@
                                                 </div>
                                                 <div class="flex">
                                                     <div class="bill-property">Action </div>
-                                                    <div class="value">
+                                                    <div class="value" *ngIf="is_cancellation">
                                                         <a class="text-success" (click)="editRow(group,i)">Edit</a>
                                                         <a *ngIf="i != 0" class="text-danger m-l-10"
                                                             (click)="deleteRow(i,group)">Remove</a>
@@ -709,7 +709,8 @@
                                                             (click)="download(file?.exam_report_file_url,file?.file_name)">{{file?.file_name}}</a>
                                                     </td>
                                                     <td class="action"><a class="text-danger p-r-10"
-                                                            (click)="RemoveFile(file,i)">Remove</a> |
+                                                            (click)="RemoveFile(file,i)"
+                                                            *ngIf="!is_cancellation">Remove</a> |
                                                         <a class="text-danger p-l-10"
                                                             (click)="openUploadPopUp(false, ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png'], {file: file, i: i}, 'reupload', 501)">Reupload</a>
                                                         <!--<input type="file" #uploader hidden
@@ -719,8 +720,9 @@
                                                 </tr>
                                                 <tr *ngFor="let file of fileName;let i=index">
                                                     <td><a class="">{{file?.file_name}}</a></td>
-                                                    <td class="action"><a class="text-danger p-r-10"
-                                                            (click)="RemoveFile(file,i)">Remove</a> |
+                                                    <td class="action">
+                                                        <a class="text-danger p-r-10" (click)="RemoveFile(file,i)"
+                                                            *ngIf="!is_cancellation">Remove</a> |
                                                         <a class="text-danger p-l-10"
                                                             (click)="openUploadPopUp(false, ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png'], {file: file, i: i}, 'reupload', 501)">Reupload</a>
                                                         <!-- <input type="file" #uploader hidden
@@ -1037,7 +1039,8 @@
                                                             (click)="download(file?.exam_report_file_url,file?.file_name)">{{file?.file_name}}</a>
                                                     </td>
                                                     <td class="action"><a class="text-danger p-r-10"
-                                                            (click)="RemoveFile(file,i)">Remove</a><br />
+                                                            (click)="RemoveFile(file,i)"
+                                                            *ngIf="!is_cancellation">Remove</a><br />
                                                         <a class="text-danger p-l-10"
                                                             (click)="uploader.click()">Reupload</a>
                                                         <input type="file" #uploader hidden
@@ -1048,7 +1051,8 @@
                                                 <tr *ngFor="let file of fileName;let i=index">
                                                     <td><a class="">{{file?.file_name}}</a></td>
                                                     <td class="action"><a class="text-danger p-r-10"
-                                                            (click)="RemoveFile(file,i)">Remove</a><br />
+                                                            (click)="RemoveFile(file,i)"
+                                                            *ngIf="!is_cancellation">Remove</a><br />
                                                         <a class="text-danger p-l-10"
                                                             (click)="uploader.click()">Reupload</a>
                                                         <input type="file" #uploader hidden

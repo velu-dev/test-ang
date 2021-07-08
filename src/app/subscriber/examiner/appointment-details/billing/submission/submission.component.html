@@ -50,7 +50,7 @@
                 <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100">
                     <input type="file" #uploader hidden (change)="addFile($event,true)" multiple
                         accept=".pdf, .doc, .docx" required>
-                    <button mat-raised-button class="float-right filled-gray m-r-5 m-b-5"
+                    <button [disabled]="is_cancellation" mat-raised-button class="float-right filled-gray m-r-5 m-b-5"
                         (click)="openUploadPopUp(true, ['.pdf', '.doc', '.docx'], '', 'addFile', '30')"><i
                             class="fa fa-file-medical p-r-10"></i> Add Custom
                         Document</button>
@@ -103,13 +103,14 @@
                                     <span *ngIf="column == 'action'">
                                         <input type="file" #uploader hidden (change)="addCompleteDoc($event,element)"
                                             hidden accept=".pdf, .doc, .docx" required>
-                                        <a *ngIf="element?.form_action_type != 'C' && element?.form_action_type != 'X' && element?.completed_document"
+                                        <a *ngIf="!is_cancellation && (element?.form_action_type != 'C' && element?.form_action_type != 'X' && element?.completed_document)"
                                             class="text-danger no-wrap-td"
                                             [ngClass]="is_ondemand_created ? 'disabled' : ''"
                                             (click)="!is_ondemand_created ? deleteDocument(element?.completed_document,true) : ''">Remove
                                             <!-- Remove and Reupload-->
                                         </a>
-                                        <a *ngIf="element?.form_name == 'Custom'" class="text-danger no-wrap-td"
+                                        <a *ngIf="!is_cancellation && element?.form_name == 'Custom'"
+                                            class="text-danger no-wrap-td"
                                             [ngClass]="is_ondemand_created ? 'disabled' : ''"
                                             (click)="!is_ondemand_created ? deleteDocument(element?.completed_document,true): ''">Remove
                                         </a>
@@ -155,13 +156,14 @@
                                             <span> <input type="file" #uploader hidden
                                                     (change)="addCompleteDoc($event,element)" hidden
                                                     accept=".pdf, .doc, .docx" required>
-                                                <a *ngIf="element?.form_action_type != 'C' && element?.form_action_type != 'X' && element?.completed_document"
+                                                <a *ngIf="!is_cancellation && (element?.form_action_type != 'C' && element?.form_action_type != 'X' && element?.completed_document)"
                                                     class="text-danger no-wrap-td"
                                                     [ngClass]="is_ondemand_created ? 'disabled' : ''"
                                                     (click)="!is_ondemand_created ? deleteDocument(element?.completed_document,true) : ''">Remove
                                                     <!-- Remove and Reupload-->
                                                 </a>
-                                                <a *ngIf="element?.form_name == 'Custom'" class="text-danger no-wrap-td"
+                                                <a *ngIf="!is_cancellation && element?.form_name == 'Custom'"
+                                                    class="text-danger no-wrap-td"
                                                     [ngClass]="is_ondemand_created ? 'disabled' : ''"
                                                     (click)="!is_ondemand_created ? deleteDocument(element?.completed_document,true): ''">Remove
                                                 </a> </span>
@@ -190,20 +192,22 @@
 <!-- ===== actions ==== -->
 <div class="ondamand-actions m-t-30 m-b-30" fxLayout="row wrap">
     <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-left">
-        <button mat-stroked-button class="filled-lightgray huge-btn m-b-5 font-weight-600"
+        <button [disabled]="is_cancellation" mat-stroked-button class="filled-lightgray huge-btn m-b-5 font-weight-600"
             (click)="VMC1500Submit()">View
             CMS
             1500</button>
 
     </div>
     <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-center" *ngIf="billType != 3">
-        <button mat-stroked-button class="filled-success huge-btn m-b-5" (click)="openBillOnDemand()">Submit
+        <button [disabled]="is_cancellation" mat-stroked-button class="filled-success huge-btn m-b-5"
+            (click)="openBillOnDemand()">Submit
             Bill
             and Report</button>
     </div>
 
     <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-center" *ngIf="billType == 3">
-        <button mat-stroked-button class="filled-success huge-btn m-b-5" (click)="downloadMethod()">Download Bill and
+        <button [disabled]="is_cancellation" mat-stroked-button class="filled-success huge-btn m-b-5"
+            (click)="downloadMethod()">Download Bill and
             Report</button>
     </div>
 </div>

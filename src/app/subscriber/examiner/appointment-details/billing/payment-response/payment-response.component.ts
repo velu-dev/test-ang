@@ -79,6 +79,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   @Input() paidStatusData: any;
   subscription: any;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
+  @Input() cancellation: boolean;
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService, public billingService: BillingService, private intercom: IntercomService) {
@@ -98,7 +99,10 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
 
   }
 
-
+  is_cancellation = false;
+  ngAfterContentInit() {
+    this.is_cancellation = this.cancellation;
+  }
   openDialog(): void {
     const dialogRef = this.dialog.open(EditResponse, {
       width: '800px',

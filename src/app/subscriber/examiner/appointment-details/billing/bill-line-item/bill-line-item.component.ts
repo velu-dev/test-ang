@@ -57,6 +57,8 @@ export class BillLineItemComponent implements OnInit {
   fileName: any = []
   support_documents = [];
   oneUnitProcedure = ['ml201', 'ml202', 'ml203']
+  @Input() cancellation: boolean;
+
   constructor(private logger: NGXLogger,
     private claimService: ClaimService,
     private breakpointObserver: BreakpointObserver,
@@ -78,7 +80,10 @@ export class BillLineItemComponent implements OnInit {
     this.getBillLineItem();
     console.log('Linr item')
   }
-
+  is_cancellation = false;
+  ngAfterContentInit() {
+    this.is_cancellation = this.cancellation;
+  }
   billing_line_items: any;
   newFeeScheduleStatus: boolean;
   billingCodeDetails: any;
@@ -278,7 +283,7 @@ export class BillLineItemComponent implements OnInit {
       }
     }
 
-    if(this.getFormControls.controls && this.getFormControls.controls.length >= 50){
+    if (this.getFormControls.controls && this.getFormControls.controls.length >= 50) {
       this.alertService.openSnackBar("Maximum 50 Bill Line Item will be allowed here!", 'error');
       return;
     }
@@ -582,7 +587,7 @@ export class BillLineItemComponent implements OnInit {
     }
     let modify = group.value.modifierList;
     modify.push(event.option.viewValue)
-    group.get('modifierList').setValue(modify.sort(function(a, b){return a-b}))
+    group.get('modifierList').setValue(modify.sort(function (a, b) { return a - b }))
   }
 
   rowSelected(group: FormGroup) {

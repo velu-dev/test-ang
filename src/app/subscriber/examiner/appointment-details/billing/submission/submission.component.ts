@@ -55,6 +55,7 @@ export class SubmissionComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
+  @Input() cancellation: boolean;
   constructor(public billingService: BillingService,
     private alertService: AlertService,
     public dialog: MatDialog,
@@ -75,6 +76,10 @@ export class SubmissionComponent implements OnInit {
         this.columnsToDisplay2 = ['doc_image', 'file_name', 'partial', 'complete', "action"]
       }
     });
+  }
+  is_cancellation = false;
+  ngAfterContentInit() {
+    this.is_cancellation = this.cancellation;
   }
   is_ondemand_created: boolean = false;
   getBillDocument() {

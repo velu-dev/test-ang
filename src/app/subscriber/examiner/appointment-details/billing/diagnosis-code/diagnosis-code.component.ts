@@ -35,16 +35,17 @@ export class DiagnosisCodeComponent implements OnInit {
   @Input() billingData: any;
   @Input() paramsId: any;
   @Input() isMobile: any;
+  @Input() cancellation: any;
   icdExpandID: any;
   IcdDataSource = new MatTableDataSource([]);
   columnsToDisplay = [];
   columnName = [];
   expandedElement;
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-  .pipe(
-    map(result => result.matches),
-    shareReplay()
-  );
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   constructor(private logger: NGXLogger,
     private claimService: ClaimService,
@@ -57,18 +58,21 @@ export class DiagnosisCodeComponent implements OnInit {
     private intercom: IntercomService,
     private _location: Location,
     private cookieService: CookieService) { }
-
+  is_cancellation = false;
+  ngAfterContentInit() {
+    this.is_cancellation = this.cancellation;
+  }
   ngOnInit() {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
-    if (this.isMobile) {
-      this.columnName = ["", "Code", "Action"]
-      this.columnsToDisplay = ['is_expand', 'code', 'action']
-    } else {
-      this.columnName = ["Code", "Name", "Action"]
-      this.columnsToDisplay = ['code', 'name', 'action']
-    }
-  });
+      if (this.isMobile) {
+        this.columnName = ["", "Code", "Action"]
+        this.columnsToDisplay = ['is_expand', 'code', 'action']
+      } else {
+        this.columnName = ["Code", "Name", "Action"]
+        this.columnsToDisplay = ['code', 'name', 'action']
+      }
+    });
 
     this.icdData = this.billingData && this.billingData.billing_diagnosis_code ? this.billingData.billing_diagnosis_code : [];
     this.IcdDataSource = new MatTableDataSource(this.icdData);

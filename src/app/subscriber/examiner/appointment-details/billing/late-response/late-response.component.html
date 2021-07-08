@@ -36,10 +36,12 @@
                         <td>{{lateResData?.bill_due_date | date:'MM-dd-yyyy'}}</td>
                         <td>{{lateResData?.charge ? '$ ' : ''}} {{lateResData?.charge | number : '1.2-2'}}</td>
                         <td>{{lateResData?.payment ? '$ ' : ''}} {{lateResData?.payment | number : '1.2-2'}}</td>
-                        <td class="text-danger">{{lateResData?.balance ? '$ ' : ''}} {{lateResData?.balance | number : '1.2-2'}}</td>
+                        <td class="text-danger">{{lateResData?.balance ? '$ ' : ''}} {{lateResData?.balance | number :
+                            '1.2-2'}}</td>
                         <td class="text-success">{{lateResData?.bill_paid_status}}</td>
                         <td><button type="button" *ngIf="lateRes().controls?.length == 0" mat-raised-button
-                              class="mini-btn filled-gray" (click)="addlateRes();openElement(lateResData?.id)">Add Response</button></td>
+                                class="mini-btn filled-gray" (click)="addlateRes();openElement(lateResData?.id)">Add
+                                Response</button></td>
                     </tr>
 
                     <tr *ngIf="expandId == lateResData?.id">
@@ -90,22 +92,29 @@
                                                 <div class="main-title p-l-0" fxFlex="100">Bill Status</div>
                                             </div>
                                             <div *ngIf="!late.get('showStatus').value" class="w-100">
-                                                <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="expand-details " [ngClass]="{'strike' : !last}">
+                                                <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="expand-details "
+                                                    [ngClass]="{'strike' : !last}">
                                                     <div class="grid-list">
                                                         <div>Status</div>
-                                                        <div class="text-success">{{late.get('bill_status').value}}</div>
+                                                        <div class="text-success">{{late.get('bill_status').value}}
+                                                        </div>
                                                     </div>
 
-                                                    <div class="grid-list" *ngIf="(late.get('bill_status_id').value == 47 || late.get('bill_status_id').value == 49) && !last">
+                                                    <div class="grid-list"
+                                                        *ngIf="(late.get('bill_status_id').value == 47 || late.get('bill_status_id').value == 49) && !last">
                                                         <div>Create Support Ticket</div>
-                                                        <div><a href="https://simplexam.freshdesk.com/support/tickets/new" target="_blank" class="text-ternary"><i>https://simplexam.freshdesk.com/support/tickets/new</i></a></div>
+                                                        <div><a href="https://simplexam.freshdesk.com/support/tickets/new"
+                                                                target="_blank"
+                                                                class="text-ternary"><i>https://simplexam.freshdesk.com/support/tickets/new</i></a>
+                                                        </div>
                                                     </div>
                                                     <div class="grid-list"
                                                         *ngIf="late.get('bill_status_id').value == 51">
                                                         <div>Other Reason</div>
                                                         <div>{{late.get('bill_other_status').value}}</div>
                                                     </div>
-                                                    <div class="grid-list" *ngIf="late.get('bill_status_id').value != 47 && late.get('bill_status_id').value != 49">
+                                                    <div class="grid-list"
+                                                        *ngIf="late.get('bill_status_id').value != 47 && late.get('bill_status_id').value != 49">
                                                         <div>Notes</div>
                                                         <div>{{late.get('late_payment_response_notes').value}}</div>
                                                     </div>
@@ -114,7 +123,8 @@
                                                 <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="expand-details">
                                                     <div class="grid-list">
                                                         <div>Created By</div>
-                                                        <div>{{late.get('created_by_first_name').value}} {{late.get('created_by_last_name').value}}</div>
+                                                        <div>{{late.get('created_by_first_name').value}}
+                                                            {{late.get('created_by_last_name').value}}</div>
                                                     </div>
                                                     <div class="grid-list">
                                                         <div>Created On</div>
@@ -122,11 +132,13 @@
                                                     </div>
                                                     <div class="grid-list">
                                                         <div>Updated By</div>
-                                                        <div>{{late.get('updated_by_first_name').value}} {{late.get('updated_by_last_name').value}}</div>
+                                                        <div>{{late.get('updated_by_first_name').value}}
+                                                            {{late.get('updated_by_last_name').value}}</div>
                                                     </div>
                                                     <div class="grid-list">
                                                         <div>Updated On</div>
-                                                        <div *ngIf="late.get('updated_by_first_name').value">{{late.get('updatedAt').value | date:'MM-dd-yyyy'}}</div>
+                                                        <div *ngIf="late.get('updated_by_first_name').value">
+                                                            {{late.get('updatedAt').value | date:'MM-dd-yyyy'}}</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -137,7 +149,8 @@
                                                     <div class="property">Status</div>
                                                     <div class="value">
                                                         <mat-form-field appearance="outline">
-                                                            <mat-select formControlName="bill_status_id" (selectionChange)="changestatus(late,$event.value)">
+                                                            <mat-select formControlName="bill_status_id"
+                                                                (selectionChange)="changestatus(late,$event.value)">
                                                                 <mat-option *ngFor="let list of billStatusList"
                                                                     [value]="list.id">
                                                                     {{list?.bill_status}}
@@ -159,7 +172,8 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="grid-list-form" *ngIf="late.get('bill_status_id').value != 47 && late.get('bill_status_id').value != 49">
+                                                <div class="grid-list-form"
+                                                    *ngIf="late.get('bill_status_id').value != 47 && late.get('bill_status_id').value != 49">
                                                     <div class="property">Notes</div>
                                                     <div class="value">
                                                         <mat-form-field appearance="outline">
@@ -172,7 +186,8 @@
                                             </div>
 
 
-                                            <div fxFlex="100" *ngIf="(late.get('bill_status_id').value == 47 || late.get('bill_status_id').value == 49) && last">
+                                            <div fxFlex="100"
+                                                *ngIf="(late.get('bill_status_id').value == 47 || late.get('bill_status_id').value == 49) && last">
                                                 <div class="create-support m-t-10">
                                                     <div><b>Create Support Ticket</b></div>
                                                     <div>Click below link to create new ticket</div>
@@ -193,8 +208,8 @@
                                                     (click)="submitLateRes(late, lateindex)">Save</button>
                                             </div>
                                             <div fxFlex="100" *ngIf="last && !late.get('showStatus').value">
-                                                <button type="button" mat-raised-button class="filled-gray"
-                                                    (click)="copyedit(late ,lateindex)">Copy
+                                                <button type="button" [disabled]="is_cancellation" mat-raised-button
+                                                    class="filled-gray" (click)="copyedit(late ,lateindex)">Copy
                                                     & Edit Response</button>
                                                 <button type="button" mat-raised-button class="filled-gray m-l-10"
                                                     (click)="addlateRes()">Add Response</button>
@@ -226,13 +241,13 @@
                                         <mat-expansion-panel-header>
                                             <mat-panel-title>
                                                 <mat-icon class="pointer"
-                                                        [ngClass]="{'text-success': expandId != lateResData?.id, 'text-danger' : expandId == lateResData?.id}"
-                                                        >{{expandId
-                                                        == lateResData?.id ? 'remove_circle' : 'add_circle'}}</mat-icon>
+                                                    [ngClass]="{'text-success': expandId != lateResData?.id, 'text-danger' : expandId == lateResData?.id}">
+                                                    {{expandId
+                                                    == lateResData?.id ? 'remove_circle' : 'add_circle'}}</mat-icon>
                                                 <div class="inline-title">
                                                     <div><b>Bill #</b></div>
                                                     <div>{{lateResData?.bill_no}}</div>
-                                               </div>
+                                                </div>
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
                                         <mat-card>
@@ -275,8 +290,9 @@
                                             <div class="flex">
                                                 <div class="bill-property">Action </div>
                                                 <div class="value">
-                                                    <button type="button" *ngIf="lateRes().controls?.length == 0"
-                                                        mat-raised-button class="mini-btn filled-gray"
+                                                    <button type="button" [disabled]="is_cancellation"
+                                                        *ngIf="lateRes().controls?.length == 0" mat-raised-button
+                                                        class="mini-btn filled-gray"
                                                         (click)="addlateRes();openElement(lateResData?.id)">Add
                                                         Response</button>
                                                 </div>
@@ -289,17 +305,20 @@
                         <tr>
                             <td colspan="10">
                                 <form [formGroup]="lateForm">
-                                    <div class="detail"  *ngIf="lateRes().controls?.length > 0" style="background-color: #f8f8f8;padding: 10px;border: 1px solid #a2a1a1;">
+                                    <div class="detail" *ngIf="lateRes().controls?.length > 0"
+                                        style="background-color: #f8f8f8;padding: 10px;border: 1px solid #a2a1a1;">
                                         <div>
                                             <div class="expand-details-list bg-white list-level" fxLayout="row wrap">
                                                 <div fxFlex="100">
-                                                    <div class="main-title p-l-0 p-b-10" fxFlex="100">Claims Administrator
+                                                    <div class="main-title p-l-0 p-b-10" fxFlex="100">Claims
+                                                        Administrator
                                                         Information</div>
                                                 </div>
                                                 <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="expand-details">
                                                     <div class="grid-list">
                                                         <div>Insurance Name</div>
-                                                        <div>{{lateResData?.claims_administrator_details?.insurance_name}}
+                                                        <div>
+                                                            {{lateResData?.claims_administrator_details?.insurance_name}}
                                                         </div>
                                                     </div>
                                                     <div class="grid-list">
@@ -309,28 +328,31 @@
                                                     </div>
                                                     <div class="grid-list">
                                                         <div>Email Address</div>
-                                                        <div>{{lateResData?.claims_administrator_details?.email_address}}
+                                                        <div>
+                                                            {{lateResData?.claims_administrator_details?.email_address}}
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="expand-details">
                                                     <div class="grid-list">
                                                         <div>Adjuster Name</div>
-                                                        <div>{{lateResData?.claims_administrator_details?.adjuster_name}}
+                                                        <div>
+                                                            {{lateResData?.claims_administrator_details?.adjuster_name}}
                                                         </div>
                                                     </div>
                                                     <div class="grid-list">
                                                         <div>Fax Number</div>
-                                                        <div>{{lateResData?.claims_administrator_details?.fax | mask:'(000)
+                                                        <div>{{lateResData?.claims_administrator_details?.fax |
+                                                            mask:'(000)
                                                             000-0000'}}</div>
                                                     </div>
                                                 </div>
                                             </div>
-    
+
                                         </div>
                                     </div>
                                     <div class="detail m-t-5" formArrayName="lateRes"
-                                    *ngFor="let late of lateRes().controls; let lateindex=index; let last = last"
+                                        *ngFor="let late of lateRes().controls; let lateindex=index; let last = last"
                                         style="background-color: #f8f8f8;padding: 10px;border: 1px solid #a2a1a1;">
                                         <div [formGroupName]="lateindex">
 
@@ -340,15 +362,16 @@
                                                 </div>
 
 
-                                                <div *ngIf="!late.get('showStatus').value" class="w-100"  fxLayout="row wrap">
-                                                    <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100" class="expand-details "
-                                                        [ngClass]="{'strike' : !last}">
+                                                <div *ngIf="!late.get('showStatus').value" class="w-100"
+                                                    fxLayout="row wrap">
+                                                    <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100"
+                                                        class="expand-details " [ngClass]="{'strike' : !last}">
                                                         <div class="grid-list">
                                                             <div>Status</div>
                                                             <div class="text-success">{{late.get('bill_status').value}}
                                                             </div>
                                                         </div>
-    
+
                                                         <div class="grid-list"
                                                             *ngIf="(late.get('bill_status_id').value == 47 || late.get('bill_status_id').value == 49) && !last">
                                                             <div>Create Support Ticket</div>
@@ -367,9 +390,10 @@
                                                             <div>Notes</div>
                                                             <div>{{late.get('late_payment_response_notes').value}}</div>
                                                         </div>
-    
+
                                                     </div>
-                                                    <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100" class="expand-details">
+                                                    <div fxFlex="100" fxFlex.sm="100" fxFlex.xs="100"
+                                                        class="expand-details">
                                                         <div class="grid-list">
                                                             <div>Created By</div>
                                                             <div>{{late.get('created_by_first_name').value}}
@@ -377,7 +401,8 @@
                                                         </div>
                                                         <div class="grid-list">
                                                             <div>Created On</div>
-                                                            <div>{{late.get('createdAt').value | date:'MM-dd-yyyy'}}</div>
+                                                            <div>{{late.get('createdAt').value | date:'MM-dd-yyyy'}}
+                                                            </div>
                                                         </div>
                                                         <div class="grid-list">
                                                             <div>Updated By</div>
@@ -387,91 +412,97 @@
                                                         <div class="grid-list">
                                                             <div>Updated On</div>
                                                             <div *ngIf="late.get('updated_by_first_name').value">
-                                                                {{late.get('updatedAt').value | date:'MM-dd-yyyy'}}</div>
+                                                                {{late.get('updatedAt').value | date:'MM-dd-yyyy'}}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div fxFlex="50" fxFlex.sm="100" fxFlex.xs="100"
-                                                class="expand-details editable" *ngIf="late.get('showStatus').value">
-                                                <div class="grid-list-form">
-                                                    <div class="property">Status</div>
-                                                    <div class="value">
-                                                        <mat-form-field appearance="outline">
-                                                            <mat-select formControlName="bill_status_id"
-                                                                (selectionChange)="changestatus(late,$event.value)">
-                                                                <mat-option *ngFor="let list of billStatusList"
-                                                                    [value]="list.id">
-                                                                    {{list?.bill_status}}
-                                                                </mat-option>
-                                                            </mat-select>
-                                                        </mat-form-field>
+                                                    class="expand-details editable"
+                                                    *ngIf="late.get('showStatus').value">
+                                                    <div class="grid-list-form">
+                                                        <div class="property">Status</div>
+                                                        <div class="value">
+                                                            <mat-form-field appearance="outline">
+                                                                <mat-select formControlName="bill_status_id"
+                                                                    (selectionChange)="changestatus(late,$event.value)">
+                                                                    <mat-option *ngFor="let list of billStatusList"
+                                                                        [value]="list.id">
+                                                                        {{list?.bill_status}}
+                                                                    </mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="grid-list-form"
+                                                        *ngIf="late.get('bill_status_id').value == 51">
+                                                        <div class="property">Other</div>
+                                                        <div class="value">
+                                                            <mat-form-field appearance="outline">
+                                                                <input matInput formControlName="bill_other_status"
+                                                                    type="text" placeholder="Other Description"
+                                                                    autocomplete="off">
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="grid-list-form"
+                                                        *ngIf="late.get('bill_status_id').value != 47 && late.get('bill_status_id').value != 49">
+                                                        <div class="property">Notes</div>
+                                                        <div class="value">
+                                                            <mat-form-field appearance="outline">
+                                                                <input matInput
+                                                                    formControlName="late_payment_response_notes"
+                                                                    type="text" placeholder="Notes" autocomplete="off">
+                                                            </mat-form-field>
+                                                        </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="grid-list-form"
-                                                    *ngIf="late.get('bill_status_id').value == 51">
-                                                    <div class="property">Other</div>
-                                                    <div class="value">
-                                                        <mat-form-field appearance="outline">
-                                                            <input matInput formControlName="bill_other_status"
-                                                                type="text" placeholder="Other Description"
-                                                                autocomplete="off">
-                                                        </mat-form-field>
+                                                <div fxFlex="100"
+                                                    *ngIf="(late.get('bill_status_id').value == 47 || late.get('bill_status_id').value == 49) && last">
+                                                    <div class="create-support m-t-10">
+                                                        <div><b>Create Support Ticket</b></div>
+                                                        <div>Click below link to create new ticket</div>
+                                                        <div class="link"><a
+                                                                href="https://simplexam.freshdesk.com/support/tickets/new"
+                                                                target="_blank"><i
+                                                                    class="fas fa-link p-r-10 hide-mobile"></i>https://simplexam.freshdesk.com/support/tickets/new
+                                                                <span
+                                                                    (click)="$event.stopPropagation();copyText('https://simplexam.freshdesk.com/support/tickets/new')"
+                                                                    class="copy-link"><i ngxClipboard cbContent="ssssss"
+                                                                        class="far fa-copy"></i></span></a></div>
                                                     </div>
                                                 </div>
 
-                                                <div class="grid-list-form"
-                                                    *ngIf="late.get('bill_status_id').value != 47 && late.get('bill_status_id').value != 49">
-                                                    <div class="property">Notes</div>
-                                                    <div class="value">
-                                                        <mat-form-field appearance="outline">
-                                                            <input matInput
-                                                                formControlName="late_payment_response_notes"
-                                                                type="text" placeholder="Notes" autocomplete="off">
-                                                        </mat-form-field>
-                                                    </div>
+                                                <div class="w-100 text-center p-t-10"
+                                                    *ngIf="late.get('showStatus').value">
+                                                    <button type="button" class="outline-danger m-r-10"
+                                                        mat-stroked-button
+                                                        (click)="removeResponse(lateindex)">Cancel</button>
+                                                    <button class="outline-success" mat-stroked-button
+                                                        (click)="submitLateRes(late, lateindex)">Save</button>
                                                 </div>
-                                            </div>
-                                                
-                                            <div fxFlex="100"
-                                            *ngIf="(late.get('bill_status_id').value == 47 || late.get('bill_status_id').value == 49) && last">
-                                            <div class="create-support m-t-10">
-                                                <div><b>Create Support Ticket</b></div>
-                                                <div>Click below link to create new ticket</div>
-                                                <div class="link"><a
-                                                        href="https://simplexam.freshdesk.com/support/tickets/new"
-                                                        target="_blank"><i
-                                                            class="fas fa-link p-r-10 hide-mobile"></i>https://simplexam.freshdesk.com/support/tickets/new
-                                                        <span
-                                                            (click)="$event.stopPropagation();copyText('https://simplexam.freshdesk.com/support/tickets/new')"
-                                                            class="copy-link"><i ngxClipboard cbContent="ssssss"
-                                                                class="far fa-copy"></i></span></a></div>
-                                            </div>
-                                        </div>
-                                                
-                                        <div class="w-100 text-center p-t-10" *ngIf="late.get('showStatus').value">
-                                            <button type="button" class="outline-danger m-r-10" mat-stroked-button
-                                                (click)="removeResponse(lateindex)">Cancel</button>
-                                            <button class="outline-success" mat-stroked-button
-                                                (click)="submitLateRes(late, lateindex)">Save</button>
-                                        </div>
-                                        <div fxFlex="100" *ngIf="last && !late.get('showStatus').value">
-                                            <button type="button" mat-raised-button class="filled-gray m-r-10 m-t-5"
-                                                (click)="copyedit(late ,lateindex)">Copy
-                                                & Edit Response</button>
-                                            <button type="button" mat-raised-button class="filled-gray m-t-5"
-                                                (click)="addlateRes()">Add Response</button>
-                                        </div>
+                                                <div fxFlex="100" *ngIf="last && !late.get('showStatus').value">
+                                                    <button type="button" [disabled]="is_cancellation" mat-raised-button
+                                                        class="filled-gray m-r-10 m-t-5"
+                                                        (click)="copyedit(late ,lateindex)">Copy
+                                                        & Edit Response</button>
+                                                    <button type="button" [disabled]="is_cancellation" mat-raised-button
+                                                        class="filled-gray m-t-5" (click)="addlateRes()">Add
+                                                        Response</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
                             </td>
                         </tr>
-            </ng-container>
-        </tbody>
-      </table>
-    </div>
-</form>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </form>
 </mat-card-content>

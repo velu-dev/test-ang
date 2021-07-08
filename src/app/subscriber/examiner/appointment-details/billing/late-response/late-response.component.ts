@@ -14,7 +14,7 @@ export class LateResponseComponent implements OnInit, OnDestroy {
   @Input() paramsId: any;
   @Input() isMobile: any;
   @Input() billType: number;
-
+  @Input() cancellation: boolean;
   billStatusList = [];
   lateResData: any;
   lateForm: FormGroup;
@@ -35,7 +35,10 @@ export class LateResponseComponent implements OnInit, OnDestroy {
 
     })
   }
-
+  is_cancellation = false;
+  ngAfterContentInit() {
+    this.is_cancellation = this.cancellation;
+  }
   ngOnInit() {
     this.getLateRes();
     this.getLateResStatus();

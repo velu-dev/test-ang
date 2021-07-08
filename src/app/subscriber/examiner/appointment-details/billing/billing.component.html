@@ -13,42 +13,44 @@
     </mat-tab-group>
 
     <div *ngIf="billingData">
-        <app-billing-info [review]="review" [paramsId]="paramsId" [billingData]="billingData"
-            [isMobile]="isMobile">
+        <app-billing-info [cancellation]="is_cancellation" [review]="review" [paramsId]="paramsId"
+            [billingData]="billingData" [isMobile]="isMobile">
         </app-billing-info>
 
-        <app-diagnosis-code [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
+        <app-diagnosis-code [cancellation]="is_cancellation" [paramsId]="paramsId" [billingData]="billingData"
+            [isMobile]="isMobile">
         </app-diagnosis-code>
 
-        <app-bill-line-item [review]="review" [billType]="tabIndex + 1" [paramsId]="paramsId"
-            [billingData]="billingData" [isMobile]="isMobile">
+        <app-bill-line-item [cancellation]="is_cancellation" [review]="review" [billType]="tabIndex + 1"
+            [paramsId]="paramsId" [billingData]="billingData" [isMobile]="isMobile">
         </app-bill-line-item>
 
         <mat-card class="fbr-pay-response" *ngIf="billingData">
             <mat-tab-group>
                 <mat-tab label="Payment response">
                     <mat-card class="fbr-mat-card">
-                        <app-payment-response [paramsId]="paramsId" [billingData]="billingData"
-                            (getPaymentStatus)="getPaymentStatus($event)" [voidType]="voidType"
-                            [paidStatusData]="paidStatusData">
+                        <app-payment-response [cancellation]="is_cancellation" [paramsId]="paramsId"
+                            [billingData]="billingData" (getPaymentStatus)="getPaymentStatus($event)"
+                            [voidType]="voidType" [paidStatusData]="paidStatusData">
                         </app-payment-response>
                     </mat-card>
                 </mat-tab>
                 <mat-tab label="Late response">
-                    <app-late-response [paramsId]="paramsId" [billingData]="billingData" [billType]="tabIndex + 1"
-                        [isMobile]="isMobile">
+                    <app-late-response [cancellation]="is_cancellation" [paramsId]="paramsId"
+                        [billingData]="billingData" [billType]="tabIndex + 1" [isMobile]="isMobile">
                     </app-late-response>
                 </mat-tab>
             </mat-tab-group>
         </mat-card>
 
-        <app-submission [review]="review" [billType]="tabIndex + 1" [paramsId]="paramsId" [billingData]="billingData"
-            [states]="states" (getBillingDetails)="getBillingDetails($event)" [isIME]="isIME">
+        <app-submission [cancellation]="is_cancellation" [review]="review" [billType]="tabIndex + 1"
+            [paramsId]="paramsId" [billingData]="billingData" [states]="states"
+            (getBillingDetails)="getBillingDetails($event)" [isIME]="isIME">
         </app-submission>
 
         <div class="completed-documents m-t-30">
-            <app-billing-document [billType]="tabIndex + 1" [paramsId]="paramsId" [billingData]="billingData"
-                [isMobile]="isMobile"></app-billing-document>
+            <app-billing-document [cancellation]="is_cancellation" [billType]="tabIndex + 1" [paramsId]="paramsId"
+                [billingData]="billingData" [isMobile]="isMobile"></app-billing-document>
         </div>
     </div>
 

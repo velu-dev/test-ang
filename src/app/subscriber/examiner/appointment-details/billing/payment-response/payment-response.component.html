@@ -42,7 +42,7 @@
                         <td
                             [ngClass]="{'text-success' : payment.get('bill_paid_status').value != 'Rejected', 'text-danger' : payment.get('bill_paid_status').value == 'Rejected'}">
                             {{payment.get('bill_paid_status').value}}</td>
-                        <td><button type="button"
+                        <td><button type="button" [disabled]="is_cancellation"
                                 *ngIf="paymentReviews(payIndex)?.controls?.length == 0 || paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length -1).get('void_type_id').value == 3"
                                 mat-raised-button class="mini-btn filled-gray" (click)="addReviews(payIndex)">Add
                                 Response</button></td>
@@ -159,8 +159,9 @@
                                             </div>
                                         </div>
                                         <div fxFlex="100">
-                                            <button type="button" *ngIf="last && review.get('void_type_id').value != 3"
-                                                mat-raised-button class="filled-gray m-t-15"
+                                            <button type="button" [disabled]="is_cancellation"
+                                                *ngIf="last && review.get('void_type_id').value != 3" mat-raised-button
+                                                class="filled-gray m-t-15"
                                                 (click)="editResponse(payment,review,payIndex,reviewIndex)">Copy & Edit
                                                 Response</button>
 
@@ -863,7 +864,8 @@
 
     </form>
     <div fxLayout="row wrap" class="m-t-15">
-        <button mat-raised-button class="filled-gray m-r-5" (click)="openCloseBillDialog()">Close Bill</button>
+        <button [disabled]="is_cancellation" mat-raised-button class="filled-gray m-r-5"
+            (click)="openCloseBillDialog()">Close Bill</button>
         <!-- <button mat-raised-button class="filled-gray m-r-5" (click)="openLateResponse()">Late Response</button>
             <button mat-raised-button class="filled-gray m-r-5" (click)="openSecondBillReviewDialog()">Second Bill Review</button>
             <button mat-raised-button class="filled-gray" disabled>Independent Bill Review</button> -->
