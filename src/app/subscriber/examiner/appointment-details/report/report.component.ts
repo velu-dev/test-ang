@@ -138,8 +138,10 @@ export class ReportComponent implements OnInit {
     this.styleElement.appendChild(document.createTextNode(css));
     head.appendChild(this.styleElement);
   }
+  is_cancellation = false;
   getReport() {
     this.onDemandService.getTranscription(this.paramsId.claim_id, this.paramsId.billId).subscribe(report => {
+      this.is_cancellation = report.is_cancellation;
       this.reportData = report;
       this.changeColors(report.on_demand_status_color_code);
       this.dataSource = new MatTableDataSource(report.documents)

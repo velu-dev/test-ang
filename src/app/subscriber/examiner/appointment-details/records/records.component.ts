@@ -159,8 +159,10 @@ export class RecordsComponent implements OnInit {
     })
 
   }
+  is_cancellation = false;
   getRecord() {
     this.onDemandService.getRecords(this.paramsId.claim_id, this.paramsId.billId).subscribe(record => {
+      this.is_cancellation = record.is_cancellation;
       this.recordData = record;
       this.changeColors(record.on_demand_status_color_code)
       if (this.recordData.service_providers && this.recordData.service_providers.length) {

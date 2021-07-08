@@ -48,7 +48,7 @@ export class HistoryComponent implements OnInit {
   statusBarValues = { value: null, status: '', class: '' }
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild('MatSortTracking', { static: true }) sortTracking: MatSort;
-  
+  is_cancellation = false;
   constructor(private breakpointObserver: BreakpointObserver, private route: ActivatedRoute,
     private onDemandService: OnDemandService, private alertService: AlertService, private intercom: IntercomService,
     public dialog: MatDialog, private cookieService: CookieService, public router: Router, private claimService: ClaimService) {
@@ -125,6 +125,7 @@ export class HistoryComponent implements OnInit {
   getHistory() {
     this.inFile = [];
     this.onDemandService.getHistory(this.paramsId.claim_id, this.paramsId.billId).subscribe(history => {
+      this.is_cancellation = history.is_cancellation;
       this.historyData = history;
       if (this.historyData.on_demand_status_id == null || this.historyData.on_demand_status_id == 7 || this.historyData.on_demand_status_id == 9 || this.historyData.on_demand_status_id == 10 || this.historyData.on_demand_status_id == 25) {
         this.isMedicalhistoryShow = true;

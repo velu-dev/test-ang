@@ -10,8 +10,9 @@
       <div class="text-center">{{historyData?.on_demand_status}}</div>
     </div>
 
-    <div fxFlex="100" class="text-center m-t-20 m-b-20"  *ngIf="isMedicalhistoryShow">
-      <mat-checkbox [disabled]="historyData?.is_exam_type_changed || historyData?.isExaminerDisabled || !historyData.isenglish_or_spanish_speaking_claimant "
+    <div fxFlex="100" class="text-center m-t-20 m-b-20" *ngIf="isMedicalhistoryShow">
+      <mat-checkbox
+        [disabled]="is_cancellation || historyData?.is_exam_type_changed || historyData?.isExaminerDisabled || !historyData.isenglish_or_spanish_speaking_claimant "
         [(ngModel)]="rushRequest">Rush Request?</mat-checkbox>
     </div>
     <div fxFlex="100" class="text-center m-t-20 m-b-20" *ngIf="!isMedicalhistoryShow">
@@ -20,12 +21,14 @@
       </div>
     </div>
     <div fxFlex="100" *ngIf="isMedicalhistoryShow" class="text-center m-t-20 m-b-20 action-btns">
-      <button [disabled]="historyData?.is_exam_type_changed || historyData?.isExaminerDisabled || !historyData.isenglish_or_spanish_speaking_claimant" mat-stroked-button
-        class="outline-success huge-btn" (click)="onDemandSubmit()"> Click Here for Medical History Questionnaire On
+      <button
+        [disabled]="is_cancellation || historyData?.is_exam_type_changed || historyData?.isExaminerDisabled || !historyData.isenglish_or_spanish_speaking_claimant"
+        mat-stroked-button class="outline-success huge-btn" (click)="onDemandSubmit()"> Click Here for Medical History
+        Questionnaire On
         Demand</button>
-        <div class="note">
-          <span>*</span>English and Spanish are the only languages currently supported.
-        </div>
+      <div class="note">
+        <span>*</span>English and Spanish are the only languages currently supported.
+      </div>
     </div>
 
     <div fxFlex="100" class="m-t-20" *ngIf="historyTrackingDatasource?.filteredData?.length > 0">
@@ -95,7 +98,8 @@
             class="material-icons-outlined">info</i></span></div>
       <p class="description">Completed document table. </p>
       <div class="user-detail vertical-fixed default-cursor">
-        <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort #MatSortDocument="matSort">
+        <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8 user-table" matSort
+          #MatSortDocument="matSort">
           <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay; let i=index">
             <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="columnName[i] == 'Action'">
               {{columnName[i]}}</th>
