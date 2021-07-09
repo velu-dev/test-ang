@@ -39,8 +39,9 @@
                         <td class="text-danger">{{lateResData?.balance ? '$ ' : ''}} {{lateResData?.balance | number :
                             '1.2-2'}}</td>
                         <td class="text-success">{{lateResData?.bill_paid_status}}</td>
-                        <td><button type="button" *ngIf="lateRes().controls?.length == 0" mat-raised-button
-                                class="mini-btn filled-gray" (click)="addlateRes();openElement(lateResData?.id)">Add
+                        <td><button type="button" [disabled]="is_cancellation" *ngIf="lateRes().controls?.length == 0"
+                                mat-raised-button class="mini-btn filled-gray"
+                                (click)="addlateRes();openElement(lateResData?.id)">Add
                                 Response</button></td>
                     </tr>
 
@@ -211,7 +212,7 @@
                                                 <button type="button" [disabled]="is_cancellation" mat-raised-button
                                                     class="filled-gray" (click)="copyedit(late ,lateindex)">Copy
                                                     & Edit Response</button>
-                                                <button type="button" mat-raised-button class="filled-gray m-l-10"
+                                                <button type="button" [disabled]="is_cancellation" mat-raised-button class="filled-gray m-l-10"
                                                     (click)="addlateRes()">Add Response</button>
                                             </div>
                                         </div>
