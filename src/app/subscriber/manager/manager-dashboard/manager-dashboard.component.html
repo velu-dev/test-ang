@@ -52,10 +52,10 @@
             <mat-card matRipple class="simple-card" [ngClass]="{'active': selectedTile == 'claimants_without_claims'}"
                 (click)="getDashboardData('claimants_without_claims')">
                 <mat-card-content>
-                    <h4>Claimants without claims</h4>
+                    <h4>Claimants Without Claims</h4>
                     <ul>
-                        <li>&nbsp;</li>
-                        <li></li>
+                        <!-- <li>&nbsp;</li>
+                        <li></li> -->
                         <li>{{totalCount?.claimants_without_claims}}</li>
                     </ul>
                 </mat-card-content>
@@ -67,10 +67,10 @@
                 [ngClass]="{'active': selectedTile == 'claims_without_billable_item'}"
                 (click)="getDashboardData('claims_without_billable_item')">
                 <mat-card-content>
-                    <h4>Claims without billable items</h4>
+                    <h4>Claims Without Billable Items</h4>
                     <ul>
-                        <li>&nbsp;</li>
-                        <li></li>
+                        <!-- <li>&nbsp;</li>
+                        <li></li> -->
                         <li>{{totalCount?.claims_without_billable_item}}</li>
                     </ul>
                 </mat-card-content>
@@ -158,8 +158,8 @@
                 <mat-card-content>
                     <h4>Closed Bills</h4>
                     <ul>
-                        <li>&nbsp;</li>
-                        <li></li>
+                        <!-- <li>&nbsp;</li>
+                        <li></li> -->
                         <li>{{totalCount?.closed_bills}}</li>
                     </ul>
                 </mat-card-content>

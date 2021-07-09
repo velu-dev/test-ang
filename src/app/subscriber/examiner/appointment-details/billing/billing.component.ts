@@ -386,6 +386,7 @@ export class billingOnDemandDialog {
   displayedColumns1: string[] = ['select', 'recipient_type'];
   states: any;
   onDemandStatus: boolean = false;
+  is_cancellation = false;
   constructor(
     public dialogRef: MatDialogRef<billingOnDemandDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any, public dialog: MatDialog, public billingService: BillingService,
