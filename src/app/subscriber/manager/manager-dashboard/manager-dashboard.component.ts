@@ -160,7 +160,7 @@ export class ManagerDashboardComponent implements OnInit {
         }
       })
     }
-    if (status == "awaiting_appointment_details" || status == "submit_correspondence" || status == "confirm_appointment" || status == "bill_report" || status == "collect_on_payment" || status == 'collect_bills') {
+    if (status == "awaiting_appointment_details" || status == "submit_correspondence" || status == "confirm_appointment" || status == "bill_report" || status == "collect_on_payment" || status == 'collect_bills' || status == 'closed_bills') {
       this.isHandset$.subscribe(res => {
         this.isMobile = res;
         if (res) {
@@ -183,6 +183,11 @@ export class ManagerDashboardComponent implements OnInit {
           filteredData = res.data;
           return true
         }
+      })
+    }
+    if (status == 'claims_without_billable_item') {
+      filteredData.map(filter => {
+        filter['body_parts'] = filter.body_parts ? filter.body_parts[0].body_part_name : "";
       })
     }
     this.selectedData = filteredData.length;
