@@ -50,7 +50,7 @@
                 <div fxFlex="30" fxFlex.sm="100" fxFlex.xs="100">
                     <input type="file" #uploader hidden (change)="addFile($event,true)" multiple
                         accept=".pdf, .doc, .docx" required>
-                    <button [disabled]="is_cancellation" mat-raised-button class="float-right filled-gray m-r-5 m-b-5"
+                    <button mat-raised-button class="float-right filled-gray m-r-5 m-b-5"
                         (click)="openUploadPopUp(true, ['.pdf', '.doc', '.docx'], '', 'addFile', '30')"><i
                             class="fa fa-file-medical p-r-10"></i> Add Custom
                         Document</button>

@@ -869,6 +869,7 @@ export class AppointmentDetailsComponent implements OnInit {
       if (this.billable_item.get(["appointment", "conference_phone"]).value && this.billable_item.get(["appointment", "conference_phone"]).valid) {
         this.billable_item.get(["appointment", "phone_ext"]).enable();
       } else {
+        this.billable_item.get(["appointment", "phone_ext"]).reset();
         this.billable_item.get(["appointment", "phone_ext"]).disable();
       }
     })
@@ -876,6 +877,7 @@ export class AppointmentDetailsComponent implements OnInit {
       if (this.billable_item.get(["intake_call", "caller_phone"]).value && this.billable_item.get(["intake_call", "caller_phone"]).valid) {
         this.billable_item.get(["intake_call", "phone_ext"]).enable();
       } else {
+        this.billable_item.get(["intake_call", "phone_ext"]).reset();
         this.billable_item.get(["intake_call", "phone_ext"]).disable();
       }
     })
@@ -1536,11 +1538,13 @@ export class AppointmentDetailsComponent implements OnInit {
     if (this.billable_item.get(["appointment", "conference_phone"]).value && this.billable_item.get(["appointment", "conference_phone"]).valid) {
       this.billable_item.get(["appointment", "phone_ext"]).enable();
     } else {
+      this.billable_item.get(["appointment", "phone_ext"]).reset();
       this.billable_item.get(["appointment", "phone_ext"]).disable();
     }
     if (this.billable_item.get(["intake_call", "caller_phone"]).value && this.billable_item.get(["intake_call", "caller_phone"]).valid) {
       this.billable_item.get(["intake_call", "phone_ext"]).enable();
     } else {
+      this.billable_item.get(["intake_call", "phone_ext"]).reset();
       this.billable_item.get(["intake_call", "phone_ext"]).disable();
     }
   }
