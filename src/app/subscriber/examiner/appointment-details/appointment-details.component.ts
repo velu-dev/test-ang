@@ -1149,6 +1149,9 @@ export class AppointmentDetailsComponent implements OnInit {
     this.getDisabledFields('status');
     this.examinationStatusForm.enable();
     this.isExaminationStatusEdit = true;
+    this.isEditBillableItem = false;
+    this.billable_item.disable();
+    this.billable_item.patchValue(this.billableData);
     // if (this.billable_item.get(["appointment", "conference_phone"]).value && this.billable_item.get(["appointment", "conference_phone"]).valid) {
     //   this.billable_item.get(["appointment", "phone_ext"]).enable();
     // } else {
@@ -1522,9 +1525,12 @@ export class AppointmentDetailsComponent implements OnInit {
     }
   }
   editBillable() {
+    this.examinationStatusForm.disable();
+    this.isExaminationStatusEdit = false;
     this.getDisabledFields('bill');
     this.isEditBillableItem = true;
     this.billable_item.enable();
+    this.examinationStatusForm.patchValue(this.examinationDetails.appointments);
     if (this.billableData.isExaminerDisabled) {
       this.billable_item.get('appointment').get('examiner_id').enable();
     } else {
