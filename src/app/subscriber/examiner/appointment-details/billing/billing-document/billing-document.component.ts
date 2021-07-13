@@ -137,12 +137,10 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
   }
 
   private removeNonSftpActionRefId(data: any[]) {
-    return data.map((doc, i) => {
-      console.log(doc.action)
-      if(doc.action !== 'SFTP' && i < 1) {
+    return data.map((doc) => {
+      if(doc.action !== 'SFTP') {
         doc.request_reference_id = '';
       }
-      console.log(doc);
       return doc;
     })
   }
