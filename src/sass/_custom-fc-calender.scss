@@ -1,0 +1,127 @@
+
+// custom calender css
+.fc-event,
+.fc-event:hover {
+  cursor: pointer;
+}
+.fc-button {
+  border: 1px solid #d7dae3;
+  text-transform: capitalize;
+  @media only screen and (max-width: 568px) {
+    font-size: $font-size-7 !important;
+  }
+}
+.fc-button .fc-icon {
+  @media only screen and (max-width: 568px) {
+    font-size: 10px;
+    width: 10px;
+    height: 10px;
+  }
+}
+.fc-header-toolbar {
+  .fc-left {
+    h2 {
+      font-size: $font-size-9;
+      font-weight: $font-weight-bold;
+    }
+  }
+}
+.fc-toolbar {
+  button {
+    background-color: $white;
+    border: 1px solid $light-gray;
+    color: $text-gray;
+    &:hover {
+      background-color: $white !important;
+      border: 1px solid $light-gray !important;
+      color: $primary !important;
+    }
+    &:focus {
+      box-shadow: none !important;
+      outline: none !important;
+    }
+  }
+  button.fc-button-active {
+    background-color: $white !important;
+    border: 1px solid $light-gray !important;
+    color: $primary !important;
+  }
+}
+.fc-button-primary:disabled {
+  color: $white !important;
+  background-color: $secondary;
+  border-color: $secondary;
+  &:hover {
+    color: $white !important;
+    background-color: $secondary !important;
+    cursor: pointer;
+  }
+}
+.fc-toolbar.fc-header-toolbar {
+  @media only screen and (max-width: 568px) {
+    min-height: 90px;
+  }
+  h2 {
+    float: right;
+    padding-top: 5px;
+    font-size: $font-size-10;
+    @media screen and (max-width: 1024px) and (min-width: 481px) {
+      font-size: $font-size-1;
+      padding-top: 10px;
+    }
+  }
+  @media only screen and (max-width: 568px) {
+    display: block;
+  }
+}
+.fc-day-header.fc-widget-header {
+  @media only screen and (max-width: 568px) {
+    text-transform: capitalize !important;
+    padding: 5px 0px;
+  }
+}
+.fc-toolbar {
+  .fc-right {
+    @media only screen and (max-width: 568px) {
+      float: left;
+      padding: 18px 0 0 0;
+      z-index: 99999;
+      width: 100%;
+    }
+  }
+  .fc-button-group {
+    @media only screen and (max-width: 568px) {
+      float: right;
+    }
+  }
+}
+.fc-head {
+  background-color: $navbar-light;
+  tr {
+    th {
+      padding: 10px 15px;
+      font-size: $font-size-1;
+      color: $text-dark;
+      font-weight: $font-weight-bold;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.fc-bgevent-skeleton {
+  td {
+    padding: 10px;
+  }
+}
+.fc-unthemed td.fc-today {
+  background: #f5f6fa;
+}
+
+.fc-ltr .fc-dayGrid-view .fc-day-top .fc-day-number {
+  padding: 5px;
+}
+.fc-event,
+.fc-event:hover {
+  border: none !important;
+  padding: 1px 5px !important;
+}

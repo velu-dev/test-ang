@@ -1,0 +1,131 @@
+$primary: #e21b8e;
+$secondary: #96358d;
+$ternary: hsl(193, 100%, 44%);
+
+$primary-dark: #1b1c1d;
+$primary-light: #383838;
+$menu-light: #b3b3b3;
+$navbar-light: #f4f4f4;
+$light-color: #f4f4f4;
+$progres-light-gray: #e6e6e6;
+
+$active: #767676;
+
+//===================================
+//===== alert-color =================
+//===================================
+//LITE-MESSAGE
+$light:#000000;
+$light-bg:#F8F8F9;
+$light-border:#D7D8D8;
+
+// INFORMATION
+$info: #018aaf;
+$info-bg: #f2fbfe;
+$info-border: #bedfe6;
+
+// ERROR
+$error: #db2828;
+$error-bg: #fcebeb;
+$error-border: #db2828;
+
+// WARNING
+$warning: #a3501c;
+$warning-bg: #fcddca;
+$warning-bg-light: #fdf4ef;
+$warning-border: #a3501c;
+
+// SUCCESS
+$success: #1e561f;
+$success-bg: #dbf5d2;
+$success-border: #a8c599;
+
+//colors
+$bg-light-blue: #f2f7ff;
+//Primary background colors
+$primarycolor: #3c3cff;
+$primarylightcolor: #8369ff;
+$primarydarkcolor: #000eca;
+
+//Secondary background colors
+$secondarycolor: #65ff88;
+$secondarylightcolor: #9effb9;
+$secondaryarkcolor: #19cb59;
+
+// progress error
+$progress-error: #f27120;
+
+//ternary color
+$ternary-color: #6464fa;
+
+//Extra colors
+// $green: #65ff88;
+$green: #4fcc24;
+$white: #ffffff;
+$black: #000000;
+$gray: #ccc;
+$text-gray: #5b626b;
+// $text-gray: #767676;
+$lightgray: #e0e1e2;
+$dark-gray: #4d4f5c;
+// $light-gray: #a2a1a1;
+$light-gray: #a2a1a1;
+$text-dark: #45515f;
+$menu-active: #383838; //Menu active background
+$tab-active: #3c3cff1f; //Tab active background
+$transparent: transparent;
+$border-light: #efefef;
+$yellow: #f2cf3c;
+$light_green: #b5cc18;
+$icon-gray: #a7a7a7;
+$text-light: #707070;
+$mat-tree: #4d4f5c;
+$dark_gray_1: #e2e2e2;
+
+//alert colors
+$text-success: rgb(3, 90, 6);
+$text-error: rgb(197, 1, 1);
+$text-warning: rgb(206, 123, 0);
+$bg-success: rgb(76, 175, 80);
+$bg-error: rgba(255, 54, 54, 0.05);
+$bg-warning: rgba(255, 178, 54, 0.4);
+$bg-error-style-one: #ff8f8f;
+$btn_success: #4fcc24 !default;
+$btn_close: #ebebf2;
+$accent: #ff4081;
+$disabled: rgba(0, 0, 0, 0.12);
+
+// Tab background color
+$tab-bg-1: #3c3cff1f;
+
+//btn light color
+$btn-light-color: #e3e3fa;
+
+//
+$warning-light: #ffc400;
+// $danger: #ff3366;
+$danger: #db2828;
+
+//table odd row color
+$table-solid: #f8f8f8;
+$table-border: rgba(0, 0, 0, 0.05); //table data bottom border
+
+//box Shadow
+$nav-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+$shadow-style-one: 0px 5px 25px 0px rgba(0, 0, 0, 0.2);
+$shadow-style-one-hover: 0 0 25px -5px #9e9c9e;
+
+$box-shadow-none: none !important;
+$box-shadow-1: 5px 5px 25px #b3c5de9c;
+$box-shadow-2: 3px 0 10px 0 rgba(183, 192, 206, 0.2); // Using navebar
+$box-shadow-3: 0px 3px 6px #00000029;
+$box-shadow-4: 0px 3px 6px #00000029; // Using logo toolbar
+$box-shadow-7: 0px 1px 10px #00000029; // Using logo toolbar
+$box-shadow-5: 0px 3px 6px #448aff38; //using table header
+$box-shadow-6: 0px 7px 25px rgba(18, 38, 63, 0.1);
+
+//button Shadow
+$btn-primary-shadow: 0px 3px 5px #2e5eaf;
+
+//table shadow
+$box-shadow: 0px 0px 5px #b3c5de9c;
