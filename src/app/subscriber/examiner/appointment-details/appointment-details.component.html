@@ -368,12 +368,13 @@
             <form [formGroup]="docDeclearTable">
                 <table *ngIf="getFormControls.controls.length > 0">
                     <tbody>
-                        <ng-container formArrayName="tableRows" *ngFor="let group of getFormControls.controls ; let i=index">
+                        <ng-container formArrayName="tableRows"
+                            *ngFor="let group of getFormControls.controls ; let i=index">
                             <tr *ngIf="!group.get('isEditable').value" [formGroupName]="i">
                                 <td>
                                     <mat-accordion>
-                                        <mat-expansion-panel (click)="openElement(group.get('no_of_pages_declared').value)"
-                                            hideToggle>
+                                        <mat-expansion-panel
+                                            (click)="openElement(group.get('no_of_pages_declared').value)" hideToggle>
                                             <mat-expansion-panel-header>
                                                 <mat-panel-title>
                                                     <div class="inline-title">
@@ -416,7 +417,8 @@
                                                     <div class="bill-property">Action</div>
                                                     <div class="value">
                                                         <a class="text-success" (click)="editRow(group,i)">Edit</a>
-                                                        <a class="text-danger m-l-10" (click)="deleteRow(i,group)">Remove</a>
+                                                        <a class="text-danger m-l-10"
+                                                            (click)="deleteRow(i,group)">Remove</a>
                                                     </div>
                                                 </div>
 
@@ -441,17 +443,21 @@
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
                                             <mat-card>
-                                                <div class="detail m-t-5" style="background-color: #ffffff;padding: 10px;">
-                                                    <div class="expand-details-list form-level w-100" fxLayout="row wrap">
-                                                        <div fxFlex.sm="100" fxFlex.xs="100" class="expand-details editable">
+                                                <div class="detail m-t-5"
+                                                    style="background-color: #ffffff;padding: 10px;">
+                                                    <div class="expand-details-list form-level w-100"
+                                                        fxLayout="row wrap">
+                                                        <div fxFlex.sm="100" fxFlex.xs="100"
+                                                            class="expand-details editable">
                                                             <div class="grid-list-form">
                                                                 <div class="property">Pages Declared</div>
                                                                 <div class="value">
                                                                     <mat-form-field appearance="outline" class="w-100">
                                                                         <input matInput type="number"
                                                                             (keypress)="numberOnly($event)"
-                                                                            formControlName="no_of_pages_declared" min="1"
-                                                                            autocomplete="off" placeholder="Pages Declared">
+                                                                            formControlName="no_of_pages_declared"
+                                                                            min="1" autocomplete="off"
+                                                                            placeholder="Pages Declared">
                                                                     </mat-form-field>
                                                                 </div>
                                                             </div>
@@ -459,9 +465,11 @@
                                                                 <div class="property">Submitting Party</div>
                                                                 <div class="value">
                                                                     <mat-form-field appearance="outline" class="w-100">
-                                                                        <mat-select placeholder="Select Submitting Party"
+                                                                        <mat-select
+                                                                            placeholder="Select Submitting Party"
                                                                             formControlName="agent_type">
-                                                                            <mat-option *ngFor="let party of SubmittingParty"
+                                                                            <mat-option
+                                                                                *ngFor="let party of SubmittingParty"
                                                                                 [value]="party.name">
                                                                                 {{party.name}}
                                                                             </mat-option>
@@ -474,11 +482,14 @@
                                                                 <div class="value">
                                                                     <mat-form-field appearance="outline"
                                                                         class="mat-date-picker">
-                                                                        <input matInput type="text" placeholder="Date Received"
-                                                                            formControlName="date_received" autocomplete="off"
-                                                                            [min]="minimumDate" [matDatepicker]="date_received"
+                                                                        <input matInput type="text"
+                                                                            placeholder="Date Received"
+                                                                            formControlName="date_received"
+                                                                            autocomplete="off" [min]="minimumDate"
+                                                                            [matDatepicker]="date_received"
                                                                             [max]="today">
-                                                                        <mat-datepicker-toggle matSuffix [for]="date_received">
+                                                                        <mat-datepicker-toggle matSuffix
+                                                                            [for]="date_received">
                                                                         </mat-datepicker-toggle>
                                                                         <mat-datepicker #date_received></mat-datepicker>
                                                                     </mat-form-field>
@@ -487,13 +498,15 @@
 
                                                             <div class="grid-list-form">
                                                                 <div class="property"></div>
-                                                                <div class="value" *ngIf="!group.get('file_name').value">
+                                                                <div class="value"
+                                                                    *ngIf="!group.get('file_name').value">
                                                                     <button type="button" mat-raised-button
                                                                         class="mini-btn filled-gray"
                                                                         (click)="addFileDoc($event,group,i)">Upload</button>
                                                                 </div>
                                                                 <div class="value" *ngIf="group.get('file_name').value">
-                                                                    <a class="text-ternary" style="word-break: break-all;"
+                                                                    <a class="text-ternary"
+                                                                        style="word-break: break-all;"
                                                                         (click)="downloadDocDeclare(group,i)">
                                                                         {{group.get('file_name').value}}</a>
                                                                     <button type="button" mat-raised-button
@@ -505,7 +518,8 @@
                                                             <div class="grid-list-form m-t-20">
                                                                 <div class="property"></div>
                                                                 <div class="value text-center">
-                                                                    <a class="text-success" (click)="doneRow(group, i)">Save</a>
+                                                                    <a class="text-success"
+                                                                        (click)="doneRow(group, i)">Save</a>
                                                                     <a class="text-danger m-l-10"
                                                                         (click)="cancelRow(group,i)">Cancel</a>
                                                                 </div>
@@ -918,7 +932,8 @@
                                 <div>
                                     <span *ngIf="column == 'doc_image'" class="file_type_icon"><img
                                             [src]="element?.file_name | fileType" alt=""></span>
-                                    <span *ngIf="column == 'file_name'"> {{element?.file_name}} </span>
+                                    <span *ngIf="column == 'file_name'" (click)="openPDF(element)">
+                                        {{element?.file_name}} </span>
                                     <span *ngIf="column == 'updatedAt'">{{element?.updatedAt | date:'MM-dd-yyyy hh:mm
                                         a'}}</span>
                                     <span *ngIf="column == 'pfs' && element?.proof_of_service_file_name">

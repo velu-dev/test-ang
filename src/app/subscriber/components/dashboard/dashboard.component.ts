@@ -119,7 +119,7 @@ export class DashboardComponent implements OnInit {
         }
       })
     }
-    if (status == "awaiting_appointment_details" || status == "submit_correspondence" || status == "confirm_appointment" || status == "bill_report" || status == "collect_on_payment" || status == 'collect_bills' || status == 'closed_bills') {
+    if (status == "awaiting_appointment_details" || status == "submit_correspondence" || status == "confirm_appointment" || status == "bill_report" || status == "collect_on_payment" || status == 'collect_bills') {
       this.isHandset$.subscribe(res => {
         this.isMobile = res;
         if (res) {
@@ -128,6 +128,18 @@ export class DashboardComponent implements OnInit {
         } else {
           this.columnName = ["", "Claimant", "Date of Birth", "Examiner", "Exam Procedure Type", "Standing", "Date of Service /" + '\n' + "Date Item Received", "Standing Due Date", "Report Submission" + '\n' + "Due Date", "Critical"]
           this.columnsToDisplay = ['is_expand', 'claimant_first_name', 'date_of_birth', 'examiner_first_name', "exam_procedure_name", "standing", 'appointment_scheduled_date_time', 'due_date', 'report_submission_due_date', 'is_critical']
+        }
+      })
+    }
+    if (status == 'closed_bills') {
+      this.isHandset$.subscribe(res => {
+        this.isMobile = res;
+        if (res) {
+          this.columnName = ["", "Claimant", "Examiner"]
+          this.columnsToDisplay = ['is_expand', 'claimant_first_name', "examiner_first_name"]
+        } else {
+          this.columnName = ["", "Claimant", "Date of Birth", "Examiner", "Exam Procedure Type", "Standing", "Date of Service /" + '\n' + "Date Item Received", "Report Submission" + '\n' + "Due Date"]
+          this.columnsToDisplay = ['is_expand', 'claimant_first_name', 'date_of_birth', 'examiner_first_name', "exam_procedure_name", "standing", 'appointment_scheduled_date_time', 'report_submission_due_date']
         }
       })
     }
@@ -197,7 +209,11 @@ export class DashboardComponent implements OnInit {
   isCloseIds = [];
   isExpandIds = [];
   openElement(element, ind?) {
-    console.log(ind)
+    if ((this.selectedTile === 'claimants_without_claims') || (this.selectedTile === 'claims_without_billable_item')) {
+      this.isExpandAll = false;
+      this.expandId = null;
+      return
+    }
     if (this.isExpandAll) {
       if (this.isCloseIds.includes(ind)) {
         let index = this.isCloseIds.indexOf(ind)

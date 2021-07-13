@@ -52,6 +52,7 @@
     "rxjs": "~6.4.0",
     "xlsx": "^0.15.5",
     "xng-breadcrumb": "^6.2.0",
+    "ng2-pdf-viewer": "^6.4.1",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
