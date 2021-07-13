@@ -79,7 +79,8 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
   }
   getDocument() {
     this.billingService.getSendRecDocument(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, this.billType).subscribe(document => {
-      this.dataSourceDocList = new MatTableDataSource(document.data);
+      const data = this.removeNonSftpActionRefId(document.data);
+      this.dataSourceDocList = new MatTableDataSource(data);
       this.dataSourceDocList.sort = this.sort;
     })
     this.billingService.getDtmData({ claim_id: this.paramsId.claim_id, billable_item_id: this.paramsId.billId, bill_id: this.paramsId.billingId }).subscribe(res => {
@@ -135,6 +136,16 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
     })
   }
 
+  private removeNonSftpActionRefId(data: any[]) {
+    return data.map((doc, i) => {
+      console.log(doc.action)
+      if(doc.action !== 'SFTP' && i < 1) {
+        doc.request_reference_id = '';
+      }
+      console.log(doc);
+      return doc;
+    })
+  }
 
 }
 // const ELEMENT_DATA = [
