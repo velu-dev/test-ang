@@ -1,282 +1,13 @@
+@import "./custom-color";
+@import "./custom-font-size";
+@import "./custom-fc-calender";
+@import "./custom-spacing";
+@import "./custom-overide";
+@import "./custom-variables";
+
 :root {
   --cropper-outline-color: rgba(0, 0, 0, 0.3);
 }
-
-$primary: #e21b8e;
-$secondary: #96358d;
-$ternary: hsl(193, 100%, 44%);
-
-$primary-dark: #1b1c1d;
-$primary-light: #383838;
-$menu-light: #b3b3b3;
-$navbar-light: #f4f4f4;
-$light-color: #f4f4f4;
-$progres-light-gray: #e6e6e6;
-
-$active: #767676;
-
-//===================================
-//===== alert-color =================
-//===================================
-//LITE-MESSAGE
-$light:#000000;
-$light-bg:#F8F8F9;
-$light-border:#D7D8D8;
-
-// INFORMATION
-$info: #018aaf;
-$info-bg: #f2fbfe;
-$info-border: #bedfe6;
-
-// ERROR
-$error: #db2828;
-$error-bg: #fcebeb;
-$error-border: #db2828;
-
-// WARNING
-$warning: #a3501c;
-$warning-bg: #fcddca;
-$warning-bg-light: #fdf4ef;
-$warning-border: #a3501c;
-
-// SUCCESS
-$success: #1e561f;
-$success-bg: #dbf5d2;
-$success-border: #a8c599;
-
-//colors
-$bg-light-blue: #f2f7ff;
-//Primary background colors
-$primarycolor: #3c3cff;
-$primarylightcolor: #8369ff;
-$primarydarkcolor: #000eca;
-
-//Secondary background colors
-$secondarycolor: #65ff88;
-$secondarylightcolor: #9effb9;
-$secondaryarkcolor: #19cb59;
-
-// progress error
-$progress-error: #f27120;
-
-//ternary color
-$ternary-color: #6464fa;
-
-//Extra colors
-// $green: #65ff88;
-$green: #4fcc24;
-$white: #ffffff;
-$black: #000000;
-$gray: #ccc;
-$text-gray: #5b626b;
-// $text-gray: #767676;
-$lightgray: #e0e1e2;
-$dark-gray: #4d4f5c;
-// $light-gray: #a2a1a1;
-$light-gray: #a2a1a1;
-$text-dark: #45515f;
-$menu-active: #383838; //Menu active background
-$tab-active: #3c3cff1f; //Tab active background
-$transparent: transparent;
-$border-light: #efefef;
-$yellow: #f2cf3c;
-$light_green: #b5cc18;
-$icon-gray: #a7a7a7;
-$text-light: #707070;
-$mat-tree: #4d4f5c;
-$dark_gray_1: #e2e2e2;
-
-//alert colors
-$text-success: rgb(3, 90, 6);
-$text-error: rgb(197, 1, 1);
-$text-warning: rgb(206, 123, 0);
-$bg-success: rgb(76, 175, 80);
-$bg-error: rgba(255, 54, 54, 0.05);
-$bg-warning: rgba(255, 178, 54, 0.4);
-$bg-error-style-one: #ff8f8f;
-$btn_success: #4fcc24 !default;
-$btn_close: #ebebf2;
-$accent: #ff4081;
-$disabled: rgba(0, 0, 0, 0.12);
-
-// Tab background color
-$tab-bg-1: #3c3cff1f;
-
-//btn light color
-$btn-light-color: #e3e3fa;
-
-//
-$warning-light: #ffc400;
-// $danger: #ff3366;
-$danger: #db2828;
-
-//table odd row color
-$table-solid: #f8f8f8;
-$table-border: rgba(0, 0, 0, 0.05); //table data bottom border
-//class
-// Matero Variables
-//
-// Layout
-$gutter: 16px !default;
-
-// Sidenav
-$sidenav-width: 240px !default;
-$sidenav-collapsed-width: 50px !default;
-$sidenav-width-mobile: 280px !default;
-
-// Toolbar
-$toolbar-height-desktop: 64px !default;
-$toolbar-height-mobile: 56px !default;
-
-// Typography
-$font-size-base: 14px !default;
-$font-weight-base: 400 !default;
-$font-weight-medium: 500 !default;
-$font-weight-bold: 600 !default;
-
-$font-size-h1: 40px !default;
-$font-size-h2: 32px !default;
-$font-size-h3: 28px !default;
-$font-size-h4: 24px !default;
-$font-size-h5: 20px !default;
-$font-size-h6: 16px !default;
-
-//Font-size
-$font-size-1: 0.875rem; // font-size: 14px
-$font-size-2: 1rem; // font-size: 16px;
-$font-size-3: 0.75rem; // font-size: 12px;
-$font-size-4: 1.375rem; // font-size: 22px;
-$font-size-5: 0.6875rem; // font-size: 11px;
-$font-size-6: 1.0625rem; // font-size: 17px;
-$font-size-7: 0.8125rem; // font-size: 13px;
-$font-size-8: 0.5625rem; // font-size: 9px;
-$font-size-9: 1.25rem; // font-size: 20px;
-$font-size-10: 1.125rem; // font-size: 18px;
-$font-size-11: 0.938rem; // font-size: 15px;
-$font-size-12: 0.625rem; // font-size: 10px;
-$font-size-13: 1.5rem; // font-size: 24px;
-$font-size-14: 2.25rem; // font-size: 36px;
-$font-size-15: 3rem; //font-size: 48px;
-$font-size-16: 5.5rem; // font-size: 88px;
-$font-size-17: 1.875rem; // font-size: 30px;
-$font-size-18: 5.625rem; // font-size: 90px;
-$font-size-19: 2.5rem; // font-size: 40px;
-$font-size-20: 0.7em;
-$font-size-21: 1.1875rem; // font-size: 19px;
-$font-size-22: 0.656rem; //font-size: 10.5px;
-$font-size-23: 2em;
-
-//Font-family
-
-$font-family: -apple-system, system-ui, BlinkMacSystemFont, "Lato ";
-$font-family-source-san-serif: "Lato";
-
-//Alignment
-$float-left: left;
-$float-right: right;
-$float-none: none;
-//
-// Breakpoints
-//
-// Define the minimum dimensions at which your layout will change,
-// adapting to different screen sizes, for use in media queries.
-$breakpoints: (
-  xsmall: 0,
-  small: 600px,
-  medium: 960px,
-  large: 1280px,
-  xlarge: 1920px,
-) !default;
-
-//Width
-$width-10: 10%;
-$width-20: 20%;
-$width-30: 30%;
-$width-40: 40%;
-$width-50: 50%;
-$width-60: 60%;
-$width-70: 70%;
-$width-80: 80%;
-$width-90: 90%;
-$width-95: 95%;
-$width-100: 100%;
-//box Shadow
-$nav-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-$shadow-style-one: 0px 5px 25px 0px rgba(0, 0, 0, 0.2);
-$shadow-style-one-hover: 0 0 25px -5px #9e9c9e;
-
-$box-shadow-none: none !important;
-$box-shadow-1: 5px 5px 25px #b3c5de9c;
-$box-shadow-2: 3px 0 10px 0 rgba(183, 192, 206, 0.2); // Using navebar
-$box-shadow-3: 0px 3px 6px #00000029;
-$box-shadow-4: 0px 3px 6px #00000029; // Using logo toolbar
-$box-shadow-7: 0px 1px 10px #00000029; // Using logo toolbar
-$box-shadow-5: 0px 3px 6px #448aff38; //using table header
-$box-shadow-6: 0px 7px 25px rgba(18, 38, 63, 0.1);
-
-//button Shadow
-$btn-primary-shadow: 0px 3px 5px #2e5eaf;
-
-//table shadow
-$box-shadow: 0px 0px 5px #b3c5de9c;
-
-// Font-weight
-.font-weight-600 {
-  font-weight: $font-weight-bold !important;
-}
-
-.text-center {
-  text-align: center;
-}
-.text-left {
-  text-align: left;
-}
-.text-right {
-  text-align: right;
-}
-
-.display-block {
-  display: block !important;
-}
-.pointer {
-  cursor: pointer;
-}
-//Width
-.w-10 {
-  width: 10%;
-}
-.w-20 {
-  width: 20%;
-}
-.w-30 {
-  width: 30%;
-}
-.w-40 {
-  width: 40%;
-}
-.w-50 {
-  width: 50%;
-}
-.w-60 {
-  width: 60%;
-}
-.w-70 {
-  width: 70%;
-}
-.w-80 {
-  width: 80%;
-}
-.w-90 {
-  width: 90%;
-}
-.w-100 {
-  width: 100%;
-}
-
-.icon-16 {
-  width: 16px;
-}
-// mixins scss
 
 // ==================================
 // Authentication styles     ========
@@ -575,18 +306,6 @@ input:-webkit-autofill {
 }
 
 // ==================================
-// selection custom css      ========
-// ==================================
-
-// ::-moz-selection { /* Code for Firefox */
-//   background: transparent; //background transparent color
-//   }
-
-//   ::selection {
-//   background: transparent; //background transparent color
-
-//   }
-// ==================================
 // Button styles             ========
 // ==================================
 
@@ -720,177 +439,13 @@ input:-webkit-autofill {
   max-width: $width-60;
   width: $width-60;
 }
-// ==================================
-// Forms overide scss        ========
-// ==================================
-
-.mat-dialog-container {
-  padding: 18px !important;
-}
-
-.mat-form-field {
-  line-height: 1.15; 
-  .mat-form-field-wrapper {
-    padding-bottom: 0;
-
-    .mat-form-field-underline {
-      position: initial !important;
-      display: block;
-      margin-top: -1px;
-    }
-
-    .mat-form-field-subscript-wrapper,
-    .mat-form-field-ripple {
-      position: initial !important;
-      display: table;
-    }
-
-    .mat-form-field-subscript-wrapper {
-      min-height: calc(1em + 1px);
-    }
-  }
-}
-.claim-search {
-  .mat-form-field-wrapper {
-    .mat-form-field-subscript-wrapper {
-      min-height: auto !important;
-      display: inline-block !important;
-    }
-  }
-}
-
-// Form fields disabled label color
-.mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-label {
-  color: rgba(0, 0, 0, 0.7) !important;
-}
-.mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-suffix {
-  color: rgba(0, 0, 0, 0.7) !important;
-}
-.mat-input-element:disabled,
-.mat-form-field-type-mat-native-select.mat-form-field-disabled,
-.mat-form-field-infix::after {
-  color: rgba(0, 0, 0, 0.7) !important;
-}
-.mat-select-disabled .mat-select-value,
-.mat-checkbox-disabled .mat-checkbox-label {
-  color: rgba(0, 0, 0, 0.7) !important;
-}
-
-.cdk-overlay-pane {
-  @media only screen and (max-width: 568px) {
-    max-width: 90vw !important;
-  }
-}
-
-.searchable-dropdown {
-  font-size: $font-size-1;
-  background-color: $white;
-  .mat-form-field {
-    width: 500px;
-    @media screen and (max-width: 1024px) and (min-width: 768px) {
-      max-width: 280px;
-    }
-    @media screen and (max-width: 568px) and (min-width: 320px) {
-      max-width: 100%;
-    }
-  }
-  ::ng-deep {
-    .mat-form-field-appearance-outline .mat-form-field-infix {
-      padding: 0.5em 0 0.8em 0;
-    }
-    .mat-form-field-appearance-outline .mat-form-field-wrapper {
-      margin: 0px;
-    }
-    .mat-form-field-wrapper {
-      padding-bottom: 0px;
-      mat-icon {
-        color: $text-dark;
-        // font-size: $font-size-1;
-        cursor: pointer;
-      }
-      .mat-input-element {
-        color: $text-dark;
-      }
-    }
-  }
-}
-// Safari browser Form fields disabled label color
-
-@media not all and (min-resolution: 0.001dpcm) {
-  @supports (-webkit-appearance: none) and (stroke-color: transparent) {
-    .mat-select-disabled .mat-select-value,
-    .mat-checkbox-disabled .mat-checkbox-label {
-      color: rgba(0, 0, 0, 0.5) !important;
-    }
-  }
-}
-::ng-deep {
-  // mat-input carent color
-  .mat-input-element {
-    caret-color: #d5aed2 !important;
-  }
-  // outline Form fields custom color
-  /* Border */
-  //mat-input focused color
-  .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
-    color: #d5aed2 !important;
-  }
-
-  // mat-input label color
-  .mat-form-field.mat-focused .mat-form-field-label {
-    color: #96358d !important;
-  }
-  .mat-form-field.mat-focused .mat-form-field-ripple {
-    background-color: #d5aed2 !important;
-  }
-
-  .mat-datepicker-toggle-active {
-    color: #96358d !important;
-  }
-
-  .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
-    color: #96358d !important;
-  }
-
-  // .mat-form-field-appearance-outline .mat-form-field-label {
-  //   margin-top: -0.46em;
-  // }
-}
-// Tooltip font-size
-.mat-tooltip {
-  font-size: 14px !important;
-  max-width: 600px !important;
-}
-
-// OUTLINE BUTTON CSS
-.mat-button-focus-overlay {
-  transition: none !important;
-  opacity: 0 !important;
-}
-// button {
-//   &:disabled {
-//     opacity: .5;
-//   }
-// }
 
 .btn_ {
   height: 40px;
   min-width: 100px;
   font-weight: $font-weight-bold;
-  // &:disabled {
-  //   background-color: inherit !important;
-  //   color: $disabled;
-  //   border: 1px solid $disabled;
-  //   cursor: not-allowed;
-  // }
 }
-// button[disabled] {
-//   &:hover {
-//     background-color: inherit !important;
-//     color: $disabled;
-//     border: 1px solid $disabled;
-//   }
-// }
+
 .disable-button {
   opacity: .5;
   cursor: not-allowed;
@@ -1552,22 +1107,6 @@ input:-webkit-autofill {
   display: block;
 }
 
-// On Demand Pages Information Icon
-// .ondemand-info {
-//   border-radius: 50px;
-//   border: 2px solid $black;
-//   width: 15px;
-//   height: 15px;
-//   line-height: 0.5;
-//   vertical-align: middle;
-//   text-align: center;
-//   display: inline-table;
-//   cursor: pointer;
-//   i {
-//     font-size: $font-size-12 !important;
-//     line-height: 0;
-//   }
-// }
 .custom-info {
   vertical-align: middle;
   cursor: pointer;
@@ -1708,10 +1247,6 @@ input:-webkit-autofill {
     border: 2px dashed !important;
     border-color: $primary !important;
   }
-  // .move {
-  //   border: 5px dashed !important;
-  //   border-color:$primary !important;
-  // }
 }
 
 // incomplete inforamation
@@ -1841,27 +1376,6 @@ input:-webkit-autofill {
   }
 }
 
-// .incomplete-details {
-//   padding: 0 10px 0 10px;
-//   .title {
-//     color: $text-dark;
-//     font-weight: $font-weight-bold;
-//     font-size: $font-size-1;
-//     padding-bottom: 10px;
-//   }
-//   mat-divider {
-//     padding-bottom: 10px;
-//   }
-//   .list {
-//     color: $text-dark;
-//     font-size: $font-size-7;
-//     mat-icon {
-//       vertical-align: middle;
-//       font-size: $font-size-7;
-//     }
-//   }
-// }
-
 // Tree custom css
 .mat-tree {
   width: $width-100;
@@ -1939,37 +1453,6 @@ input:-webkit-autofill {
         min-width: 20%;
       }
     }
-
-    // span {
-    //   float: left;
-    //   &:first-child {
-    //     width: 50%;
-    //     min-width: 50%;
-    //     text-align: left;
-    //     color: $mat-tree;
-    //     @media screen and (max-width: 568px) {
-    //       width: 100%;
-    //     }
-    //   }
-    //   &:nth-child(2) {
-    //     width: 20%;
-    //     min-width: 20%;
-    //     text-align: center;
-    //     @media screen and (max-width: 568px) {
-    //       width: 50%;
-    //       text-align: left;
-    //     }
-    //   }
-    //   &:nth-child(3) {
-    //     width: 30%;
-    //     min-width: 30%;
-    //     text-align: right;
-    //     @media screen and (max-width: 568px) {
-    //       width: 50%;
-    //       text-align: right;
-    //     }
-    //   }
-    // }
     .divider {
       content: "";
       display: block;

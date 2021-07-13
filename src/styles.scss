@@ -7,6 +7,12 @@
 @import "./sass/tabs";
 @import "./sass/progress";
 @import "./sass/sidenav";
+@import "./sass/custom-color";
+@import "./sass/custom-font-size";
+@import "./sass/custom-fc-calender";
+@import "./sass/custom-spacing";
+@import "./sass/custom-overide";
+@import "./sass/custom-variables";
 @import "~@fullcalendar/core/main.css";
 @import "~@fullcalendar/daygrid/main.css";
 @import "~@fullcalendar/timegrid/main.css";
@@ -97,44 +103,6 @@ textarea::-webkit-scrollbar {
   width: 3px;
   height: 3px;
   // border-radius: 10px;
-}
-// ==================================================
-// SPACING
-// ==================================================
-
-$spaceamounts: (
-  0,
-  1,
-  2,
-  3,
-  4,
-  5,
-  10,
-  15,
-  20,
-  25,
-  30,
-  35,
-  40,
-  45,
-  50,
-  65,
-  75,
-  80,
-  100
-); // Adjust this to include the pixel amounts you need.
-$sides: (top, bottom, left, right); // Leave this variable alone
-
-@each $space in $spaceamounts {
-  @each $side in $sides {
-    .m-#{str-slice($side, 0, 1)}-#{$space} {
-      margin-#{$side}: #{$space}px !important;
-    }
-
-    .p-#{str-slice($side, 0, 1)}-#{$space} {
-      padding-#{$side}: #{$space}px !important;
-    }
-  }
 }
 
 // ==================================================
@@ -311,102 +279,6 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   }
 }
 
-// action buttons
-// .confirmed {
-//   border: 1px solid $secondaryarkcolor;
-//   box-shadow: $box-shadow-2;
-//   white-space: nowrap;
-//   border-radius: 3px;
-//   padding: 2px 10px;
-//   font-size: $font-size-7;
-// }
-
-// .not_confirmed {
-//   border: 1px solid $danger;
-//   box-shadow: $box-shadow-2;
-//   white-space: nowrap;
-//   border-radius: 3px;
-//   padding: 2px 10px;
-//   font-size: $font-size-7;
-// }
-// .left_voicemail {
-//   border: 1px solid $warning-light;
-//   box-shadow: $box-shadow-2;
-//   white-space: nowrap;
-//   border-radius: 3px;
-//   padding: 2px 10px;
-//   font-size: $font-size-7;
-// }
-
-// .claimant_details_model,
-// .claim_details_model,
-// .billableiten_details_model {
-//   div {
-//     .scroll_ {
-//       max-height: 70vh;
-//       overflow: auto;
-//       .sub-title {
-//         border-bottom: 1px solid $light-color;
-//       }
-//       mat-divider {
-//         display: block;
-//       }
-//       div {
-//         .claim_popup {
-//           padding-top: 10px;
-//           .claim_label {
-//             width: $width-100;
-//             div {
-//               font-weight: $font-weight-bold;
-//               font-size: $font-size-1;
-//               padding-top: 10px;
-//               color: $text-gray;
-//               &::after {
-//                 content: ":";
-//                 display: inline-block;
-//                 float: right;
-//                 padding-right: 10px;
-//               }
-//             }
-//           }
-//           .claim_value {
-//             width: $width-100;
-//             div {
-//               font-size: $font-size-1;
-//               padding-top: 10px;
-//               color: $text-gray;
-//             }
-//           }
-//         }
-//       }
-//     }
-//     div {
-//       .des_ {
-//         font-size: $font-size-7;
-//         color: $text-gray;
-//       }
-//       .map {
-//         padding: 5px;
-//       }
-//     }
-//   }
-//   mat-card-footer {
-//     box-shadow: $box-shadow-1;
-//     .close_btn {
-//       float: right;
-//       border-radius: 50px;
-//       background-color: $btn_close;
-//       padding: 5px 20px !important;
-//       box-shadow: $box-shadow-4;
-//       margin-top: 10px;
-//       cursor: pointer;
-//       &:hover {
-//         background-color: $light-gray;
-//       }
-//     }
-//   }
-// }
-
 .mat-step-label-selected {
   color: $btn_success !important;
   font-weight: bold !important;
@@ -433,133 +305,6 @@ $sides: (top, bottom, left, right); // Leave this variable alone
 .mat-form-field.duration:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix {
   top: -2px;
 }
-// custom calender css
-.fc-event,
-.fc-event:hover {
-  cursor: pointer;
-}
-.fc-button {
-  border: 1px solid #d7dae3;
-  text-transform: capitalize;
-  @media only screen and (max-width: 568px) {
-    font-size: $font-size-7 !important;
-  }
-}
-.fc-button .fc-icon {
-  @media only screen and (max-width: 568px) {
-    font-size: 10px;
-    width: 10px;
-    height: 10px;
-  }
-}
-.fc-header-toolbar {
-  .fc-left {
-    h2 {
-      font-size: $font-size-9;
-      font-weight: $font-weight-bold;
-    }
-  }
-}
-.fc-toolbar {
-  button {
-    background-color: $white;
-    border: 1px solid $light-gray;
-    color: $text-gray;
-    &:hover {
-      background-color: $white !important;
-      border: 1px solid $light-gray !important;
-      color: $primary !important;
-    }
-    &:focus {
-      box-shadow: none !important;
-      outline: none !important;
-    }
-  }
-  button.fc-button-active {
-    background-color: $white !important;
-    border: 1px solid $light-gray !important;
-    color: $primary !important;
-  }
-}
-.fc-button-primary:disabled {
-  color: $white !important;
-  background-color: $secondary;
-  border-color: $secondary;
-  &:hover {
-    color: $white !important;
-    background-color: $secondary !important;
-    cursor: pointer;
-  }
-}
-.fc-toolbar.fc-header-toolbar {
-  @media only screen and (max-width: 568px) {
-    min-height: 90px;
-  }
-  h2 {
-    float: right;
-    padding-top: 5px;
-    font-size: $font-size-10;
-    @media screen and (max-width: 1024px) and (min-width: 481px) {
-      font-size: $font-size-1;
-      padding-top: 10px;
-    }
-  }
-  @media only screen and (max-width: 568px) {
-    display: block;
-  }
-}
-.fc-day-header.fc-widget-header {
-  @media only screen and (max-width: 568px) {
-    text-transform: capitalize !important;
-    padding: 5px 0px;
-  }
-}
-.fc-toolbar {
-  .fc-right {
-    @media only screen and (max-width: 568px) {
-      float: left;
-      padding: 18px 0 0 0;
-      z-index: 99999;
-      width: 100%;
-    }
-  }
-  .fc-button-group {
-    @media only screen and (max-width: 568px) {
-      float: right;
-    }
-  }
-}
-.fc-head {
-  background-color: $navbar-light;
-  tr {
-    th {
-      padding: 10px 15px;
-      font-size: $font-size-1;
-      color: $text-dark;
-      font-weight: $font-weight-bold;
-      text-transform: uppercase;
-    }
-  }
-}
-
-.fc-bgevent-skeleton {
-  td {
-    padding: 10px;
-  }
-}
-.fc-unthemed td.fc-today {
-  background: #f5f6fa;
-}
-
-.fc-ltr .fc-dayGrid-view .fc-day-top .fc-day-number {
-  padding: 5px;
-}
-.fc-event,
-.fc-event:hover {
-  border: none !important;
-  padding: 1px 5px !important;
-}
-
 mat-horizontal-stepper {
   .mat-horizontal-stepper-header {
     .mat-step-icon-state-number,
