@@ -493,8 +493,8 @@ export class billingOnDemandDialog {
           this.selection1.select(doc);
         }
       })
-      let tableData = this.data.billType == 2 ? secondRecData : this.recipientsData;
-      this.recipients = new MatTableDataSource(tableData);
+      // let tableData = this.data.billType == 2 ? secondRecData : this.recipientsData;
+      this.recipients = new MatTableDataSource(this.recipientsData);
     })
   }
 

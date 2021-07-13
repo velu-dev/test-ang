@@ -1,0 +1,142 @@
+// ==================================
+// Forms overide scss        ========
+// ==================================
+.mat-dialog-container {
+    padding: 18px !important;
+  }
+  
+  .mat-form-field {
+    line-height: 1.15; 
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+  
+      .mat-form-field-underline {
+        position: initial !important;
+        display: block;
+        margin-top: -1px;
+      }
+  
+      .mat-form-field-subscript-wrapper,
+      .mat-form-field-ripple {
+        position: initial !important;
+        display: table;
+      }
+  
+      .mat-form-field-subscript-wrapper {
+        min-height: calc(1em + 1px);
+      }
+    }
+  }
+  .claim-search {
+    .mat-form-field-wrapper {
+      .mat-form-field-subscript-wrapper {
+        min-height: auto !important;
+        display: inline-block !important;
+      }
+    }
+  }
+  
+  // Form fields disabled label color
+  .mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-label {
+    color: rgba(0, 0, 0, 0.7) !important;
+  }
+  .mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-suffix {
+    color: rgba(0, 0, 0, 0.7) !important;
+  }
+  .mat-input-element:disabled,
+  .mat-form-field-type-mat-native-select.mat-form-field-disabled,
+  .mat-form-field-infix::after {
+    color: rgba(0, 0, 0, 0.7) !important;
+  }
+  .mat-select-disabled .mat-select-value,
+  .mat-checkbox-disabled .mat-checkbox-label {
+    color: rgba(0, 0, 0, 0.7) !important;
+  }
+  
+  .cdk-overlay-pane {
+    @media only screen and (max-width: 568px) {
+      max-width: 90vw !important;
+    }
+  }
+  
+  .searchable-dropdown {
+    font-size: $font-size-1;
+    background-color: $white;
+    .mat-form-field {
+      width: 500px;
+      @media screen and (max-width: 1024px) and (min-width: 768px) {
+        max-width: 280px;
+      }
+      @media screen and (max-width: 568px) and (min-width: 320px) {
+        max-width: 100%;
+      }
+    }
+    ::ng-deep {
+      .mat-form-field-appearance-outline .mat-form-field-infix {
+        padding: 0.5em 0 0.8em 0;
+      }
+      .mat-form-field-appearance-outline .mat-form-field-wrapper {
+        margin: 0px;
+      }
+      .mat-form-field-wrapper {
+        padding-bottom: 0px;
+        mat-icon {
+          color: $text-dark;
+          // font-size: $font-size-1;
+          cursor: pointer;
+        }
+        .mat-input-element {
+          color: $text-dark;
+        }
+      }
+    }
+  }
+  // Safari browser Form fields disabled label color
+  
+  @media not all and (min-resolution: 0.001dpcm) {
+    @supports (-webkit-appearance: none) and (stroke-color: transparent) {
+      .mat-select-disabled .mat-select-value,
+      .mat-checkbox-disabled .mat-checkbox-label {
+        color: rgba(0, 0, 0, 0.5) !important;
+      }
+    }
+  }
+  ::ng-deep {
+    // mat-input carent color
+    .mat-input-element {
+      caret-color: #d5aed2 !important;
+    }
+    // outline Form fields custom color
+    /* Border */
+    //mat-input focused color
+    .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+      color: #d5aed2 !important;
+    }
+  
+    // mat-input label color
+    .mat-form-field.mat-focused .mat-form-field-label {
+      color: #96358d !important;
+    }
+    .mat-form-field.mat-focused .mat-form-field-ripple {
+      background-color: #d5aed2 !important;
+    }
+  
+    .mat-datepicker-toggle-active {
+      color: #96358d !important;
+    }
+  
+    .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+      color: #96358d !important;
+    }
+  }
+  // Tooltip font-size
+  .mat-tooltip {
+    font-size: 14px !important;
+    max-width: 600px !important;
+  }
+  
+  // OUTLINE BUTTON CSS
+  .mat-button-focus-overlay {
+    transition: none !important;
+    opacity: 0 !important;
+  }

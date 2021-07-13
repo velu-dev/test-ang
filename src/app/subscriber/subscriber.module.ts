@@ -77,6 +77,9 @@ import { SubmissionComponent } from './examiner/appointment-details/billing/subm
 import { LateResponseComponent } from './examiner/appointment-details/billing/late-response/late-response.component';
 import { DxCheckBoxModule, DxDataGridComponent, DxFileUploaderModule, DxHtmlEditorModule, DxProgressBarModule, DxToolbarComponent, DxToolbarModule } from 'devextreme-angular';
 import { FileUploadComponent } from '../shared/components/file-upload/file-upload.component';
+import { PDFViewerComponent } from '../shared/components/pdf-viewer/pdf-viewer.component';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -163,8 +166,9 @@ import { FileUploadComponent } from '../shared/components/file-upload/file-uploa
     BillingInfoComponent,
     SubmissionComponent,
     LateResponseComponent,
-    FileUploadComponent
-   
+    FileUploadComponent,
+    PDFViewerComponent
+
   ],
   entryComponents: [
     ClaimantPopupComponent,
@@ -188,7 +192,8 @@ import { FileUploadComponent } from '../shared/components/file-upload/file-uploa
     MailOnDemandConfirm,
     EditResponse,
     LateResponse,
-    FileUploadComponent
+    FileUploadComponent,
+    PDFViewerComponent
     // DefenseAttorneyComponent,
     // ApplicationAttorneyComponent,
     // DeoComponent,
@@ -203,7 +208,8 @@ import { FileUploadComponent } from '../shared/components/file-upload/file-uploa
     ImageCropperModule,
     NgxSpinnerModule,
     NgxMatSelectSearchModule,
-    DxFileUploaderModule, DxProgressBarModule,DxHtmlEditorModule , DxCheckBoxModule, DxToolbarModule
+    DxFileUploaderModule, DxProgressBarModule, DxHtmlEditorModule, DxCheckBoxModule, DxToolbarModule,
+    PdfViewerModule
   ],
   providers: [
     SubscriberUserService,
@@ -218,3 +224,4 @@ import { FileUploadComponent } from '../shared/components/file-upload/file-uploa
   ]
 })
 export class SubscriberModule { }
+// platformBrowserDynamic().bootstrapModule(SubscriberModule);

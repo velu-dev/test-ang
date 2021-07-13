@@ -57,8 +57,6 @@
 // override css
 .mat-drawer {
   transform: inherit !important;
-  @media only screen and (max-width: 568px) {
-  }
 }
 .mat-drawer-side {
   visibility: visible !important;

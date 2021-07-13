@@ -25,6 +25,7 @@ import { RegulationDialogueComponent } from 'src/app/shared/components/regulatio
 import { UserService } from 'src/app/shared/services/user.service';
 import * as regulation from 'src/app/shared/services/regulations';
 import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
+import { PDFViewerComponent } from 'src/app/shared/components/pdf-viewer/pdf-viewer.component';
 export interface PeriodicElement1 {
   file_name: string;
   date: string;
@@ -1936,6 +1937,20 @@ export class AppointmentDetailsComponent implements OnInit {
   download(data) {
     saveAs(data.exam_report_file_url, data.file_name, '_self');
     this.alertService.openSnackBar("File downloaded successfully", "success");
+  }
+  openPDF(element) {
+    this.examinerService.downloadOndemandDocuments({ file_url: element.file_url }).subscribe(res => {
+      const dialogRef = this.dialog.open(PDFViewerComponent, {
+        width: '800px',
+        data: { pdf: res.signed_file_url },
+        panelClass: 'custom-drag-and-drop',
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result['data']) {
+
+        }
+      })
+    })
   }
   downloadDocumet(element) {
     this.examinerService.downloadOndemandDocuments({ file_url: element.exam_report_file_url }).subscribe(res => {
