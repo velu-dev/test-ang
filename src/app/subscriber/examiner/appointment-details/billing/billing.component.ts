@@ -499,9 +499,10 @@ export class billingOnDemandDialog {
   }
 
 
-  download(data) {
-    if(this.selection1.selected.length > 1 && this.data.billType === 2) {
-      this.showSecondBillReviewAlert()
+  download(data, directDownload = false) {
+    if(this.selection1.selected.length > 1 && this.data.billType === 2 && !directDownload) {
+      this.showSecondBillReviewAlert(() => this.download(data, true));
+      return;
     }
     saveAs(data.exam_report_file_url, data.file_name);
     this.alertService.openSnackBar("File downloaded successfully", "success");
@@ -763,9 +764,10 @@ export class billingOnDemandDialog {
     })
   }
 
-  downloadMethod() {
-    if(this.selection1.selected.length > 1 && this.data.billType === 2) {
-      this.showSecondBillReviewAlert()
+  downloadMethod(directDownload = false) {
+    if(this.selection1.selected.length > 1 && this.data.billType === 2 && !directDownload) {
+      this.showSecondBillReviewAlert(() => this.downloadMethod(true));
+      return;
     }
     let selected_recipients = []
     this.selection1.selected.map(res => {
@@ -786,7 +788,7 @@ export class billingOnDemandDialog {
     })
   }
 
-  showSecondBillReviewAlert() {
+  showSecondBillReviewAlert(callbackAfterClosed: () => void) {
     const dialogRef = this.dialog.open(AlertDialogueComponent, {
       width: "500px",
       data: {
@@ -795,6 +797,7 @@ export class billingOnDemandDialog {
         message: 'Only the Insurance Company requires the request for Second Bill Review'
       }
     });
+    dialogRef.afterClosed().subscribe(() => callbackAfterClosed());
   }
 
 }

@@ -40,7 +40,10 @@
                     <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection1.toggle(row) : null"
                         [checked]="selection1.isSelected(row)"
                         [aria-label]="data.billType != 2 ? checkboxLabel1(row) : ''"
-                        [disabled]="data.billType === 2 && row.recipient_type === 'Insurance Company'">
+                        *ngIf="data.billType !== 2 || row.recipient_type !== 'Insurance Company'">
+                    </mat-checkbox>
+                    <mat-checkbox disabled [checked]="true"
+                        *ngIf="data.billType === 2 && row.recipient_type === 'Insurance Company'">
                     </mat-checkbox>
                 </td>
             </ng-container>
