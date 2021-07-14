@@ -21,7 +21,7 @@ export class PDFViewerComponent implements OnInit {
   onError(e) {
     console.log(e)
   }
-  zoomValue = 0.5;
+  zoomValue = 1;
   zoomIn() {
     this.zoomValue = this.zoomValue + 0.5
   }

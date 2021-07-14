@@ -12,6 +12,6 @@
                     class="fa fa-download"></i></button>
         </div>
         <pdf-viewer [src]="pdfSrc" style="display: block;" [zoom]="zoomValue" [fit-to-page]="true" [show-borders]="true"
-            [original-size]="false" (error)="onError($event)"></pdf-viewer>
+            [original-size]="true" [fit-to-page]="true" (error)="onError($event)"></pdf-viewer>
     </div>
 </div>
