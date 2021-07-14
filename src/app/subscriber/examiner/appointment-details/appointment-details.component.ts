@@ -1945,7 +1945,10 @@ export class AppointmentDetailsComponent implements OnInit {
     this.alertService.openSnackBar("File downloaded successfully", "success");
   }
   openPDF(element) {
-    this.examinerService.downloadOndemandDocuments({ file_url: element.file_url }).subscribe(res => {
+    console.log(element);
+    // return
+    this.examinerService.downloadOndemandDocuments({ file_url: element.exam_report_file_url }).subscribe(res => {
+      // console.log(res.signed_file_url);
       const dialogRef = this.dialog.open(PDFViewerComponent, {
         width: '800px',
         data: { pdf: res.signed_file_url },
