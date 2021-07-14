@@ -1,1 +1,17 @@
-<pdf-viewer [src]="pdfSrc" [render-text]="true" style="display: block;"></pdf-viewer>
+<div class="pdf-file">
+    <mat-card-header class="card-header">
+        <div class="content-wrapper-main-title">{{data?.name}}</div>
+        <span class="spacer"></span>
+        <button mat-icon-button (click)="onNoClick()"><i class="fa fa-close"></i></button>
+    </mat-card-header>
+    <div class="container widget-container flex-box">
+        <div class="text-right">
+            <button mat-icon-button (click)="zoomIn()"><i class="fa fa-search-plus"></i></button>
+            <button mat-icon-button (click)="zoomOut()"><i class="fa fa-search-minus"></i></button>
+            <button mat-stroked-button class="m-r-10 outline-success" (click)="download()">Download<i
+                    class="fa fa-download"></i></button>
+        </div>
+        <pdf-viewer [src]="pdfSrc" style="display: block;" [zoom]="zoomValue" [fit-to-page]="true" [show-borders]="true"
+            [original-size]="false" (error)="onError($event)"></pdf-viewer>
+    </div>
+</div>

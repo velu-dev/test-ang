@@ -1,0 +1,27 @@
+@import "variables";
+pdf-viewer {
+    display: block;
+    height: 90vh;
+}
+.pdf-file {
+    max-height: 90vh;
+    overflow: auto;
+    .card-header {
+        background-color: $info-bg;
+        border: 1px solid;
+        border-color: $info-border;
+        padding: 8px 10px;
+        display: flex;
+        .content-wrapper-main-title {
+            color: $info;
+            padding-top: 10px;
+            margin-bottom: 0px;
+        }
+    }
+    .container {
+        margin: 20px 0 15px 0;
+        width: $width-100;
+        min-height: 50vh;
+        max-height: 85vh;
+    }
+}
