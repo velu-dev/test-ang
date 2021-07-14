@@ -125,8 +125,9 @@ export class FileUploadComponent implements OnInit {
       { data: true, files: this.files }
     );
   }
-  remove(i) {
-    this.files.splice(i, 1)
+  remove(i: number) {
+    this.files.splice(i, 1);
+    this.fileName.splice(i, 1);
   }
   onNoClick(): void {
     this.dialogRef.close({ data: false });
