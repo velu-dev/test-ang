@@ -116,9 +116,10 @@
                     <form [formGroup]="dateofServiceForm" (ngSubmit)="saveClicked()">
                         <div fxLayout="row wrap">
                             <mat-form-field appearance="outline" fxFlex="100">
-                                <input matInput [matDatepicker]="date_of_service" formControlName="date_of_service"
-                                    placeholder="Date of Service">
-                                <mat-datepicker-toggle matSuffix [for]="date_of_service" [disabled]="is_cancellation || review != 'First'">
+                                <input matInput [matDatepicker]="date_of_service" [min]="billingData.date_of_birth"
+                                    formControlName="date_of_service" placeholder="Date of Service">
+                                <mat-datepicker-toggle matSuffix [for]="date_of_service"
+                                    [disabled]="is_cancellation || review != 'First'">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #date_of_service></mat-datepicker>
                             </mat-form-field>

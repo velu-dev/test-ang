@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MatDialog, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import * as moment from 'moment';
@@ -48,7 +48,7 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
   payerResponse: any = [];
   styleElement: HTMLStyleElement;
   subscription: any;
-  dateofServiceForm: any;
+  dateofServiceForm: FormGroup;
   constructor(public dialog: MatDialog, private formBuilder: FormBuilder, public billingService: BillingService, private intercom: IntercomService, private alertService: AlertService) {
     this.subscription = this.intercom.getBillDiagnosisChange().subscribe(res => {
       this.getIncomplete();
@@ -152,10 +152,13 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
       }
     })
   }
+
+  previousDateOfService = '';
   dosSubmit() {
     if (this.dateofServiceForm.get('date_of_service').value)
       this.dateofServiceForm.get('date_of_service').patchValue(moment(this.dateofServiceForm.get('date_of_service').value).format("YYYY-MM-DD"))
     this.billingService.createDateofService(this.dateofServiceForm.value, this.paramsId.billId).subscribe(res => {
+      this.previousDateOfService = res.data[0].date_of_service || '';
       this.alertService.openSnackBar(res.message, "success");;
       this.getIncomplete();
     }, error => {
@@ -173,6 +176,10 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
           date_of_service: ""
         });
         this.dosSubmit();
+      } else {
+        this.dateofServiceForm.patchValue({
+          date_of_service: this.previousDateOfService
+        });
       }
     })
   }
