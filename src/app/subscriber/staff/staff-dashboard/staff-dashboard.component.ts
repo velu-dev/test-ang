@@ -140,6 +140,10 @@ export class StaffDashboardComponent implements OnInit {
   }
   selectedData: any;
   getDashboardData(status?) {
+    this.isExpandAll = false;
+    this.isExpandIds = []
+    this.expandId = null;
+    var filteredData = [];
     var filteredData = [];
     if (status == 'claimants_without_claims') {
       this.isHandset$.subscribe(res => {

@@ -141,6 +141,10 @@ export class ManagerDashboardComponent implements OnInit {
   selectedData: any;
   getDashboardData(status?) {
     var filteredData = [];
+    this.isExpandAll = false;
+    this.isExpandIds = []
+    this.expandId = null;
+    var filteredData = [];
     if (status == 'claimants_without_claims') {
       this.isHandset$.subscribe(res => {
         this.isMobile = res;
