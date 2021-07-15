@@ -1950,9 +1950,9 @@ export class AppointmentDetailsComponent implements OnInit {
     this.examinerService.downloadOndemandDocuments({ file_url: element.exam_report_file_url }).subscribe(res => {
       // console.log(res.signed_file_url);
       const dialogRef = this.dialog.open(PDFViewerComponent, {
-        width: '1200px',
+        width: '1000px',
         data: { pdf: res.signed_file_url, name: element.file_name },
-        panelClass: 'custom-drag-and-drop',
+        panelClass: 'pdf-viewer',
       });
       dialogRef.afterClosed().subscribe(result => {
         return
