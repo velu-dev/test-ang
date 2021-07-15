@@ -40,7 +40,10 @@
           <!-- Name Column -->
           <ng-container matColumnDef="form_name">
             <th mat-header-cell *matHeaderCellDef> </th>
-            <td mat-cell *matCellDef="let element" class="p-l-0">{{element.form_name}}</td>
+            <td mat-cell *matCellDef="let element" class="p-l-0">{{
+              element?.original_file_name && element?.original_file_name != '' ? element?.original_file_name :
+              element?.form_name
+              }}</td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -112,7 +115,12 @@
               <div>
                 <span *ngIf="column == 'doc_image'" class="file_type_icon"> <img [src]="element?.file_name | fileType"
                     alt=""></span>
-                <span *ngIf="column == 'file_name'">{{element?.file_name}}</span>
+                <span *ngIf="column == 'file_name'">
+                  {{
+                  element?.original_file_name && element?.original_file_name != '' ? element?.original_file_name :
+                  element?.file_name
+                  }}
+                </span>
                 <span *ngIf="column == 'updatedAt'" class="no-wrap-td">{{element?.updatedAt | date:'MM-dd-yyyy'}}</span>
                 <span *ngIf="column == 'action'" class="text-center no-wrap-td">
                   <a class="text-success" (click)="downloadDocument(element)">Download</a>

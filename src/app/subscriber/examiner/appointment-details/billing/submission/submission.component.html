@@ -83,7 +83,13 @@
                                             (click)="element?.completed_document?.isCompleteOnly ? getGenerateBillingForm(element?.completed_document?.id) : download(element?.completed_document)"
                                             *ngIf="element?.completed_document">{{element?.completed_document?.isCompleteOnly
                                             ? 'Generate & Download' :
-                                            element?.completed_document?.file_name}}
+                                            (
+                                            element?.completed_document?.original_file_name &&
+                                            element?.completed_document?.original_file_name != '' ?
+                                            element?.completed_document?.original_file_name :
+                                            element?.completed_document?.file_name
+                                            )
+                                            }}
                                             <i class="fas fa-download"></i></a>
 
                                         <a *ngIf="!element?.completed_document && element?.form_action_type != 'C' && element?.form_action_type != 'X'"

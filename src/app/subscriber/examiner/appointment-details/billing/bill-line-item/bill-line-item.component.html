@@ -706,7 +706,10 @@
 
                                                 <tr *ngFor="let file of support_documents;let i=index">
                                                     <td><a class="text-ternary"
-                                                            (click)="download(file?.exam_report_file_url,file?.file_name)">{{file?.file_name}}</a>
+                                                            (click)="download(file?.exam_report_file_url,file?.file_name)">{{
+                                                            file?.original_file_name && file?.original_file_name != '' ?
+                                                            file?.original_file_name : file?.file_name
+                                                            }}</a>
                                                     </td>
                                                     <td class="action"><a class="text-danger p-r-10"
                                                             (click)="RemoveFile(file,i)"
@@ -719,7 +722,11 @@
                                                     </td>
                                                 </tr>
                                                 <tr *ngFor="let file of fileName;let i=index">
-                                                    <td><a class="">{{file?.file_name}}</a></td>
+                                                    <td><a class="">{{
+                                                            file?.original_file_name && file?.original_file_name != '' ?
+                                                            file?.original_file_name :
+                                                            file?.file_name
+                                                            }}</a></td>
                                                     <td class="action">
                                                         <a class="text-danger p-r-10" (click)="RemoveFile(file,i)"
                                                             *ngIf="!is_cancellation">Remove</a> |
