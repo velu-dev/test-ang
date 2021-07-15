@@ -192,6 +192,13 @@ export class StaffDashboardComponent implements OnInit {
     if (this.selectedTile == status) {
       this.selectedTile = "";
       filteredData = this.allData;
+      if (this.isMobile) {
+        this.columnName = ["", "Claimant", "Critical"]
+        this.columnsToDisplay = ['is_expand', 'claimant_first_name', "is_critical"]
+      } else {
+        this.columnName = ["", "Claimant", "Date of Birth", "Examiner", "Exam Procedure Type", "Standing", "Date of Service /" + '\n' + "Date Item Received", "Standing Due Date", "Report Submission" + '\n' + "Due Date", "Critical"]
+        this.columnsToDisplay = ['is_expand', 'claimant_first_name', 'date_of_birth', 'examiner_first_name', "exam_procedure_name", "standing", 'appointment_scheduled_date_time', 'due_date', 'report_submission_due_date', 'is_critical']
+      }
     } else {
       this.selectedTile = status;
       this.dashboardData.map(res => {
