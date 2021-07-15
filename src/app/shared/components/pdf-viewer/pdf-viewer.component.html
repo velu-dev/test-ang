@@ -2,16 +2,23 @@
     <mat-card-header class="card-header">
         <div class="content-wrapper-main-title">{{data?.name}}</div>
         <span class="spacer"></span>
-        <button mat-icon-button (click)="onNoClick()"><i class="fa fa-close"></i></button>
+        <button mat-icon-button (click)="onNoClick()" class="text-ternary"><i class="fa fa-close"></i></button>
     </mat-card-header>
-    <div class="container widget-container flex-box">
-        <div class="text-right">
-            <button mat-icon-button (click)="zoomIn()"><i class="fa fa-search-plus"></i></button>
-            <button mat-icon-button (click)="zoomOut()"><i class="fa fa-search-minus"></i></button>
-            <button mat-stroked-button class="m-r-10 outline-success" (click)="download()">Download<i
-                    class="fa fa-download"></i></button>
+    <mat-card-content>
+       <div class="pdf-container">
+        <div class="text-center actions">
+          <button mat-icon-button (click)="download()" matTooltip="Download" matTooltipPosition="left">
+            <mat-icon>file_download</mat-icon>
+          </button>
+            <button mat-icon-button (click)="zoomIn()">
+                <mat-icon>add</mat-icon>
+              </button>
+              <button mat-icon-button (click)="zoomOut()">
+                <mat-icon>remove</mat-icon>
+              </button>
         </div>
         <pdf-viewer [src]="pdfSrc" style="display: block;" [zoom]="zoomValue" [fit-to-page]="true" [show-borders]="true"
             [original-size]="true" [fit-to-page]="true" (error)="onError($event)"></pdf-viewer>
-    </div>
+       </div>
+      </mat-card-content>
 </div>

@@ -256,12 +256,18 @@ textarea::-webkit-scrollbar {
   display: none !important;
 }
 
-// FIle Upload
-.custom-drag-and-drop {
+// FIle Upload //PDF viewer
+.custom-drag-and-drop,
+.pdf-viewer {
   .mat-dialog-container {
-  padding: 0px !important;
-  
+    padding: 0px !important;
+  }
 }
+.pdf-viewer {
+  .page {
+    border: none !important;
+    box-shadow: $shadow-style-one;
+  }
 }
 
 .create-claimant-stepper {
@@ -743,13 +749,13 @@ mat-progress-bar {
 //Tracking and Tracing
 .traking-details {
   .more-btn {
-      background: none;
-      border: none;
-      color: $text-gray;
-      cursor: pointer;
+    background: none;
+    border: none;
+    color: $text-gray;
+    cursor: pointer;
   }
 }
-// Past Date and Time 
+// Past Date and Time
 
 .past-date-and-time {
   .mat-form-field {

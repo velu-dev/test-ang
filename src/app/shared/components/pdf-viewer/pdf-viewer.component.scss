@@ -1,11 +1,6 @@
 @import "variables";
-pdf-viewer {
-    display: block;
-    height: 90vh;
-}
+
 .pdf-file {
-    max-height: 90vh;
-    overflow: auto;
     .card-header {
         background-color: $info-bg;
         border: 1px solid;
@@ -18,10 +13,43 @@ pdf-viewer {
             margin-bottom: 0px;
         }
     }
-    .container {
-        margin: 20px 0 15px 0;
-        width: $width-100;
-        min-height: 50vh;
-        max-height: 85vh;
+    mat-card-content {
+        pdf-viewer {
+            background-color:$dark_gray_1;
+            min-height: 80vh;
+            max-height: 80vh;
+            overflow: auto;
+            padding: 20px 0;
+        }
     }
+
 }
+
+.pdf-file {
+    .mat-card-content {
+      margin-bottom: 0px !important;
+      position: relative;
+      .actions {
+          button {
+            background-color: $light-color;
+            color: $menu-active;
+            right: 30px;
+            position: absolute;
+            z-index: 1;
+            &:hover {
+                color: $ternary;
+            }
+              &:first-child {
+                  bottom:150px;
+              }
+              &:nth-child(2) {
+                bottom:100px;
+            }
+            &:last-child {
+                bottom:50px;
+            }
+          }
+      }
+    }
+
+  }
