@@ -1947,7 +1947,7 @@ export class AppointmentDetailsComponent implements OnInit {
   openPDF(element) {
     console.log(element);
     // return
-    this.examinerService.downloadOndemandDocuments({ file_url: element.exam_report_file_url }).subscribe(res => {
+    this.examinerService.downloadOndemandDocuments({ document_id: element.id, file_url: element.exam_report_file_url }).subscribe(res => {
       // console.log(res.signed_file_url);
       const dialogRef = this.dialog.open(PDFViewerComponent, {
         width: '1000px',
