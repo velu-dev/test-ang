@@ -297,6 +297,7 @@ export class AppointmentDetailsComponent implements OnInit {
         res.data.map((item, i) => {
           this.addRow(true);
           console.log(item)
+          item.file_name = item.original_file_name ? item.original_file_name : item.file_name
           this.getFormControls.controls[i].patchValue(item)
           this.getFormControls.controls[i].get('isEditable').patchValue(false)
         })
