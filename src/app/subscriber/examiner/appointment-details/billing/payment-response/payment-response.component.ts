@@ -174,7 +174,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
         pay.payment_response.map((review, ind) => {
           //  console.log(ind, i)
           this.addReviews(i);
-          review.file_name = review.eor_file_name;
+          review.file_name = review.eor_original_file_name ? review.eor_original_file_name : review.eor_file_name;
           review.file_url = review.eor_file_url;
           if (ind > 0) review.void_reason_id = this.paymentReviews(i).at(ind - 1).get('id').value;
           review.showStatus = false
