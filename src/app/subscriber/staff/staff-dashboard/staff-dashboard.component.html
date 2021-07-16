@@ -207,8 +207,7 @@
                         <span *ngIf="column == 'exam_type_code'">{{element?.exam_type_code}}</span>
                         <span *ngIf="column == 'claim_number'">{{element?.claim_number}}</span>
                         <span *ngIf="column == 'phone_no_1'">{{element?.phone_no_1 | mask : "(000) 000-0000"}}</span>
-                        <span *ngIf="column == 'body_parts'">{{element?.body_parts}}<small *ngIf="element?.body_parts">,
-                                (+{{element?.body_parts?.length - 1}} more)</small></span>
+                        <span *ngIf="column == 'body_parts'">{{element?.body_parts}}</span>
 
                         <span *ngIf="column == 'due_date'" class="no-wrap-td">{{element?.due_date |
                             date:'MM-dd-yyyy'}}</span>
