@@ -1,24 +1,26 @@
 <div class="pdf-file">
-    <mat-card-header class="card-header">
-        <div class="content-wrapper-main-title">{{data?.name}}</div>
-        <span class="spacer"></span>
-        <button mat-icon-button (click)="onNoClick()" class="text-ternary"><i class="fa fa-close"></i></button>
-    </mat-card-header>
-    <mat-card-content>
-       <div class="pdf-container">
-        <div class="text-center actions">
-          <button mat-icon-button (click)="download()" matTooltip="Download" matTooltipPosition="left">
-            <mat-icon>file_download</mat-icon>
-          </button>
-            <button mat-icon-button (click)="zoomIn()">
-                <mat-icon>add</mat-icon>
-              </button>
-              <button mat-icon-button (click)="zoomOut()">
-                <mat-icon>remove</mat-icon>
-              </button>
-        </div>
+  <mat-card-header class="card-header">
+    <div class="content-wrapper-main-title">{{data?.name}}</div>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="onNoClick()" class="text-white"><i class="fa fa-close"></i></button>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="pdf-container">
+      <div class="actions">
+        <button mat-icon-button (click)="zoomOut()">
+          <mat-icon>remove</mat-icon>
+        </button>
+        <button mat-icon-button (click)="zoomIn()">
+          <mat-icon>add</mat-icon>
+        </button>
+        <button mat-icon-button (click)="download()" matTooltip="Download" matTooltipPosition="right">
+          <mat-icon>file_download</mat-icon>
+        </button>
+      </div>
+      <div class="pdf-file-view">
         <pdf-viewer [src]="pdfSrc" style="display: block;" [zoom]="zoomValue" [fit-to-page]="true" [show-borders]="true"
-            [original-size]="true" [fit-to-page]="true" (error)="onError($event)"></pdf-viewer>
-       </div>
-      </mat-card-content>
+          [original-size]="true" [fit-to-page]="true" (error)="onError($event)"></pdf-viewer>
+      </div>
+    </div>
+  </mat-card-content>
 </div>
