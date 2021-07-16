@@ -2,54 +2,51 @@
 
 .pdf-file {
     .card-header {
-        background-color: $info-bg;
+        background-color: $text-gray;
         border: 1px solid;
-        border-color: $info-border;
+        border-color: $text-gray;
         padding: 8px 10px;
         display: flex;
         .content-wrapper-main-title {
-            color: $info;
+            color: $white;
             padding-top: 10px;
             margin-bottom: 0px;
         }
-    }
-    mat-card-content {
-        pdf-viewer {
-            background-color:$dark_gray_1;
-            min-height: 80vh;
-            max-height: 80vh;
-            overflow: auto;
-            padding: 20px 0;
+        .text-white {
+            color: $white;
         }
     }
-
+    mat-card-content {
+        .pdf-container {
+            background-color: $dark_gray_1;
+            padding-top: 10px;
+            .actions {
+                text-align: center;
+                button {
+                    background-color: $text-gray;
+                    color: $white;
+                    margin: 5px;
+                    box-shadow: $shadow-style-one;
+                }
+            }
+            .pdf-file-view {
+                pdf-viewer {
+                    background-color: $dark_gray_1;
+                    padding: 5px 0 10px 0;
+                    min-height: 80vh;
+                    max-height: 80vh;
+                    overflow: hidden;
+                    @media only screen and (max-width: 568px) {
+                        min-height: 60vh;
+                        max-height: 60vh;
+                      }
+                }
+            }
+        }
+    }
 }
-
 .pdf-file {
     .mat-card-content {
-      margin-bottom: 0px !important;
-      position: relative;
-      .actions {
-          button {
-            background-color: $light-color;
-            color: $menu-active;
-            right: 30px;
-            position: absolute;
-            z-index: 1;
-            &:hover {
-                color: $ternary;
-            }
-              &:first-child {
-                  bottom:150px;
-              }
-              &:nth-child(2) {
-                bottom:100px;
-            }
-            &:last-child {
-                bottom:50px;
-            }
-          }
-      }
+        margin-bottom: 0px !important;
     }
-
-  }
+}
