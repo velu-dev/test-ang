@@ -264,10 +264,26 @@ textarea::-webkit-scrollbar {
   }
 }
 .pdf-viewer {
-  .page {
-    border: none !important;
-    box-shadow: $shadow-style-one;
+  .pdfViewer {
+    height: 80vh;
+    overflow: auto;
+    @media only screen and (max-width: 568px) {
+      height: 60vh;
+    }
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+     }
+     &::-webkit-scrollbar-thumb {
+      border-radius: 5px;
+     }
+    .page {
+      border: none !important;
+      box-shadow: $shadow-style-one;
+    }
   }
+
 }
 
 .create-claimant-stepper {
