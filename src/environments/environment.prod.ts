@@ -2,7 +2,7 @@ export const environment = {
   production: true,
   baseUrl: 'https://dev01api.simplexam.com/', //dev
   searchUrl: 'https://dev01esapi.simplexam.com/elastic/search',
-  cookieSecure : true,
+  cookieSecure: true,
   smartyStreetsAPIKey: "75184436999002492",
   Amplify: {
     Auth: {
@@ -22,7 +22,9 @@ export const environment = {
         expires: 1,
         // OPTIONAL - Cookie secure flag
         // Either true or false, indicating if the cookie transmission requires a secure protocol (https).
-        secure: true
+        secure: true,
+        sameSite: 'strict',
+        HttpOnly: true
       },
     }
   }
