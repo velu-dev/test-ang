@@ -95,6 +95,7 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
       claim_id: this.paramsId.claim_id,
       date_of_service: this.billingData.date_of_service
     })
+    this.previousDateOfService = this.billingData.date_of_service;
     for (let payer in this.billingData.payor_response_messages) {
       if (this.billingData.payor_response_messages[payer].payor_response_status == 'R') {
         if (this.billingData.payor_response_messages[payer].payor_response_message.length) {
@@ -158,6 +159,7 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
     if (this.dateofServiceForm.get('date_of_service').value)
       this.dateofServiceForm.get('date_of_service').patchValue(moment(this.dateofServiceForm.get('date_of_service').value).format("YYYY-MM-DD"))
     this.billingService.createDateofService(this.dateofServiceForm.value, this.paramsId.billId).subscribe(res => {
+      console.log(res.data)
       this.previousDateOfService = res.data[0].date_of_service || '';
       this.alertService.openSnackBar(res.message, "success");;
       this.getIncomplete();
