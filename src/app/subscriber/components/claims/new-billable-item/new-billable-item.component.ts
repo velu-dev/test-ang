@@ -16,6 +16,7 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
 import { UserService } from 'src/app/shared/services/user.service';
 import * as regulation from 'src/app/shared/services/regulations';
+import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
 export const MY_CUSTOM_FORMATS = {
   parseInput: 'MM-DD-YYYY hh:mm A z',
   fullPickerInput: 'MM-DD-YYYY hh:mm A z',
@@ -182,6 +183,7 @@ export class NewBillableItemComponent implements OnInit {
         appointment_scheduled_date_time: [null],
         duration: [null, Validators.compose([Validators.pattern('[0-9]+'), Validators.min(0), Validators.max(450)])],
         examiner_service_location_id: [null],
+        examiner_service_location: [null],
         is_virtual_location: [false],
         conference_url: [null],
         conference_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
@@ -285,8 +287,18 @@ export class NewBillableItemComponent implements OnInit {
     }
 
   }
+  isAppointmentFuture = false;
   changeDateType(date) {
     if (date) {
+      if (moment(date).isBefore(moment(new Date()))) {
+        this.isAppointmentFuture = true;
+        this.billable_item.get('appointment').get('examiner_service_location').setValidators([Validators.compose([Validators.required])]);
+        this.billable_item.get('appointment').get('examiner_service_location').updateValueAndValidity();
+      } else {
+        this.isAppointmentFuture = true;
+        this.billable_item.get('appointment').get('examiner_service_location').setValidators([]);
+        this.billable_item.get('appointment').get('examiner_service_location').updateValueAndValidity();
+      }
       this.billable_item.patchValue({
         appointment: { duration: 60 }
       })
@@ -319,6 +331,7 @@ export class NewBillableItemComponent implements OnInit {
           appointment_scheduled_date_time: null,
           duration: null,
           examiner_service_location_id: null,
+          examiner_service_location: null,
           is_virtual_location: false,
           conference_url: null,
           conference_phone: null
@@ -435,14 +448,17 @@ export class NewBillableItemComponent implements OnInit {
 
   service_location_name: any;
   serviceLocationChange(value) {
-    if (value == '0') {
+
+    if (value == 0) {
       this.service_location_name = "0";
+      return;
     }
-    this.examinarAddress.map(res => {
-      if (res.street1 == value) {
-        this.service_location_name = res.service_location_name;
+    this.examinarAddress.map(address => {
+      if (address.address_id == value) {
+        this.service_location_name = address.service_location_name;
       }
     })
+
   }
   examinarChange(examinar) {
     this.addressCtrl.setValue('');
@@ -484,7 +500,22 @@ export class NewBillableItemComponent implements OnInit {
   }
 
   submitBillableItem() {
-    this.submitBill();
+    if (moment(this.billable_item.get('appointment').get('appointment_scheduled_date_time').value).isBefore(moment(new Date())) && !this.billable_item.get('appointment').get('examiner_service_location').value) {
+      const dialogRef = this.dialog.open(AlertDialogueComponent, {
+        width: "500px",
+        data: {
+          title: "Service Location",
+          type: 'info',
+          ok: true,
+          message: 'Service Location is empty for the selected Past Appointment Date. Please select a location to proceed.'
+        }
+      });
+      dialogRef.afterClosed().subscribe(res => {
+        return
+      });
+    } else {
+      this.submitBill();
+    }
   }
   submitBill() {
     let selectedOrderIds = []
@@ -521,8 +552,10 @@ export class NewBillableItemComponent implements OnInit {
     this.billable_item.value.claim_id = +this.claimId;
     this.billable_item.value.documents_received = selectedOrderIds
     this.billable_item.value.intake_call.call_date = this.billable_item.get(['intake_call', 'call_date']).value ? moment(this.billable_item.get(['intake_call', 'call_date']).value).format("MM-DD-YYYY") : null;
+    if (this.billable_item.get('appointment').get('examiner_service_location_id').value == 0) {
+      this.billable_item.get('appointment').get('examiner_service_location_id').setValue(null);
+    }
     if (!this.isEdit) {
-      console.log(this.claimantId, this.billable_item.value)
       this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
         this.alertService.openSnackBar(res.message, "success");
         // if (this.isSearch) {

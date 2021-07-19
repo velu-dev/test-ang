@@ -360,7 +360,7 @@ export class AppointmentDetailsComponent implements OnInit {
         if (this.billableData.appointment.examiner_service_location_id == null) {
           this.service_location_name = '0';
         }
-
+        this.billableData.appointment.examiner_service_location = this.billableData.appointment.examiner_service_location_id;
         //check appoinment date past or future
         if (this.billableData.appointment.appointment_scheduled_date_time && moment(this.billableData.appointment.appointment_scheduled_date_time).isBefore(moment())) {
           this.isPastDate = true
@@ -684,8 +684,18 @@ export class AppointmentDetailsComponent implements OnInit {
     }
     this.router.navigate([this.router.url + "/appointment", this.examinerId, this.appointmentId]);
   }
+  isAppointmentFuture = false;
   changeDateType(date) {
     if (date) {
+      if (moment(date).isBefore(moment(new Date()))) {
+        this.isAppointmentFuture = true;
+        this.billable_item.get('appointment').get('examiner_service_location_id').setValidators([Validators.compose([Validators.required])]);
+        this.billable_item.get('appointment').get('examiner_service_location_id').updateValueAndValidity();
+      } else {
+        this.isAppointmentFuture = true;
+        this.billable_item.get('appointment').get('examiner_service_location_id').setValidators([]);
+        this.billable_item.get('appointment').get('examiner_service_location_id').updateValueAndValidity();
+      }
       let time = this.billable_item.get(["appointment", "duration"]).value ? this.billable_item.get(["appointment", "duration"]).value : 60
       this.billable_item.patchValue({
         appointment: { duration: time }
@@ -1722,7 +1732,26 @@ export class AppointmentDetailsComponent implements OnInit {
     this.updateBillableItem();
   }
 
+
   updateBillableItem() {
+    if (moment(this.billable_item.get('appointment').get('appointment_scheduled_date_time').value).isBefore(moment(new Date())) && !this.billable_item.get('appointment').get('examiner_service_location_id').value) {
+      const dialogRef = this.dialog.open(AlertDialogueComponent, {
+        width: "500px",
+        data: {
+          title: "Service Location",
+          type: 'info',
+          ok: true,
+          message: 'Service Location is empty for the selected Past Appointment Date. Please select a location to proceed.'
+        }
+      });
+      dialogRef.afterClosed().subscribe(res => {
+        return
+      });
+    } else {
+      this.saveBillableItem();
+    }
+  }
+  saveBillableItem() {
     if (this.billable_item.invalid) {
       return
     }

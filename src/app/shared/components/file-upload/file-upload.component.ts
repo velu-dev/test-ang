@@ -101,7 +101,7 @@ export class FileUploadComponent implements OnInit {
     this.error = "";
     if (this.isMultiple) {
       if (this.fileName.includes(e.file.name)) {
-        this.alertService.openSnackBar('File is already exist!', 'error')
+        this.alertService.openSnackBar('File already exist!', 'error')
         return
       }
       this.fileName.push(e.file.name);
