@@ -94,7 +94,20 @@
         <mat-divider class="border-red"></mat-divider>
         <mat-card-content>
             <!-- <div fxLayout="row wrap">
-                <div class="note"><mat-icon>info</mat-icon> Note : You have Re-submitted the bill. If you want to see the feedback please click "Feedback History" button</div>
+                <div class="note" fxFlex="100"><mat-icon>info</mat-icon> Note : You have Re-submitted the bill. If you want to see the feedback please click "Feedback History" button</div>
+            </div> -->
+            <div fxLayout="row wrap">
+                <div class="incomplete-modules m-b-10" fxFlex="100">
+                    <div class="received-date">Received Date: 12-07-2021  </div>
+                    <ul class="p-t-5">
+                        <li *ngFor="let payer of payerResponse" class="text-danger">
+                            <mat-icon>error</mat-icon>{{payer?.status_date | date:'MM-dd-yyyy' }} -
+                            {{payer?.MessageText}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- <div fxLayout="row wrap">
                 <div class="resubmitted-modules" fxFlex="100">
                     <div class="received-date">Received Date: 12-07-2021  </div>
                     <ul>
@@ -119,16 +132,6 @@
                     </ul>
                 </div>
             </div> -->
-            <div fxLayout="row wrap">
-                <div class="incomplete-modules m-t-10" fxFlex="100">
-                    <ul>
-                        <li *ngFor="let payer of payerResponse" class="text-danger">
-                            <mat-icon>error</mat-icon>{{payer?.status_date | date:'MM-dd-yyyy' }} -
-                            {{payer?.MessageText}}
-                        </li>
-                    </ul>
-                </div>
-            </div>
         </mat-card-content>
     </mat-card>
 </div>
