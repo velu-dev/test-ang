@@ -110,9 +110,33 @@
 }
 .incomplete-info {
     .incomplete-modules {
+        background-color: #fdf4ef;
+        padding: 10px;
+        border-radius: 3px;
         .text-danger {
             color: $error !important;
         }
+        .received-date {
+            font-weight: $font-weight-bold;
+            padding-bottom: 10px;
+            border-bottom: 1px solid $white;
+            color: $error;
+        }
+        ul {
+            width: 100%;
+            padding-left: 20px;
+            margin: 5px 0 0 0 ;
+            li {
+              list-style: disc;
+              width: 50%;
+              float: left;
+              padding: 5px 0;
+              @media only screen and (max-width: 568px) {
+                width: 100%;
+                padding-top: 10px;
+              }
+            }
+          }
     }
 }
 .incomplete-info.resubmitted-bill {
