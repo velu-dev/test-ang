@@ -8,32 +8,32 @@ import { saveAs } from 'file-saver';
   styleUrls: ['./pdf-viewer.component.scss']
 })
 export class PDFViewerComponent implements OnInit {
-  pdfSrc = "";
+  // pdfSrc = "";
   constructor(
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<PDFViewerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.pdfSrc = data.pdf;
+    // this.pdfSrc = data.pdf;
   }
   ngOnInit() {
 
   }
-  onError(e) {
-    console.log(e)
-  }
-  zoomValue = 1;
-  zoomIn() {
-    this.zoomValue = this.zoomValue + 0.5
-  }
-  zoomOut() {
-    this.zoomValue = this.zoomValue - 0.5
-  }
-  onNoClick(): void {
-    this.dialogRef.close({ data: false });
-  }
-  download() {
-    saveAs(this.data.pdf, this.data.name)
-  }
+  // onError(e) {
+  //   console.log(e)
+  // }
+  // zoomValue = 1;
+  // zoomIn() {
+  //   this.zoomValue = this.zoomValue + 0.5
+  // }
+  // zoomOut() {
+  //   this.zoomValue = this.zoomValue - 0.5
+  // }
+  // onNoClick(): void {
+  //   this.dialogRef.close({ data: false });
+  // }
+  // download() {
+  //   saveAs(this.data.pdf, this.data.name)
+  // }
 }
 export interface DialogData {
   name: string;

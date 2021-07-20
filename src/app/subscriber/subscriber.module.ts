@@ -79,7 +79,7 @@ import { DxCheckBoxModule, DxDataGridComponent, DxFileUploaderModule, DxHtmlEdit
 import { FileUploadComponent } from '../shared/components/file-upload/file-upload.component';
 import { PDFViewerComponent } from '../shared/components/pdf-viewer/pdf-viewer.component';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
+// import { PdfViewerModule } from 'ng2-pdf-viewer';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -209,7 +209,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     NgxSpinnerModule,
     NgxMatSelectSearchModule,
     DxFileUploaderModule, DxProgressBarModule, DxHtmlEditorModule, DxCheckBoxModule, DxToolbarModule,
-    PdfViewerModule
+    // PdfViewerModule
   ],
   providers: [
     SubscriberUserService,
