@@ -27,7 +27,6 @@ export class FileUploadComponent implements OnInit {
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<FileUploadComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    console.log(data)
     this.isMultiple = data.isMultiple;
     this.fileType = data.fileType;
     this.fileSize = data.fileSize * 1024 * 1024;
@@ -84,7 +83,6 @@ export class FileUploadComponent implements OnInit {
   error = "";
   fileName = [];
   onUploadStarted(e) {
-    console.log(e.file)
     if (this.fileType.includes(('.' + e.file.name.split('.').pop().toLowerCase()))) {
       var FileSize = e.file.size / 1024 / 1024; // in MB
       let actualFileSize = (this.fileSize / (1024 * 1024));
@@ -99,14 +97,15 @@ export class FileUploadComponent implements OnInit {
       return
     }
     this.error = "";
+    if (this.fileName.includes(e.file.name)) {
+      this.alertService.openSnackBar('Files already exist', 'error')
+      return
+    }
     if (this.isMultiple) {
-      if (this.fileName.includes(e.file.name)) {
-        this.alertService.openSnackBar('Files already exist', 'error')
-        return
-      }
       this.fileName.push(e.file.name);
       this.files.push(e.file);
     } else {
+      this.fileName.push(e.file.name);
       this.files = [];
       this.files.push(e.file);
     }
