@@ -45,7 +45,7 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
   incompleteInformation: any;
   isIncompleteError: any = true;
   isExpandDetail = true;
-  payerResponse: any = [];
+  payerResponse: any = { old_response: [], new_response: [] };
   styleElement: HTMLStyleElement;
   subscription: any;
   dateofServiceForm: FormGroup;
@@ -96,20 +96,23 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
       date_of_service: this.billingData.date_of_service
     })
     this.previousDateOfService = this.billingData.date_of_service;
-    for (let payer in this.billingData.payor_response_messages) {
-      if (this.billingData.payor_response_messages[payer].payor_response_status == 'R') {
-        if (this.billingData.payor_response_messages[payer].payor_response_message.length) {
-          for (let arr in this.billingData.payor_response_messages[payer].payor_response_message) {
-            this.billingData.payor_response_messages[payer].payor_response_message[arr]._attributes.status_date = this.billingData.payor_response_messages[payer].status_date;
-            this.payerResponse.push(this.billingData.payor_response_messages[payer].payor_response_message[arr]._attributes);
-          }
+    this.payerResponse['new_response'] = this.billingData.new_response;
+    this.payerResponse['old_response'] = this.billingData.old_response;
+    // for (let payer in this.billingData.payor_response_messages) {
+    //   if (this.billingData.payor_response_messages[payer].payor_response_status == 'R') {
+    //     if (this.billingData.payor_response_messages[payer].payor_response_message.length) {
+    //       for (let arr in this.billingData.payor_response_messages[payer].payor_response_message) {
+    //         this.billingData.payor_response_messages[payer].payor_response_message[arr]._attributes.status_date = this.billingData.payor_response_messages[payer].status_date;
 
-        } else {
-          this.billingData.payor_response_messages[payer].payor_response_message._attributes.status_date = this.billingData.payor_response_messages[payer].status_date;
-          this.payerResponse.push(this.billingData.payor_response_messages[payer].payor_response_message._attributes);
-        }
-      }
-    }
+    //       }
+
+    //     } else {
+    //       this.billingData.payor_response_messages[payer].payor_response_message._attributes.status_date = this.billingData.payor_response_messages[payer].status_date;
+    //       this.payerResponse['new_response'] = this.billingData.new_response;
+    //       this.payerResponse['old_response'] = this.billingData.old_response;
+    //     }
+    //   }
+    // }
 
     this.changeColors(this.billingData.bill_status_color_code ? this.billingData.bill_status_color_code : '#E6E6E6')
   }
@@ -184,5 +187,9 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
         });
       }
     })
+  }
+  isFeedbackOpened = false;
+  openFeedback() {
+    this.isFeedbackOpened = true;
   }
 }

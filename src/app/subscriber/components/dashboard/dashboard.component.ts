@@ -118,7 +118,7 @@ export class DashboardComponent implements OnInit {
           this.columnsToDisplay = ["is_expand", "claimant_first_name", "exam_type_code"];
         } else {
           this.columnName = ["", "Claimant", "Exam Type", "Claim Number", "Body Parts"];
-          this.columnsToDisplay = ["is_expand", "claimant_first_name", "exam_type_code", "claim_number", "body_parts"];
+          this.columnsToDisplay = ["is_expand", "claimant_first_name", "exam_type_code", "claim_number", "body_part"];
         }
       })
     }
@@ -167,7 +167,7 @@ export class DashboardComponent implements OnInit {
     }
     if (status == 'claims_without_billable_item') {
       filteredData.map(filter => {
-        filter['body_parts'] = filter.body_parts ? filter.body_parts[0].body_part_name : "";
+        filter['body_part'] = filter.body_parts ? filter.body_parts[0].body_part_name: "";
       })
     }
     this.selectedData = filteredData.length;

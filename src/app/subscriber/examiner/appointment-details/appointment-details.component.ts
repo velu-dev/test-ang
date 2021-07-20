@@ -357,13 +357,13 @@ export class AppointmentDetailsComponent implements OnInit {
         }
         this.billableData = bills.data;
 
-      
-        if(this.billableData.isExaminerDisabled){
+
+        if (this.billableData.isExaminerDisabled) {
           this.claimService.listExaminar(this.billableData.appointment.examiner_id).subscribe(res => {
             this.examinarList = res.data;
           })
         }
-      
+
         if (this.billableData.appointment.examiner_service_location_id == null) {
           this.service_location_name = '0';
         }
@@ -668,8 +668,11 @@ export class AppointmentDetailsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
+        this.selectedFile = []
         this.file = result.files[0].name;
-        this.selectedFile = result.files[0];
+        result.files.map(file => {
+          this.selectedFile.push(file)
+        })
         this.uploadFile();
       }
     })
@@ -1889,7 +1892,7 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
 
-  selectedFile: File;
+  selectedFile = [];
   formData = new FormData()
   errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
   addFile(event) {
@@ -1934,7 +1937,9 @@ export class AppointmentDetailsComponent implements OnInit {
       this.errors.file.error = "Please select a file";
       return;
     }
-    this.formData.append('file', this.selectedFile);
+    this.selectedFile.map(file => {
+      this.formData.append('file', file);
+    })
     this.formData.append('document_category_id', this.documentType);
     this.formData.append('claim_id', this.claim_id);
     this.formData.append('bill_item_id', this.billableId.toString());
@@ -1944,10 +1949,12 @@ export class AppointmentDetailsComponent implements OnInit {
       this.formDataDoc.append('agent_type', '');
       this.formDataDoc.append('no_of_pages_declared', '');
       this.formDataDoc.append('date_received', '');
-      this.formDataDoc.append('file', this.selectedFile);
+      this.selectedFile.map(file => {
+        this.formDataDoc.append('file', file);
+      })
       this.formDataDoc.append('is_upload', 'true');
       this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe(res => {
-        this.selectedFile = null;
+        this.selectedFile = [];
         // this.fileUpload.nativeElement.value = "";
         this.documentType = null;
         this.formData = new FormData();
@@ -1958,7 +1965,7 @@ export class AppointmentDetailsComponent implements OnInit {
         this.getDocumentDeclareData();
       }, error => {
         //this.fileUpload.nativeElement.value = "";
-        this.selectedFile = null;
+        this.selectedFile = [];
         this.alertService.openSnackBar(error.error.message, 'error');
       })
       return;
