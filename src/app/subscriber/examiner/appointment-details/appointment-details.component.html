@@ -826,7 +826,7 @@
                     <mat-label>Document Type</mat-label>
                     <mat-select [(ngModel)]="documentType" (selectionChange)="docChange($event.value)">
                         <mat-option *ngFor="let doc of documentList" [value]="doc.id">
-                            {{doc.document_category_name}}
+                            {{doc.document_category_name }}
                         </mat-option>
                     </mat-select>
                     <mat-hint *ngIf="errors.doc_type.isError">
@@ -836,14 +836,14 @@
                     </mat-hint>
                 </mat-form-field>
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_"
-                    *ngIf="documentType == null || documentType != 6">
+                    *ngIf="documentType == null || (documentType != 6 && documentType != 12 && documentType != 9)">
                     <!-- <button type="button" mat-stroked-button class="filled-gray"
                         (click)="openUploadPopUp(false,['.pdf', '.doc', '.docx'], '', '',  30)">Select
                         File
                     </button> -->
                     <!-- <mat-form-field appearance="standard"> -->
                     <button type="button" mat-stroked-button class="filled-ternary"
-                        (click)="openUploadPopUp(false,['.pdf', '.doc', '.docx'], '', '',  30)">Upload File</button>
+                        (click)="openUploadPopUp(true,['.pdf', '.doc', '.docx'], '', '',  3073)">Upload File</button>
                     <!-- <mat-form-field appearance="standard">
                         <input matInput [(ngModel)]="file" readonly placeholder="No file chosen">
                         <input type="file" #uploader hidden (change)="addFile($event)" hidden accept=".pdf, .doc, .docx"
@@ -858,10 +858,10 @@
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_"
                     *ngIf="documentType == 6">
                     <!-- <button mat-raised-button class="filled-gray"
-                        (click)="openUploadPopUp(false,['.pdf', '.doc', '.docx'], '', '6',  30)">Select File</button> -->
+                        (click)="openUploadPopUp(true,['.pdf', '.doc', '.docx'], '', '6',  30)">Select File</button> -->
                     <!-- <mat-form-field appearance="standard" class="p-l-10 w-100  custom-br"> -->
                     <button mat-raised-button class="filled-ternary"
-                        (click)="openUploadPopUp(false,['.pdf', '.doc', '.docx', '.mp3', '.wav', '.m4a', '.wma', '.dss', '.ds2', '.dct'], '', '6',  3073)">Upload
+                        (click)="openUploadPopUp(true,['.pdf', '.doc', '.docx', '.mp3', '.wav', '.m4a', '.wma', '.dss', '.ds2', '.dct'], '', '6',  3073)">Upload
                         File</button>
                     <!-- <mat-form-field appearance="standard" class="p-l-10 w-100  custom-br">
                         <input matInput value="{{file | ellipsis:50}}" readonly placeholder="No file chosen">
@@ -873,6 +873,13 @@
                             <mat-error>{{errors.file.error}}</mat-error>
                         </mat-hint>
                     </mat-form-field> -->
+                </div>
+
+                <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_"
+                    *ngIf="documentType == 12 || documentType == 9">
+                    <button mat-raised-button class="filled-ternary"
+                        (click)="openUploadPopUp(true,['.pdf', '.doc', '.docx'], '', '6',  30)">Upload
+                        File</button>
                 </div>
 
 
