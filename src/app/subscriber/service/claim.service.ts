@@ -50,7 +50,10 @@ export class ClaimService {
   updateBillableItem(data, id): Observable<any> {
     return this.http.put(environment.baseUrl + api_endpoint.update_billable_item + id, data)
   }
-  listExaminar(): Observable<any> {
+  listExaminar(id?): Observable<any> {
+    if (id) {
+      return this.http.get(environment.baseUrl + api_endpoint.examinar_type + '/' + id)
+    }
     return this.http.get(environment.baseUrl + api_endpoint.examinar_type)
   }
   seedData(data): Observable<any> {

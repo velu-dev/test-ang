@@ -82,15 +82,45 @@
     </mat-card>
 </div>
 
-<div class="incomplete-info" *ngIf="payerResponse.length">
+<div class="incomplete-info resubmitted-bill" *ngIf="payerResponse.length">
     <mat-card>
         <mat-card-header>
             <div class="content-wrapper-main-title text-danger m-t-10 m-b-10">Claims Administrator Feedback</div>
+            <!-- <span class="spacer"></span>
+            <button mat-raised-button class="filled-gray m-b-5">
+                Feedback History
+            </button> -->
         </mat-card-header>
         <mat-divider class="border-red"></mat-divider>
         <mat-card-content>
-            <div fxLayout="row wrap" class="p-t-10">
-                <div class="incomplete-modules" fxFlex="100">
+            <!-- <div fxLayout="row wrap">
+                <div class="note"><mat-icon>info</mat-icon> Note : You have Re-submitted the bill. If you want to see the feedback please click "Feedback History" button</div>
+                <div class="resubmitted-modules" fxFlex="100">
+                    <div class="received-date">Received Date: 12-07-2021  </div>
+                    <ul>
+                        <li>
+                            Claim number is missing or invalid
+                        </li>
+                        <li>
+                            Bill expried in suspense
+                        </li>
+                        <li>
+                            DOB does not match the payor claim list but claim
+                        </li>
+                        <li>
+                            Claim number is missing or invalid
+                        </li>
+                        <li>
+                            Bill expried in suspense
+                        </li>
+                        <li>
+                            DOB does not match the payor claim list but claim
+                        </li>
+                    </ul>
+                </div>
+            </div> -->
+            <div fxLayout="row wrap">
+                <div class="incomplete-modules m-t-10" fxFlex="100">
                     <ul>
                         <li *ngFor="let payer of payerResponse" class="text-danger">
                             <mat-icon>error</mat-icon>{{payer?.status_date | date:'MM-dd-yyyy' }} -

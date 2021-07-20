@@ -177,7 +177,7 @@ export class NewClaimComponent implements OnInit {
   isEdit: boolean = false;
   addressCtrl = new FormControl();
   address = [];
-  examinarAddress: Observable<any[]>;
+  examinarAddress = [];
   claimId: any;
   claimantId: any;
   isClaimSubmited: boolean = false;
@@ -588,9 +588,18 @@ export class NewClaimComponent implements OnInit {
   prevStep() {
     this.step--;
   }
-  service_lcation_name: any;
+  service_location_name: any;
   serviceLocationChange(value) {
-    this.service_lcation_name = value;
+    if (value == 0) {
+      this.service_location_name = "0";
+      return;
+    }
+    this.examinarAddress.map(address => {
+      if (address.address_id == value) {
+        this.service_location_name = address.service_location_name;
+      }
+    })
+
   }
   claimantState: any;
   caState: any;
@@ -776,6 +785,7 @@ export class NewClaimComponent implements OnInit {
         appointment_scheduled_date_time: [null],
         duration: [null, Validators.compose([Validators.pattern('[0-9]+'), Validators.min(0), Validators.max(450)])],
         examiner_service_location_id: [null],
+        examiner_service_location: [null],
         is_virtual_location: [false],
         conference_url: [null],
         conference_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
@@ -1278,7 +1288,7 @@ export class NewClaimComponent implements OnInit {
   }
   examinarId: any;
   examinarChange(examinar) {
-    this.examinarAddress = new Observable()
+    this.examinarAddress = []
     this.addressCtrl.setValue('');
     this.selectedExaminarAddress = '';
     this.isAddressSelected = false;
@@ -1286,12 +1296,7 @@ export class NewClaimComponent implements OnInit {
     this.claimService.getExaminarAddress(this.examinarId).subscribe(res => {
       this.examinerOptions = [];
       this.examinerOptions = res['data'];
-      this.examinarAddress = this.addressCtrl.valueChanges
-        .pipe(
-          startWith(''),
-          map(value => this._filterAddress(value))
-        );
-
+      this.examinarAddress = res['data']
       if (examinar.address_id) {
         res.data.map(addr => {
           if (addr.address_id == examinar.address_id) {
@@ -1309,6 +1314,24 @@ export class NewClaimComponent implements OnInit {
   //   })
   // }
   submitBillableItem(state?) {
+    if (moment(this.billable_item.get('appointment').get('appointment_scheduled_date_time').value).isBefore(moment(new Date())) && !this.billable_item.get('appointment').get('examiner_service_location').value) {
+      const dialogRef = this.dialog.open(AlertDialogueComponent, {
+        width: "500px",
+        data: {
+          title: "Service Location",
+          type: 'info',
+          ok: true,
+          message: 'Service Location is empty for the selected Past Appointment Date. Please select a location to proceed.'
+        }
+      });
+      dialogRef.afterClosed().subscribe(res => {
+        return
+      });
+    } else {
+      this.saveBillable(state);
+    }
+  }
+  saveBillable(state?) {
     // this.todayDate.appointment = new Date();
     this.currentTab = "billable_item"
     this.isBillSubmited = true;
@@ -1330,6 +1353,7 @@ export class NewClaimComponent implements OnInit {
     //     return
     //   }
     // }
+
     if (this.billable_item.invalid) {
       return;
     }
@@ -1347,6 +1371,9 @@ export class NewClaimComponent implements OnInit {
     this.billable_item.value.appointment.duration = this.billable_item.value.appointment.duration == "" ? null : this.billable_item.value.appointment.duration;
     this.billable_item.value.documents_received = selectedOrderIds;
     this.billable_item.value.intake_call.call_date = this.billable_item.get(['intake_call', 'call_date']).value ? moment(this.billable_item.get(['intake_call', 'call_date']).value).format("MM-DD-YYYY") : null;
+    if (this.billable_item.get('appointment').get('examiner_service_location_id').value == 0) {
+      this.billable_item.get('appointment').get('examiner_service_location_id').setValue(null);
+    }
     this.claimService.createBillableItem(this.billable_item.value).subscribe(res => {
       this.alertService.openSnackBar(res.message, "success");
       //this._location.back();
@@ -2043,8 +2070,16 @@ export class NewClaimComponent implements OnInit {
     }
     return errorCount;
   }
+  isAppointmentFuture = false;
   changeDateType(date) {
     if (date) {
+      if (moment(date).isBefore(moment(new Date()))) {
+        this.billable_item.get('appointment').get('examiner_service_location').setValidators([Validators.compose([Validators.required])]);
+        this.billable_item.get('appointment').get('examiner_service_location').updateValueAndValidity();
+      } else {
+        this.billable_item.get('appointment').get('examiner_service_location').setValidators([]);
+        this.billable_item.get('appointment').get('examiner_service_location').updateValueAndValidity();
+      }
       this.billable_item.patchValue({
         appointment: { duration: 60 }
       })

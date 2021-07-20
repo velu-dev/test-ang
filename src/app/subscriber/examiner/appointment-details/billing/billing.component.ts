@@ -500,10 +500,10 @@ export class billingOnDemandDialog {
 
 
   download(data, directDownload = false) {
-    if(this.selection1.selected.length > 1 && this.data.billType === 2 && !directDownload) {
-      this.showSecondBillReviewAlert(() => this.download(data, true));
-      return;
-    }
+    // if (this.selection1.selected.length > 1 && this.data.billType === 2 && !directDownload) {
+    //   this.showSecondBillReviewAlert(() => this.download(data, true));
+    //   return;
+    // }
     saveAs(data.exam_report_file_url, data.file_name);
     this.alertService.openSnackBar("File downloaded successfully", "success");
   }
@@ -680,6 +680,24 @@ export class billingOnDemandDialog {
   }
 
   secondBillOnDemand(data) {
+    if (this.selection1.selected.length > 1 && this.data.billType === 2) {
+      const dialogRef = this.dialog.open(AlertDialogueComponent, {
+        width: "500px",
+        data: {
+          title: "Recipients",
+          type: 'info',
+          ok: true,
+          message: 'Only the Insurance Company requires the request for Second Bill Review'
+        }
+      });
+      dialogRef.afterClosed().subscribe(res => {
+        this.billondemand(data);
+      });
+    } else {
+      this.billondemand(data);
+    }
+  }
+  billondemand(data) {
     this.billingService.secondBillOnDemand(data).subscribe(secondbill => {
 
       if (secondbill.data.exam_report_signed_file_url) {
@@ -765,7 +783,7 @@ export class billingOnDemandDialog {
   }
 
   downloadMethod(directDownload = false) {
-    if(this.selection1.selected.length > 1 && this.data.billType === 2 && !directDownload) {
+    if (this.selection1.selected.length > 1 && this.data.billType === 2 && !directDownload) {
       this.showSecondBillReviewAlert(() => this.downloadMethod(true));
       return;
     }
@@ -792,6 +810,7 @@ export class billingOnDemandDialog {
     const dialogRef = this.dialog.open(AlertDialogueComponent, {
       width: "500px",
       data: {
+        title: "Recipients",
         type: 'info',
         ok: true,
         message: 'Only the Insurance Company requires the request for Second Bill Review'

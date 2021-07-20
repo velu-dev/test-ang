@@ -18,7 +18,8 @@
                                             [formControl]="searchInput" class="p-l-10">
                                         <mat-autocomplete #claimantAutocomplete="matAutocomplete">
                                             <mat-option *ngFor="let option of filteredClaimant?.data"
-                                                (click)="selectClaimant(option)" (onSelectionChange)="selectClaimant(option)">
+                                                (click)="selectClaimant(option)"
+                                                (onSelectionChange)="selectClaimant(option)">
                                                 <span><strong>Full Name:</strong> {{option.first_name}}
                                                     {{option.middle_name}} {{option.last_name}} <strong>DOB:</strong>
                                                     {{option.date_of_birth | date:'MM-dd-yyyy' }}</span>
@@ -583,7 +584,8 @@
                                     matTooltipPosition="above" class="clear">
                                     <mat-icon>close</mat-icon>
                                 </button>
-                                <mat-autocomplete #caAuto="matAutocomplete" (optionSelected)='getCA($event.option.value)'>
+                                <mat-autocomplete #caAuto="matAutocomplete"
+                                    (optionSelected)='getCA($event.option.value)'>
                                     <mat-optgroup *ngFor="let group of claimAdminGroupOptions " [label]="group.name">
                                         <mat-option (click)="appClaimAdmin(claim_admin)"
                                             *ngFor="let claim_admin of group.data" [value]="claim_admin.company_name">
@@ -699,7 +701,8 @@
                                     matTooltipPosition="above" class="clear">
                                     <mat-icon>close</mat-icon>
                                 </button>
-                                <mat-autocomplete #empAuto="matAutocomplete"  (optionSelected)='getEmp($event.option.value)'>
+                                <mat-autocomplete #empAuto="matAutocomplete"
+                                    (optionSelected)='getEmp($event.option.value)'>
                                     <mat-option (click)="appEmployer(employer)" *ngFor="let employer of empDetails"
                                         [value]="employer.name">
                                         {{employer.name}}
@@ -737,8 +740,9 @@
                                     #trigger="matAutocompleteTrigger" formControlName="street1"
                                     placeholder="Street Address 1">
                                 <mat-autocomplete #streetEAutocomplete="matAutocomplete">
-                                    <mat-option *ngFor="let address of streetEmpAddressList" [value]="address.street_line"
-                                        (click)="selectEmpAddress(address)" (onSelectionChange)="selectEmpAddress(address)">
+                                    <mat-option *ngFor="let address of streetEmpAddressList"
+                                        [value]="address.street_line" (click)="selectEmpAddress(address)"
+                                        (onSelectionChange)="selectEmpAddress(address)">
                                         {{address?.street_line}} {{address?.secondary}} {{address?.city}}
                                         {{address?.state}}
                                         {{address?.zipcode}}
@@ -847,7 +851,8 @@
                                     matTooltipPosition="above" class="clear">
                                     <mat-icon>close</mat-icon>
                                 </button>
-                                <mat-autocomplete #aaAuto="matAutocomplete"  (optionSelected)='getAA($event.option.value)'>
+                                <mat-autocomplete #aaAuto="matAutocomplete"
+                                    (optionSelected)='getAA($event.option.value)'>
                                     <mat-optgroup *ngFor="let group of aattroneyGroupOptions" [label]="group.name">
                                         <!-- [disabled]="selectedDAttorney == aa.id" -->
                                         <mat-option (click)="appAttorney(aa)" *ngFor="let aa of group.data"
@@ -963,7 +968,8 @@
                                     matTooltipPosition="above" class="clear">
                                     <mat-icon>close</mat-icon>
                                 </button>
-                                <mat-autocomplete #daAuto="matAutocomplete"  (optionSelected)='getDA($event.option.value)'>
+                                <mat-autocomplete #daAuto="matAutocomplete"
+                                    (optionSelected)='getDA($event.option.value)'>
                                     <mat-optgroup *ngFor="let group of dattroneyGroupOptions" [label]="group.name">
                                         <!-- [disabled]="selectedAAttorney == aa.id" -->
                                         <mat-option (click)="defAttornety(aa)" *ngFor="let aa of group.data"
@@ -1092,7 +1098,8 @@
                                     <mat-icon>close</mat-icon>
                                 </button>
                                 <mat-error>Please enter a valid office name</mat-error>
-                                <mat-autocomplete #deuAuto="matAutocomplete"  (optionSelected)='getDeuOffice($event.option.value)'>
+                                <mat-autocomplete #deuAuto="matAutocomplete"
+                                    (optionSelected)='getDeuOffice($event.option.value)'>
                                     <mat-option *ngFor="let deu of filteredDeu" (click)="deuSelect(deu)"
                                         [value]="deu.deu_office">
                                         <span>{{deu.code}} - {{deu.deu_office}}</span>
@@ -1339,53 +1346,58 @@
                                     </mat-select>
                                     <mat-error *ngIf="isBillSubmited">Please select Examiner</mat-error>
                                 </mat-form-field>
-                                <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100" class="past-date-and-time">
+                                <div fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100"
+                                    class="past-date-and-time">
                                     <div fxLayout="row wrap">
-                                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                                fxFlex.xs="100" *ngIf="!isSuplimental">
-                                                <mat-label>Date & Time</mat-label>
-                                                <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM"
-                                                    formControlName="appointment_scheduled_date_time" autocomplete="off"
-                                                    [owlDateTime]="appointment" [min]="claimantDetails?.date_of_birth" [value]="appointment_scheduled_date_time"
-                                                    (dateTimeChange)="changeDateType(billable_item?.value?.appointment?.appointment_scheduled_date_time)">
-                                                <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment">
-                                                </mat-datepicker-toggle>
-                                                <owl-date-time (afterPickerOpen)="pickerOpened('app')" [hour12Timer]="true"
-                                                    #appointment>
-                                                </owl-date-time>
-                                                <mat-error>Please enter valid date & time</mat-error>
-                                            </mat-form-field>
+                                        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                            fxFlex.xs="100" *ngIf="!isSuplimental">
+                                            <mat-label>Date & Time</mat-label>
+                                            <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM"
+                                                formControlName="appointment_scheduled_date_time" autocomplete="off"
+                                                [owlDateTime]="appointment" [min]="claimantDetails?.date_of_birth"
+                                                [value]="appointment_scheduled_date_time"
+                                                (dateTimeChange)="changeDateType(billable_item?.value?.appointment?.appointment_scheduled_date_time)">
+                                            <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment">
+                                            </mat-datepicker-toggle>
+                                            <owl-date-time (afterPickerOpen)="pickerOpened('app')" [hour12Timer]="true"
+                                                #appointment>
+                                            </owl-date-time>
+                                            <mat-error>Please enter valid date & time</mat-error>
+                                        </mat-form-field>
 
-                                            <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
-                                                fxFlex.xs="100" *ngIf="!isSuplimental" class="duration">
-                                                <mat-label>Duration</mat-label>
-                                                <input matInput type="number" placeholder="Minutes" min="1" max="450" maxlength="3"
-                                                    formControlName="duration" autocomplete="off">
-                                                <span matSuffix>Minutes</span>
-                                                <mat-error>Please enter a valid duration between 1 to 450 minutes</mat-error>
-                                            </mat-form-field>
-                                        </div>
-                                        <div fxLayout="row wrap" *ngIf="!isSuplimental">
-                                            <div fxFlex="100" class="note">
-                                                <mat-icon>info</mat-icon>For past dates of service the appointment standing is automatically changed to “attended” and the billable item standing is changed to “Bill Report”
-                                            </div>
+                                        <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
+                                            fxFlex.xs="100" *ngIf="!isSuplimental" class="duration">
+                                            <mat-label>Duration</mat-label>
+                                            <input matInput type="number" placeholder="Minutes" min="1" max="450"
+                                                maxlength="3" formControlName="duration" autocomplete="off">
+                                            <span matSuffix>Minutes</span>
+                                            <mat-error>Please enter a valid duration between 1 to 450 minutes
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxLayout="row wrap" *ngIf="!isSuplimental">
+                                        <div fxFlex="100" class="note">
+                                            <mat-icon>info</mat-icon>For past dates of service the appointment standing
+                                            is automatically changed to “attended” and the billable item standing is
+                                            changed to “Bill Report”
                                         </div>
                                     </div>
+                                </div>
 
                                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50"
                                     fxFlex.xs="100" *ngIf="!isSuplimental">
                                     <mat-label>Location</mat-label>
-                                    <mat-select (selectionChange)="serviceLocationChange($event.value)">
+                                    <mat-select (selectionChange)="serviceLocationChange($event.value)"
+                                        formControlName="examiner_service_location">
                                         <mat-select-trigger>
-                                            {{service_lcation_name == '0' ? "Virtual Service Location" :
-                                            service_lcation_name }}
+                                            {{service_location_name == '0' ? "Virtual Service Location" :
+                                            service_location_name }}
                                         </mat-select-trigger>
                                         <mat-option (click)="VserviceLocation()" value="0">
                                             Virtual Service Location
                                         </mat-option>
-                                        <mat-option *ngFor="let address of (examinarAddress | async)"
-                                            (click)="changeExaminarAddress(address)"
-                                            [value]="address.service_location_name">
+                                        <mat-option *ngFor="let address of examinarAddress"
+                                            (click)="changeExaminarAddress(address)" [value]="address.address_id">
                                             {{address.service_location_name}} - {{address.street1}} {{address.street2}}
                                             {{address.city}}
                                             {{address.state_code}}
@@ -1393,6 +1405,7 @@
                                             "-"+address.zip_code_plus_4 : "")}}
                                         </mat-option>
                                     </mat-select>
+                                    <mat-error>Please select service location</mat-error>
                                 </mat-form-field>
 
                                 <div fxFlex="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" fxFlex.sm="50"
