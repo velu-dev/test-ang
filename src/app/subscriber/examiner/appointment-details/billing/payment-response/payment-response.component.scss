@@ -401,3 +401,23 @@ mat-card-content {
     }
 }
 // }
+.eor-allowance {
+    .bg-white {
+     background-color: $white;
+    }
+    .custom-input {
+        input {
+            width: fit-content;
+            border: 1px solid $light-gray;
+            border-radius: 5px;
+            padding: 5px;
+            &:hover,
+            &:focus,
+            &:focus-visible {
+                border: 1px solid #d5aed2;
+                box-shadow: none;
+                outline: none;
+            }
+        }
+    }
+}
