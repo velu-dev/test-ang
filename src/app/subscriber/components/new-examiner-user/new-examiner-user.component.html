@@ -285,7 +285,7 @@
                                 fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>{{billingProviderForm.value.is_person ? 'SSN' : 'EIN'}}</mat-label>
                                 <input matInput [placeholder]="billingProviderForm.value.is_person ? 'SSN' : 'EIN'"
-                                    [mask]="billingProviderForm.value.is_person ? '000-00-0000' : '00-0000000'"
+                                    [mask]="billingProviderForm.get('is_person').value ? '000-00-0000' : '00-0000000'"
                                     formControlName="tax_id" autocomplete="off">
                                 <mat-error *ngIf="billingSubmit">Please enter valid tax ID</mat-error>
                             </mat-form-field>
@@ -627,7 +627,7 @@
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="50" fxFlex.md="50"
-                            fxFlex.sm="50" fxFlex.xs="100" [ngClass]="{'mat-form-field-disabled' : isUserDisabled}">
+                            fxFlex.sm="50" fxFlex.xs="100">
                             <mat-label>Taxonomy Code</mat-label>
                             <!-- <mat-select formControlName="taxonomy_id" (selectionChange)="texonomyChange($event.value)">
                                 <mat-select-trigger>
@@ -638,11 +638,11 @@
                                 </mat-option>
                                 <mat-error *ngIf="renderingSubmit">Please select valid taxonomy code</mat-error>
                             </mat-select> -->
-                            <input type="text" matInput [formControl]="texonomySearch" [readOnly]="isUserDisabled"
+                            <input type="text" matInput [formControl]="texonomySearch"
                                 placeholder="Select taxonomy code" [matAutocomplete]="examinerAutocomplete">
                             <button mat-button matSuffix mat-icon-button aria-label="Clear"
                                 (click)="clearAutoComplete()" matTooltip="Clear Code" matTooltipPosition="above"
-                                [disabled]="isUserDisabled" class="clear" class="clear">
+                                class="clear" class="clear">
                                 <mat-icon>close</mat-icon>
                             </button>
                             <mat-autocomplete #examinerAutocomplete="matAutocomplete"

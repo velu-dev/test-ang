@@ -158,6 +158,7 @@ export class NewUserComponent implements OnInit {
   }
 
   userSubmit() {
+    if(this.isUserDisabled) {return;}
     this.userForm.value.company_name = this.user.company_name
     this.isSubmitted = true;
     Object.keys(this.userForm.controls).forEach((key) => {

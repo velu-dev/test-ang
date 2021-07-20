@@ -455,6 +455,7 @@ export class NewExaminerUserComponent implements OnInit {
         this.mailingAddressForm.disable();
         this.billingProviderForm.disable();
         this.renderingForm.disable();
+        this.texonomySearch.disable();
       }
     })
   }
@@ -672,7 +673,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
   createStatus: boolean = false;
   userSubmit(status?) {
-
+    if(this.isUserDisabled) {return;}
     this.userForm.value.company_name = this.user.company_name
     this.isSubmitted = true;
 
@@ -932,6 +933,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   mailingAddressSubmit(status?) {
+    if(this.isUserDisabled) {return;}
     this.mailingSubmit = true;
     Object.keys(this.mailingAddressForm.controls).forEach((key) => {
       if (this.mailingAddressForm.get(key).value && typeof (this.mailingAddressForm.get(key).value) == 'string')
@@ -1022,6 +1024,7 @@ export class NewExaminerUserComponent implements OnInit {
 
   billingSubmit: boolean = false;
   billingPrviderSubmit(status?) {
+    if(this.isUserDisabled) {return;}
     this.billingSubmit = true;
     if (this.billingProviderForm.value.is_person) {
       this.billingProviderForm.get('first_name').setValidators([Validators.required, Validators.maxLength(50)]);
@@ -1086,6 +1089,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
   renderingSubmit: boolean = false;
   renderingFormSubmit(status?) {
+    if(this.isUserDisabled) {return;}
     this.renderingSubmit = true;
     if (this.renderingForm.value.is_person) {
       this.renderingForm.get('first_name').setValidators([Validators.required, Validators.maxLength(50)]);
@@ -1296,6 +1300,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   locationSubmit() {
+    if(this.isUserDisabled) {return;}
     if (this.locationData == null) {
       this.alertService.openSnackBar('Please select existing location', 'error');
       return
