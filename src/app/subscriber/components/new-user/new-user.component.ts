@@ -63,6 +63,7 @@ export class NewUserComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
+  isUserDisabled = false;
   constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -98,6 +99,7 @@ export class NewUserComponent implements OnInit {
 
           this.userService.getEditUser(params_res.id).subscribe(res => {
             this.userData = res.data;
+            this.isUserDisabled = this.userData.isactive === false;
             let user = {
               id: res.data.id,
               first_name: res.data.first_name,
@@ -124,7 +126,7 @@ export class NewUserComponent implements OnInit {
 
             this.userForm.patchValue(user)
             this.userForm.get('sign_in_email_id').disable();
-            if (this.user.role_id != 2 && user.role_id == 2) {
+            if (this.user.role_id != 2 && user.role_id == 2 || this.isUserDisabled) {
               this.userForm.disable();
             }
           })
@@ -156,6 +158,7 @@ export class NewUserComponent implements OnInit {
   }
 
   userSubmit() {
+    if(this.isUserDisabled) {return;}
     this.userForm.value.company_name = this.user.company_name
     this.isSubmitted = true;
     Object.keys(this.userForm.controls).forEach((key) => {

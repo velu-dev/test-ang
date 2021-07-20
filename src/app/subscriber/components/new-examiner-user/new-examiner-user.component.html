@@ -72,10 +72,12 @@
                             <button mat-stroked-button type="button" class="outline-danger"
                                 (click)="cancel()">Cancel</button>
                             <button mat-stroked-button class="m-l-10 outline-light_green" (click)="userSubmit('close')"
-                                [disabled]="this.user.role_id != 2 && userForm.value.SameAsSubscriber">Save &
+                                [disabled]="this.user.role_id != 2 && userForm.value.SameAsSubscriber || (isUserDisabled)">Save
+                                &
                                 Close</button>
                             <button mat-stroked-button class="m-l-10 outline-success" (click)="userSubmit('next')"
-                                [disabled]="this.user.role_id != 2 && userForm.value.SameAsSubscriber">Save &
+                                [disabled]="this.user.role_id != 2 && userForm.value.SameAsSubscriber || (isUserDisabled)">Save
+                                &
                                 Next</button>
                         </div>
                     </form>
@@ -98,7 +100,7 @@
                             </div>
                         </div>
                         <div fxFlex="100">
-                            <mat-checkbox [disabled]="!isSubscriberAddressPresent"
+                            <mat-checkbox [disabled]="!isSubscriberAddressPresent || isUserDisabled"
                                 (change)="sameAsSubscriber($event, 'mailing')"
                                 [(ngModel)]="addressesCheck.mailing_as_subscriber" [ngModelOptions]="{standalone: true}"
                                 class="checkbox_ m-t-0">Same as
@@ -230,9 +232,9 @@
                             <button mat-stroked-button type="button" class="outline-danger"
                                 (click)="cancel()">Cancel</button>
                             <button mat-stroked-button (click)="mailingAddressSubmit('close')"
-                                class="m-l-10 outline-light_green">Save & Close</button>
+                                class="m-l-10 outline-light_green" [disabled]="isUserDisabled">Save & Close</button>
                             <button mat-stroked-button (click)="mailingAddressSubmit('next')"
-                                class="m-l-10 outline-success">Save & Next</button>
+                                class="m-l-10 outline-success" [disabled]="isUserDisabled">Save & Next</button>
                         </div>
                     </form>
                 </mat-card-content>
@@ -283,7 +285,7 @@
                                 fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                                 <mat-label>{{billingProviderForm.value.is_person ? 'SSN' : 'EIN'}}</mat-label>
                                 <input matInput [placeholder]="billingProviderForm.value.is_person ? 'SSN' : 'EIN'"
-                                    [mask]="billingProviderForm.value.is_person ? '000-00-0000' : '00-0000000'"
+                                    [mask]="billingProviderForm.get('is_person').value ? '000-00-0000' : '00-0000000'"
                                     formControlName="tax_id" autocomplete="off">
                                 <mat-error *ngIf="billingSubmit">Please enter valid tax ID</mat-error>
                             </mat-form-field>
@@ -292,7 +294,7 @@
                         <div fxLayout="row" class="w-100 upload-w9 m-b-20">
                             <div fxFlex="50" class="upload" fxFlex.sm="100" fxFlex.xs="100">
                                 <div class="title">W-9 Form</div>
-                                <button type="button" mat-raised-button
+                                <button type="button" mat-raised-button [disabled]="isUserDisabled"
                                     (click)="openUploadPopUp(false, ['.pdf'], '', 'billing', 30)"
                                     class="filled-ternary">{{file ? 'Reupload' : 'Upload File'}}</button>
                                 <!-- <input type="file" #uploaderBilling (change)="addFile($event)" hidden accept=".pdf"
@@ -383,7 +385,7 @@
                             </mat-form-field>
                         </div>
                         <div fxFlex="100">
-                            <mat-checkbox [disabled]="!isSubscriberAddressPresent"
+                            <mat-checkbox [disabled]="!isSubscriberAddressPresent || isUserDisabled"
                                 (change)="sameAsSubscriber($event, 'billing');" class="checkbox_ m-t-0"
                                 [(ngModel)]="addressesCheck.billing_as_subsciber" [ngModelOptions]="{standalone: true}">
                                 Same as Subscriber Address</mat-checkbox>
@@ -391,7 +393,8 @@
 
                         <div fxFlex="100">
                             <mat-checkbox (change)="sameAsMailling($event)" class="checkbox_ m-t-10"
-                                [(ngModel)]="addressesCheck.billing_as_mailing" [ngModelOptions]="{standalone: true}">
+                                [disabled]="isUserDisabled" [(ngModel)]="addressesCheck.billing_as_mailing"
+                                [ngModelOptions]="{standalone: true}">
                                 Same as Mailing
                                 Address</mat-checkbox>
                             <!--  -->
@@ -519,9 +522,10 @@
                             <button mat-stroked-button type="button" class="outline-danger"
                                 (click)="cancel()">Cancel</button>
                             <button mat-stroked-button class="m-l-10 outline-light_green"
-                                (click)="billingPrviderSubmit('close')">Save & Close</button>
+                                (click)="billingPrviderSubmit('close')" [disabled]="isUserDisabled">Save &
+                                Close</button>
                             <button mat-stroked-button class="m-l-10 outline-success"
-                                (click)="billingPrviderSubmit('next')">Save & Next</button>
+                                (click)="billingPrviderSubmit('next')" [disabled]="isUserDisabled">Save & Next</button>
                         </div>
                     </form>
                 </mat-card-content>
@@ -657,7 +661,8 @@
                             class="add-license">
                             <div fxLayout="row wrap">
                                 <div fxFlex="100">
-                                    <button mat-stroked-button class="outline-success m-t-3" (click)="openLicense()">Add
+                                    <button mat-stroked-button class="outline-success m-t-3" (click)="openLicense()"
+                                        [disabled]="isUserDisabled">Add
                                         License </button>
                                 </div>
                                 <div class="w-100 table m-l-5 striped_ vertical-fixed  default-cursor  m-b-10">
@@ -679,10 +684,12 @@
                                         <ng-container matColumnDef="action">
                                             <th mat-header-cell *matHeaderCellDef class="text-center">Action</th>
                                             <td mat-cell *matCellDef="let element;let i = index" class="text-center">
-                                                <a class="text-success" (click)="editLicense(element,i)">
+                                                <a class="text-success" [class.disabled]="isUserDisabled"
+                                                    (click)="isUserDisabled ? '' : editLicense(element,i)">
                                                     Edit
                                                 </a>
-                                                <a class="text-danger m-l-10" (click)="removeLicense(element,i)">
+                                                <a class="text-danger m-l-10" [class.disabled]="isUserDisabled"
+                                                    (click)="isUserDisabled ? '' : removeLicense(element,i)">
                                                     Remove
                                                 </a>
                                             </td>
@@ -705,7 +712,8 @@
                                 <div class="sub-title p-l-10" fxFlex="100">
                                     Signature
                                     <br /> <small class="note p-l-0">
-                                        <mat-icon>info</mat-icon>Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect Ratio, 600*150 pixels &
+                                        <mat-icon>info</mat-icon>Supported File Formats are JPEG/JPG/PNG with 4:1 Aspect
+                                        Ratio, 600*150 pixels &
                                         Maximum File Size: 3 MB
                                     </small>
                                 </div>
@@ -714,7 +722,8 @@
                                         <div fxFlex="100">
                                             <mat-form-field appearance="standard"
                                                 hideRequiredMarker="hideRequiredControl.auto"
-                                                floatLabel="floatLabelControl.auto">
+                                                floatLabel="floatLabelControl.auto"
+                                                [ngClass]="{'mat-form-field-disabled' : isUserDisabled}">
                                                 <input matInput [title]="selectedFile" readonly
                                                     [value]="selectedFile | ellipsis:50" placeholder="No file chosen"
                                                     value="12345" autocomplete="off">
@@ -722,8 +731,8 @@
                                                     (change)="fileChangeEvent($event)" id="uploadFile"> -->
 
                                             </mat-form-field>
-                                            <button matSuffix type="button" (click)="openSignature()"
-                                                mat-stroked-button class="upload_btn outline-success">Upload
+                                            <button matSuffix type="button" (click)="openSignature()" mat-stroked-button
+                                                class="upload_btn outline-success" [disabled]="isUserDisabled">Upload
                                             </button>
                                         </div>
 
@@ -734,7 +743,7 @@
                                         </div>
                                         <div fxFlex="100" *ngIf="signData" class="m-t-20 sign-img">
                                             <button type="button" class="m-b-5" (click)="removeSign()"
-                                                mat-stroked-button>Remove </button><br />
+                                                [disabled]="isUserDisabled" mat-stroked-button>Remove </button><br />
                                             <div class="sign m-l-10">
                                                 <img [src]="signData">
                                             </div>
@@ -771,9 +780,9 @@
                             <button mat-stroked-button type="button" class="outline-danger"
                                 (click)="cancel()">Cancel</button>
                             <button mat-stroked-button class="m-l-10 outline-light_green"
-                                (click)="renderingFormSubmit('close')">Save & Close</button>
+                                (click)="renderingFormSubmit('close')" [disabled]="isUserDisabled">Save & Close</button>
                             <button mat-stroked-button class="m-l-10 outline-success"
-                                (click)="renderingFormSubmit('next')">Save & Next</button>
+                                (click)="renderingFormSubmit('next')" [disabled]="isUserDisabled">Save & Next</button>
                         </div>
                     </form>
                 </mat-card-content>
@@ -793,7 +802,7 @@
                     </div>
                     <span class="spacer"></span>
                     <button mat-stroked-button class="float-right outline-success m-t-5"
-                        (click)="assignLocation($event, trigger)">
+                        (click)="assignLocation($event, trigger)" [disabled]="isUserDisabled">
                         Assign Service Location
                     </button>
                     <ng-container>
@@ -826,10 +835,12 @@
                                             <span
                                                 *ngIf="column == 'npi_number'">{{element.national_provider_identifier}}</span>
                                             <span *ngIf="column == 'action'" class="no-wrap-td">
-                                                <a class="text-success" (click)="editAddress(element)">
+                                                <a class="text-success" [class.disabled]="isUserDisabled"
+                                                    (click)="isUserDisabled ? '' : editAddress(element)">
                                                     Edit
                                                 </a>
-                                                <a class="text-danger m-l-10" (click)="removeLocation(element,i)">
+                                                <a class="text-danger m-l-10" [class.disabled]="isUserDisabled"
+                                                    (click)="isUserDisabled ? '' : removeLocation(element,i)">
                                                     Remove
                                                 </a>
                                             </span>
