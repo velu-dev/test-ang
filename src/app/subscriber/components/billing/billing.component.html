@@ -114,7 +114,7 @@
                             <span *ngIf="column == 'bill_paid_status'" [ngClass]="{
                                 'paid': element?.bill_paid_status === 'Paid',
                                 'par_paid': element?.bill_paid_status === 'Partially Paid',
-                                'rejected': element?.bill_paid_status === 'Rejected'
+                                'rejected': element?.bill_paid_status === 'Denied'
                               }">{{element?.status}}</span>
                             <!-- <span *ngIf="column == 'action'">
                                 <mat-icon class="edit-user" matTooltip="Edit {{element?.claimant_first_name}} "
