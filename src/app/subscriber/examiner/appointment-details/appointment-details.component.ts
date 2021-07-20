@@ -296,7 +296,6 @@ export class AppointmentDetailsComponent implements OnInit {
         this.documentsDeclared = res.data;
         res.data.map((item, i) => {
           this.addRow(true);
-          console.log(item)
           item.file_name = item.original_file_name ? item.original_file_name : item.file_name
           this.getFormControls.controls[i].patchValue(item)
           this.getFormControls.controls[i].get('isEditable').patchValue(false)
@@ -1036,6 +1035,7 @@ export class AppointmentDetailsComponent implements OnInit {
             let message = group.value.id ? "Documents declared details updated successfully!" : "Documents declared details created successfully!"
             this.alertService.openSnackBar(message, "success");
             this.documentsDeclared[i] = res.data
+            res.data.file_name = res.data.original_file_name ? res.data.original_file_name : res.data.file_name;
             group.patchValue(res.data)
             group.get('isEditable').setValue(false);
             group.get('id').setValue(res.data.id);
