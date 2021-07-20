@@ -357,6 +357,14 @@ export class AppointmentDetailsComponent implements OnInit {
           this.isFreeze = true;
         }
         this.billableData = bills.data;
+
+      
+        if(this.billableData.isExaminerDisabled){
+          this.claimService.listExaminar(this.billableData.appointment.examiner_id).subscribe(res => {
+            this.examinarList = res.data;
+          })
+        }
+      
         if (this.billableData.appointment.examiner_service_location_id == null) {
           this.service_location_name = '0';
         }
