@@ -1554,3 +1554,9 @@ input:-webkit-autofill {
     padding-right: 3px !important;
   }
 }
+
+//disable a tag
+a.disabled {
+  cursor: default !important;
+  opacity: .5;
+}

@@ -89,6 +89,7 @@ export class NewExaminerUserComponent implements OnInit {
   pdf = globals.pdf;
   file: any;
   w9Url: any;
+  isUserDisabled = false;
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   @ViewChild('uploaderBilling', { static: true }) fileUploadBilling: ElementRef;
   @ViewChild(MatAutocompleteTrigger, { static: false }) addressAutocomplete: MatAutocompleteTrigger;
@@ -334,6 +335,7 @@ export class NewExaminerUserComponent implements OnInit {
       // if (res.examiner_id == this.user.id) {
       //   this.userForm.disable();
       // }
+      this.isUserDisabled = res.examiner_details.isactive === false;
       let user = {
         id: res.examiner_details.id,
         first_name: res.examiner_details.first_name,
@@ -447,6 +449,12 @@ export class NewExaminerUserComponent implements OnInit {
       })
       if (this.user.role_id != 2 && user.SameAsSubscriber) {
         this.userForm.disable();
+      }
+      if(this.isUserDisabled) {
+        this.userForm.disable();
+        this.mailingAddressForm.disable();
+        this.billingProviderForm.disable();
+        this.renderingForm.disable();
       }
     })
   }
