@@ -1082,6 +1082,7 @@ export class NewExaminerUserComponent implements OnInit {
     })
   }
   clearAutoComplete() {
+    if(this.isUserDisabled) {return;}
     this.renderingForm.patchValue({
       taxonomy_id: null
     })

@@ -640,7 +640,7 @@
                             </mat-select> -->
                             <input type="text" matInput [formControl]="texonomySearch"
                                 placeholder="Select taxonomy code" [matAutocomplete]="examinerAutocomplete">
-                            <button mat-button matSuffix mat-icon-button aria-label="Clear"
+                            <button mat-button matSuffix mat-icon-button aria-label="Clear" [disabled]="isUserDisabled"
                                 (click)="clearAutoComplete()" matTooltip="Clear Code" matTooltipPosition="above"
                                 class="clear" class="clear">
                                 <mat-icon>close</mat-icon>
