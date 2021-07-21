@@ -110,33 +110,9 @@
 }
 .incomplete-info {
     .incomplete-modules {
-        background-color: #fdf4ef;
-        padding: 10px;
-        border-radius: 3px;
         .text-danger {
             color: $error !important;
         }
-        .received-date {
-            font-weight: $font-weight-bold;
-            padding-bottom: 10px;
-            border-bottom: 1px solid $white;
-            color: $error;
-        }
-        ul {
-            width: 100%;
-            padding-left: 20px;
-            margin: 5px 0 0 0 ;
-            li {
-              list-style: disc;
-              width: 50%;
-              float: left;
-              padding: 5px 0;
-              @media only screen and (max-width: 568px) {
-                width: 100%;
-                padding-top: 10px;
-              }
-            }
-          }
     }
 }
 .incomplete-info.resubmitted-bill {
@@ -144,30 +120,67 @@
     .note {
         padding-left: 0;
     }
-    .resubmitted-modules {
-        background-color: $light-color;
-        padding: 10px;
-        border-radius: 3px;
-        .received-date {
-            font-weight: $font-weight-bold;
-            padding-bottom: 10px;
-            border-bottom: 1px solid $white;
-        }
-        ul {
-            width: 100%;
-            padding-left: 20px;
-            margin: 5px 0 0 0 ;
-            li {
-              list-style: disc;
-              width: 50%;
-              float: left;
-              padding: 5px 0;
-              @media only screen and (max-width: 568px) {
-                width: 100%;
-                padding-top: 10px;
-              }
+    mat-card {
+        mat-card-header {
+            button {
+                min-width: auto !important;
             }
-          }
+        }
+        .incomplete-modules {
+            background-color: $warning-bg-light;
+            padding: 10px;
+            border-radius: 3px;
+            .text-danger {
+                color: $error !important;
+            }
+            .received-date {
+                font-weight: $font-weight-bold;
+                padding-bottom: 10px;
+                border-bottom: 1px solid $white;
+                color: $error;
+            }
+            ul {
+                width: 100%;
+                padding-left: 20px;
+                margin: 5px 0 0 0;
+                li {
+                    list-style: disc;
+                    width: 50%;
+                    float: left;
+                    padding: 5px 0;
+                    display: inline-flex;
+                    @media only screen and (max-width: 568px) {
+                        width: 100%;
+                        padding-top: 10px;
+                    }
+                }
+            }
+        }
+        .resubmitted-modules {
+            background-color: $light-color;
+            padding: 10px;
+            border-radius: 3px;
+            .received-date {
+                font-weight: $font-weight-bold;
+                padding-bottom: 10px;
+                border-bottom: 1px solid $white;
+            }
+            ul {
+                width: 100%;
+                padding-left: 20px;
+                margin: 5px 0 0 0;
+                li {
+                    list-style: disc;
+                    width: 50%;
+                    float: left;
+                    padding: 5px 0;
+                    @media only screen and (max-width: 568px) {
+                        width: 100%;
+                        padding-top: 10px;
+                    }
+                }
+            }
+        }
     }
 }
 .border-dashed-blue {
