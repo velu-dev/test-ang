@@ -554,7 +554,7 @@ export class NewExaminerUserComponent implements OnInit {
       .pipe(
         debounceTime(500),
       ).subscribe(key => {
-        if (key && typeof (key) == 'string') 
+        if (key && typeof (key) == 'string')
           key = key.trim();
         this.isMAddressSearched = true;
         if (key)
@@ -566,7 +566,7 @@ export class NewExaminerUserComponent implements OnInit {
               this.isMAddressError = true;
             this.streetMAddressList = [];
           })
-        else 
+        else
           this.streetMAddressList = [];
       })
 
@@ -966,6 +966,7 @@ export class NewExaminerUserComponent implements OnInit {
     this.userService.updatemailingAddress(this.examinerId, this.mailingAddressForm.value).subscribe(mail => {
       if (!this.mailingAddressForm.value.id) {
         this.alertService.openSnackBar("Mailing address added successfully", 'success');
+        this.getAddresses();
       } else {
         this.alertService.openSnackBar("Mailing address updated successfully", 'success');
       }
@@ -1098,7 +1099,7 @@ export class NewExaminerUserComponent implements OnInit {
     })
   }
   clearAutoComplete() {
-    if(this.isUserDisabled) {return;}
+    if (this.isUserDisabled) { return; }
     this.renderingForm.patchValue({
       taxonomy_id: null
     })
