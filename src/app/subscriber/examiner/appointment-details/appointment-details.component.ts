@@ -1578,6 +1578,20 @@ export class AppointmentDetailsComponent implements OnInit {
     }
   }
   submitBillableItem() {
+    if (moment(this.billable_item.get('appointment').get('appointment_scheduled_date_time').value).isBefore(moment(new Date())) && !this.billable_item.get('appointment').get('examiner_service_location_id').value) {
+      const dialogRef = this.dialog.open(AlertDialogueComponent, {
+        width: "500px",
+        data: {
+          title: "Service Location",
+          type: 'info',
+          ok: true,
+          message: 'Service Location is empty for the selected Past Appointment Date. Please select a location to proceed.'
+        }
+      });
+      dialogRef.afterClosed().subscribe(res => {
+        return
+      });
+    }
     if (this.billable_item.value.appointment.appointment_scheduled_date_time) {
       this.billable_item.get('appointment').get('duration').setValidators([Validators.compose([Validators.required, Validators.pattern('[0-9]+'), Validators.min(1), Validators.max(450)])]);
     } else {
