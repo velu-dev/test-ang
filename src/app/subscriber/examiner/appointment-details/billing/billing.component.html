@@ -3,11 +3,11 @@
         <mat-tab label="First Bill Submission">
         </mat-tab>
         <mat-tab label="Second Bill Review"
-            [disabled]="!(sbrPaymentStatus?.bill_paid_status?.toLowerCase() == 'partially paid' || sbrPaymentStatus?.bill_paid_status?.toLowerCase() == 'rejected' || secondBillId)">
+            [disabled]="!(sbrPaymentStatus?.bill_paid_status?.toLowerCase() == 'partially paid' || sbrPaymentStatus?.bill_paid_status?.toLowerCase() == 'denied' || secondBillId)">
 
         </mat-tab>
         <mat-tab label="Independent Bill Review"
-            [disabled]="!(ibrPaymentStatus?.bill_paid_status?.toLowerCase() == 'partially paid' || ibrPaymentStatus?.bill_paid_status?.toLowerCase() == 'rejected' || independentBillId)">
+            [disabled]="!(ibrPaymentStatus?.bill_paid_status?.toLowerCase() == 'partially paid' || ibrPaymentStatus?.bill_paid_status?.toLowerCase() == 'denied' || independentBillId)">
             <!-- ===== Independent Bill Submission ===== -->
         </mat-tab>
     </mat-tab-group>

@@ -40,7 +40,7 @@
                         <td class="text-danger">{{+payment.get('balance').value > -1 ? '$ ' :
                             ''}}{{payment.get('balance').value | number : '1.2-2'}}</td>
                         <td
-                            [ngClass]="{'text-success' : payment.get('bill_paid_status').value != 'Rejected', 'text-danger' : payment.get('bill_paid_status').value == 'Rejected'}">
+                            [ngClass]="{'text-success' : payment.get('bill_paid_status').value != 'Denied', 'text-danger' : payment.get('bill_paid_status').value == 'Denied'}">
                             {{payment.get('bill_paid_status').value}}</td>
                         <td><button type="button" [disabled]="is_cancellation"
                                 *ngIf="paymentReviews(payIndex)?.controls?.length == 0 || paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length -1).get('void_type_id').value == 3"
@@ -389,6 +389,50 @@
                                                     </div>
                                                 </div> -->
                                         </div>
+
+
+                                        <!-- <div fxLayout="row wrap">
+                                            <div fxFlex="100">
+                                                <div class="user-detail m-t-10">
+                                                    <table class="table res-table eor-allowance">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Item</th>
+                                                                <th>Procedure Code</th>
+                                                                <th>Modifier</th>
+                                                                <th>Charge</th>
+                                                                <th>EOR Allowance</th>
+                                                                <th>Balance</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <thead class="bg-white">
+                                                            <tr>
+                                                                <td>Represented QME Follow-Up</td>
+                                                                <td>ML 202</td>
+                                                                <td>95</td>
+                                                                <td>$ 1316.25</td>
+                                                                <td class="custom-input">
+                                                                   <input type="text">
+                                                                </td>
+                                                                <td>$ 0.00</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Exces Pages</td>
+                                                                <td>ML 202</td>
+                                                                <td>95</td>
+                                                                <td>$ 1316.25</td>
+                                                                <td class="custom-input">
+                                                                   <input type="text">
+                                                                </td>
+                                                                <td>$ 0.00</td>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div> -->
+
+
                                         <div class="w-100 text-center p-t-10">
                                             <button type="button" class="outline-danger m-r-10"
                                                 (click)="removeReview(payIndex,reviewIndex)"
@@ -472,7 +516,7 @@
                                                 <div class="flex">
                                                     <div class="bill-property">Status </div>
                                                     <div class="value"
-                                                        [ngClass]="{'text-success' : payment.get('bill_paid_status').value != 'Rejected', 'text-danger' : payment.get('bill_paid_status').value == 'Rejected'}">
+                                                        [ngClass]="{'text-success' : payment.get('bill_paid_status').value != 'Denied', 'text-danger' : payment.get('bill_paid_status').value == 'Denied'}">
                                                         {{payment.get('bill_paid_status').value}}</div>
                                                 </div>
                                                 <div class="flex">
