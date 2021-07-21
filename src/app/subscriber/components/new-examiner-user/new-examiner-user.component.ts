@@ -89,6 +89,7 @@ export class NewExaminerUserComponent implements OnInit {
   pdf = globals.pdf;
   file: any;
   w9Url: any;
+  isUserDisabled = false;
   @ViewChild('uploader', { static: true }) fileUpload: ElementRef;
   @ViewChild('uploaderBilling', { static: true }) fileUploadBilling: ElementRef;
   @ViewChild(MatAutocompleteTrigger, { static: false }) addressAutocomplete: MatAutocompleteTrigger;
@@ -334,6 +335,7 @@ export class NewExaminerUserComponent implements OnInit {
       // if (res.examiner_id == this.user.id) {
       //   this.userForm.disable();
       // }
+      this.isUserDisabled = res.examiner_details.isactive === false;
       let user = {
         id: res.examiner_details.id,
         first_name: res.examiner_details.first_name,
@@ -447,6 +449,13 @@ export class NewExaminerUserComponent implements OnInit {
       })
       if (this.user.role_id != 2 && user.SameAsSubscriber) {
         this.userForm.disable();
+      }
+      if(this.isUserDisabled) {
+        this.userForm.disable();
+        this.mailingAddressForm.disable();
+        this.billingProviderForm.disable();
+        this.renderingForm.disable();
+        this.texonomySearch.disable();
       }
     })
   }
@@ -664,7 +673,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
   createStatus: boolean = false;
   userSubmit(status?) {
-
+    if(this.isUserDisabled) {return;}
     this.userForm.value.company_name = this.user.company_name
     this.isSubmitted = true;
 
@@ -924,6 +933,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   mailingAddressSubmit(status?) {
+    if(this.isUserDisabled) {return;}
     this.mailingSubmit = true;
     Object.keys(this.mailingAddressForm.controls).forEach((key) => {
       if (this.mailingAddressForm.get(key).value && typeof (this.mailingAddressForm.get(key).value) == 'string')
@@ -1014,6 +1024,7 @@ export class NewExaminerUserComponent implements OnInit {
 
   billingSubmit: boolean = false;
   billingPrviderSubmit(status?) {
+    if(this.isUserDisabled) {return;}
     this.billingSubmit = true;
     if (this.billingProviderForm.value.is_person) {
       this.billingProviderForm.get('first_name').setValidators([Validators.required, Validators.maxLength(50)]);
@@ -1078,6 +1089,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
   renderingSubmit: boolean = false;
   renderingFormSubmit(status?) {
+    if(this.isUserDisabled) {return;}
     this.renderingSubmit = true;
     if (this.renderingForm.value.is_person) {
       this.renderingForm.get('first_name').setValidators([Validators.required, Validators.maxLength(50)]);
@@ -1288,6 +1300,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   locationSubmit() {
+    if(this.isUserDisabled) {return;}
     if (this.locationData == null) {
       this.alertService.openSnackBar('Please select existing location', 'error');
       return

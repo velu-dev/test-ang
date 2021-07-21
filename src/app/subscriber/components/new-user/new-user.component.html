@@ -11,7 +11,7 @@
             </ng-template>
         </mat-tab>
     </mat-tab-group> -->
-    
+
     <mat-card-content class="m-b-25">
         <!--Form start-->
         <form fxLayout="row wrap" (keydown.enter)="$event.target.tagName == 'TEXTAREA'" [formGroup]="userForm"
@@ -65,7 +65,8 @@
             <div class="text-center w-100 m-t-10">
                 <button mat-stroked-button type="button" (click)="cancel()" class="outline-danger">Cancel</button>
                 <button mat-stroked-button class="m-l-10 outline-success"
-                    [disabled]="user.role_id != 2 &&  userForm.value.role_id == 2" (click)="userSubmit()">Save </button>
+                    [disabled]="user.role_id != 2 &&  userForm.value.role_id == 2 || (isUserDisabled)"
+                    (click)="userSubmit()">Save </button>
             </div>
         </form>
     </mat-card-content>
