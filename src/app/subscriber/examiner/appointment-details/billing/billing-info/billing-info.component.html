@@ -88,11 +88,11 @@
         <mat-card-header>
             <div class="content-wrapper-main-title text-danger m-t-10 m-b-10">Claims Administrator Feedback</div>
             <span class="spacer"></span>
-            <!-- <button *ngIf="billingData.is_re_submit" mat-raised-button (click)="isFeedbackOpened =!isFeedbackOpened"
+            <!-- <button  mat-raised-button (click)="isFeedbackOpened =!isFeedbackOpened"
                 class="filled-gray m-b-5">
                 Feedback History
             </button> -->
-            <button mat-raised-button class="filled-gray m-b-5" (click)="isFeedbackOpened =!isFeedbackOpened">
+            <button mat-raised-button *ngIf="billingData.is_re_submit" class="filled-gray m-b-5" (click)="isFeedbackOpened =!isFeedbackOpened">
                 Feedback History <i class="p-l-5 fas"
                     [ngClass]="{'fa-angle-up': isFeedbackOpened,'fa-angle-down': !isFeedbackOpened}"></i>
             </button>
