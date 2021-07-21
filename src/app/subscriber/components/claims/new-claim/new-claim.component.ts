@@ -984,6 +984,8 @@ export class NewClaimComponent implements OnInit {
               this.isAddressError = true;
             this.streetAddressList = [];
           })
+        else 
+          this.streetAddressList = [];
       })
     this.claim.get(['Employer', 'street1']).valueChanges
       .pipe(
@@ -1001,6 +1003,8 @@ export class NewClaimComponent implements OnInit {
               this.isEmpAddressError = true;
             this.streetEmpAddressList = [];
           })
+        else
+          this.streetEmpAddressList = [];
       })
   }
   // private _filterAttroney(value: string, data) {

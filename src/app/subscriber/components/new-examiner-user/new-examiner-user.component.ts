@@ -614,6 +614,8 @@ export class NewExaminerUserComponent implements OnInit {
               this.isBAddressError = true;
             this.streetBAddressList = [];
           })
+        else
+          this.streetBAddressList = [];
       })
     this.billingProviderForm.get("phone_no1").valueChanges.subscribe(res => {
       if (this.billingProviderForm.get("phone_no1").value && this.billingProviderForm.get("phone_no1").valid) {

@@ -218,6 +218,8 @@ export class NewClaimantComponent implements OnInit {
               this.isAddressError = true;
             this.streetAddressList = []
           })
+        else 
+          this.streetAddressList = []
       })
     this.claimService.seedData('language').subscribe(response => {
       this.languageList = response['data'];
