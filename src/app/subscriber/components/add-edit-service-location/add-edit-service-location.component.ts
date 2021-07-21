@@ -188,6 +188,8 @@ export class AddEditServiceLocationComponent implements OnInit {
               this.isAddressError = true;
             this.streetAddressList = [];
           })
+        else
+          this.streetAddressList = [];
       })
 
 

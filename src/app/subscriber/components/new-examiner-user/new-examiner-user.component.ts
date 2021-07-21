@@ -554,7 +554,7 @@ export class NewExaminerUserComponent implements OnInit {
       .pipe(
         debounceTime(500),
       ).subscribe(key => {
-        if (key && typeof (key) == 'string')
+        if (key && typeof (key) == 'string') 
           key = key.trim();
         this.isMAddressSearched = true;
         if (key)
@@ -566,6 +566,8 @@ export class NewExaminerUserComponent implements OnInit {
               this.isMAddressError = true;
             this.streetMAddressList = [];
           })
+        else 
+          this.streetMAddressList = [];
       })
 
     this.mailingAddressForm.get("phone_no1").valueChanges.subscribe(res => {
@@ -624,6 +626,8 @@ export class NewExaminerUserComponent implements OnInit {
               this.isBAddressError = true;
             this.streetBAddressList = [];
           })
+        else
+          this.streetBAddressList = [];
       })
     this.billingProviderForm.get("phone_no1").valueChanges.subscribe(res => {
       if (this.billingProviderForm.get("phone_no1").value && this.billingProviderForm.get("phone_no1").valid) {
@@ -1094,6 +1098,7 @@ export class NewExaminerUserComponent implements OnInit {
     })
   }
   clearAutoComplete() {
+    if(this.isUserDisabled) {return;}
     this.renderingForm.patchValue({
       taxonomy_id: null
     })

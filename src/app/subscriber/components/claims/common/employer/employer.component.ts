@@ -62,6 +62,8 @@ export class EmployerComponent implements OnInit {
             this.isEmpAddressError = true;
           this.streetEmpAddressList = [];
         })
+      else
+        this.streetEmpAddressList = [];
     })
     
   }

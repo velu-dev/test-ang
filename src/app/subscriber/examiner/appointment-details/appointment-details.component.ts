@@ -661,6 +661,12 @@ export class AppointmentDetailsComponent implements OnInit {
 
   }
   openUploadPopUp(isMultiple, type, data?, callback?, fileSize?) {
+    if (!this.documentType) {
+      this.errors.doc_type.isError = true;
+      this.errors.doc_type.error = "Please select Document type";
+      // this.alertService.openSnackBar("Please select Document type", 'error');
+      return;
+    }
     const dialogRef = this.dialog.open(FileUploadComponent, {
       width: '800px',
       data: { name: 'make this card the default card', address: true, isMultiple: isMultiple, fileType: type, fileSize: fileSize },

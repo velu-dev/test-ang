@@ -404,6 +404,8 @@ export class SubscriberSettingsComponent implements OnInit {
               this.isAddressError = true;
             this.streetAddressList = [];
           })
+          else
+            this.streetAddressList = []
       })
     let user = JSON.parse(this.cookieService.get('user'));
     this.currentUser = user;
