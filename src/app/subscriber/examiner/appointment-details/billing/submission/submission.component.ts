@@ -15,6 +15,7 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
+import { CookieService } from 'src/app/shared/services/cookie.service';
 @Component({
   selector: 'app-submission',
   templateUrl: './submission.component.html',
@@ -61,7 +62,9 @@ export class SubmissionComponent implements OnInit {
     public dialog: MatDialog,
     private intercom: IntercomService,
     public userService: UserService,
-    private breakpointObserver: BreakpointObserver) { }
+    private breakpointObserver: BreakpointObserver,
+    private cookieService: CookieService
+  ) { }
 
   ngOnInit() {
     this.getBillDocument();
@@ -87,6 +90,7 @@ export class SubmissionComponent implements OnInit {
       this.billDocumentList = doc.data
       if (doc.data) {
         this.intercom.setBillableItem(doc.data.exam_procedure_name);
+        this.cookieService.set('billableItem', doc.data.exam_procedure_name)
         if (doc.data.document_list) {
           this.is_ondemand_created = doc.data.is_ondemand_created;
           this.documentsData = new MatTableDataSource(doc.data.document_list);
