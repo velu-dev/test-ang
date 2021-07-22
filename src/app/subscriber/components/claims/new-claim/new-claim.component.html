@@ -1470,7 +1470,7 @@
                                     <mat-error>Please enter valid date & time</mat-error> -->
                                     <input matInput placeholder="MM-DD-YYYY" autocomplete="off"
                                         [matDatepicker]="call_date" [max]="todayDate.intake"
-                                        formControlName="call_date">
+                                        [min]="claimantDetails?.date_of_birth" formControlName="call_date">
                                     <mat-datepicker-toggle matSuffix [for]="call_date"></mat-datepicker-toggle>
                                     <mat-datepicker #call_date disabled="false"></mat-datepicker>
                                     <mat-error *ngIf="isBillSubmited">Please enter valid date</mat-error>

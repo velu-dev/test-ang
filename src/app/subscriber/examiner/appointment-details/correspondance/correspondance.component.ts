@@ -603,7 +603,8 @@ export class BillingCorrespondanceComponent implements OnInit {
     SelectedIds = this.selection.selected;
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '500px',
-      data: { name: "remove this document", address: true, title: element.form_name }
+      data: { name: "remove this document", address: true, title: element.original_file_name && element.original_file_name != '' ? element.original_file_name :
+      element.form_name }
     });
 
     dialogRef.afterClosed().subscribe(result => {

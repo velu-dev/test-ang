@@ -722,7 +722,7 @@
                             <mat-error>Please enter valid date & time</mat-error> -->
 
                             <input matInput placeholder="MM-DD-YYYY" autocomplete="off" [matDatepicker]="call_date"
-                                [max]="todayDate.intake" formControlName="call_date">
+                                [max]="todayDate.intake" formControlName="call_date" [min]="examinationDetails?.dob">
                             <mat-datepicker-toggle matSuffix [for]="call_date"></mat-datepicker-toggle>
                             <mat-datepicker #call_date [disabled]="!isEditBillableItem"></mat-datepicker>
                             <mat-error>Please enter valid date</mat-error>
@@ -882,11 +882,11 @@
                         File</button>
                 </div>
                 <div fxFlex="100" fxFlex.sm="100" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50" class="Upload_"
-                *ngIf="documentType == 12">
-                <button mat-raised-button class="filled-ternary"
-                    (click)="openUploadPopUp(false,['.pdf', '.doc', '.docx'], '', '6',  30)">Upload
-                    File</button>
-            </div>
+                    *ngIf="documentType == 12">
+                    <button mat-raised-button class="filled-ternary"
+                        (click)="openUploadPopUp(false,['.pdf', '.doc', '.docx'], '', '6',  30)">Upload
+                        File</button>
+                </div>
 
 
                 <!-- <div fxFlex="100" fxFlex.sm="100" fxFlex.md="20" fxFlex.lg="20" fxFlex.xl="20">
