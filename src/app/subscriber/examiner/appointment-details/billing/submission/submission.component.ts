@@ -86,6 +86,7 @@ export class SubmissionComponent implements OnInit {
     this.billingService.getBillDocument(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, this.billType).subscribe(doc => {
       this.billDocumentList = doc.data
       if (doc.data) {
+        this.intercom.setBillableItem(doc.data.exam_procedure_name);
         if (doc.data.document_list) {
           this.is_ondemand_created = doc.data.is_ondemand_created;
           this.documentsData = new MatTableDataSource(doc.data.document_list);
@@ -210,10 +211,10 @@ export class SubmissionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.getBillDocument()
       if (result) {
         this.intercom.setBillDocChange(true);
         this.getBillingDetails.emit(true);
-        this.getBillDocument()
       }
     });
   }
