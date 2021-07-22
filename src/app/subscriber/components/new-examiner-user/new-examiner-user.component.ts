@@ -175,6 +175,7 @@ export class NewExaminerUserComponent implements OnInit {
     this.route.params.subscribe(params_res => {
       if (params_res.id) {
         this.isEdit = true;
+        this.examinerId = params_res.id;
         this.updateFormData(params_res.id)
       }
     })
@@ -207,7 +208,8 @@ export class NewExaminerUserComponent implements OnInit {
   }
   isSubscriberAddressPresent: boolean = false;
   subscriberAddress: any;
-  ngOnInit() {
+  isMailingAddressPresent: boolean = false;
+  getAddresses() {
     this.userService.getSubscriberAddress().subscribe(res => {
       if (res.data) {
         this.isSubscriberAddressPresent = true;
@@ -216,6 +218,16 @@ export class NewExaminerUserComponent implements OnInit {
     }, error => {
 
     })
+    this.subscriberService.getMaillingAddress(this.examinerId).subscribe(address => {
+      if (address.data) {
+        this.isMailingAddressPresent = true;
+      }
+    }, error => {
+
+    })
+  }
+  ngOnInit() {
+    this.getAddresses();
     this.intercom.setExaminerPage(true)
     this.userService.verifyRole().subscribe(role => {
       this.sameAsExaminer = role.status;
@@ -426,7 +438,7 @@ export class NewExaminerUserComponent implements OnInit {
 
       this.licenceDataSource = new MatTableDataSource(res.rendering_provider.license_details != null ? res.rendering_provider.license_details : [])
       this.licenseData = res.rendering_provider.license_details != null ? res.rendering_provider.license_details : []
-      console.log( this.licenseData)
+      console.log(this.licenseData)
       //this.getLocationDetails();
       this.dataSource = new MatTableDataSource(res.service_location != null ? res.service_location : []);
       if (res.service_location != null) {
@@ -450,7 +462,7 @@ export class NewExaminerUserComponent implements OnInit {
       if (this.user.role_id != 2 && user.SameAsSubscriber) {
         this.userForm.disable();
       }
-      if(this.isUserDisabled) {
+      if (this.isUserDisabled) {
         this.userForm.disable();
         this.mailingAddressForm.disable();
         this.billingProviderForm.disable();
@@ -542,7 +554,7 @@ export class NewExaminerUserComponent implements OnInit {
       .pipe(
         debounceTime(500),
       ).subscribe(key => {
-        if (key && typeof (key) == 'string') 
+        if (key && typeof (key) == 'string')
           key = key.trim();
         this.isMAddressSearched = true;
         if (key)
@@ -554,7 +566,7 @@ export class NewExaminerUserComponent implements OnInit {
               this.isMAddressError = true;
             this.streetMAddressList = [];
           })
-        else 
+        else
           this.streetMAddressList = [];
       })
 
@@ -677,7 +689,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
   createStatus: boolean = false;
   userSubmit(status?) {
-    if(this.isUserDisabled) {return;}
+    if (this.isUserDisabled) { return; }
     this.userForm.value.company_name = this.user.company_name
     this.isSubmitted = true;
 
@@ -914,9 +926,11 @@ export class NewExaminerUserComponent implements OnInit {
     } else if (this.tab == 1) {
       if (this.mailingAddressForm.touched)
         this.mailingAddressSubmit();
+      this.getAddresses();
     } else if (this.tab == 2) {
       if (this.billingProviderForm.touched)
-        this.billingPrviderSubmit();
+        this.getAddresses();
+      this.billingPrviderSubmit();
     } else if (this.tab == 3) {
       if (this.renderingForm.touched || this.licenseChangeStatus) {
         this.renderingFormSubmit();
@@ -937,7 +951,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   mailingAddressSubmit(status?) {
-    if(this.isUserDisabled) {return;}
+    if (this.isUserDisabled) { return; }
     this.mailingSubmit = true;
     Object.keys(this.mailingAddressForm.controls).forEach((key) => {
       if (this.mailingAddressForm.get(key).value && typeof (this.mailingAddressForm.get(key).value) == 'string')
@@ -952,6 +966,7 @@ export class NewExaminerUserComponent implements OnInit {
     this.userService.updatemailingAddress(this.examinerId, this.mailingAddressForm.value).subscribe(mail => {
       if (!this.mailingAddressForm.value.id) {
         this.alertService.openSnackBar("Mailing address added successfully", 'success');
+        this.getAddresses();
       } else {
         this.alertService.openSnackBar("Mailing address updated successfully", 'success');
       }
@@ -1028,7 +1043,7 @@ export class NewExaminerUserComponent implements OnInit {
 
   billingSubmit: boolean = false;
   billingPrviderSubmit(status?) {
-    if(this.isUserDisabled) {return;}
+    if (this.isUserDisabled) { return; }
     this.billingSubmit = true;
     if (this.billingProviderForm.value.is_person) {
       this.billingProviderForm.get('first_name').setValidators([Validators.required, Validators.maxLength(50)]);
@@ -1084,7 +1099,7 @@ export class NewExaminerUserComponent implements OnInit {
     })
   }
   clearAutoComplete() {
-    if(this.isUserDisabled) {return;}
+    if (this.isUserDisabled) { return; }
     this.renderingForm.patchValue({
       taxonomy_id: null
     })
@@ -1094,7 +1109,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
   renderingSubmit: boolean = false;
   renderingFormSubmit(status?) {
-    if(this.isUserDisabled) {return;}
+    if (this.isUserDisabled) { return; }
     this.renderingSubmit = true;
     if (this.renderingForm.value.is_person) {
       this.renderingForm.get('first_name').setValidators([Validators.required, Validators.maxLength(50)]);
@@ -1305,7 +1320,7 @@ export class NewExaminerUserComponent implements OnInit {
   }
 
   locationSubmit() {
-    if(this.isUserDisabled) {return;}
+    if (this.isUserDisabled) { return; }
     if (this.locationData == null) {
       this.alertService.openSnackBar('Please select existing location', 'error');
       return

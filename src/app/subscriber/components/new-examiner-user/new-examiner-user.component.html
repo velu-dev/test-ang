@@ -393,7 +393,7 @@
 
                         <div fxFlex="100">
                             <mat-checkbox (change)="sameAsMailling($event)" class="checkbox_ m-t-10"
-                                [disabled]="isUserDisabled" [(ngModel)]="addressesCheck.billing_as_mailing"
+                                [disabled]="!isMailingAddressPresent || isUserDisabled" [(ngModel)]="addressesCheck.billing_as_mailing"
                                 [ngModelOptions]="{standalone: true}">
                                 Same as Mailing
                                 Address</mat-checkbox>

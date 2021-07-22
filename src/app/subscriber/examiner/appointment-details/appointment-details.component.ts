@@ -1765,24 +1765,6 @@ export class AppointmentDetailsComponent implements OnInit {
 
 
   updateBillableItem() {
-    if (moment(this.billable_item.get('appointment').get('appointment_scheduled_date_time').value).isBefore(moment(new Date())) && !this.billable_item.get('appointment').get('examiner_service_location_id').value) {
-      const dialogRef = this.dialog.open(AlertDialogueComponent, {
-        width: "500px",
-        data: {
-          title: "Service Location",
-          type: 'info',
-          ok: true,
-          message: 'Service Location is empty for the selected Past Appointment Date. Please select a location to proceed.'
-        }
-      });
-      dialogRef.afterClosed().subscribe(res => {
-        return
-      });
-    } else {
-      this.saveBillableItem();
-    }
-  }
-  saveBillableItem() {
     if (this.billable_item.invalid) {
       return
     }
