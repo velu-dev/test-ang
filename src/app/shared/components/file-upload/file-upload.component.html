@@ -28,7 +28,7 @@
             dropZone="#dropzone-external" [multiple]="isMultiple" [accept]="fileType.join()" uploadMode="instantly"
             [visible]="false" (onDropZoneEnter)="onDropZoneEnter($event)" (onDropZoneLeave)="onDropZoneLeave($event)"
             (onUploaded)="onUploaded($event)" (onProgress)="onProgress($event)"
-            (onUploadStarted)="onUploadStarted($event)"></dx-file-uploader>
+            (onUploadStarted)="onUploadStarted($event)" [inputAttr]="{ id: 'input-file-upload' }"></dx-file-uploader>
         <div class="upload-error" *ngIf="error != ''" [innerHTML]="error"></div>
         <div class="uploaded-files" *ngIf="files.length !=0">
             <div class="sub-title">Attached Files</div>

@@ -65,7 +65,6 @@ export class FileUploadComponent implements OnInit {
       console.log(this.imageSource)
     }
     fileReader.readAsDataURL(file);
-    console.log(file)
     this.textVisible = false;
     this.progressVisible = false;
     this.progressValue = 0;
@@ -97,6 +96,7 @@ export class FileUploadComponent implements OnInit {
       return
     }
     this.error = "";
+    this.emptyInput();
     if (this.fileName.includes(e.file.name)) {
       this.alertService.openSnackBar('Files already exist', 'error')
       return
@@ -105,11 +105,11 @@ export class FileUploadComponent implements OnInit {
       this.fileName.push(e.file.name);
       this.files.push(e.file);
     } else {
+      this.fileName = [];
       this.fileName.push(e.file.name);
       this.files = [];
       this.files.push(e.file);
     }
-
     this.imageSource = "";
     this.progressVisible = true;
   }
@@ -135,6 +135,14 @@ export class FileUploadComponent implements OnInit {
     this.dialogRef.close(
       { data: true }
     );
+  }
+
+  emptyInput() {
+    const input = document.getElementById('input-file-upload') as HTMLInputElement;
+    console.log(input)
+    if(input) {
+      input.value = null;
+    }
   }
 
 }
