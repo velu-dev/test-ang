@@ -66,6 +66,8 @@ export class ManagerDashboardComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+    }, error => {
+      this.dataSource = new MatTableDataSource([]);
     })
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
