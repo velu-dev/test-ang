@@ -72,6 +72,8 @@ export class DashboardComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.dataSource.sortingDataAccessor = (data, sortHeaderId) => (typeof (data[sortHeaderId]) == 'string') && data[sortHeaderId].toLocaleLowerCase();
+    }, error => {
+      this.dataSource = new MatTableDataSource([]);
     })
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -83,6 +85,7 @@ export class DashboardComponent implements OnInit {
         this.columnsToDisplay = ['is_expand', 'claimant_first_name', 'date_of_birth', 'examiner_first_name', "exam_procedure_name", "standing", 'appointment_scheduled_date_time', 'due_date', 'report_submission_due_date', 'is_critical']
       }
     })
+
   }
   getCount(status) {
     this.dashboardData.map(res => {
@@ -167,7 +170,7 @@ export class DashboardComponent implements OnInit {
     }
     if (status == 'claims_without_billable_item') {
       filteredData.map(filter => {
-        filter['body_part'] = filter.body_parts ? filter.body_parts[0].body_part_name: "";
+        filter['body_part'] = filter.body_parts ? filter.body_parts[0].body_part_name : "";
       })
     }
     this.selectedData = filteredData.length;
