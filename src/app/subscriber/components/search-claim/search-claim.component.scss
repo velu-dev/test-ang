@@ -60,6 +60,11 @@
                     max-width: 100%;
                     width: 100%;
                 }
+                ::ng-deep {
+                    .mat-form-field-subscript-wrapper {
+                        display: none !important;
+                    }
+                }
             }
         }
     }
