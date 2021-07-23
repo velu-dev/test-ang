@@ -391,7 +391,7 @@ export class AddEditServiceLocationComponent implements OnInit {
         alternate_contact_1: this.subscriberAddress.alternate_contact_1,
         alternate_contact_1_phone: this.subscriberAddress.phone_no2,
         phone_ext2: this.subscriberAddress.phone_ext2,
-        alternate_contact_2: this.subscriberAddress.phone_ext2,
+        alternate_contact_2: this.subscriberAddress.alternate_contact_2,
         alternate_contact_2_phone: this.subscriberAddress.alternate_contact_2_phone,
         phone_ext3: this.subscriberAddress.phone_ext3
       })
@@ -421,6 +421,7 @@ export class AddEditServiceLocationComponent implements OnInit {
         phone_ext3: "",
         alternate_contact_2: "",
         alternate_contact_2_phone: "",
+        notes: ""
       }
       this.locationForm.patchValue(addresEmpty)
     }
