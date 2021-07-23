@@ -108,7 +108,7 @@
             </div>
             <div fxLayout="row wrap" *ngIf="payerResponse['new_response'].length != 0">
                 <div class="incomplete-modules m-b-10" fxFlex="100" *ngFor="let payer of payerResponse['new_response']">
-                    <div class="received-date">Received Date: {{payer?.status_date | date:'MM-dd-yyyy'}} </div>
+                    <div class="received-date"><span>Received Date: {{payer?.status_date | date:'MM-dd-yyyy'}}</span><span>Ref #: {{payer?.request_reference_id}}</span></div>
                     <ul class="p-t-5">
                         <li *ngFor="let message of payer.message" class="text-danger">
                             <mat-icon>error</mat-icon>{{message?._attributes?.MessageText}}
@@ -118,7 +118,7 @@
             </div>
             <div fxLayout="row wrap" *ngIf="payerResponse['old_response'].length > 0 && isFeedbackOpened">
                 <div class="resubmitted-modules" fxFlex="100" *ngFor="let payer of payerResponse['old_response']">
-                    <div class="received-date">Received Date: {{payer?.status_date | date:'MM-dd-yyyy'}} </div>
+                    <div class="received-date"><span>Received Date: {{payer?.status_date | date:'MM-dd-yyyy'}}</span><span>Ref #: {{payer?.request_reference_id}}</span></div>
                     <ul>
                         <li *ngFor="let message of payer.message">
                             {{message?._attributes?.MessageText}}

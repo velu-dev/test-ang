@@ -262,9 +262,9 @@ export class StaffDashboardComponent implements OnInit {
     if (billable_id) {
       this.router.navigate(['subscriber/staff/claimants/claimant/' + claimant_id + '/claim/' + claim_id + '/billable-item/' + billable_id])
     } else {
-      if (this.selectedTile == 'claimants_without_claims') {
+      if (this.selectedTile == 'claimants_without_claims' || (!claim_id && claimant_id)) {
         this.router.navigate(['subscriber/staff/claimants/claimant/' + claimant_id])
-      } else if (this.selectedTile == 'claims_without_billable_item') {
+      } else if (this.selectedTile == 'claims_without_billable_item' || (claimant_id && claim_id)) {
         this.router.navigate(['subscriber/staff/claimants/claimant/' + claimant_id + '/claim/' + claim_id])
       } else {
         this.alertService.openSnackBar("Billable Item ID Not Found", "error");

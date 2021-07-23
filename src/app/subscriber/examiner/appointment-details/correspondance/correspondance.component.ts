@@ -81,6 +81,7 @@ export class BillingCorrespondanceComponent implements OnInit {
   incompleteInformation: any;
   isExpandDetail = true;
   isIME: boolean = false;
+  claimant_id: any;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild('popupMenu', { static: false }) popupMenu: MatMenuTrigger;
@@ -95,11 +96,8 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.claim_id = params.claim_id;
       this.billableId = params.billId;
       this.examinerId = params.examiner_id;
-      let ids = {
-        claimant_id: params.claimant_id,
-        claim_id: params.claim_id,
-        billable_item_id: params.billId
-      }
+      this.claimant_id = params.claimant_id;
+      
       this.onDemandService.getCorresIncomplete(this.claim_id, this.billableId, []).subscribe(res => {
         this.isIncompleteError = true;
       }, error => {
@@ -111,19 +109,7 @@ export class BillingCorrespondanceComponent implements OnInit {
         this.dataSource1.paginator = this.paginator;
         this.dataSource1.sort = this.sort;
       })
-      this.onDemandService.getBreadcrumbDetails(ids).subscribe(details => {
-        this.intercom.setClaimant(details.data.claimant.first_name + ' ' + details.data.claimant.last_name);
-        this.cookieService.set('claimDetails', details.data.claimant.first_name + ' ' + details.data.claimant.last_name)
-        this.intercom.setClaimNumber(details.data.claim_number);
-        this.cookieService.set('claimNumber', details.data.claim_number)
-        this.intercom.setBillableItem(details.data.exam_procedure_name);
-        this.cookieService.set('billableItem', details.data.exam_procedure_name)
-        if (details.data && details.data.exam_procedure_name.includes('IME')) {
-          this.isIME = true;
-        }
-      }, error => {
-
-      })
+      this.getBreadcrumbDetails();
       this.getData();
     })
     this.isHandset$.subscribe(res => {
@@ -155,6 +141,26 @@ export class BillingCorrespondanceComponent implements OnInit {
   }
 
   styleElement: HTMLStyleElement;
+  getBreadcrumbDetails() {
+    const ids = {
+      claimant_id: this.claimant_id,
+      claim_id: this.claim_id,
+      billable_item_id: this.billableId
+    }
+    this.onDemandService.getBreadcrumbDetails(ids).subscribe(details => {
+      this.intercom.setClaimant(details.data.claimant.first_name + ' ' + details.data.claimant.last_name);
+      this.cookieService.set('claimDetails', details.data.claimant.first_name + ' ' + details.data.claimant.last_name);
+      this.intercom.setClaimNumber(details.data.claim_number);
+      this.cookieService.set('claimNumber', details.data.claim_number);
+      this.intercom.setBillableItem(details.data.exam_procedure_name);
+      this.cookieService.set('billableItem', details.data.exam_procedure_name);
+      if (details.data && details.data.exam_procedure_name.includes('IME')) {
+        this.isIME = true;
+      }
+    }, error => {
+    });
+  }
+
   changeColors(color) {
     color = color ? color : "#E6E6E6";
     const head = document.getElementsByTagName("head")[0];
@@ -657,8 +663,8 @@ export class BillingCorrespondanceComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result)
-        this.getData();
+      this.getData();
+      this.getBreadcrumbDetails();
     });
   }
 

@@ -33,7 +33,7 @@
                     <ul>
                         <!-- <li>&nbsp;</li> -->
                         <!-- <li></li> -->
-                        <li>{{totalCount?.claimants_without_claims}}</li>
+                        <li>{{totalCount?.claimants_without_claims || 0}}</li>
                     </ul>
                 </mat-card-content>
             </mat-card>
@@ -48,7 +48,7 @@
                     <ul>
                         <!-- <li>&nbsp;</li>
                         <li></li> -->
-                        <li>{{totalCount?.claims_without_billable_item}}</li>
+                        <li>{{totalCount?.claims_without_billable_item || 0}}</li>
                     </ul>
                 </mat-card-content>
             </mat-card>
@@ -61,9 +61,9 @@
                 <mat-card-content>
                     <h4>Awaiting Appointment Details</h4>
                     <ul>
-                        <li>{{criticalCount?.awaiting_appointment_details}}</li>
+                        <li>{{criticalCount?.awaiting_appointment_details || 0}}</li>
                         <li></li>
-                        <li>{{totalCount?.awaiting_appointment_details}}</li>
+                        <li>{{totalCount?.awaiting_appointment_details || 0}}</li>
                     </ul>
                 </mat-card-content>
             </mat-card>
@@ -76,9 +76,9 @@
                 <mat-card-content>
                     <h4>Mail Appointment Notification</h4>
                     <ul>
-                        <li>{{criticalCount?.submit_correspondence}}</li>
+                        <li>{{criticalCount?.submit_correspondence || 0}}</li>
                         <li></li>
-                        <li>{{totalCount?.submit_correspondence}}</li>
+                        <li>{{totalCount?.submit_correspondence || 0}}</li>
                     </ul>
                 </mat-card-content>
             </mat-card>
@@ -91,9 +91,9 @@
                 <mat-card-content>
                     <h4>Confirm Appointment</h4>
                     <ul>
-                        <li>{{criticalCount?.confirm_appointment}}</li>
+                        <li>{{criticalCount?.confirm_appointment || 0}}</li>
                         <li></li>
-                        <li>{{totalCount?.confirm_appointment}}</li>
+                        <li>{{totalCount?.confirm_appointment || 0}}</li>
                     </ul>
                 </mat-card-content>
             </mat-card>
@@ -106,9 +106,9 @@
                 <mat-card-content>
                     <h4>Bill Report</h4>
                     <ul>
-                        <li>{{criticalCount?.bill_report}}</li>
+                        <li>{{criticalCount?.bill_report || 0}}</li>
                         <li></li>
-                        <li>{{totalCount?.bill_report}}</li>
+                        <li>{{totalCount?.bill_report || 0}}</li>
                     </ul>
                 </mat-card-content>
             </mat-card>
@@ -121,9 +121,9 @@
                 <mat-card-content>
                     <h4>Collect Bill Payment</h4>
                     <ul>
-                        <li>{{criticalCount?.collect_on_payment}}</li>
+                        <li>{{criticalCount?.collect_on_payment || 0}}</li>
                         <li></li>
-                        <li>{{totalCount?.collect_on_payment}}</li>
+                        <li>{{totalCount?.collect_on_payment || 0}}</li>
                     </ul>
                 </mat-card-content>
             </mat-card>
@@ -138,7 +138,7 @@
                     <ul>
                         <!-- <li>&nbsp;</li>
                         <li></li> -->
-                        <li>{{totalCount?.closed_bills}}</li>
+                        <li>{{totalCount?.closed_bills || 0}}</li>
                     </ul>
                 </mat-card-content>
             </mat-card>

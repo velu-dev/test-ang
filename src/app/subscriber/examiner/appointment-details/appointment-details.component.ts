@@ -369,12 +369,12 @@ export class AppointmentDetailsComponent implements OnInit {
         }
         this.billableData.appointment.examiner_service_location = this.billableData.appointment.examiner_service_location_id;
         //check appoinment date past or future
-        if (this.billableData.appointment.appointment_scheduled_date_time && moment(this.billableData.appointment.appointment_scheduled_date_time).isBefore(moment())) {
-          this.isPastDate = true
-        } else {
-          this.isPastDate = false
-        }
-        console.log("isPastDate", this.isPastDate)
+        // if (this.billableData.appointment.appointment_scheduled_date_time && moment(this.billableData.appointment.appointment_scheduled_date_time).isBefore(moment())) {
+        //   this.isPastDate = true
+        // } else {
+        //   this.isPastDate = false
+        // }
+        // console.log("isPastDate", this.isPastDate)
         // this.isExamTypeChanged = bills.data.is_exam_type_changed;
         this.isChecked = bills.data.exam_type.is_psychiatric;
         // this.claimService.getClaim(this.claim_id).subscribe(claim => {
@@ -449,6 +449,7 @@ export class AppointmentDetailsComponent implements OnInit {
           if (response && response.data && response.data.exam_type_code.includes('IME')) {
             this.isIME = true
           }
+          this.isPastDate = response.data && response.data.is_past_date
           this.intercom.setClaimant(response.data.claimant_name.first_name + ' ' + response.data.claimant_name.last_name);
           this.cookieService.set('claimDetails', response.data.claimant_name.first_name + ' ' + response.data.claimant_name.last_name)
           this.intercom.setClaimNumber(response.data.claim_details.claim_number);
