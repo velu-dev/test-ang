@@ -44,7 +44,7 @@
                             {{payment.get('bill_paid_status').value}}</td>
                         <td><button type="button" [disabled]="is_cancellation"
                                 *ngIf="paymentReviews(payIndex)?.controls?.length == 0 || paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length -1).get('void_type_id').value == 3"
-                                mat-raised-button class="mini-btn filled-gray" (click)="addReviews(payIndex)">Add
+                                mat-raised-button class="mini-btn filled-gray" (click)="addReviews(payIndex, true, 0)">Add
                                 Response</button></td>
                     </tr>
 
@@ -156,6 +156,47 @@
                                                 <div>Void Reason</div>
                                                 <div class="value">{{review.get('void_type').value}} -
                                                     {{review.get('void_reason').value}}</div>
+                                            </div>
+                                        </div>
+
+                                        <div fxLayout="row wrap">
+                                            <div fxFlex="100">
+                                                <div class="user-detail m-t-10">
+                                                    <table class="table res-table eor-allowance">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Item</th>
+                                                                <th>Procedure Code</th>
+                                                                <th>Modifier</th>
+                                                                <th>Charge</th>
+                                                                <th>EOR Allowance</th>
+                                                                <th>Balance</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <thead class="bg-white">
+                                                            <tr
+                                                                *ngFor="let lineItem of review.get('eor_allowance_details').controls; let eorInd=index">
+
+                                                                <td>{{lineItem.get('item').value}}</td>
+                                                                <td>{{lineItem.get('procedure_code').value}}
+                                                                </td>
+                                                                <td>{{lineItem.get('modifier').value}}</td>
+                                                                <td>$ {{lineItem.get('charges').value}}</td>
+                                                                <td>
+                                                                    $ {{lineItem.get('eor_allowance').value}}
+                                                                </td>
+                                                                <td>
+                                                                    {{lineItem.get('charges').value > -1 ? '$ ' :
+                                                                    ''}}{{(lineItem.get('charges').value -
+                                                                    lineItem.get('payment_amount').value)
+                                                                    | number
+                                                                    :
+                                                                    '1.2-2'}}
+                                                                </td>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                         <div fxFlex="100">
@@ -390,8 +431,7 @@
                                                 </div> -->
                                         </div>
 
-
-                                        <!-- <div fxLayout="row wrap">
+                                        <div fxLayout="row wrap">
                                             <div fxFlex="100">
                                                 <div class="user-detail m-t-10">
                                                     <table class="table res-table eor-allowance">
@@ -405,32 +445,35 @@
                                                                 <th>Balance</th>
                                                             </tr>
                                                         </thead>
-                                                        <thead class="bg-white">
-                                                            <tr>
-                                                                <td>Represented QME Follow-Up</td>
-                                                                <td>ML 202</td>
-                                                                <td>95</td>
-                                                                <td>$ 1316.25</td>
-                                                                <td class="custom-input">
-                                                                   <input type="text">
+                                                        <thead formArrayName="eor_allowance_details" class="bg-white">
+                                                            <tr
+                                                                *ngFor="let eor of review.get('eor_allowance_details').controls; let eorInd=index">
+
+                                                                <td>{{eor.get('item').value}}</td>
+                                                                <td>{{eor.get('procedure_code').value}}
                                                                 </td>
-                                                                <td>$ 0.00</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Exces Pages</td>
-                                                                <td>ML 202</td>
-                                                                <td>95</td>
-                                                                <td>$ 1316.25</td>
-                                                                <td class="custom-input">
-                                                                   <input type="text">
+                                                                <td>{{eor.get('modifier').value}}</td>
+                                                                <td>$ {{eor.get('charges').value}}</td>
+                                                                <td [formGroupName]="eorInd" class="custom-input">
+                                                                    <input type="text" formControlName="eor_allowance"
+                                                                        min="0" matInput type="number"
+                                                                        autocomplete="off"
+                                                                        (change)="setTwoNumberDecimal($event)">
                                                                 </td>
-                                                                <td>$ 0.00</td>
+                                                                <td>
+                                                                    {{eor.get('charges').value > -1 ? '$ ' :
+                                                                    ''}}{{(eor.get('charges').value -
+                                                                    eor.get('payment_amount').value)
+                                                                    | number
+                                                                    :
+                                                                    '1.2-2'}}
+                                                                </td>
                                                             </tr>
                                                         </thead>
                                                     </table>
                                                 </div>
                                             </div>
-                                        </div> -->
+                                        </div>
 
 
                                         <div class="w-100 text-center p-t-10">
@@ -524,8 +567,7 @@
                                                     <div class="value"><button type="button"
                                                             *ngIf="paymentReviews(payIndex)?.controls?.length == 0 || paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length -1).get('void_type_id').value == 3"
                                                             mat-raised-button class="mini-btn filled-gray"
-                                                            (click)="addReviews(payIndex)">Add
-                                                            Response</button>
+                                                            (click)="addReviews(payIndex, true, 0)">Add Response</button>
                                                     </div>
                                                 </div>
                                             </mat-card>
