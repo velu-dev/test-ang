@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger, MatChipInputEvent, MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
@@ -79,6 +79,7 @@ export class BillLineItemComponent implements OnInit {
   ngOnInit() {
     this.getBillLineItem();
     console.log('Linr item')
+    console.log(this.billingData)
   }
   is_cancellation = false;
   ngAfterContentInit() {
@@ -904,6 +905,12 @@ export class BillLineItemComponent implements OnInit {
       this.expandId = null;
     } else {
       this.expandId = element;
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes.billingData.previousValue !== changes.billingData.currentValue) {
+      this.getBillLineItem();
     }
   }
 
