@@ -72,10 +72,10 @@ export class SubmissionComponent implements OnInit {
       this.isMobile = res;
       if (this.isMobile) {
         console.log("dfihdsfiusdiudhsifhisdfiudfiu")
-        this.columnName2 = ["", "File Name"]
+        this.columnName2 = ["", "Description"]
         this.columnsToDisplay2 = ['is_expand', 'file_name']
       } else {
-        this.columnName2 = ["", "File Name", "Download Partial Document", "Complete", "Action"]
+        this.columnName2 = ["", "Description", "Partial Document", "Completed Document", "Action"]
         this.columnsToDisplay2 = ['doc_image', 'file_name', 'partial', 'complete', "action"]
       }
     });
