@@ -15,7 +15,7 @@ import * as moment from 'moment-timezone';
 import { NGXLogger } from 'ngx-logger';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
-import { map, shareReplay } from 'rxjs/operators';
+import { map, shareReplay, startWith } from 'rxjs/operators';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
@@ -205,6 +205,8 @@ export class AppointmentDetailsComponent implements OnInit {
   isIME: boolean = false;
   is_appointment_date_change: boolean = false;
   isPastDate: boolean = false;
+  filteredExaminerList: any = [];
+  examinerFilterCtrl = new FormControl();
   constructor(public dialog: MatDialog, private examinerService: ExaminerService,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -237,7 +239,25 @@ export class AppointmentDetailsComponent implements OnInit {
     //this.getDocumentDeclareData();
     this.claimService.listExaminar().subscribe(res => {
       this.examinarList = res.data;
+      this.examinerFilterCtrl.setValue(null);
     })
+
+    this.filteredExaminerList = this.examinerFilterCtrl.valueChanges.pipe(
+      startWith(null), 
+      map((searchKey) => {
+        if(searchKey) {
+          searchKey = searchKey.toLowerCase();
+          return this.examinarList.filter((examiner) => 
+            examiner.first_name.toLowerCase().indexOf(searchKey) > -1 || 
+            examiner.last_name.toLowerCase().indexOf(searchKey) > -1 || 
+            examiner.suffix.toLowerCase().indexOf(searchKey) > -1
+          )
+        }
+        else {
+          return this.examinarList;
+        }
+      })
+    )
     // this.claimService.seedData("language").subscribe(res => {
     //   this.languageList = res.data;
     // })

@@ -240,6 +240,8 @@ export class NewClaimComponent implements OnInit {
   regulation = regulation;
   minInjuryDate: any;
   isIME: boolean = false;
+  filteredExaminerList: any = [];
+  examinerFilterCtrl = new FormControl();
   constructor(
     private formBuilder: FormBuilder,
     private claimService: ClaimService,
@@ -388,7 +390,26 @@ export class NewClaimComponent implements OnInit {
     })
     this.claimService.listExaminar().subscribe(res => {
       this.examinarList = res.data;
-    });
+      this.examinerFilterCtrl.setValue(null);
+    })
+
+    this.filteredExaminerList = this.examinerFilterCtrl.valueChanges.pipe(
+      startWith(null), 
+      map((searchKey) => {
+        if(searchKey) {
+          searchKey = searchKey.toLowerCase();
+          return this.examinarList.filter((examiner) => 
+            examiner.first_name.toLowerCase().indexOf(searchKey) > -1 || 
+            examiner.last_name.toLowerCase().indexOf(searchKey) > -1 || 
+            examiner.suffix.toLowerCase().indexOf(searchKey) > -1
+          )
+        }
+        else {
+          return this.examinarList;
+        }
+      })
+    )
+
     this.claimService.searchEAMSAdmin({ search: "" }).subscribe(res => {
       this.eamsClaimsAdministrator = res['data'];
       this.claimAdminList = [{ name: "Simplexam Addresses", data: this.eamsClaimsAdministrator }];
