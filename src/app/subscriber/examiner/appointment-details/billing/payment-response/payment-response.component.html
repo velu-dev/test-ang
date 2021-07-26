@@ -163,7 +163,8 @@
                                         <div fxLayout="row wrap" *ngIf="review.get('void_type_id').value != 3">
                                             <div fxFlex="100">
                                                 <div class="user-detail m-t-10">
-                                                    <table class="table res-table eor-allowance">
+                                                    <table class="table res-table eor-allowance" [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}"
+                                                    >
                                                         <thead>
                                                             <tr>
                                                                 <th>Item</th>
