@@ -79,9 +79,11 @@ export class BillingDocumentComponent implements OnInit, OnDestroy {
   }
   getDocument() {
     this.billingService.getSendRecDocument(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, this.billType).subscribe(document => {
-      const data = this.removeNonSftpActionRefId(document.data);
-      this.dataSourceDocList = new MatTableDataSource(data);
-      this.dataSourceDocList.sort = this.sort;
+      if(document.data) {
+        const data = this.removeNonSftpActionRefId(document.data);
+        this.dataSourceDocList = new MatTableDataSource(data);
+        this.dataSourceDocList.sort = this.sort;
+      }
     })
     this.billingService.getDtmData({ claim_id: this.paramsId.claim_id, billable_item_id: this.paramsId.billId, bill_id: this.paramsId.billingId }).subscribe(res => {
       this.DTMtableData = new MatTableDataSource(res.data);
