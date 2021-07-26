@@ -139,7 +139,6 @@ export class FileUploadComponent implements OnInit {
 
   emptyInput() {
     const input = document.getElementById('input-file-upload') as HTMLInputElement;
-    console.log(input)
     if(input) {
       input.value = null;
     }
