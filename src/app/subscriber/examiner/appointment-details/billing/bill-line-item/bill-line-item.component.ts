@@ -16,6 +16,7 @@ import { animate, style, transition, trigger, state } from '@angular/animations'
 import { saveAs } from 'file-saver';
 import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
 import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-bill-line-item',
@@ -57,6 +58,7 @@ export class BillLineItemComponent implements OnInit {
   fileName: any = []
   support_documents = [];
   oneUnitProcedure = ['ml201', 'ml202', 'ml203']
+  subscription: Subscription;
   @Input() cancellation: boolean;
 
   constructor(private logger: NGXLogger,
@@ -78,8 +80,11 @@ export class BillLineItemComponent implements OnInit {
 
   ngOnInit() {
     this.getBillLineItem();
-    console.log('Linr item')
-    console.log(this.billingData)
+    this.subscription = this.intercom.getAttorneyAddressChanges().subscribe((res) => {
+      if(res) {
+        this.getBillLineItem()
+      }
+    })
   }
   is_cancellation = false;
   ngAfterContentInit() {
@@ -908,10 +913,8 @@ export class BillLineItemComponent implements OnInit {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if(changes.billingData.previousValue !== changes.billingData.currentValue) {
-      this.getBillLineItem();
-    }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }
