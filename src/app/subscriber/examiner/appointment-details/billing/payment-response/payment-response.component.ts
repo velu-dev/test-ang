@@ -291,11 +291,9 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   }
 
   addReviews(index: number, isNew?, Extraind?) {
-    console.log(index)
-    this.getBillLineItems();
     this.paymentReviews(index).push(this.newReview());
-    console.log(this.paymentReviews(index).length)
-    if (isNew)
+    if (isNew) {
+      this.getBillLineItems();
       this.billLineItems.map((eor, ind) => {
         const eor_allowance_details = this.paymentReviews(index).at(this.paymentReviews(index).length - 1).get('eor_allowance_details');
         (eor_allowance_details as FormArray).push(this.fb.group({
@@ -303,6 +301,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
           item: eor.item_description, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charge, eor_allowance: "", payment_amount: eor.payment_amount
         }))
       })
+    }
     this.expandId = null;
     this.openElement(this.payments().at(0).get('id').value)
   }
@@ -333,7 +332,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     });
     let isEORError = false;
     review.get('eor_allowance_details').value.map(rev => {
-      if (rev.charges <= rev.eor_allowance) {
+      if (rev.charges < rev.eor_allowance) {
         this.alertService.openSnackBar("EOR Allowance must be less than charge", 'error');
         isEORError = true;
         review.markAllAsTouched();

@@ -160,7 +160,7 @@
                                             </div>
                                         </div>
 
-                                        <div fxLayout="row wrap" *ngIf="review.get('void_type_id').value != 3">
+                                        <div fxLayout="row wrap">
                                             <div fxFlex="100">
                                                 <div class="user-detail m-t-10">
                                                     <table class="table res-table eor-allowance">
@@ -182,14 +182,16 @@
                                                                 <td>{{lineItem.get('procedure_code').value}}
                                                                 </td>
                                                                 <td>{{lineItem.get('modifier').value}}</td>
-                                                                <td>$ {{lineItem.get('charges').value}}</td>
+                                                                <td>$ {{lineItem.get('charges').value | number :
+                                                                    '1.2-2'}}</td>
                                                                 <td>
-                                                                    $ {{lineItem.get('eor_allowance').value}}
+                                                                    $ {{lineItem.get('eor_allowance').value | number :
+                                                                    '1.2-2'}}
                                                                 </td>
                                                                 <td>
                                                                     {{lineItem.get('charges').value > -1 ? '$ ' :
                                                                     ''}}{{(lineItem.get('charges').value -
-                                                                    lineItem.get('payment_amount').value)
+                                                                    lineItem.get('eor_allowance').value)
                                                                     | number
                                                                     :
                                                                     '1.2-2'}}
@@ -454,7 +456,8 @@
                                                                 <td>{{eor.get('procedure_code').value}}
                                                                 </td>
                                                                 <td>{{eor.get('modifier').value}}</td>
-                                                                <td>$ {{eor.get('charges').value}}</td>
+                                                                <td>$ {{eor.get('charges').value | number : '1.2-2'}}
+                                                                </td>
                                                                 <td [formGroupName]="eorInd" class="custom-input">
                                                                     <input type="text" formControlName="eor_allowance"
                                                                         min="0" [max]="eor.get('charges').value"
@@ -464,7 +467,7 @@
                                                                 <td>
                                                                     {{eor.get('charges').value > -1 ? '$ ' :
                                                                     ''}}{{(eor.get('charges').value -
-                                                                    eor.get('payment_amount').value)
+                                                                    eor.get('eor_allowance').value)
                                                                     | number
                                                                     :
                                                                     '1.2-2'}}
