@@ -291,11 +291,13 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   }
 
   addReviews(index: number, isNew?, Extraind?) {
+    console.log(index)
     this.getBillLineItems();
     this.paymentReviews(index).push(this.newReview());
+    console.log(this.paymentReviews(index).length)
     if (isNew)
       this.billLineItems.map((eor, ind) => {
-        const eor_allowance_details = this.paymentReviews(index).at(Extraind).get('eor_allowance_details');
+        const eor_allowance_details = this.paymentReviews(index).at(this.paymentReviews(index).length - 1).get('eor_allowance_details');
         (eor_allowance_details as FormArray).push(this.fb.group({
           bill_line_item_id: eor.id,
           item: eor.item_description, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charge, eor_allowance: "", payment_amount: eor.payment_amount
