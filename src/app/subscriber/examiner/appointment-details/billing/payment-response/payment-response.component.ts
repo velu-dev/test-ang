@@ -3,7 +3,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { formatDate } from '@angular/common';
 import { Component, ElementRef, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MatDialog, MatDialogRef, MatTableDataSource, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_DIALOG_DATA, NativeDateAdapter } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Observable } from 'rxjs';
@@ -96,7 +96,12 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     this.paymentForm = this.fb.group({
       payments: this.fb.array([]),
     })
-
+  }
+  billLineItems = [];
+  getBillLineItems() {
+    this.billingService.getBillLineItem(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId).subscribe(line => {
+      this.billLineItems = line.data;
+    })
   }
 
   is_cancellation = false;
@@ -128,6 +133,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+    this.getBillLineItems();
     this.getPaymentRes();
     this.subscription = this.intercom.getBillItemChange().subscribe(res => {
       if (!res.paymentStatus) {
@@ -142,10 +148,10 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-
+  billingEORDetails = []
   getPaymentRes() {
     this.billingService.getPaymentResponse(this.paramsId.billingId, this.paramsId.claim_id, this.paramsId.billId).subscribe(payment => {
-      console.log(payment);
+      console.log("payment", payment);
       this.paymentForm = this.fb.group({
         payments: this.fb.array([]),
       })
@@ -172,12 +178,21 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
         }
         this.payments().at(i).patchValue(initPayment);
         pay.payment_response.map((review, ind) => {
-          //  console.log(ind, i)
-          this.addReviews(i);
+          this.billingEORDetails[ind] = review.eor_allowance_details;
+          this.addReviews(i, false);
           review.file_name = review.eor_original_file_name ? review.eor_original_file_name : review.eor_file_name;
           review.file_url = review.eor_file_url;
           if (ind > 0) review.void_reason_id = this.paymentReviews(i).at(ind - 1).get('id').value;
           review.showStatus = false
+          this.paymentReviews(i).at(ind).get('eor_allowance_details').patchValue([]);
+          review.eor_allowance_details.map((eor, index) => {
+            let eor_allowance_details = this.paymentReviews(i).at(ind).get('eor_allowance_details');
+            (eor_allowance_details as FormArray).push(this.fb.group({
+              bill_line_item_id: eor.id,
+              item: eor.item_description, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charge, eor_allowance: Number(eor.eor_allowance), payment_amount: eor.payment_amount
+            }))
+          })
+          // console.log(review)
           this.paymentReviews(i).at(ind).patchValue(review);
         })
 
@@ -241,6 +256,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       updatedAt: '',
       updated_by_first_name: '',
       updated_by_last_name: '',
+      eor_allowance_details: this.fb.array([]),
       voidData: '',
       void_type: '',
       response_type_id: ['', Validators.compose([Validators.required])],
@@ -250,7 +266,16 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
 
     })
   }
-
+  newEORForm() {
+    return this.fb.group({
+      item: [""],
+      procedure_code: [""],
+      modifier: [""],
+      charges: [""],
+      eor_allowence: [],
+      payment_amount: []
+    })
+  }
   payments(): FormArray {
     return this.paymentForm.get("payments") as FormArray;
   }
@@ -258,18 +283,32 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   paymentReviews(index: number): FormArray {
     return this.payments().at(index).get("reviews") as FormArray;
   }
-
+  eorForm(index: number, ind): FormArray {
+    return this.paymentReviews(0).at(ind).get('eor_allowance_details') as FormArray;
+  }
   addPayment() {
     this.payments().push(this.newPayemntRes());
   }
 
-  addReviews(index: number) {
+  addReviews(index: number, isNew?, Extraind?) {
+    console.log(index)
+    this.getBillLineItems();
     this.paymentReviews(index).push(this.newReview());
+    console.log(this.paymentReviews(index).length)
+    if (isNew)
+      this.billLineItems.map((eor, ind) => {
+        const eor_allowance_details = this.paymentReviews(index).at(this.paymentReviews(index).length - 1).get('eor_allowance_details');
+        (eor_allowance_details as FormArray).push(this.fb.group({
+          bill_line_item_id: eor.id,
+          item: eor.item_description, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charge, eor_allowance: "", payment_amount: eor.payment_amount
+        }))
+      })
     this.expandId = null;
     this.openElement(this.payments().at(0).get('id').value)
   }
 
   saveReview(payment: FormGroup, review: FormGroup, payIndex, reviewIndex) {
+
     // console.log(payment.value)
     // console.log(review.value)
     if (reviewIndex > 0 && this.paymentReviews(payIndex).at(this.paymentReviews(payIndex).controls.length - 2).get('void_type_id').value != 3) {
@@ -292,9 +331,21 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       if (review.get(key).value && typeof (review.get(key).value) == 'string')
         review.get(key).setValue(review.get(key).value.trim())
     });
+    let isEORError = false;
+    review.get('eor_allowance_details').value.map(rev => {
+      if (rev.charges <= rev.eor_allowance) {
+        this.alertService.openSnackBar("EOR Allowance must be less than charge", 'error');
+        isEORError = true;
+        review.markAllAsTouched();
+        return;
+      }
+    })
     if (review.status == "INVALID") {
       this.alertService.openSnackBar("Please fill in the required (*) fields", 'error')
       review.markAllAsTouched();
+      return;
+    }
+    if (isEORError) {
       return;
     }
     formData.append('post_date', review.get('post_date').value ? moment(review.get('post_date').value).format("MM-DD-YYYY") : '');
@@ -313,7 +364,8 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     formData.append('eor_file_id', review.get('eor_file_id').value);
     formData.append('response_type_id', review.get('response_type_id').value);
     formData.append('other_type_reason', review.get('other_type_reason').value);
-
+    console.log(review.get('eor_allowance_details').value);
+    formData.append('eor_allowance_details', JSON.stringify(review.get('eor_allowance_details').value));
 
 
     formData.append('file', review.get('file').value);
@@ -345,14 +397,21 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
         }
         this.payments().at(i).patchValue(initPayment);
         pay.payment_response.map((review, ind) => {
-          // console.log(ind, i)
-          this.addReviews(i);
           review.file_name = review.eor_original_file_name ? review.eor_original_file_name : review.eor_file_name;
           review.file_url = review.eor_file_url;
           if (ind > 0) review.void_reason_id = this.paymentReviews(i).at(ind - 1).get('id').value;
-          review.showStatus = false
+          review.showStatus = false;
+          review.eor_allowance_details.map((eor, index) => {
+            this.addReviews(i, false);
+            let eor_allowance_details = this.paymentReviews(i).at(ind).get('eor_allowance_details');
+            (eor_allowance_details as FormArray).push(this.fb.group({
+              bill_line_item_id: eor.bill_line_item_id,
+              item: eor.item, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charges, eor_allowance: Number(eor.eor_allowance), payment_amount: eor.payment_amount
+            }))
+          })
           this.paymentReviews(i).at(ind).patchValue(review);
         })
+        // this.getPaymentRes();
         this.intercom.setBillItemChange({ paymentStatus: true })
       })
       // this.getPaymentRes();
@@ -370,8 +429,16 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   }
 
   editResponse(payment, review, payi, reviewi) {
-    // console.log(this.voidType)
-    this.addReviews(payi);
+    this.addReviews(payi, true, reviewi + 1);
+    // this.paymentReviews(payi).at(reviewi).get('eor_allowance_details').patchValue([]);
+    // return;
+    // this.paymentRes[payi].payment_response[reviewi].eor_allowance_details.value.map((eor, index) => {
+    //   let eor_allowance_details = review.get('eor_allowance_details');
+    //   (eor_allowance_details as FormArray).push(this.fb.group({
+    //     bill_line_item_id: eor.id,
+    //     item: eor.item_description, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charge, eor_allowence: Number(eor.eor_allowance), payment_amount: eor.payment_amount
+    //   }))
+    // })
     this.paymentReviews(payi).at(reviewi + 1).patchValue(review.value);
     this.paymentReviews(payi).at(reviewi + 1).get('showStatus').patchValue(true);
     this.paymentReviews(payi).at(reviewi + 1).get('voidData').patchValue(this.voidType)
@@ -380,8 +447,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     this.paymentReviews(payi).at(reviewi + 1).disable();
     this.paymentReviews(payi).at(reviewi + 1).get('void_type_id').enable();
     this.paymentReviews(payi).at(reviewi + 1).get('void_reason').enable();
-    console.log(this.paymentReviews(payi).at(reviewi + 1))
-
+    console.log(this.paymentReviews(payi).at(reviewi))
   }
 
   changeVoidType(payment, review, payIndex, reviewIndex, event) {
