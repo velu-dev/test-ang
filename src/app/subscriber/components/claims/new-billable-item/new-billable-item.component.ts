@@ -272,6 +272,7 @@ export class NewBillableItemComponent implements OnInit {
           searchKey = searchKey.toLowerCase();
           return this.examinarList.filter((examiner) => 
             examiner.first_name.toLowerCase().indexOf(searchKey) > -1 || 
+            examiner.middle_name.toLowerCase().indexOf(searchKey) > -1 || 
             examiner.last_name.toLowerCase().indexOf(searchKey) > -1 || 
             examiner.suffix.toLowerCase().indexOf(searchKey) > -1
           )
