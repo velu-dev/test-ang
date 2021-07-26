@@ -44,7 +44,8 @@
                             {{payment.get('bill_paid_status').value}}</td>
                         <td><button type="button" [disabled]="is_cancellation"
                                 *ngIf="paymentReviews(payIndex)?.controls?.length == 0 || paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length -1).get('void_type_id').value == 3"
-                                mat-raised-button class="mini-btn filled-gray" (click)="addReviews(payIndex, true, 0)">Add
+                                mat-raised-button class="mini-btn filled-gray"
+                                (click)="addReviews(payIndex, true, 0)">Add
                                 Response</button></td>
                     </tr>
 
@@ -159,7 +160,7 @@
                                             </div>
                                         </div>
 
-                                        <div fxLayout="row wrap">
+                                        <div fxLayout="row wrap" *ngIf="review.get('void_type_id').value != 3">
                                             <div fxFlex="100">
                                                 <div class="user-detail m-t-10">
                                                     <table class="table res-table eor-allowance">
@@ -431,7 +432,7 @@
                                                 </div> -->
                                         </div>
 
-                                        <div fxLayout="row wrap">
+                                        <div fxLayout="row wrap" *ngIf="review.get('void_type_id').value != 3">
                                             <div fxFlex="100">
                                                 <div class="user-detail m-t-10">
                                                     <table class="table res-table eor-allowance">
@@ -456,8 +457,8 @@
                                                                 <td>$ {{eor.get('charges').value}}</td>
                                                                 <td [formGroupName]="eorInd" class="custom-input">
                                                                     <input type="text" formControlName="eor_allowance"
-                                                                        min="0" matInput type="number"
-                                                                        autocomplete="off"
+                                                                        min="0" [max]="eor.get('charges').value"
+                                                                        matInput type="number" autocomplete="off"
                                                                         (change)="setTwoNumberDecimal($event)">
                                                                 </td>
                                                                 <td>
@@ -567,7 +568,8 @@
                                                     <div class="value"><button type="button"
                                                             *ngIf="paymentReviews(payIndex)?.controls?.length == 0 || paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length -1).get('void_type_id').value == 3"
                                                             mat-raised-button class="mini-btn filled-gray"
-                                                            (click)="addReviews(payIndex, true, 0)">Add Response</button>
+                                                            (click)="addReviews(payIndex, true, 0)">Add
+                                                            Response</button>
                                                     </div>
                                                 </div>
                                             </mat-card>

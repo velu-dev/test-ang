@@ -329,9 +329,21 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       if (review.get(key).value && typeof (review.get(key).value) == 'string')
         review.get(key).setValue(review.get(key).value.trim())
     });
+    let isEORError = false;
+    review.get('eor_allowance_details').value.map(rev => {
+      if (rev.charges <= rev.eor_allowance) {
+        this.alertService.openSnackBar("EOR Allowance must be less than charge", 'error');
+        isEORError = true;
+        review.markAllAsTouched();
+        return;
+      }
+    })
     if (review.status == "INVALID") {
       this.alertService.openSnackBar("Please fill in the required (*) fields", 'error')
       review.markAllAsTouched();
+      return;
+    }
+    if (isEORError) {
       return;
     }
     formData.append('post_date', review.get('post_date').value ? moment(review.get('post_date').value).format("MM-DD-YYYY") : '');
