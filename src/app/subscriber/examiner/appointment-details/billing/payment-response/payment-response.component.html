@@ -163,8 +163,7 @@
                                         <div fxLayout="row wrap">
                                             <div fxFlex="100">
                                                 <div class="user-detail m-t-10">
-                                                    <table class="table res-table eor-allowance" [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}"
-                                                    >
+                                                    <table class="table res-table eor-allowance">
                                                         <thead>
                                                             <tr>
                                                                 <th>Item</th>
@@ -175,7 +174,7 @@
                                                                 <th>Balance</th>
                                                             </tr>
                                                         </thead>
-                                                        <thead class="bg-white">
+                                                        <thead class="bg-white" [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
                                                             <tr
                                                                 *ngFor="let lineItem of review.get('eor_allowance_details').controls; let eorInd=index">
 
