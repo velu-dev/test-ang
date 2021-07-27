@@ -17,6 +17,7 @@ export class IntercomService {
   BillDiagnosisChange = new Subject<any>();
   BillingDetails = new Subject<any>();
   AttorneyAddressChange = new Subject<boolean>();
+  billLineItemChange = new Subject<any>();
   public examinerPage: any;
   constructor() { }
   public setUser(status): any {
@@ -119,5 +120,7 @@ export class IntercomService {
   public getAttorneyAddressChanges() {
     return this.AttorneyAddressChange.asObservable();
   }
-
+  public getBillLineItem(line_item) {
+    this.billLineItemChange.next(line_item);
+  }
 }

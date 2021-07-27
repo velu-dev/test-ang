@@ -81,7 +81,7 @@ export class BillLineItemComponent implements OnInit {
   ngOnInit() {
     this.getBillLineItem();
     this.subscription = this.intercom.getAttorneyAddressChanges().subscribe((res) => {
-      if(res) {
+      if (res) {
         this.getBillLineItem()
       }
     })
@@ -403,6 +403,7 @@ export class BillLineItemComponent implements OnInit {
       this.billing_line_items[index] = line.data;
       this.billing_line_items[index].modifierList = modifier;
       this.intercom.setBillItemChange(this.billing_line_items[index])
+      this.intercom.getBillLineItem(line.data);
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })

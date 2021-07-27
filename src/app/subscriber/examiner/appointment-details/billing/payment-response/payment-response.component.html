@@ -45,8 +45,7 @@
                         <td><button type="button" [disabled]="is_cancellation"
                                 *ngIf="paymentReviews(payIndex)?.controls?.length == 0 || paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length -1).get('void_type_id').value == 3"
                                 mat-raised-button class="mini-btn filled-gray"
-                                (click)="addReviews(payIndex, true, 0)">Add
-                                Response</button></td>
+                                (click)="addReviews(payIndex, true, 0)">Add Response</button></td>
                     </tr>
 
                     <tr formArrayName="reviews" *ngIf="expandId == payment.get('id').value">
