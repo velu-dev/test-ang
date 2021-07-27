@@ -1620,7 +1620,7 @@ export class AppointmentDetailsComponent implements OnInit {
         return
       });
     } else {
-      this.submitBillableItem()
+      this.billableItemSubmit()
     }
   }
   billableItemSubmit() {
