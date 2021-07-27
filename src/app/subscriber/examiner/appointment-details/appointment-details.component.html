@@ -586,8 +586,14 @@
                             <!-- <input matInput [value]="examinerName" placeholder="Examiner" maxlength="3"
                                 autocomplete="off" [attr.disabled]="disabled ? '' : null"> -->
                             <mat-select formControlName="examiner_id">
-                                <mat-option *ngFor="let examinar of examinarList" (click)="examinarChange(examinar)"
-                                    [value]="examinar.id">
+                                <mat-option>
+                                    <ngx-mat-select-search [formControl]="examinerFilterCtrl"
+                                        placeholderLabel="Find Examiner" i18n-placeholderLabel
+                                        noEntriesFoundLabel="No Matching Examiner Found" i18n-noEntriesFoundLabel>
+                                    </ngx-mat-select-search>
+                                </mat-option>
+                                <mat-option *ngFor="let examinar of filteredExaminerList | async"
+                                    (click)="examinarChange(examinar)" [value]="examinar.id">
                                     {{examinar.first_name}} {{examinar.middle_name}}
                                     {{examinar.last_name}}{{examinar.suffix ? (", "+ examinar.suffix) : ""}}
                                 </mat-option>

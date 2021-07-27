@@ -90,6 +90,8 @@ export class NewBillableItemComponent implements OnInit {
   supplementalOtherIndex: number;
   pastTwoYearDate = moment().subtract(2, 'year');
   regulation = regulation;
+  filteredExaminerList: any = [];
+  examinerFilterCtrl = new FormControl();
   constructor(private formBuilder: FormBuilder,
     private claimService: ClaimService,
     private alertService: AlertService,
@@ -165,6 +167,7 @@ export class NewBillableItemComponent implements OnInit {
       })
     })
     this.isLoading = false;
+
   }
 
   ngOnInit() {
@@ -258,8 +261,27 @@ export class NewBillableItemComponent implements OnInit {
     })
 
     this.claimService.listExaminar().subscribe(res => {
-      this.examinarList = res.data;
+      this.examinarList = res.data;  
+      this.examinerFilterCtrl.setValue(null);
     })
+
+    this.filteredExaminerList = this.examinerFilterCtrl.valueChanges.pipe(
+      startWith(null), 
+      map((searchKey) => {
+        if(searchKey) {
+          searchKey = searchKey.toLowerCase();
+          return this.examinarList.filter((examiner) => 
+            examiner.first_name.toLowerCase().indexOf(searchKey) > -1 || 
+            examiner.middle_name.toLowerCase().indexOf(searchKey) > -1 || 
+            examiner.last_name.toLowerCase().indexOf(searchKey) > -1 || 
+            examiner.suffix.toLowerCase().indexOf(searchKey) > -1
+          )
+        }
+        else {
+          return this.examinarList;
+        }
+      })
+    )
 
     let role = this.cookieService.get('role_id')
     switch (role) {

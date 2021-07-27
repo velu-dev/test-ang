@@ -125,8 +125,14 @@
                     <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Examiner*</mat-label>
                         <mat-select formControlName="examiner_id">
-                            <mat-option *ngFor="let examinar of examinarList" (click)="examinarChange(examinar)"
-                                [value]="examinar.id">
+                            <mat-option>
+                                <ngx-mat-select-search [formControl]="examinerFilterCtrl"
+                                    placeholderLabel="Find Examiner" i18n-placeholderLabel
+                                    noEntriesFoundLabel="No Matching Examiner Found" i18n-noEntriesFoundLabel>
+                                </ngx-mat-select-search>
+                            </mat-option>
+                            <mat-option *ngFor="let examinar of filteredExaminerList | async"
+                                (click)="examinarChange(examinar)" [value]="examinar.id">
                                 {{examinar.first_name}} {{examinar.middle_name}}
                                 {{examinar?.last_name}}{{examinar?.suffix ? (", "+ examinar.suffix) : ""}}
                             </mat-option>
