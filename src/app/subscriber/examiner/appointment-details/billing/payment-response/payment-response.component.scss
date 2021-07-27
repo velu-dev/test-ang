@@ -423,8 +423,8 @@ mat-card-content {
 }
 .eor-allowance.strike {
     tr{
-        th, td {
-            text-decoration: line-through;
+        td {
+            text-decoration: line-through !important;
         }
     }
 }
