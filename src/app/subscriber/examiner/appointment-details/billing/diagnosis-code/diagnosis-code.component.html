@@ -13,7 +13,7 @@
                     <input [formControl]="icdCtrl" [matAutocomplete]="auto" placeholder="Search by code or name">
                     <mat-autocomplete #auto="matAutocomplete">
                         <mat-option (onSelectionChange)="selectICD(icd)" [title]="icd[1]"
-                            *ngFor="let icd of filteredICD" [value]="icd[1]" [disabled]="is_cancellation">
+                            *ngFor="let icd of filteredICD" [value]="icd[1]" [disabled]="is_cancellation || isPaymentresponseCreated">
                             {{icd[0] + " "+ icd[1]}}
                         </mat-option>
                         <mat-option disabled *ngIf="icdCtrl?.value && filteredICD?.length == 0">
@@ -42,7 +42,7 @@
                                     <span *ngIf="column == 'code'">{{element?.code}}</span>
                                     <span *ngIf="column == 'name'">{{element?.name}}</span>
                                     <span *ngIf="column == 'action'">
-                                        <a class="text-danger" *ngIf="!is_cancellation"
+                                        <a class="text-danger" *ngIf="!is_cancellation && !isPaymentresponseCreated"
                                             (click)="removeICD(element)">Remove</a>
                                     </span>
                                 </div>

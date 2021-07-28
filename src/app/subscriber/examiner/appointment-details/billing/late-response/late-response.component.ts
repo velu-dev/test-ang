@@ -82,12 +82,10 @@ export class LateResponseComponent implements OnInit, OnDestroy {
     this.lateRes().at(index + 1).get('showStatus').patchValue(true)
     this.lateRes().at(index + 1).get('previous_response_id').patchValue(group.get('id').value)
 
-    console.log(this.lateRes().at(index + 1))
   }
 
   getLateRes() {
     this.billingService.getLateResponse(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, +this.billType).subscribe(late => {
-      console.log(late)
       this.lateForm = this.fb.group({
         lateRes: this.fb.array([]),
       })
@@ -103,16 +101,13 @@ export class LateResponseComponent implements OnInit, OnDestroy {
 
       }
     }, error => {
-      console.log(error)
     })
   }
 
   getLateResStatus() {
     this.billingService.getLateResBillStatus(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, +this.billType).subscribe(lateStatus => {
-      console.log(lateStatus)
       this.billStatusList = lateStatus.data;
     }, error => {
-      console.log(error)
     })
   }
 
@@ -132,7 +127,6 @@ export class LateResponseComponent implements OnInit, OnDestroy {
       previous_response_id: group.get('previous_response_id').value
     }
     this.billingService.postLateResponse(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, details).subscribe(lateRes => {
-      console.log(lateRes);
       this.lateResData = lateRes.data;
       this.lateForm = this.fb.group({
         lateRes: this.fb.array([]),
@@ -146,7 +140,6 @@ export class LateResponseComponent implements OnInit, OnDestroy {
 
       }
     }, error => {
-      console.log(error)
     })
   }
 
