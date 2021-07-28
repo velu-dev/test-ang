@@ -66,6 +66,12 @@ export class DiagnosisCodeComponent implements OnInit {
   ngOnInit() {
     this.intercom.getPaymentReview().subscribe(res => {
       this.isPaymentresponseCreated = res > 0 ? true : false;
+      if(this.isPaymentresponseCreated){
+        this.icdCtrl.reset();
+        this.icdCtrl.disable();
+      } else {
+        this.icdCtrl.enable()
+      }
     })
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
