@@ -62,7 +62,13 @@ export class DiagnosisCodeComponent implements OnInit {
   ngAfterContentInit() {
     this.is_cancellation = this.cancellation;
   }
+  isPaymentresponseCreated: boolean = false;
   ngOnInit() {
+    this.intercom.getPaymentReview().subscribe(res => {
+      if (res > 0) {
+        this.isPaymentresponseCreated = true;
+      }
+    })
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (this.isMobile) {
