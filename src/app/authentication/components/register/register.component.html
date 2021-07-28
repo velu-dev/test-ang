@@ -27,11 +27,12 @@
                 <mat-label>Middle Name/MI</mat-label>
                 <input matInput placeholder="Middle Name/MI" formControlName="middleInitial" autocomplete="off">
               </mat-form-field>
-              <div fxFlex="100" class="m-b-20" >  
-                <mat-radio-group class="" formControlName="orgStatus" (change)="registerForm.get('companyName').reset()">
+              <div fxFlex="100" class="m-b-20">
+                <mat-radio-group class="" formControlName="orgStatus"
+                  (change)="registerForm.get('companyName').reset()">
                   <mat-radio-button value="true" checked>Organization</mat-radio-button>
                   <mat-radio-button value="false" class="p-l-30">Individual</mat-radio-button>
-              </mat-radio-group>
+                </mat-radio-group>
               </div>
               <mat-form-field appearance="outline" fxFlex="100" *ngIf="registerForm.value.orgStatus == 'true'">
                 <mat-label>Organization Name*</mat-label>
@@ -40,7 +41,8 @@
               </mat-form-field>
               <mat-form-field appearance="outline" fxFlex="100">
                 <mat-label>Email ID*</mat-label>
-                <input matInput placeholder="Email ID" formControlName="email" autocomplete="off" onfocus="this.removeAttribute('readonly');" readonly>
+                <input matInput placeholder="Email ID" formControlName="email" autocomplete="off"
+                  onfocus="this.removeAttribute('readonly');" readonly>
                 <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidemail}}</mat-error>
               </mat-form-field>
               <mat-form-field class="p-r-5 p-r-m-0" appearance="outline" fxFlex="100" fxFlex.md="50" fxFlex.lg="50"
@@ -60,7 +62,7 @@
                   formControlName="confirmPassword">
                 <mat-icon matSuffix class="check-password" (click)="togglePasswordFieldType()">
                   {{passwordFieldType ? 'visibility_off' : 'visibility'}}</mat-icon>
-                  <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidpassword}}</mat-error>
+                <mat-error *ngIf="isSubmitted">{{errorMessages?.entervalidpassword}}</mat-error>
               </mat-form-field>
               <div class="re-captcha-error">
                 <re-captcha formControlName="captcha" name="captcha" required></re-captcha>
@@ -68,12 +70,17 @@
                   *ngIf="isSubmitted && (formControls.captcha.errors || !formControls.captcha.value)">
                   {{errorMessages?.imnotrobot}}</mat-error>
               </div>
-              <div class="p-t-5 p-b-5 checkbox">
+              <!-- <div class="p-t-5 p-b-5 checkbox">
                 <mat-checkbox name="policy" formControlName="policy"> I agree with the terms and conditions
                 </mat-checkbox>
                 <mat-error *ngIf="isSubmitted && (formControls.policy.errors || !formControls.policy.value)"
                   class="note">{{errorMessages?.agreeterms}}
                 </mat-error>
+              </div> -->
+              <div class="p-t-5 p-b-5 agreeterms-info">
+                <span class="p-0 m-0">By clicking Sign Up you agree to the
+                  <a class="terms-link">Simplexam.com</a> Terms of Service.
+                </span>
               </div>
 
               <button mat-raised-button color="primary" type="submit" class="authentication-btn">Sign Up</button>
