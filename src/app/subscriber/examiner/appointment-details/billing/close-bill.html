@@ -12,7 +12,9 @@
                     <div class="main-title p-b-3">Reason for bill close</div>
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Bill Close Reason *</mat-label>
-                        <input matInput formControlName="close_bill_reason" placeholder="Bill Close Reason">
+                        <textarea matInput formControlName="close_bill_reason" placeholder="Bill Close Reason"
+                            autocomplete="off" cdkTextareaAutosize cdkAutosizeMinRows="4"
+                            cdkAutosizeMaxRows="4"></textarea>
                         <mat-error>Please enter Bill Close Reason</mat-error>
                     </mat-form-field>
                 </div>
