@@ -119,11 +119,11 @@
                                                 '1.2-2'}}</span>
                                         </td>
 
-                                        <td class="no-wrap-td" *ngIf="!isPaymentresponseCreated">
-                                            <a class="text-success" (click)="doneRow(group,i)">
+                                        <td class="no-wrap-td">
+                                            <a [ngClass]="{'disableatag': isPaymentresponseCreated}" class="text-success" (click)="doneRow(group,i)">
                                                 Save
                                             </a>
-                                            <a class="text-danger m-l-10" (click)="cancelRow(group,i)">
+                                            <a [ngClass]="{'disableatag': isPaymentresponseCreated}" class="text-danger m-l-10" (click)="cancelRow(group,i)">
                                                 Cancel
                                             </a>
                                         </td>
@@ -156,13 +156,15 @@
                                             {{group.get('charge').value > -1 ? '$ ' : ''}}{{(group.get('charge').value)
                                             | number : '1.2-2'}}
                                         </td>
-                                        <td class="no-wrap-td" *ngIf="!is_cancellation && !isPaymentresponseCreated">
+                                        <td class="no-wrap-td" *ngIf="!is_cancellation">
 
-                                            <a class="text-success" (click)="editRow(group,i)">
+                                            <a [ngClass]="{'disableatag': isPaymentresponseCreated}"
+                                                class="text-success" (click)="editRow(group,i)">
                                                 Edit
                                             </a>
 
-                                            <a *ngIf="i != 0" class="text-danger m-l-10" (click)="deleteRow(i,group)">
+                                            <a [ngClass]="{'disableatag': isPaymentresponseCreated}" *ngIf="i != 0"
+                                                class="text-danger m-l-10" (click)="deleteRow(i,group)">
                                                 Remove
                                             </a>
                                         </td>
@@ -329,13 +331,15 @@
                                                             '1.2-2'}}</span>
                                                     </div>
                                                 </div>
-                                                <div class="flex" *ngIf="!isPaymentresponseCreated">
+                                                <div class="flex">
                                                     <div class="bill-property">Action </div>
                                                     <div class="editable">
-                                                        <a class="text-success" (click)="doneRow(group,i)">
+                                                        <a [ngClass]="{'disableatag': isPaymentresponseCreated}"
+                                                            class="text-success" (click)="doneRow(group,i)">
                                                             Save
                                                         </a>
-                                                        <a class="text-danger m-l-10" (click)="cancelRow(group,i)">
+                                                        <a [ngClass]="{'disableatag': isPaymentresponseCreated}"
+                                                            class="text-danger m-l-10" (click)="cancelRow(group,i)">
                                                             Cancel
                                                         </a>
                                                     </div>
@@ -403,8 +407,10 @@
                                                 <div class="flex">
                                                     <div class="bill-property">Action </div>
                                                     <div class="value" *ngIf="is_cancellation">
-                                                        <a class="text-success" (click)="editRow(group,i)">Edit</a>
-                                                        <a *ngIf="i != 0" class="text-danger m-l-10"
+                                                        <a [ngClass]="{'disableatag': isPaymentresponseCreated}"
+                                                            class="text-success" (click)="editRow(group,i)">Edit</a>
+                                                        <a [ngClass]="{'disableatag': isPaymentresponseCreated}"
+                                                            *ngIf="i != 0" class="text-danger m-l-10"
                                                             (click)="deleteRow(i,group)">Remove</a>
                                                     </div>
                                                 </div>
