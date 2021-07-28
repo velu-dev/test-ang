@@ -125,7 +125,6 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
       // this.animal = result;
     });
   }
@@ -164,7 +163,6 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       })
       this.intercom.PaymentReview(responseCount);
       this.paymentRes.map((pay, i) => {
-        // console.log(pay, i)
         this.addPayment();
         this.openElement(pay.id)
         let initPayment = {
@@ -198,13 +196,11 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
               item: eor.item_description, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charge, eor_allowance: Number(eor.eor_allowance), payment_amount: eor.payment_amount
             }))
           })
-          // console.log(review)
           this.paymentReviews(i).at(ind).patchValue(review);
         })
 
       })
     }, error => {
-      console.log(error)
     })
   }
   expandId: any;
@@ -308,6 +304,13 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
         }))
       })
     }
+    let responseCount = 0;
+    this.payments().value.map(pay => {
+      pay.reviews.map(rev => {
+        responseCount = responseCount + 1;
+      })
+    })
+    this.intercom.PaymentReview(responseCount);
     this.expandId = null;
     this.openElement(this.payments().at(0).get('id').value);
   }
@@ -326,8 +329,6 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
         }
       }
     })
-    // console.log(payment.value)
-    // console.log(review.value)
     if (reviewIndex > 0 && this.paymentReviews(payIndex).at(this.paymentReviews(payIndex).controls.length - 2).get('void_type_id').value != 3) {
       review.get('void_type_id').setValidators([Validators.required])
       review.get('void_reason').setValidators([Validators.required])
@@ -337,7 +338,6 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       if (!review.get('file').value) {
         review.get('file').setValidators([])
         review.get('file').updateValueAndValidity();
-        //console.log(review.get('file').value);
       } else {
         review.get('eor_file_id').patchValue('')
       }
@@ -372,7 +372,6 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     formData.append('eor_file_id', review.get('eor_file_id').value);
     formData.append('response_type_id', review.get('response_type_id').value);
     formData.append('other_type_reason', review.get('other_type_reason').value);
-    console.log(review.get('eor_allowance_details').value);
     formData.append('eor_allowance_details', JSON.stringify(review.get('eor_allowance_details').value));
 
 
@@ -389,7 +388,6 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       this.paymentRes = pay.data;
       this.getPaymentStatus.emit(this.paymentRes ? this.paymentRes[0] : null)
       this.paymentRes.map((pay, i) => {
-        // console.log(pay, i)
         this.addPayment();
         //this.openElement(i)
         let initPayment = {
@@ -441,6 +439,13 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
 
   removeReview(payI, reviewI) {
     this.paymentReviews(payI).removeAt(reviewI)
+    let responseCount = 0;
+    this.payments().value.map(pay => {
+      pay.reviews.map(rev => {
+        responseCount = responseCount + 1;
+      })
+    })
+    this.intercom.PaymentReview(responseCount);
   }
 
   editResponse(payment, review, payi, reviewi) {
@@ -462,11 +467,9 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     this.paymentReviews(payi).at(reviewi + 1).disable();
     this.paymentReviews(payi).at(reviewi + 1).get('void_type_id').enable();
     this.paymentReviews(payi).at(reviewi + 1).get('void_reason').enable();
-    console.log(this.paymentReviews(payi).at(reviewi))
   }
 
   changeVoidType(payment, review, payIndex, reviewIndex, event) {
-    // console.log(event.value);
     if (event.value == 3) { //Void Payment
       review.get('payment_amount').patchValue(0);
       review.disable();
@@ -479,12 +482,10 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     if (event.value == 1) { //Change Payment
       review.enable();
     }
-    // console.log(review)
     this.changeResponseType(payment, review, payIndex, reviewIndex, { value: review.value.response_type_id })
   }
 
   changeResponseType(payment, review, payIndex, reviewIndex, event) {
-    console.log(event.value);
 
     if (event.value == 3 || event.value == 5) {
       review.get('payment_amount').setValidators([Validators.min(0)]); review.get('payment_amount').updateValueAndValidity();
@@ -517,7 +518,6 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       review.get('other_type_reason').patchValue('')
     }
     review.updateValueAndValidity();
-    console.log(review)
   }
   openUploadPopUp(isMultiple, type, data?, fileSize?) {
     const dialogRef = this.dialog.open(FileUploadComponent, {
@@ -560,7 +560,6 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   download(element) {
     this.billingService.downloadOndemandDocuments({ file_url: element.file_url }).subscribe(res => {
       this.alertService.openSnackBar("File downloaded successfully", "success");
-      console.log(element)
       saveAs(res.signed_file_url, element.file_name);
     })
   }
@@ -623,7 +622,6 @@ export class CloseBill {
   }
 
   closeBill() {
-    // console.log(this.closeBillForm.value)
     Object.keys(this.closeBillForm.controls).forEach((key) => {
       if (this.closeBillForm.get(key).value && typeof (this.closeBillForm.get(key).value) == 'string')
         this.closeBillForm.get(key).setValue(this.closeBillForm.get(key).value.trim())
@@ -632,7 +630,6 @@ export class CloseBill {
       return;
     }
     this.billingService.closeBill(this.data.bill_id, this.data.claim_id, this.data.billable_item_id, this.closeBillForm.value).subscribe(close => {
-      //console.log(close)
       this.alertService.openSnackBar(close.message, "success");
       this.dialogRef.close();
     }, error => {
