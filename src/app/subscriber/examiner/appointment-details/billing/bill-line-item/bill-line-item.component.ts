@@ -77,8 +77,13 @@ export class BillLineItemComponent implements OnInit {
     });
 
   }
-
+  isPaymentresponseCreated: boolean = false;
   ngOnInit() {
+    this.intercom.getPaymentReview().subscribe(res => {
+      if (res > 0) {
+        this.isPaymentresponseCreated = true;
+      }
+    })
     this.getBillLineItem();
     this.subscription = this.intercom.getAttorneyAddressChanges().subscribe((res) => {
       if (res) {

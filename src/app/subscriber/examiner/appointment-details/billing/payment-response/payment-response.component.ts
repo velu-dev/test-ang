@@ -158,6 +158,11 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       })
       this.paymentRes = payment.data;
       this.getPaymentStatus.emit(this.paymentRes ? this.paymentRes[0] : null)
+      let responseCount = 0;
+      payment.data.map(pay => {
+        responseCount = pay.payment_response.length + responseCount;
+      })
+      this.intercom.PaymentReview(responseCount);
       this.paymentRes.map((pay, i) => {
         // console.log(pay, i)
         this.addPayment();
@@ -373,7 +378,11 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
 
     formData.append('file', review.get('file').value);
     this.billingService.postPaymentResponse(this.paramsId.billingId, this.paramsId.claim_id, this.paramsId.billId, formData).subscribe(pay => {
-      // console.log(pay);
+      let responseCount = 0;
+      pay.data.map(res => {
+        responseCount = responseCount + res.payment_response.length;
+      })
+      this.intercom.PaymentReview(responseCount);
       this.paymentForm = this.fb.group({
         payments: this.fb.array([]),
       })
@@ -405,7 +414,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
           if (ind > 0) review.void_reason_id = this.paymentReviews(i).at(ind - 1).get('id').value;
           review.showStatus = false;
           // if (review.eor_allowance_details.length == 0) {
-            this.addReviews(i, false);
+          this.addReviews(i, false);
           // }
           review.eor_allowance_details.map((eor, index) => {
             // this.addReviews(i, false);
