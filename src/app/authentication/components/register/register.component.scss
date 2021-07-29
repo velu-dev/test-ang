@@ -45,12 +45,8 @@
       }
       .agreeterms-info {
         a.terms-link {
-          color: #00b0e0;
-          text-decoration: none;
+          color: $ternary;
           cursor: pointer;
-          span {
-            color: #000000de;
-          }
         }
       }
     }
