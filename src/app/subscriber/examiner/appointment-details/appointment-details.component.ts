@@ -243,14 +243,14 @@ export class AppointmentDetailsComponent implements OnInit {
     })
 
     this.filteredExaminerList = this.examinerFilterCtrl.valueChanges.pipe(
-      startWith(null), 
+      startWith(null),
       map((searchKey) => {
-        if(searchKey) {
+        if (searchKey) {
           searchKey = searchKey.toLowerCase();
-          return this.examinarList.filter((examiner) => 
-            examiner.first_name.toLowerCase().indexOf(searchKey) > -1 || 
-            examiner.middle_name.toLowerCase().indexOf(searchKey) > -1 || 
-            examiner.last_name.toLowerCase().indexOf(searchKey) > -1 || 
+          return this.examinarList.filter((examiner) =>
+            examiner.first_name.toLowerCase().indexOf(searchKey) > -1 ||
+            examiner.middle_name.toLowerCase().indexOf(searchKey) > -1 ||
+            examiner.last_name.toLowerCase().indexOf(searchKey) > -1 ||
             examiner.suffix.toLowerCase().indexOf(searchKey) > -1
           )
         }
@@ -329,7 +329,6 @@ export class AppointmentDetailsComponent implements OnInit {
   }
   loadActivity() {
     this.claimService.seedDocumentData("submitting_party_seed_data", this.claim_id, this.billableId).subscribe(res => {
-      console.log(res.data)
       this.SubmittingParty = res.data;
     })
 
@@ -395,7 +394,6 @@ export class AppointmentDetailsComponent implements OnInit {
         // } else {
         //   this.isPastDate = false
         // }
-        // console.log("isPastDate", this.isPastDate)
         // this.isExamTypeChanged = bills.data.is_exam_type_changed;
         this.isChecked = bills.data.exam_type.is_psychiatric;
         // this.claimService.getClaim(this.claim_id).subscribe(claim => {
@@ -437,7 +435,6 @@ export class AppointmentDetailsComponent implements OnInit {
         }
         this.billableData.documents_received = this.billableData.documents_received ? this.billableData.documents_received : []
         this.billable_item.patchValue(bills.data);
-        console.log(this.billable_item.value)
         this.changeDateType(bills.data.appointment.appointment_scheduled_date_time)
         if (bills.data.appointment.is_virtual_location) {
           this.billable_item.patchValue({
@@ -446,27 +443,21 @@ export class AppointmentDetailsComponent implements OnInit {
             }
           })
         }
-        console.log(this.supplementalItems)
         const controlArray = Array(this.supplementalItems.length).fill(false);
         this.billableData.documents_received.map((doc, index) => {
-          console.log(doc)
           let ind = this.supplementalItems.findIndex(docs => docs.name == doc);
-          console.log(ind)
           // if (ind != -1) {
           controlArray[ind] = (true)
           // }
         })
-        console.log(controlArray)
         let disableStatus = this.billable_item.get('documents_received').disabled
         this.billable_item.setControl('documents_received', this.formBuilder.array(controlArray))
-        console.log(this.billable_item.value)
         if (disableStatus) {
           this.billable_item.get('documents_received').disable()
         }
 
         // })
         this.examinerService.getAllExamination(this.claim_id, this.billableId).subscribe(response => {
-          console.log(response)
           if (response && response.data && response.data.exam_type_code.includes('IME')) {
             this.isIME = true
           }
@@ -612,7 +603,6 @@ export class AppointmentDetailsComponent implements OnInit {
             })
           }
         }, error => {
-          console.log(error)
           this.dataSource = new MatTableDataSource([]);
         })
       })
@@ -632,7 +622,6 @@ export class AppointmentDetailsComponent implements OnInit {
       this.editedDocumentIndex = index;
       this.documentDeclared = documents;
     }
-    console.log(this.documentDeclared, documents, this.isEditDocument)
   }
   documentDeclared = { id: null, agent_type: "", no_of_pages_declared: "", date_received: "" }
   createDocumentsDeclared() {
@@ -666,7 +655,6 @@ export class AppointmentDetailsComponent implements OnInit {
       data: { title: 'Pages Declared', address: true, name: "remove" }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result)
       if (result['data']) {
         this.claimService.removeDeclaredDocument(group.get('id').value, { claim_id: this.claim_id, billable_item_id: this.billableId }).subscribe(res => {
           this.alertService.openSnackBar('Documents declared details removed successfully!', "success")
@@ -933,7 +921,6 @@ export class AppointmentDetailsComponent implements OnInit {
     })
     this.claimService.seedData("supplemental_item_received").subscribe(supp => {
       this.supplementalItems = supp.data;
-      console.log(supp)
       this.supplementalOtherIndex = this.supplementalItems.findIndex(docs => docs.name.toLowerCase() == 'other')
       const controlArray = this.supplementalItems.map(c => new FormControl(false));
       this.billable_item.setControl('documents_received', this.formBuilder.array(controlArray))
@@ -1016,7 +1003,6 @@ export class AppointmentDetailsComponent implements OnInit {
       if (group.get(key).value && typeof (group.get(key).value) == 'string')
         group.get(key).setValue(group.get(key).value.trim())
     });
-    console.log(group.value)
     if (group.value.no_of_pages_declared || group.value.agent_type || group.value.date_received) {
       group.get('no_of_pages_declared').setValidators([Validators.required, Validators.min(1), Validators.max(99999999)])
       group.get('agent_type').setValidators([Validators.required])
@@ -1109,7 +1095,6 @@ export class AppointmentDetailsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        console.log(result.files)
         group.get('file_name').patchValue(null);
         group.get('file').patchValue(null);
         group.get('file_name').patchValue(result.files[0].name);
@@ -1506,7 +1491,7 @@ export class AppointmentDetailsComponent implements OnInit {
         examiner_service_location_id: null
       }
     })
-    if (this.examinerId != examinar.id) {
+    if (examinar.id) {
       this.claimService.getExaminarAddress(examinar.id).subscribe(res => {
         this.examinarAddress = res['data'];
         res.data.map(address => {
@@ -1580,6 +1565,18 @@ export class AppointmentDetailsComponent implements OnInit {
     this.getDisabledFields('bill');
     this.isEditBillableItem = true;
     this.billable_item.enable();
+    let date = this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value;
+    if (date) {
+      if (moment(date).isBefore(moment(new Date()))) {
+        this.isAppointmentFuture = true;
+        this.billable_item.get('appointment').get('examiner_service_location_id').setValidators([Validators.compose([Validators.required])]);
+        this.billable_item.get('appointment').get('examiner_service_location_id').updateValueAndValidity();
+      } else {
+        this.isAppointmentFuture = true;
+        this.billable_item.get('appointment').get('examiner_service_location_id').setValidators([]);
+        this.billable_item.get('appointment').get('examiner_service_location_id').updateValueAndValidity();
+      }
+    }
     this.examinationStatusForm.patchValue(this.examinationDetails.appointments);
     if (this.billableData.isExaminerDisabled) {
       this.billable_item.get('appointment').get('examiner_id').enable();
@@ -1668,7 +1665,6 @@ export class AppointmentDetailsComponent implements OnInit {
     if (this.examinationDetails.bill_id) {
       if (this.billableData.exam_type.exam_procedure_type_id != this.billable_item.get(['exam_type', 'exam_procedure_type_id']).value) {
         this.alertService.openSnackBar("Billing already created for this billable Item", "error");
-        console.log("rerere1")
         return;
       }
     }
@@ -1780,7 +1776,6 @@ export class AppointmentDetailsComponent implements OnInit {
           dialogRef.afterClosed().subscribe(result => {
             return
           })
-          console.log("rerere11")
           return
         }
       }
@@ -1801,7 +1796,6 @@ export class AppointmentDetailsComponent implements OnInit {
         .map((v, i) => v ? this.supplementalItems[i].name : null)
         .filter(v => v !== null);
     }
-    console.log(billableData)
     if (billableData.appointment.is_virtual_location) {
       this.billable_item.patchValue({
         appointment: {
@@ -1813,14 +1807,12 @@ export class AppointmentDetailsComponent implements OnInit {
     billableData.exam_type.is_psychiatric = this.isChecked;
     billableData.appointment.duration = billableData.appointment.duration == "" ? null : billableData.appointment.duration;
     // billableData.appointment.examiner_id = this.examinerId;
-    console.log(selectedOrderIds)
     billableData.documents_received = selectedOrderIds;
     billableData.id = this.examinationDetails.appointments.id
     billableData.intake_call.call_date = this.billable_item.get(['intake_call', 'call_date']).value ? moment(this.billable_item.get(['intake_call', 'call_date']).value).format("MM-DD-YYYY") : null;
     billableData.documents_received = selectedOrderIds;
     billableData['is_appointment_date_change'] = this.is_appointment_date_change;
     billableData['claimant_id'] = this.billableData.claimant_id;
-    console.log(billableData);
     // return
     this.examinerService.updateBillableItem(this.billableData.id, billableData).subscribe(res => {
       this.isEditBillableItem = false;
@@ -2018,10 +2010,8 @@ export class AppointmentDetailsComponent implements OnInit {
     this.alertService.openSnackBar("File downloaded successfully", "success");
   }
   // openPDF(element) {
-  //   console.log(element);
   //   // return
   //   this.examinerService.downloadOndemandDocuments({ document_id: element.id, file_url: element.exam_report_file_url }).subscribe(res => {
-  //     // console.log(res.signed_file_url);
   //     const file_name = element.original_file_name && element.original_file_name != '' ? element.original_file_name : element.file_name;
   //     const dialogRef = this.dialog.open(PDFViewerComponent, {
   //       width: '1000px',
@@ -2122,7 +2112,6 @@ export class AppointmentDetailsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
-        console.log(data);
         if (data.documents_declared_id) {
           this.claimService.removeDocumentDeclared(data.documents_declared_id, data.id).subscribe(res => {
             let i = 0;
