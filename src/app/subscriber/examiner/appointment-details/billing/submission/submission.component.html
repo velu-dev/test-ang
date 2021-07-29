@@ -199,7 +199,7 @@
 <div class="ondamand-actions m-t-30 m-b-30" fxLayout="row wrap">
     <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-left">
         <button [disabled]="is_cancellation" mat-stroked-button class="filled-lightgray huge-btn m-b-5 font-weight-600"
-            (click)="VMC1500Submit()">View
+            *ngIf="billType === 1" (click)="VMC1500Submit()">View
             CMS
             1500</button>
 
