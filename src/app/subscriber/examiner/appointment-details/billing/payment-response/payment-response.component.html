@@ -85,10 +85,10 @@
                                             </div>
                                             <div class="grid-list">
                                                 <div>Deposit Date</div>
-                                                <!-- <div *ngIf="last && !review.get('deposit_date').value">
+                                                <div *ngIf="last && !review.get('deposit_date').value">
                                                      <input *ngIf="isEditDepositdate" type="date"
                                                         [(ngModel)]="depositionDate"
-                                                        [ngModelOptions]="{standalone: true}" [max]="review.get('effective_date').value"/>
+                                                        [ngModelOptions]="{standalone: true}" [min]="review.get('effective_date').value"/>
                                                     <mat-icon *ngIf="!isEditDepositdate"
                                                         (click)="isEditDepositdate = !isEditDepositdate"> edit
                                                     </mat-icon>
@@ -98,7 +98,7 @@
                                                     </mat-icon>
                                                     <mat-icon *ngIf="isEditDepositdate" (click)="clearDepositDate()">
                                                         close </mat-icon> 
-                                                </div>-->
+                                                </div>
                                                 <div class="value" *ngIf="review.get('deposit_date').value">
                                                     {{review.get('deposit_date').value |
                                                     date:'MM-dd-yyyy'}}</div>
