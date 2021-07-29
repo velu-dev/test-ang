@@ -41,7 +41,7 @@ export class RegisterComponent implements OnInit {
       password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$*.{}?"!@#%&/,><\':;|_~`^\\]\\[\\)\\(]).{8,}'), Validators.minLength(8)])],
       confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$*.{}?"!@#%&/,><\':;|_~`^\\]\\[\\)\\(]).{8,}'), Validators.minLength(8)])],
       captcha: ['', Validators.required],
-      policy: ['', Validators.required],
+      // policy: ['', Validators.required],
       orgStatus: ['true',Validators.required]
     });
   }
@@ -76,9 +76,10 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    if (!this.registerForm.value.policy) {
-      return;
-    }
+    // if (!this.registerForm.value.policy) {
+    //   return;
+    // }
+
     this.spinnerService.show();
     //role id set role_id = 1-admin, 2-subscriber
     let signUpDetails = { first_name: this.registerForm.value.firstName, middle_name: this.registerForm.value.middleInitial, last_name: this.registerForm.value.lastName, sign_in_email_id: this.registerForm.value.email.toLowerCase(), company_name: this.registerForm.value.companyName }
