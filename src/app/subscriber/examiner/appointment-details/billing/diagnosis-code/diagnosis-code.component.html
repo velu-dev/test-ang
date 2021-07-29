@@ -42,7 +42,7 @@
                                     <span *ngIf="column == 'code'">{{element?.code}}</span>
                                     <span *ngIf="column == 'name'">{{element?.name}}</span>
                                     <span *ngIf="column == 'action'">
-                                        <a class="text-danger" *ngIf="!is_cancellation && !isPaymentresponseCreated"
+                                        <a [ngClass]="{'disableatag': isPaymentresponseCreated}" class="text-danger" *ngIf="!is_cancellation"
                                             (click)="removeICD(element)">Remove</a>
                                     </span>
                                 </div>
