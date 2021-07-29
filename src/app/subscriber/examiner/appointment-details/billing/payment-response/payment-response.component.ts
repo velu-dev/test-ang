@@ -80,7 +80,8 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   subscription: any;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   @Input() cancellation: boolean;
-
+  isEditDepositdate: boolean = false;
+  depositionDate: any;
   constructor(public dialog: MatDialog, private fb: FormBuilder, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService, public billingService: BillingService, private intercom: IntercomService) {
     this.isHandset$.subscribe(res => {
@@ -314,7 +315,15 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     this.expandId = null;
     this.openElement(this.payments().at(0).get('id').value);
   }
-
+  addDepositDate(payment, review, payIndex, reviewIndex) {
+    console.log(payment, review, payIndex, reviewIndex)
+    review.get('deposit_date').patchValue(this.depositionDate);
+    this.saveReview(payment, review, payIndex, reviewIndex);
+  }
+  clearDepositDate() {
+    this.isEditDepositdate = false;
+    this.depositionDate = "";
+  }
   saveReview(payment: FormGroup, review: FormGroup, payIndex, reviewIndex) {
     let isEORError = false;
     review.get('eor_allowance_details').value.map((rev, ind) => {
