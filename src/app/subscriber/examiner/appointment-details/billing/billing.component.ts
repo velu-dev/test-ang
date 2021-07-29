@@ -686,12 +686,15 @@ export class billingOnDemandDialog {
         data: {
           title: "Recipients",
           type: 'info',
-          ok: true,
+          proceed: true,
+          cancel: true,
           message: 'Only the Insurance Company requires the request for Second Bill Review'
         }
       });
       dialogRef.afterClosed().subscribe(res => {
-        this.billondemand(data);
+        if(res.data) {
+          this.billondemand(data);
+        }
       });
     } else {
       this.billondemand(data);
@@ -811,12 +814,13 @@ export class billingOnDemandDialog {
       width: "500px",
       data: {
         title: "Recipients",
-        type: 'info',
-        ok: true,
+        type: 'info',        
+        proceed: true,
+        cancel: true,
         message: 'Only the Insurance Company requires the request for Second Bill Review'
       }
     });
-    dialogRef.afterClosed().subscribe(() => callbackAfterClosed());
+    dialogRef.afterClosed().subscribe((res) => res.data ? callbackAfterClosed() : null);
   }
 
 }
