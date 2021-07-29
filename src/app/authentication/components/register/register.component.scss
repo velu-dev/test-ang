@@ -43,6 +43,16 @@
         width: 100%;
         padding-left: 25px;
       }
+      .agreeterms-info {
+        a.terms-link {
+          color: #00b0e0;
+          text-decoration: none;
+          cursor: pointer;
+          span {
+            color: #000000de;
+          }
+        }
+      }
     }
     .new-account {
       @include switched-link;

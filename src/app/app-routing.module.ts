@@ -5,6 +5,7 @@ import { FullLayoutComponent } from './layout/full-layout/full-layout.component'
 import { CommonLayoutComponent } from './layout/common-layout/common-layout.component';
 import { AuthGuard } from './shared/guard/auth.guard';
 import { SessionGuard } from './shared/guard/session.guard';
+import { TermsOfServiceComponent } from './shared/components/_layouts/terms-of-service/terms-of-service.component';
 
 
 const routes: Routes = [
@@ -32,6 +33,10 @@ const routes: Routes = [
   //   canActivate: [AuthGuard],
   //   loadChildren: () => import('./vendor/vendor.module').then(m => m.VendorModule)
   // }, 
+  {
+    path: "terms-of-service",
+    component: TermsOfServiceComponent
+  },
   {
     path: "**",
     component: NotFoundComponent
