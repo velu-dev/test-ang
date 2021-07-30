@@ -252,27 +252,29 @@ mat-card-content {
                                         word-break: break-all;
                                     }
                                 }
-                                .deposit-date {
-                                    padding: 0 !important;
-                                    mat-icon {
-                                        cursor: pointer;
-                                    }
-                                    input[type=date] {
-                                        width: calc(100% - 65px);
-                                        border: 2px solid $light-gray;
-                                        padding: 3px;
-                                        border-radius: 3px;
-                                        vertical-align: bottom;
-                                    }
-                                    input[type=date]:disabled {
-                                        border :2px solid $yellow;
-                                    }
+                                // .deposit-date {
+                                //     padding: 0 !important;
+                                //     mat-icon {
+                                //         cursor: pointer;
+                                //     }
+                                //     input[type=date] {
+                                //         width: calc(100% - 75px);
+                                //         border: 2px solid $light-gray;
+                                //         padding: 3px;
+                                //         border-radius: 3px;
+                                //         vertical-align: bottom;
+                                //     }
+                                //     input[type=date]:disabled {
+                                //         border :2px solid $yellow;
+                                //         width: calc(100% - 45px);
+                                //         padding: 3px;
+                                //     }
                                    
-                                    input[type=date]:disabled::-webkit-calendar-picker-indicator {
-                                        display: none;
-                                        -webkit-appearance: none;
-                                    }
-                                }
+                                //     input[type=date]:disabled::-webkit-calendar-picker-indicator {
+                                //         display: none;
+                                //         -webkit-appearance: none;
+                                //     }
+                                // }
                             }
                             // div {
                             //     // padding: 5px 0;
