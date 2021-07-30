@@ -343,14 +343,6 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     review.get('eor_allowance_details').value.map((rev, ind) => {
       if (review.get('void_type_id').value == 3) {
         review.get('eor_allowance_details').value[ind].eor_allowance = null;
-      } 
-      else {
-        if (rev.charges < rev.eor_allowance) {
-          this.alertService.openSnackBar("EOR Allowance must be less than charge", 'error');
-          isEORError = true;
-          review.markAllAsTouched();
-          return;
-        }
       }
     })
     if (reviewIndex > 0 && this.paymentReviews(payIndex).at(this.paymentReviews(payIndex).controls.length - 2).get('void_type_id').value != 3) {
