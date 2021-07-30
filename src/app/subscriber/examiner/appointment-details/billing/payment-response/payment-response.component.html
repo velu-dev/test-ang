@@ -85,19 +85,21 @@
                                             </div>
                                             <div class="grid-list">
                                                 <div>Deposit Date</div>
-                                                <div *ngIf="last && !review.get('deposit_date').value">
+                                                <div *ngIf="last && !review.get('deposit_date').value" class="deposit-date">
                                                      <input *ngIf="isEditDepositdate" type="date"
                                                         [(ngModel)]="depositionDate"
                                                         [ngModelOptions]="{standalone: true}" [min]="review.get('effective_date').value"/>
+                                                   <span class="action-btn">
                                                     <mat-icon *ngIf="!isEditDepositdate"
-                                                        (click)="isEditDepositdate = !isEditDepositdate"> edit
-                                                    </mat-icon>
+                                                    (click)="isEditDepositdate = !isEditDepositdate" class="edit"> edit
+                                                </mat-icon>
                                                     <mat-icon *ngIf="isEditDepositdate"
-                                                        (click)="addDepositDate(payment,review,payIndex,reviewIndex)">
-                                                        done
-                                                    </mat-icon>
-                                                    <mat-icon *ngIf="isEditDepositdate" (click)="clearDepositDate()">
-                                                        close </mat-icon> 
+                                                    (click)="addDepositDate(payment,review,payIndex,reviewIndex)" class="text-success" matTooltip="Save" matTooltipPosition="right">
+                                                    done
+                                                </mat-icon>
+                                                <mat-icon *ngIf="isEditDepositdate" (click)="clearDepositDate()" class="text-danger" matTooltip="Cancel" matTooltipPosition="right">
+                                                    close </mat-icon> 
+                                                </span>
                                                 </div>
                                                 <div class="value" *ngIf="review.get('deposit_date').value">
                                                     {{review.get('deposit_date').value |

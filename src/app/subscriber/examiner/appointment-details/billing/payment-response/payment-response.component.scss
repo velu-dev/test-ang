@@ -137,9 +137,9 @@ mat-card-content {
                                 position: absolute;
                                 left: -30px;
                                 top: -15px;
-                                height: -moz-calc(60.6% - 0px);
-                                height: -webkit-calc(60.6% - 0px);
-                                height: calc(60.6% - 0px);
+                                height: -moz-calc(57.2% - 0px);
+                                height: -webkit-calc(57.2% - 0px);
+                                height: calc(57.2% - 0px);
                             }
                         }
                         .expand-details-list.form-level {
@@ -250,6 +250,27 @@ mat-card-content {
                                     a {
                                         cursor: pointer;
                                         word-break: break-all;
+                                    }
+                                }
+                                .deposit-date {
+                                    padding: 0 !important;
+                                    mat-icon {
+                                        cursor: pointer;
+                                    }
+                                    input[type=date] {
+                                        width: calc(100% - 65px);
+                                        border: 2px solid $light-gray;
+                                        padding: 3px;
+                                        border-radius: 3px;
+                                        vertical-align: bottom;
+                                    }
+                                    input[type=date]:disabled {
+                                        border :2px solid $yellow;
+                                    }
+                                   
+                                    input[type=date]:disabled::-webkit-calendar-picker-indicator {
+                                        display: none;
+                                        -webkit-appearance: none;
                                     }
                                 }
                             }
@@ -403,7 +424,7 @@ mat-card-content {
 // }
 .eor-allowance {
     .bg-white {
-     background-color: $white;
+        background-color: $white;
     }
     .custom-input {
         input {
@@ -422,7 +443,7 @@ mat-card-content {
     }
 }
 .eor-allowance.strike {
-    tr{
+    tr {
         td {
             text-decoration: line-through !important;
         }
