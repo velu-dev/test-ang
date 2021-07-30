@@ -3,7 +3,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { formatDate } from '@angular/common';
 import { Component, ElementRef, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MatDialog, MatDialogRef, MatTableDataSource, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_DIALOG_DATA, NativeDateAdapter } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { Observable } from 'rxjs';
@@ -81,7 +81,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   @Input() cancellation: boolean;
   isEditDepositdate: boolean = false;
-  depositionDate: any;
+  depositionDate: string = null;
   constructor(public dialog: MatDialog, private fb: FormBuilder, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService, public billingService: BillingService, private intercom: IntercomService) {
     this.isHandset$.subscribe(res => {
@@ -315,20 +315,36 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     this.expandId = null;
     this.openElement(this.payments().at(0).get('id').value);
   }
-  addDepositDate(payment, review, payIndex, reviewIndex) {
-    review.get('deposit_date').patchValue(this.depositionDate);
-    this.saveReview(payment, review, payIndex, reviewIndex, true);
+  addDepositDate(review: FormGroup) {
+    if(!this.depositionDate) {
+      this.alertService.openSnackBar('Please enter Deposit date!', 'error');
+      return;
+    }
+    const { bill_id, billable_item_id, claim_id } = this.billingData;
+    const payment_response_id = review.get('id').value;
+    const data = {
+      deposit_date: moment(this.depositionDate).format("YYYY-MM-DD")
+    }
+    this.billingService.updateDepositDate(claim_id, billable_item_id, bill_id, payment_response_id, data).subscribe((res) => {
+      review.get('deposit_date').patchValue(this.depositionDate);
+      this.alertService.openSnackBar('Deposit date updated successfully!', 'success');
+    }, err => {
+      this.depositionDate = null;
+      review.get('deposit_date').patchValue(null);
+      this.alertService.openSnackBar('Unable to update Deposit date!', 'error');
+    })
   }
   clearDepositDate() {
     this.isEditDepositdate = false;
-    this.depositionDate = "";
+    this.depositionDate = null;
   }
   saveReview(payment: FormGroup, review: FormGroup, payIndex, reviewIndex, isDepositAdd?) {
     let isEORError = false;
     review.get('eor_allowance_details').value.map((rev, ind) => {
       if (review.get('void_type_id').value == 3) {
         review.get('eor_allowance_details').value[ind].eor_allowance = null;
-      } else {
+      } 
+      else {
         if (rev.charges < rev.eor_allowance) {
           this.alertService.openSnackBar("EOR Allowance must be less than charge", 'error');
           isEORError = true;
@@ -337,7 +353,6 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
         }
       }
     })
-    console.log(review)
     if (reviewIndex > 0 && this.paymentReviews(payIndex).at(this.paymentReviews(payIndex).controls.length - 2).get('void_type_id').value != 3) {
       if (!isDepositAdd) {
         review.get('void_type_id').setValidators([Validators.required])
@@ -358,7 +373,6 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       if (review.get(key).value && typeof (review.get(key).value) == 'string')
         review.get(key).setValue(review.get(key).value.trim())
     });
-    console.log(review)
     if (review.status == "INVALID") {
       this.alertService.openSnackBar("Please fill in the required (*) fields", 'error')
       review.markAllAsTouched();
@@ -612,6 +626,9 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     $event.target.value = parseFloat($event.target.value).toFixed(2);
   }
 
+  toggleDepositDate() {
+    this.isEditDepositdate = !this.isEditDepositdate;
+  }
 }
 
 

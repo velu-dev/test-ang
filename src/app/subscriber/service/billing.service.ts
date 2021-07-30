@@ -197,4 +197,8 @@ export class BillingService {
   getOverlap(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.getOverlap, data)
   }
+  updateDepositDate(claim_id, billable_item_id, bill_id, payment_response_id, data): Observable<any> {
+    const postUrl = environment.baseUrl + api_endpoint.updateDepositDate + claim_id + '/' + billable_item_id + '/' + bill_id + '/' + payment_response_id;
+    return this.http.post(postUrl, data);
+  }
 }

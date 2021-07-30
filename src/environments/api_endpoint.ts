@@ -224,6 +224,7 @@ export const api_endpoint = {
     secondBillDemand: 'service-requests/second-bill-ondemand/create',
     getSubmission: 'billing/get-submission-details/',
     postIBRCreate: 'billing/create-ibr/',
+    updateDepositDate: 'billing/update-deposit-date/',
 
 
     //Calendar 
