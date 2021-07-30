@@ -80,7 +80,8 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   subscription: any;
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   @Input() cancellation: boolean;
-
+  isEditDepositdate: boolean = false;
+  depositionDate: any;
   constructor(public dialog: MatDialog, private fb: FormBuilder, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService, public billingService: BillingService, private intercom: IntercomService) {
     this.isHandset$.subscribe(res => {
@@ -314,8 +315,15 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     this.expandId = null;
     this.openElement(this.payments().at(0).get('id').value);
   }
-
-  saveReview(payment: FormGroup, review: FormGroup, payIndex, reviewIndex) {
+  addDepositDate(payment, review, payIndex, reviewIndex) {
+    review.get('deposit_date').patchValue(this.depositionDate);
+    this.saveReview(payment, review, payIndex, reviewIndex, true);
+  }
+  clearDepositDate() {
+    this.isEditDepositdate = false;
+    this.depositionDate = "";
+  }
+  saveReview(payment: FormGroup, review: FormGroup, payIndex, reviewIndex, isDepositAdd?) {
     let isEORError = false;
     review.get('eor_allowance_details').value.map((rev, ind) => {
       if (review.get('void_type_id').value == 3) {
@@ -329,12 +337,14 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
         }
       }
     })
+    console.log(review)
     if (reviewIndex > 0 && this.paymentReviews(payIndex).at(this.paymentReviews(payIndex).controls.length - 2).get('void_type_id').value != 3) {
-      review.get('void_type_id').setValidators([Validators.required])
-      review.get('void_reason').setValidators([Validators.required])
-      review.get('void_type_id').updateValueAndValidity();
-      review.get('void_reason').updateValueAndValidity();
-
+      if (!isDepositAdd) {
+        review.get('void_type_id').setValidators([Validators.required])
+        review.get('void_reason').setValidators([Validators.required])
+        review.get('void_type_id').updateValueAndValidity();
+        review.get('void_reason').updateValueAndValidity();
+      }
       if (!review.get('file').value) {
         review.get('file').setValidators([])
         review.get('file').updateValueAndValidity();
@@ -348,6 +358,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       if (review.get(key).value && typeof (review.get(key).value) == 'string')
         review.get(key).setValue(review.get(key).value.trim())
     });
+    console.log(review)
     if (review.status == "INVALID") {
       this.alertService.openSnackBar("Please fill in the required (*) fields", 'error')
       review.markAllAsTouched();

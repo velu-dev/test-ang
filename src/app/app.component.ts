@@ -31,7 +31,9 @@ export class AppComponent {
           let token = localStorage.getItem('SYb+KUjt03Mkgz22hYyCXR3hloq2jrRXu6ozoRJPos8=');
           if(token == undefined) { // you can update this as per your key
               // DO LOGOUT FROM THIS TAB AS WELL
-              this._router.navigate(['/']); // If you are using router
+              if(this._router.url !== '/terms-of-service') {
+                this._router.navigate(['/']); // If you are using router
+              }
               // OR
               // window.location.href = '<home page URL>';
           }
