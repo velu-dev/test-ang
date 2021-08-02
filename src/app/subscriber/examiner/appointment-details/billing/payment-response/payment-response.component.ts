@@ -371,6 +371,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       review.markAllAsTouched();
       return;
     }
+    this.validatePaymentAmount(review);
     if (isEORError || this.eorError) {
       return;
     }
@@ -456,6 +457,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   }
 
   removeReview(payI, reviewI) {
+    this.eorError = false;
     this.paymentReviews(payI).removeAt(reviewI)
     let responseCount = 0;
     this.payments().value.map(pay => {
@@ -619,14 +621,13 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     $event.target.value = parseFloat($event.target.value).toFixed(2);
   }
 
-  validatePaymentAmount(review: any, lastIndex) {
+  validatePaymentAmount(review: any) {
     let eorAllowance = 0;
     review.get('eor_allowance_details').value.map(eorDetail => {
-      eorAllowance += eorDetail.eor_allowance; 
+      eorAllowance += Number(eorDetail.eor_allowance); 
     });
-    const paymentAmount = review.get('payment_amount').value;
-    const eorFilled = review.get('eor_allowance_details').value.every((eorDetail) => eorDetail.eor_allowance && eorDetail.eor_allowance > 0);
-    this.eorError = paymentAmount !== eorAllowance && eorFilled;
+    const paymentAmount = Number(review.get('payment_amount').value);
+    this.eorError = paymentAmount !== eorAllowance;
   }
 
   toggleDepositDate() {

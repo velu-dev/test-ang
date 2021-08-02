@@ -486,8 +486,7 @@
                                                                     <input type="text" formControlName="eor_allowance"
                                                                         min="0" [max]="eor.get('charges').value"
                                                                         matInput type="number" autocomplete="off"
-                                                                        (input)="validatePaymentAmount(review, lastReview)"
-                                                                        (change)="setTwoNumberDecimal($event)">
+                                                                        (change)="setTwoNumberDecimal($event); validatePaymentAmount(review)">
                                                                 </td>
                                                                 <td>
                                                                     {{eor.get('charges').value > -1 ? '$ ' :
