@@ -82,6 +82,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   @Input() cancellation: boolean;
   isEditDepositdate: boolean = false;
   depositionDate: string = null;
+  eorError = false;
   constructor(public dialog: MatDialog, private fb: FormBuilder, private breakpointObserver: BreakpointObserver,
     private alertService: AlertService, public billingService: BillingService, private intercom: IntercomService) {
     this.isHandset$.subscribe(res => {
@@ -370,7 +371,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       review.markAllAsTouched();
       return;
     }
-    if (isEORError) {
+    if (isEORError || this.eorError) {
       return;
     }
     formData.append('post_date', review.get('post_date').value ? moment(review.get('post_date').value).format("MM-DD-YYYY") : '');
@@ -616,6 +617,16 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
 
   setTwoNumberDecimal($event) {
     $event.target.value = parseFloat($event.target.value).toFixed(2);
+  }
+
+  validatePaymentAmount(review: any, lastIndex) {
+    let eorAllowance = 0;
+    review.get('eor_allowance_details').value.map(eorDetail => {
+      eorAllowance += eorDetail.eor_allowance; 
+    });
+    const paymentAmount = review.get('payment_amount').value;
+    const eorFilled = review.get('eor_allowance_details').value.every((eorDetail) => eorDetail.eor_allowance && eorDetail.eor_allowance > 0);
+    this.eorError = paymentAmount !== eorAllowance && eorFilled;
   }
 
   toggleDepositDate() {

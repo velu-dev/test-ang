@@ -474,7 +474,7 @@
                                                         </thead>
                                                         <thead formArrayName="eor_allowance_details" class="bg-white">
                                                             <tr
-                                                                *ngFor="let eor of review.get('eor_allowance_details').controls; let eorInd=index">
+                                                                *ngFor="let eor of review.get('eor_allowance_details').controls; let eorInd=index; let lastReview = last">
 
                                                                 <td>{{eor.get('item').value}}</td>
                                                                 <td>{{eor.get('procedure_code').value}}
@@ -486,6 +486,7 @@
                                                                     <input type="text" formControlName="eor_allowance"
                                                                         min="0" [max]="eor.get('charges').value"
                                                                         matInput type="number" autocomplete="off"
+                                                                        (input)="validatePaymentAmount(review, lastReview)"
                                                                         (change)="setTwoNumberDecimal($event)">
                                                                 </td>
                                                                 <td>
@@ -499,6 +500,11 @@
                                                             </tr>
                                                         </thead>
                                                     </table>
+                                                    <div *ngIf="eorError">
+                                                        <span class="error">
+                                                            Payment amount does not equal EOR allowance
+                                                        </span>
+                                                    </div>
                                                     <app-nodata
                                                         *ngIf="review.get('eor_allowance_details').controls.length == 0">
                                                     </app-nodata>
