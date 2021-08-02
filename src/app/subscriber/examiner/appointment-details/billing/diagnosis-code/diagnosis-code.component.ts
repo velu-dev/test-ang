@@ -66,11 +66,15 @@ export class DiagnosisCodeComponent implements OnInit {
   ngOnInit() {
     this.intercom.getPaymentReview().subscribe(res => {
       this.isPaymentresponseCreated = res > 0 ? true : false;
-      if(this.isPaymentresponseCreated){
+      if (this.isPaymentresponseCreated) {
         this.icdCtrl.reset();
         this.icdCtrl.disable();
       } else {
-        this.icdCtrl.enable()
+        this.icdCtrl.enable();
+        this.icdCtrl.valueChanges
+          .pipe(
+            debounceTime(300),
+          ).subscribe(value => { this.claimService.getICD10(value).subscribe(val => this.filteredICD = val[3]) });
       }
     })
     this.isHandset$.subscribe(res => {
@@ -91,11 +95,6 @@ export class DiagnosisCodeComponent implements OnInit {
     this.claimService.getICD10('a').subscribe(icd => {
       this.filteredICD = icd[3];
     });
-
-    this.icdCtrl.valueChanges
-      .pipe(
-        debounceTime(300),
-      ).subscribe(value => { this.claimService.getICD10(value).subscribe(val => this.filteredICD = val[3]) });
   }
   icdData = [];
   selectedIcd = { code: "", name: "" };
