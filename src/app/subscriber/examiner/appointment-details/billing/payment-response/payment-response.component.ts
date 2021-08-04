@@ -623,11 +623,13 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
 
   validatePaymentAmount(review: any) {
     let eorAllowance = 0;
-    review.get('eor_allowance_details').value.map(eorDetail => {
+    const eorDetails = review.get('eor_allowance_details').value;
+    eorDetails.map(eorDetail => {
       eorAllowance += Number(eorDetail.eor_allowance); 
     });
     const paymentAmount = Number(review.get('payment_amount').value);
-    this.eorError = paymentAmount !== eorAllowance;
+    const eorFilled = eorDetails.some((eorDetail) => eorDetail.eor_allowance && eorDetail.eor_allowance > 0);
+    this.eorError = paymentAmount !== eorAllowance && eorFilled;
   }
 
   toggleDepositDate() {

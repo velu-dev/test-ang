@@ -105,7 +105,7 @@
                                                             close </mat-icon>
                                                     </ng-container>
                                                 </div> -->
-                                                <div *ngIf="last && !review.get('deposit_date').value"
+                                                <div *ngIf="last && !review.get('deposit_date').value && review.get('response_type').value !== 'Denied'"
                                                     class="deposit-date">
                                                     <input type="date" [disabled]="!isEditDepositdate"
                                                         [(ngModel)]="depositionDate"
@@ -228,13 +228,21 @@
                                                                 <td>$ {{lineItem.get('charges').value | number :
                                                                     '1.2-2'}}</td>
                                                                 <td>
-                                                                    $ {{lineItem.get('eor_allowance').value | number :
-                                                                    '1.2-2'}}
+                                                                    $ {{
+                                                                    (lineItem.get('eor_allowance').value !== null ?
+                                                                    lineItem.get('eor_allowance').value : 0) | number :
+                                                                    '1.2-2'
+                                                                    }}
                                                                 </td>
                                                                 <td>
-                                                                    {{lineItem.get('charges').value > -1 ? '$ ' :
-                                                                    ''}}{{(lineItem.get('charges').value -
-                                                                    lineItem.get('eor_allowance').value)
+                                                                    {{lineItem.get('charges').value > -1 ? '$ ' : '' }}
+                                                                    {{
+                                                                    (
+                                                                    (lineItem.get('charges').value -
+                                                                    lineItem.get('eor_allowance').value) > 0 ?
+                                                                    lineItem.get('charges').value -
+                                                                    lineItem.get('eor_allowance').value : 0
+                                                                    )
                                                                     | number
                                                                     :
                                                                     '1.2-2'}}
@@ -511,19 +519,22 @@
                                                                         (change)="setTwoNumberDecimal($event); validatePaymentAmount(review)">
                                                                 </td>
                                                                 <td>
-                                                                    {{eor.get('charges').value > -1 ? '$ ' :
-                                                                    ''}}{{(eor.get('charges').value -
-                                                                    eor.get('eor_allowance').value)
-                                                                    | number
-                                                                    :
-                                                                    '1.2-2'}}
+                                                                    {{ eor.get('charges').value > -1 ? '$ ' : '' }}
+                                                                    {{
+                                                                    (
+                                                                    (eor.get('charges').value -
+                                                                    eor.get('eor_allowance').value) > 0 ?
+                                                                    eor.get('charges').value -
+                                                                    eor.get('eor_allowance').value : 0
+                                                                    ) | number: '1.2-2'
+                                                                    }}
                                                                 </td>
                                                             </tr>
                                                         </thead>
                                                     </table>
                                                     <div *ngIf="eorError">
                                                         <span class="error">
-                                                            Payment amount does not equal EOR allowance
+                                                            EOR allowance does not equal to Payment amount
                                                         </span>
                                                     </div>
                                                     <app-nodata
