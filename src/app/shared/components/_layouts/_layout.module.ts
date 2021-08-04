@@ -9,7 +9,6 @@ import { MaterialModule } from '../../material.module';
 import { PageHeaderComponent } from '../navigation/page_header/page_header.component';
 import { BreadcrumbComponent } from '../navigation/breadcrumb/breadcrumb.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.component';
 
 @NgModule({
     exports: [
@@ -33,8 +32,7 @@ import { TermsOfServiceComponent } from './terms-of-service/terms-of-service.com
         SidenavComponent,
         FooterComponent,
         PageHeaderComponent,
-        BreadcrumbComponent,
-        TermsOfServiceComponent
+        BreadcrumbComponent
     ],
     providers: [
     ]

@@ -21,6 +21,7 @@ export class RegisterComponent implements OnInit {
   passwordFieldType: boolean;
   passwordMatchStatus: boolean = false;
   error: any;
+  termsOfService = 'https://simplexam.com/terms-of-service/';
 
   constructor(private formBuilder: FormBuilder,
     private cognitoService: CognitoService,
