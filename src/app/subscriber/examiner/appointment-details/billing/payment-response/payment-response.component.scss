@@ -119,15 +119,6 @@ mat-card-content {
                 .detail {
                     background-color: $white;
                     display: block;
-                    // &::after {
-                    //     content: "";
-                    //     background-color: $black;
-                    //     width: 20px;
-                    //     position: absolute;
-                    //     left: 10px;
-                    //     top: 50%;
-                    //     height: 3px;
-                    // }
                     &:last-child {
                         .expand-details-list.list-level {
                             &::after {
@@ -205,28 +196,6 @@ mat-card-content {
                             left: -28px;
                             top: 50%;
                         }
-
-                        // &::after {
-                        //     content: "";
-                        //     background-color: $black;
-                        //     width: 20px;
-                        //     position: absolute;
-                        //     left: -35px;
-                        //     top: 50%;
-                        //     height: 3px;
-                        //     margin-top: 16px;
-                        // }
-                        // Error icon design
-                        // &::after {
-                        //     font-family: "Font Awesome 5 Free";
-                        //     font-weight: 900;
-                        //     content: "\f00d";
-                        //     color: $danger;
-                        //     position: absolute;
-                        //     font-size: 25px;
-                        //     left: 20px;
-                        //     top: 41%;
-                        // }
                         .main-title {
                             padding-bottom: 0;
                             border-bottom: 1px solid $light_color;
@@ -252,29 +221,64 @@ mat-card-content {
                                         word-break: break-all;
                                     }
                                 }
-                                // .deposit-date {
-                                //     padding: 0 !important;
-                                //     mat-icon {
-                                //         cursor: pointer;
-                                //     }
-                                //     input[type=date] {
-                                //         width: calc(100% - 75px);
-                                //         border: 2px solid $light-gray;
-                                //         padding: 3px;
-                                //         border-radius: 3px;
-                                //         vertical-align: bottom;
-                                //     }
-                                //     input[type=date]:disabled {
-                                //         border :2px solid $yellow;
-                                //         width: calc(100% - 45px);
-                                //         padding: 3px;
-                                //     }
-                                   
-                                //     input[type=date]:disabled::-webkit-calendar-picker-indicator {
-                                //         display: none;
-                                //         -webkit-appearance: none;
-                                //     }
-                                // }
+                            }
+                            div.grid-list-form {
+                                width: 100%;
+                                display: flex;
+                                .property {
+                                    min-width: 120px;
+                                    width: 100%;
+                                    padding: 5px;
+                                    max-width: 120px;
+                                    font-weight: $font-weight-bold;
+                                    font-size: $font-size-1;
+                                    color: $text-gray;
+                                    position: relative;
+                                    &::after {
+                                        content: ":";
+                                        position: absolute;
+                                        top: 4px;
+                                        right: 5px;
+                                    }
+                                }
+                                .deposit-date {
+                                    width: calc(100% - 130px);
+                                    ::ng-deep {
+                                        // .mat-form-field-appearance-outline .mat-form-field-outline-end, .mat-form-field-appearance-outline .mat-form-field-outline-start {
+                                        //     border:2px solid;
+                                        // }
+                                        .mat-form-field {
+                                            @media only screen and (min-width: 1200px) {
+                                                width: calc(100% - 70px);
+                                            }
+                                        }
+                                        .mat-form-field-appearance-outline .mat-form-field-outline {
+                                            color: $ternary;
+                                          }
+                                        .mat-form-field-wrapper {
+                                            padding: 0 !important;
+                                        }
+                                        .mat-form-field-appearance-outline .mat-form-field-infix {
+                                            padding: 3px 0 10px 0 !important;
+                                        }
+                                        .mat-form-field-appearance-outline .mat-form-field-prefix {
+                                            top: 0px !important;
+                                        }
+                                        .mat-form-field-appearance-outline .mat-form-field-suffix {
+                                            top: 6px !important;
+                                        }
+                                        .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+                                            padding-top: 10px !important;
+                                        }
+                                    }
+                                    .action-btn {
+                                        mat-icon {
+                                            cursor: pointer;
+                                            margin: 0 5px;
+                                            vertical-align: middle;
+                                        }
+                                    }
+                                }
                             }
                             // div {
                             //     // padding: 5px 0;
