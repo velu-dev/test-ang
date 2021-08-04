@@ -269,7 +269,6 @@ export class BillLineItemComponent implements OnInit {
       unitTotal: [0],
       is_excess_pages: [null],
       reviewShow: [false],
-
       bill_request_reason: [],
       billed_service_authorized: [false],
       support_documents_attached: [false],

@@ -181,6 +181,11 @@
                                                 <div class="value">{{review.get('reference_no').value}}</div>
                                             </div>
                                             <div class="grid-list">
+                                                <div>Payor Claim Control Number</div>
+                                                <div class="value">{{review.get('payor_claim_control_number').value}}
+                                                </div>
+                                            </div>
+                                            <div class="grid-list">
                                                 <div>Interest Charged</div>
                                                 <div class="value">{{review.get('interest_charged').value ? '$ ' :
                                                     ''}}{{review.get('interest_charged').value | number : '1.2-2'}}
@@ -448,6 +453,17 @@
                                                     <mat-form-field appearance="outline">
                                                         <input formControlName="reference_no" matInput type="text"
                                                             placeholder="Reference Number" autocomplete="off">
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="grid-list-form">
+                                                <div class="property">Payor Claim Control Number
+                                                </div>
+                                                <div class="value">
+                                                    <mat-form-field appearance="outline">
+                                                        <input formControlName="payor_claim_control_number" matInput
+                                                            type="text" placeholder="Payor Claim Control Number"
+                                                            autocomplete="off">
                                                     </mat-form-field>
                                                 </div>
                                             </div>
@@ -744,6 +760,11 @@
                                                         <div class="value">{{review.get('reference_no').value}}</div>
                                                     </div>
                                                     <div class="grid-list">
+                                                        <div>Payor Claim Control Number</div>
+                                                        <div class="value">
+                                                            {{review.get('payor_claim_control_number').value}}</div>
+                                                    </div>
+                                                    <div class="grid-list">
                                                         <div>Interest Charged</div>
                                                         <div class="value">{{review.get('interest_charged').value ? '$ '
                                                             : ''}}{{review.get('interest_charged').value | number :
@@ -968,6 +989,18 @@
                                                             <mat-form-field appearance="outline">
                                                                 <input formControlName="reference_no" matInput
                                                                     type="text" placeholder="Reference Number"
+                                                                    autocomplete="off">
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                    <div class="grid-list-form">
+                                                        <div class="property">Payor Claim Control Number
+                                                        </div>
+                                                        <div class="value">
+                                                            <mat-form-field appearance="outline">
+                                                                <input formControlName="payor_claim_control_number"
+                                                                    matInput type="text"
+                                                                    placeholder="Payor Claim Control Number"
                                                                     autocomplete="off">
                                                             </mat-form-field>
                                                         </div>
