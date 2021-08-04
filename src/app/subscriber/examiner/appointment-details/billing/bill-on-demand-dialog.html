@@ -83,7 +83,7 @@
             <button mat-stroked-button class="outline-warning huge-btn" (click)="downloadAll()">Download Bill and
                 Report</button>
             <div class="note m-t-0"><i class="fas fa-info-circle p-r-5"></i>
-                <ng-container *ngIf="data.billType == 1"> Includes CMS-1500,</ng-container> Declaration of Service
+                Includes <ng-container *ngIf="data.billType == 1"> CMS-1500,</ng-container> Declaration of Service
                 <ng-container *ngIf="data.billType == 1">and W-9</ng-container>
             </div>
         </div>
