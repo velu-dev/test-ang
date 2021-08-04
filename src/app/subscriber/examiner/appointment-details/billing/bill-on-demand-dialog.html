@@ -82,12 +82,15 @@
         <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-left">
             <button mat-stroked-button class="outline-warning huge-btn" (click)="downloadAll()">Download Bill and
                 Report</button>
-            <div class="note m-t-0"><i class="fas fa-info-circle p-r-5"></i>Includes CMS-1500, Declaration of Service
-                and W-9</div>
+            <div class="note m-t-0"><i class="fas fa-info-circle p-r-5"></i>
+                <ng-container *ngIf="data.billType == 1"> Includes CMS-1500,</ng-container> Declaration of Service
+                <ng-container *ngIf="data.billType == 1">and W-9</ng-container>
+            </div>
         </div>
         <div fxFlex="33.3" fxFlex.sm="33.3" fxFlex.xs="100" class="align-center m-b-5">
             <button [disabled]="data?.on_demand_progress_status == 'In Progress'" mat-stroked-button
-                class="filled-success huge-btn" (click)="billingOnDemand()">{{data.billType == 2 ? 'Mail On Demand' : 'Bill On Demand'}}</button>
+                class="filled-success huge-btn" (click)="billingOnDemand()">{{data.billType == 2 ? 'Mail On Demand' :
+                'Bill On Demand'}}</button>
             <div *ngIf="data?.on_demand_progress_status == 'In Progress'" class="note m-t-0"><i
                     class="fas fa-exclamation-triangle"></i> Request made on : {{data?.last_bill_on_demand_request_date
                 | date:'MM-dd-yyyy hh:mm a'}} In Progress</div>
