@@ -237,6 +237,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       id: [''],
       payment_amount: ['', Validators.compose([Validators.required, Validators.min(0)])],
       reference_no: ['', Validators.compose([Validators.required])],
+      payor_claim_control_number: [''],
       effective_date: ['', Validators.compose([Validators.required])],
       payment_method: ['', Validators.compose([Validators.required])],
       post_date: ['', Validators.compose([Validators.required])],
@@ -317,7 +318,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     this.openElement(this.payments().at(0).get('id').value);
   }
   addDepositDate(review: FormGroup) {
-    if(!this.depositionDate) {
+    if (!this.depositionDate) {
       this.alertService.openSnackBar('Please enter Deposit date!', 'error');
       return;
     }
@@ -383,6 +384,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     formData.append('penalty_charged', review.get('penalty_charged').value);
     formData.append('penalty_paid', review.get('penalty_paid').value);
     formData.append('reference_no', review.get('reference_no').value);
+    formData.append('payor_claim_control_number', review.get('payor_claim_control_number').value);
     formData.append('interest_charged', review.get('interest_charged').value);
     formData.append('interest_paid', review.get('interest_paid').value);
     formData.append('void_reason_id', reviewIndex > 0 && this.paymentReviews(payIndex).at(this.paymentReviews(payIndex).controls.length - 2).get('void_type_id').value != 3 ? this.paymentReviews(payIndex).at(reviewIndex - 1).get('id').value : '');
@@ -625,7 +627,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     let eorAllowance = 0;
     const eorDetails = review.get('eor_allowance_details').value;
     eorDetails.map(eorDetail => {
-      eorAllowance += Number(eorDetail.eor_allowance); 
+      eorAllowance += Number(eorDetail.eor_allowance);
     });
     const paymentAmount = Number(review.get('payment_amount').value);
     const eorFilled = eorDetails.some((eorDetail) => eorDetail.eor_allowance && eorDetail.eor_allowance > 0);
