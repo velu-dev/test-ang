@@ -15,6 +15,7 @@ import { saveAs } from 'file-saver';
 import * as moment from 'moment';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
+import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
@@ -326,7 +327,6 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   }
   
   setPaymentAmount(index: number, review) {
-    console.log(this.billingData);
     const { charge, payment, bill_submission_type } = this.payments().at(index).value;
     const payment_amount = bill_submission_type === 'First' ? Number(charge) : Number(charge) - Number(payment);
     review.get('payment_amount').patchValue(payment_amount);
@@ -646,19 +646,45 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     $event.target.value = parseFloat($event.target.value).toFixed(2);
   }
 
-  validatePaymentAmount(review: any) {
-    let eorAllowance = 0;
+  validatePaymentAmount(review: any, eorIndex?: number) {
     const eorDetails = review.get('eor_allowance_details').value;
-    eorDetails.map(eorDetail => {
-      eorAllowance += Number(eorDetail.eor_allowance);
-    });
     const paymentAmount = Number(review.get('payment_amount').value);
-    // const eorFilled = eorDetails.some((eorDetail) => eorDetail.eor_allowance && eorDetail.eor_allowance > 0);
-    this.eorError = paymentAmount !== eorAllowance;
+    if(eorIndex >= 0) {
+      const eorDetail = eorDetails[eorIndex];
+      if(eorDetail.charges < eorDetail.eor_allowance) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: "500px",
+          data: {
+            title: "Warning",
+            type: 'warning',        
+            proceed: true,
+            cancel: true,
+            message: 'EOR Allowance is higher than charge'
+          }
+        });
+        dialogRef.afterClosed().subscribe((res) => {
+          if(!res.data) {
+            eorDetails[eorIndex].eor_allowance = null;
+            review.get('eor_allowance_details').patchValue(eorDetails);
+          }
+          this.checkEorError(eorDetails, paymentAmount);
+        });
+      }
+    } 
+    this.checkEorError(eorDetails, paymentAmount);
   }
 
   toggleDepositDate() {
     this.isEditDepositdate = !this.isEditDepositdate;
+  }
+
+  private checkEorError(eorDetails: any, paymentAmount: number) {
+    let eorAllowance = 0;
+    eorDetails.map(eorDetail => {
+      eorAllowance += Number(eorDetail.eor_allowance);
+    });
+    // const eorFilled = eorDetails.some((eorDetail) => eorDetail.eor_allowance && eorDetail.eor_allowance > 0);
+    this.eorError = paymentAmount !== eorAllowance;
   }
 }
 
