@@ -93,6 +93,7 @@ export class HeaderComponent implements OnInit {
   toggleClass = 'fullscreen';
   role: string;
   filteredClaimant: any;
+  helpUrl = 'https://simplexam.freshdesk.com/'; 
   constructor(@Inject(DOCUMENT) private document: any,
     private cookieService: CookieService,
     private spinnerService: NgxSpinnerService,
