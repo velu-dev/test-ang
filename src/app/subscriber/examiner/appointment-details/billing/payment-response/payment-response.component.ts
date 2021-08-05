@@ -297,16 +297,23 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
 
   addReviews(index: number, isNew?, Extraind?) {
     this.paymentReviews(index).push(this.newReview());
+    const review = this.paymentReviews(index).at(this.paymentReviews(index).length - 1);
     if (isNew) {
       this.getBillLineItems();
       this.billLineItems.map((eor, ind) => {
-        const eor_allowance_details = this.paymentReviews(index).at(this.paymentReviews(index).length - 1).get('eor_allowance_details');
+        const eor_allowance_details = review.get('eor_allowance_details');
         (eor_allowance_details as FormArray).push(this.fb.group({
           bill_line_item_id: eor.id,
           item: eor.item_description, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charge, eor_allowance: "", payment_amount: eor.payment_amount
         }))
       })
     }
+    
+    //update payment amount value if response type is fully paid
+    if(review.get('response_type').value === 1) {
+      this.setPaymentAmount(index, review);
+    }
+
     let responseCount = 0;
     this.payments().value.map(pay => {
       pay.reviews.map(rev => {
@@ -317,6 +324,14 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     this.expandId = null;
     this.openElement(this.payments().at(0).get('id').value);
   }
+  
+  setPaymentAmount(index: number, review) {
+    console.log(this.billingData);
+    const { charge, payment, bill_submission_type } = this.payments().at(index).value;
+    const payment_amount = bill_submission_type === 'First' ? Number(charge) : Number(charge) - Number(payment);
+    review.get('payment_amount').patchValue(payment_amount);
+  }
+
   addDepositDate(review: FormGroup) {
     if (!this.depositionDate) {
       this.alertService.openSnackBar('Please enter Deposit date!', 'error');
@@ -509,6 +524,14 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
 
   changeResponseType(payment, review, payIndex, reviewIndex, event) {
 
+
+    //update payment amount value if response type is fully paid
+    if(event.value === 1) {
+      this.setPaymentAmount(payIndex, review);
+    } else {
+      review.get('payment_amount').patchValue(null);
+    }
+
     if (event.value == 3 || event.value == 5) {
       review.get('payment_amount').setValidators([Validators.min(0)]); review.get('payment_amount').updateValueAndValidity();
       review.get('reference_no').setValidators([]); review.get('reference_no').updateValueAndValidity();
@@ -630,8 +653,8 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       eorAllowance += Number(eorDetail.eor_allowance);
     });
     const paymentAmount = Number(review.get('payment_amount').value);
-    const eorFilled = eorDetails.some((eorDetail) => eorDetail.eor_allowance && eorDetail.eor_allowance > 0);
-    this.eorError = paymentAmount !== eorAllowance && eorFilled;
+    // const eorFilled = eorDetails.some((eorDetail) => eorDetail.eor_allowance && eorDetail.eor_allowance > 0);
+    this.eorError = paymentAmount !== eorAllowance;
   }
 
   toggleDepositDate() {
