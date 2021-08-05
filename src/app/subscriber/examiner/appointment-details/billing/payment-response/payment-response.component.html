@@ -90,8 +90,9 @@
                                                     <mat-form-field appearance="outline" class="mat-date-picker">
                                                         <input matInput type="text" [(ngModel)]="depositionDate"
                                                             [ngModelOptions]="{standalone: true}"
-                                                            [min]="review.get('effective_date').value"
-                                                            [matDatepicker]="deposited" [readonly]="!isEditDepositdate"
+                                                            [min]="review.get('effective_date').value || minimumDate"
+                                                            [max]="currentDate" [matDatepicker]="deposited"
+                                                            [readonly]="!isEditDepositdate"
                                                             placeholder="Deposit Date" />
                                                         <mat-datepicker-toggle matSuffix [for]="deposited"
                                                             [disabled]="!isEditDepositdate">
