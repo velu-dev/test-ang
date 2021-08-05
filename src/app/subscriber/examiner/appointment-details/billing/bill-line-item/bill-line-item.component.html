@@ -624,7 +624,7 @@
                                             | number : '1.2-2'}}
                                         </td>
                                         <td>
-                                            {{group.get('charge').value > -1 ? '$ ' : ''}}{{(group.get('charge').value)
+                                            {{group.get('charge').value > -1 ? '$ ' : ''}}{{(group.get('charge').value) - (group.get('payment').value)
                                             | number : '1.2-2'}}
                                         </td>
                                         <td>-</td>
