@@ -85,26 +85,31 @@
                                             </div>
                                             <div class="grid-list-form">
                                                 <div class="property">Deposit Date</div>
-                                                <div  *ngIf="last && !review.get('deposit_date').value && review.get('response_type').value !== 'Denied'" class="deposit-date value">
+                                                <div *ngIf="last && !review.get('deposit_date').value && review.get('response_type').value !== 'Denied'"
+                                                    class="deposit-date value">
                                                     <mat-form-field appearance="outline" class="mat-date-picker">
                                                         <input matInput type="text" [(ngModel)]="depositionDate"
-                                                        [ngModelOptions]="{standalone: true}"
-                                                        [min]="review.get('effective_date').value"
-                                                        [matDatepicker]="deposited" [readonly]="!isEditDepositdate" placeholder="Deposit Date"/>
-                                                    <mat-datepicker-toggle matSuffix [for]="deposited"
-                                                        [disabled]="!isEditDepositdate">
-                                                    </mat-datepicker-toggle>
-                                                    <mat-datepicker #deposited></mat-datepicker>
+                                                            [ngModelOptions]="{standalone: true}"
+                                                            [min]="review.get('effective_date').value"
+                                                            [matDatepicker]="deposited" [readonly]="!isEditDepositdate"
+                                                            placeholder="Deposit Date" />
+                                                        <mat-datepicker-toggle matSuffix [for]="deposited"
+                                                            [disabled]="!isEditDepositdate">
+                                                        </mat-datepicker-toggle>
+                                                        <mat-datepicker #deposited></mat-datepicker>
                                                     </mat-form-field>
-                                                    
+
                                                     <span class="action-btn">
-                                                        <mat-icon (click)="toggleDepositDate()" *ngIf="!isEditDepositdate" class="text-success">
+                                                        <mat-icon (click)="toggleDepositDate()"
+                                                            *ngIf="!isEditDepositdate" class="text-success">
                                                             edit
                                                         </mat-icon>
-                                                        <mat-icon (click)="addDepositDate(review)" *ngIf="isEditDepositdate" class="text-success">
+                                                        <mat-icon (click)="addDepositDate(review)"
+                                                            *ngIf="isEditDepositdate" class="text-success">
                                                             done
                                                         </mat-icon>
-                                                        <mat-icon (click)="clearDepositDate()" *ngIf="isEditDepositdate" class="text-danger">
+                                                        <mat-icon (click)="clearDepositDate()" *ngIf="isEditDepositdate"
+                                                            class="text-danger">
                                                             close </mat-icon>
                                                     </span>
                                                 </div>
@@ -382,8 +387,8 @@
                                                     <mat-form-field appearance="outline" class="mat-date-picker">
                                                         <input formControlName="deposit_date" matInput type="text"
                                                             placeholder="Deposit Date" autocomplete="off"
-                                                            [min]="minimumDate" [max]="currentDate"
-                                                            [matDatepicker]="deposited">
+                                                            [min]="review.get('effective_date').value || minimumDate"
+                                                            [max]="currentDate" [matDatepicker]="deposited">
                                                         <mat-datepicker-toggle matSuffix [for]="deposited">
                                                         </mat-datepicker-toggle>
                                                         <mat-datepicker #deposited></mat-datepicker>
@@ -402,7 +407,8 @@
                                                     <mat-form-field appearance="outline">
                                                         <input formControlName="payment_amount" min="0" matInput
                                                             type="number" placeholder="Payment Amount"
-                                                            autocomplete="off" (change)="setTwoNumberDecimal($event)">
+                                                            autocomplete="off"
+                                                            (change)="setTwoNumberDecimal($event); validatePaymentAmount(review)">
                                                         <span matPrefix>$&nbsp;</span>
                                                     </mat-form-field>
                                                 </div>
@@ -915,7 +921,8 @@
                                                                 class="mat-date-picker">
                                                                 <input formControlName="deposit_date" matInput
                                                                     type="text" placeholder="Deposit Date"
-                                                                    autocomplete="off" [min]="minimumDate"
+                                                                    autocomplete="off"
+                                                                    [min]="review.get('effective_date').value || minimumDate"
                                                                     [max]="currentDate" [matDatepicker]="deposited">
                                                                 <mat-datepicker-toggle matSuffix [for]="deposited">
                                                                 </mat-datepicker-toggle>
