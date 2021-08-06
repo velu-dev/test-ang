@@ -539,7 +539,8 @@
                                                                 </td>
                                                                 <td>
                                                                     {{ eor.get('charges').value > -1 ? '$ ' : '' }}
-                                                                    {{ eor.get('balance').value > 0 ? eor.get('balance').value : 0}}
+                                                                    {{ (eor.get('balance').value > 0 ? eor.get('balance').value : 0) |  number :
+                                                                    '1.2-2' }}
                                                                     <!-- {{
                                                                     (
                                                                     (eor.get('charges').value -

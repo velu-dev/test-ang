@@ -681,8 +681,11 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       }
     }
     if (eorData) {
-      let balance = eorData.get('charges').value - eorData.get('eor_allowance').value - eorData.get('balance').value
-      if(this.billType == 2){
+      let balance
+      if (this.billType == 1) {
+        balance = eorData.get('charges').value - eorData.get('eor_allowance').value
+      }
+      if (this.billType == 2) {
         balance = eorData.get('charges').value - eorData.get('eor_allowance').value - eorData.get('first_submission_payment').value
       }
       eorData.get('balance').patchValue(balance);
