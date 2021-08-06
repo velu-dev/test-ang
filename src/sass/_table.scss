@@ -631,47 +631,6 @@ tr.detail-row {
 }
 // custom payment response css
 ::ng-deep {
-  // .mat-menu-panel.custom-menu {
-  //   max-width: 400px;
-  //   min-width: 400px;
-  //   border-radius: 0;
-  //   .mat-menu-content {
-  //     padding: 0;
-  //     border: 1px solid $text-gray;
-  //     .more-details {
-  //       width: 100%;
-  //       padding: 0;
-  //       mat-card-content {
-  //         padding: 0;
-  //         .details {
-  //           width: auto;
-  //           display: flex;
-  //           padding: 0 16px;
-  //           border-bottom: 2px solid $light_color;
-  //           &:last-child {
-  //             border: none;
-  //           }
-  //           div.Property {
-  //             min-width: 40%;
-  //             float: left;
-  //             padding-top: 10px;
-  //           }
-  //           div.custom-value {
-  //             min-width: 60%;
-  //             float: left;
-  //             .mat-form-field-appearance-outline .mat-form-field-infix {
-  //               padding: 5px 0 !important;
-  //             }
-  //             .mat-form-field-appearance-outline .mat-form-field-wrapper {
-  //               margin: 0 !important;
-  //               padding: 5px 0;
-  //             }
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
   .mat-menu-panel.custom-menu {
     max-width: 500px;
     min-width: 500px;
@@ -700,16 +659,6 @@ tr.detail-row {
           max-height: 300px;
           overflow-y: auto;
           margin: 0;
-          // &::before {
-          //   content: "";
-          //   // background-color: $info-bg;
-          //   border-left: 2px dashed $info;
-          //   width: 3px;
-          //   height: 88%;
-          //   position: absolute;
-          //   left: 10px;
-          //   top: 16px;
-          // }
           li {
             list-style-type: none;
             padding-bottom: 18px;

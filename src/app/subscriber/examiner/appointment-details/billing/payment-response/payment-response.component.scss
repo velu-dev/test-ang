@@ -132,17 +132,17 @@ mat-card-content {
                                         right: 5px;
                                     }
                                 }
+                                .value {
+                                    padding: 5px;
+                                }
                                 .deposit-date {
                                     width: calc(100% - 130px);
                                     ::ng-deep {
                                         .mat-form-field {
-                                                width: calc(100% - 70px);
+                                            width: calc(100% - 70px);
                                         }
                                         .mat-form-field-appearance-outline .mat-form-field-outline {
-                                                color: $secondary;
-                                                @media screen and (max-width: 920px) and (min-width: 320px) {
-                                                    color: $secondary;
-                                                }
+                                            color: $secondary;
                                         }
                                         .mat-form-field-appearance-outline .mat-form-field-outline-start,
                                         .mat-form-field-appearance-outline .mat-form-field-outline-end,
@@ -181,8 +181,11 @@ mat-card-content {
                                 ::ng-deep {
                                     .mat-form-field {
                                         width: 100%;
-                                        @media only screen and (min-width: 1200px) {
+                                        @media only screen and (min-width: 1450px) {
                                             width: calc(85% - 20px);
+                                        }
+                                        @media screen and (max-width: 1450px) and (min-width: 1200px) {
+                                            width: calc(65% - 20px);
                                         }
                                         @media screen and (max-width: 1200px) and (min-width: 1160px) {
                                             width: calc(65% - 20px);
@@ -198,8 +201,11 @@ mat-card-content {
                                         width: 95% !important;
                                     }
                                     .mat-form-field.mat-date-picker {
-                                        @media only screen and (min-width: 1200px) {
+                                        @media only screen and (min-width: 1450px) {
                                             width: 70%;
+                                        }
+                                        @media screen and (max-width: 1450px) and (min-width: 1200px) {
+                                            width: calc(60% - 20px);
                                         }
                                         @media screen and (max-width: 1200px) and (min-width: 1160px) {
                                             width: calc(60% - 20px);
@@ -304,30 +310,34 @@ mat-card-content {
         }
     }
 }
-.eor-allowance {
-    .bg-white {
-        background-color: $white;
-    }
-    .custom-input {
-        input {
-            width: fit-content;
-            border: 1px solid $light-gray;
-            border-radius: 5px;
-            padding: 5px;
-            &:hover,
-            &:focus,
-            &:focus-visible {
-                border: 1px solid #d5aed2;
-                box-shadow: none;
-                outline: none;
+.eor-response {
+    box-shadow: $box-shadow;
+    background-color: $white;
+    .eor-allowance {
+        .bg-white {
+            background-color: $white;
+        }
+        .custom-input {
+            input {
+                width: calc(100% - 20px);
+                border: 1px solid $light-gray;
+                border-radius: 5px;
+                padding: 5px;
+                &:hover,
+                &:focus,
+                &:focus-visible {
+                    border: 1px solid #d5aed2;
+                    box-shadow: none;
+                    outline: none;
+                }
             }
         }
     }
-}
-.eor-allowance.strike {
-    tr {
-        td {
-            text-decoration: line-through !important;
+    .eor-allowance.strike {
+        tr {
+            td {
+                text-decoration: line-through !important;
+            }
         }
     }
 }
