@@ -142,7 +142,7 @@ export const MY_MOMENT_FORMATS = {
     {
       provide: RECAPTCHA_SETTINGS,
       useValue: {
-        siteKey: '6Lfz6doUAAAAANgvOxZA8lZmFEK0vm0v1lWkveLq',
+        siteKey: '6LdL1tAbAAAAAJgOZknJIIT-YgCLElbMQ-_0HZE4',
       } as RecaptchaSettings,
     },
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },

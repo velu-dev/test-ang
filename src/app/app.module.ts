@@ -70,7 +70,7 @@ const maskConfig: Partial<IConfig> = {
     {
       provide: RECAPTCHA_SETTINGS,
       useValue: {
-        siteKey: '6Lfz6doUAAAAANgvOxZA8lZmFEK0vm0v1lWkveLq',
+        siteKey: '6LdL1tAbAAAAAJgOZknJIIT-YgCLElbMQ-_0HZE4',
       } as RecaptchaSettings,
     }
   ],
