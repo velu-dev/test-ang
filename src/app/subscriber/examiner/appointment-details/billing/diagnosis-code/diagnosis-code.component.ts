@@ -74,7 +74,7 @@ export class DiagnosisCodeComponent implements OnInit {
         this.icdCtrl.valueChanges
           .pipe(
             debounceTime(300),
-          ).subscribe(value => { this.claimService.getICD10(value).subscribe(val => this.filteredICD = val[3]) });
+          ).subscribe(value => { if(value) this.claimService.getICD10(value).subscribe(val => this.filteredICD = val[3]) });
       }
     })
     this.isHandset$.subscribe(res => {
@@ -93,6 +93,7 @@ export class DiagnosisCodeComponent implements OnInit {
     this.IcdDataSource.sort = this.sort;
 
     this.claimService.getICD10('a').subscribe(icd => {
+      console.log('get icd')
       this.filteredICD = icd[3];
     });
   }

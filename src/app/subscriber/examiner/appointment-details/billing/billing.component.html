@@ -31,7 +31,7 @@
                     <mat-card class="fbr-mat-card">
                         <app-payment-response [cancellation]="is_cancellation" [paramsId]="paramsId"
                             [billingData]="billingData" (getPaymentStatus)="getPaymentStatus($event)"
-                            [voidType]="voidType" [paidStatusData]="paidStatusData">
+                            [voidType]="voidType" [paidStatusData]="paidStatusData"  [billType]="tabIndex + 1">
                         </app-payment-response>
                     </mat-card>
                 </mat-tab>

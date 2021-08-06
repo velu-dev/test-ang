@@ -90,8 +90,9 @@
                                                     <mat-form-field appearance="outline" class="mat-date-picker">
                                                         <input matInput type="text" [(ngModel)]="depositionDate"
                                                             [ngModelOptions]="{standalone: true}"
-                                                            [min]="review.get('effective_date').value"
-                                                            [matDatepicker]="deposited" [readonly]="!isEditDepositdate"
+                                                            [min]="review.get('effective_date').value || minimumDate"
+                                                            [max]="currentDate" [matDatepicker]="deposited"
+                                                            [readonly]="!isEditDepositdate"
                                                             placeholder="Deposit Date" />
                                                         <mat-datepicker-toggle matSuffix [for]="deposited"
                                                             [disabled]="!isEditDepositdate">
@@ -232,7 +233,7 @@
                                                         </thead>
                                                         <thead class="bg-white">
                                                             <tr
-                                                                *ngFor="let lineItem of review.get('eor_allowance_details').controls; let eorInd=index">
+                                                                *ngFor="let lineItem of review.get('eor_allowance_details')['controls']; let eorInd=index">
 
                                                                 <td>{{lineItem.get('item').value}}</td>
                                                                 <td>{{lineItem.get('procedure_code').value}}
@@ -249,22 +250,14 @@
                                                                 </td>
                                                                 <td>
                                                                     {{lineItem.get('charges').value > -1 ? '$ ' : '' }}
-                                                                    {{
-                                                                    (
-                                                                    (lineItem.get('charges').value -
-                                                                    lineItem.get('eor_allowance').value) > 0 ?
-                                                                    lineItem.get('charges').value -
-                                                                    lineItem.get('eor_allowance').value : 0
-                                                                    )
-                                                                    | number
-                                                                    :
+                                                                    {{ lineItem.get('balance').value |  number :
                                                                     '1.2-2'}}
                                                                 </td>
                                                             </tr>
                                                         </thead>
                                                     </table>
                                                     <app-nodata
-                                                        *ngIf="review.get('eor_allowance_details').controls.length == 0">
+                                                        *ngIf="review.get('eor_allowance_details')['controls'].length == 0">
                                                     </app-nodata>
                                                 </div>
                                             </div>
@@ -408,7 +401,8 @@
                                                         <input formControlName="payment_amount" min="0" matInput
                                                             type="number" placeholder="Payment Amount"
                                                             autocomplete="off"
-                                                            (change)="setTwoNumberDecimal($event); validatePaymentAmount(review)">
+                                                            (change)="setTwoNumberDecimal($event); validatePaymentAmount(review)"
+                                                            (blur)="setTwoNumberDecimal($event)">
                                                         <span matPrefix>$&nbsp;</span>
                                                     </mat-form-field>
                                                 </div>
@@ -529,7 +523,7 @@
                                                         </thead>
                                                         <thead formArrayName="eor_allowance_details" class="bg-white">
                                                             <tr
-                                                                *ngFor="let eor of review.get('eor_allowance_details').controls; let eorInd=index; let lastReview = last">
+                                                                *ngFor="let eor of review.get('eor_allowance_details')['controls']; let eorInd=index; let lastReview = last">
 
                                                                 <td>{{eor.get('item').value}}</td>
                                                                 <td>{{eor.get('procedure_code').value}}
@@ -541,18 +535,19 @@
                                                                     <input type="text" formControlName="eor_allowance"
                                                                         min="0" [max]="eor.get('charges').value"
                                                                         matInput type="number" autocomplete="off"
-                                                                        (change)="setTwoNumberDecimal($event); validatePaymentAmount(review, eorInd)">
+                                                                        (change)="setTwoNumberDecimal($event); validatePaymentAmount(review, eorInd, eor)" (blur)="setTwoNumberDecimal($event)">
                                                                 </td>
                                                                 <td>
                                                                     {{ eor.get('charges').value > -1 ? '$ ' : '' }}
-                                                                    {{
+                                                                    {{ eor.get('balance').value > 0 ? eor.get('balance').value : 0}}
+                                                                    <!-- {{
                                                                     (
                                                                     (eor.get('charges').value -
                                                                     eor.get('eor_allowance').value) > 0 ?
                                                                     eor.get('charges').value -
                                                                     eor.get('eor_allowance').value : 0
                                                                     ) | number: '1.2-2'
-                                                                    }}
+                                                                    }} -->
                                                                 </td>
                                                             </tr>
                                                         </thead>
@@ -563,7 +558,7 @@
                                                         </span>
                                                     </div>
                                                     <app-nodata
-                                                        *ngIf="review.get('eor_allowance_details').controls.length == 0">
+                                                        *ngIf="review.get('eor_allowance_details')['controls'].length == 0">
                                                     </app-nodata>
                                                 </div>
                                             </div>

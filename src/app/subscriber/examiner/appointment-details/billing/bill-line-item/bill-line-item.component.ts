@@ -183,7 +183,8 @@ export class BillLineItemComponent implements OnInit {
             filteredmodifier: item.filteredmodifier,
             unitTotal: +item.charge,
             is_excess_pages: item.is_excess_pages,
-            modifierTotal: item.modifierTotal
+            modifierTotal: item.modifierTotal,
+            first_submission_payment: item.first_submission_payment ? item.first_submission_payment : 0,
           }
           if (this.billType == 2 || this.billType == 3) {
             firstData['bill_request_reason'] = item.support_documents_details.bill_request_reason;
@@ -272,6 +273,9 @@ export class BillLineItemComponent implements OnInit {
       bill_request_reason: [],
       billed_service_authorized: [false],
       support_documents_attached: [false],
+      first_submission_payment: [],
+      sbr_payment: [],
+      ibr_payment: []
 
     });
   }
