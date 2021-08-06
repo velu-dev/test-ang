@@ -552,14 +552,14 @@
                                                             </tr>
                                                         </thead>
                                                     </table>
-                                                    <div *ngIf="eorError">
-                                                        <span class="error">
-                                                            EOR allowance does not equal to Payment amount
-                                                        </span>
-                                                    </div>
                                                     <app-nodata
                                                         *ngIf="review.get('eor_allowance_details')['controls'].length == 0">
                                                     </app-nodata>
+                                                </div>
+                                                <div *ngIf="eorError">
+                                                    <div class="eor-error-message">
+                                                        <i class="fas fa-exclamation-triangle"></i> EOR allowance does not equal to Payment amount
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -820,6 +820,144 @@
                                                             {{review.get('void_reason').value}}</div>
                                                     </div>
                                                 </div>
+
+
+        <!-- EOR - Mobile UI-->
+        <!-- <div class="bill-response-mobile show-mobile w-100">
+                <table>
+                    <tbody>
+                        <ng-container>
+                            <tr *ngFor="let lineItem of review.get('eor_allowance_details')['controls']; let eorInd=index">
+                                <td>
+                                    <mat-accordion>
+                                        <mat-expansion-panel
+                                            (click)="openElement(lineItem.get('item').value)" hideToggle>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    <div class="inline-title">
+                                                        <div><b>Item</b></div>
+                                                        <div> {{lineItem.get('item').value}}</div>
+                                                    </div>
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <mat-card>
+                                                <div class="flex">
+                                                    <div class="bill-property">Item</div>
+                                                    <div class="value">{{lineItem.get('item').value}}</div>
+                                                </div>
+                                                <div class="flex">
+                                                    <div class="bill-property">Procedure Code</div>
+                                                    <div class="value">{{lineItem.get('procedure_code').value}}</div>
+                                                </div>
+                                                <div class="flex">
+                                                    <div class="bill-property">Modifier</div>
+                                                    <div class="value">{{lineItem.get('modifier').value}}</div>
+                                                </div>
+
+                                                <div class="flex">
+                                                    <div class="bill-property">Charge</div>
+                                                    <div class="value">$ {{lineItem.get('charges').value | number :
+                                                        '1.2-2'}}</div>
+                                                </div>
+
+                                                <div class="flex">
+                                                    <div class="bill-property">EOR Allowance</div>
+                                                    <div class="value">$ {{
+                                                        (lineItem.get('eor_allowance').value !== null ?
+                                                        lineItem.get('eor_allowance').value : 0) | number :
+                                                        '1.2-2'
+                                                        }}</div>
+                                                </div>
+
+                                                <div class="flex">
+                                                    <div class="bill-property">Balance</div>
+                                                    <div class="value">{{lineItem.get('charges').value > -1 ? '$ ' : '' }}
+                                                        {{ lineItem.get('balance').value |  number :
+                                                        '1.2-2'}}</div>
+                                                </div>
+                                            </mat-card>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+
+                                </td>
+                            </tr>
+                            <tr *ngIf="review.get('void_type_id').value != 3">
+                                <td formArrayName="eor_allowance_details" >
+                                    <mat-accordion>
+                                        <mat-expansion-panel [expanded]="true" hideToggle>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    <div class="inline-title">
+                                                        <div><b>Item</b></div>
+                                                        <div>: {{eor.get('item').value}}</div>
+                                                    </div>
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <mat-card *ngFor="let eor of review.get('eor_allowance_details')['controls']; let eorInd=index; let lastReview = last">
+                                                <div class="detail m-t-5"
+                                                    style="background-color: #ffffff;padding: 10px;">
+                                                    <div class="expand-details-list form-level w-100"
+                                                        fxLayout="row wrap">
+                                                        <div fxFlex.sm="100" fxFlex.xs="100"
+                                                            class="expand-details editable">
+                                                            <div class="grid-list-form">
+                                                                <div class="property">Item</div>
+                                                                <div class="value">
+                                                                    {{eor.get('item').value}}
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid-list-form">
+                                                                <div class="property">Procedure Code</div>
+                                                                <div class="value">
+                                                                    {{eor.get('procedure_code').value}}
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid-list-form">
+                                                                <div class="property">Modifier</div>
+                                                                <div class="value">
+                                                                    {{eor.get('modifier').value}}
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="grid-list-form">
+                                                                <div class="property">Charge</div>
+                                                                <div class="value">
+                                                                    $ {{eor.get('charges').value | number : '1.2-2'}}
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid-list-form">
+                                                                <div class="property">EOR Allowance</div>
+                                                                <div class="value">
+                                                                    <div [formGroupName]="eorInd" class="custom-input">
+                                                                        <input type="text" formControlName="eor_allowance"
+                                                                            min="0" [max]="eor.get('charges').value"
+                                                                            matInput type="number" autocomplete="off"
+                                                                            (change)="setTwoNumberDecimal($event); validatePaymentAmount(review, eorInd, eor)" (blur)="setTwoNumberDecimal($event)">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid-list-form">
+                                                                <div class="property">Balance</div>
+                                                                <div class="value">
+                                                                    {{ eor.get('charges').value > -1 ? '$ ' : '' }}
+                                                                    {{ eor.get('balance').value > 0 ? eor.get('balance').value : 0}}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </mat-card>
+                                        </mat-expansion-panel>
+                                    </mat-accordion>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+        </div> -->
+
+
                                                 <div fxFlex="100">
                                                     <button type="button"
                                                         *ngIf="last && review.get('void_type_id').value != 3"
