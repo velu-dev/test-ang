@@ -341,3 +341,11 @@ mat-card-content {
         }
     }
 }
+.eor-error-message {
+    padding: 10px;
+    margin: 20px 0 10px 0;
+    color: $error;
+    background-color: $error-bg;
+    border: 1px solid $error-border;
+    border-radius: 3px;
+}
