@@ -78,7 +78,7 @@
                     </button>
                 </div>
                 <div class="support-btn hide-mobile p-r-20">
-                    <a href="javaScript:void(0)">Help</a> |
+                    <a [href]="helpUrl" target="help_url">Help</a> |
                     <a (click)="logout()">Log-Out</a></div>
                 <div *ngIf="user">
                     <button mat-icon-button [title]="user?.first_name" [matMenuTriggerFor]="settings">
@@ -107,10 +107,10 @@
                 <span>Settings</span>
             </button>
             <mat-divider class="show-mobile"></mat-divider>
-            <button mat-menu-item class="show-mobile">
+            <a mat-menu-item class="show-mobile" [href]="helpUrl" target="help_url">
                 <mat-icon>help_outline</mat-icon>
                 <span>Help</span>
-            </button>
+            </a>
             <mat-divider></mat-divider>
             <button mat-menu-item (click)="logout()">
                 <mat-icon>exit_to_app</mat-icon>
