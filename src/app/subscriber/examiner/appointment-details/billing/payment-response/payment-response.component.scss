@@ -1,102 +1,6 @@
 @import "variables";
 @import "table";
 
-// .bill-item {
-//     margin-top: 20px;
-//     mat-card {
-//         box-shadow: $shadow-style-one !important;
-//         &:hover {
-//             box-shadow: $shadow-style-one-hover;
-//         }
-//     }
-//     .custom-input {
-//         padding: 8px 3px;
-//         border: 1px solid $gray;
-//         width: 100px;
-//         border-radius: 3px;
-//         &:disabled {
-//             border: 1px solid $white;
-//             background-color: transparent;
-//             width: auto;
-//             border-radius: 3px;
-//         }
-//     }
-// }
-// .payment-response {
-//     .vertical-fixed {
-//         overflow: inherit !important;
-// .pay-response {
-//     width: 2000px;
-//     thead {
-//             th {
-//                 &:first-child {
-//                     position: sticky;
-//                     left: 0;
-//                     z-index: 99999;
-//                 }
-//                 &:last-child {
-//                     position: sticky;
-//                     right: 0;
-//                     z-index: 99999;
-//                 }
-//             }
-//     }
-//     tbody {
-//         tr {
-//             th {
-//                 &:first-child {
-//                     position: sticky;
-//                     left: 0;
-//                     background-color: $white;
-//                     z-index: 99999;
-//                 }
-//                 &:last-child {
-//                     position: sticky;
-//                     right: 0;
-//                     z-index: 99999;
-//                 }
-//             }
-//             td {
-//                 &:first-child {
-//                     position: sticky;
-//                     left: 0;
-//                     background-color: $white;
-//                     z-index: 99999;
-//                 }
-//                 &:last-child {
-//                     position: sticky;
-//                     right: 0;
-//                     background-color: $white;
-//                     z-index: 99999;
-//                 }
-//             }
-//         }
-//     }
-//     tfoot {
-//         tr {
-//             td {
-//                 &:first-child {
-//                     position: sticky;
-//                     left: 0;
-//                     background-color: $white;
-//                     z-index: 99999;
-//                 }
-//                 &:last-child {
-//                     position: sticky;
-//                     right: 0;
-//                     background-color: $white;
-//                     z-index: 99999;
-//                 }
-//             }
-//         }
-//     }
-// }
-//     }
-// }
-// New design implementation
-// .m-card {
-//     margin-bottom: 20px;
-//     min-height: fit-content;
 mat-card-content {
     .user-detail {
         min-height: auto !important;
@@ -174,19 +78,6 @@ mat-card-content {
                             height: -webkit-calc(100% + (28px + 10px));
                             height: calc(100% + (28px + 10px));
                         }
-                        // &:last-child {
-                        //     &::after {
-                        //         content: "";
-                        //         background-color: $black;
-                        //         width: 3px;
-                        //         position: absolute;
-                        //         left: -30px;
-                        //         top: 0;
-                        //         height: -moz-calc(54.3% - 0px);
-                        //         height: -webkit-calc(54.3% - 0px);
-                        //         height: calc(54.3% - 0px);
-                        //     }
-                        // }
                         &::before {
                             font-family: "Font Awesome 5 Free";
                             font-weight: 900;
@@ -244,17 +135,20 @@ mat-card-content {
                                 .deposit-date {
                                     width: calc(100% - 130px);
                                     ::ng-deep {
-                                        // .mat-form-field-appearance-outline .mat-form-field-outline-end, .mat-form-field-appearance-outline .mat-form-field-outline-start {
-                                        //     border:2px solid;
-                                        // }
                                         .mat-form-field {
-                                            @media only screen and (min-width: 1200px) {
                                                 width: calc(100% - 70px);
-                                            }
                                         }
                                         .mat-form-field-appearance-outline .mat-form-field-outline {
-                                            color: $secondary;
-                                          }
+                                                color: $secondary;
+                                                @media screen and (max-width: 920px) and (min-width: 320px) {
+                                                    color: $secondary;
+                                                }
+                                        }
+                                        .mat-form-field-appearance-outline .mat-form-field-outline-start,
+                                        .mat-form-field-appearance-outline .mat-form-field-outline-end,
+                                        .mat-form-field-appearance-outline .mat-form-field-outline-gap {
+                                            border-width: 2px !important;
+                                        }
                                         .mat-form-field-wrapper {
                                             padding: 0 !important;
                                         }
@@ -280,23 +174,6 @@ mat-card-content {
                                     }
                                 }
                             }
-                            // div {
-                            //     // padding: 5px 0;
-                            //     display: flex;
-                            //     span.prp_ {
-                            //         min-width: 150px;
-                            //         display: -webkit-inline-box;
-                            //         position: relative;
-                            //         font-weight: $font-weight-bold;
-                            //         &::after {
-                            //             position: absolute;
-                            //             top: 0;
-                            //             right: 0;
-                            //             content: ":";
-                            //             padding-right: 5px;
-                            //         }
-                            //     }
-                            // }
                         }
                         .expand-details.editable {
                             div {
@@ -427,7 +304,6 @@ mat-card-content {
         }
     }
 }
-// }
 .eor-allowance {
     .bg-white {
         background-color: $white;
