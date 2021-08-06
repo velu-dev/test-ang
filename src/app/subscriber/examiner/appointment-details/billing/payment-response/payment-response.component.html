@@ -409,7 +409,8 @@
                                                         <input formControlName="payment_amount" min="0" matInput
                                                             type="number" placeholder="Payment Amount"
                                                             autocomplete="off"
-                                                            (change)="setTwoNumberDecimal($event); validatePaymentAmount(review)">
+                                                            (change)="setTwoNumberDecimal($event); validatePaymentAmount(review)"
+                                                            (blur)="setTwoNumberDecimal($event)">
                                                         <span matPrefix>$&nbsp;</span>
                                                     </mat-form-field>
                                                 </div>
@@ -542,7 +543,8 @@
                                                                     <input type="text" formControlName="eor_allowance"
                                                                         min="0" [max]="eor.get('charges').value"
                                                                         matInput type="number" autocomplete="off"
-                                                                        (change)="setTwoNumberDecimal($event); validatePaymentAmount(review, eorInd)">
+                                                                        (change)="setTwoNumberDecimal($event); validatePaymentAmount(review, eorInd)"
+                                                                        (blur)="setTwoNumberDecimal($event)">
                                                                 </td>
                                                                 <td>
                                                                     {{ eor.get('charges').value > -1 ? '$ ' : '' }}
