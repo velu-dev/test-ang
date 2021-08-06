@@ -115,7 +115,8 @@
                                         <td>
                                             <span class="text-danger">
                                                 {{group.get('charge').value > -1 ? '$ ' :
-                                                ''}}{{group.get('charge').value - group.value.payment | number :
+                                                ''}}{{group.get('charge').value - group.get('payment').value |
+                                                number :
                                                 '1.2-2'}}</span>
                                         </td>
 
@@ -153,8 +154,9 @@
                                             | number : '1.2-2'}}
                                         </td>
                                         <td>
-                                            {{group.get('charge').value > -1 ? '$ ' : ''}}{{(group.get('charge').value)
-                                            | number : '1.2-2'}}
+                                            {{group.get('charge').value > -1 ? '$ ' : ''}}{{group.get('charge').value - group.get('payment').value |
+                                            number :
+                                            '1.2-2'}}
                                         </td>
                                         <td class="no-wrap-td" *ngIf="!is_cancellation">
 
@@ -326,7 +328,7 @@
                                                     <div class="editable">
                                                         <span class="text-danger">
                                                             {{group.get('charge').value > -1 ? '$ ' :
-                                                            ''}}{{group.get('charge').value - group.value.payment |
+                                                            ''}}{{group.get('charge').value - group.get('payment').value |
                                                             number :
                                                             '1.2-2'}}</span>
                                                     </div>
@@ -491,6 +493,7 @@
                                 <th>Charge</th>
                                 <th>{{billType == 2 ? 'First Submission Payment' : ""}}{{billType == 3? 'SBR Payment' :
                                     ""}}</th>
+                                <th>{{billType == 2 ? 'SBR Payment' : ""}}{{billType == 3? 'IBR Payment' : ""}}</th>    
                                 <th>Balance</th>
                                 <th>Action</th>
                             </thead>
@@ -575,14 +578,15 @@
                                             </mat-form-field>
                                         </td>
                                         <td>
+                                            {{group.get('first_submission_payment').value > -1 ? '$ ' : ''}}{{group.get('first_submission_payment').value | number : '1.2-2'}}
+                                        </td>
+                                        <td>
                                             {{group.get('payment').value > -1 ? '$ ' : ''}}{{group.get('payment').value
                                             | number : '1.2-2'}}
                                         </td>
-                                        <td>
-                                            <span class="text-danger">
-                                                {{group.get('charge').value > -1 ? '$ ' :
-                                                ''}}{{group.get('charge').value - group.value.payment | number :
-                                                '1.2-2'}}</span>
+                                                                                <td>
+                                            <span class="text-danger">{{group.get('charge').value > -1 ? '$ ' :''}}
+                                                {{group.get('charge').value - group.get('payment').value | number :'1.2-2'}}</span>
                                         </td>
 
                                         <td class="no-wrap-td">
@@ -620,11 +624,14 @@
                                             number : '1.2-2'}}
                                         </td>
                                         <td>
+                                            {{group.get('first_submission_payment').value > -1 ? '$ ' : ''}}{{group.get('first_submission_payment').value | number : '1.2-2'}}
+                                        </td>
+                                        <td>
                                             {{group.get('payment').value > -1 ? '$ ' : ''}}{{group.get('payment').value
                                             | number : '1.2-2'}}
                                         </td>
                                         <td>
-                                            {{group.get('charge').value > -1 ? '$ ' : ''}}{{(group.get('charge').value) - (group.get('payment').value)
+                                            {{group.get('charge').value > -1 ? '$ ' : ''}}{{(group.get('charge').value) - (group.get('first_submission_payment').value) - (group.get('payment').value)
                                             | number : '1.2-2'}}
                                         </td>
                                         <td>-</td>

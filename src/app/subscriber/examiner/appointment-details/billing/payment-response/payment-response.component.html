@@ -249,15 +249,7 @@
                                                                 </td>
                                                                 <td>
                                                                     {{lineItem.get('charges').value > -1 ? '$ ' : '' }}
-                                                                    {{
-                                                                    (
-                                                                    (lineItem.get('charges').value -
-                                                                    lineItem.get('eor_allowance').value) > 0 ?
-                                                                    lineItem.get('charges').value -
-                                                                    lineItem.get('eor_allowance').value : 0
-                                                                    )
-                                                                    | number
-                                                                    :
+                                                                    {{ lineItem.get('balance').value |  number :
                                                                     '1.2-2'}}
                                                                 </td>
                                                             </tr>
@@ -541,18 +533,19 @@
                                                                     <input type="text" formControlName="eor_allowance"
                                                                         min="0" [max]="eor.get('charges').value"
                                                                         matInput type="number" autocomplete="off"
-                                                                        (change)="setTwoNumberDecimal($event); validatePaymentAmount(review, eorInd)">
+                                                                        (change)="setTwoNumberDecimal($event); validatePaymentAmount(review, eorInd, eor)">
                                                                 </td>
                                                                 <td>
                                                                     {{ eor.get('charges').value > -1 ? '$ ' : '' }}
-                                                                    {{
+                                                                    {{ eor.get('balance').value > 0 ? eor.get('balance').value : 0}}
+                                                                    <!-- {{
                                                                     (
                                                                     (eor.get('charges').value -
                                                                     eor.get('eor_allowance').value) > 0 ?
                                                                     eor.get('charges').value -
                                                                     eor.get('eor_allowance').value : 0
                                                                     ) | number: '1.2-2'
-                                                                    }}
+                                                                    }} -->
                                                                 </td>
                                                             </tr>
                                                         </thead>
