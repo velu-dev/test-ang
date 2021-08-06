@@ -13,6 +13,7 @@
     </mat-tab-group>
 
     <div *ngIf="billingData">
+        <app-billing-timeline></app-billing-timeline>
         <app-billing-info [cancellation]="is_cancellation" [review]="review" [paramsId]="paramsId"
             [billingData]="billingData" [isMobile]="isMobile">
         </app-billing-info>

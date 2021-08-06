@@ -9,23 +9,11 @@
             <div class="text-center">{{billingData?.on_demand_progress_status}}</div>
         </div>
         <!-- <div class="progress">
-            <div class="billing-progress-status">
+            <div class="">
                 <ul>
-                    <li>
-                        <p class="selected">Submitted to Clearinghouse</p>
-                        <p> 07-03-2021 <br/>12:04 PM</p>
-                    </li>
-                    <li>
-                        <p class="selected">Accepted by Clearinghouse</p>
-                        <p> 07-03-2021 <br/>12:04 PM</p>
-                    </li>
-                    <li>
-                        <p class="selected">Approved by Clearinghouse</p>
-                        <p> 07-03-2021 <br/>12:04 PM</p>
-                    </li>
-                    <li>
-                        <p class="selected">Sent to Claims Administrator</p>
-                        <p> 07-03-2021 <br/>12:04 PM</p>
+                    <li *ngFor="let billing of billingTimelineInfo">
+                        <p class="selected">{{billing.status_name}}</p>
+                        <p> {{billing.date}} <br />{{billing.time}}</p>
                     </li>
                 </ul>
             </div>
@@ -92,7 +80,8 @@
                 class="filled-gray m-b-5">
                 Feedback History
             </button> -->
-            <button mat-raised-button *ngIf="billingData.is_re_submit" class="filled-gray m-b-5" (click)="isFeedbackOpened =!isFeedbackOpened">
+            <button mat-raised-button *ngIf="billingData.is_re_submit" class="filled-gray m-b-5"
+                (click)="isFeedbackOpened =!isFeedbackOpened">
                 Feedback History <i class="p-l-5 fas"
                     [ngClass]="{'fa-angle-up': isFeedbackOpened,'fa-angle-down': !isFeedbackOpened}"></i>
             </button>
@@ -108,7 +97,8 @@
             </div>
             <div fxLayout="row wrap" *ngIf="payerResponse['new_response'].length != 0">
                 <div class="incomplete-modules m-b-10" fxFlex="100" *ngFor="let payer of payerResponse['new_response']">
-                    <div class="received-date"><span>Received Date: {{payer?.status_date | date:'MM-dd-yyyy'}}</span><span>Ref #: {{payer?.request_reference_id}}</span></div>
+                    <div class="received-date"><span>Received Date: {{payer?.status_date |
+                            date:'MM-dd-yyyy'}}</span><span>Ref #: {{payer?.request_reference_id}}</span></div>
                     <ul class="p-t-5">
                         <li *ngFor="let message of payer.message" class="text-danger">
                             <mat-icon>error</mat-icon>{{message?._attributes?.MessageText}}
@@ -118,7 +108,8 @@
             </div>
             <div fxLayout="row wrap" *ngIf="payerResponse['old_response'].length > 0 && isFeedbackOpened">
                 <div class="resubmitted-modules" fxFlex="100" *ngFor="let payer of payerResponse['old_response']">
-                    <div class="received-date"><span>Received Date: {{payer?.status_date | date:'MM-dd-yyyy'}}</span><span>Ref #: {{payer?.request_reference_id}}</span></div>
+                    <div class="received-date"><span>Received Date: {{payer?.status_date |
+                            date:'MM-dd-yyyy'}}</span><span>Ref #: {{payer?.request_reference_id}}</span></div>
                     <ul>
                         <li *ngFor="let message of payer.message">
                             {{message?._attributes?.MessageText}}

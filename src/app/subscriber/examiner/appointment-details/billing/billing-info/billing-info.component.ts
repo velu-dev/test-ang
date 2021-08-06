@@ -36,6 +36,9 @@ export const MY_CUSTOM_FORMATS = {
   { provide: OWL_DATE_TIME_FORMATS, useValue: MY_CUSTOM_FORMATS }]
 })
 export class BillingInfoComponent implements OnInit, OnDestroy {
+  billingTimelineInfo = [{ status_name: "Submitted to Claim Manager", date: "07-03-2021", time: "12:04 PM", status: true }, { status_name: "Accepted by Clearinghouse", date: "07-04-2021", time: "12:04 PM", status: true }, { status_name: "Accepted for Processing", date: "07-05-2021", time: "12:04 PM", status: true }]
+  
+  // { status_name: "Sent to Claims Administrator", date: "07-06-2021", time: "12:04 PM", status: true }, { status_name: "Closed", date: "07-09-2021", time: "12:04 PM", status: true }]
   @Input() billingData: any;
   @Input() paramsId: any;
   @Input() isMobile: any;
