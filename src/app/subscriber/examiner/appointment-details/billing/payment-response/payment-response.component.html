@@ -250,7 +250,8 @@
                                                                 </td>
                                                                 <td>
                                                                     {{lineItem.get('charges').value > -1 ? '$ ' : '' }}
-                                                                    {{ lineItem.get('balance').value |  number :
+                                                                    {{ (lineItem.get('balance').value > 0 ?
+                                                                    lineItem.get('balance').value : 0) | number :
                                                                     '1.2-2'}}
                                                                 </td>
                                                             </tr>
@@ -466,7 +467,7 @@
                                                     <mat-form-field appearance="outline">
                                                         <input formControlName="payor_claim_control_number" matInput
                                                             type="text" placeholder="Payor Claim Control Number"
-                                                            autocomplete="off">
+                                                            maxlength="35" autocomplete="off">
                                                     </mat-form-field>
                                                 </div>
                                             </div>
@@ -535,11 +536,13 @@
                                                                     <input type="text" formControlName="eor_allowance"
                                                                         min="0" [max]="eor.get('charges').value"
                                                                         matInput type="number" autocomplete="off"
-                                                                        (change)="setTwoNumberDecimal($event); validatePaymentAmount(review, eorInd, eor)" (blur)="setTwoNumberDecimal($event)">
+                                                                        (change)="setTwoNumberDecimal($event); validatePaymentAmount(review, eorInd, eor)"
+                                                                        (blur)="setTwoNumberDecimal($event)">
                                                                 </td>
                                                                 <td>
                                                                     {{ eor.get('charges').value > -1 ? '$ ' : '' }}
-                                                                    {{ (eor.get('balance').value > 0 ? eor.get('balance').value : 0) |  number :
+                                                                    {{ (eor.get('balance').value > 0 ?
+                                                                    eor.get('balance').value : 0) | number :
                                                                     '1.2-2' }}
                                                                     <!-- {{
                                                                     (
@@ -559,7 +562,8 @@
                                                 </div>
                                                 <div *ngIf="eorError">
                                                     <div class="eor-error-message">
-                                                        <i class="fas fa-exclamation-triangle"></i> EOR allowance does not equal to Payment amount
+                                                        <i class="fas fa-exclamation-triangle"></i> EOR allowance does
+                                                        not equal to Payment amount
                                                     </div>
                                                 </div>
                                             </div>
@@ -713,18 +717,20 @@
                                                         <div class="property">Deposit Date</div>
                                                         <div *ngIf="last && !review.get('deposit_date').value && review.get('response_type').value !== 'Denied'"
                                                             class="deposit-date value">
-                                                            <mat-form-field appearance="outline" class="mat-date-picker">
+                                                            <mat-form-field appearance="outline"
+                                                                class="mat-date-picker">
                                                                 <input matInput type="text" [(ngModel)]="depositionDate"
                                                                     [ngModelOptions]="{standalone: true}"
                                                                     [min]="review.get('effective_date').value"
-                                                                    [matDatepicker]="deposited" [readonly]="!isEditDepositdate"
+                                                                    [matDatepicker]="deposited"
+                                                                    [readonly]="!isEditDepositdate"
                                                                     placeholder="Deposit Date" />
                                                                 <mat-datepicker-toggle matSuffix [for]="deposited"
                                                                     [disabled]="!isEditDepositdate">
                                                                 </mat-datepicker-toggle>
                                                                 <mat-datepicker #deposited></mat-datepicker>
                                                             </mat-form-field>
-        
+
                                                             <span class="action-btn">
                                                                 <mat-icon (click)="toggleDepositDate()"
                                                                     *ngIf="!isEditDepositdate" class="text-success">
@@ -734,8 +740,8 @@
                                                                     *ngIf="isEditDepositdate" class="text-success">
                                                                     done
                                                                 </mat-icon>
-                                                                <mat-icon (click)="clearDepositDate()" *ngIf="isEditDepositdate"
-                                                                    class="text-danger">
+                                                                <mat-icon (click)="clearDepositDate()"
+                                                                    *ngIf="isEditDepositdate" class="text-danger">
                                                                     close </mat-icon>
                                                             </span>
                                                         </div>
@@ -823,8 +829,8 @@
                                                 </div>
 
 
-        <!-- EOR - Mobile UI-->
-        <!-- <div class="bill-response-mobile show-mobile w-100">
+                                                <!-- EOR - Mobile UI-->
+                                                <!-- <div class="bill-response-mobile show-mobile w-100">
                 <table>
                     <tbody>
                         <ng-container>
