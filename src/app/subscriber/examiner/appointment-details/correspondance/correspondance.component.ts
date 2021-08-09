@@ -732,23 +732,24 @@ export class BillingCorrespondanceComponent implements OnInit {
       //     message = message + " and " + msg;
       //   }
       // })
-      const dialogRef = this.dialog.open(AlertDialogueComponent, {
-        width: '500px',
-        data: { title: "Address incomplete", message: "Don't have address for " + empty_address.join(", ") + "!", ok: true, no: false, type: "warning", warning: true }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        return
-      })
+      // const dialogRef = this.dialog.open(AlertDialogueComponent, {
+      //   width: '500px',
+      //   data: { title: "Address incomplete", message: "Don't have address for " + empty_address.join(", ") + "!", ok: true, no: false, type: "warning", warning: true }
+      // });
+      // dialogRef.afterClosed().subscribe(result => {
+      //   return
+      // })
+      this.checkIncomplete(ids)
     } else {
       if (empty_address.length > 0) {
-        // let message = "";
-        // empty_address.map(msg => {
-        //   if (msg == "") {
-        //     message = msg
-        //   } else {
-        //     message = message + " and " + msg;
-        //   }
-        // })
+        let message = "";
+        empty_address.map(msg => {
+          if (msg == "") {
+            message = msg
+          } else {
+            message = message + " and " + msg;
+          }
+        })
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
           data: {
@@ -769,10 +770,21 @@ export class BillingCorrespondanceComponent implements OnInit {
       return;
     }
   }
-  createOndemand(ids) {
-    console.log(ids)
-    // this.onDemandService.getCorresIncomplete(this.claim_id, this.billableId, ids).subscribe(res => {
+  checkIncomplete(ids) {
+    this.onDemandService.getCorresIncomplete(this.claim_id, this.billableId, ids).subscribe(res => {
+      this.createOndemand(ids);
+    }, error => {
+      const dialogRef = this.dialog.open(BillingAlertComponent, {
+        width: '500px',
+        data: { title: 'Incomplete Information', incompleteInformation: error.error.data, ok: true }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        return
+      })
+    })
 
+  }
+  createOndemand(ids) {
     let documents_ids: any = [];
     let document_ids_display_order: any = [];
     let custom_documents_ids: any = [];
@@ -816,16 +828,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       selected_recipients: selected_recipients
     }
     this.getOndemandDocs(data);
-    // }, error => {
-    //   const dialogRef = this.dialog.open(BillingAlertComponent, {
-    //     width: '500px',
-    //     data: { title: 'Incomplete Information', incompleteInformation: error.error.data, ok: true }
-    //     // data: { title: 'Incomplete Information', message: "Without the information listed above the correspondence documents will not be delivered. Please, enter the missing information.", incompleteInformation: error.error.data, warning: true }
-    //   });
-    //   dialogRef.afterClosed().subscribe(result => {
-    //     return
-    //   })
-    // })
+
   }
   getOndemandDocs(data) {
     this.onDemandService.onDemandCorrespondence(data).subscribe(record => {
