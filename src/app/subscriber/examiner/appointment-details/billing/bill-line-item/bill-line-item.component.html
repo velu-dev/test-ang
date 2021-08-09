@@ -121,10 +121,12 @@
                                         </td>
 
                                         <td class="no-wrap-td">
-                                            <a [ngClass]="{'disableatag': isPaymentresponseCreated}" class="text-success" (click)="doneRow(group,i)">
+                                            <a [ngClass]="{'disableatag': isPaymentresponseCreated}"
+                                                class="text-success" (click)="doneRow(group,i)">
                                                 Save
                                             </a>
-                                            <a [ngClass]="{'disableatag': isPaymentresponseCreated}" class="text-danger m-l-10" (click)="cancelRow(group,i)">
+                                            <a [ngClass]="{'disableatag': isPaymentresponseCreated}"
+                                                class="text-danger m-l-10" (click)="cancelRow(group,i)">
                                                 Cancel
                                             </a>
                                         </td>
@@ -154,7 +156,8 @@
                                             | number : '1.2-2'}}
                                         </td>
                                         <td>
-                                            {{group.get('charge').value > -1 ? '$ ' : ''}}{{group.get('charge').value - group.get('payment').value |
+                                            {{group.get('charge').value > -1 ? '$ ' : ''}}{{group.get('charge').value -
+                                            group.get('payment').value |
                                             number :
                                             '1.2-2'}}
                                         </td>
@@ -328,7 +331,8 @@
                                                     <div class="editable">
                                                         <span class="text-danger">
                                                             {{group.get('charge').value > -1 ? '$ ' :
-                                                            ''}}{{group.get('charge').value - group.get('payment').value |
+                                                            ''}}{{group.get('charge').value - group.get('payment').value
+                                                            |
                                                             number :
                                                             '1.2-2'}}</span>
                                                     </div>
@@ -491,9 +495,10 @@
                                 <th>Unit Type</th>
                                 <th>Units</th>
                                 <th>Charge</th>
+                                <th *ngIf="billType == 3">First Submission Payment</th>
                                 <th>{{billType == 2 ? 'First Submission Payment' : ""}}{{billType == 3? 'SBR Payment' :
                                     ""}}</th>
-                                <th>{{billType == 2 ? 'SBR Payment' : ""}}{{billType == 3? 'IBR Payment' : ""}}</th>    
+                                <th>{{billType == 2 ? 'SBR Payment' : ""}}{{billType == 3? 'IBR Payment' : ""}}</th>
                                 <th>Balance</th>
                                 <th>Action</th>
                             </thead>
@@ -578,15 +583,21 @@
                                             </mat-form-field>
                                         </td>
                                         <td>
-                                            {{group.get('first_submission_payment').value > -1 ? '$ ' : ''}}{{group.get('first_submission_payment').value | number : '1.2-2'}}
+                                            {{group.get('first_submission_payment').value > -1 ? '$ ' :
+                                            ''}}{{group.get('first_submission_payment').value | number : '1.2-2'}}
+                                        </td>
+                                        <td *ngIf="billType == 3">
+                                            {{group.get('sbr_payment').value > -1 ? '$ ' :
+                                            ''}}{{group.get('sbr_payment').value | number : '1.2-2'}}
                                         </td>
                                         <td>
                                             {{group.get('payment').value > -1 ? '$ ' : ''}}{{group.get('payment').value
                                             | number : '1.2-2'}}
                                         </td>
-                                                                                <td>
+                                        <td>
                                             <span class="text-danger">{{group.get('charge').value > -1 ? '$ ' :''}}
-                                                {{group.get('charge').value - group.get('payment').value | number :'1.2-2'}}</span>
+                                                {{group.get('charge').value - group.get('payment').value | number
+                                                :'1.2-2'}}</span>
                                         </td>
 
                                         <td class="no-wrap-td">
@@ -624,15 +635,33 @@
                                             number : '1.2-2'}}
                                         </td>
                                         <td>
-                                            {{group.get('first_submission_payment').value > -1 ? '$ ' : ''}}{{group.get('first_submission_payment').value | number : '1.2-2'}}
+                                            {{group.get('first_submission_payment').value > -1 ? '$ ' :
+                                            ''}}{{group.get('first_submission_payment').value | number : '1.2-2'}}
+                                        </td>
+                                        <td *ngIf="billType == 3">
+                                            {{group.get('sbr_payment').value > -1 ? '$ ' :
+                                            ''}}{{group.get('sbr_payment').value | number : '1.2-2'}}
                                         </td>
                                         <td>
                                             {{group.get('payment').value > -1 ? '$ ' : ''}}{{group.get('payment').value
                                             | number : '1.2-2'}}
                                         </td>
                                         <td>
-                                            {{group.get('charge').value > -1 ? '$ ' : ''}}{{(group.get('charge').value) - (group.get('first_submission_payment').value) - (group.get('payment').value)
-                                            | number : '1.2-2'}}
+                                            {{group.get('charge').value > -1 ? '$ ' : ''}}
+                                            <!-- <ng-container *ngIf="billType !=3">
+                                                {{(group.get('charge').value)
+                                                - (group.get('first_submission_payment').value) -
+                                                (group.get('payment').value)
+                                                | number : '1.2-2'}}
+                                            </ng-container>
+                                            <ng-container *ngIf="billType ==3">
+                                                {{(group.get('charge').value)
+                                                - (group.get('first_submission_payment').value)
+                                                - (group.get('sbr_payment').value) -
+                                                (group.get('payment').value)
+                                                | number : '1.2-2'}}
+                                            </ng-container> -->
+                                            {{ group.get('balance').value | number: '1.2-2' }}
                                         </td>
                                         <td>-</td>
                                     </tr>
@@ -699,7 +728,7 @@
                                     <div fxFlex="50">
                                         <mat-form-field appearance="outline" fxFlex="100">
                                             <mat-label>Payer Claim Control Number*</mat-label>
-                                            <input matInput formControlName="payor_claim_control_number"
+                                            <input matInput formControlName="payor_claim_control_number" maxlength="35"
                                                 placeholder="Payer Claim Control Number">
                                         </mat-form-field>
                                     </div>

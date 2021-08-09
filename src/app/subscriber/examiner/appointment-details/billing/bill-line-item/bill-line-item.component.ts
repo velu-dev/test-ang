@@ -58,7 +58,7 @@ export class BillLineItemComponent implements OnInit {
   fileName: any = []
   support_documents = [];
   oneUnitProcedure = ['ml201', 'ml202', 'ml203']
-  subscription: Subscription;
+  subscriptions: Subscription[];
   @Input() cancellation: boolean;
 
   constructor(private logger: NGXLogger,
@@ -79,15 +79,22 @@ export class BillLineItemComponent implements OnInit {
   }
   isPaymentresponseCreated: boolean = false;
   ngOnInit() {
-    this.intercom.getPaymentReview().subscribe(res => {
+    const paymentResSubscription = this.intercom.getPaymentReview().subscribe(res => {
       this.isPaymentresponseCreated = res > 0 ? true : false;
-    })
+    });
     this.getBillLineItem();
-    this.subscription = this.intercom.getAttorneyAddressChanges().subscribe((res) => {
+    const attorneyChangeSubscription = this.intercom.getAttorneyAddressChanges().subscribe((res) => {
       if (res) {
         this.getBillLineItem()
       }
-    })
+    });
+    const billLineItemChangeSubscription = this.intercom.getBillItemChange().subscribe((res) => {
+      if (res) {
+        this.getBillLineItem()
+      }
+    });
+
+    this.subscriptions = [paymentResSubscription, attorneyChangeSubscription, billLineItemChangeSubscription];
   }
   is_cancellation = false;
   ngAfterContentInit() {
@@ -172,7 +179,7 @@ export class BillLineItemComponent implements OnInit {
             units: item.units,
             charge: +item.charge,
             payment: item.payment_amount ? item.payment_amount : 0.00,
-            balance: 0,
+            balance: this.getBalance(item),
             isEditable: [true],
             unit_price: item.unit_price ? +item.unit_price : null,
             is_post_payment: item.is_post_payment,
@@ -185,6 +192,8 @@ export class BillLineItemComponent implements OnInit {
             is_excess_pages: item.is_excess_pages,
             modifierTotal: item.modifierTotal,
             first_submission_payment: item.first_submission_payment ? item.first_submission_payment : 0,
+            sbr_payment: item.sbr_payment ? item.sbr_payment : 0,
+            ibr_payment: item.ibr_payment ? item.ibr_payment : 0,
           }
           if (this.billType == 2 || this.billType == 3) {
             firstData['bill_request_reason'] = item.support_documents_details.bill_request_reason;
@@ -275,7 +284,7 @@ export class BillLineItemComponent implements OnInit {
       support_documents_attached: [false],
       first_submission_payment: [],
       sbr_payment: [],
-      ibr_payment: []
+      ibr_payment: [],
 
     });
   }
@@ -920,8 +929,18 @@ export class BillLineItemComponent implements OnInit {
     }
   }
 
+  getBalance(item: any) {
+    let balance = 0;
+    if(this.billType != 3) {
+      balance = Number(item.charge) - Number(item.first_submission_payment) - Number(item.payment_amount);
+    } else {
+      balance = Number(item.charge) - Number(item.first_submission_payment) - Number(item.sbr_payment) - Number(item.payment_amount);
+    }
+    return balance > 0 ? balance : 0;
+  }
+
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
 }
