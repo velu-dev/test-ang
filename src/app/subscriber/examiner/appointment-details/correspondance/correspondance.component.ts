@@ -97,7 +97,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       this.billableId = params.billId;
       this.examinerId = params.examiner_id;
       this.claimant_id = params.claimant_id;
-      
+
       this.onDemandService.getCorresIncomplete(this.claim_id, this.billableId, []).subscribe(res => {
         this.isIncompleteError = true;
       }, error => {
@@ -609,8 +609,10 @@ export class BillingCorrespondanceComponent implements OnInit {
     SelectedIds = this.selection.selected;
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '500px',
-      data: { name: "remove this document", address: true, title: element.original_file_name && element.original_file_name != '' ? element.original_file_name :
-      element.form_name }
+      data: {
+        name: "remove this document", address: true, title: element.original_file_name && element.original_file_name != '' ? element.original_file_name :
+          element.form_name
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -712,117 +714,116 @@ export class BillingCorrespondanceComponent implements OnInit {
       return;
     }
     let ids = [];
+    let empty_address = [];
     this.selection1.selected.map(res => {
-      ids.push(res.id)
-    })
-
-    this.onDemandService.getCorresIncomplete(this.claim_id, this.billableId, ids).subscribe(res => {
-
-
-      let documents_ids: any = [];
-      let document_ids_display_order: any = [];
-      let custom_documents_ids: any = [];
-      let selected_recipients: any = [];
-      this.selection.selected.map(res => {
-        if (res.doc_type == "custom") {
-          custom_documents_ids.push(res.id)
-        } else {
-          document_ids_display_order.push({ form_id: res.id, custom_display_order: res.custom_display_oder })
-          documents_ids.push(res.id)
-        }
-      })
-      let recipientsDocuments_ids: any = [];
-      let recipientsCustom_documents_ids: any = [];
-      let addressEmpty = false;
-      this.selection1.selected.map(res => {
-        if (res.type == "custom") {
-          recipientsCustom_documents_ids.push(res.id)
-          selected_recipients.push(res);
-        } else {
-          recipientsDocuments_ids.push(res.id)
-          selected_recipients.push(res.data);
-        }
-        if (res.message) {
-          addressEmpty = true;
-        }
-      })
-      let data = {
-        claim_id: this.claim_id,
-        document_category_id: 9,
-        billable_item_id: this.billableId,
-        service_request_type_id: 4,
-        documents_ids: documents_ids,
-        document_ids_display_order: document_ids_display_order,
-        custom_documents_ids: custom_documents_ids,
-        recipients_ids: recipientsDocuments_ids,
-        custom_recipients_ids: recipientsCustom_documents_ids,
-        examiner_id: this.examinerId,
-        selected_recipients: selected_recipients
+      if (!res.message) {
+        ids.push(res.id)
+      } else {
+        empty_address.push(res.recipient_type)
       }
-
-      // if (documents_ids.includes(3)) {
-      //   if (!recipientsDocuments_ids.includes(1) || !recipientsDocuments_ids.includes(2)) {
-      //     const dialogRef = this.dialog.open(AlertDialogueComponent, {
-      //       width: '500px',
-      //       data: { title: "Mail On Demand", message: "Please select Claimant & Insurance Company in recipient and try again!", ok: true, no: false, type: "warning", warning: true }
-      //     });
-      //     dialogRef.afterClosed().subscribe(result => {
-      //       return
-      //     })
-      //     return;
+    })
+    console.log(ids)
+    if (ids.length == 0) {
+      // let message = "";
+      // empty_address.map(msg => {
+      //   if (msg == "") {
+      //     message = msg
+      //   } else {
+      //     message = message + " and " + msg;
       //   }
-      // }
-
-      // if (documents_ids.includes(36)) {
-      //   if (!recipientsDocuments_ids.includes(1)) {
-      //     const dialogRef = this.dialog.open(AlertDialogueComponent, {
-      //       width: '500px',
-      //       data: { title: "Mail On Demand", message: "Please select Claimant in recipient and try again!", ok: true, no: false, type: "warning", warning: true }
-      //     });
-      //     dialogRef.afterClosed().subscribe(result => {
-      //       return
-      //     })
-      //     return;
-      //   }
-      // }
-
-      // if (addressEmpty) {
-      //   const dialogRef = this.dialog.open(AlertDialogueComponent, {
-      //     width: '500px',
-      //     data: { title: "Mail On Demand", message: "Recipient address seems to be incomplete. Please fill out the required fields and try again!", ok: true, no: false, type: "warning", warning: true }
-      //   });
-      //   dialogRef.afterClosed().subscribe(result => {
-      //     return
-      //   })
-      //   return;
-      // }
-      // if (documents_ids.includes(3) || documents_ids.includes(5) || documents_ids.includes(16)) {
-      //   console.log(this.statusOfAppointment)
-      //   if (this.statusOfAppointment.IsEmptyAppointmentDate || this.statusOfAppointment.isEmptyDuration || this.statusOfAppointment.isEmptyLocation) {
-      //     const dialogRef = this.dialog.open(AlertDialogueComponent, {
-      //       width: '500px', data: { title: "Appointment Information Incomplete", message: "Please, check appointment date, time and location.", ok: true, no: false, type: "warning", warning: true }
-      //     });
-      //     dialogRef.afterClosed().subscribe(result => {
-      //       return
-
-      //     })
-      //     return
-      //   }
-      //   this.getOndemandDocs(data);
-      // } else {
-      //   this.getOndemandDocs(data);
-      // }
-      this.getOndemandDocs(data);
-    }, error => {
-      const dialogRef = this.dialog.open(BillingAlertComponent, {
+      // })
+      const dialogRef = this.dialog.open(AlertDialogueComponent, {
         width: '500px',
-        data: { title: 'Incomplete Information', incompleteInformation: error.error.data, ok: true }
-        // data: { title: 'Incomplete Information', message: "Without the information listed above the correspondence documents will not be delivered. Please, enter the missing information.", incompleteInformation: error.error.data, warning: true }
+        data: { title: "Address incomplete", message: "Don't have address for " + empty_address.join(", ") + "!", ok: true, no: false, type: "warning", warning: true }
       });
       dialogRef.afterClosed().subscribe(result => {
         return
       })
+    } else {
+      if (empty_address.length > 0) {
+        // let message = "";
+        // empty_address.map(msg => {
+        //   if (msg == "") {
+        //     message = msg
+        //   } else {
+        //     message = message + " and " + msg;
+        //   }
+        // })
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: {
+            title: "Address incomplete", message: empty_address.join(", ") + " does not have address details, Do you want to proceed?", proceed: true, cancel: true, type: "warning", warning: true
+          }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          if (result.data) {
+            this.createOndemand(ids)
+          }
+        })
+        return
+      } else {
+        this.createOndemand(ids);
+      }
+    }
+    if (ids.length == 0) {
+      return;
+    }
+  }
+  createOndemand(ids) {
+    console.log(ids)
+    // this.onDemandService.getCorresIncomplete(this.claim_id, this.billableId, ids).subscribe(res => {
+
+    let documents_ids: any = [];
+    let document_ids_display_order: any = [];
+    let custom_documents_ids: any = [];
+    let selected_recipients: any = [];
+    this.selection.selected.map(res => {
+      if (res.doc_type == "custom") {
+        custom_documents_ids.push(res.id)
+      } else {
+        document_ids_display_order.push({ form_id: res.id, custom_display_order: res.custom_display_oder })
+        documents_ids.push(res.id)
+      }
     })
+    let recipientsDocuments_ids: any = [];
+    let recipientsCustom_documents_ids: any = [];
+    let addressEmpty = false;
+    this.selection1.selected.map(res => {
+      if (res.type == "custom") {
+        recipientsCustom_documents_ids.push(res.id)
+        selected_recipients.push(res);
+      } else {
+        recipientsDocuments_ids.push(res.id)
+        selected_recipients.push(res.data);
+      }
+      if (res.message) {
+        addressEmpty = true;
+      }
+    })
+    let data = {
+      claim_id: this.claim_id,
+      document_category_id: 9,
+      billable_item_id: this.billableId,
+      service_request_type_id: 4,
+      documents_ids: documents_ids,
+      document_ids_display_order: document_ids_display_order,
+      custom_documents_ids: custom_documents_ids,
+      recipients_ids: recipientsDocuments_ids,
+      custom_recipients_ids: recipientsCustom_documents_ids,
+      examiner_id: this.examinerId,
+      selected_recipients: selected_recipients
+    }
+    this.getOndemandDocs(data);
+    // }, error => {
+    //   const dialogRef = this.dialog.open(BillingAlertComponent, {
+    //     width: '500px',
+    //     data: { title: 'Incomplete Information', incompleteInformation: error.error.data, ok: true }
+    //     // data: { title: 'Incomplete Information', message: "Without the information listed above the correspondence documents will not be delivered. Please, enter the missing information.", incompleteInformation: error.error.data, warning: true }
+    //   });
+    //   dialogRef.afterClosed().subscribe(result => {
+    //     return
+    //   })
+    // })
   }
   getOndemandDocs(data) {
     this.onDemandService.onDemandCorrespondence(data).subscribe(record => {
