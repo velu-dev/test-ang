@@ -793,8 +793,10 @@ export class BillingCorrespondanceComponent implements OnInit {
         recipientsCustom_documents_ids.push(res.id)
         selected_recipients.push(res);
       } else {
-        recipientsDocuments_ids.push(res.id)
-        selected_recipients.push(res.data);
+        if (!res.message) {
+          recipientsDocuments_ids.push(res.id)
+          selected_recipients.push(res.data);
+        }
       }
       if (res.message) {
         addressEmpty = true;
