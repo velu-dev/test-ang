@@ -72,6 +72,7 @@ export class UpdateBillableItemComponent implements OnInit {
 
   ngOnInit() {
     this.claimService.getbillableItem(this.claimId).subscribe(billRes => {
+      console.log(billRes)
       this.billableitemCount.emit(billRes.data.count)
       this.dataSource = new MatTableDataSource(billRes['data'])
     }, error => {

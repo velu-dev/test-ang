@@ -58,7 +58,7 @@ export class BillLineItemComponent implements OnInit {
   fileName: any = []
   support_documents = [];
   oneUnitProcedure = ['ml201', 'ml202', 'ml203']
-  subscriptions: Subscription[];
+  subscriptions: Subscription;
   @Input() cancellation: boolean;
 
   constructor(private logger: NGXLogger,
@@ -79,22 +79,22 @@ export class BillLineItemComponent implements OnInit {
   }
   isPaymentresponseCreated: boolean = false;
   ngOnInit() {
-    const paymentResSubscription = this.intercom.getPaymentReview().subscribe(res => {
+    this.subscriptions = this.intercom.getPaymentReview().subscribe(res => {
       this.isPaymentresponseCreated = res > 0 ? true : false;
     });
     this.getBillLineItem();
-    const attorneyChangeSubscription = this.intercom.getAttorneyAddressChanges().subscribe((res) => {
+    this.subscriptions = this.intercom.getAttorneyAddressChanges().subscribe((res) => {
       if (res) {
         this.getBillLineItem()
       }
     });
-    const billLineItemChangeSubscription = this.intercom.getBillItemChange().subscribe((res) => {
+    this.subscriptions = this.intercom.getBillItemChange().subscribe((res) => {
       if (res) {
         this.getBillLineItem()
       }
     });
 
-    this.subscriptions = [paymentResSubscription, attorneyChangeSubscription, billLineItemChangeSubscription];
+    // this.subscriptions = [paymentResSubscription, attorneyChangeSubscription, billLineItemChangeSubscription];
   }
   is_cancellation = false;
   ngAfterContentInit() {
@@ -931,7 +931,7 @@ export class BillLineItemComponent implements OnInit {
 
   getBalance(item: any) {
     let balance = 0;
-    if(this.billType != 3) {
+    if (this.billType != 3) {
       balance = Number(item.charge) - Number(item.first_submission_payment) - Number(item.payment_amount);
     } else {
       balance = Number(item.charge) - Number(item.first_submission_payment) - Number(item.sbr_payment) - Number(item.payment_amount);
@@ -940,7 +940,7 @@ export class BillLineItemComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+    this.subscriptions.unsubscribe();
   }
 
 }
