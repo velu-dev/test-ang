@@ -45,8 +45,8 @@
                                 payment.get('payment').value) | number : '1.2-2'}}
                             </ng-container>
                             <ng-container *ngIf="billType == 3">
-                                {{(payment.get('charge').value - payment.get('first_submission_payment').value -
-                                payment.get('sbr_payment').value - payment.get('payment').value) | number : '1.2-2'}}
+                                {{(payment.get('charge').value - payment.get('sbr_payment').value -
+                                payment.get('payment').value) | number : '1.2-2'}}
                             </ng-container>
                         </td>
                         <td
