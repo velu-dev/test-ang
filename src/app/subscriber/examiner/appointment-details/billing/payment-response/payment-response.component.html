@@ -37,8 +37,18 @@
                             '1.2-2'}}</td>
                         <td>{{payment.get('payment').value ? '$ ' : ''}}{{payment.get('payment').value | number :
                             '1.2-2'}}</td>
-                        <td class="text-danger">{{+payment.get('balance').value > -1 ? '$ ' :
-                            ''}}{{payment.get('balance').value | number : '1.2-2'}}</td>
+                        <td class="text-danger">{{+payment.get('balance').value > -1 ? '$ ' : ''}}
+                            <ng-container *ngIf="billType == 1"> {{payment.get('balance').value | number : '1.2-2'}}
+                            </ng-container>
+                            <ng-container *ngIf="billType == 2">
+                                {{(payment.get('charge').value - payment.get('first_submission_payment').value -
+                                payment.get('payment').value) | number : '1.2-2'}}
+                            </ng-container>
+                            <ng-container *ngIf="billType == 3">
+                                {{(payment.get('charge').value - payment.get('first_submission_payment').value -
+                                payment.get('sbr_payment').value - payment.get('payment').value) | number : '1.2-2'}}
+                            </ng-container>
+                        </td>
                         <td
                             [ngClass]="{'text-success' : payment.get('bill_paid_status').value != 'Denied', 'text-danger' : payment.get('bill_paid_status').value == 'Denied'}">
                             {{payment.get('bill_paid_status').value}}</td>

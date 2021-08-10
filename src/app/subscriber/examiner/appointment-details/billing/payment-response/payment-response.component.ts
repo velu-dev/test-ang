@@ -183,8 +183,11 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
           balance: pay.balance,
           bill_paid_status: pay.bill_paid_status,
           is_bill_closed: pay.is_bill_closed,
-          reviews: pay.payment_response
+          reviews: pay.payment_response,
+          first_submission_payment: pay.first_submission_payment,
+          sbr_payment: pay.sbr_payment
         }
+
         this.payments().at(i).patchValue(initPayment);
         pay.payment_response.map((review, ind) => {
           this.billingEORDetails[ind] = review.eor_allowance_details;
@@ -233,7 +236,9 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       balance: '',
       bill_paid_status: '',
       is_bill_closed: '',
-      reviews: this.fb.array([])
+      reviews: this.fb.array([]),
+      first_submission_payment: '',
+      sbr_payment: ''
     })
   }
 
@@ -406,7 +411,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       return;
     }
     this.validatePaymentAmount(review);
-    if (isEORError || this.eorError) {
+    if (review.get('void_type_id').value !== 3 && (isEORError || this.eorError)) {
       return;
     }
     formData.append('post_date', review.get('post_date').value ? moment(review.get('post_date').value).format("MM-DD-YYYY") : '');
@@ -457,7 +462,9 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
           balance: pay.balance,
           bill_paid_status: pay.bill_paid_status,
           is_bill_closed: pay.is_bill_closed,
-          reviews: pay.payment_response
+          reviews: pay.payment_response,
+          first_submission_payment: pay.first_submission_payment,
+          sbr_payment: pay.sbr_payment
         }
         this.payments().at(i).patchValue(initPayment);
         pay.payment_response.map((review, ind) => {
@@ -474,7 +481,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
             let eor_allowance_details = this.paymentReviews(i).at(ind).get('eor_allowance_details');
             (eor_allowance_details as FormArray).push(this.fb.group({
               bill_line_item_id: eor.bill_line_item_id,
-              item: eor.item, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charges, eor_allowance: Number(eor.eor_allowance), payment_amount: eor.payment_amount, balance: eor.balance > 0 ? eor.balance : eor.charge, first_submission_payment: eor.first_submission_payment, sbr_payment: eor.sbr_payment
+              item: eor.item_description, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charges, eor_allowance: Number(eor.eor_allowance), payment_amount: eor.payment_amount, balance: eor.balance > 0 ? eor.balance : eor.charge, first_submission_payment: eor.first_submission_payment, sbr_payment: eor.sbr_payment
             }))
           }
           })
