@@ -183,8 +183,11 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
           balance: pay.balance,
           bill_paid_status: pay.bill_paid_status,
           is_bill_closed: pay.is_bill_closed,
-          reviews: pay.payment_response
+          reviews: pay.payment_response,
+          first_submission_payment: pay.first_submission_payment,
+          sbr_payment: pay.sbr_payment
         }
+
         this.payments().at(i).patchValue(initPayment);
         pay.payment_response.map((review, ind) => {
           this.billingEORDetails[ind] = review.eor_allowance_details;
@@ -233,7 +236,9 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       balance: '',
       bill_paid_status: '',
       is_bill_closed: '',
-      reviews: this.fb.array([])
+      reviews: this.fb.array([]),
+      first_submission_payment: '',
+      sbr_payment: ''
     })
   }
 
@@ -457,7 +462,9 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
           balance: pay.balance,
           bill_paid_status: pay.bill_paid_status,
           is_bill_closed: pay.is_bill_closed,
-          reviews: pay.payment_response
+          reviews: pay.payment_response,
+          first_submission_payment: pay.first_submission_payment,
+          sbr_payment: pay.sbr_payment
         }
         this.payments().at(i).patchValue(initPayment);
         pay.payment_response.map((review, ind) => {
