@@ -3,7 +3,7 @@ import { MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatPagina
 import { SelectionModel } from '@angular/cdk/collections';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Observable } from 'rxjs';
-import { shareReplay, map, subscribeOn } from 'rxjs/operators';
+import { shareReplay, map, subscribeOn, debounceTime } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ActivatedRoute, Router, RouterState } from '@angular/router';
 import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
@@ -714,9 +714,11 @@ export class BillingCorrespondanceComponent implements OnInit {
       return;
     }
     let ids = [];
+    let have_address = [];
     let empty_address = [];
     this.selection1.selected.map(res => {
       if (!res.message) {
+        have_address.push(res.recipient_type)
         ids.push(res.id)
       } else {
         empty_address.push(res.recipient_type)
@@ -753,7 +755,7 @@ export class BillingCorrespondanceComponent implements OnInit {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
           data: {
-            title: "Address incomplete", message: empty_address.join(", ") + " does not have address details, Do you want to proceed?", proceed: true, cancel: true, type: "warning", warning: true
+            title: "Address incomplete", message: empty_address.join(", ") + " does not have address details, " + have_address.join(',') + " having address." + " Do you want to proceed?", proceed: true, cancel: true, type: "warning", warning: true
           }
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -942,6 +944,10 @@ export class CustomRecipient {
   isEdit: any = false;
   recipientData = {};
   isSubmit = false;
+  isAddressError = false;
+  streetAddressList = [];
+  isAddressSearched = false;
+
   constructor(
     public dialogRef: MatDialogRef<CustomRecipient>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, private claimService: ClaimService,
@@ -965,6 +971,28 @@ export class CustomRecipient {
       state: [null],
       zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$'), Validators.required])],
     })
+
+    this.customReceipient.get('street1').valueChanges
+    .pipe(
+      debounceTime(500),
+    ).subscribe(key => {
+      if (key && typeof (key) == 'string')
+        key = key.trim();
+      this.isAddressSearched = true;
+      if (key)
+        this.claimService.searchAddress(key).subscribe(address => {
+          this.streetAddressList = address.suggestions;
+          this.isAddressError = false;
+        }, error => {
+          if (error.status == 0)
+            this.isAddressError = true;
+          this.streetAddressList = [];
+        })
+      else
+        this.streetAddressList = [];
+    })
+
+
     if (this.isEdit) {
       this.data['data'].state_id = this.data['data'].state;
       if (this.data["data"].zip_code_plus_4) {
@@ -987,6 +1015,16 @@ export class CustomRecipient {
       }
     })
   }
+
+  selectAddress(street) {
+    let state_id: any;
+    this.states.map(state => {
+      if (state.state_code == street.state) {
+        state_id = state.id;
+      }
+    })
+  }
+
   saveClick() {
     Object.keys(this.customReceipient.controls).forEach((key) => {
       if (this.customReceipient.get(key).value && typeof (this.customReceipient.get(key).value) == 'string')

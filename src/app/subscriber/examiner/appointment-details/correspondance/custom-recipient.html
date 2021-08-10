@@ -21,8 +21,19 @@
                     fxFlex.sm="100" fxFlex.xs="100">
                     <mat-label>Street Address 1*</mat-label>
                     <textarea matInput placeholder="Street Address 1" formControlName="street1" cdkTextareaAutosize
-                        cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
-                    <mat-error>Please enter street address 1</mat-error>
+                        [matAutocomplete]="streetAutocomplete" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="1"></textarea>
+                    <mat-autocomplete #streetAutocomplete="matAutocomplete">
+                        <mat-option *ngFor="let address of streetAddressList" [value]="address.street_line"
+                            (click)="selectAddress(address)" (onSelectionChange)="selectAddress(address)">
+                            {{address?.street_line}} {{address?.secondary}} {{address?.city}}
+                            {{address?.state}}
+                            {{address?.zipcode}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-hint *ngIf="isAddressError"><i class="fas fa-info-circle"></i> The address
+                        autocomplete service is temporarily unavailable. Our team is working to fix it.
+                    </mat-hint>
+                    <!-- <mat-error>Please enter street address 1</mat-error> -->
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.lg="50" fxFlex.xl="50"
