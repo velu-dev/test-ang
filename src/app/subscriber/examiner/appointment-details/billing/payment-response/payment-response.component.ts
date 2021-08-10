@@ -474,7 +474,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
             let eor_allowance_details = this.paymentReviews(i).at(ind).get('eor_allowance_details');
             (eor_allowance_details as FormArray).push(this.fb.group({
               bill_line_item_id: eor.bill_line_item_id,
-              item: eor.item, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charges, eor_allowance: Number(eor.eor_allowance), payment_amount: eor.payment_amount, balance: eor.balance > 0 ? eor.balance : eor.charge, first_submission_payment: eor.first_submission_payment, sbr_payment: eor.sbr_payment
+              item: eor.item_description, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charges, eor_allowance: Number(eor.eor_allowance), payment_amount: eor.payment_amount, balance: eor.balance > 0 ? eor.balance : eor.charge, first_submission_payment: eor.first_submission_payment, sbr_payment: eor.sbr_payment
             }))
           }
           })
