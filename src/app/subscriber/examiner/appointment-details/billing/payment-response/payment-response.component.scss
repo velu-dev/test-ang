@@ -97,6 +97,8 @@ mat-card-content {
                             .grid-list {
                                 div {
                                     align-self: auto;
+                                    white-space: normal;
+                                    word-break: break-word;
                                     &:first-child {
                                         position: relative;
                                         &::after {
