@@ -194,7 +194,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
           review.showStatus = false
           this.paymentReviews(i).at(ind).get('eor_allowance_details').patchValue([]);
           review.eor_allowance_details.map((eor, index) => {
-            if (eor && (!eor.is_fully_paid || this.billType == 1)) {
+            if (eor && !eor.is_fully_paid) {
             let eor_allowance_details = this.paymentReviews(i).at(ind).get('eor_allowance_details');
             (eor_allowance_details as FormArray).push(this.fb.group({
               bill_line_item_id: eor.id,
@@ -308,7 +308,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       this.getBillLineItems();
       let eorDetails: any = {};
       this.billLineItems.map((eor, ind) => {
-        if (eor && (!eor.is_fully_paid || this.billType == 1)) {
+        if (eor && !eor.is_fully_paid) {
           eorDetails = {}
           const eor_allowance_details = review.get('eor_allowance_details');
           eorDetails = {
@@ -465,7 +465,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
           // }
           review.eor_allowance_details.map((eor, index) => {
             // this.addReviews(i, false);
-            if (eor && (!eor.is_fully_paid || this.billType == 1) ) {
+            if (eor && !eor.is_fully_paid) {
             let eor_allowance_details = this.paymentReviews(i).at(ind).get('eor_allowance_details');
             (eor_allowance_details as FormArray).push(this.fb.group({
               bill_line_item_id: eor.bill_line_item_id,
