@@ -406,7 +406,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       return;
     }
     this.validatePaymentAmount(review);
-    if (isEORError || this.eorError) {
+    if (review.get('void_type_id').value !== 3 && (isEORError || this.eorError)) {
       return;
     }
     formData.append('post_date', review.get('post_date').value ? moment(review.get('post_date').value).format("MM-DD-YYYY") : '');
