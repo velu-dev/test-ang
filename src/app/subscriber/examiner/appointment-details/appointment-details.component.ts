@@ -560,6 +560,7 @@ export class AppointmentDetailsComponent implements OnInit {
           // }
           this.claimant_name = response.data.claimant_name.first_name + " " + response.data.claimant_name.middle_name + " " + response.data.claimant_name.last_name;
           this.examiner_id = response.data.appointments.examiner_id;
+          console.log(response)
           this.examinationDetails = response['data'];
           this.getDocumentData();
           if (bills.data.exam_type_name != response.data.exam_type_name) {
