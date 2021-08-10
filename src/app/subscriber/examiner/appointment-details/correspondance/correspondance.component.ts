@@ -714,9 +714,11 @@ export class BillingCorrespondanceComponent implements OnInit {
       return;
     }
     let ids = [];
+    let have_address = [];
     let empty_address = [];
     this.selection1.selected.map(res => {
       if (!res.message) {
+        have_address.push(res.recipient_type)
         ids.push(res.id)
       } else {
         empty_address.push(res.recipient_type)
@@ -753,7 +755,7 @@ export class BillingCorrespondanceComponent implements OnInit {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
           data: {
-            title: "Address incomplete", message: empty_address.join(", ") + " does not have address details, Do you want to proceed?", proceed: true, cancel: true, type: "warning", warning: true
+            title: "Address incomplete", message: empty_address.join(", ") + " does not have address details, " + have_address.join(',') + " having address." + " Do you want to proceed?", proceed: true, cancel: true, type: "warning", warning: true
           }
         });
         dialogRef.afterClosed().subscribe(result => {
