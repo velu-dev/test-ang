@@ -565,7 +565,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     if (event.value === 1) {
       this.setPaymentAmount(payIndex, review);
     } else {
-      review.get('payment_amount').patchValue(event.value === 3 ? 0 : this.paymentReviewAmount);
+      review.get('payment_amount').patchValue(event.value === 3 ? (0).toFixed(2) : this.paymentReviewAmount);
     }
 
     if (event.value == 3 || event.value == 5) {
@@ -735,22 +735,28 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
           return a + (Number(b.charges) - Number(b.first_submission_payment) - Number(b.sbr_payment));
         }
       }, 0);
+      let comparisonText = 'equal to'
       if(
         response_type_id == 2 && 
         (
-          (Number(payment_amount) === charge && this.billType == 1) || 
-          (Number(payment_amount) === balance && 
+          (Number(payment_amount) >= charge && this.billType == 1) || 
+          (Number(payment_amount) >= balance && 
             (this.billType == 2 || this.billType == 3)
           )
         )
       ) {
+        if(Number(payment_amount) >= charge && this.billType == 1) {
+          comparisonText = payment_amount === charge ? 'equal to the' : 'greater than';
+        } else {
+          comparisonText = payment_amount === balance ? 'equal to the' : 'greater than';
+        }
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
           data: {
             proceed: true,
             cancel: true,
             type: 'warning',
-            message: 'Payment amount is equal to the balance. Do you want to change the response type to Fully Paid?'
+            message: 'Payment amount is ' + comparisonText + ' balance. Do you want to change the response type to Fully Paid?'
           }
         });
         dialogRef.afterClosed().subscribe((res) => {

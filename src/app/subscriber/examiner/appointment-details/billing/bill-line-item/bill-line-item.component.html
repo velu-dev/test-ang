@@ -157,8 +157,8 @@
                                         </td>
                                         <td>
                                             {{group.get('charge').value > -1 ? '$ ' : ''}}
-                                            {{ (group.get('charge').value - group.get('payment').value) > 0 ?
-                                            group.get('charge').value - group.get('payment').value : 0 | number :
+                                            {{ ((group.get('charge').value - group.get('payment').value) > 0 ?
+                                            group.get('charge').value - group.get('payment').value : 0) | number :
                                             '1.2-2'}}
                                         </td>
                                         <td class="no-wrap-td" *ngIf="!is_cancellation">
