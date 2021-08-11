@@ -19,6 +19,7 @@ export class IntercomService {
   AttorneyAddressChange = new Subject<boolean>();
   billLineItemChange = new Subject<any>();
   paymentReviewCount = new Subject<any>();
+  paymentReviewSave = new Subject<any>();
   public examinerPage: any;
   constructor() { }
   public setUser(status): any {
@@ -128,6 +129,12 @@ export class IntercomService {
     this.paymentReviewCount.next(line_item);
   }
   public getPaymentReview() {
-    return this.paymentReviewCount.asObservable();;
+    return this.paymentReviewCount.asObservable();
+  }
+  public paymentReviewSaved(status: boolean) {
+    this.paymentReviewSave.next(status);
+  }
+  public onPaymentReviewSave() {
+    return this.paymentReviewSave.asObservable();
   }
 }

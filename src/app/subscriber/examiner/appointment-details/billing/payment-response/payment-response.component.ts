@@ -103,9 +103,8 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     })
   }
   billLineItems = [];
-  count = 0
+  
   getBillLineItems() {
-    console.log(this.count++,"getBillLineItems")
     this.billingService.getBillLineItem(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId).subscribe(line => {
       this.billLineItems = line.data;
     })
@@ -449,6 +448,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
         responseCount = responseCount + res.payment_response.length;
       })
       this.intercom.PaymentReview(responseCount);
+      this.intercom.paymentReviewSaved(true);
       this.paymentForm = this.fb.group({
         payments: this.fb.array([]),
       })
