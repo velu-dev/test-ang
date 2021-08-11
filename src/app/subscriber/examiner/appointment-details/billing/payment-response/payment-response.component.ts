@@ -103,7 +103,9 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     })
   }
   billLineItems = [];
+  count = 0
   getBillLineItems() {
+    console.log(this.count++,"getBillLineItems")
     this.billingService.getBillLineItem(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId).subscribe(line => {
       this.billLineItems = line.data;
     })
@@ -136,7 +138,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.intercom.getBillItemChange().subscribe(res => {
+    this.subscription = this.intercom.getBillItemChange().subscribe(res => {
       this.getBillLineItems();
     })
     this.getBillLineItems();

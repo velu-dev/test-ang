@@ -103,7 +103,9 @@ export class BillLineItemComponent implements OnInit {
   billing_line_items: any;
   newFeeScheduleStatus: boolean;
   billingCodeDetails: any;
+  count = 0
   getBillLineItem() {
+    console.log(this.count++,"getBillLineItemsActual")
     this.touchedRows = [];
 
     if (this.review && this.review.toLowerCase() == 'second') {
