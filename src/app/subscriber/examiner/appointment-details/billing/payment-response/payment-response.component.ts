@@ -420,7 +420,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     this.validatePaymentAmount(review);
     if (review.get('void_type_id').value !== 3 && this.eorError) {
       return;
-    }
+    }    
     formData.append('post_date', review.get('post_date').value ? moment(review.get('post_date').value).format("MM-DD-YYYY") : '');
     formData.append('effective_date', review.get('effective_date').value ? moment(review.get('effective_date').value).format("MM-DD-YYYY") : '');
     formData.append('deposit_date', review.get('deposit_date').value ? moment(review.get('deposit_date').value).format("MM-DD-YYYY") : '');
@@ -486,12 +486,12 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
           review.eor_allowance_details.map((eor, index) => {
             // this.addReviews(i, false);
             if (eor && !eor.is_fully_paid) {
-            let eor_allowance_details = this.paymentReviews(i).at(ind).get('eor_allowance_details');
-            (eor_allowance_details as FormArray).push(this.fb.group({
-              bill_line_item_id: eor.bill_line_item_id,
-              item: eor.item_description, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charges, eor_allowance: Number(eor.eor_allowance), payment_amount: eor.payment_amount, balance: eor.balance > 0 ? eor.balance : eor.charge, first_submission_payment: eor.first_submission_payment, sbr_payment: eor.sbr_payment
-            }))
-          }
+              let eor_allowance_details = this.paymentReviews(i).at(ind).get('eor_allowance_details');
+              (eor_allowance_details as FormArray).push(this.fb.group({
+                bill_line_item_id: eor.bill_line_item_id,
+                item: eor.item_description, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charges, eor_allowance: Number(eor.eor_allowance), payment_amount: eor.payment_amount, balance: eor.balance > 0 ? eor.balance : eor.charge, first_submission_payment: eor.first_submission_payment, sbr_payment: eor.sbr_payment
+              }))
+            }
           })
           this.paymentReviews(i).at(ind).patchValue(review);
         })
