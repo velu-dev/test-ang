@@ -194,6 +194,7 @@ export class BillLineItemComponent implements OnInit {
             first_submission_payment: item.first_submission_payment ? item.first_submission_payment : 0,
             sbr_payment: item.sbr_payment ? item.sbr_payment : 0,
             ibr_payment: item.ibr_payment ? item.ibr_payment : 0,
+            is_fully_paid: item.is_fully_paid
           }
           if (this.billType == 2 || this.billType == 3) {
             firstData['bill_request_reason'] = item.support_documents_details.bill_request_reason;
@@ -206,6 +207,9 @@ export class BillLineItemComponent implements OnInit {
           }
           if (this.billType == 2 || this.billType == 3) {
             this.getFormControls.controls[index].get('isEditable').setValue(false);
+            if (item.is_fully_paid) {
+              this.getFormControls.controls[index].get('reviewShow').disable();
+            }
           }
         })
         if (this.billType == 2) {
@@ -285,6 +289,7 @@ export class BillLineItemComponent implements OnInit {
       first_submission_payment: [],
       sbr_payment: [],
       ibr_payment: [],
+      is_fully_paid: []
 
     });
   }
@@ -680,7 +685,9 @@ export class BillLineItemComponent implements OnInit {
 
   selectAllCheck(value, group) {
     group.map((data, i) => {
+      if(!data.get('is_fully_paid').value){
       data.get('reviewShow').patchValue(value);
+      }
     })
     if (value) {
       this.showDocumentSec = true;
