@@ -716,15 +716,19 @@ export class BillingCorrespondanceComponent implements OnInit {
     let ids = [];
     let have_address = [];
     let empty_address = [];
+    let have_custom_recipient = "";
     this.selection1.selected.map(res => {
       if (!res.message) {
+        if (res.type == 'custom') {
+          have_custom_recipient = res.name;
+        }
         have_address.push(res.recipient_type)
         ids.push(res.id)
       } else {
         empty_address.push(res.recipient_type)
       }
     })
-    console.log(ids)
+    this.selection
     if (ids.length == 0) {
       // let message = "";
       // empty_address.map(msg => {
@@ -755,11 +759,12 @@ export class BillingCorrespondanceComponent implements OnInit {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
           data: {
-            title: "Address incomplete", message: empty_address.join(", ") + " does not have address details whereas " + have_address.join(',') + " has the address details." + " Do you want to proceed?", proceed: true, cancel: true, type: "warning", warning: true
+            title: "Address incomplete", message: empty_address.join(", ") + " does not have address details whereas " + have_address.join(',') + (have_custom_recipient ? ", " : " ") + have_custom_recipient + " has the address details." + " Do you want to proceed?", proceed: true, cancel: true, type: "warning", warning: true
           }
         });
         dialogRef.afterClosed().subscribe(result => {
           if (result.data) {
+            return
             this.createOndemand(ids)
           }
         })
@@ -973,24 +978,24 @@ export class CustomRecipient {
     })
 
     this.customReceipient.get('street1').valueChanges
-    .pipe(
-      debounceTime(500),
-    ).subscribe(key => {
-      if (key && typeof (key) == 'string')
-        key = key.trim();
-      this.isAddressSearched = true;
-      if (key)
-        this.claimService.searchAddress(key).subscribe(address => {
-          this.streetAddressList = address.suggestions;
-          this.isAddressError = false;
-        }, error => {
-          if (error.status == 0)
-            this.isAddressError = true;
+      .pipe(
+        debounceTime(500),
+      ).subscribe(key => {
+        if (key && typeof (key) == 'string')
+          key = key.trim();
+        this.isAddressSearched = true;
+        if (key)
+          this.claimService.searchAddress(key).subscribe(address => {
+            this.streetAddressList = address.suggestions;
+            this.isAddressError = false;
+          }, error => {
+            if (error.status == 0)
+              this.isAddressError = true;
+            this.streetAddressList = [];
+          })
+        else
           this.streetAddressList = [];
-        })
-      else
-        this.streetAddressList = [];
-    })
+      })
 
 
     if (this.isEdit) {
@@ -1064,6 +1069,9 @@ export class AddAddress {
   isLoading = false;
   claimantForm: FormGroup;
   isSubmit = false;
+  streetClaimantAddressList = [];
+  isClaimantAddressError = false;
+  isClaimantAddressSearched = false;
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddAddress>,
@@ -1091,8 +1099,44 @@ export class AddAddress {
         zip_code: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])]
       });
       this.changeState(this.userData.state, this.userData.state_code)
-      this.claimantForm.patchValue(this.userData)
+      this.claimantForm.patchValue(this.userData);
+      this.claimantForm.get('street1').valueChanges
+        .pipe(
+          debounceTime(500),
+        ).subscribe(key => {
+          if (key && typeof (key) == 'string')
+            key = key.trim();
+          this.isClaimantAddressSearched = true;
+          if (key)
+            this.claimService.searchAddress(key).subscribe(address => {
+              this.streetClaimantAddressList = address.suggestions;
+              this.isClaimantAddressError = false;
+            }, error => {
+              if (error.status == 0)
+                this.isClaimantAddressError = true;
+              this.streetClaimantAddressList = [];
+            })
+          else
+            this.streetClaimantAddressList = [];
+        })
     }
+  }
+  selectAddress(street) {
+    let state_id: any;
+    this.states.map(state => {
+      if (state.state_code == street.state) {
+        state_id = state.state;
+      }
+    })
+
+    this.claimantForm.patchValue({
+      street1: street.street_line,
+      street2: "",
+      city: street.city,
+      state: state_id,
+      zip_code: street.zipcode
+    })
+    this.changeState("", street.state)
   }
   corresState: any;
   changeState(state, state_code?) {

@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, debounceTime } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material';
 export const _filter = (opt: any[], value: string): string[] => {
   const filterValue = value.toLowerCase();
@@ -28,6 +28,9 @@ export class DefenseAttorneyComponent implements OnInit {
   dattroneyGroupOptions: any = [];
   DattroneySelect = true;
   id: any;
+  streetDAAddressList = [];
+  isDAAddressError = false;
+  isDAAddressSearched = false;
   constructor(public dialogRef: MatDialogRef<DefenseAttorneyComponent>, public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.claimService.seedData("state").subscribe(res => {
       this.states = res.data;
@@ -59,13 +62,13 @@ export class DefenseAttorneyComponent implements OnInit {
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
     this.DefanceAttorney.get('phone')!.valueChanges.subscribe(input => {
-      if(this.daEdit)
-      if (this.DefanceAttorney.get("phone").value && this.DefanceAttorney.get("phone").valid) {
-        this.DefanceAttorney.get("phone_ext").enable();
-      } else {
-        this.DefanceAttorney.get("phone_ext").reset();
-        this.DefanceAttorney.get("phone_ext").disable();
-      }
+      if (this.daEdit)
+        if (this.DefanceAttorney.get("phone").value && this.DefanceAttorney.get("phone").valid) {
+          this.DefanceAttorney.get("phone_ext").enable();
+        } else {
+          this.DefanceAttorney.get("phone_ext").reset();
+          this.DefanceAttorney.get("phone_ext").disable();
+        }
     })
     this.DefanceAttorney.get('company_name')!.valueChanges.subscribe(input => {
       if (this.DefanceAttorney.get('company_name').errors) {
@@ -84,6 +87,42 @@ export class DefenseAttorneyComponent implements OnInit {
         }
       }
     });
+    this.DefanceAttorney.get('street1').valueChanges
+      .pipe(
+        debounceTime(500),
+      ).subscribe(key => {
+        if (key && typeof (key) == 'string')
+          key = key.trim();
+        this.isDAAddressSearched = true;
+        if (key)
+          this.claimService.searchAddress(key).subscribe(address => {
+            this.streetDAAddressList = address.suggestions;
+            this.isDAAddressError = false;
+          }, error => {
+            if (error.status == 0)
+              this.isDAAddressError = true;
+            this.streetDAAddressList = [];
+          })
+        else
+          this.streetDAAddressList = [];
+      })
+  }
+  selectAddress(street) {
+    let state_id: any;
+    this.states.map(state => {
+      if (state.state_code == street.state) {
+        state_id = state.state;
+      }
+    })
+
+    this.DefanceAttorney.patchValue({
+      street1: street.street_line,
+      street2: "",
+      city: street.city,
+      state: state_id,
+      zip_code: street.zipcode
+    })
+    this.changeState("", street.state)
   }
   private _filterAttroney(value: string, data) {
     if (value) {
