@@ -360,7 +360,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     } else {
       payment_amount = Number(charge) - Number(sbr_payment);
     }
-    review.get('payment_amount').patchValue(payment_amount);
+    review.get('payment_amount').patchValue(payment_amount.toFixed(2));
   }
 
   addDepositDate(review: FormGroup) {
@@ -420,7 +420,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     this.validatePaymentAmount(review);
     if (review.get('void_type_id').value !== 3 && this.eorError) {
       return;
-    }
+    }    
     formData.append('post_date', review.get('post_date').value ? moment(review.get('post_date').value).format("MM-DD-YYYY") : '');
     formData.append('effective_date', review.get('effective_date').value ? moment(review.get('effective_date').value).format("MM-DD-YYYY") : '');
     formData.append('deposit_date', review.get('deposit_date').value ? moment(review.get('deposit_date').value).format("MM-DD-YYYY") : '');
@@ -486,12 +486,12 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
           review.eor_allowance_details.map((eor, index) => {
             // this.addReviews(i, false);
             if (eor && !eor.is_fully_paid) {
-            let eor_allowance_details = this.paymentReviews(i).at(ind).get('eor_allowance_details');
-            (eor_allowance_details as FormArray).push(this.fb.group({
-              bill_line_item_id: eor.bill_line_item_id,
-              item: eor.item_description, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charges, eor_allowance: Number(eor.eor_allowance), payment_amount: eor.payment_amount, balance: eor.balance > 0 ? eor.balance : eor.charge, first_submission_payment: eor.first_submission_payment, sbr_payment: eor.sbr_payment
-            }))
-          }
+              let eor_allowance_details = this.paymentReviews(i).at(ind).get('eor_allowance_details');
+              (eor_allowance_details as FormArray).push(this.fb.group({
+                bill_line_item_id: eor.bill_line_item_id,
+                item: eor.item_description, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charges, eor_allowance: Number(eor.eor_allowance), payment_amount: eor.payment_amount, balance: eor.balance > 0 ? eor.balance : eor.charge, first_submission_payment: eor.first_submission_payment, sbr_payment: eor.sbr_payment
+              }))
+            }
           })
           this.paymentReviews(i).at(ind).patchValue(review);
         })
@@ -723,6 +723,43 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       eorData.get('balance').patchValue(balance);
     }
     this.checkEorError(eorDetails, paymentAmount);
+    
+    //check payment equal to charge and show alert to change response type to fully paid
+    if(!eorData && !eorIndex) {
+      const { payment_amount, response_type_id, eor_allowance_details } = review.value;
+      const charge = eor_allowance_details.reduce((a, b) => a + Number(b.charges), 0);
+      const balance = eor_allowance_details.reduce((a, b) => {
+        if(this.billType == 2) {
+          return a + (Number(b.charges) - Number(b.first_submission_payment));
+        } else {
+          return a + (Number(b.charges) - Number(b.first_submission_payment) - Number(b.sbr_payment));
+        }
+      }, 0);
+      if(
+        response_type_id == 2 && 
+        (
+          (Number(payment_amount) === charge && this.billType == 1) || 
+          (Number(payment_amount) === balance && 
+            (this.billType == 2 || this.billType == 3)
+          )
+        )
+      ) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: {
+            proceed: true,
+            cancel: true,
+            type: 'warning',
+            message: 'Payment amount is equal to the balance. Do you want to change the response type to Fully Paid?'
+          }
+        });
+        dialogRef.afterClosed().subscribe((res) => {
+          if(res.data) {
+            review.get('response_type_id').patchValue(1);  
+          }
+        });
+      }
+    }
   }
 
   toggleDepositDate() {

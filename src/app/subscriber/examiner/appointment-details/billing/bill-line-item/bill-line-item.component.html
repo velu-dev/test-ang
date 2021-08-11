@@ -649,20 +649,8 @@
                                         </td>
                                         <td>
                                             {{group.get('charge').value > -1 ? '$ ' : ''}}
-                                            <!-- <ng-container *ngIf="billType !=3">
-                                                {{(group.get('charge').value)
-                                                - (group.get('first_submission_payment').value) -
-                                                (group.get('payment').value)
-                                                | number : '1.2-2'}}
-                                            </ng-container>
-                                            <ng-container *ngIf="billType ==3">
-                                                {{(group.get('charge').value)
-                                                - (group.get('first_submission_payment').value)
-                                                - (group.get('sbr_payment').value) -
-                                                (group.get('payment').value)
-                                                | number : '1.2-2'}}
-                                            </ng-container> -->
-                                            {{ group.get('balance').value > 0 ? group.get('balance').value : 0 | number:
+                                            {{ (group.get('balance').value > 0 ? group.get('balance').value : 0)|
+                                            number:
                                             '1.2-2' }}
                                         </td>
                                         <td>-</td>
