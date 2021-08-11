@@ -360,7 +360,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     } else {
       payment_amount = Number(charge) - Number(sbr_payment);
     }
-    review.get('payment_amount').patchValue(payment_amount);
+    review.get('payment_amount').patchValue(payment_amount.toFixed(2));
   }
 
   addDepositDate(review: FormGroup) {
@@ -723,6 +723,43 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       eorData.get('balance').patchValue(balance);
     }
     this.checkEorError(eorDetails, paymentAmount);
+    
+    //check payment equal to charge and show alert to change response type to fully paid
+    if(!eorData && !eorIndex) {
+      const { payment_amount, response_type_id, eor_allowance_details } = review.value;
+      const charge = eor_allowance_details.reduce((a, b) => a + Number(b.charges), 0);
+      const balance = eor_allowance_details.reduce((a, b) => {
+        if(this.billType == 2) {
+          return a + (Number(b.charges) - Number(b.first_submission_payment));
+        } else {
+          return a + (Number(b.charges) - Number(b.first_submission_payment) - Number(b.sbr_payment));
+        }
+      }, 0);
+      if(
+        response_type_id == 2 && 
+        (
+          (Number(payment_amount) === charge && this.billType == 1) || 
+          (Number(payment_amount) === balance && 
+            (this.billType == 2 || this.billType == 3)
+          )
+        )
+      ) {
+        const dialogRef = this.dialog.open(AlertDialogueComponent, {
+          width: '500px',
+          data: {
+            proceed: true,
+            cancel: true,
+            type: 'warning',
+            message: 'Payment amount is equal to the balance. Do you want to change the response type to Fully Paid?'
+          }
+        });
+        dialogRef.afterClosed().subscribe((res) => {
+          if(res.data) {
+            review.get('response_type_id').patchValue(1);  
+          }
+        });
+      }
+    }
   }
 
   toggleDepositDate() {
