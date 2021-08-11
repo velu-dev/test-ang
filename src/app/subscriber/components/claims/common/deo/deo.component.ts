@@ -23,6 +23,9 @@ export class DeoComponent implements OnInit {
   deuDetails = [];
   deuId = "";
   id: any;
+  streetDEUAddressList = [];
+  isDEUAddressError = false;
+  isDEUAddressSearched = false;
   constructor(public dialogRef: MatDialogRef<DeoComponent>, public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.DEU = this.formBuilder.group({
       id: [null],
@@ -46,9 +49,28 @@ export class DeoComponent implements OnInit {
           this.DEU.get("phone_ext").disable();
         }
     })
+    this.DEU.get('street1').valueChanges
+      .pipe(
+        debounceTime(500),
+      ).subscribe(key => {
+        if (key && typeof (key) == 'string')
+          key = key.trim();
+        this.isDEUAddressSearched = true;
+        if (key)
+          this.claimService.searchAddress(key).subscribe(address => {
+            this.streetDEUAddressList = address.suggestions;
+            this.isDEUAddressError = false;
+          }, error => {
+            if (error.status == 0)
+              this.isDEUAddressError = true;
+            this.streetDEUAddressList = [];
+          })
+        else
+          this.streetDEUAddressList = [];
+      })
     this.claimService.getDeuDetails().subscribe(res => {
       console.log(res.data);
-      res.data.map(ii =>{
+      res.data.map(ii => {
         ii['name'] = ii.code + " - " + ii.deu_office
       })
       this.deuDetails = res.data;

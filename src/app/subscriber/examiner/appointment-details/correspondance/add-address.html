@@ -1,15 +1,16 @@
 <span *ngIf="!isLoading">
-  <mat-card-content>
-    <app-claim-admin *ngIf="type == 'Insurance Company'" [state]="states" [fromPop]="true" [claim_admin]="userData">
-    </app-claim-admin>
-    <app-application-attorney *ngIf="type == 'Applicant Attorney'" [fromPop]="true" [aattorney]="userData"
-        [state]="states">
-    </app-application-attorney>
-    <app-defense-attorney *ngIf="type == 'Defense Attorney'" [fromPop]="true" [state]="states" [dattroney]="userData">
-    </app-defense-attorney>
-    <app-deo *ngIf="type == 'DEU Office'" [fromPop]="true" [deu]="userData" [state]="states"></app-deo>
-    <app-employer *ngIf="type == 'Employer'" [fromPop]="true" [employer]="userData" [state]="states"></app-employer>
-  </mat-card-content>
+    <mat-card-content>
+        <app-claim-admin *ngIf="type == 'Insurance Company'" [state]="states" [fromPop]="true" [claim_admin]="userData">
+        </app-claim-admin>
+        <app-application-attorney *ngIf="type == 'Applicant Attorney'" [fromPop]="true" [aattorney]="userData"
+            [state]="states">
+        </app-application-attorney>
+        <app-defense-attorney *ngIf="type == 'Defense Attorney'" [fromPop]="true" [state]="states"
+            [dattroney]="userData">
+        </app-defense-attorney>
+        <app-deo *ngIf="type == 'DEU Office'" [fromPop]="true" [deu]="userData" [state]="states"></app-deo>
+        <app-employer *ngIf="type == 'Employer'" [fromPop]="true" [employer]="userData" [state]="states"></app-employer>
+    </mat-card-content>
     <!-- <app-new-claimant *ngIf="type == 'Claimant'" [fromPop]="true" [claimantId]="userData.id"></app-new-claimant> -->
     <div *ngIf="type == 'Claimant'" class="dialog fixed-dialog custom-dialog">
         <mat-card-header class="model-header">
@@ -31,8 +32,21 @@
                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50"
                         fxFlex.sm="50" fxFlex.xs="100">
                         <mat-label>Street Address 1*</mat-label>
-                        <input matInput placeholder="Street Address 1" formControlName="street1" autocomplete="off">
-                        <mat-error>Please enter valid street address 1</mat-error>
+                        <input matInput id="street-input" [matAutocomplete]="streetAutocomplete"
+                            #trigger="matAutocompleteTrigger" formControlName="street1" placeholder="Street Address 1">
+                        <mat-autocomplete #streetAutocomplete="matAutocomplete">
+                            <mat-option *ngFor="let address of streetClaimantAddressList" [value]="address.street_line"
+                                (click)="selectAddress(address)" (onSelectionChange)="selectAddress(address)">
+                                {{address?.street_line}} {{address?.secondary}} {{address?.city}}
+                                {{address?.state}}
+                                {{address?.zipcode}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-hint *ngIf="isClaimantAddressError"><i class="fas fa-info-circle"></i> The address
+                            autocomplete service is temporarily unavailable. Our team is working to fix it.
+                        </mat-hint>
+                        <!-- <input matInput placeholder="Street Address 1" formControlName="street1" autocomplete="off">
+                        <mat-error>Please enter valid street address 1</mat-error> -->
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" fxFlex="100" fxFlex.lg="50" fxFlex.xl="" fxFlex.md="50"

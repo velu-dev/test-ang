@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Observable, Subject } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, debounceTime } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { IntercomService } from 'src/app/services/intercom.service';
 export const _filter = (opt: any[], value: string): string[] => {
@@ -31,6 +31,9 @@ export class ApplicationAttorneyComponent implements OnInit {
   dattroneyGroupOptions: any = [];
   DattroneySelect = true;
   id: any;
+  streetAAAddressList = [];
+  isAAAddressError = false;
+  isAAAddressSearched = false;
   constructor(
     public dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -82,6 +85,25 @@ export class ApplicationAttorneyComponent implements OnInit {
         }
       }
     });
+    this.ApplicantAttorney.get('street1').valueChanges
+      .pipe(
+        debounceTime(500),
+      ).subscribe(key => {
+        if (key && typeof (key) == 'string')
+          key = key.trim();
+        this.isAAAddressSearched = true;
+        if (key)
+          this.claimService.searchAddress(key).subscribe(address => {
+            this.streetAAAddressList = address.suggestions;
+            this.isAAAddressError = false;
+          }, error => {
+            if (error.status == 0)
+              this.isAAAddressError = true;
+            this.streetAAAddressList = [];
+          })
+        else
+          this.streetAAAddressList = [];
+      })
   }
   ngOnInit() {
     if (this.fromPop) {
@@ -147,6 +169,23 @@ export class ApplicationAttorneyComponent implements OnInit {
       this.ApplicantAttorney.get("phone_ext").reset();
       this.ApplicantAttorney.get("phone_ext").disable();
     }
+  }
+  selectAddress(street) {
+    let state_id: any;
+    this.states.map(state => {
+      if (state.state_code == street.state) {
+        state_id = state.state;
+      }
+    })
+
+    this.ApplicantAttorney.patchValue({
+      street1: street.street_line,
+      street2: "",
+      city: street.city,
+      state: state_id,
+      zip_code: street.zipcode
+    })
+    this.changeState("", street.state)
   }
   updateAAttorney() {
     Object.keys(this.ApplicantAttorney.controls).forEach((key) => {

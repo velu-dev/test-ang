@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Observable } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, debounceTime } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material';
 export const _filter = (opt: any[], value: string): string[] => {
   // console.log("opt", opt);
@@ -29,6 +29,9 @@ export class ClaimAdminComponent implements OnInit {
   CASelect = true;
   @Input('state') states;
   id: any;
+  streetCAAddressList = [];
+  isCAAddressError = false;
+  isCAAddressSearched = false;
   // @Output() isEditComplete = new EventEmitter();
   constructor(public dialogRef: MatDialogRef<ClaimAdminComponent>, public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     // this.claimService.seedData('eams_claims_administrator').subscribe(res => {
@@ -74,8 +77,8 @@ export class ClaimAdminComponent implements OnInit {
         if (input) {
           if (input.length >= 3 || input.length == 0) {
             this.claimService.searchEAMSAdmin({ search: input }).subscribe(res => {
-              if(res.data){
-              this.claimAdminGroupOptions = [{ name: "Simplexam Addresses", data: res.data }];
+              if (res.data) {
+                this.claimAdminGroupOptions = [{ name: "Simplexam Addresses", data: res.data }];
               } else {
                 this.claimAdminForm.patchValue({
                   payor_id: null
@@ -90,6 +93,25 @@ export class ClaimAdminComponent implements OnInit {
         }
       }
     });
+    this.claimAdminForm.get('street1').valueChanges
+      .pipe(
+        debounceTime(500),
+      ).subscribe(key => {
+        if (key && typeof (key) == 'string')
+          key = key.trim();
+        this.isCAAddressSearched = true;
+        if (key)
+          this.claimService.searchAddress(key).subscribe(address => {
+            this.streetCAAddressList = address.suggestions;
+            this.isCAAddressError = false;
+          }, error => {
+            if (error.status == 0)
+              this.isCAAddressError = true;
+            this.streetCAAddressList = [];
+          })
+        else
+          this.streetCAAddressList = [];
+      })
   }
 
   ngOnInit() {
@@ -109,6 +131,23 @@ export class ClaimAdminComponent implements OnInit {
     this.changeState(this.claimAdmin.state, this.claimAdmin.state_code);
     this.claimAdminForm.patchValue(this.claimAdmin)
     this.id = this.claimAdmin.id;
+  }
+  selectAddress(street) {
+    let state_id: any;
+    this.states.map(state => {
+      if (state.state_code == street.state) {
+        state_id = state.state;
+      }
+    })
+
+    this.claimAdminForm.patchValue({
+      street1: street.street_line,
+      street2: "",
+      city: street.city,
+      state: state_id,
+      zip_code: street.zipcode
+    })
+    this.changeState("", street.state)
   }
   caState: any;
   changeState(state, state_code?) {

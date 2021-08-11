@@ -1069,6 +1069,9 @@ export class AddAddress {
   isLoading = false;
   claimantForm: FormGroup;
   isSubmit = false;
+  streetClaimantAddressList = [];
+  isClaimantAddressError = false;
+  isClaimantAddressSearched = false;
   constructor(
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddAddress>,
@@ -1096,8 +1099,44 @@ export class AddAddress {
         zip_code: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])]
       });
       this.changeState(this.userData.state, this.userData.state_code)
-      this.claimantForm.patchValue(this.userData)
+      this.claimantForm.patchValue(this.userData);
+      this.claimantForm.get('street1').valueChanges
+        .pipe(
+          debounceTime(500),
+        ).subscribe(key => {
+          if (key && typeof (key) == 'string')
+            key = key.trim();
+          this.isClaimantAddressSearched = true;
+          if (key)
+            this.claimService.searchAddress(key).subscribe(address => {
+              this.streetClaimantAddressList = address.suggestions;
+              this.isClaimantAddressError = false;
+            }, error => {
+              if (error.status == 0)
+                this.isClaimantAddressError = true;
+              this.streetClaimantAddressList = [];
+            })
+          else
+            this.streetClaimantAddressList = [];
+        })
     }
+  }
+  selectAddress(street) {
+    let state_id: any;
+    this.states.map(state => {
+      if (state.state_code == street.state) {
+        state_id = state.state;
+      }
+    })
+
+    this.claimantForm.patchValue({
+      street1: street.street_line,
+      street2: "",
+      city: street.city,
+      state: state_id,
+      zip_code: street.zipcode
+    })
+    this.changeState("", street.state)
   }
   corresState: any;
   changeState(state, state_code?) {
