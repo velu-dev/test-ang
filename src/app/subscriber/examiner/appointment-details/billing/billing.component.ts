@@ -692,7 +692,7 @@ export class billingOnDemandDialog {
         }
       });
       dialogRef.afterClosed().subscribe(res => {
-        if(res.data) {
+        if (res.data) {
           this.billondemand(data);
         }
       });
@@ -814,7 +814,7 @@ export class billingOnDemandDialog {
       width: "500px",
       data: {
         title: "Recipients",
-        type: 'info',        
+        type: 'info',
         proceed: true,
         cancel: true,
         message: 'Only the Insurance Company requires the request for Second Bill Review'
@@ -837,7 +837,11 @@ export class BillingCustomRecipient {
   billable_id: any;
   isEdit: any = false;
   recipientData = {};
+  streetbillcustomAddressList = [];
+  isbillcustomAddressError = false;
+  isbillcustomAddressSearched = false;
   constructor(
+    public claimService: ClaimService,
     public dialogRef: MatDialogRef<BillingCustomRecipient>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private formBuilder: FormBuilder, public billingService: BillingService,
     private alertService: AlertService) {
@@ -867,6 +871,26 @@ export class BillingCustomRecipient {
       this.changeState(this.data['data'].state, this.data['data'].state_code);
       this.customReceipient.patchValue(this.data["data"]);
     }
+
+    this.customReceipient.get('street1').valueChanges
+      .pipe(
+        debounceTime(500),
+      ).subscribe(key => {
+        if (key && typeof (key) == 'string')
+          key = key.trim();
+        this.isbillcustomAddressSearched = true;
+        if (key)
+          this.claimService.searchAddress(key).subscribe(address => {
+            this.streetbillcustomAddressList = address.suggestions;
+            this.isbillcustomAddressError = false;
+          }, error => {
+            if (error.status == 0)
+              this.isbillcustomAddressError = true;
+            this.streetbillcustomAddressList = [];
+          })
+        else
+          this.streetbillcustomAddressList = [];
+      })
   }
   recipientState = {};
   changeState(state, state_code?) {
@@ -879,6 +903,23 @@ export class BillingCustomRecipient {
         this.recipientState = res.state_code;
       }
     })
+  }
+  selectAddress(street) {
+    let state_id: any;
+    this.states.map(state => {
+      if (state.state_code == street.state) {
+        state_id = state.state;
+      }
+    })
+
+    this.customReceipient.patchValue({
+      street1: street.street_line,
+      street2: "",
+      city: street.city,
+      state: state_id,
+      zip_code: street.zipcode
+    })
+    this.changeState("", street.state)
   }
   saveClick() {
     Object.keys(this.customReceipient.controls).forEach((key) => {
