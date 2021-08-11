@@ -88,7 +88,7 @@ export class BillLineItemComponent implements OnInit {
         this.getBillLineItem()
       }
     });
-    this.subscriptions = this.intercom.getBillItemChange().subscribe((res) => {
+    this.subscriptions = this.intercom.onPaymentReviewSave().subscribe((res) => {
       if (res) {
         this.getBillLineItem()
       }
@@ -103,9 +103,8 @@ export class BillLineItemComponent implements OnInit {
   billing_line_items: any;
   newFeeScheduleStatus: boolean;
   billingCodeDetails: any;
-  count = 0
+  
   getBillLineItem() {
-    console.log(this.count++,"getBillLineItemsActual")
     this.touchedRows = [];
 
     if (this.review && this.review.toLowerCase() == 'second') {
