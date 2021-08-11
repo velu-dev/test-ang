@@ -351,3 +351,20 @@ mat-card-content {
     border: 1px solid $error-border;
     border-radius: 3px;
 }
+::ng-deep {
+    .custom-input {
+        input {
+            width: calc(100% - 20px);
+            border: 1px solid $light-gray;
+            border-radius: 5px;
+            padding: 5px;
+            &:hover,
+            &:focus,
+            &:focus-visible {
+                border: 1px solid #d5aed2;
+                box-shadow: none;
+                outline: none;
+            }
+        }
+    }
+}
