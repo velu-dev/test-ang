@@ -103,7 +103,9 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     })
   }
   billLineItems = [];
+  count = 0
   getBillLineItems() {
+    console.log(this.count++,"getBillLineItems")
     this.billingService.getBillLineItem(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId).subscribe(line => {
       this.billLineItems = line.data;
     })
@@ -136,7 +138,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.intercom.getBillItemChange().subscribe(res => {
+    this.subscription = this.intercom.getBillItemChange().subscribe(res => {
       this.getBillLineItems();
     })
     this.getBillLineItems();
@@ -350,8 +352,15 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   }
 
   setPaymentAmount(index: number, review) {
-    const { charge, payment, bill_submission_type } = this.payments().at(index).value;
-    const payment_amount = bill_submission_type === 'First' ? Number(charge) : Number(charge) - Number(payment);
+    const { charge, first_submission_payment, sbr_payment } = this.payments().at(index).value;
+    let payment_amount = 0;
+    if(this.billType == 1) {
+      payment_amount = charge;
+    } else if(this.billType == 2) {
+      payment_amount = Number(charge) - Number(first_submission_payment);
+    } else {
+      payment_amount = Number(charge) - Number(sbr_payment);
+    }
     review.get('payment_amount').patchValue(payment_amount);
   }
 
@@ -379,7 +388,6 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     this.depositionDate = null;
   }
   saveReview(payment: FormGroup, review: FormGroup, payIndex, reviewIndex, isDepositAdd?) {
-    let isEORError = false;
     review.get('eor_allowance_details').value.map((rev, ind) => {
       if (review.get('void_type_id').value == 3) {
         review.get('eor_allowance_details').value[ind].eor_allowance = null;
@@ -411,7 +419,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       return;
     }
     this.validatePaymentAmount(review);
-    if (review.get('void_type_id').value !== 3 && (isEORError || this.eorError)) {
+    if (review.get('void_type_id').value !== 3 && this.eorError) {
       return;
     }
     formData.append('post_date', review.get('post_date').value ? moment(review.get('post_date').value).format("MM-DD-YYYY") : '');
@@ -707,7 +715,6 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
         balance = eorData.get('charges').value - eorData.get('eor_allowance').value;
       }
       if (this.billType == 2) {
-        console.log(eorData.get('first_submission_payment').value)
         balance = eorData.get('charges').value - eorData.get('eor_allowance').value - eorData.get('first_submission_payment').value;
       }
       if (this.billType == 3) {
