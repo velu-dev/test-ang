@@ -33,7 +33,7 @@
                     matTooltipPosition="above" class="clear">
                     <mat-icon>close</mat-icon>
                 </button>
-                <mat-autocomplete #daAuto="matAutocomplete"  (optionSelected)='getDA($event.option.value)'>
+                <mat-autocomplete #daAuto="matAutocomplete" (optionSelected)='getDA($event.option.value)'>
                     <mat-optgroup *ngFor="let group of dattroneyGroupOptions" [label]="group.name">
                         <mat-option (click)="defAttornety(attroney)" *ngFor="let attroney of group.data"
                             [value]="attroney.company_name">
@@ -50,9 +50,22 @@
 
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
                 <mat-label>Street Address 1{{fromPop ? "*" : ""}}</mat-label>
-                <textarea matInput placeholder="Street Address 1" cdkTextareaAutosize cdkAutosizeMinRows="1"
+                <input matInput id="street-input" [matAutocomplete]="streetAutocomplete"
+                    #trigger="matAutocompleteTrigger" formControlName="street1" placeholder="Street Address 1">
+                <mat-autocomplete #streetAutocomplete="matAutocomplete">
+                    <mat-option *ngFor="let address of streetDAAddressList" [value]="address.street_line"
+                        (click)="selectAddress(address)" (onSelectionChange)="selectAddress(address)">
+                        {{address?.street_line}} {{address?.secondary}} {{address?.city}}
+                        {{address?.state}}
+                        {{address?.zipcode}}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-hint *ngIf="isDAAddressError"><i class="fas fa-info-circle"></i> The address
+                    autocomplete service is temporarily unavailable. Our team is working to fix it.
+                </mat-hint>
+                <!-- <textarea matInput placeholder="Street Address 1" cdkTextareaAutosize cdkAutosizeMinRows="1"
                     cdkAutosizeMaxRows="1" formControlName="street1"></textarea>
-                <mat-error>Please enter valid street address 1</mat-error>
+                <mat-error>Please enter valid street address 1</mat-error> -->
             </mat-form-field>
 
             <mat-form-field appearance="outline" fxFlex="50" fxFlex.md="50" fxFlex.sm="50" fxFlex.xs="100">
@@ -96,7 +109,8 @@
 
                 <mat-form-field appearance="outline" fxFlex="30" class="phone-ext">
                     <mat-label>Ext</mat-label>
-                    <input matInput type="text" placeholder="Ext" autocomplete="off" (keypress)="numberOnly($event)" formControlName="phone_ext">
+                    <input matInput type="text" placeholder="Ext" autocomplete="off" (keypress)="numberOnly($event)"
+                        formControlName="phone_ext">
                     <mat-error>Please enter valid Extension</mat-error>
                 </mat-form-field>
 

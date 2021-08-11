@@ -23,6 +23,9 @@ export class DeoComponent implements OnInit {
   deuDetails = [];
   deuId = "";
   id: any;
+  streetDEUAddressList = [];
+  isDEUAddressError = false;
+  isDEUAddressSearched = false;
   constructor(public dialogRef: MatDialogRef<DeoComponent>, public dialog: MatDialog, private formBuilder: FormBuilder, private claimService: ClaimService, private alertService: AlertService) {
     this.DEU = this.formBuilder.group({
       id: [null],
@@ -46,9 +49,28 @@ export class DeoComponent implements OnInit {
           this.DEU.get("phone_ext").disable();
         }
     })
+    this.DEU.get('street1').valueChanges
+      .pipe(
+        debounceTime(500),
+      ).subscribe(key => {
+        if (key && typeof (key) == 'string')
+          key = key.trim();
+        this.isDEUAddressSearched = true;
+        if (key)
+          this.claimService.searchAddress(key).subscribe(address => {
+            this.streetDEUAddressList = address.suggestions;
+            this.isDEUAddressError = false;
+          }, error => {
+            if (error.status == 0)
+              this.isDEUAddressError = true;
+            this.streetDEUAddressList = [];
+          })
+        else
+          this.streetDEUAddressList = [];
+      })
     this.claimService.getDeuDetails().subscribe(res => {
       console.log(res.data);
-      res.data.map(ii =>{
+      res.data.map(ii => {
         ii['name'] = ii.code + " - " + ii.deu_office
       })
       this.deuDetails = res.data;
@@ -125,6 +147,23 @@ export class DeoComponent implements OnInit {
         this.deuState = res.state_code;
       }
     })
+  }
+  selectAddress(street) {
+    let state_id: any;
+    this.states.map(state => {
+      if (state.state_code == street.state) {
+        state_id = state.state;
+      }
+    })
+
+    this.DEU.patchValue({
+      street1: street.street_line,
+      street2: "",
+      city: street.city,
+      state: state_id,
+      zip_code: street.zipcode
+    })
+    this.changeState("", street.state)
   }
   appAttorney(sdsd) {
 
