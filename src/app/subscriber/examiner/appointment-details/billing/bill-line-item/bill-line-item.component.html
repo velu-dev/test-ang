@@ -394,24 +394,24 @@
                                                 <div class="flex">
                                                     <div class="bill-property">Charge</div>
                                                     <div class="value">
-                                                        {{group.get('charge').value? '$ ' :
-                                                        ''}}{{group.get('charge').value | number : '1.2-2'}}</div>
+                                                        {{group.get('charge').value > -1 ? '$ ' : ''}}{{group.get('charge').value |
+                                                        number : '1.2-2'}}</div>
                                                 </div>
                                                 <div class="flex">
                                                     <div class="bill-property">Payment</div>
                                                     <div class="value">
-                                                        {{group.get('payment').value > -1 ? '$ ' :
-                                                        ''}}{{group.get('payment').value
+                                                        {{group.get('payment').value > -1 ? '$ ' : ''}}{{group.get('payment').value
                                                         | number : '1.2-2'}}</div>
                                                 </div>
                                                 <div class="flex">
                                                     <div class="bill-property">Balance</div>
                                                     <div class="value text-danger">
-                                                        {{group.get('charge').value > -1 ? '$ ' :
-                                                        ''}}{{(group.get('charge').value)
-                                                        | number : '1.2-2'}}</div>
+                                                        {{group.get('charge').value > -1 ? '$ ' : ''}}
+                                                        {{ ((group.get('charge').value - group.get('payment').value) > 0 ?
+                                                        group.get('charge').value - group.get('payment').value : 0) | number :
+                                                        '1.2-2'}}</div>
                                                 </div>
-                                                <div class="flex">
+                                                <div class="flex" *ngIf="!is_cancellation">
                                                     <div class="bill-property">Action </div>
                                                     <div class="value" *ngIf="is_cancellation">
                                                         <a [ngClass]="{'disableatag': isPaymentresponseCreated}"
@@ -449,7 +449,9 @@
                                     <div class="grid-list">
                                         <div><b>Total Balance</b></div>
                                         <div class="text-danger">
-                                            {{calculateTotalBal()? '$ ' : ''}}{{calculateTotalBal() | number : '1.2-2'}}
+                                            {{calculateTotalBal()? '$ ' :
+                                            ''}}{{ calculateTotalBal().indexOf('-') < 0 ? calculateTotalBal() : 0 |
+                                                number : '1.2-2' }}
                                         </div>
                                     </div>
                                 </mat-card>
@@ -656,7 +658,7 @@
                                         <td>-</td>
                                     </tr>
                                     <tr class="reason" *ngIf="group.get('reviewShow').value">
-                                        <td colspan="10" [formGroupName]="i">
+                                        <td colspan="11" [formGroupName]="i">
                                             <div fxLayout="row wrap" class="reason-for-request">
                                                 <div fxFlex="100" *ngIf="!first">
                                                     <div class="checkbox">
