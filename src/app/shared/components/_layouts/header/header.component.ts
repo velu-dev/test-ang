@@ -156,12 +156,12 @@ export class HeaderComponent implements OnInit {
 
         }
       });
-    window.onresize = () => {
-      this.ngOnInit();
-      this.isOpen = this.inputSideNav.opened;
-      this.isClosed.emit(this.isOpen);
-      // this.isSearch = false;
-    };
+    // window.onresize = () => {
+    //   this.ngOnInit();
+    //   this.isOpen = this.inputSideNav.opened;
+    //   this.isClosed.emit(this.isOpen);
+    //   // this.isSearch = false;
+    // };
 
   }
   private _filterClaimants(value: string): Claimant[] {

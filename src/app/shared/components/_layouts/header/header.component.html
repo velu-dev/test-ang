@@ -1,11 +1,11 @@
 <mat-toolbar class="nav-bar navbar-fixed-header">
     <mat-toolbar-row>
-        <button [ngClass]="{'opened': isOpen, 'closed': !isOpen}" type="button" aria-label="Toggle sidenav"
+        <button [ngClass]="{'opened': isOpened, 'closed': !isOpened}" type="button" aria-label="Toggle sidenav"
             mat-icon-button (click)="openSidenav()" class="toggle_ show-mobile">
-            <mat-icon aria-label="Side nav menu icon" [matTooltip]="isOpen ? 'Collapse' : 'Expand'"
+            <mat-icon aria-label="Side nav menu icon" [matTooltip]="isOpened ? 'Collapse' : 'Expand'"
                 matTooltipPosition="right">menu</mat-icon>
         </button>
-        <div [ngClass]="{'opened': isOpen, 'closed': !isOpen}" class="hide-mobile"></div>
+        <div [ngClass]="{'opened': isOpened, 'closed': !isOpened}" class="hide-mobile"></div>
         <img [src]="nav_logo" alt="logo" class="p-l-5 simplexam-logo" (click)="navegateHome()">
         <div [ngClass]="{'overlay': isSearch,'hide-mobile': !isSearch}" *ngIf="isSearch" (click)="isSearch = !isSearch">
         </div>
@@ -18,7 +18,8 @@
                         [matAutocomplete]="auto" [formControl]="claimantCtrl">
                     <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let claimant of filteredClaimants"
-                            (click)="searchClick(claimant); isSearch = false" (onSelectionChange)='searchClick(claimant); isSearch = false' [value]="claimant._id"
+                            (click)="searchClick(claimant); isSearch = false"
+                            (onSelectionChange)='searchClick(claimant); isSearch = false' [value]="claimant._id"
                             class="custom-option">
                             <ul>
                                 <li>
@@ -79,7 +80,8 @@
                 </div>
                 <div class="support-btn hide-mobile p-r-20">
                     <a [href]="helpUrl" target="help_url">Help</a> |
-                    <a (click)="logout()">Log-Out</a></div>
+                    <a (click)="logout()">Log-Out</a>
+                </div>
                 <div *ngIf="user">
                     <button mat-icon-button [title]="user?.first_name" [matMenuTriggerFor]="settings">
                         <div class="welcome_t">
