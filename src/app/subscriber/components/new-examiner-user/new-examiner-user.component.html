@@ -905,7 +905,7 @@
                                         {{option?.city}}
                                         {{option?.state_code }} {{option?.zip_code }}
                                     </mat-option>
-                                    <mat-option *ngIf="(filteredOptions | async)?.length == 0" disabled>No Existing
+                                    <mat-option *ngIf="(filteredOptions | async)?.length == 0" disabled>No existing
                                         service location found. Please create a <a class="text-ternary"
                                             (click)="locationRoute()" style="cursor: pointer;">new service location</a>.
                                     </mat-option>
@@ -939,7 +939,7 @@
                                    Create Service Location
                                 </button> -->
                                 <div *ngIf="(filteredOptions | async)?.length == 0 && locationData == null"
-                                    class="text-center p-b-40">No Existing service location found. Please create a <a
+                                    class="text-center p-b-40">No existing service location found. Please create a <a
                                         class="text-ternary cursor-pointer" (click)="locationRoute()">new service
                                         location</a>.</div>
                             </div>
