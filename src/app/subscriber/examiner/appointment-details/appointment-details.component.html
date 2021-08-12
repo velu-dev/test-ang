@@ -610,7 +610,7 @@
                                     <input matInput placeholder="MM-DD-YYYY HH:MM AM/PM"
                                         formControlName="appointment_scheduled_date_time"
                                         [value]="appointment_scheduled_date_time"
-                                        (dateTimeChange)="changeDateType(billable_item?.value?.appointment?.appointment_scheduled_date_time, 'change')"
+                                        (dateTimeChange)="changeDateType(billable_item?.value?.appointment?.appointment_scheduled_date_time)"
                                         autocomplete="off" [owlDateTime]="appointment" [min]="examinationDetails?.dob">
                                     <mat-datepicker-toggle matSuffix [owlDateTimeTrigger]="appointment"
                                         [disabled]="!isEditBillableItem || this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).disabled">
