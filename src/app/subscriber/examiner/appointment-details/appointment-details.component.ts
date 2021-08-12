@@ -1188,6 +1188,7 @@ export class AppointmentDetailsComponent implements OnInit {
     this.isEditBillableItem = false;
     this.billable_item.disable();
     this.billable_item.patchValue(this.billableData);
+    this.billable_item.get('appointment').get('appointment_scheduled_date_time').patchValue(this.appointment_scheduled_date_time);
     // if (this.billable_item.get(["appointment", "conference_phone"]).value && this.billable_item.get(["appointment", "conference_phone"]).valid) {
     //   this.billable_item.get(["appointment", "phone_ext"]).enable();
     // } else {
