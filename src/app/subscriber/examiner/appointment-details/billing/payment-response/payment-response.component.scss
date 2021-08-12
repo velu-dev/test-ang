@@ -156,6 +156,7 @@ mat-card-content {
                                         }
                                         .mat-form-field-appearance-outline .mat-form-field-infix {
                                             padding: 3px 0 10px 0 !important;
+                                            word-break:break-all !important;
                                         }
                                         .mat-form-field-appearance-outline .mat-form-field-prefix {
                                             top: 0px !important;
@@ -221,6 +222,7 @@ mat-card-content {
                                     }
                                     .mat-form-field-appearance-outline .mat-form-field-infix {
                                         padding: 3px 0 10px 0 !important;
+                                        word-break: break-all !important;
                                     }
                                     .mat-form-field-appearance-outline .mat-form-field-prefix {
                                         top: 0px !important;
