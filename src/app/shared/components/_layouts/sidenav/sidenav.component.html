@@ -2,11 +2,13 @@
     <mat-sidenav #drawer class="sidenav side-nav-icon" fixedInViewport
         [attr.role]="((isHandset$ | async) || (isTablet | async) ) ? 'dialog' : 'navigation'"
         [mode]="((isHandset$ | async) || (isTablet | async) ) ? 'over' : 'side'"
-        [opened]="((isHandset$ | async) || (isTablet | async) ) === false">
+        [opened]="((isHandset$ | async) || (isTablet | async) ) === false || isOpen">
 
         <mat-toolbar>
             <button type="button" (click)="openSidenav()" aria-label="Toggle sidenav" mat-icon-button class="toggle_">
-                <mat-icon aria-label="Side nav menu icon" [matTooltip]="isOpen ? 'Collapse' : 'Expand'" matTooltipPosition="right">menu</mat-icon>
+                <mat-icon aria-label="Side nav menu icon"
+                    [matTooltip]="((isHandset$ | async) || (isTablet | async) ) === false ? 'Collapse' : 'Expand'"
+                    matTooltipPosition="right">menu</mat-icon>
             </button>
             <span class="spacer"></span>
             <!-- <img [src]="icon_logo" alt="Simplexam Logo" class="icon-logo expanded_" (click)="mainPage()"> -->
@@ -24,20 +26,25 @@
             </a>
         </span>
         <mat-nav-list>
-            <span *ngFor="let menuItem of menuItems" >
-                <a class="menu-card-title menu-group m-b-50">{{isOpen ? menuItem.group : menuItem.short_group}}</a>
+            <span *ngFor="let menuItem of menuItems">
+                <a class="menu-card-title menu-group m-b-50">{{ isOpen
+                    || sidenav?.opened ? menuItem.group :
+                    menuItem.short_group}}</a>
                 <a *ngFor="let menu of menuItem.menu" (click)="navigate()" [routerLink]="menu.path"
-                    routerLinkActive="active-list-item" class="list-nav" mat-list-item [matTooltip]="!isOpen ? menu.title : ''" matTooltipPosition="right">
+                    routerLinkActive="active-list-item" class="list-nav" mat-list-item
+                    [matTooltip]="((isHandset$ | async) || (isTablet | async) ) ? menu.title : ''"
+                    matTooltipPosition="right">
                     <!-- routerLinkActive="active-list-item" class="list-nav" mat-list-item [title]="menu.title"> -->
                     <!-- <mat-icon aria-hidden="false" aria-label="home icon">{{menu.icon}}</mat-icon> -->
-                    <i class="fa fa-{{menu.icon}} p-r-10" ></i>
+                    <i class="fa fa-{{menu.icon}} p-r-10"></i>
                     <span class="expanded_"> {{menu.title }}</span>
                 </a>
             </span>
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-        <app-header (isClosed)="isclosed($event)" [isOpened]="isOpen" [inputSideNav]="drawer"></app-header>
+        <app-header (isClosed)="isclosed($event)" [isOpened]="((isHandset$ | async) || (isTablet | async) ) === false"
+            [inputSideNav]="drawer"></app-header>
         <!-- Add Content Here -->
         <div class="content-wrapper p-t-0">
             <app-page_header></app-page_header>

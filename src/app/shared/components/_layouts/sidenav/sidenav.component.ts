@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Inject, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject, Output, ChangeDetectorRef } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
@@ -59,7 +59,8 @@ export class SidenavComponent implements OnInit {
     private loaderService: NgxSpinnerService,
     private userService: UserService,
     private cookieService: CookieService,
-    private intercom: IntercomService
+    private intercom: IntercomService,
+    private cd: ChangeDetectorRef
   ) {
 
     this.intercom.getUserChanges().subscribe(info => {
@@ -87,8 +88,8 @@ export class SidenavComponent implements OnInit {
     })
     this.isTablet.subscribe(res => {
       this.isTab = res;
-      this.isOpen = !res;
     })
+
     this.loaderService.hide();
 
   }
@@ -104,6 +105,9 @@ export class SidenavComponent implements OnInit {
 
   }
   ngAfterViewInit() {
+    this.isOpen = (!this.isMobile && !this.isTab);
+    console.log(this.isOpen)
+    this.cd.detectChanges();
   }
   navigate() {
     this.intercom.setExaminerPage(false);
@@ -117,6 +121,7 @@ export class SidenavComponent implements OnInit {
   openSidenav() {
     // this.sidenav.toggle();
     this.header.openSidenav();
+    this.isOpen = this.sidenav.opened;
   }
   changeRole() {
     if (this.roleId == 2) {
