@@ -82,6 +82,8 @@ export class SidenavComponent implements OnInit {
     this.menuItems = ROUTES.filter(menuItem => menuItem.role_id == this.roleId);
     window.onresize = () => {
       this.screenWidth = window.innerWidth;
+      this.sidenav.close();
+      this.isOpen = false;
     };
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -105,9 +107,6 @@ export class SidenavComponent implements OnInit {
 
   }
   ngAfterViewInit() {
-    this.isOpen = (!this.isMobile && !this.isTab);
-    console.log(this.isOpen)
-    this.cd.detectChanges();
   }
   navigate() {
     this.intercom.setExaminerPage(false);

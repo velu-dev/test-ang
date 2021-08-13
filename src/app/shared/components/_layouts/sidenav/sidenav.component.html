@@ -1,13 +1,12 @@
 <mat-sidenav-container class="sidenav-container ">
     <mat-sidenav #drawer class="sidenav side-nav-icon" fixedInViewport
         [attr.role]="((isHandset$ | async) || (isTablet | async) ) ? 'dialog' : 'navigation'"
-        [mode]="((isHandset$ | async) || (isTablet | async) ) ? 'over' : 'side'"
-        [opened]="((isHandset$ | async) || (isTablet | async) ) === false || isOpen">
+        [mode]="((isHandset$ | async) || (isTablet | async) ) ? 'over' : 'side'" [opened]="isOpen">
 
         <mat-toolbar>
             <button type="button" (click)="openSidenav()" aria-label="Toggle sidenav" mat-icon-button class="toggle_">
                 <mat-icon aria-label="Side nav menu icon"
-                    [matTooltip]="((isHandset$ | async) || (isTablet | async) ) === false ? 'Collapse' : 'Expand'"
+                    [matTooltip]="((isHandset$ | async) || (isTablet | async) ) === false || isOpen ? 'Collapse' : 'Expand'"
                     matTooltipPosition="right">menu</mat-icon>
             </button>
             <span class="spacer"></span>
@@ -43,8 +42,8 @@
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-        <app-header (isClosed)="isclosed($event)" [isOpened]="((isHandset$ | async) || (isTablet | async) ) === false"
-            [inputSideNav]="drawer"></app-header>
+        <app-header (isClosed)="isclosed($event)" [isOpened]="isOpen" [inputSideNav]="drawer">
+        </app-header>
         <!-- Add Content Here -->
         <div class="content-wrapper p-t-0">
             <app-page_header></app-page_header>
