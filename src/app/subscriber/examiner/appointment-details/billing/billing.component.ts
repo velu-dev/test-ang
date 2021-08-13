@@ -531,10 +531,13 @@ export class billingOnDemandDialog {
           recipientsDocuments_ids.push(res.id)
           selected_recipients.push(res)
         } else {
-          selected_recipients.push(res)
+          if (!res.message) {
+            selected_recipients.push(res);
+          }
           if (res.recipient_type.toLowerCase() != 'claimant') {
-            if (!res.message)
+            if (!res.message) {
               recipientsDocuments_ids.push(res.data.id)
+            }
           } else {
             isClaimant = true
           }
