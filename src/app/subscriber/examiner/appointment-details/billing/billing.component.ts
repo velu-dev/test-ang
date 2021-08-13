@@ -916,7 +916,7 @@ export class BillingCustomRecipient {
       street1: street.street_line,
       street2: "",
       city: street.city,
-      state: state_id,
+      state_id: state_id,
       zip_code: street.zipcode
     })
     this.changeState("", street.state)
