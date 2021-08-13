@@ -1011,7 +1011,6 @@ export class CustomRecipient {
   }
   recipientState = {};
   changeState(state, state_code?) {
-
     if (state_code) {
       this.recipientState = state_code;
       return;
@@ -1037,6 +1036,7 @@ export class CustomRecipient {
       state_id: state_id,
       zip_code: street.zipcode
     })
+    this.changeState("", street.state)
   }
 
   saveClick() {

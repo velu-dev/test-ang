@@ -335,7 +335,7 @@
                                         <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100"
                                             class="expand-details editable"
                                             *ngIf="review.get('void_type_id').value != 3">
-                                            <div class="grid-list-form">
+                                            <div class="grid-list-form mh-66">
                                                 <div class="property p-t-10">Explanation of
                                                     Review{{review.get('file')?.errors?.required ? '*' : ''}}</div>
                                                 <div class="value eor">
@@ -979,7 +979,7 @@
                                                             <p *ngIf="review.get('file_name').value" fxFlex="100" class="w-100">
                                                                 {{review.get('file_name').value}}</p>
                                                         </div>
-                                                        <button type="button" class="filled-gray mini-btn" mat-raised-button
+                                                        <button type="button" class="filled-gray mini-btn m-t-5" mat-raised-button
                                                             [disabled]="review.get('file_name').disabled"
                                                             (click)="openUploadPopUp(false, ['.pdf', '.jpg', '.jpeg', '.png'], review, 30 )">{{!review.get('file_name').value
                                                             ? 'Upload' : 'Reupload'}}</button>
