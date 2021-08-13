@@ -40,12 +40,9 @@ export class SidenavComponent implements OnInit {
   public menuItems: any;
   expanded: boolean = false;
   roleId: any;
-  isTablet: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Tablet).pipe(map(result => result.matches), shareReplay())
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
+  isTablet: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Tablet).pipe(map(result => result.matches), shareReplay());
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(map(result => result.matches), shareReplay());
+  isDesktop: Observable<boolean> = this.breakpointObserver.observe([Breakpoints.Medium, Breakpoints.Large]).pipe(map(result => result.matches), shareReplay());
   isMobile: boolean = false;
   isTab: boolean = false;
   role: any;
@@ -82,8 +79,13 @@ export class SidenavComponent implements OnInit {
     this.menuItems = ROUTES.filter(menuItem => menuItem.role_id == this.roleId);
     window.onresize = () => {
       this.screenWidth = window.innerWidth;
-      this.sidenav.close();
-      this.isOpen = false;
+      if(this.screenWidth < 1240){
+        this.sidenav.close();
+        this.isOpen = false;
+      } else {
+        this.sidenav.open();
+        this.isOpen = true;
+      }
     };
     this.isHandset$.subscribe(res => {
       this.isMobile = res;

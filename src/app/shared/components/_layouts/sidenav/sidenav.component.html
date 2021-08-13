@@ -5,8 +5,7 @@
 
         <mat-toolbar>
             <button type="button" (click)="openSidenav()" aria-label="Toggle sidenav" mat-icon-button class="toggle_">
-                <mat-icon aria-label="Side nav menu icon"
-                    [matTooltip]="((isHandset$ | async) || (isTablet | async) ) === false || isOpen ? 'Collapse' : 'Expand'"
+                <mat-icon aria-label="Side nav menu icon" [matTooltip]="isOpen ? 'Collapse' : 'Expand'"
                     matTooltipPosition="right">menu</mat-icon>
             </button>
             <span class="spacer"></span>
@@ -31,8 +30,7 @@
                     menuItem.short_group}}</a>
                 <a *ngFor="let menu of menuItem.menu" (click)="navigate()" [routerLink]="menu.path"
                     routerLinkActive="active-list-item" class="list-nav" mat-list-item
-                    [matTooltip]="((isHandset$ | async) || (isTablet | async) ) ? menu.title : ''"
-                    matTooltipPosition="right">
+                    [matTooltip]="!isOpen ? menu.title : ''" matTooltipPosition="right">
                     <!-- routerLinkActive="active-list-item" class="list-nav" mat-list-item [title]="menu.title"> -->
                     <!-- <mat-icon aria-hidden="false" aria-label="home icon">{{menu.icon}}</mat-icon> -->
                     <i class="fa fa-{{menu.icon}} p-r-10"></i>
