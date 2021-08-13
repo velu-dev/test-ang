@@ -533,7 +533,8 @@ export class billingOnDemandDialog {
         } else {
           selected_recipients.push(res)
           if (res.recipient_type.toLowerCase() != 'claimant') {
-            recipientsDocuments_ids.push(res.data.id)
+            if (!res.message)
+              recipientsDocuments_ids.push(res.data.id)
           } else {
             isClaimant = true
           }
@@ -550,7 +551,6 @@ export class billingOnDemandDialog {
           isInsuranceAddress = true
         }
       })
-
       if (!isInsurance) {
         this.alertService.openSnackBar('Please select Insurance Company', "error");
         return;
@@ -577,7 +577,6 @@ export class billingOnDemandDialog {
           data: { title: 'Bill on demand', message: "W9 Form not included. Do you want to proceed further?", yes: true, no: true, type: "info", info: true }
         });
         dialogRef.afterClosed().subscribe(result => {
-          console.log(result)
           if (result.data) {
             if (addressEmpty) {
               const dialogRef = this.dialog.open(AlertDialogueComponent, {
