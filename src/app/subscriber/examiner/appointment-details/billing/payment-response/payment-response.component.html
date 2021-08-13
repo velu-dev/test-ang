@@ -680,7 +680,7 @@
                                     <div class="detail m-t-5"
                                         *ngFor="let review of paymentReviews(payIndex).controls; let reviewIndex=index;let last = last"
                                         style="background-color: #f8f8f8;padding: 10px;border: 1px solid #a2a1a1;">
-                                        <div [formGroupName]="reviewIndex">
+                                        <div [formGroupName]="reviewIndex" [ngClass]="{'strike-mobile-line-item' : !last || review.get('void_type_id').value == 3}">
         
                                             <div class="expand-details-list list-level list-level-{{reviewIndex}}"
                                                 fxLayout="row wrap" *ngIf="!review.get('showStatus').value">
