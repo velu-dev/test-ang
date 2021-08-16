@@ -81,6 +81,7 @@ export class BillLineItemComponent implements OnInit {
   ngOnInit() {
     this.subscriptions = this.intercom.getPaymentReview().subscribe(res => {
       this.isPaymentresponseCreated = res > 0 ? true : false;
+      this.isPaymentresponseCreated ? this.userTable.disable() : this.userTable.enable();
     });
     this.getBillLineItem();
     this.subscriptions = this.intercom.getAttorneyAddressChanges().subscribe((res) => {
