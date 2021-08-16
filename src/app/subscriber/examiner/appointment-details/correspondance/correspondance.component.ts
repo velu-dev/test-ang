@@ -758,11 +758,11 @@ export class BillingCorrespondanceComponent implements OnInit {
             message = message + " and " + msg;
           }
         })
-        console.log(have_address)
+        
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
           data: {
-            title: "Address incomplete", message: empty_address.join(", ") + " does not have address details whereas " + have_address.join(', ') + (have_address.length ? ", " : "") + have_custom_recipient + " has the address details." + " Do you want to proceed?", proceed: true, cancel: true, type: "warning", warning: true
+            title: "Address incomplete", message: empty_address.join(", ") + " does not have address details whereas " + have_address.join(', ') + (have_address.length && have_custom_recipient !="" ? ", " : "") + have_custom_recipient + " has the address details." + " Do you want to proceed?", proceed: true, cancel: true, type: "warning", warning: true
           }
         });
         dialogRef.afterClosed().subscribe(result => {
