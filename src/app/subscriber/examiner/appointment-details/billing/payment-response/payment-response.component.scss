@@ -373,3 +373,10 @@ mat-card-content {
         }
     }
 }
+.bill-response-mobile {
+    .strike-mobile-line-item {
+        .value {
+            text-decoration: line-through;
+        }
+    }
+}

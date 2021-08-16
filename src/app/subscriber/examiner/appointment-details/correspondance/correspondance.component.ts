@@ -720,9 +720,11 @@ export class BillingCorrespondanceComponent implements OnInit {
     this.selection1.selected.map(res => {
       if (!res.message) {
         if (res.type == 'custom') {
-          have_custom_recipient = res.name;
+          have_custom_recipient = "Custom Recipient";
         }
-        have_address.push(res.recipient_type)
+        if (res.recipient_type) {
+          have_address.push(res.recipient_type)
+        }
         ids.push(res.id)
       } else {
         empty_address.push(res.recipient_type)
@@ -756,15 +758,15 @@ export class BillingCorrespondanceComponent implements OnInit {
             message = message + " and " + msg;
           }
         })
+        console.log(have_address)
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
           data: {
-            title: "Address incomplete", message: empty_address.join(", ") + " does not have address details whereas " + have_address.join(',') + (have_custom_recipient ? ", " : " ") + have_custom_recipient + " has the address details." + " Do you want to proceed?", proceed: true, cancel: true, type: "warning", warning: true
+            title: "Address incomplete", message: empty_address.join(", ") + " does not have address details whereas " + have_address.join(', ') + (have_custom_recipient ? ", " : " ") + have_custom_recipient + " has the address details." + " Do you want to proceed?", proceed: true, cancel: true, type: "warning", warning: true
           }
         });
         dialogRef.afterClosed().subscribe(result => {
           if (result.data) {
-            return
             this.createOndemand(ids)
           }
         })
@@ -1009,7 +1011,6 @@ export class CustomRecipient {
   }
   recipientState = {};
   changeState(state, state_code?) {
-
     if (state_code) {
       this.recipientState = state_code;
       return;
@@ -1032,9 +1033,10 @@ export class CustomRecipient {
       street1: street.street_line,
       street2: "",
       city: street.city,
-      state: state_id,
+      state_id: state_id,
       zip_code: street.zipcode
     })
+    this.changeState("", street.state)
   }
 
   saveClick() {
