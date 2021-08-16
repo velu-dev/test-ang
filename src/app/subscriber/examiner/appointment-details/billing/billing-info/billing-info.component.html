@@ -92,7 +92,8 @@
                 class="filled-gray m-b-5">
                 Feedback History
             </button> -->
-            <button mat-raised-button *ngIf="billingData.is_re_submit" class="filled-gray m-b-5" (click)="isFeedbackOpened =!isFeedbackOpened">
+            <button mat-raised-button *ngIf="billingData.is_re_submit" class="filled-gray m-b-5"
+                (click)="isFeedbackOpened =!isFeedbackOpened">
                 Feedback History <i class="p-l-5 fas"
                     [ngClass]="{'fa-angle-up': isFeedbackOpened,'fa-angle-down': !isFeedbackOpened}"></i>
             </button>
@@ -108,7 +109,8 @@
             </div>
             <div fxLayout="row wrap" *ngIf="payerResponse['new_response'].length != 0">
                 <div class="incomplete-modules m-b-10" fxFlex="100" *ngFor="let payer of payerResponse['new_response']">
-                    <div class="received-date"><span>Received Date: {{payer?.status_date | date:'MM-dd-yyyy'}}</span><span>Ref #: {{payer?.request_reference_id}}</span></div>
+                    <div class="received-date"><span>Received Date: {{payer?.status_date |
+                            date:'MM-dd-yyyy'}}</span><span>Ref #: {{payer?.request_reference_id}}</span></div>
                     <ul class="p-t-5">
                         <li *ngFor="let message of payer.message" class="text-danger">
                             <mat-icon>error</mat-icon>{{message?._attributes?.MessageText}}
@@ -118,7 +120,8 @@
             </div>
             <div fxLayout="row wrap" *ngIf="payerResponse['old_response'].length > 0 && isFeedbackOpened">
                 <div class="resubmitted-modules" fxFlex="100" *ngFor="let payer of payerResponse['old_response']">
-                    <div class="received-date"><span>Received Date: {{payer?.status_date | date:'MM-dd-yyyy'}}</span><span>Ref #: {{payer?.request_reference_id}}</span></div>
+                    <div class="received-date"><span>Received Date: {{payer?.status_date |
+                            date:'MM-dd-yyyy'}}</span><span>Ref #: {{payer?.request_reference_id}}</span></div>
                     <ul>
                         <li *ngFor="let message of payer.message">
                             {{message?._attributes?.MessageText}}
@@ -146,7 +149,7 @@
                                 <input matInput [matDatepicker]="date_of_service" [min]="billingData.date_of_birth"
                                     formControlName="date_of_service" placeholder="Date of Service">
                                 <mat-datepicker-toggle matSuffix [for]="date_of_service"
-                                    [disabled]="is_cancellation || review != 'First'">
+                                    [disabled]="is_cancellation || review != 'First' || dateofServiceForm.disabled">
                                 </mat-datepicker-toggle>
                                 <mat-datepicker #date_of_service></mat-datepicker>
                             </mat-form-field>
@@ -154,7 +157,8 @@
                                 <button mat-stroked-button type="button" (click)="onCancleClick()"
                                     [disabled]="is_cancellation || !dateofServiceForm.value.date_of_service"
                                     class="outline-danger">Cancel</button>
-                                <button mat-stroked-button class="outline-success text-center m-l-10">Save</button>
+                                <button mat-stroked-button class="outline-success text-center m-l-10"
+                                    [disabled]="dateofServiceForm.disabled">Save</button>
                             </div>
                         </div>
                     </form>

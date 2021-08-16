@@ -49,6 +49,7 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
   styleElement: HTMLStyleElement;
   subscription: any;
   dateofServiceForm: FormGroup;
+  isPaymentresponseCreated: boolean;
   constructor(public dialog: MatDialog, private formBuilder: FormBuilder, public billingService: BillingService, private intercom: IntercomService, private alertService: AlertService) {
     this.subscription = this.intercom.getBillDiagnosisChange().subscribe(res => {
       this.getIncomplete();
@@ -59,6 +60,11 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
       this.billingData = res;
       this.ngOnInit();
     })
+
+    this.subscription = this.intercom.getPaymentReview().subscribe(res => {
+      this.isPaymentresponseCreated = res > 0 ? true : false;
+      this.isPaymentresponseCreated ? this.dateofServiceForm.disable() : this.dateofServiceForm.enable();
+    });
   }
   is_cancellation = false;
   ngAfterContentInit() {
