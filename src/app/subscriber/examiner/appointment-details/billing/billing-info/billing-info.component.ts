@@ -63,7 +63,7 @@ export class BillingInfoComponent implements OnInit, OnDestroy {
 
     this.subscription = this.intercom.getPaymentReview().subscribe(res => {
       this.isPaymentresponseCreated = res > 0 ? true : false;
-      this.isPaymentresponseCreated ? this.dateofServiceForm.disable() : this.dateofServiceForm.enable();
+      this.isPaymentresponseCreated || this.review != 'First' ? this.dateofServiceForm.disable() : this.dateofServiceForm.enable();
     });
   }
   is_cancellation = false;
