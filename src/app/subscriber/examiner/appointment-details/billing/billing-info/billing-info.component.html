@@ -155,7 +155,7 @@
                             </mat-form-field>
                             <div fxFlex="100" class="text-center" *ngIf="review == 'First'">
                                 <button mat-stroked-button type="button" (click)="onCancleClick()"
-                                    [disabled]="is_cancellation || !dateofServiceForm.value.date_of_service"
+                                    [disabled]="is_cancellation || !dateofServiceForm.value.date_of_service || dateofServiceForm.disabled"
                                     class="outline-danger">Cancel</button>
                                 <button mat-stroked-button class="outline-success text-center m-l-10"
                                     [disabled]="dateofServiceForm.disabled">Save</button>
