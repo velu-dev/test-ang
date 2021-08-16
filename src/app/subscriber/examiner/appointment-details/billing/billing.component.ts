@@ -393,7 +393,7 @@ export class billingOnDemandDialog {
     private alertService: AlertService) {
     dialogRef.disableClose = true;
     this.states = data.states
-    console.log(data.billType)
+    console.log(data)
     this.getBillRecipient();
   }
 
