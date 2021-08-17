@@ -8,6 +8,7 @@ import * as  errors from '../../../shared/messages/errors'
 import * as  success from '../../../shared/messages/success'
 import { NgxSpinnerService } from "ngx-spinner";
 import { AlertService } from 'src/app/shared/services/alert.service';
+import { EMAIL_REGEXP } from '../../../globals';
 
 @Component({
   selector: 'app-user-verification',
@@ -28,7 +29,7 @@ export class UserVerificationComponent implements OnInit {
 
   ngOnInit() {
     this.verificationForm = this.formBuilder.group({
-      email: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      email: ['', Validators.compose([Validators.required, Validators.pattern(EMAIL_REGEXP)])],
       code: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(6), Validators.maxLength(6)])]
     });
   }

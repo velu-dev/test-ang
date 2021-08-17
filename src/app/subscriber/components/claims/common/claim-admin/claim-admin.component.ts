@@ -5,6 +5,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { Observable } from 'rxjs';
 import { startWith, map, debounceTime } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { EMAIL_REGEXP } from 'src/app/globals';
 export const _filter = (opt: any[], value: string): string[] => {
   // console.log("opt", opt);
   const filterValue = value.toLowerCase();
@@ -58,7 +59,7 @@ export class ClaimAdminComponent implements OnInit {
       zip_code: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       phone: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
       phone_ext: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
-      email: [{ value: null, disabled: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+      email: [{ value: null, disabled: true }, Validators.compose([Validators.email, Validators.pattern(EMAIL_REGEXP)])],
       fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
     });
     this.claimAdminForm.get('phone')!.valueChanges.subscribe(input => {

@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as globals from '../../../globals';
 import * as  errors from '../../../shared/messages/errors'
 import { Title } from '@angular/platform-browser';
+import { EMAIL_REGEXP } from '../../../globals';
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
@@ -32,7 +33,7 @@ export class ForgotPasswordComponent implements OnInit {
 
   ngOnInit() {
     this.forgotPasswordForm = this.formBuilder.group({
-      email: ['', Validators.compose([Validators.required, Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      email: ['', Validators.compose([Validators.required, Validators.email, Validators.pattern(EMAIL_REGEXP)])],
     });
   }
 

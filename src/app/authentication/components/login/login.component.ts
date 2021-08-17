@@ -10,6 +10,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Title } from '@angular/platform-browser';
+import { EMAIL_REGEXP } from '../../../globals';
 
 
 @Component({
@@ -54,7 +55,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.firstname.nativeElement.focus();
     this.loginForm = this.formBuilder.group({
-      email: ['', Validators.compose([Validators.required, Validators.email, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      email: ['', Validators.compose([Validators.required, Validators.email, Validators.pattern(EMAIL_REGEXP)])],
       password: ['', Validators.compose([Validators.required, Validators.minLength(8)])]
     });
   }

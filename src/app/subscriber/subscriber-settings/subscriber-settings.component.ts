@@ -24,6 +24,7 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { saveAs } from 'file-saver';
 import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
+import { EMAIL_REGEXP } from '../../globals';
 
 /*Treeview*/
 interface PaymentHistroy {
@@ -367,7 +368,7 @@ export class SubscriberSettingsComponent implements OnInit {
       phone_no2: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       phone_ext2: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       fax_no: null,
-      email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+      email: [null, Validators.compose([Validators.email, Validators.pattern(EMAIL_REGEXP)])],
       contact_person: [null],
       notes: [null]
     })

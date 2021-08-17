@@ -20,6 +20,7 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 import { RegulationDialogueComponent } from 'src/app/shared/components/regulation-dialogue/regulation-dialogue.component';
 import { UserService } from 'src/app/shared/services/user.service';
 import * as regulation from 'src/app/shared/services/regulations';
+import { EMAIL_REGEXP } from 'src/app/globals';
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
@@ -168,7 +169,7 @@ export class NewClaimantComponent implements OnInit {
       suffix: [null, Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
       date_of_birth: [null, Validators.required],
       gender: [null],
-      email: ["", Validators.compose([Validators.email])],
+      email: ["", Validators.compose([Validators.pattern(EMAIL_REGEXP)])],
       handedness: [null],
       primary_language_spoken: [null],
       certified_interpreter_required: [null],

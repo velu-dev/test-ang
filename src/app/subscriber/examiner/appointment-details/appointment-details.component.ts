@@ -26,6 +26,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 import * as regulation from 'src/app/shared/services/regulations';
 import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 import { PDFViewerComponent } from 'src/app/shared/components/pdf-viewer/pdf-viewer.component';
+import { EMAIL_REGEXP } from '../../../globals';
 export interface PeriodicElement1 {
   file_name: string;
   date: string;
@@ -893,7 +894,7 @@ export class AppointmentDetailsComponent implements OnInit {
         notes: [{ value: '', disable: true }],
         caller_phone: [{ value: '', disable: true }, Validators.compose([Validators.pattern('[0-9]+')])],
         phone_ext: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
-        caller_email: [{ value: null, disable: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+        caller_email: [{ value: null, disable: true }, Validators.compose([Validators.email, Validators.pattern(EMAIL_REGEXP)])],
         caller_fax: [{ value: '', disable: true }, Validators.compose([Validators.pattern('[0-9]+')])]
       }),
 

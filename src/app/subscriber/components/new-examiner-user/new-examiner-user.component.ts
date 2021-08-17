@@ -22,6 +22,7 @@ import * as globals from '../../../globals';
 import { saveAs } from 'file-saver';
 import { ClaimService } from '../../service/claim.service';
 import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
+import { EMAIL_REGEXP } from '../../../globals';
 @Component({
   selector: 'app-new-examiner-user',
   templateUrl: './new-examiner-user.component.html',
@@ -241,7 +242,7 @@ export class NewExaminerUserComponent implements OnInit {
       first_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
       last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
       middle_name: ['', Validators.compose([Validators.maxLength(50)])],
-      sign_in_email_id: [{ value: '', disabled: this.isEdit }, Validators.compose([Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      sign_in_email_id: [{ value: '', disabled: this.isEdit }, Validators.compose([Validators.pattern(EMAIL_REGEXP)])],
       role_id: [{ value: '', disabled: this.isEdit }, Validators.required],
       suffix: ['', Validators.compose([Validators.maxLength(15), Validators.pattern('[a-zA-Z.,/ ]{0,15}$')])],
       SameAsSubscriber: [{ value: false, disabled: this.isEdit }],
@@ -546,7 +547,7 @@ export class NewExaminerUserComponent implements OnInit {
       phone_no2: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       phone_ext2: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       fax_no: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-      email: ["", Validators.compose([Validators.email])],
+      email: ["", Validators.compose([Validators.pattern(EMAIL_REGEXP)])],
       contact_person: [""],
       notes: [""],
     })
@@ -698,7 +699,7 @@ export class NewExaminerUserComponent implements OnInit {
         this.userForm.get(key).setValue(this.userForm.get(key).value.trim())
     });
     if (this.isEmailId) {
-      this.userForm.controls.sign_in_email_id.setValidators(Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')]))
+      this.userForm.controls.sign_in_email_id.setValidators(Validators.compose([Validators.required, Validators.pattern(EMAIL_REGEXP)]))
     } else {
       this.userForm.controls.sign_in_email_id.setValidators([])
     }
