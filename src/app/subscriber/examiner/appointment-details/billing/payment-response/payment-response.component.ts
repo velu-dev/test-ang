@@ -103,7 +103,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     })
   }
   billLineItems = [];
-  
+
   getBillLineItems() {
     this.billingService.getBillLineItem(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId).subscribe(line => {
       this.billLineItems = line.data;
@@ -200,12 +200,12 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
           this.paymentReviews(i).at(ind).get('eor_allowance_details').patchValue([]);
           review.eor_allowance_details.map((eor, index) => {
             if (eor && !eor.is_fully_paid) {
-            let eor_allowance_details = this.paymentReviews(i).at(ind).get('eor_allowance_details');
-            (eor_allowance_details as FormArray).push(this.fb.group({
-              bill_line_item_id: eor.id,
-              item: eor.item_description, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charge, eor_allowance: Number(eor.eor_allowance), payment_amount: eor.payment_amount, balance: eor.balance > 0 ? eor.balance : eor.charge, first_submission_payment: eor.first_submission_payment, sbr_payment: eor.sbr_payment
-            }))
-          }
+              let eor_allowance_details = this.paymentReviews(i).at(ind).get('eor_allowance_details');
+              (eor_allowance_details as FormArray).push(this.fb.group({
+                bill_line_item_id: eor.id,
+                item: eor.item_description, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charge, eor_allowance: Number(eor.eor_allowance), payment_amount: eor.payment_amount, balance: eor.balance > 0 ? eor.balance : eor.charge, first_submission_payment: eor.first_submission_payment, sbr_payment: eor.sbr_payment
+              }))
+            }
           })
           this.paymentReviews(i).at(ind).patchValue(review);
         })
@@ -308,29 +308,32 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   addPayment() {
     this.payments().push(this.newPayemntRes());
   }
-
+  reviewIndex: any;
   addReviews(index: number, isNew?, Extraind?) {
+    this.reviewIndex = index;
     this.paymentReviews(index).push(this.newReview());
     const review = this.paymentReviews(index).at(this.paymentReviews(index).length - 1);
     if (isNew) {
-      this.getBillLineItems();
       let eorDetails: any = {};
-      this.billLineItems.map((eor, ind) => {
-        if (eor && !eor.is_fully_paid) {
-          eorDetails = {}
-          const eor_allowance_details = review.get('eor_allowance_details');
-          eorDetails = {
-            bill_line_item_id: eor.id,
-            item: eor.item_description, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charge, eor_allowance: "", payment_amount: eor.payment_amount, balance: eor.balance > 0 ? eor.balance : eor.charge, first_submission_payment: eor.first_submission_payment, sbr_payment: eor.sbr_payment
-          };
-          if (this.billType == 2) {
-            eorDetails.balance = eor.charge - eor.first_submission_payment;
+      this.billingService.getBillLineItem(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId).subscribe(line => {
+        line.data.map((eor, ind) => {
+          console.log(eor)
+          if (eor && !eor.is_fully_paid) {
+            eorDetails = {}
+            const eor_allowance_details = review.get('eor_allowance_details');
+            eorDetails = {
+              bill_line_item_id: eor.id,
+              item: eor.item_description, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charge, eor_allowance: "", payment_amount: eor.payment_amount, balance: eor.balance > 0 ? eor.balance : eor.charge, first_submission_payment: eor.first_submission_payment, sbr_payment: eor.sbr_payment
+            };
+            if (this.billType == 2) {
+              eorDetails.balance = eor.charge - eor.first_submission_payment;
+            }
+            if (this.billType == 3) {
+              eorDetails.balance = eor.charge - eor.first_submission_payment - eor.sbr_payment;
+            }
+            (eor_allowance_details as FormArray).push(this.fb.group(eorDetails));
           }
-          if (this.billType == 3) {
-            eorDetails.balance = eor.charge - eor.first_submission_payment - eor.sbr_payment;
-          }
-          (eor_allowance_details as FormArray).push(this.fb.group(eorDetails));
-        }
+        })
       })
     }
 
@@ -353,9 +356,9 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   setPaymentAmount(index: number, review) {
     const { charge, first_submission_payment, sbr_payment } = this.payments().at(index).value;
     let payment_amount = 0;
-    if(this.billType == 1) {
+    if (this.billType == 1) {
       payment_amount = charge;
-    } else if(this.billType == 2) {
+    } else if (this.billType == 2) {
       payment_amount = Number(charge) - Number(first_submission_payment);
     } else {
       payment_amount = Number(charge) - Number(sbr_payment);
@@ -420,7 +423,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     this.validatePaymentAmount(review);
     if (review.get('void_type_id').value !== 3 && this.eorError) {
       return;
-    }    
+    }
     formData.append('post_date', review.get('post_date').value ? moment(review.get('post_date').value).format("MM-DD-YYYY") : '');
     formData.append('effective_date', review.get('effective_date').value ? moment(review.get('effective_date').value).format("MM-DD-YYYY") : '');
     formData.append('deposit_date', review.get('deposit_date').value ? moment(review.get('deposit_date').value).format("MM-DD-YYYY") : '');
@@ -576,7 +579,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       review.get('post_date').setValidators([]); review.get('post_date').updateValueAndValidity();
       //review.get('deposit_date').setValidators([]); review.get('deposit_date').updateValueAndValidity();
       review.get('other_type_reason').setValidators(); review.get('other_type_reason').updateValueAndValidity();
-    } 
+    }
     // else if (event.value == 4) {
     //   review.get('payment_amount').setValidators(Validators.compose([Validators.required, Validators.min(0)])); review.get('payment_amount').updateValueAndValidity();
     //   review.get('reference_no').setValidators([]); review.get('reference_no').updateValueAndValidity();
@@ -723,29 +726,29 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       eorData.get('balance').patchValue(balance);
     }
     this.checkEorError(eorDetails, paymentAmount);
-    
+
     //check payment equal to charge and show alert to change response type to fully paid
-    if(!eorData && !eorIndex) {
+    if (!eorData && !eorIndex) {
       const { payment_amount, response_type_id, eor_allowance_details } = review.value;
       const charge = eor_allowance_details.reduce((a, b) => a + Number(b.charges), 0);
       const balance = eor_allowance_details.reduce((a, b) => {
-        if(this.billType == 2) {
+        if (this.billType == 2) {
           return a + (Number(b.charges) - Number(b.first_submission_payment));
         } else {
           return a + (Number(b.charges) - Number(b.first_submission_payment) - Number(b.sbr_payment));
         }
       }, 0);
       let comparisonText = 'equal to'
-      if(
-        response_type_id == 2 && 
+      if (
+        response_type_id == 2 &&
         (
-          (Number(payment_amount) >= charge && this.billType == 1) || 
-          (Number(payment_amount) >= balance && 
+          (Number(payment_amount) >= charge && this.billType == 1) ||
+          (Number(payment_amount) >= balance &&
             (this.billType == 2 || this.billType == 3)
           )
         )
       ) {
-        if(Number(payment_amount) >= charge && this.billType == 1) {
+        if (Number(payment_amount) >= charge && this.billType == 1) {
           comparisonText = payment_amount === charge ? 'equal to the' : 'greater than';
         } else {
           comparisonText = payment_amount === balance ? 'equal to the' : 'greater than';
@@ -760,8 +763,8 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
           }
         });
         dialogRef.afterClosed().subscribe((res) => {
-          if(res.data) {
-            review.get('response_type_id').patchValue(1);  
+          if (res.data) {
+            review.get('response_type_id').patchValue(1);
           }
         });
       }
