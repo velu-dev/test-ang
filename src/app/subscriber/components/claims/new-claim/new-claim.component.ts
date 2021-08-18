@@ -1218,7 +1218,7 @@ export class NewClaimComponent implements OnInit {
       } else {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
-          data: { title: 'Date of Birth', message: "Please check the Date of Birth. The date entered occurs after the EAMS Date of Injury. The Date of Injury can be changed on the next page", proceed: true, cancel: true, type: "warning", info: true }
+          data: { title: 'Date of Birth', message: "Please check the Date of Birth. The date entered occurs after the EAMS Date of Injury.", proceed: true, cancel: true, type: "warning", info: true }
         });
         dialogRef.afterClosed().subscribe(result => {
           if (result.data) {
@@ -1504,6 +1504,7 @@ export class NewClaimComponent implements OnInit {
       this.claimantCreate1(status);
     } else {
       if (this.popupCount == 0) {
+        this.popupCount = this.popupCount + 1;
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
           data: { title: 'Date of Birth', message: "Please check the Date of Birth. The date entered occurs after the EAMS Date of Injury. The Date of Injury can be changed on the next page", proceed: true, cancel: true, type: "warning", info: true }
@@ -1512,6 +1513,7 @@ export class NewClaimComponent implements OnInit {
           if (result.data) {
             this.claimantCreate1(status);
           } else {
+            this.popupCount = 0;
             this.stepper.selectedIndex = 0;
             return
           }
@@ -1519,7 +1521,6 @@ export class NewClaimComponent implements OnInit {
       }
       // }
     }
-    this.popupCount = this.popupCount + 1;
   }
   claimantCreate1(status) {
     if (this.claimantChanges) {
