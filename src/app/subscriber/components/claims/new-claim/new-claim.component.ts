@@ -394,14 +394,14 @@ export class NewClaimComponent implements OnInit {
     })
 
     this.filteredExaminerList = this.examinerFilterCtrl.valueChanges.pipe(
-      startWith(null), 
+      startWith(null),
       map((searchKey) => {
-        if(searchKey) {
+        if (searchKey) {
           searchKey = searchKey.toLowerCase();
-          return this.examinarList.filter((examiner) => 
-            examiner.first_name.toLowerCase().indexOf(searchKey) > -1 || 
-            examiner.middle_name.toLowerCase().indexOf(searchKey) > -1 || 
-            examiner.last_name.toLowerCase().indexOf(searchKey) > -1 || 
+          return this.examinarList.filter((examiner) =>
+            examiner.first_name.toLowerCase().indexOf(searchKey) > -1 ||
+            examiner.middle_name.toLowerCase().indexOf(searchKey) > -1 ||
+            examiner.last_name.toLowerCase().indexOf(searchKey) > -1 ||
             examiner.suffix.toLowerCase().indexOf(searchKey) > -1
           )
         }
@@ -1006,7 +1006,7 @@ export class NewClaimComponent implements OnInit {
               this.isAddressError = true;
             this.streetAddressList = [];
           })
-        else 
+        else
           this.streetAddressList = [];
       })
     this.claim.get(['Employer', 'street1']).valueChanges
@@ -1118,6 +1118,7 @@ export class NewClaimComponent implements OnInit {
   isClaimantCompleted = false;
   selectionChange(event) {
     if (event.selectedIndex == 0) {
+      this.popupCount = 0;
       this.titleName = " Claimant"
     } else if (event.selectedIndex == 1) {
       this.createClaimant('tab');
@@ -1216,7 +1217,7 @@ export class NewClaimComponent implements OnInit {
       } else {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
-          data: { title: 'Date of Birth', message: "Please enter date of birth lesser than date of injury!", proceed: true, cancel: true, type: "warning", info: true }
+          data: { title: 'Date of Birth', message: "Please check the Date of Birth. The date entered occurs after the EAMS Date of Injury. The Date of Injury can be changed on the next page", proceed: true, cancel: true, type: "warning", info: true }
         });
         dialogRef.afterClosed().subscribe(result => {
           if (result.data) {
@@ -1478,6 +1479,7 @@ export class NewClaimComponent implements OnInit {
   claimantDetails = { claimant_name: "", date_of_birth: "", phone_no_1: "", phone_ext1: "" }
   claimDetails = { claim_number: "", exam_type_id: "", wcab_number: "" }
   isClaimantCreated = false;
+  popupCount = 0;
   createClaimant(status) {
     this.currentTab = "claimant";
     this.isClaimantSubmited = true;
@@ -1494,15 +1496,16 @@ export class NewClaimComponent implements OnInit {
     if (this.claimant.invalid) {
       return;
     }
-    if (this.isClaimantCreated) {
+    // if (this.isClaimantCreated) {
+    //   this.claimantCreate1(status);
+    // } else {
+    if (moment(this.claimant.get('date_of_birth').value).isBefore(this.minInjuryDate)) {
       this.claimantCreate1(status);
     } else {
-      if (moment(this.claimant.get('date_of_birth').value).isBefore(this.minInjuryDate)) {
-        this.claimantCreate1(status);
-      } else {
+      if (this.popupCount == 0) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
-          data: { title: 'Date of Birth', message: "Please enter date of birth lesser than date of injury!", proceed: true, cancel: true, type: "warning", info: true }
+          data: { title: 'Date of Birth', message: "Please check the Date of Birth. The date entered occurs after the EAMS Date of Injury. The Date of Injury can be changed on the next page", proceed: true, cancel: true, type: "warning", info: true }
         });
         dialogRef.afterClosed().subscribe(result => {
           if (result.data) {
@@ -1511,13 +1514,13 @@ export class NewClaimComponent implements OnInit {
             this.stepper.selectedIndex = 0;
             return
           }
-        })
+        });
       }
+      // }
     }
+    this.popupCount = this.popupCount + 1;
   }
   claimantCreate1(status) {
-
-    this.logger.log("claimantChanges", this.claimantChanges)
     if (this.claimantChanges) {
       this.claimantChanges = false;
       let data = this.claimant.value;
