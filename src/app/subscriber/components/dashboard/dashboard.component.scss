@@ -111,6 +111,7 @@
 .dashboard-list {
     box-shadow: $shadow-style-one;
     .user-detail {
+        overflow-y:hidden ;
         .row-background {
             tr {
                 &:nth-child(even) {
