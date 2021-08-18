@@ -1500,7 +1500,7 @@ export class NewClaimComponent implements OnInit {
     // if (this.isClaimantCreated) {
     //   this.claimantCreate1(status);
     // } else {
-    if (moment(this.claimant.get('date_of_birth').value).isBefore(this.minInjuryDate)) {
+    if (moment(this.claimant.get('date_of_birth').value).isSameOrBefore(this.minInjuryDate)) {
       this.claimantCreate1(status);
     } else {
       if (this.popupCount == 0) {
