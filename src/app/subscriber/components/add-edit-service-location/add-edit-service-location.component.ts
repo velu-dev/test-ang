@@ -11,6 +11,7 @@ import { debounceTime } from 'rxjs/operators';
 import { ClaimService } from '../../service/claim.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { SubscriberUserService } from '../../service/subscriber-user.service';
+import { EMAIL_REGEXP } from './../../../globals';
 
 @Component({
   selector: 'app-add-edit-service-location',
@@ -157,7 +158,7 @@ export class AddEditServiceLocationComponent implements OnInit {
       zip_code: [null, Validators.compose([Validators.required, Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
       phone_no: [null],
       fax_no: [null],
-      email: [null, Validators.compose([Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+      email: [null, Validators.compose([Validators.pattern(EMAIL_REGEXP)])],
       primary_contact: [""],
       phone_ext1: [{ value: "", disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
       primary_contact_phone: [""],

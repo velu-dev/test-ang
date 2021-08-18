@@ -28,7 +28,7 @@ export class AppComponent {
     private cookieService: CookieService, private claimService: ClaimService) {
       window.addEventListener('storage', (event) => {
         if (event.storageArea == localStorage) {
-          let token = localStorage.getItem('SYb+KUjt03Mkgz22hYyCXR3hloq2jrRXu6ozoRJPos8=');
+          const token = localStorage.getItem('SYb+KUjt03Mkgz22hYyCXR3hloq2jrRXu6ozoRJPos8=');
           if(token == undefined) { // you can update this as per your key
               // DO LOGOUT FROM THIS TAB AS WELL
               if(this._router.url !== '/terms-of-service') {
@@ -36,6 +36,9 @@ export class AppComponent {
               }
               // OR
               // window.location.href = '<home page URL>';
+          }
+          if(event.key === 'SYb+KUjt03Mkgz22hYyCXR3hloq2jrRXu6ozoRJPos8=' && _router.url === '/') {
+            this._router.navigate(['/subscriber']);
           }
         }
       }, false);

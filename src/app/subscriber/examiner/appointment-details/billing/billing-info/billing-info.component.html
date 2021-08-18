@@ -111,7 +111,7 @@
                 <div class="incomplete-modules m-b-10" fxFlex="100" *ngFor="let payer of payerResponse['new_response']">
                     <div class="received-date"><span>Received Date: {{payer?.status_date |
                             date:'MM-dd-yyyy'}}</span><span>Ref #: {{payer?.request_reference_id}}</span></div>
-                    <ul class="p-t-5">
+                    <ul class="p-t-15">
                         <li *ngFor="let message of payer.message" class="text-danger">
                             <mat-icon>error</mat-icon>{{message?._attributes?.MessageText}}
                         </li>

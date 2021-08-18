@@ -17,6 +17,7 @@ import { RegulationDialogueComponent } from 'src/app/shared/components/regulatio
 import { UserService } from 'src/app/shared/services/user.service';
 import * as regulation from 'src/app/shared/services/regulations';
 import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
+import { EMAIL_REGEXP } from 'src/app/globals';
 export const MY_CUSTOM_FORMATS = {
   parseInput: 'MM-DD-YYYY hh:mm A z',
   fullPickerInput: 'MM-DD-YYYY hh:mm A z',
@@ -200,7 +201,7 @@ export class NewBillableItemComponent implements OnInit {
         call_type_detail: [null],
         notes: [null],
         caller_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
-        caller_email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+        caller_email: [null, Validators.compose([Validators.email, Validators.pattern(EMAIL_REGEXP)])],
         phone_ext: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
         caller_fax: [null, Validators.compose([Validators.pattern('[0-9]+')])]
       }),

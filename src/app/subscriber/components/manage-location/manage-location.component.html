@@ -43,8 +43,10 @@
                             </mat-icon>
                         </span>
                         <span *ngIf="column == 'service_location_name'">{{element.service_location_name}}</span>
-                        <span *ngIf="column == 'street1'">{{element.street1}} {{element.street2}} {{element.city}}
-                            {{element.state_code}} - {{element.zip_code}}</span>
+                        <span *ngIf="column == 'street1'">
+                            {{element.street1 ? element.street1 + ", " : ""}}{{element.street2 ? element.street2 + ", " : ""}}{{element.city ? element.city + ", " : ""}}
+                            {{element.state_code}} - {{element.zip_code}}
+                        </span>
                         <span *ngIf="column == 'service'">{{element?.service_code}}{{element?.service_name ? ' -
                             '+element?.service_name : ''}}</span>
                         <span *ngIf="column == 'primary_contact_phone'"
@@ -88,8 +90,8 @@
                         <div class="detail" [@detailExpand]="expandId == element.id ? 'expanded' : 'collapsed'">
                             <div class="responsive-table">
                                 <div><span>Location Name</span><span>{{element.service_location_name}}</span></div>
-                                <div><span>Address</span><span>{{element.street1}} {{element.street2}} {{element.city}}
-                                        {{element.state_code}} - {{element.zip_code}}</span></div>
+                                <div><span>Address</span><span>{{element.street1 ? element.street1 + ", " : ""}}{{element.street2 ? element.street2 + ", " : ""}}{{element.city ? element.city + ", " : ""}}
+                                    {{element.state_code}} - {{element.zip_code}}</span></div>
                                 <div><span>Service Type</span><span>{{element?.service_code}}{{element?.service_name ? '
                                         - '+element?.service_name : ''}}</span></div>
                                 <div><span>Phone</span><span>{{element?.primary_contact_phone ?

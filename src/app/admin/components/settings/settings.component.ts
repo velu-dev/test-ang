@@ -11,6 +11,7 @@ import * as  errors from '../../../shared/messages/errors'
 import { Store } from '@ngrx/store';
 import * as headerActions from "./../../../shared/store/header.actions";
 import { IntercomService } from 'src/app/services/intercom.service';
+import { EMAIL_REGEXP } from '../../../globals';
 
 @Component({
   selector: 'app-settings',
@@ -69,7 +70,7 @@ export class SettingsComponent implements OnInit {
       last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
       middle_name: ['', Validators.compose([Validators.maxLength(50)])],
       company_name: [{ value: "", disabled: true }, Validators.compose([Validators.maxLength(100)])],
-      sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])]
+      sign_in_email_id: [{ value: "", disabled: true }, Validators.compose([Validators.required, Validators.pattern(EMAIL_REGEXP)])]
     });
   }
   userformSubmit() {

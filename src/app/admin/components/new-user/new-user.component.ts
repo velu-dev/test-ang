@@ -9,6 +9,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { Role } from '../../models/role.model';
 import { Store } from '@ngrx/store';
 import { CookieService } from 'src/app/shared/services/cookie.service';
+import { EMAIL_REGEXP } from 'src/app/globals';
 
 @Component({
   selector: 'app-new-user',
@@ -99,7 +100,7 @@ export class NewUserComponent implements OnInit {
       last_name: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
       middle_name: ['', Validators.compose([Validators.maxLength(50)])],
       company_name: [{ value: this.user.company_name, disabled: true }, Validators.compose([Validators.maxLength(100)])],
-      sign_in_email_id: [{ value: '', disabled: this.isEdit }, Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      sign_in_email_id: [{ value: '', disabled: this.isEdit }, Validators.compose([Validators.required, Validators.pattern(EMAIL_REGEXP)])],
       role_id: [{ value: role_id, disabled: disabled }, Validators.required]
     });
   }

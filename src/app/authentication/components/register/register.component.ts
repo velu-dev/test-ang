@@ -7,6 +7,7 @@ import * as globals from '../../../globals';
 import * as  errors from '../../../shared/messages/errors'
 import { NgxSpinnerService } from "ngx-spinner";
 import { Title } from '@angular/platform-browser';
+import { EMAIL_REGEXP } from '../../../globals';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -38,7 +39,7 @@ export class RegisterComponent implements OnInit {
       lastName: ['', Validators.compose([Validators.required, Validators.maxLength(50)])],
       middleInitial: ['', Validators.compose([Validators.maxLength(50)])],
       companyName: ['', Validators.compose([Validators.maxLength(100)])],
-      email: ['', Validators.compose([Validators.required, Validators.email])],
+      email: ['', Validators.compose([Validators.required, Validators.pattern(EMAIL_REGEXP)])],
       password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$*.{}?"!@#%&/,><\':;|_~`^\\]\\[\\)\\(]).{8,}'), Validators.minLength(8)])],
       confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$*.{}?"!@#%&/,><\':;|_~`^\\]\\[\\)\\(]).{8,}'), Validators.minLength(8)])],
       captcha: ['', Validators.required],

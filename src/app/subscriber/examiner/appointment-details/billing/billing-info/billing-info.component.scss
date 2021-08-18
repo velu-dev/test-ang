@@ -138,6 +138,22 @@
                 padding-bottom: 10px;
                 border-bottom: 1px solid $white;
                 color: $error;
+                span {
+                    width: 33.3%;
+                    float: left;
+                    @media only screen and (max-width: 568px) {
+                        width: 100%;
+                    }
+                    &:first-child {
+                        text-align: left;
+                    }
+                    &:last-child {
+                        text-align: center;
+                        @media only screen and (max-width: 568px) {
+                            text-align: left;
+                        }
+                    }
+                }
             }
             ul {
                 width: 100%;

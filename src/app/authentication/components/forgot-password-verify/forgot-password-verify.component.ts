@@ -9,6 +9,7 @@ import * as  errors from '../../../shared/messages/errors'
 import * as  success from '../../../shared/messages/success'
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { Title } from '@angular/platform-browser';
+import { EMAIL_REGEXP } from '../../../globals';
 @Component({
   selector: 'app-forgot-password-verify',
   templateUrl: './forgot-password-verify.component.html',
@@ -35,7 +36,7 @@ export class ForgotPasswordVerifyComponent implements OnInit {
 
   ngOnInit() {
     this.forgotVerifyForm = this.formBuilder.group({
-      email: ['', Validators.compose([Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$')])],
+      email: ['', Validators.compose([Validators.required, Validators.pattern(EMAIL_REGEXP)])],
       code: ['', Validators.compose([Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(6), Validators.maxLength(6)])],
       password: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$*.{}?"!@#%&/,><\':;|_~`^\\]\\[\\)\\(]).{8,}'), Validators.minLength(8)])],
       confirmPassword: ['', Validators.compose([Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$*.{}?"!@#%&/,><\':;|_~`^\\]\\[\\)\\(]).{8,}'), Validators.minLength(8)])],

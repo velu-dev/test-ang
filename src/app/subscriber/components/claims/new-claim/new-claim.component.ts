@@ -38,6 +38,7 @@ import { RegulationDialogueComponent } from 'src/app/shared/components/regulatio
 import { UserService } from 'src/app/shared/services/user.service';
 import * as regulation from 'src/app/shared/services/regulations';
 import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
+import { EMAIL_REGEXP } from 'src/app/globals';
 export const PICK_FORMATS = {
   // parse: { dateInput: { month: 'short', year: 'numeric', day: 'numeric' } },
   parse: {
@@ -681,7 +682,7 @@ export class NewClaimComponent implements OnInit {
       zip_code_plus_4: [null],
       date_of_birth: [null, Validators.required],
       gender: [null],
-      email: ["", Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+      email: ["", Validators.compose([Validators.email, Validators.pattern(EMAIL_REGEXP)])],
       handedness: [null],
       primary_language_not_english: [null],
       primary_language_spoken: [null],
@@ -726,7 +727,7 @@ export class NewClaimComponent implements OnInit {
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         phone_ext: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
         fax: [null],
-        email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+        email: [null, Validators.compose([Validators.email, Validators.pattern(EMAIL_REGEXP)])],
       }),
       Employer: this.formBuilder.group({
         id: [null],
@@ -739,7 +740,7 @@ export class NewClaimComponent implements OnInit {
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         phone_ext: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
         fax: [null],
-        email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+        email: [null, Validators.compose([Validators.email, Validators.pattern(EMAIL_REGEXP)])],
 
       }),
       ApplicantAttorney: this.formBuilder.group({
@@ -753,14 +754,14 @@ export class NewClaimComponent implements OnInit {
         zip_code: [null, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
         phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         phone_ext: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
-        email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+        email: [null, Validators.compose([Validators.email, Validators.pattern(EMAIL_REGEXP)])],
         fax: [null, Validators.compose([Validators.pattern('[0-9]+')])],
       }),
       DefenseAttorney: this.formBuilder.group({
         id: [null],
         company_name: [null, Validators.compose([Validators.pattern("^[a-zA-Z0-9-&/' ]{0,100}$")])],
         name: [null],
-        email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+        email: [null, Validators.compose([Validators.email, Validators.pattern(EMAIL_REGEXP)])],
         street1: [null],
         street2: [null],
         city: [null],
@@ -780,7 +781,7 @@ export class NewClaimComponent implements OnInit {
         zip_code: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('^[0-9]{5}(?:-[0-9]{4})?$')])],
         phone: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
         phone_ext: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
-        email: [{ value: null, disabled: true }, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+        email: [{ value: null, disabled: true }, Validators.compose([Validators.email, Validators.pattern(EMAIL_REGEXP)])],
         fax: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('[0-9]+')])],
       })
     })
@@ -822,7 +823,7 @@ export class NewClaimComponent implements OnInit {
         notes: [null],
         caller_phone: [null, Validators.compose([Validators.pattern('[0-9]+')])],
         phone_ext: [{ value: null, disabled: true }, Validators.compose([Validators.pattern('(?!0+$)[0-9]{0,6}'), Validators.minLength(2), Validators.maxLength(6)])],
-        caller_email: [null, Validators.compose([Validators.email, Validators.pattern('^[A-z0-9._%+-]+@[A-z0-9.-]+\\.[A-z]{2,4}$')])],
+        caller_email: [null, Validators.compose([Validators.email, Validators.pattern(EMAIL_REGEXP)])],
         caller_fax: [null, Validators.compose([Validators.pattern('[0-9]+')])]
       })
 
