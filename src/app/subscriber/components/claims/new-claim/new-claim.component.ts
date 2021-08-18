@@ -1213,7 +1213,7 @@ export class NewClaimComponent implements OnInit {
     if (this.isClaimCreated) {
       this.createClaim1(claim, status);
     } else {
-      if (moment(this.claimant.get('date_of_birth').value).isBefore(this.minInjuryDate)) {
+      if (moment(this.claimant.get('date_of_birth').value).isSameOrBefore(this.minInjuryDate)) {
         this.createClaim1(claim, status);
       } else {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
