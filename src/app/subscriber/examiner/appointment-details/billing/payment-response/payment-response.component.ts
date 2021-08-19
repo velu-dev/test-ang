@@ -442,6 +442,9 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     formData.append('response_type_id', review.get('response_type_id').value);
     formData.append('other_type_reason', review.get('other_type_reason').value);
     formData.append('eor_allowance_details', JSON.stringify(review.get('eor_allowance_details').value));
+    formData.append('submission_type_id', this.billType.toString());
+
+
 
 
     formData.append('file', review.get('file').value);
