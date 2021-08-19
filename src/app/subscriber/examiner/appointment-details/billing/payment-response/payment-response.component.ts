@@ -82,6 +82,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   @ViewChild('uploader', { static: false }) fileUpload: ElementRef;
   @Input() cancellation: boolean;
   @Input() billType: number;
+  @Output() getBillingDetails = new EventEmitter();
   isEditDepositdate: boolean = false;
   depositionDate: string = null;
   eorError = false;
@@ -505,6 +506,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       })
       this.intercom.setBillItemChange({ paymentStatus: true })
       // this.getPaymentRes();
+      this.getBillingDetails.emit(true);
     }, error => {
 
     })
