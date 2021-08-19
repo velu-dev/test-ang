@@ -312,22 +312,22 @@ export class NewExaminerUserComponent implements OnInit {
     //     //this.filteredOptions = null;
     //  }
     // })
-    this.addresssearch.valueChanges
+    // this.addresssearch.valueChanges
+    //   .pipe(
+    //     debounceTime(300),
+    //   ).subscribe(res => {
+    //     if (this.addresssearch.errors) {
+    //       this.isAddresssearchError = true;
+    //       return
+    //     } else {
+    //       this.isAddresssearchError = false;
+    this.filteredOptions = this.addresssearch.valueChanges
       .pipe(
-        debounceTime(300),
-      ).subscribe(res => {
-        if (this.addresssearch.errors) {
-          this.isAddresssearchError = true;
-          return
-        } else {
-          this.isAddresssearchError = false;
-          this.filteredOptions = this.addresssearch.valueChanges
-            .pipe(
-              startWith(''),
-              map(value => this._filterLocation(value))
-            );
-        }
-      })
+        startWith(''),
+        map(value => this._filterLocation(value))
+      );
+    // }
+    // })
   }
 
   enableEmail(status) {
@@ -475,11 +475,8 @@ export class NewExaminerUserComponent implements OnInit {
 
   locationDataSearch: any = [];
   private _filterLocation(value: string): string[] {
-    // if (typeof (value) == 'number') {
-    //   return;
-    // }
     const filterValue = value == undefined ? '' : value && value.toLowerCase();
-    return this.locationDataSearch.filter(option => option.street1 && option.street1.toLowerCase().includes(filterValue) || option.street2 && option.street2.toLowerCase().includes(filterValue)
+    return this.locationDataSearch.filter(option => option.service_location_name && option.service_location_name.toLowerCase().includes(filterValue) || option.street1 && option.street1.toLowerCase().includes(filterValue) || option.street2 && option.street2.toLowerCase().includes(filterValue)
       || option.city && option.city.toLowerCase().includes(filterValue) || option.state_name && option.state_name.toLowerCase().includes(filterValue) || option.zip_code && option.zip_code.includes(filterValue));
   }
 
