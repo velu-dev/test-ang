@@ -38,9 +38,9 @@
                             </span>
                             <span *ngIf="column == 'location_name'">{{element?.is_virtual_location ? "Virtual Service
                                 Location" : element?.service_location_name }}</span>
-                            <span *ngIf="column == 'location' && !element?.is_virtual_location">{{element?.street1 }}
-                                {{element?.street2}}
-                                {{element?.city}} {{element?.state}} {{element?.zip_code}}{{element?.zip_code_plus_4 ?
+                            <span *ngIf="column == 'location' && !element?.is_virtual_location">{{element?.street1 ? element?.street1 + ", " : ""}}
+                                {{element?.street2 ? element?.street2 + ", " : ""}}
+                                {{element?.city ? element?.city + ", " : ""}}{{element?.state}} - {{element?.zip_code}}{{element?.zip_code_plus_4 ?
                                 '-'+element?.zip_code_plus_4 : ''}}</span>
                             <span *ngIf="column == 'location' && element?.is_virtual_location">{{element?.conference_url
                                 }} {{element?.conference_phone && element?.conference_url ? ' - ' : '' }}
@@ -71,11 +71,10 @@
                             <div class="detail" [@detailExpand]="expandId ==n ? 'expanded' : 'collapsed'">
                                 <div class="responsive-table" (click)="isMobile ? handleEventClick(element) : ''">
                                     <!-- <div><span>Location Name</span><span>{{element?.is_virtual_location ? "Virtual Service Location" : element?.service_location_name }}</span></div> -->
-                                    <div><span>Location Name</span><span>{{element?.street1 }}
-                                            {{element?.street2}}
-                                            {{element?.city}} {{element?.state}}
-                                            {{element?.zip_code}}{{element?.zip_code_plus_4 ?
-                                            '-'+element?.zip_code_plus_4 : ''}}</span></div>
+                                    <div><span>Location Name</span><span>{{element?.street1 ? element?.street1 + ", " : ""}}
+                                        {{element?.street2 ? element?.street2 + ", " : ""}}
+                                        {{element?.city ? element?.city + ", " : ""}}{{element?.state}} - {{element?.zip_code}}{{element?.zip_code_plus_4 ?
+                                        '-'+element?.zip_code_plus_4 : ''}}</span></div>
                                     <div><span>Claimant Name</span><span>{{element?.claimant_last_name }}
                                             {{element?.claimant_first_name }}</span></div>
                                     <div><span>Date Of Birth</span><span>{{element?.date_of_birth | date:'MM-dd-yyyy' }}
