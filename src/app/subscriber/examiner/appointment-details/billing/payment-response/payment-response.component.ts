@@ -421,7 +421,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       review.markAllAsTouched();
       return;
     }
-    this.validatePaymentAmount(review);
+    review.get('void_type_id').value !== 3 ? this.validatePaymentAmount(review) : '';
     if (review.get('void_type_id').value !== 3 && this.eorError) {
       return;
     }
