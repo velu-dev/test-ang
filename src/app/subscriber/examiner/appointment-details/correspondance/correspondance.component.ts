@@ -524,7 +524,7 @@ export class BillingCorrespondanceComponent implements OnInit {
       //   }
       // });
       const dialogRef = this.dialog.open(AlertDialogueComponent, {
-        width: '500px', data: { title: "Confirm", message: "We are assuming you are processing Mailing Manually, Instead of Mail On-demand.", yes: false, proceed: true, no: true, type: "warning" }
+        width: '500px', data: { title: "Confirm", message: "We are assuming you are processing mailing manually, instead of Mail On Demand.", yes: false, proceed: true, no: true, type: "warning" }
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result.data) {
