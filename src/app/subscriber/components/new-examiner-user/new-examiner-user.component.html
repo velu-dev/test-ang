@@ -902,7 +902,7 @@
                                         (click)="addressOnChange(option)" (onSelectionChange)="addressOnChange(option)"
                                         value="{{option?.service_location_name }}">
                                         {{option?.service_location_name}} - {{option?.street1 ? option?.street1 + ", " : ""}}{{option?.street2 ? option?.street2 + ", " : "" }}{{option?.city ? option?.city + ", " : ""}}
-                                        {{option?.state_code }} {{option?.zip_code }}
+                                        {{option?.state_code }} - {{option?.zip_code }}
                                     </mat-option>
                                     <mat-option *ngIf="(filteredOptions | async)?.length == 0" disabled>No existing
                                         service location found. Please create a <a class="text-ternary"
