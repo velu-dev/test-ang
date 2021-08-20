@@ -477,7 +477,7 @@ export class NewExaminerUserComponent implements OnInit {
   private _filterLocation(value: string): string[] {
     const filterValue = value == undefined ? '' : value && value.toLowerCase();
     return this.locationDataSearch.filter(option => option.service_location_name && option.service_location_name.toLowerCase().includes(filterValue) || option.street1 && option.street1.toLowerCase().includes(filterValue) || option.street2 && option.street2.toLowerCase().includes(filterValue)
-      || option.city && option.city.toLowerCase().includes(filterValue) || option.state_name && option.state_name.toLowerCase().includes(filterValue) || option.zip_code && option.zip_code.includes(filterValue));
+      || option.city && option.city.toLowerCase().includes(filterValue) || option.state_name && option.state_name.toLowerCase().includes(filterValue) || option.state_code && option.state_code.toLowerCase().includes(filterValue) || option.zip_code && option.zip_code.includes(filterValue));
   }
 
 
