@@ -11,11 +11,11 @@
         <div class="progress">
             <div class="billing-progress-status">
                 <ul>
-                    <li *ngFor="let billing of billingTimelineInfo" class="selected">
+                    <li *ngFor="let billing of billingTimelineInfo" [ngClass]="{'selected' : billing.status}">
                         <p class="">{{billing.status_name}}</p>
                         <p> {{billing.date}} <br />{{billing.time}}</p>
                     </li>
-                   
+
                 </ul>
             </div>
 
