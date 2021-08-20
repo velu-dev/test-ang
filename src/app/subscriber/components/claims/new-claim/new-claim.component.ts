@@ -1507,7 +1507,7 @@ export class NewClaimComponent implements OnInit {
         this.popupCount = this.popupCount + 1;
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
-          data: { title: 'Date of Birth', message: "Please check the Date of Birth. The date entered occurs after the EAMS Date of Injury. The Date of Injury can be changed on the next page", proceed: true, cancel: true, type: "warning", info: true }
+          data: { title: 'Date of Birth', message: "Please check the Date of Birth. The date entered occurs after the EAMS Date of Injury. The Date of Injury can be changed on the next page.", proceed: true, cancel: true, type: "warning", info: true }
         });
         dialogRef.afterClosed().subscribe(result => {
           if (result.data) {

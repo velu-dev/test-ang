@@ -435,8 +435,8 @@ export class AppointmentDetailsComponent implements OnInit {
           this.languageId = bills['data'].exam_type.primary_language_spoken;
         }
         this.billableData.documents_received = this.billableData.documents_received ? this.billableData.documents_received : []
-        this.billable_item.patchValue(bills.data);
         this.changeDateType(bills.data.appointment.appointment_scheduled_date_time)
+        this.billable_item.patchValue(bills.data);
         if (bills.data.appointment.is_virtual_location) {
           this.billable_item.patchValue({
             appointment: {
@@ -769,7 +769,7 @@ export class AppointmentDetailsComponent implements OnInit {
   disabledFields = {}
   // statusSaveDisable = false;
   getDisabledFields(from?) {
-    this.claimService.getFormDisabled(this.claim_id, this.billableId, this.examinationStatusForm.get('examination_status').value).subscribe(res => {
+    this.claimService.getFormDisabled(this.claim_id, this.billableId, this.examinationDetails.appointments.examination_status).subscribe(res => {
       if (res && res.data) {
 
         // let data = {
@@ -1188,8 +1188,9 @@ export class AppointmentDetailsComponent implements OnInit {
     this.isExaminationStatusEdit = true;
     this.isEditBillableItem = false;
     this.billable_item.disable();
+    this.changeDateType(this.billableData.appointment.appointment_scheduled_date_time)
     this.billable_item.patchValue(this.billableData);
-    this.billable_item.get('appointment').get('appointment_scheduled_date_time').patchValue(this.appointment_scheduled_date_time);
+    // this.billable_item.get('appointment').get('appointment_scheduled_date_time').patchValue(this.appointment_scheduled_date_time);
     // if (this.billable_item.get(["appointment", "conference_phone"]).value && this.billable_item.get(["appointment", "conference_phone"]).valid) {
     //   this.billable_item.get(["appointment", "phone_ext"]).enable();
     // } else {
@@ -1671,7 +1672,6 @@ export class AppointmentDetailsComponent implements OnInit {
         return;
       }
     }
-
     if (this.examinationDetails.procedure_type == "Deposition") {
       if (!this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value && this.billableData.appointment.appointment_scheduled_date_time && this.examinationStatusForm.get('examination_status').value != 11) {
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
@@ -1721,7 +1721,6 @@ export class AppointmentDetailsComponent implements OnInit {
         return;
       }
     }
-
     if (this.examinationDetails.procedure_type == "Evaluation" || this.examinationDetails.procedure_type == "Reevaluation") {
 
       if (!this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value && this.billableData.appointment.appointment_scheduled_date_time && this.examinationStatusForm.get('examination_status').value != 1) {
@@ -1738,7 +1737,6 @@ export class AppointmentDetailsComponent implements OnInit {
         })
         return
       }
-
       if (!this.billableData.appointment.appointment_scheduled_date_time) {
         if (((this.billable_item.get(['appointment', 'appointment_scheduled_date_time']).value != this.billableData.appointment.appointment_scheduled_date_time) || (this.billable_item.get(['appointment', 'duration']).value != this.billableData.appointment.duration)) && (this.examinationStatusForm.getRawValue().examination_status != 2)) {
           const dialogRef = this.dialog.open(AlertDialogueComponent, {
