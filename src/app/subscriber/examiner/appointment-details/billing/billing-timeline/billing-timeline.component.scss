@@ -1,0 +1,22 @@
+@import "variables";
+@import "table";
+// @import "../../billing/billing.component.scss";
+.example-h2 {
+    margin: 10px;
+}
+
+.example-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+}
+
+.example-margin {
+    margin: 0 0;
+}
+
+mat-progress-bar {
+    height: 3px !important;
+    color: #474747;
+}

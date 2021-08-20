@@ -79,6 +79,7 @@ import { DxCheckBoxModule, DxDataGridComponent, DxFileUploaderModule, DxHtmlEdit
 import { FileUploadComponent } from '../shared/components/file-upload/file-upload.component';
 import { PDFViewerComponent } from '../shared/components/pdf-viewer/pdf-viewer.component';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { BillingTimelineComponent } from './examiner/appointment-details/billing/billing-timeline/billing-timeline.component';
 // import { PdfViewerModule } from 'ng2-pdf-viewer';
 @NgModule({
   declarations: [
@@ -164,6 +165,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
     DiagnosisCodeComponent,
     BillingDocumentComponent,
     BillingInfoComponent,
+    BillingTimelineComponent,
     SubmissionComponent,
     LateResponseComponent,
     FileUploadComponent,
