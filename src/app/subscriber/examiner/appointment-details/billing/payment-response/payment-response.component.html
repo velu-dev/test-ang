@@ -417,7 +417,7 @@
                                                         <input formControlName="payment_amount" min="0" matInput
                                                             type="number" placeholder="Payment Amount"
                                                             autocomplete="off"
-                                                            (change)="setTwoNumberDecimal($event); validatePaymentAmount(review)"
+                                                            (change)="setTwoNumberDecimal($event); validatePaymentAmount(review); checkFullyPaid(review)"
                                                             (blur)="setTwoNumberDecimal($event)">
                                                         <span matPrefix>$&nbsp;</span>
                                                     </mat-form-field>
@@ -575,10 +575,14 @@
                                                         *ngIf="review.get('eor_allowance_details')['controls'].length == 0">
                                                     </app-nodata>
                                                 </div>
-                                                <div *ngIf="eorError">
+                                                <div *ngIf="eorError || paymentError">
                                                     <div class="eor-error-message">
-                                                        <i class="fas fa-exclamation-triangle"></i> EOR allowance does
-                                                        not equal to Payment amount
+                                                        <i class="fas fa-exclamation-triangle"></i>
+                                                        <ng-container *ngIf="eorError">EOR allowance does not equal to
+                                                            Payment amount</ng-container>
+                                                        <ng-container *ngIf="paymentError && !eorError">Payment Amount
+                                                            must be
+                                                            greater than zero</ng-container>
                                                     </div>
                                                 </div>
                                             </div>
