@@ -108,20 +108,20 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   getBillLineItems() {
     this.billingService.getBillLineItem(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId).subscribe(line => {
       this.billLineItems = line.data;
-        // let balance: number = 0;
-        // this.billLineItems && this.billLineItems.map(line_item => {
-        //   console.log(line_item)
-        //   if (line_item && +line_item.charge > +line_item.payment_amount) {
-        //     console.log("charge", +line_item.charge)
-        //     balance += +line_item.charge
-        //   } else {
-        //     console.log("payment_amount", +line_item.payment_amount)
-        //     balance += +line_item.payment_amount
-        //   }
-        // })
-        // console.log(+balance)
-        // this.payments().at(0).get('balance').patchValue(+balance > 0 ? +balance : 0);
-        // this.payments().at(0).get('actual_balance').patchValue(+balance > 0 ? +balance : 0);
+      // let balance: number = 0;
+      // this.billLineItems && this.billLineItems.map(line_item => {
+      //   console.log(line_item)
+      //   if (line_item && +line_item.charge > +line_item.payment_amount) {
+      //     console.log("charge", +line_item.charge)
+      //     balance += +line_item.charge
+      //   } else {
+      //     console.log("payment_amount", +line_item.payment_amount)
+      //     balance += +line_item.payment_amount
+      //   }
+      // })
+      // console.log(+balance)
+      // this.payments().at(0).get('balance').patchValue(+balance > 0 ? +balance : 0);
+      // this.payments().at(0).get('actual_balance').patchValue(+balance > 0 ? +balance : 0);
     })
 
   }
@@ -252,7 +252,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       payment: '',
       status: '',
       balance: '',
-    //  actual_balance: '',
+      //  actual_balance: '',
       bill_paid_status: '',
       is_bill_closed: '',
       reviews: this.fb.array([]),
@@ -392,7 +392,8 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     const { bill_id, billable_item_id, claim_id } = this.billingData;
     const payment_response_id = review.get('id').value;
     const data = {
-      deposit_date: moment(this.depositionDate).format("YYYY-MM-DD")
+      deposit_date: moment(this.depositionDate).format("YYYY-MM-DD"),
+      submission_type_id: this.billType
     }
     this.billingService.updateDepositDate(claim_id, billable_item_id, bill_id, payment_response_id, data).subscribe((res) => {
       review.get('deposit_date').patchValue(this.depositionDate);
@@ -666,7 +667,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   }
 
   download(element) {
-    this.billingService.downloadOndemandDocuments({ file_url: element.file_url }).subscribe(res => {
+    this.billingService.downloadOndemandDocuments({ file_url: element.file_url, submission_type_id: this.billType }).subscribe(res => {
       this.alertService.openSnackBar("File downloaded successfully", "success");
       saveAs(res.signed_file_url, element.file_name);
     })
