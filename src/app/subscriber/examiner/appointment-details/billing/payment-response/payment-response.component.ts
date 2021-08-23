@@ -660,8 +660,10 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   }
 
   download(element) {
-    this.billingService.downloadOndemandDocuments({ file_url: element.file_url, submission_type_id: this.billType }).subscribe(res => {
+    this.billingService.downloadOndemandDocuments({ file_url: element.file_url }).subscribe(res => {
       this.alertService.openSnackBar("File downloaded successfully", "success");
+      this.billingService.updateActionLog({ type: "billing", "claim_id": this.paramsId.claim_id, "billable_item_id": this.paramsId.billId, "documents_ids": [element.id], submission_type_id: this.billType }).subscribe(res => {
+      })
       saveAs(res.signed_file_url, element.file_name);
     })
   }
