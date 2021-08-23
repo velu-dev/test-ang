@@ -108,7 +108,22 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   getBillLineItems() {
     this.billingService.getBillLineItem(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId).subscribe(line => {
       this.billLineItems = line.data;
+        // let balance: number = 0;
+        // this.billLineItems && this.billLineItems.map(line_item => {
+        //   console.log(line_item)
+        //   if (line_item && +line_item.charge > +line_item.payment_amount) {
+        //     console.log("charge", +line_item.charge)
+        //     balance += +line_item.charge
+        //   } else {
+        //     console.log("payment_amount", +line_item.payment_amount)
+        //     balance += +line_item.payment_amount
+        //   }
+        // })
+        // console.log(+balance)
+        // this.payments().at(0).get('balance').patchValue(+balance > 0 ? +balance : 0);
+        // this.payments().at(0).get('actual_balance').patchValue(+balance > 0 ? +balance : 0);
     })
+
   }
 
   is_cancellation = false;
@@ -166,7 +181,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       this.getPaymentStatus.emit(this.paymentRes ? this.paymentRes[0] : null)
       let responseCount = 0;
       payment.data.map(pay => {
-        responseCount = pay.payment_response.length + responseCount;
+        responseCount = pay.payment_response && pay.payment_response.length + responseCount;
       })
       this.intercom.PaymentReview(responseCount);
       this.paymentRes.map((pay, i) => {
@@ -190,8 +205,9 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
           sbr_payment: pay.sbr_payment
         }
 
+
         this.payments().at(i).patchValue(initPayment);
-        pay.payment_response.map((review, ind) => {
+        pay.payment_response && pay.payment_response.map((review, ind) => {
           this.billingEORDetails[ind] = review.eor_allowance_details;
           this.addReviews(i, false);
           review.file_name = review.eor_original_file_name ? review.eor_original_file_name : review.eor_file_name;
@@ -236,6 +252,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       payment: '',
       status: '',
       balance: '',
+    //  actual_balance: '',
       bill_paid_status: '',
       is_bill_closed: '',
       reviews: this.fb.array([]),

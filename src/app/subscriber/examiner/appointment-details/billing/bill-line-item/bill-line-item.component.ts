@@ -640,7 +640,12 @@ export class BillLineItemComponent implements OnInit {
         total += parseFloat(this.getFormControls.controls[j].get('charge').value)
       }
       if (this.getFormControls.controls[j].get('payment').value) {
-        payment += parseFloat(this.getFormControls.controls[j].get('payment').value)
+        if (this.getFormControls.controls[j].get('payment').value > this.getFormControls.controls[j].get('charge').value) {
+          payment += parseFloat(this.getFormControls.controls[j].get('charge').value)
+        } else {
+          payment += parseFloat(this.getFormControls.controls[j].get('payment').value)
+        }
+
       }
     }
     return (total - payment).toFixed(2);
@@ -687,8 +692,8 @@ export class BillLineItemComponent implements OnInit {
 
   selectAllCheck(value, group) {
     group.map((data, i) => {
-      if(!data.get('is_fully_paid').value){
-      data.get('reviewShow').patchValue(value);
+      if (!data.get('is_fully_paid').value) {
+        data.get('reviewShow').patchValue(value);
       }
     })
     if (value) {
