@@ -187,10 +187,10 @@
                     class="margin-20">
                     <div class="p-b-5"><b>Service Location</b> </div>
                     <div *ngIf="!billingData?.is_virtual_location">{{billingData?.service_location_name ?
-                        billingData?.service_location_name + ' - ' : ''}}{{billingData?.service_location?.street1 }}
-                        {{billingData?.service_location?.street2 }}
-                        {{billingData?.service_location?.city}}
-                        {{billingData?.state_code }}
+                        billingData?.service_location_name + ' - ' : ''}}{{billingData?.service_location?.street1 ? billingData?.service_location?.street1 + ", " : ""}}
+                        {{billingData?.service_location?.street2 ? billingData?.service_location?.street2 + ", " : ""}}
+                        {{billingData?.service_location?.city ? billingData?.service_location?.city + ", " : ""}}
+                        {{billingData?.state_code}}
                         {{billingData?.service_location?.zip_code ? '- ' + billingData?.service_location?.zip_code :
                         '' }}
                     </div>
