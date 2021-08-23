@@ -372,15 +372,8 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   }
 
   setPaymentAmount(index: number, review) {
-    const { charge, first_submission_payment, sbr_payment } = this.payments().at(index).value;
-    let payment_amount = 0;
-    if (this.billType == 1) {
-      payment_amount = charge;
-    } else if (this.billType == 2) {
-      payment_amount = Number(charge) - Number(first_submission_payment);
-    } else {
-      payment_amount = Number(charge) - Number(sbr_payment);
-    }
+    const { balance } = this.payments().at(index).value;
+    const payment_amount = +balance;
     review.get('payment_amount').patchValue(payment_amount.toFixed(2));
   }
 
