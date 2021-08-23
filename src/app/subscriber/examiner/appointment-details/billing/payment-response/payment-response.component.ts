@@ -373,7 +373,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
 
   setPaymentAmount(index: number, review) {
     const { balance } = this.payments().at(index).value;
-    const payment_amount = +balance;
+    const payment_amount = Number(balance || 0);
     review.get('payment_amount').patchValue(payment_amount.toFixed(2));
   }
 
