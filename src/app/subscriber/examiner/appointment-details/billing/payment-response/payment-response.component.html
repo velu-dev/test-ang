@@ -33,7 +33,9 @@
                         <td>{{payment.get('payment').value ? '$ ' : ''}}{{payment.get('payment').value | number :
                             '1.2-2'}}</td>
                         <td class="text-danger">{{+payment.get('balance').value > -1 ? '$ ' : ''}}
-                            <ng-container *ngIf="billType == 1"> {{payment.get('balance').value | number : '1.2-2'}}
+                            {{ (payment.get('balance').value > 0 ? payment.get('balance').value : 0) | number : '1.2-2'
+                            }}
+                            <!-- <ng-container *ngIf="billType == 1"> {{payment.get('balance').value | number : '1.2-2'}}
                             </ng-container>
                             <ng-container *ngIf="billType == 2">
                                 {{((payment.get('charge').value - payment.get('first_submission_payment').value -
@@ -46,7 +48,7 @@
                                 payment.get('payment').value) > 0 ? (payment.get('charge').value -
                                 payment.get('sbr_payment').value -
                                 payment.get('payment').value) : 0) | number : '1.2-2'}}
-                            </ng-container>
+                            </ng-container> -->
                         </td>
                         <td
                             [ngClass]="{'text-success' : payment.get('bill_paid_status').value != 'Denied', 'text-danger' : payment.get('bill_paid_status').value == 'Denied'}">
@@ -672,7 +674,7 @@
                                             </mat-card>
                                         </mat-expansion-panel>
                                     </mat-accordion>
-        
+
                                 </td>
                             </tr>
                             <tr formArrayName="reviews">
@@ -680,8 +682,9 @@
                                     <div class="detail m-t-5"
                                         *ngFor="let review of paymentReviews(payIndex).controls; let reviewIndex=index;let last = last"
                                         style="background-color: #f8f8f8;padding: 10px;border: 1px solid #a2a1a1;">
-                                        <div [formGroupName]="reviewIndex" [ngClass]="{'strike-mobile-line-item' : !last || review.get('void_type_id').value == 3}">
-        
+                                        <div [formGroupName]="reviewIndex"
+                                            [ngClass]="{'strike-mobile-line-item' : !last || review.get('void_type_id').value == 3}">
+
                                             <div class="expand-details-list list-level list-level-{{reviewIndex}}"
                                                 fxLayout="row wrap" *ngIf="!review.get('showStatus').value">
                                                 <div fxFlex="100">
@@ -692,7 +695,8 @@
                                                             review.get('other_type_reason').value : '' }}</div>
                                                     </div>
                                                 </div>
-                                                <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100" class="expand-details"
+                                                <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100"
+                                                    class="expand-details"
                                                     [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
                                                     <div class="grid-list">
                                                         <div>Explanation of Review</div>
@@ -715,18 +719,20 @@
                                                         <div class="property">Deposit Date</div>
                                                         <div *ngIf="last && !review.get('deposit_date').value && review.get('response_type').value !== 'Denied'"
                                                             class="deposit-date value">
-                                                            <mat-form-field appearance="outline" class="mat-date-picker">
+                                                            <mat-form-field appearance="outline"
+                                                                class="mat-date-picker">
                                                                 <input matInput type="text" [(ngModel)]="depositionDate"
                                                                     [ngModelOptions]="{standalone: true}"
                                                                     [min]="review.get('effective_date').value"
-                                                                    [matDatepicker]="deposited" [readonly]="!isEditDepositdate"
+                                                                    [matDatepicker]="deposited"
+                                                                    [readonly]="!isEditDepositdate"
                                                                     placeholder="Deposit Date" />
                                                                 <mat-datepicker-toggle matSuffix [for]="deposited"
                                                                     [disabled]="!isEditDepositdate">
                                                                 </mat-datepicker-toggle>
                                                                 <mat-datepicker #deposited></mat-datepicker>
                                                             </mat-form-field>
-        
+
                                                             <span class="action-btn">
                                                                 <mat-icon (click)="toggleDepositDate()"
                                                                     *ngIf="!isEditDepositdate" class="text-success">
@@ -736,8 +742,8 @@
                                                                     *ngIf="isEditDepositdate" class="text-success">
                                                                     done
                                                                 </mat-icon>
-                                                                <mat-icon (click)="clearDepositDate()" *ngIf="isEditDepositdate"
-                                                                    class="text-danger">
+                                                                <mat-icon (click)="clearDepositDate()"
+                                                                    *ngIf="isEditDepositdate" class="text-danger">
                                                                     close </mat-icon>
                                                             </span>
                                                         </div>
@@ -756,7 +762,8 @@
                                                             date:'MM-dd-yyyy'}}</div>
                                                     </div>
                                                 </div>
-                                                <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100" class="expand-details"
+                                                <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100"
+                                                    class="expand-details"
                                                     [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
                                                     <div class="grid-list">
                                                         <div>Payment Amount</div>
@@ -787,11 +794,13 @@
                                                     </div>
                                                     <div class="grid-list">
                                                         <div>Updated On</div>
-                                                        <div class="value" *ngIf="review.get('updated_by_first_name').value">
+                                                        <div class="value"
+                                                            *ngIf="review.get('updated_by_first_name').value">
                                                             {{review.get('updatedAt').value | date:'MM-dd-yyyy'}}</div>
                                                     </div>
                                                 </div>
-                                                <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100" class="expand-details"
+                                                <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100"
+                                                    class="expand-details"
                                                     [ngClass]="{'strike' : !last || review.get('void_type_id').value == 3}">
                                                     <div class="grid-list">
                                                         <div>Reference Number</div>
@@ -820,7 +829,7 @@
                                                             {{review.get('void_reason').value}}</div>
                                                     </div>
                                                 </div>
-        
+
                                                 <!-- EOR - Mobile UI-->
                                                 <div class="bill-response-mobile show-mobile w-100">
                                                     <table>
@@ -837,42 +846,50 @@
                                                                                     <mat-panel-title>
                                                                                         <div class="inline-title">
                                                                                             <div><b>Item</b></div>
-                                                                                            <div>{{lineItem.get('item').value}}
+                                                                                            <div>
+                                                                                                {{lineItem.get('item').value}}
                                                                                             </div>
                                                                                         </div>
                                                                                     </mat-panel-title>
                                                                                 </mat-expansion-panel-header>
                                                                                 <mat-card>
                                                                                     <div class="flex">
-                                                                                        <div class="bill-property">Item</div>
+                                                                                        <div class="bill-property">Item
+                                                                                        </div>
                                                                                         <div class="value">
-                                                                                            {{lineItem.get('item').value}}</div>
+                                                                                            {{lineItem.get('item').value}}
+                                                                                        </div>
                                                                                     </div>
                                                                                     <div class="flex">
-                                                                                        <div class="bill-property">Procedure
+                                                                                        <div class="bill-property">
+                                                                                            Procedure
                                                                                             Code</div>
                                                                                         <div class="value">
                                                                                             {{lineItem.get('procedure_code').value}}
                                                                                         </div>
                                                                                     </div>
                                                                                     <div class="flex">
-                                                                                        <div class="bill-property">Modifier
+                                                                                        <div class="bill-property">
+                                                                                            Modifier
                                                                                         </div>
                                                                                         <div class="value">
                                                                                             {{lineItem.get('modifier').value}}
                                                                                         </div>
                                                                                     </div>
-        
+
                                                                                     <div class="flex">
-                                                                                        <div class="bill-property">Charge</div>
+                                                                                        <div class="bill-property">
+                                                                                            Charge</div>
                                                                                         <div class="value">$
-                                                                                            {{lineItem.get('charges').value |
+                                                                                            {{lineItem.get('charges').value
+                                                                                            |
                                                                                             number :
                                                                                             '1.2-2'}}</div>
                                                                                     </div>
-        
+
                                                                                     <div class="flex">
-                                                                                        <div class="bill-property">EOR Allowance
+                                                                                        <div class="bill-property">EOR
+                                                                                            Allowance
                                                                                         </div>
                                                                                         <div class="value">$ {{
                                                                                             (lineItem.get('eor_allowance').value
@@ -882,22 +899,27 @@
                                                                                             '1.2-2'
                                                                                             }}</div>
                                                                                     </div>
-        
+
                                                                                     <div class="flex">
-                                                                                        <div class="bill-property">Balance</div>
+                                                                                        <div class="bill-property">
+                                                                                            Balance</div>
                                                                                         <div class="value">
-                                                                                            {{lineItem.get('charges').value > -1
+                                                                                            {{lineItem.get('charges').value
+                                                                                            > -1
                                                                                             ? '$ ' : '' }}
-                                                                                            {{ (lineItem.get('balance').value >
+                                                                                            {{
+                                                                                            (lineItem.get('balance').value
+                                                                                            >
                                                                                             0 ?
-                                                                                            lineItem.get('balance').value : 0) |
+                                                                                            lineItem.get('balance').value
+                                                                                            : 0) |
                                                                                             number :
                                                                                             '1.2-2'}}</div>
                                                                                     </div>
                                                                                 </mat-card>
                                                                             </mat-expansion-panel>
                                                                         </mat-accordion>
-        
+
                                                                     </td>
                                                                 </tr>
                                                             </ng-container>
@@ -905,13 +927,14 @@
                                                     </table>
                                                 </div>
                                                 <!-- EOR - Mobile UI END -->
-        
+
                                                 <div fxFlex="100">
-                                                    <button type="button" *ngIf="last && review.get('void_type_id').value != 3"
+                                                    <button type="button"
+                                                        *ngIf="last && review.get('void_type_id').value != 3"
                                                         mat-raised-button class="filled-gray m-t-15"
                                                         (click)="editResponse(payment,review,payIndex,reviewIndex)">Copy
                                                         & Edit Response</button>
-        
+
                                                 </div>
                                             </div>
                                             <div [ngClass]="{'void_': review.get('void_type_id').value == 3, ' response_': paymentReviews(payIndex)?.controls?.length == 1}"
@@ -927,7 +950,8 @@
                                                             fxFlex.sm="100" fxFlex.xs="100"
                                                             (change)="changeVoidType(payment,review,payIndex,reviewIndex,$event)"
                                                             formControlName="void_type_id">
-                                                            <mat-radio-button *ngFor="let type of review.get('voidData').value"
+                                                            <mat-radio-button
+                                                                *ngFor="let type of review.get('voidData').value"
                                                                 [value]="type?.id" class="m-r-15">{{type?.name}}
                                                             </mat-radio-button>
                                                         </mat-radio-group>
@@ -950,49 +974,55 @@
                                                                 <mat-select formControlName="response_type_id"
                                                                     (selectionChange)="changeResponseType(payment,review,payIndex,reviewIndex,$event)"
                                                                     placeholder="Response Type">
-                                                                    <mat-option *ngFor="let paidStatus of paidStatusData"
+                                                                    <mat-option
+                                                                        *ngFor="let paidStatus of paidStatusData"
                                                                         [value]="paidStatus?.id">
                                                                         {{paidStatus?.name}}
                                                                     </mat-option>
                                                                 </mat-select>
                                                             </mat-form-field>
                                                         </div>
-                                                        <div *ngIf="review.get('response_type_id').value == 5" fxFlex="50"
-                                                            fxFlex.sm="100" fxFlex.xs="100" class="p-r-10">
+                                                        <div *ngIf="review.get('response_type_id').value == 5"
+                                                            fxFlex="50" fxFlex.sm="100" fxFlex.xs="100" class="p-r-10">
                                                             <mat-form-field appearance="outline" class="w-100">
-                                                                <input matInput type="text" formControlName="other_type_reason"
+                                                                <input matInput type="text"
+                                                                    formControlName="other_type_reason"
                                                                     placeholder="Other Description" autocomplete="off">
                                                             </mat-form-field>
                                                         </div>
                                                     </div>
-        
+
                                                 </div>
                                                 <div fxFlex="33.3" fxFlex.sm="100" fxFlex.xs="100"
                                                     class="expand-details editable"
                                                     *ngIf="review.get('void_type_id').value != 3">
-        
+
                                                     <div class="flex" class="m-b-20">
                                                         <div class="bill-property">Explanation of
                                                             Review{{review.get('file')?.errors?.required ? '*' : ''}}
                                                         </div>
                                                         <div class="editable">
-                                                            <p *ngIf="review.get('file_name').value" fxFlex="100" class="w-100">
+                                                            <p *ngIf="review.get('file_name').value" fxFlex="100"
+                                                                class="w-100">
                                                                 {{review.get('file_name').value}}</p>
                                                         </div>
-                                                        <button type="button" class="filled-gray mini-btn m-t-5" mat-raised-button
+                                                        <button type="button" class="filled-gray mini-btn m-t-5"
+                                                            mat-raised-button
                                                             [disabled]="review.get('file_name').disabled"
                                                             (click)="openUploadPopUp(false, ['.pdf', '.jpg', '.jpeg', '.png'], review, 30 )">{{!review.get('file_name').value
                                                             ? 'Upload' : 'Reupload'}}</button>
-                                                        <input type="file" #uploader hidden (change)="addEOR($event,review)"
+                                                        <input type="file" #uploader hidden
+                                                            (change)="addEOR($event,review)"
                                                             accept=".pdf, .jpg, .jpeg, .png" required>
                                                     </div>
-        
+
                                                     <div class="grid-list-form">
                                                         <div class="property">Post
                                                             Date{{review.get('post_date')?.errors?.required ? '*' : ''}}
                                                         </div>
                                                         <div class="value">
-                                                            <mat-form-field appearance="outline" class="mat-date-picker">
+                                                            <mat-form-field appearance="outline"
+                                                                class="mat-date-picker">
                                                                 <input formControlName="post_date" matInput type="text"
                                                                     placeholder="Post Date" autocomplete="off"
                                                                     [min]="minimumDate" [matDatepicker]="post_date">
@@ -1007,10 +1037,12 @@
                                                             Date{{review.get('effective_date')?.errors?.required ? '*' :
                                                             ''}}</div>
                                                         <div class="value">
-                                                            <mat-form-field appearance="outline" class="mat-date-picker">
-                                                                <input formControlName="effective_date" matInput type="text"
-                                                                    autocomplete="off" placeholder="Effective Date"
-                                                                    [min]="minimumDate" [matDatepicker]="effective">
+                                                            <mat-form-field appearance="outline"
+                                                                class="mat-date-picker">
+                                                                <input formControlName="effective_date" matInput
+                                                                    type="text" autocomplete="off"
+                                                                    placeholder="Effective Date" [min]="minimumDate"
+                                                                    [matDatepicker]="effective">
                                                                 <mat-datepicker-toggle matSuffix [for]="effective">
                                                                 </mat-datepicker-toggle>
                                                                 <mat-datepicker #effective></mat-datepicker>
@@ -1022,9 +1054,11 @@
                                                             Date{{review.get('deposit_date')?.errors?.required ? '*' :
                                                             ''}}</div>
                                                         <div class="value">
-                                                            <mat-form-field appearance="outline" class="mat-date-picker">
-                                                                <input formControlName="deposit_date" matInput type="text"
-                                                                    placeholder="Deposit Date" autocomplete="off"
+                                                            <mat-form-field appearance="outline"
+                                                                class="mat-date-picker">
+                                                                <input formControlName="deposit_date" matInput
+                                                                    type="text" placeholder="Deposit Date"
+                                                                    autocomplete="off"
                                                                     [min]="review.get('effective_date').value || minimumDate"
                                                                     [max]="currentDate" [matDatepicker]="deposited">
                                                                 <mat-datepicker-toggle matSuffix [for]="deposited">
@@ -1045,7 +1079,8 @@
                                                             <mat-form-field appearance="outline">
                                                                 <input formControlName="payment_amount" min="0" matInput
                                                                     type="number" placeholder="Payment Amount"
-                                                                    autocomplete="off" (change)="setTwoNumberDecimal($event)">
+                                                                    autocomplete="off"
+                                                                    (change)="setTwoNumberDecimal($event)">
                                                                 <span matPrefix>$&nbsp;</span>
                                                             </mat-form-field>
                                                         </div>
@@ -1069,9 +1104,10 @@
                                                         <div class="property">Penalty Charged</div>
                                                         <div class="value">
                                                             <mat-form-field appearance="outline">
-                                                                <input formControlName="penalty_charged" min="0" matInput
-                                                                    type="number" placeholder="Penalty Charged"
-                                                                    autocomplete="off" (change)="setTwoNumberDecimal($event)">
+                                                                <input formControlName="penalty_charged" min="0"
+                                                                    matInput type="number" placeholder="Penalty Charged"
+                                                                    autocomplete="off"
+                                                                    (change)="setTwoNumberDecimal($event)">
                                                                 <span matPrefix>$&nbsp;</span>
                                                             </mat-form-field>
                                                         </div>
@@ -1081,7 +1117,8 @@
                                                         <div class="value">
                                                             <mat-form-field appearance="outline">
                                                                 <input formControlName="penalty_paid" min="0" matInput
-                                                                    type="number" placeholder="Penalty Paid" autocomplete="off"
+                                                                    type="number" placeholder="Penalty Paid"
+                                                                    autocomplete="off"
                                                                     (change)="setTwoNumberDecimal($event)">
                                                                 <span matPrefix>$&nbsp;</span>
                                                             </mat-form-field>
@@ -1097,8 +1134,9 @@
                                                             ''}}</div>
                                                         <div class="value">
                                                             <mat-form-field appearance="outline">
-                                                                <input formControlName="reference_no" matInput type="text"
-                                                                    placeholder="Reference Number" autocomplete="off">
+                                                                <input formControlName="reference_no" matInput
+                                                                    type="text" placeholder="Reference Number"
+                                                                    autocomplete="off">
                                                             </mat-form-field>
                                                         </div>
                                                     </div>
@@ -1107,8 +1145,9 @@
                                                         </div>
                                                         <div class="value">
                                                             <mat-form-field appearance="outline">
-                                                                <input formControlName="payor_claim_control_number" matInput
-                                                                    type="text" placeholder="Payor Claim Control Number"
+                                                                <input formControlName="payor_claim_control_number"
+                                                                    matInput type="text"
+                                                                    placeholder="Payor Claim Control Number"
                                                                     autocomplete="off">
                                                             </mat-form-field>
                                                         </div>
@@ -1117,9 +1156,10 @@
                                                         <div class="property">Interest Charged</div>
                                                         <div class="value">
                                                             <mat-form-field appearance="outline">
-                                                                <input formControlName="interest_charged" min="0" matInput
-                                                                    type="number" placeholder="Interest Charged"
-                                                                    autocomplete="off" (change)="setTwoNumberDecimal($event)">
+                                                                <input formControlName="interest_charged" min="0"
+                                                                    matInput type="number"
+                                                                    placeholder="Interest Charged" autocomplete="off"
+                                                                    (change)="setTwoNumberDecimal($event)">
                                                                 <span matPrefix>$&nbsp;</span>
                                                             </mat-form-field>
                                                         </div>
@@ -1129,7 +1169,8 @@
                                                         <div class="value">
                                                             <mat-form-field appearance="outline">
                                                                 <input formControlName="interest_paid" min="0" matInput
-                                                                    type="number" placeholder="Interest Paid" autocomplete="off"
+                                                                    type="number" placeholder="Interest Paid"
+                                                                    autocomplete="off"
                                                                     (change)="setTwoNumberDecimal($event)">
                                                                 <span matPrefix>$&nbsp;</span>
                                                             </mat-form-field>
@@ -1137,7 +1178,7 @@
                                                     </div>
                                                 </div>
                                                 <!-- EOR - Mobile UI-->
-        
+
                                                 <div class="bill-response-mobile show-mobile w-100">
                                                     <table>
                                                         <tbody>
@@ -1146,61 +1187,77 @@
                                                                     <td formArrayName="eor_allowance_details">
                                                                         <mat-accordion
                                                                             *ngFor="let eor of review.get('eor_allowance_details')['controls']; let eorInd=index; let lastReview = last">
-                                                                            <mat-expansion-panel [expanded]="true" hideToggle
-                                                                                class="m-t-10">
+                                                                            <mat-expansion-panel [expanded]="true"
+                                                                                hideToggle class="m-t-10">
                                                                                 <mat-expansion-panel-header>
                                                                                     <mat-panel-title>
                                                                                         <div class="inline-title">
                                                                                             <div><b>Item</b></div>
-                                                                                            <div>{{eor.get('item').value}}</div>
+                                                                                            <div>
+                                                                                                {{eor.get('item').value}}
+                                                                                            </div>
                                                                                         </div>
                                                                                     </mat-panel-title>
                                                                                 </mat-expansion-panel-header>
                                                                                 <mat-card>
                                                                                     <div class="detail p-t-0"
                                                                                         style="background-color: #ffffff;padding: 10px;">
-                                                                                        <div class="w-100" fxLayout="row wrap">
-                                                                                            <div fxFlex.sm="100" fxFlex.xs="100"
+                                                                                        <div class="w-100"
+                                                                                            fxLayout="row wrap">
+                                                                                            <div fxFlex.sm="100"
+                                                                                                fxFlex.xs="100"
                                                                                                 class="expand-details editable">
                                                                                                 <div class="grid-list">
-                                                                                                    <div class="property">Item
+                                                                                                    <div
+                                                                                                        class="property">
+                                                                                                        Item
                                                                                                     </div>
                                                                                                     <div class="value">
                                                                                                         {{eor.get('item').value}}
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 <div class="grid-list">
-                                                                                                    <div class="property">
-                                                                                                        Procedure Code</div>
+                                                                                                    <div
+                                                                                                        class="property">
+                                                                                                        Procedure Code
+                                                                                                    </div>
                                                                                                     <div class="value">
                                                                                                         {{eor.get('procedure_code').value}}
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 <div class="grid-list">
-                                                                                                    <div class="property">
+                                                                                                    <div
+                                                                                                        class="property">
                                                                                                         Modifier</div>
                                                                                                     <div class="value">
                                                                                                         {{eor.get('modifier').value}}
                                                                                                     </div>
                                                                                                 </div>
-        
-        
+
+
                                                                                                 <div class="grid-list">
-                                                                                                    <div class="property">Charge
+                                                                                                    <div
+                                                                                                        class="property">
+                                                                                                        Charge
                                                                                                     </div>
                                                                                                     <div class="value">
                                                                                                         $
                                                                                                         {{eor.get('charges').value
-                                                                                                        | number : '1.2-2'}}
+                                                                                                        | number :
+                                                                                                        '1.2-2'}}
                                                                                                     </div>
                                                                                                 </div>
-                                                                                                <div class="grid-list-form">
-                                                                                                    <div class="property">EOR
+                                                                                                <div
+                                                                                                    class="grid-list-form">
+                                                                                                    <div
+                                                                                                        class="property">
+                                                                                                        EOR
                                                                                                         Allowance</div>
                                                                                                     <div class="value">
                                                                                                         <div [formGroupName]="eorInd"
                                                                                                             class="custom-input">
-                                                                                                            <input type="text"
+                                                                                                            <input
+                                                                                                                type="text"
                                                                                                                 formControlName="eor_allowance"
                                                                                                                 min="0"
                                                                                                                 [max]="eor.get('charges').value"
@@ -1209,17 +1266,19 @@
                                                                                                                 autocomplete="off"
                                                                                                                 (change)="setTwoNumberDecimal($event); validatePaymentAmount(review, eorInd, eor)"
                                                                                                                 (blur)="setTwoNumberDecimal($event)">
-        
+
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 <div class="grid-list">
-                                                                                                    <div class="property">
+                                                                                                    <div
+                                                                                                        class="property">
                                                                                                         Balance</div>
                                                                                                     <div class="value">
                                                                                                         {{
                                                                                                         eor.get('charges').value
-                                                                                                        > -1 ? '$ ' : '' }}
+                                                                                                        > -1 ? '$ ' : ''
+                                                                                                        }}
                                                                                                         {{
                                                                                                         (eor.get('balance').value
                                                                                                         > 0 ?
@@ -1236,7 +1295,9 @@
                                                                         </mat-accordion>
                                                                         <div *ngIf="eorError">
                                                                             <div class="eor-error-message">
-                                                                                <i class="fas fa-exclamation-triangle"></i> EOR
+                                                                                <i
+                                                                                    class="fas fa-exclamation-triangle"></i>
+                                                                                EOR
                                                                                 allowance does
                                                                                 not equal to Payment amount
                                                                             </div>
@@ -1266,9 +1327,9 @@
                 </table>
             </form>
         </div>
-        </form>
-        <div fxLayout="row wrap" class="m-t-15">
-            <button [disabled]="is_cancellation" mat-raised-button class="filled-gray m-r-5"
-                (click)="openCloseBillDialog()">Close Bill</button>
-        </div>
-        </mat-card-content>
+    </form>
+    <div fxLayout="row wrap" class="m-t-15">
+        <button [disabled]="is_cancellation" mat-raised-button class="filled-gray m-r-5"
+            (click)="openCloseBillDialog()">Close Bill</button>
+    </div>
+</mat-card-content>
