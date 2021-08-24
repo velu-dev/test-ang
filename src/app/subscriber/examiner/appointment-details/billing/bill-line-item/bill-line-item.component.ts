@@ -1,15 +1,13 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, ElementRef, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatAutocompleteSelectedEvent, MatAutocompleteTrigger, MatChipInputEvent, MatDialog } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { AlertService } from 'src/app/shared/services/alert.service';
-import { CookieService } from 'src/app/shared/services/cookie.service';
 import { BillingService } from 'src/app/subscriber/service/billing.service';
 import { ClaimService } from 'src/app/subscriber/service/claim.service';
-import { formatDate, Location } from '@angular/common';
 import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.component';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { animate, style, transition, trigger, state } from '@angular/animations';
@@ -69,9 +67,7 @@ export class BillLineItemComponent implements OnInit {
     private route: ActivatedRoute,
     public billingService: BillingService,
     private fb: FormBuilder,
-    private intercom: IntercomService,
-    private _location: Location,
-    private cookieService: CookieService) {
+    private intercom: IntercomService  ) {
     this.userTable = this.fb.group({
       tableRows: this.fb.array([])
     });
@@ -82,6 +78,15 @@ export class BillLineItemComponent implements OnInit {
     this.subscriptions = this.intercom.getPaymentReview().subscribe(res => {
       this.isPaymentresponseCreated = res > 0 ? true : false;
       this.isPaymentresponseCreated ? this.userTable.disable() : this.userTable.enable();
+      this.billing_line_items && this.billing_line_items.map((item, index) => {
+        if (this.billType == 2 || this.billType == 3) {
+          this.getFormControls.controls[index].get('isEditable').setValue(false);
+          this.getFormControls.controls[index].get('reviewShow').enable();
+          if (item.is_fully_paid) {
+            this.getFormControls.controls[index].get('reviewShow').disable();
+          }
+        }
+      })
     });
     this.getBillLineItem();
     this.subscriptions = this.intercom.getAttorneyAddressChanges().subscribe((res) => {
@@ -212,6 +217,17 @@ export class BillLineItemComponent implements OnInit {
             if (item.is_fully_paid) {
               this.getFormControls.controls[index].get('reviewShow').disable();
             }
+            // if(
+            //   !item.is_fully_paid && 
+            //   (
+            //     (this.billType == 2 && Number(item.first_submission_payment) > 0) || 
+            //     (this.billType == 3 && 
+            //       (Number(item.first_submission_payment) > 0 || Number(item.sbr_payment) > 0)
+            //     )
+            //   )
+            // ) {
+            //   this.getFormControls.controls[index].get('reviewShow').patchValue(true);
+            // }
           }
         })
         if (this.billType == 2) {
