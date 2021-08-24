@@ -955,9 +955,18 @@
                                                 <div fxFlex="100"
                                                     *ngIf="paymentReviews(payIndex)?.controls?.length > 1 && paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length - 2).get('void_type_id').value != 3">
                                                     <div fxLayout="row wrap">
-                                                        <div class="main-title p-l-0 p-b-10" fxFlex="100">First Bill
-                                                            Submission Edit
-                                                            Reason</div>
+                                                        <div class="main-title p-l-0 p-b-10" fxFlex="100">
+                                                            <ng-container *ngIf="billType == 1">First</ng-container>
+                                                            <ng-container *ngIf="billType == 2">Second</ng-container>
+                                                            <ng-container *ngIf="billType == 3">Independent
+                                                            </ng-container>
+                                                            Bill
+                                                            <ng-container *ngIf="billType == 2 || billType == 3">Review
+                                                            </ng-container>
+                                                            <ng-container *ngIf="billType == 1">Submission
+                                                            </ng-container>
+                                                            Edit Reason
+                                                        </div>
                                                         <mat-radio-group aria-label="Select an option" fxFlex="100"
                                                             fxFlex.sm="100" fxFlex.xs="100"
                                                             (change)="changeVoidType(payment,review,payIndex,reviewIndex,$event)"
@@ -1305,13 +1314,18 @@
                                                                                 </mat-card>
                                                                             </mat-expansion-panel>
                                                                         </mat-accordion>
-                                                                        <div *ngIf="eorError">
+                                                                        <div *ngIf="eorError || paymentError">
                                                                             <div class="eor-error-message">
                                                                                 <i
                                                                                     class="fas fa-exclamation-triangle"></i>
-                                                                                EOR
-                                                                                allowance does
-                                                                                not equal to Payment amount
+                                                                                <ng-container *ngIf="eorError">EOR
+                                                                                    allowance does not equal to
+                                                                                    Payment amount</ng-container>
+                                                                                <ng-container
+                                                                                    *ngIf="paymentError && !eorError">
+                                                                                    Payment Amount
+                                                                                    must be
+                                                                                    greater than zero</ng-container>
                                                                             </div>
                                                                         </div>
                                                                     </td>
