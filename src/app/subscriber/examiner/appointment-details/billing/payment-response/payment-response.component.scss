@@ -24,40 +24,41 @@ mat-card-content {
                     background-color: $white;
                     display: block;
                     &:last-child {
-                        .expand-details-list.list-level {
-                            &::after {
+                        // .expand-details-list.list-level {
+                            .expand-details-list {
+                            &::before {
                                 content: "";
                                 background-color: $black;
                                 width: 3px;
                                 position: absolute;
                                 left: -30px;
                                 top: -15px;
-                                height: -moz-calc(57.2% - 0px);
-                                height: -webkit-calc(57.2% - 0px);
-                                height: calc(57.2% - 0px);
+                                height: -moz-calc(50% + 15px);
+                                height: -webkit-calc(50% + 15px);
+                                height: calc(50% + 15px);
                             }
                         }
-                        .expand-details-list.form-level {
-                            &::after {
-                                content: "";
-                                background-color: $black;
-                                width: 3px;
-                                position: absolute;
-                                left: -30px;
-                                top: -15px;
-                                height: -moz-calc(55.5% - 0px);
-                                height: -webkit-calc(55.5% - 0px);
-                                height: calc(55.5% - 0px);
-                            }
-                        }
-                        .expand-details-list.void_ {
-                            &::after {
-                                content: "";
-                                height: -moz-calc(64% - 0px) !important;
-                                height: -webkit-calc(64% - 0px) !important;
-                                height: calc(64% - 0px) !important;
-                            }
-                        }
+                        // .expand-details-list.form-level {
+                        //     &::before {
+                        //         content: "";
+                        //         background-color: $black;
+                        //         width: 3px;
+                        //         position: absolute;
+                        //         left: -30px;
+                        //         top: -15px;
+                        //         height: -moz-calc(50% + 15px) !important;
+                        //         height: -webkit-calc(50% + 15px) !important;
+                        //         height: calc(50% + 15px) !important;
+                        //     }
+                        // }
+                        // .expand-details-list.void_ {
+                        //     &::before {
+                        //         content: "";
+                        //         height: -moz-calc(50% - 0px) !important;
+                        //         height: -webkit-calc(50% - 0px) !important;
+                        //         height: calc(50% - 0px) !important;
+                        //     }
+                        // }
                     }
                     .expand-details-list {
                         width: 92%;
@@ -67,7 +68,7 @@ mat-card-content {
                         border-radius: 5px;
                         background-color: $table-solid;
                         position: relative;
-                        &::after {
+                        &::before {
                             content: "";
                             background-color: $black;
                             width: 3px;
@@ -78,13 +79,17 @@ mat-card-content {
                             height: -webkit-calc(100% + (28px + 10px));
                             height: calc(100% + (28px + 10px));
                         }
-                        &::before {
-                            font-family: "Font Awesome 5 Free";
-                            font-weight: 900;
-                            content: "\f30b";
+                        &::after {
+                            // font-family: "Font Awesome 5 Free";
+                            // font-weight: 900;
+                            // content: "\f30b";
+                            // position: absolute;
+                            // font-size: 25px;
+                            // left: -28px;
+                            // top: 47%;
+                            content: url("../../../../../../assets/images/arrow-right.svg");
                             position: absolute;
-                            font-size: 25px;
-                            left: -28px;
+                            left: -30px;
                             top: 50%;
                         }
                         .main-title {
@@ -283,7 +288,7 @@ mat-card-content {
                         }
                     }
                     .expand-details-list.response_ {
-                        &::after {
+                        &::before {
                             content: "";
                             height: -moz-calc(56% - 0px) !important;
                             height: -webkit-calc(56% - 0px) !important;
