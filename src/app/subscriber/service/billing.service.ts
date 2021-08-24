@@ -201,4 +201,9 @@ export class BillingService {
     const postUrl = environment.baseUrl + api_endpoint.updateDepositDate + claim_id + '/' + billable_item_id + '/' + bill_id + '/' + payment_response_id;
     return this.http.post(postUrl, data);
   }
+
+  updateActionLog(data, is_billable_item_document?): Observable<any> {
+    data.is_billable_item_document = is_billable_item_document ? true : false;
+    return this.http.post(environment.baseUrl + api_endpoint.activityLogUpdate, data)
+  }
 }

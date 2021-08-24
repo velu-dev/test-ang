@@ -80,7 +80,7 @@
                                             <div class="grid-list">
                                                 <div>Explanation of Review</div>
                                                 <div class="value"><a class="text-ternary"
-                                                        (click)="download({file_url:review.get('file_url').value,file_name:review.get('file_name').value})">{{review.get('file_name').value}}</a>
+                                                        (click)="download({file_url:review.get('file_url').value,file_name:review.get('file_name').value,id:review.get('eor_file_id').value})">{{review.get('file_name').value}}</a>
                                                 </div>
                                             </div>
                                             <div class="grid-list">
@@ -285,9 +285,17 @@
                                         <div fxFlex="100"
                                             *ngIf="paymentReviews(payIndex)?.controls?.length > 1 && paymentReviews(payIndex).at(paymentReviews(payIndex)?.controls?.length - 2).get('void_type_id').value != 3">
                                             <div fxLayout="row wrap">
-                                                <div class="main-title p-l-0 p-b-10" fxFlex="100">First Bill Submission
-                                                    Edit
-                                                    Reason</div>
+                                                <div class="main-title p-l-0 p-b-10" fxFlex="100">
+                                                    <ng-container *ngIf="billType == 1">First</ng-container>
+                                                    <ng-container *ngIf="billType == 2">Second</ng-container>
+                                                    <ng-container *ngIf="billType == 3">Independent</ng-container>
+                                                    Bill
+                                                    <ng-container *ngIf="billType == 2 || billType == 3">Review
+                                                    </ng-container>
+                                                    <ng-container *ngIf="billType == 1">Submission
+                                                    </ng-container>
+                                                    Edit Reason
+                                                </div>
                                                 <mat-radio-group aria-label="Select an option" fxFlex="100"
                                                     fxFlex.sm="100" fxFlex.xs="100"
                                                     (change)="changeVoidType(payment,review,payIndex,reviewIndex,$event)"
@@ -409,7 +417,7 @@
                                                         <input formControlName="payment_amount" min="0" matInput
                                                             type="number" placeholder="Payment Amount"
                                                             autocomplete="off"
-                                                            (change)="setTwoNumberDecimal($event); validatePaymentAmount(review)"
+                                                            (change)="setTwoNumberDecimal($event); validatePaymentAmount(review); checkFullyPaid(review)"
                                                             (blur)="setTwoNumberDecimal($event)">
                                                         <span matPrefix>$&nbsp;</span>
                                                     </mat-form-field>
@@ -567,10 +575,14 @@
                                                         *ngIf="review.get('eor_allowance_details')['controls'].length == 0">
                                                     </app-nodata>
                                                 </div>
-                                                <div *ngIf="eorError">
+                                                <div *ngIf="eorError || paymentError">
                                                     <div class="eor-error-message">
-                                                        <i class="fas fa-exclamation-triangle"></i> EOR allowance does
-                                                        not equal to Payment amount
+                                                        <i class="fas fa-exclamation-triangle"></i>
+                                                        <ng-container *ngIf="eorError">EOR allowance does not equal to
+                                                            Payment amount</ng-container>
+                                                        <ng-container *ngIf="paymentError && !eorError">Payment Amount
+                                                            must be
+                                                            greater than zero</ng-container>
                                                     </div>
                                                 </div>
                                             </div>
@@ -701,7 +713,7 @@
                                                     <div class="grid-list">
                                                         <div>Explanation of Review</div>
                                                         <div class="value"><a class="text-ternary"
-                                                                (click)="download({file_url:review.get('file_url').value,file_name:review.get('file_name').value})">{{review.get('file_name').value}}</a>
+                                                                (click)="download({file_url:review.get('file_url').value,file_name:review.get('file_name').value,id:review.get('eor_file_id').value})">{{review.get('file_name').value}}</a>
                                                         </div>
                                                     </div>
                                                     <div class="grid-list">
