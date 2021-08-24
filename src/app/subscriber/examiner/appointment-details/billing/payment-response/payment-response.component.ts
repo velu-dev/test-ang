@@ -532,8 +532,8 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   }
 
   private checkPaymentError(review: FormGroup) {
-    const responseType = review.get('void_type_id').value;
-    const paymentError = (responseType === 2 || responseType === 1) && Number(review.get('payment_amount').value) === 0;
+    const { response_type_id, void_type_id } = review.value;
+    const paymentError = (response_type_id === 2 || response_type_id === 1) && Number(review.get('payment_amount').value) === 0 && void_type_id !== 3;
     this.paymentError = paymentError;
     return paymentError;
   }
@@ -635,6 +635,8 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       review.get('other_type_reason').patchValue('')
     }
     review.updateValueAndValidity();
+
+    this.checkPaymentError(review);
 
   }
   openUploadPopUp(isMultiple, type, data?, fileSize?) {
