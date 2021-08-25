@@ -221,6 +221,7 @@ export class BillLineItemComponent implements OnInit {
               !item.is_fully_paid && item.support_documents_details.bill_request_reason
             ) {
               this.getFormControls.controls[index].get('reviewShow').patchValue(true);
+              this.showDocumentSec = true;
             }
           }
         })
