@@ -71,7 +71,6 @@ export class SubmissionComponent implements OnInit {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
       if (this.isMobile) {
-        console.log("dfihdsfiusdiudhsifhisdfiudfiu")
         this.columnName2 = ["", "Description"]
         this.columnsToDisplay2 = ['is_expand', 'file_name']
       } else {

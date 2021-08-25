@@ -22,6 +22,10 @@
       <div class="info-alert m-b-10 m-t-10">
         <i class="fa fa-info-circle p-r-5"></i>Uploaded documents should not exceed 300 dpi
       </div>
+      <div *ngIf="progress > 0">
+        <mat-progress-bar mode="determinate" [value]="progress" class="file-upload-progress"></mat-progress-bar>
+        <div class="text-center">{{progress}} %</div>
+      </div>
       <div fxLayout="row wrap" class="upload-sec w-100 m-b-10"
         *ngIf="!(reportData?.is_exam_type_changed || reportData?.isExaminerDisabled)">
         <!-- <mat-form-field fxFLex="30" fxFlex.sm="100" fxFlex.xs="100" appearance="outline" class="m-t-10">
