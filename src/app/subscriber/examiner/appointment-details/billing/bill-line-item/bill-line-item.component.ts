@@ -217,17 +217,11 @@ export class BillLineItemComponent implements OnInit {
             if (item.is_fully_paid) {
               this.getFormControls.controls[index].get('reviewShow').disable();
             }
-            // if(
-            //   !item.is_fully_paid && 
-            //   (
-            //     (this.billType == 2 && Number(item.first_submission_payment) > 0) || 
-            //     (this.billType == 3 && 
-            //       (Number(item.first_submission_payment) > 0 || Number(item.sbr_payment) > 0)
-            //     )
-            //   )
-            // ) {
-            //   this.getFormControls.controls[index].get('reviewShow').patchValue(true);
-            // }
+            if(
+              !item.is_fully_paid && item.support_documents_details.bill_request_reason
+            ) {
+              this.getFormControls.controls[index].get('reviewShow').patchValue(true);
+            }
           }
         })
         if (this.billType == 2) {
