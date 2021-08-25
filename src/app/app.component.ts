@@ -73,6 +73,13 @@ export class AppComponent {
       }
     })
 
+    document.addEventListener("wheel", function(event){
+      const activeElement: any = document.activeElement;
+      if(activeElement.type === "number"){
+        activeElement.blur();
+      }
+    });
+
   }
   ngOnInit() {
     let claimant = this.cookieService.get('claimDetails');
