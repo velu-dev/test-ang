@@ -61,7 +61,7 @@ export class UpdateBillableItemComponent implements OnInit {
         this.columnName = ["", "Exam Procedure Type"]
         this.columnsToDisplay = ['is_expand', 'procedure_type_name']
       } else {
-        this.columnName = ["Exam Procedure Type", "Date of Service / Date Item Received", "Examiner", "Status"]
+        this.columnName = ["Exam Procedure Type", "Date of Service /" + '\n' + " Date Item Received", "Examiner", "Status"]
         this.columnsToDisplay = ['procedure_type_name', 'appointment_scheduled_date_time', 'examiner_name', "status"]
       }
     })

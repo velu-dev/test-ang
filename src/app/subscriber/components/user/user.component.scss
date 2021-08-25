@@ -19,5 +19,15 @@
                 }
             }
         }
+        .user-detail {
+            th.text-center {
+                ::ng-deep {
+                    .mat-sort-header-container {
+                        text-align: center;
+                        display: inline-block;
+                    }
+                }
+            }
+        }
     }
 }
