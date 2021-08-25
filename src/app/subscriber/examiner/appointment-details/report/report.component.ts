@@ -15,6 +15,7 @@ import { CookieService } from 'src/app/shared/services/cookie.service';
 import { IntercomService } from 'src/app/services/intercom.service';
 import * as moment from 'moment-timezone';
 import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
@@ -57,6 +58,7 @@ export class ReportComponent implements OnInit {
   claim_id: any;
   billable_item_id: any;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  progress: number = 0;
   constructor(private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
     private alertService: AlertService,
@@ -275,15 +277,33 @@ export class ReportComponent implements OnInit {
     for (let i = 0; i < this.selectedFiles.length; i++) {
       this.formData.append('file', this.selectedFiles[i]);
     }
-    this.onDemandService.postDocument(this.formData).subscribe(res => {
-      this.selectedFile = null;
-      this.selectedFiles = null;
-      // this.fileUpload.nativeElement.value = "";
-      this.formData = new FormData();
-      this.file = [];
-      this.getReport();
-      this.errors = { file: { isError: false, error: "" } }
-      this.alertService.openSnackBar("File added successfully", 'success');
+    this.onDemandService.postDocument(this.formData).subscribe((event: HttpEvent<any>) => {
+      switch (event.type) {
+        case HttpEventType.Sent:
+          console.log('Request has been made!');
+          break;
+        case HttpEventType.ResponseHeader:
+          console.log('Response header has been received!');
+          break;
+        case HttpEventType.UploadProgress:
+          this.progress = Math.round(event.loaded / event.total * 100);
+          console.log(`Uploaded! ${this.progress}%`);
+          break;
+        case HttpEventType.Response:
+          console.log('User successfully created!', event.body);
+          setTimeout(() => {
+            this.selectedFile = null;
+            this.selectedFiles = null;
+            // this.fileUpload.nativeElement.value = "";
+            this.formData = new FormData();
+            this.file = [];
+            this.getReport();
+            this.errors = { file: { isError: false, error: "" } }
+            this.alertService.openSnackBar("File added successfully", 'success');
+            this.progress = 0;
+          }, 1500);
+
+      }
     }, error => {
       this.fileUpload.nativeElement.value = "";
       this.selectedFile = null;

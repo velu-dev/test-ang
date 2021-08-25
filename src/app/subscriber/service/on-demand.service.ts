@@ -60,7 +60,10 @@ export class OnDemandService {
   }
 
   postDocument(data): Observable<any> {
-    return this.http.post(environment.baseUrl + api_endpoint.documentType, data)
+    return this.http.post(environment.baseUrl + api_endpoint.documentType, data, {
+      reportProgress: true,
+      observe: 'events'
+    })
   }
 
   documentUnit(data): Observable<any> {
