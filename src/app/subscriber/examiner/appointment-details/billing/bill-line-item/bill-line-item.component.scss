@@ -103,7 +103,8 @@
                 text-align: center;
                 color: $lightgray;
                 a {
-                    display: contents !important;
+                    display: initial !important;
+                    margin: 0 5px;
                 }
             }
         }

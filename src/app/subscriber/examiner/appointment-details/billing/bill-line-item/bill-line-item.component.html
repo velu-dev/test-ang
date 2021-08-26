@@ -661,7 +661,7 @@
                                         <td>-</td>
                                     </tr>
                                     <tr class="reason" *ngIf="group.get('reviewShow').value">
-                                        <td colspan="11" [formGroupName]="i">
+                                        <td [attr.colspan]="billType == 2 ? '11' : '12'" [formGroupName]="i">
                                             <div fxLayout="row wrap" class="reason-for-request">
                                                 <div fxFlex="100" *ngIf="!first">
                                                     <div class="checkbox">
@@ -749,14 +749,14 @@
                                                             file?.original_file_name : file?.file_name
                                                             }}</a>
                                                     </td>
-                                                    <td class="action">
-                                                        <a class="text-danger p-r-10"
-                                                            [ngClass]="{'disabled': isPaymentresponseCreated}"
-                                                            (click)="RemoveFile(file,i)"
-                                                            *ngIf="!is_cancellation">Remove</a> |
-                                                        <a class="text-danger p-l-10"
-                                                            [ngClass]="{'disabled': isPaymentresponseCreated}"
-                                                            (click)="openUploadPopUp(false, ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png'], {file: file, i: i}, 'reupload', 501)">Reupload</a>
+                                                    <td class="action no-wrap-td">
+                                                        <a class="text-danger"
+                                                        [ngClass]="{'disableatag': isPaymentresponseCreated}"
+                                                        (click)="RemoveFile(file,i)"
+                                                        *ngIf="!is_cancellation">Remove</a> |
+                                                    <a class="text-danger"
+                                                        [ngClass]="{'disableatag': isPaymentresponseCreated}"
+                                                        (click)="openUploadPopUp(false, ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png'], {file: file, i: i}, 'reupload', 501)">Reupload</a>
                                                     </td>
                                                 </tr>
                                                 <tr *ngFor="let file of fileName;let i=index">
@@ -765,12 +765,12 @@
                                                             file?.original_file_name :
                                                             file?.file_name
                                                             }}</a></td>
-                                                    <td class="action">
-                                                        <a class="text-danger p-r-10" (click)="RemoveFile(file,i)"
-                                                            [ngClass]="{'disabled': isPaymentresponseCreated}"
+                                                    <td class="action no-wrap-td">
+                                                        <a class="text-danger" (click)="RemoveFile(file,i)"
+                                                            [ngClass]="{'disableatag': isPaymentresponseCreated}"
                                                             *ngIf="!is_cancellation">Remove</a> |
-                                                        <a class="text-danger p-l-10"
-                                                            [ngClass]="{'disabled': isPaymentresponseCreated}"
+                                                        <a class="text-danger"
+                                                            [ngClass]="{'disableatag': isPaymentresponseCreated}"
                                                             (click)="openUploadPopUp(false, ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png'], {file: file, i: i}, 'reupload', 501)">Reupload</a>
 
                                                     </td>
@@ -1118,12 +1118,12 @@
                                                     <td><a class="text-ternary"
                                                             (click)="download(file?.exam_report_file_url,file?.file_name)">{{file?.file_name}}</a>
                                                     </td>
-                                                    <td class="action"><a class="text-danger p-r-10"
-                                                            [ngClass]="{'disabled': isPaymentresponseCreated}"
+                                                    <td class="action no-wrap-td"><a class="text-danger"
+                                                            [ngClass]="{'disableatag': isPaymentresponseCreated}"
                                                             (click)="RemoveFile(file,i)"
                                                             *ngIf="!is_cancellation">Remove</a><br />
-                                                        <a class="text-danger p-l-10"
-                                                            [ngClass]="{'disabled': isPaymentresponseCreated}"
+                                                        <a class="text-danger"
+                                                            [ngClass]="{'disableatag': isPaymentresponseCreated}"
                                                             (click)="uploader.click()">Reupload</a>
                                                         <input type="file" #uploader hidden
                                                             (change)="reuploadFile($event,file,i)"
@@ -1132,12 +1132,12 @@
                                                 </tr>
                                                 <tr *ngFor="let file of fileName;let i=index">
                                                     <td><a class="">{{file?.file_name}}</a></td>
-                                                    <td class="action"><a class="text-danger p-r-10"
-                                                            [ngClass]="{'disabled': isPaymentresponseCreated}"
+                                                    <td class="action no-wrap-td"><a class="text-danger"
+                                                            [ngClass]="{'disableatag': isPaymentresponseCreated}"
                                                             (click)="RemoveFile(file,i)"
                                                             *ngIf="!is_cancellation">Remove</a><br />
-                                                        <a class="text-danger p-l-10"
-                                                            [ngClass]="{'disabled': isPaymentresponseCreated}"
+                                                        <a class="text-danger"
+                                                            [ngClass]="{'disableatag': isPaymentresponseCreated}"
                                                             (click)="uploader.click()">Reupload</a>
                                                         <input type="file" #uploader hidden
                                                             (change)="reuploadFile($event,file,i)"
