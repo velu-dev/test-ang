@@ -195,7 +195,7 @@ export class SubmissionComponent implements OnInit {
   }
 
   VMC1500Submit() {
-    this.billingService.generateCMS1500Form(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId).subscribe(cms => {
+    this.billingService.generateCMS1500Form(this.paramsId.claim_id, this.paramsId.billId, this.paramsId.billingId, this.billType).subscribe(cms => {
       saveAs(cms.cms_1500_signed_file_url, cms.cms_1500_file_name, '_self');
       this.alertService.openSnackBar("CMS1500 generated successfully", "success");
     }, error => {
