@@ -83,8 +83,8 @@ export class BillingComponent implements OnInit {
         this.columnName = ["", "Bill #", "Status"]
         this.displayedColumns = ['is_expand', 'bill_no', 'status']
       } else {
-        this.columnName = ["Bill #", "Claim #", "Claimant Name", "Date of Birth", "Examiner", "Bill Total", "Status"]
-        this.displayedColumns = ['bill_no', 'claim_number', 'claimant_name', "claimant_date_of_birth", "examiner_name", "paid_amt", "status"]
+        this.columnName = ["Bill #", "Submission", "Claim #", "Claimant Name", "Date of Birth", "Examiner", "Bill Total", "Status"]
+        this.displayedColumns = ['bill_no', 'bill_submission_type', 'claim_number', 'claimant_name', "claimant_date_of_birth", "examiner_name", "paid_amt", "status"]
       }
     })
   }
