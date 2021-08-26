@@ -751,12 +751,12 @@
                                                     </td>
                                                     <td class="action no-wrap-td">
                                                         <a class="text-danger"
-                                                        [ngClass]="{'disableatag': isPaymentresponseCreated}"
-                                                        (click)="RemoveFile(file,i)"
-                                                        *ngIf="!is_cancellation">Remove</a> |
-                                                    <a class="text-danger"
-                                                        [ngClass]="{'disableatag': isPaymentresponseCreated}"
-                                                        (click)="openUploadPopUp(false, ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png'], {file: file, i: i}, 'reupload', 501)">Reupload</a>
+                                                            [ngClass]="{'disableatag': isPaymentresponseCreated}"
+                                                            (click)="RemoveFile(file,i)"
+                                                            *ngIf="!is_cancellation">Remove</a> |
+                                                        <a class="text-danger"
+                                                            [ngClass]="{'disableatag': isPaymentresponseCreated}"
+                                                            (click)="openUploadPopUp(false, ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png'], {file: file, i: i}, 'reupload', 501)">Reupload</a>
                                                     </td>
                                                 </tr>
                                                 <tr *ngFor="let file of fileName;let i=index">
@@ -780,7 +780,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div fxFlex="100" class="p-t-20 text-center">
+                            <div fxFlex="100" class="p-t-20 text-center" *ngIf="!isPaymentresponseCreated">
                                 <button mat-stroked-button type="button" class="outline-danger"
                                     (click)="getBillLineItem()">Cancel</button>
                                 <button mat-stroked-button class="outline-success text-center m-l-10"
@@ -1149,7 +1149,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div fxFlex="100" class="p-t-20 text-center">
+                            <div fxFlex="100" class="p-t-20 text-center" *ngIf="!isPaymentresponseCreated">
                                 <button mat-stroked-button type="button" class="outline-danger"
                                     (click)="getBillLineItem()">Cancel</button>
                                 <button mat-stroked-button class="outline-success text-center m-l-10"
