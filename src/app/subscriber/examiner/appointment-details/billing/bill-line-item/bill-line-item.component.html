@@ -666,7 +666,8 @@
                                                 <div fxFlex="100" *ngIf="!first">
                                                     <div class="checkbox">
                                                         <mat-checkbox (change)="BillLineSame(group,i, $event)"
-                                                            class="p-l-10" labelposition="after">Same as
+                                                            [disabled]="isPaymentresponseCreated" class="p-l-10"
+                                                            labelposition="after">Same as
                                                             previous line item</mat-checkbox>
                                                     </div>
                                                 </div>
@@ -729,6 +730,7 @@
                                     </div>
                                     <div fxFlex="50" class="text-right">
                                         <button mat-stroked-button class="filled-ternary m-t-20"
+                                            [disabled]="isPaymentresponseCreated"
                                             (click)="openUploadPopUp(true, ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png'], '', 'upload', 501)">Upload
                                             Supporting Documents</button>
                                     </div>
@@ -747,10 +749,13 @@
                                                             file?.original_file_name : file?.file_name
                                                             }}</a>
                                                     </td>
-                                                    <td class="action"><a class="text-danger p-r-10"
+                                                    <td class="action">
+                                                        <a class="text-danger p-r-10"
+                                                            [ngClass]="{'disabled': isPaymentresponseCreated}"
                                                             (click)="RemoveFile(file,i)"
                                                             *ngIf="!is_cancellation">Remove</a> |
                                                         <a class="text-danger p-l-10"
+                                                            [ngClass]="{'disabled': isPaymentresponseCreated}"
                                                             (click)="openUploadPopUp(false, ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png'], {file: file, i: i}, 'reupload', 501)">Reupload</a>
                                                     </td>
                                                 </tr>
@@ -762,8 +767,10 @@
                                                             }}</a></td>
                                                     <td class="action">
                                                         <a class="text-danger p-r-10" (click)="RemoveFile(file,i)"
+                                                            [ngClass]="{'disabled': isPaymentresponseCreated}"
                                                             *ngIf="!is_cancellation">Remove</a> |
                                                         <a class="text-danger p-l-10"
+                                                            [ngClass]="{'disabled': isPaymentresponseCreated}"
                                                             (click)="openUploadPopUp(false, ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png'], {file: file, i: i}, 'reupload', 501)">Reupload</a>
 
                                                     </td>
@@ -777,6 +784,7 @@
                                 <button mat-stroked-button type="button" class="outline-danger"
                                     (click)="getBillLineItem()">Cancel</button>
                                 <button mat-stroked-button class="outline-success text-center m-l-10"
+                                    [disabled]="isPaymentresponseCreated"
                                     (click)="saveReview(getFormControls.controls,userTable)">Save</button>
                             </div>
                         </div>
@@ -1029,7 +1037,8 @@
                                                 <div fxFlex="100" *ngIf="!first">
                                                     <div class="checkbox">
                                                         <mat-checkbox (change)="BillLineSame(group,i, $event)"
-                                                            class="p-l-10" labelposition="after">Same as
+                                                            [disabled]="isPaymentresponseCreated" class="p-l-10"
+                                                            labelposition="after">Same as
                                                             previous line item</mat-checkbox>
                                                     </div>
                                                 </div>
@@ -1092,7 +1101,7 @@
                                     </div>
                                     <div fxFlex="100" class="text-right">
                                         <button mat-stroked-button class="filled-ternary m-t-5"
-                                            (click)="uploader.click()">Upload
+                                            [disabled]="isPaymentresponseCreated" (click)="uploader.click()">Upload
                                             Supporting Documents</button>
                                         <input type="file" #uploader hidden (change)="addFile($event)" multiple
                                             accept=".pdf, .doc, .docx, .jpg, .jpeg, .png" required>
@@ -1110,9 +1119,11 @@
                                                             (click)="download(file?.exam_report_file_url,file?.file_name)">{{file?.file_name}}</a>
                                                     </td>
                                                     <td class="action"><a class="text-danger p-r-10"
+                                                            [ngClass]="{'disabled': isPaymentresponseCreated}"
                                                             (click)="RemoveFile(file,i)"
                                                             *ngIf="!is_cancellation">Remove</a><br />
                                                         <a class="text-danger p-l-10"
+                                                            [ngClass]="{'disabled': isPaymentresponseCreated}"
                                                             (click)="uploader.click()">Reupload</a>
                                                         <input type="file" #uploader hidden
                                                             (change)="reuploadFile($event,file,i)"
@@ -1122,9 +1133,11 @@
                                                 <tr *ngFor="let file of fileName;let i=index">
                                                     <td><a class="">{{file?.file_name}}</a></td>
                                                     <td class="action"><a class="text-danger p-r-10"
+                                                            [ngClass]="{'disabled': isPaymentresponseCreated}"
                                                             (click)="RemoveFile(file,i)"
                                                             *ngIf="!is_cancellation">Remove</a><br />
                                                         <a class="text-danger p-l-10"
+                                                            [ngClass]="{'disabled': isPaymentresponseCreated}"
                                                             (click)="uploader.click()">Reupload</a>
                                                         <input type="file" #uploader hidden
                                                             (change)="reuploadFile($event,file,i)"
@@ -1140,6 +1153,7 @@
                                 <button mat-stroked-button type="button" class="outline-danger"
                                     (click)="getBillLineItem()">Cancel</button>
                                 <button mat-stroked-button class="outline-success text-center m-l-10"
+                                    [disabled]="isPaymentresponseCreated"
                                     (click)="saveReview(getFormControls.controls,userTable)">Save</button>
                             </div>
                         </div>
