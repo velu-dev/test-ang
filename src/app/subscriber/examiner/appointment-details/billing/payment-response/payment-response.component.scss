@@ -142,45 +142,6 @@ mat-card-content {
                                 .value {
                                     padding: 5px;
                                 }
-                                .deposit-date {
-                                    width: calc(100% - 130px);
-                                    ::ng-deep {
-                                        .mat-form-field {
-                                            width: calc(100% - 70px);
-                                        }
-                                        .mat-form-field-appearance-outline .mat-form-field-outline {
-                                            color: $secondary;
-                                        }
-                                        .mat-form-field-appearance-outline .mat-form-field-outline-start,
-                                        .mat-form-field-appearance-outline .mat-form-field-outline-end,
-                                        .mat-form-field-appearance-outline .mat-form-field-outline-gap {
-                                            border-width: 2px !important;
-                                        }
-                                        .mat-form-field-wrapper {
-                                            padding: 0 !important;
-                                        }
-                                        .mat-form-field-appearance-outline .mat-form-field-infix {
-                                            padding: 3px 0 10px 0 !important;
-                                            word-break:break-all !important;
-                                        }
-                                        .mat-form-field-appearance-outline .mat-form-field-prefix {
-                                            top: 0px !important;
-                                        }
-                                        .mat-form-field-appearance-outline .mat-form-field-suffix {
-                                            top: 6px !important;
-                                        }
-                                        .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
-                                            padding-top: 10px !important;
-                                        }
-                                    }
-                                    .action-btn {
-                                        mat-icon {
-                                            cursor: pointer;
-                                            margin: 0 5px;
-                                            vertical-align: middle;
-                                        }
-                                    }
-                                }
                             }
                         }
                         .expand-details.editable {
@@ -386,6 +347,51 @@ mat-card-content {
                 border: 1px solid #d5aed2;
                 box-shadow: none;
                 outline: none;
+            }
+        }
+    }
+}
+::ng-deep {
+    .deposit-date {
+        width: calc(100% - 130px) !important;
+        @media only screen and (max-width: 568px) {
+            width: 100% !important;
+        }
+        .mat-form-field {
+            width: calc(100% - 70px) !important;
+            .mat-form-field-subscript-wrapper {
+                display: none;
+            }
+        }
+        .mat-form-field-appearance-outline .mat-form-field-outline {
+            color: $secondary;
+        }
+        .mat-form-field-appearance-outline .mat-form-field-outline-start,
+        .mat-form-field-appearance-outline .mat-form-field-outline-end,
+        .mat-form-field-appearance-outline .mat-form-field-outline-gap {
+            border-width: 2px !important;
+        }
+        .mat-form-field-wrapper {
+            padding: 0 !important;
+        }
+        .mat-form-field-appearance-outline .mat-form-field-infix {
+            padding: 3px 0 10px 0 !important;
+            word-break: break-all !important;
+        }
+        .mat-form-field-appearance-outline .mat-form-field-prefix {
+            top: 0px !important;
+        }
+        .mat-form-field-appearance-outline .mat-form-field-suffix {
+            top: 6px !important;
+        }
+        .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+            padding-top: 10px !important;
+        }
+        .action-btn {
+            mat-icon {
+                cursor: pointer;
+                margin: 0 5px;
+                vertical-align: middle;
             }
         }
     }
