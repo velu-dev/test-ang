@@ -279,8 +279,9 @@ export class BilllableBillingComponent implements OnInit {
         } else {
           tabIndex = 0;
         }
-        this.tabIndex = tabIndex;
+        this.tabchange(tabIndex)
       }
+      this.tabIndex = tabIndex;
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
