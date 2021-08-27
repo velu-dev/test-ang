@@ -97,6 +97,14 @@ mat-sidenav-container {
       @media (max-width: 599px) {
         margin-top: 56px;
       }
+      ngx-spinner {
+        p {
+          font-size: 18px;
+          color:$white;
+          font-weight:bold;
+          margin-top: 0;
+        }
+      }
       .main-card {
         max-height: 100px;
         background-color: $white;

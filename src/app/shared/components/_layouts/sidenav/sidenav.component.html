@@ -46,7 +46,7 @@
         <div class="content-wrapper p-t-0">
             <app-page_header></app-page_header>
             <ngx-spinner type="ball-clip-rotate" size="medium">
-                <p style="font-size: 20px; color: white" *ngIf="progressPercentage > 0">Uploading... {{progressPercentage}} %</p>
+                <p *ngIf="progressPercentage > 0">Uploading... {{progressPercentage}} %</p>
             </ngx-spinner>
             <router-outlet></router-outlet>
         </div>
