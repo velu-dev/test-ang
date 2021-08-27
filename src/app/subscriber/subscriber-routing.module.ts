@@ -659,6 +659,10 @@ const routes: Routes = [{
           path: "billing/:billingId",
           component: BilllableBillingComponent,
           data: { breadcrumb: { alias: '@Bill' } }
+        }, {
+          path: "billing/:billingId/:submissionType",
+          component: BilllableBillingComponent,
+          data: { breadcrumb: { alias: '@Bill' } }
         }]
       }]
     }, {
@@ -1276,6 +1280,10 @@ const routes: Routes = [{
               data: { breadcrumb: { alias: '@Bill' } }
             }, {
               path: "billing/:billingId",
+              component: BilllableBillingComponent,
+              data: { breadcrumb: { alias: '@Bill' } }
+            }, {
+              path: "billing/:billingId/:submissionType",
               component: BilllableBillingComponent,
               data: { breadcrumb: { alias: '@Bill' } }
             }]
@@ -1931,6 +1939,10 @@ const routes: Routes = [{
               data: { breadcrumb: { alias: '@Bill' } }
             }, {
               path: "billing/:billingId",
+              component: BilllableBillingComponent,
+              data: { breadcrumb: { alias: '@Bill' } }
+            }, {
+              path: "billing/:billingId/:submissionType",
               component: BilllableBillingComponent,
               data: { breadcrumb: { alias: '@Bill' } }
             }]
@@ -2769,6 +2781,10 @@ const routes: Routes = [{
             data: { breadcrumb: { alias: '@Bill' } }
           }, {
             path: "billing/:billingId",
+            component: BilllableBillingComponent,
+            data: { breadcrumb: { alias: '@Bill' } }
+          }, {
+            path: "billing/:billingId/:submissionType",
             component: BilllableBillingComponent,
             data: { breadcrumb: { alias: '@Bill' } }
           }]
