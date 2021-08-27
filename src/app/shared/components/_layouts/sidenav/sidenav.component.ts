@@ -79,7 +79,7 @@ export class SidenavComponent implements OnInit {
     this.menuItems = ROUTES.filter(menuItem => menuItem.role_id == this.roleId);
     window.onresize = () => {
       this.screenWidth = window.innerWidth;
-      if(this.screenWidth < 1240){
+      if (this.screenWidth < 1240) {
         this.sidenav.close();
         this.isOpen = false;
       } else {
@@ -97,6 +97,7 @@ export class SidenavComponent implements OnInit {
     this.loaderService.hide();
 
   }
+  progressPercentage = 0
   ngOnInit() {
     if (this.is_subscriber) {
       this.userService.verifyUserRole().subscribe(role => {
@@ -109,6 +110,10 @@ export class SidenavComponent implements OnInit {
 
   }
   ngAfterViewInit() {
+    this.intercom.getLoaderPercentage().subscribe(number => {
+      console.log(number)
+      this.progressPercentage = number;
+    })
   }
   navigate() {
     this.intercom.setExaminerPage(false);

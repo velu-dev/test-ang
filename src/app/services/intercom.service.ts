@@ -10,6 +10,7 @@ export class IntercomService {
   public userChanges = new Subject<any>();
   public claimantName = new Subject<any>();
   public claimNumber = new Subject<any>();
+  public loaderPercent = new Subject<any>();
   public billableItem = new Subject<any>();
   public billNo = new Subject<any>();
   public BillDocChange = new Subject<any>();
@@ -54,7 +55,13 @@ export class IntercomService {
   public setClaimNumber(status): any {
     this.claimNumber.next(status);
   }
+  public setLoaderPercentage(status): any {
+    this.loaderPercent.next(status);
+  }
 
+  public getLoaderPercentage(): Observable<any> {
+    return this.loaderPercent.asObservable();
+  }
   public getClaimNumber(): Observable<any> {
     return this.claimNumber.asObservable();
   }

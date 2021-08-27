@@ -287,6 +287,7 @@ export class ReportComponent implements OnInit {
           break;
         case HttpEventType.UploadProgress:
           this.progress = Math.round(event.loaded / event.total * 100);
+          this.intercom.setLoaderPercentage(this.progress)
           console.log(`Uploaded! ${this.progress}%`);
           break;
         case HttpEventType.Response:
@@ -301,6 +302,7 @@ export class ReportComponent implements OnInit {
             this.errors = { file: { isError: false, error: "" } }
             this.alertService.openSnackBar("File added successfully", 'success');
             this.progress = 0;
+            this.intercom.setLoaderPercentage(this.progress)
           }, 1500);
 
       }
