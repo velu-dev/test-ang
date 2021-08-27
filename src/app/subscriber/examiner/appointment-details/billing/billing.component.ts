@@ -251,25 +251,37 @@ export class BilllableBillingComponent implements OnInit {
     this.billingService.getSubmission(this.paramsId.claim_id, this.paramsId.billId).subscribe(submission => {
       console.log(submission.data);
       this.BillIds = submission.data;
+      let tabIndex = 0;
       if (submission.data.independent_bill_id) {
         this.billingId = submission.data.independent_bill_id;
         this.independentBillId = submission.data.independent_bill_id;
         this.firstBillId = submission.data.first_bill_id;
         this.secondBillId = submission.data.second_bill_id;
-        this.tabIndex = 2;
+        tabIndex = 2;
       }
       else if (submission.data.second_bill_id) {
         this.billingId = submission.data.second_bill_id;
         this.secondBillId = submission.data.second_bill_id;
         this.firstBillId = submission.data.first_bill_id;
-        this.tabIndex = 1;
+        tabIndex = 1;
       }
       else if (submission.data.first_bill_id) {
         this.billingId = submission.data.first_bill_id;
         this.firstBillId = submission.data.first_bill_id;
-        this.tabIndex = 0;
+        tabIndex = 0;
         this.getBillingDetails();
       }
+      if (this.paramsId.submissionType) {
+        if(this.paramsId.submissionType === 'independent') {
+          tabIndex = 2;
+        } else if(this.paramsId.submissionType === 'second') {
+          tabIndex = 1;
+        } else {
+          tabIndex = 0;
+        }
+        this.tabchange(tabIndex)
+      }
+      this.tabIndex = tabIndex;
     }, error => {
       this.alertService.openSnackBar(error.error.message, 'error');
     })
