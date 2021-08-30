@@ -278,33 +278,16 @@ export class ReportComponent implements OnInit {
       this.formData.append('file', this.selectedFiles[i]);
     }
     this.onDemandService.postDocument(this.formData).subscribe((event: HttpEvent<any>) => {
-      switch (event.type) {
-        case HttpEventType.Sent:
-          console.log('Request has been made!');
-          break;
-        case HttpEventType.ResponseHeader:
-          console.log('Response header has been received!');
-          break;
-        case HttpEventType.UploadProgress:
-          this.progress = Math.round(event.loaded / event.total * 100);
-          this.intercom.setLoaderPercentage(this.progress)
-          console.log(`Uploaded! ${this.progress}%`);
-          break;
-        case HttpEventType.Response:
-          console.log('User successfully created!', event.body);
-          setTimeout(() => {
-            this.selectedFile = null;
-            this.selectedFiles = null;
-            // this.fileUpload.nativeElement.value = "";
-            this.formData = new FormData();
-            this.file = [];
-            this.getReport();
-            this.errors = { file: { isError: false, error: "" } }
-            this.alertService.openSnackBar("File added successfully", 'success');
-            this.progress = 0;
-            this.intercom.setLoaderPercentage(this.progress)
-          }, 1500);
-
+      let progress = this.onDemandService.getProgress(event);
+      if (progress == 0) {
+        this.selectedFile = null;
+        this.selectedFiles = null;
+        // this.fileUpload.nativeElement.value = "";
+        this.formData = new FormData();
+        this.file = [];
+        this.getReport();
+        this.errors = { file: { isError: false, error: "" } }
+        this.alertService.openSnackBar("File added successfully", 'success');
       }
     }, error => {
       this.fileUpload.nativeElement.value = "";

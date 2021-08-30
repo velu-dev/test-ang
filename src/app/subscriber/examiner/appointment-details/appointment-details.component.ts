@@ -27,6 +27,8 @@ import * as regulation from 'src/app/shared/services/regulations';
 import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 import { PDFViewerComponent } from 'src/app/shared/components/pdf-viewer/pdf-viewer.component';
 import { EMAIL_REGEXP } from '../../../globals';
+import { HttpEvent } from '@angular/common/http';
+import { OnDemandService } from '../../service/on-demand.service';
 export interface PeriodicElement1 {
   file_name: string;
   date: string;
@@ -218,7 +220,8 @@ export class AppointmentDetailsComponent implements OnInit {
     private router: Router,
     private intercom: IntercomService,
     private cookieService: CookieService,
-    private userService: UserService
+    private userService: UserService,
+    private onDemandService: OnDemandService
   ) {
     this.userEmail = JSON.parse(this.cookieService.get('user')).sign_in_email_id.toLowerCase();
     this.intercom.setBillableItem("Billable Item");
@@ -1974,16 +1977,19 @@ export class AppointmentDetailsComponent implements OnInit {
         this.formDataDoc.append('file', file);
       })
       this.formDataDoc.append('is_upload', 'true');
-      this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe(res => {
-        this.selectedFile = [];
-        // this.fileUpload.nativeElement.value = "";
-        this.documentType = null;
-        this.formData = new FormData();
-        this.file = "";
-        this.getDocumentData();
-        this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
-        this.alertService.openSnackBar("File added successfully", 'success');
-        this.getDocumentDeclareData();
+      this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe((event: HttpEvent<any>) => {
+        let progress = this.onDemandService.getProgress(event);
+        if (progress == 0) {
+          this.selectedFile = [];
+          // this.fileUpload.nativeElement.value = "";
+          this.documentType = null;
+          this.formData = new FormData();
+          this.file = "";
+          this.getDocumentData();
+          this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
+          this.alertService.openSnackBar("File added successfully", 'success');
+          this.getDocumentDeclareData();
+        }
       }, error => {
         //this.fileUpload.nativeElement.value = "";
         this.selectedFile = [];
@@ -1991,15 +1997,18 @@ export class AppointmentDetailsComponent implements OnInit {
       })
       return;
     }
-    this.examinerService.postDocument(this.formData).subscribe(res => {
-      this.selectedFile = null;
-      // this.fileUpload.nativeElement.value = "";
-      this.documentType = null;
-      this.formData = new FormData();
-      this.file = "";
-      this.getDocumentData();
-      this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
-      this.alertService.openSnackBar("File added successfully", 'success');
+    this.examinerService.postDocument(this.formData).subscribe((event: HttpEvent<any>) => {
+      let progress = this.onDemandService.getProgress(event);
+      if (progress == 0) {
+        this.selectedFile = null;
+        // this.fileUpload.nativeElement.value = "";
+        this.documentType = null;
+        this.formData = new FormData();
+        this.file = "";
+        this.getDocumentData();
+        this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
+        this.alertService.openSnackBar("File added successfully", 'success');
+      }
     }, error => {
       //this.fileUpload.nativeElement.value = "";
       this.selectedFile = null;

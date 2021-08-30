@@ -80,7 +80,10 @@ export class ClaimService {
     return this.http.get(environment.baseUrl + "examinations/documents-declared-details/" + claim_id + "/" + billable_item_id)
   }
   createDeclaredDocument(data, claim_id, billable_item_id): Observable<any> {
-    return this.http.post(environment.baseUrl + "examinations/documents-declared-add/" + claim_id + "/" + billable_item_id, data)
+    return this.http.post(environment.baseUrl + "examinations/documents-declared-add/" + claim_id + "/" + billable_item_id, data, {
+      reportProgress: true,
+      observe: 'events'
+    })
   }
   removeDeclaredDocument(documents_declared_id, data): Observable<any> {
     return this.http.delete(environment.baseUrl + "examinations/documents-declared-remove/" + data.claim_id + "/" + data.billable_item_id + "/" + documents_declared_id,)

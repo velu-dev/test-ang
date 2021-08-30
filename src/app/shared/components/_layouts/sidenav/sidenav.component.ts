@@ -111,7 +111,6 @@ export class SidenavComponent implements OnInit {
   }
   ngAfterViewInit() {
     this.intercom.getLoaderPercentage().subscribe(number => {
-      console.log(number)
       this.progressPercentage = number;
     })
   }

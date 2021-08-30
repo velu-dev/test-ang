@@ -17,6 +17,8 @@ import { SignPopupComponent } from '../../subscriber-settings/subscriber-setting
 import { MatDialog } from '@angular/material';
 import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/alert-dialog.component';
 import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { OnDemandService } from '../../service/on-demand.service';
 
 @Component({
   selector: 'app-examiner-setting',
@@ -51,7 +53,8 @@ export class ExaminerSettingComponent implements OnInit {
     private store: Store<{ header: any }>,
     public _location: Location,
     private intercom: IntercomService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private onDemandService: OnDemandService
   ) {
     this.userService.getProfile().subscribe(res => {
       this.user = res.data;
@@ -112,7 +115,7 @@ export class ExaminerSettingComponent implements OnInit {
     // })
 
   }
-
+  progress = 0;
   userformSubmit() {
     this.isSubmit = true;
     Object.keys(this.userForm.controls).forEach((key) => {
@@ -124,13 +127,16 @@ export class ExaminerSettingComponent implements OnInit {
     }
     let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : '';
     this.userForm.value.signature = sign;
-    this.userService.updateSubsciberSetting(this.userForm.value).subscribe(res => {
-      this.alertService.openSnackBar("Profile updated successfully", 'success');
-      this.signData = res.data.signature ? 'data:image/png;base64,' + res.data.signature : null;
-      this.isSubmit = false;
-      if (this.first_name != this.userForm.value.first_name) {
-        this.first_name = this.userForm.value.first_name;
-        this.intercom.setUser(true);
+    this.userService.updateSubsciberSetting(this.userForm.value).subscribe((event: HttpEvent<any>) => {
+      let progress = this.onDemandService.getProgress(event);
+      if (progress == 0) {
+        this.alertService.openSnackBar("Profile updated successfully", 'success');
+        this.signData = event['body'].data.signature ? 'data:image/png;base64,' + event['body'].data.signature : null;
+        this.isSubmit = false;
+        if (this.first_name != this.userForm.value.first_name) {
+          this.first_name = this.userForm.value.first_name;
+          this.intercom.setUser(true);
+        }
       }
     }, error => {
       this.isSubmit = false;

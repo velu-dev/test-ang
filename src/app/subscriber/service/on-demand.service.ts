@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { Observable, ObservedValueOf, Observer } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { api_endpoint } from 'src/environments/api_endpoint';
 import { env } from 'process';
+import { IntercomService } from 'src/app/services/intercom.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OnDemandService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private intercom: IntercomService) {
 
   }
 
@@ -48,7 +49,10 @@ export class OnDemandService {
     return this.http.get(environment.baseUrl + api_endpoint.tracingPopup + tracking_id + "/" + claim_id + "/" + bill_item_id)
   }
   uploadDocument(data): Observable<any> {
-    return this.http.post(environment.baseUrl + api_endpoint.document_upload, data);
+    return this.http.post(environment.baseUrl + api_endpoint.document_upload, data, {
+      reportProgress: true,
+      observe: 'events'
+    });
   }
   createCustomRecipient(claim_id, bill_item_id, data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.create_custom_recipient + claim_id + "/" + bill_item_id, data)
@@ -64,6 +68,29 @@ export class OnDemandService {
       reportProgress: true,
       observe: 'events'
     })
+  }
+  progress: any;
+  getProgress(event) {
+    console.log(event)
+    switch (event.type) {
+      case HttpEventType.Sent:
+        console.log(event)
+        this.progress = null;
+        break;
+      case HttpEventType.ResponseHeader:
+        break;
+      case HttpEventType.UploadProgress:
+        this.progress = Math.round(event.loaded / event.total * 100);
+        this.intercom.setLoaderPercentage(this.progress);
+        break;
+      case HttpEventType.Response:
+        // setTimeout(() => {
+        this.progress = 0;
+        this.intercom.setLoaderPercentage(this.progress)
+        break
+      // }, 1500);
+    }
+    return this.progress
   }
 
   documentUnit(data): Observable<any> {

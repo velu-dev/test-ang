@@ -25,6 +25,8 @@ import { DialogueComponent } from 'src/app/shared/components/dialogue/dialogue.c
 import { saveAs } from 'file-saver';
 import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 import { EMAIL_REGEXP } from '../../globals';
+import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { OnDemandService } from '../service/on-demand.service';
 
 /*Treeview*/
 interface PaymentHistroy {
@@ -183,7 +185,8 @@ export class SubscriberSettingsComponent implements OnInit {
     public dialog: MatDialog,
     private breakpointObserver: BreakpointObserver,
     private stripeService: StripeService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private onDemandService: OnDemandService
   ) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -405,8 +408,8 @@ export class SubscriberSettingsComponent implements OnInit {
               this.isAddressError = true;
             this.streetAddressList = [];
           })
-          else
-            this.streetAddressList = []
+        else
+          this.streetAddressList = []
       })
     let user = JSON.parse(this.cookieService.get('user'));
     this.currentUser = user;
@@ -821,6 +824,7 @@ export class SubscriberSettingsComponent implements OnInit {
       }
     }
   }
+  progress = 0;
   userformSubmit() {
     if (this.user.role_id == 2) {
       console.log(this.user)
@@ -842,11 +846,16 @@ export class SubscriberSettingsComponent implements OnInit {
     }
     let sign = this.signData ? this.signData.replace('data:image/png;base64,', '') : '';
     this.userForm.value.signature = sign;
-    this.userService.updateSubsciberSetting(this.userForm.value).subscribe(res => {
-      this.alertService.openSnackBar("Profile updated successfully", 'success');
-      this.signData = res.data.signature ? 'data:image/png;base64,' + res.data.signature : null;
-      this.isSubmit = false;
-      this.intercom.setUser(true);
+    this.userService.updateSubsciberSetting(this.userForm.value).subscribe((event: HttpEvent<any>) => {
+      let progress = this.onDemandService.getProgress(event);
+      if (progress == 0) {
+        console.log(event)
+        this.intercom.setLoaderPercentage(this.progress)
+        this.alertService.openSnackBar("Profile updated successfully", 'success');
+        this.signData = event['body'].data.signature ? 'data:image/png;base64,' + event['body'].data.signature : null;
+        this.isSubmit = false;
+        this.intercom.setUser(true);
+      } event
     }, error => {
       this.isSubmit = false;
       console.log(error.error.message)

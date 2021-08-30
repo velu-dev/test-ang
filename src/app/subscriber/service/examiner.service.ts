@@ -68,7 +68,10 @@ export class ExaminerService {
   }
 
   postDocument(data): Observable<any> {
-    return this.http.post(environment.baseUrl + api_endpoint.documentType, data)
+    return this.http.post(environment.baseUrl + api_endpoint.documentType, data, {
+      reportProgress: true,
+      observe: 'events'
+    })
   }
   downloadOndemandDocuments(data): Observable<any> {
     return this.http.post(environment.baseUrl + api_endpoint.getSignedURL, data)

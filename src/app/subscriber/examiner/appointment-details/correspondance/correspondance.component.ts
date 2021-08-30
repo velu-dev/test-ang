@@ -25,6 +25,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 import * as regulation from 'src/app/shared/services/regulations';
 import { BillingAlertComponent } from 'src/app/shared/components/billingalert/billing-alert.component';
 import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
+import { HttpEvent } from '@angular/common/http';
 @Component({
   selector: 'app-billing-correspondance',
   templateUrl: './correspondance.component.html',
@@ -299,12 +300,16 @@ export class BillingCorrespondanceComponent implements OnInit {
           formData.append('file', result.files[i]);
         }
         // console.log("result", result)
-        this.onDemandService.uploadDocument(formData).subscribe(res => {
-          if (res.status) {
-            this.alertService.openSnackBar(res.message, "success");
-            this.getData();
-          } else {
-            this.alertService.openSnackBar(res.message, "error");
+        this.onDemandService.uploadDocument(formData).subscribe((event: HttpEvent<any>) => {
+          let progress = this.onDemandService.getProgress(event);
+          if (progress == 0) {
+            console.log(event)
+            if (event['body'].status) {
+              this.alertService.openSnackBar(event['body'].message, "success");
+              this.getData();
+            } else {
+              this.alertService.openSnackBar(event['body'].message, "error");
+            }
           }
         })
       }
@@ -758,11 +763,11 @@ export class BillingCorrespondanceComponent implements OnInit {
             message = message + " and " + msg;
           }
         })
-        
+
         const dialogRef = this.dialog.open(AlertDialogueComponent, {
           width: '500px',
           data: {
-            title: "Address incomplete", message: empty_address.join(", ") + " does not have address details whereas " + have_address.join(', ') + (have_address.length && have_custom_recipient !="" ? ", " : "") + have_custom_recipient + " has the address details." + " Do you want to proceed?", proceed: true, cancel: true, type: "warning", warning: true
+            title: "Address incomplete", message: empty_address.join(", ") + " does not have address details whereas " + have_address.join(', ') + (have_address.length && have_custom_recipient != "" ? ", " : "") + have_custom_recipient + " has the address details." + " Do you want to proceed?", proceed: true, cancel: true, type: "warning", warning: true
           }
         });
         dialogRef.afterClosed().subscribe(result => {

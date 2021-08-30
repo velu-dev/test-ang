@@ -48,7 +48,10 @@ export class SubscriberUserService {
   }
 
   updateSubsciberSetting(data): Observable<any> {
-    return this.http.put(environment.baseUrl + api_endpoint.updateSubsciberSetting + data.id, data);
+    return this.http.put(environment.baseUrl + api_endpoint.updateSubsciberSetting + data.id, data, {
+      reportProgress: true,
+      observe: 'events'
+    });
   }
 
   createExaminerUser(data): Observable<any> {
@@ -76,11 +79,17 @@ export class SubscriberUserService {
   }
 
   updateBillingProvider(id, data): Observable<any> {
-    return this.http.put(environment.baseUrl + api_endpoint.updateBillingProvider + id, data)
+    return this.http.put(environment.baseUrl + api_endpoint.updateBillingProvider + id, data, {
+      reportProgress: true,
+      observe: 'events'
+    })
   }
 
   updateRenderingProvider(id, data): Observable<any> {
-    return this.http.put(environment.baseUrl + api_endpoint.updateRenderingProvider + id, data)
+    return this.http.put(environment.baseUrl + api_endpoint.updateRenderingProvider + id, data, {
+      reportProgress: true,
+      observe: 'events'
+    })
   }
 
   createLicense(id, data): Observable<any> {
