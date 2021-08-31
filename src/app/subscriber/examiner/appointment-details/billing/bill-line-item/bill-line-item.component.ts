@@ -109,36 +109,6 @@ export class BillLineItemComponent implements OnInit {
           this.procedureCodes = res.data;
         }
       }, console.error);
-      this.procedureCodes = [
-        {
-          "id": 8,
-          "billing_code": "ML200"
-        },
-        {
-          "id": 9,
-          "billing_code": "ML201"
-        },
-        {
-          "id": 10,
-          "billing_code": "ML202"
-        },
-        {
-          "id": 11,
-          "billing_code": "ML203"
-        },
-        {
-          "id": 12,
-          "billing_code": "ML204"
-        },
-        {
-          "id": 13,
-          "billing_code": "ML205"
-        },
-        {
-          "id": 15,
-          "billing_code": "ML-PRR"
-        }
-      ];
     }
   }
   is_cancellation = false;
