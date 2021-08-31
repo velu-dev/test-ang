@@ -57,6 +57,7 @@ export class BillLineItemComponent implements OnInit {
   support_documents = [];
   oneUnitProcedure = ['ml201', 'ml202', 'ml203']
   subscriptions: Subscription;
+  procedureCodes: any[] = [];
   @Input() cancellation: boolean;
 
   constructor(private logger: NGXLogger,
@@ -103,7 +104,41 @@ export class BillLineItemComponent implements OnInit {
     // this.subscriptions = [paymentResSubscription, attorneyChangeSubscription, billLineItemChangeSubscription];
 
     if(!this.is_cancellation && !this.isPaymentresponseCreated && this.billType === 1) {
-      this.billingService.getProcedureCode(this.paramsId.claim_id, this.paramsId.billId).subscribe(console.log);
+      this.billingService.getProcedureCode(this.paramsId.claim_id, this.paramsId.billId).subscribe((res) => {
+        if(res.data) {
+          this.procedureCodes = res.data;
+        }
+      }, console.error);
+      this.procedureCodes = [
+        {
+          "id": 8,
+          "billing_code": "ML200"
+        },
+        {
+          "id": 9,
+          "billing_code": "ML201"
+        },
+        {
+          "id": 10,
+          "billing_code": "ML202"
+        },
+        {
+          "id": 11,
+          "billing_code": "ML203"
+        },
+        {
+          "id": 12,
+          "billing_code": "ML204"
+        },
+        {
+          "id": 13,
+          "billing_code": "ML205"
+        },
+        {
+          "id": 15,
+          "billing_code": "ML-PRR"
+        }
+      ];
     }
   }
   is_cancellation = false;
