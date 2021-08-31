@@ -101,6 +101,10 @@ export class BillLineItemComponent implements OnInit {
     });
 
     // this.subscriptions = [paymentResSubscription, attorneyChangeSubscription, billLineItemChangeSubscription];
+
+    if(!this.is_cancellation && !this.isPaymentresponseCreated && this.billType === 1) {
+      this.billingService.getProcedureCode(this.paramsId.claim_id, this.paramsId.billId).subscribe(console.log);
+    }
   }
   is_cancellation = false;
   ngAfterContentInit() {
