@@ -14,6 +14,7 @@ import { ClaimService } from 'src/app/subscriber/service/claim.service';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { CookieService } from 'src/app/shared/services/cookie.service';
 import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
+import { HttpEvent } from '@angular/common/http';
 export interface PeriodicElement {
   name: string;
 }
@@ -212,21 +213,26 @@ export class ExaminationComponent implements OnInit {
     for (let i = 0; i < this.selectedFiles.length; i++) {
       formData.append('file', this.selectedFiles[i]);
     }
-    this.ondemandService.uploadExaminationDocument(formData).subscribe(res => {
-      if (res.status) {
-        this.alertService.openSnackBar(res.message, 'success');
-        this.selectedFile = null;
-        // this.fileUpload.nativeElement.value = "";
-        formData = new FormData();
-        this.file = [];
-        // this.alldocuments.push(res.data);
-        // this.uploadedDocument = new MatTableDataSource(this.alldocuments);
-        // this.uploadedDocument.sort = this.sort;
-        this.getData();
-        this.error = { status: false, message: "" };
-      }
-      else {
-        this.alertService.openSnackBar(res.message, "error")
+    this.ondemandService.uploadExaminationDocument(formData).subscribe((event: HttpEvent<any>) => {
+      let res = event['body'];
+      let progress = this.ondemandService.getProgress(event);
+      if (progress == 0) {
+
+        if (res.status) {
+          this.alertService.openSnackBar(res.message, 'success');
+          this.selectedFile = null;
+          // this.fileUpload.nativeElement.value = "";
+          formData = new FormData();
+          this.file = [];
+          // this.alldocuments.push(res.data);
+          // this.uploadedDocument = new MatTableDataSource(this.alldocuments);
+          // this.uploadedDocument.sort = this.sort;
+          this.getData();
+          this.error = { status: false, message: "" };
+        }
+        else {
+          this.alertService.openSnackBar(res.message, "error")
+        }
       }
     })
   }

@@ -115,7 +115,10 @@ export class OnDemandService {
     return this.http.post(environment.baseUrl + api_endpoint.downloadBillingDocument + claim_id + "/" + bill_item_id, doc_ids)
   }
   uploadExaminationDocument(data): Observable<any> {
-    return this.http.post(environment.baseUrl + api_endpoint.uploadExaminationFile, data)
+    return this.http.post(environment.baseUrl + api_endpoint.uploadExaminationFile, data, {
+      reportProgress: true,
+      observe: 'events'
+    })
   }
   listUploadedDocs(claim_id, bill_item_id): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.listExaminationUploadedDocs + claim_id + "/" + bill_item_id)
