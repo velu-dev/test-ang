@@ -1053,16 +1053,19 @@ export class AppointmentDetailsComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result.data) {
           // group.get('date_received').patchValue(moment((group.value.date_received).format("MM-DD-YYYY")));
-          this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe(res => {
-            let message = group.value.id ? "Documents declared details updated successfully!" : "Documents declared details created successfully!"
-            this.alertService.openSnackBar(message, "success");
-            this.documentsDeclared[i] = res.data
-            res.data.file_name = res.data.original_file_name ? res.data.original_file_name : res.data.file_name;
-            group.patchValue(res.data)
-            group.get('isEditable').setValue(false);
-            group.get('id').setValue(res.data.id);
-            this.loadActivity();
-            this.getDocumentData();
+          this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe((event: HttpEvent<any>) => {
+            let progress = this.onDemandService.getProgress(event);
+            if (progress == 0) {
+              let message = group.value.id ? "Documents declared details updated successfully!" : "Documents declared details created successfully!"
+              this.alertService.openSnackBar(message, "success");
+              this.documentsDeclared[i] = event['body'].data
+              event['body'].data.file_name = event['body'].data.original_file_name ? event['body'].data.original_file_name : event['body'].data.file_name;
+              group.patchValue(event['body'].data)
+              group.get('isEditable').setValue(false);
+              group.get('id').setValue(event['body'].data.id);
+              this.loadActivity();
+              this.getDocumentData();
+            }
           }, error => {
             this.alertService.openSnackBar(error.error.message, 'error');
           })
@@ -1071,15 +1074,18 @@ export class AppointmentDetailsComponent implements OnInit {
         }
       })
     } else {
-      this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe(res => {
-        let message = group.value.id ? "Documents declared details updated successfully!" : "Documents declared details created successfully!"
-        this.alertService.openSnackBar(message, "success");
-        this.documentsDeclared[i] = res.data
-        group.patchValue(res.data)
-        group.get('isEditable').setValue(false);
-        group.get('id').setValue(res.data.id);
-        this.loadActivity();
-        this.getDocumentData();
+      this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe((event: HttpEvent<any>) => {
+        let progress = this.onDemandService.getProgress(event);
+        if (progress == 0) {
+          let message = group.value.id ? "Documents declared details updated successfully!" : "Documents declared details created successfully!"
+          this.alertService.openSnackBar(message, "success");
+          this.documentsDeclared[i] = event['body'].data
+          group.patchValue(event['body'].data)
+          group.get('isEditable').setValue(false);
+          group.get('id').setValue(event['body'].data.id);
+          this.loadActivity();
+          this.getDocumentData();
+        }
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
       })

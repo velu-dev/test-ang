@@ -16,6 +16,8 @@ import * as moment from 'moment';
 import { IntercomService } from 'src/app/services/intercom.service';
 import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 import { AlertDialogueComponent } from 'src/app/shared/components/alert-dialogue/alert-dialogue.component';
+import { HttpEvent } from '@angular/common/http';
+import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
 export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
     if (displayFormat === 'input') {
@@ -88,7 +90,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
   eorError = false;
   paymentError = false;
   paymentReviewAmount = null;
-  constructor(public dialog: MatDialog, private fb: FormBuilder, private breakpointObserver: BreakpointObserver,
+  constructor(public dialog: MatDialog, private fb: FormBuilder, private breakpointObserver: BreakpointObserver, private onDemandService: OnDemandService,
     private alertService: AlertService, public billingService: BillingService, private intercom: IntercomService) {
     this.isHandset$.subscribe(res => {
       this.isMobile = res;
@@ -440,7 +442,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
     }
 
     const paymentError = this.checkPaymentError(review);
-    if(paymentError) {
+    if (paymentError) {
       return;
     }
 
@@ -468,64 +470,68 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
 
 
     formData.append('file', review.get('file').value);
-    this.billingService.postPaymentResponse(this.paramsId.billingId, this.paramsId.claim_id, this.paramsId.billId, formData).subscribe(pay => {
-      let responseCount = 0;
-      pay.data.map(res => {
-        responseCount = responseCount + res.payment_response.length;
-      })
-      this.intercom.PaymentReview(responseCount);
-      this.intercom.paymentReviewSaved(true);
-      this.paymentForm = this.fb.group({
-        payments: this.fb.array([]),
-      })
-      this.paymentRes = pay.data;
-      this.getPaymentStatus.emit(this.paymentRes ? this.paymentRes[0] : null)
-      this.paymentRes.map((pay, i) => {
-        this.addPayment();
-        //this.openElement(i)
-        let initPayment = {
-          bill_no: pay.bill_no,
-          id: pay.id,
-          bill_submission_type: pay.bill_submission_type,
-          showStatus: false,
-          charge: pay.charge,
-          date_sent: pay.date_sent,
-          bill_due_date: pay.bill_due_date,
-          payment: pay.payment,
-          status: '',
-          balance: pay.balance,
-          bill_paid_status: pay.bill_paid_status,
-          is_bill_closed: pay.is_bill_closed,
-          reviews: pay.payment_response,
-          first_submission_payment: pay.first_submission_payment,
-          sbr_payment: pay.sbr_payment
-        }
-        this.payments().at(i).patchValue(initPayment);
-        pay.payment_response.map((review, ind) => {
-          review.file_name = review.eor_original_file_name ? review.eor_original_file_name : review.eor_file_name;
-          review.file_url = review.eor_file_url;
-          if (ind > 0) review.void_reason_id = this.paymentReviews(i).at(ind - 1).get('id').value;
-          review.showStatus = false;
-          // if (review.eor_allowance_details.length == 0) {
-          this.addReviews(i, false);
-          // }
-          review.eor_allowance_details.map((eor, index) => {
-            // this.addReviews(i, false);
-            if (eor && !eor.is_fully_paid) {
-              let eor_allowance_details = this.paymentReviews(i).at(ind).get('eor_allowance_details');
-              (eor_allowance_details as FormArray).push(this.fb.group({
-                bill_line_item_id: eor.bill_line_item_id,
-                item: eor.item_description, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charges, eor_allowance: Number(eor.eor_allowance), payment_amount: eor.payment_amount, balance: eor.balance > 0 ? eor.balance : eor.charge, first_submission_payment: eor.first_submission_payment, sbr_payment: eor.sbr_payment
-              }))
-            }
-          })
-          this.paymentReviews(i).at(ind).patchValue(review);
+    this.billingService.postPaymentResponse(this.paramsId.billingId, this.paramsId.claim_id, this.paramsId.billId, formData).subscribe((event: HttpEvent<any>) => {
+      let pay = event['body'];
+      let progress = this.onDemandService.getProgress(event);
+      if (progress == 0) {
+        let responseCount = 0;
+        pay.data.map(res => {
+          responseCount = responseCount + res.payment_response.length;
         })
+        this.intercom.PaymentReview(responseCount);
+        this.intercom.paymentReviewSaved(true);
+        this.paymentForm = this.fb.group({
+          payments: this.fb.array([]),
+        })
+        this.paymentRes = pay.data;
+        this.getPaymentStatus.emit(this.paymentRes ? this.paymentRes[0] : null)
+        this.paymentRes.map((pay, i) => {
+          this.addPayment();
+          //this.openElement(i)
+          let initPayment = {
+            bill_no: pay.bill_no,
+            id: pay.id,
+            bill_submission_type: pay.bill_submission_type,
+            showStatus: false,
+            charge: pay.charge,
+            date_sent: pay.date_sent,
+            bill_due_date: pay.bill_due_date,
+            payment: pay.payment,
+            status: '',
+            balance: pay.balance,
+            bill_paid_status: pay.bill_paid_status,
+            is_bill_closed: pay.is_bill_closed,
+            reviews: pay.payment_response,
+            first_submission_payment: pay.first_submission_payment,
+            sbr_payment: pay.sbr_payment
+          }
+          this.payments().at(i).patchValue(initPayment);
+          pay.payment_response.map((review, ind) => {
+            review.file_name = review.eor_original_file_name ? review.eor_original_file_name : review.eor_file_name;
+            review.file_url = review.eor_file_url;
+            if (ind > 0) review.void_reason_id = this.paymentReviews(i).at(ind - 1).get('id').value;
+            review.showStatus = false;
+            // if (review.eor_allowance_details.length == 0) {
+            this.addReviews(i, false);
+            // }
+            review.eor_allowance_details.map((eor, index) => {
+              // this.addReviews(i, false);
+              if (eor && !eor.is_fully_paid) {
+                let eor_allowance_details = this.paymentReviews(i).at(ind).get('eor_allowance_details');
+                (eor_allowance_details as FormArray).push(this.fb.group({
+                  bill_line_item_id: eor.bill_line_item_id,
+                  item: eor.item_description, procedure_code: eor.procedure_code, modifier: eor.modifier, charges: eor.charges, eor_allowance: Number(eor.eor_allowance), payment_amount: eor.payment_amount, balance: eor.balance > 0 ? eor.balance : eor.charge, first_submission_payment: eor.first_submission_payment, sbr_payment: eor.sbr_payment
+                }))
+              }
+            })
+            this.paymentReviews(i).at(ind).patchValue(review);
+          })
+          // this.getPaymentRes();
+        })
+        this.intercom.setBillItemChange({ paymentStatus: true })
         // this.getPaymentRes();
-      })
-      this.intercom.setBillItemChange({ paymentStatus: true })
-      // this.getPaymentRes();
-      this.getBillingDetails.emit(true);
+        this.getBillingDetails.emit(true);
+      }
     }, error => {
 
     })
@@ -761,7 +767,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
       }
       eorData.get('balance').patchValue(balance);
     }
-    
+
     this.checkEorError(eorDetails, paymentAmount);
 
     this.checkPaymentError(review);
@@ -811,7 +817,7 @@ export class PaymentResponseComponent implements OnInit, OnDestroy {
           review.get('response_type_id').patchValue(1);
         }
       });
-    }  
+    }
   }
 
   private checkEorError(eorDetails: any, paymentAmount: number) {
