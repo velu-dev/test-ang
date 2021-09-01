@@ -208,7 +208,7 @@ export class BillingService {
   }
 
   getProcedureCode(claim_id, billable_item_id): Observable<any> {
-    const url = environment.baseUrl + api_endpoint.getProcedureCode + '/' + claim_id + '/' + billable_item_id;
+    const url = environment.baseUrl + api_endpoint.getProcedureCode + claim_id + '/' + billable_item_id;
     return this.http.get(url);
   }
 }
