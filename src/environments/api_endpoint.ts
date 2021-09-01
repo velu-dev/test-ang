@@ -225,7 +225,7 @@ export const api_endpoint = {
     getSubmission: 'billing/get-submission-details/',
     postIBRCreate: 'billing/create-ibr/',
     updateDepositDate: 'billing/update-deposit-date/',
-
+    getProcedureCode: 'billing/billing-code-seed-data/',
 
     //Calendar 
 

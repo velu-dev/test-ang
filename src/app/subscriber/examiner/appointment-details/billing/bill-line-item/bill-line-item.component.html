@@ -54,7 +54,17 @@
                                                     oninput="this.value = this.value.toUpperCase()"
                                                     (change)="procedureChange($event.target.value,group)"
                                                     name="procedure_code" autocomplete="off"
-                                                    formControlName="procedure_code" pattern="[a-zA-Z0-9/ -]+">
+                                                    formControlName="procedure_code" pattern="[a-zA-Z0-9/ -]+"
+                                                    [matAutocomplete]="procedureCodeAutocomplete">
+                                                <mat-autocomplete #procedureCodeAutocomplete="matAutocomplete"
+                                                    (optionSelected)='procedureChange($event.option.value, group)'>
+                                                    <ng-container *ngFor="let code of procedureCodes">
+                                                        <mat-option [value]="code.billing_code"
+                                                            *ngIf="(i === 0 && code.billing_code !== 'ML-PRR' && code.billing_code !== 'MLPRR') || i !== 0">
+                                                            {{ code.billing_code }}
+                                                        </mat-option>
+                                                    </ng-container>
+                                                </mat-autocomplete>
                                             </mat-form-field>
                                         </td>
                                         <td class="bill-modifier">
@@ -247,7 +257,18 @@
                                                                 (change)="procedureChange($event.target.value,group)"
                                                                 name="procedure_code" autocomplete="off"
                                                                 formControlName="procedure_code"
+                                                                [matAutocomplete]="procedureCodeAutocomplete"
                                                                 pattern="[a-zA-Z0-9/ -]+">
+                                                            <mat-autocomplete
+                                                                #procedureCodeAutocomplete="matAutocomplete"
+                                                                (optionSelected)='procedureChange($event.option.value, group)'>
+                                                                <ng-container *ngFor="let code of procedureCodes">
+                                                                    <mat-option [value]="code.billing_code"
+                                                                        *ngIf="(i === 0 && code.billing_code !== 'ML-PRR' && code.billing_code !== 'MLPRR') || i !== 0">
+                                                                        {{ code.billing_code }}
+                                                                    </mat-option>
+                                                                </ng-container>
+                                                            </mat-autocomplete>
                                                         </mat-form-field>
                                                     </div>
                                                 </div>
