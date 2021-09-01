@@ -1,63 +1,14 @@
 @import "variables";
 
-// .error-message {
-//   padding: 10px;
-//   border-radius: 4px;
-//   background-color: $error-bg;
-//   border: 1px solid $error-border;
-//   .mat-card-title {
-//     text-align: center;
-//     font-size: $font-size-10;
-//     color: $error;
-//   }
-
-//   .note {
-//     font-size: $font-size-1;
-//     font-weight: $font-weight-medium;
-//     text-align: center;
-//     color: $error;
-//   }
-// }
-
-// .disable-actions {
-//   text-align: center;
-//   .btn {
-//     padding: 7px 30px;
-//     border-radius: 3px;
-//     font-size: $font-size-1;
-//     box-shadow: $box-shadow-3;
-//     font-weight: $font-weight-bold;
-//     height: 35px;
-//     border: 1px solid !important;
-//     cursor: pointer;
-//     &:hover {
-//       box-shadow: $box-shadow-1;
-//     }
-//     &:focus,
-//     &::-moz-focus-inner {
-//       outline: none !important;
-//       border: none !important;
-//     }
-//   }
-//   .cancel {
-//     background-color: $white;
-//     color: $btn-success;
-//     border-color: $btn-success !important;
-//     border: 0;
-//     @extend .btn;
-//     &:hover {
-//       background-color: $btn-success;
-//       color: $white;
-//     }
-//   }
-// }
 .confirm-dialog {
     .mat-card-title {
         .inline {
+            min-width: 85%;
             @media only screen and (max-width: 568px) {
                 max-width: 100% !important;
             }
             .mat-card-description {
+                min-width: 100%;
                 .incomplete-modules {
                     ul {
                         margin: 5px 0 0 0;
