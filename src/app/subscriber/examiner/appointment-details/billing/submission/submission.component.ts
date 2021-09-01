@@ -170,19 +170,21 @@ export class SubmissionComponent implements OnInit {
     this.billingService.uploadCustomDoc(this.formData).subscribe((event: HttpEvent<any>) => {
       let progress = this.onDemandService.getProgress(event);
       if (progress == 0) {
-        this.selectedFile = null;
-        this.fileUpload.nativeElement.value = "";
-        this.documentType = null;
-        this.formData = new FormData();
-        this.file = "";
-        if (status) {
-          this.getBillDocument();
-        } else {
-          //this.getDocumentData();
-        }
+        if (event['body']) {
+          this.selectedFile = null;
+          this.fileUpload.nativeElement.value = "";
+          this.documentType = null;
+          this.formData = new FormData();
+          this.file = "";
+          if (status) {
+            this.getBillDocument();
+          } else {
+            //this.getDocumentData();
+          }
 
-        this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
-        this.alertService.openSnackBar("File added successfully", 'success');
+          this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
+          this.alertService.openSnackBar("File added successfully", 'success');
+        }
       }
     }, error => {
       this.fileUpload.nativeElement.value = "";
@@ -308,8 +310,10 @@ export class SubmissionComponent implements OnInit {
     this.billingService.postBillingCompleteDoc(this.docFormData).subscribe((event: HttpEvent<any>) => {
       let progress = this.onDemandService.getProgress(event);
       if (progress == 0) {
-        this.alertService.openSnackBar("File added successfully", 'success');
-        this.getBillDocument();
+        if (event['body']) {
+          this.alertService.openSnackBar("File added successfully", 'success');
+          this.getBillDocument();
+        }
       }
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error");

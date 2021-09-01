@@ -303,13 +303,14 @@ export class BillingCorrespondanceComponent implements OnInit {
         this.onDemandService.uploadDocument(formData).subscribe((event: HttpEvent<any>) => {
           let progress = this.onDemandService.getProgress(event);
           if (progress == 0) {
-            console.log(event)
-            if (event['body'].status) {
-              this.alertService.openSnackBar(event['body'].message, "success");
-              this.getData();
-            } else {
-              this.alertService.openSnackBar(event['body'].message, "error");
-            }
+            console.log(event, progress)
+            if (event['body'])
+              if (event['body'].status) {
+                this.alertService.openSnackBar(event['body'].message, "success");
+                this.getData();
+              } else {
+                this.alertService.openSnackBar(event['body'].message, "error");
+              }
           }
         })
       }

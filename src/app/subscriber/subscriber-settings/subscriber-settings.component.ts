@@ -849,13 +849,14 @@ export class SubscriberSettingsComponent implements OnInit {
     this.userService.updateSubsciberSetting(this.userForm.value).subscribe((event: HttpEvent<any>) => {
       let progress = this.onDemandService.getProgress(event);
       if (progress == 0) {
-        console.log(event)
-        this.intercom.setLoaderPercentage(this.progress)
-        this.alertService.openSnackBar("Profile updated successfully", 'success');
-        this.signData = event['body'].data.signature ? 'data:image/png;base64,' + event['body'].data.signature : null;
-        this.isSubmit = false;
-        this.intercom.setUser(true);
-      } event
+        if (event['body']) {
+          this.intercom.setLoaderPercentage(this.progress)
+          this.alertService.openSnackBar("Profile updated successfully", 'success');
+          this.signData = event['body'].data.signature ? 'data:image/png;base64,' + event['body'].data.signature : null;
+          this.isSubmit = false;
+          this.intercom.setUser(true);
+        }
+      }
     }, error => {
       this.isSubmit = false;
       console.log(error.error.message)

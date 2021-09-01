@@ -1056,15 +1056,17 @@ export class AppointmentDetailsComponent implements OnInit {
           this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe((event: HttpEvent<any>) => {
             let progress = this.onDemandService.getProgress(event);
             if (progress == 0) {
-              let message = group.value.id ? "Documents declared details updated successfully!" : "Documents declared details created successfully!"
-              this.alertService.openSnackBar(message, "success");
-              this.documentsDeclared[i] = event['body'].data
-              event['body'].data.file_name = event['body'].data.original_file_name ? event['body'].data.original_file_name : event['body'].data.file_name;
-              group.patchValue(event['body'].data)
-              group.get('isEditable').setValue(false);
-              group.get('id').setValue(event['body'].data.id);
-              this.loadActivity();
-              this.getDocumentData();
+              if (event['body']) {
+                let message = group.value.id ? "Documents declared details updated successfully!" : "Documents declared details created successfully!"
+                this.alertService.openSnackBar(message, "success");
+                this.documentsDeclared[i] = event['body'].data
+                event['body'].data.file_name = event['body'].data.original_file_name ? event['body'].data.original_file_name : event['body'].data.file_name;
+                group.patchValue(event['body'].data)
+                group.get('isEditable').setValue(false);
+                group.get('id').setValue(event['body'].data.id);
+                this.loadActivity();
+                this.getDocumentData();
+              }
             }
           }, error => {
             this.alertService.openSnackBar(error.error.message, 'error');
@@ -1077,14 +1079,16 @@ export class AppointmentDetailsComponent implements OnInit {
       this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe((event: HttpEvent<any>) => {
         let progress = this.onDemandService.getProgress(event);
         if (progress == 0) {
-          let message = group.value.id ? "Documents declared details updated successfully!" : "Documents declared details created successfully!"
-          this.alertService.openSnackBar(message, "success");
-          this.documentsDeclared[i] = event['body'].data
-          group.patchValue(event['body'].data)
-          group.get('isEditable').setValue(false);
-          group.get('id').setValue(event['body'].data.id);
-          this.loadActivity();
-          this.getDocumentData();
+          if (event['body']) {
+            let message = group.value.id ? "Documents declared details updated successfully!" : "Documents declared details created successfully!"
+            this.alertService.openSnackBar(message, "success");
+            this.documentsDeclared[i] = event['body'].data
+            group.patchValue(event['body'].data)
+            group.get('isEditable').setValue(false);
+            group.get('id').setValue(event['body'].data.id);
+            this.loadActivity();
+            this.getDocumentData();
+          }
         }
       }, error => {
         this.alertService.openSnackBar(error.error.message, 'error');
@@ -1986,15 +1990,17 @@ export class AppointmentDetailsComponent implements OnInit {
       this.claimService.createDeclaredDocument(this.formDataDoc, this.claim_id, this.billableId).subscribe((event: HttpEvent<any>) => {
         let progress = this.onDemandService.getProgress(event);
         if (progress == 0) {
-          this.selectedFile = [];
-          // this.fileUpload.nativeElement.value = "";
-          this.documentType = null;
-          this.formData = new FormData();
-          this.file = "";
-          this.getDocumentData();
-          this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
-          this.alertService.openSnackBar("File added successfully", 'success');
-          this.getDocumentDeclareData();
+          if (event['body']) {
+            this.selectedFile = [];
+            // this.fileUpload.nativeElement.value = "";
+            this.documentType = null;
+            this.formData = new FormData();
+            this.file = "";
+            this.getDocumentData();
+            this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
+            this.alertService.openSnackBar("File added successfully", 'success');
+            this.getDocumentDeclareData();
+          }
         }
       }, error => {
         //this.fileUpload.nativeElement.value = "";
@@ -2006,14 +2012,16 @@ export class AppointmentDetailsComponent implements OnInit {
     this.examinerService.postDocument(this.formData).subscribe((event: HttpEvent<any>) => {
       let progress = this.onDemandService.getProgress(event);
       if (progress == 0) {
-        this.selectedFile = null;
-        // this.fileUpload.nativeElement.value = "";
-        this.documentType = null;
-        this.formData = new FormData();
-        this.file = "";
-        this.getDocumentData();
-        this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
-        this.alertService.openSnackBar("File added successfully", 'success');
+        if (event['body']) {
+          this.selectedFile = null;
+          // this.fileUpload.nativeElement.value = "";
+          this.documentType = null;
+          this.formData = new FormData();
+          this.file = "";
+          this.getDocumentData();
+          this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
+          this.alertService.openSnackBar("File added successfully", 'success');
+        }
       }
     }, error => {
       //this.fileUpload.nativeElement.value = "";

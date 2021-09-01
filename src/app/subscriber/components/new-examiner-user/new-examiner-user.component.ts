@@ -1082,19 +1082,21 @@ export class NewExaminerUserComponent implements OnInit {
     this.userService.updateBillingProvider(this.examinerId, formData).subscribe((event: HttpEvent<any>) => {
       let progress = this.onDemandService.getProgress(event);
       if (progress == 0) {
-        if (!this.billingProviderForm.value.id) {
-          this.alertService.openSnackBar("Billing provider added successfully", 'success');
-        } else {
-          this.alertService.openSnackBar("Billing provider updated successfully", 'success');
-        }
-        this.updateFormData(this.examinerId);
-        this.billingProviderForm.markAsUntouched();
-        this.billingProviderForm.updateValueAndValidity();
-        if (status == 'next') {
-          this.tabIndex = 3;
-        } else if (status == 'close') {
-          //this._location.back();
-          this.cancel()
+        if (event['body']) {
+          if (!this.billingProviderForm.value.id) {
+            this.alertService.openSnackBar("Billing provider added successfully", 'success');
+          } else {
+            this.alertService.openSnackBar("Billing provider updated successfully", 'success');
+          }
+          this.updateFormData(this.examinerId);
+          this.billingProviderForm.markAsUntouched();
+          this.billingProviderForm.updateValueAndValidity();
+          if (status == 'next') {
+            this.tabIndex = 3;
+          } else if (status == 'close') {
+            //this._location.back();
+            this.cancel()
+          }
         }
       }
     }, error => {
@@ -1143,23 +1145,25 @@ export class NewExaminerUserComponent implements OnInit {
     this.userService.updateRenderingProvider(this.examinerId, this.renderingForm.value).subscribe((event: HttpEvent<any>) => {
       let progress = this.onDemandService.getProgress(event);
       if (progress == 0) {
-        this.licenseChangeStatus = false;
-        if (!this.renderingForm.value.id) {
-          this.renderingForm.get('id').patchValue(event['body'].data.id)
-          this.alertService.openSnackBar("Rendering provider added successfully", 'success');
-        } else {
-          this.alertService.openSnackBar("Rendering provider updated successfully", 'success');
-        }
+        if (event['body']) {
+          this.licenseChangeStatus = false;
+          if (!this.renderingForm.value.id) {
+            this.renderingForm.get('id').patchValue(event['body'].data.id)
+            this.alertService.openSnackBar("Rendering provider added successfully", 'success');
+          } else {
+            this.alertService.openSnackBar("Rendering provider updated successfully", 'success');
+          }
 
-        this.licenseData = event['body'].data.license_details
-        this.updateFormData(this.examinerId);
-        this.renderingForm.markAsUntouched();
-        this.renderingForm.updateValueAndValidity();
-        if (status == 'next') {
-          this.tabIndex = 4;
-        } else if (status == 'close') {
-          // this._location.back();
-          this.cancel();
+          this.licenseData = event['body'].data.license_details
+          this.updateFormData(this.examinerId);
+          this.renderingForm.markAsUntouched();
+          this.renderingForm.updateValueAndValidity();
+          if (status == 'next') {
+            this.tabIndex = 4;
+          } else if (status == 'close') {
+            // this._location.back();
+            this.cancel();
+          }
         }
       }
     }, error => {

@@ -292,14 +292,16 @@ export class RecordsComponent implements OnInit {
     this.onDemandService.postDocument(this.formData).subscribe((event: HttpEvent<any>) => {
       let progress = this.onDemandService.getProgress(event);
       if (progress == 0) {
-        this.selectedFile = null;
-        this.selectedFiles = null;
-        // this.fileUpload.nativeElement.value = "";
-        this.formData = new FormData();
-        this.file = [];
-        this.getRecord();
-        this.errors = { file: { isError: false, error: "" } }
-        this.alertService.openSnackBar("File added successfully", 'success');
+        if (event['body']) {
+          this.selectedFile = null;
+          this.selectedFiles = null;
+          // this.fileUpload.nativeElement.value = "";
+          this.formData = new FormData();
+          this.file = [];
+          this.getRecord();
+          this.errors = { file: { isError: false, error: "" } }
+          this.alertService.openSnackBar("File added successfully", 'success');
+        }
       }
     }, error => {
       this.fileUpload.nativeElement.value = "";

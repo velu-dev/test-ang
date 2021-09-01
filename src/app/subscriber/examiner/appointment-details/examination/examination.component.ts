@@ -217,21 +217,22 @@ export class ExaminationComponent implements OnInit {
       let res = event['body'];
       let progress = this.ondemandService.getProgress(event);
       if (progress == 0) {
-
-        if (res.status) {
-          this.alertService.openSnackBar(res.message, 'success');
-          this.selectedFile = null;
-          // this.fileUpload.nativeElement.value = "";
-          formData = new FormData();
-          this.file = [];
-          // this.alldocuments.push(res.data);
-          // this.uploadedDocument = new MatTableDataSource(this.alldocuments);
-          // this.uploadedDocument.sort = this.sort;
-          this.getData();
-          this.error = { status: false, message: "" };
-        }
-        else {
-          this.alertService.openSnackBar(res.message, "error")
+        if (event['body']) {
+          if (res.status) {
+            this.alertService.openSnackBar(res.message, 'success');
+            this.selectedFile = null;
+            // this.fileUpload.nativeElement.value = "";
+            formData = new FormData();
+            this.file = [];
+            // this.alldocuments.push(res.data);
+            // this.uploadedDocument = new MatTableDataSource(this.alldocuments);
+            // this.uploadedDocument.sort = this.sort;
+            this.getData();
+            this.error = { status: false, message: "" };
+          }
+          else {
+            this.alertService.openSnackBar(res.message, "error")
+          }
         }
       }
     })

@@ -130,12 +130,14 @@ export class ExaminerSettingComponent implements OnInit {
     this.userService.updateSubsciberSetting(this.userForm.value).subscribe((event: HttpEvent<any>) => {
       let progress = this.onDemandService.getProgress(event);
       if (progress == 0) {
-        this.alertService.openSnackBar("Profile updated successfully", 'success');
-        this.signData = event['body'].data.signature ? 'data:image/png;base64,' + event['body'].data.signature : null;
-        this.isSubmit = false;
-        if (this.first_name != this.userForm.value.first_name) {
-          this.first_name = this.userForm.value.first_name;
-          this.intercom.setUser(true);
+        if (event['body']) {
+          this.alertService.openSnackBar("Profile updated successfully", 'success');
+          this.signData = event['body'].data.signature ? 'data:image/png;base64,' + event['body'].data.signature : null;
+          this.isSubmit = false;
+          if (this.first_name != this.userForm.value.first_name) {
+            this.first_name = this.userForm.value.first_name;
+            this.intercom.setUser(true);
+          }
         }
       }
     }, error => {
