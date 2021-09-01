@@ -57,6 +57,7 @@ export class BillLineItemComponent implements OnInit {
   support_documents = [];
   oneUnitProcedure = ['ml201', 'ml202', 'ml203']
   subscriptions: Subscription;
+  procedureCodes: any[] = [];
   @Input() cancellation: boolean;
 
   constructor(private logger: NGXLogger,
@@ -101,6 +102,14 @@ export class BillLineItemComponent implements OnInit {
     });
 
     // this.subscriptions = [paymentResSubscription, attorneyChangeSubscription, billLineItemChangeSubscription];
+
+    if(!this.is_cancellation && !this.isPaymentresponseCreated && this.billType === 1) {
+      this.billingService.getProcedureCode(this.paramsId.claim_id, this.paramsId.billId).subscribe((res) => {
+        if(res.data) {
+          this.procedureCodes = res.data;
+        }
+      }, console.error);
+    }
   }
   is_cancellation = false;
   ngAfterContentInit() {

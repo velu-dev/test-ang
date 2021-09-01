@@ -215,4 +215,9 @@ export class BillingService {
     data.is_billable_item_document = is_billable_item_document ? true : false;
     return this.http.post(environment.baseUrl + api_endpoint.activityLogUpdate, data)
   }
+
+  getProcedureCode(claim_id, billable_item_id): Observable<any> {
+    const url = environment.baseUrl + api_endpoint.getProcedureCode + claim_id + '/' + billable_item_id;
+    return this.http.get(url);
+  }
 }
