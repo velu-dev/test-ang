@@ -238,7 +238,7 @@ export class SubmissionComponent implements OnInit {
   openDialogDocument(dialogue, data, status?) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '500px',
-      data: { name: dialogue, address: true, title: data.file_name }
+      data: { name: dialogue, address: true, title: data.original_file_name }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {

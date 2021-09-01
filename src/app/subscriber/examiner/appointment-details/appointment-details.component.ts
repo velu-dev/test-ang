@@ -1142,7 +1142,8 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   removeDocDeclare(group, i) {
-
+    console.log(group)
+    return
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '500px',
       data: { name: 'remove', address: true, title: group.get('file_name').value }
@@ -2132,7 +2133,7 @@ export class AppointmentDetailsComponent implements OnInit {
   openDialog(dialogue, data) {
     const dialogRef = this.dialog.open(DialogueComponent, {
       width: '500px',
-      data: { name: dialogue, address: true, title: data.file_name }
+      data: { name: dialogue, address: true, title: data.original_file_name }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result['data']) {
