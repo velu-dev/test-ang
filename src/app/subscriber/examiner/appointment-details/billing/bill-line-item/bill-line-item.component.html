@@ -56,7 +56,8 @@
                                                     name="procedure_code" autocomplete="off"
                                                     formControlName="procedure_code" pattern="[a-zA-Z0-9/ -]+"
                                                     [matAutocomplete]="procedureCodeAutocomplete">
-                                                <mat-autocomplete #procedureCodeAutocomplete="matAutocomplete">
+                                                <mat-autocomplete #procedureCodeAutocomplete="matAutocomplete"
+                                                    (optionSelected)='procedureChange($event.option.value, group)'>
                                                     <ng-container *ngFor="let code of procedureCodes">
                                                         <mat-option [value]="code.billing_code"
                                                             *ngIf="(i === 0 && code.billing_code !== 'ML-PRR' && code.billing_code !== 'MLPRR') || i !== 0">
@@ -259,7 +260,8 @@
                                                                 [matAutocomplete]="procedureCodeAutocomplete"
                                                                 pattern="[a-zA-Z0-9/ -]+">
                                                             <mat-autocomplete
-                                                                #procedureCodeAutocomplete="matAutocomplete">
+                                                                #procedureCodeAutocomplete="matAutocomplete"
+                                                                (optionSelected)='procedureChange($event.option.value, group)'>
                                                                 <ng-container *ngFor="let code of procedureCodes">
                                                                     <mat-option [value]="code.billing_code"
                                                                         *ngIf="(i === 0 && code.billing_code !== 'ML-PRR' && code.billing_code !== 'MLPRR') || i !== 0">
