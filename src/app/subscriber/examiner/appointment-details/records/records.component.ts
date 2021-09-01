@@ -18,6 +18,7 @@ import { RegulationDialogueComponent } from 'src/app/shared/components/regulatio
 import { UserService } from 'src/app/shared/services/user.service';
 import * as regulation from 'src/app/shared/services/regulations';
 import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
+import { HttpEvent } from '@angular/common/http';
 
 @Component({
   selector: 'app-records',
@@ -288,15 +289,18 @@ export class RecordsComponent implements OnInit {
     }
 
     //return;
-    this.onDemandService.postDocument(this.formData).subscribe(res => {
-      this.selectedFile = null;
-      this.selectedFiles = null;
-      // this.fileUpload.nativeElement.value = "";
-      this.formData = new FormData();
-      this.file = [];
-      this.getRecord();
-      this.errors = { file: { isError: false, error: "" } }
-      this.alertService.openSnackBar("File added successfully", 'success');
+    this.onDemandService.postDocument(this.formData).subscribe((event: HttpEvent<any>) => {
+      let progress = this.onDemandService.getProgress(event);
+      if (progress == 0) {
+        this.selectedFile = null;
+        this.selectedFiles = null;
+        // this.fileUpload.nativeElement.value = "";
+        this.formData = new FormData();
+        this.file = [];
+        this.getRecord();
+        this.errors = { file: { isError: false, error: "" } }
+        this.alertService.openSnackBar("File added successfully", 'success');
+      }
     }, error => {
       this.fileUpload.nativeElement.value = "";
       this.selectedFile = null;

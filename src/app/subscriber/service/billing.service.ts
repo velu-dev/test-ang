@@ -109,7 +109,10 @@ export class BillingService {
   }
 
   postBillingCompleteDoc(data): Observable<any> {
-    return this.http.post(environment.baseUrl + api_endpoint.postBillingComplete, data)
+    return this.http.post(environment.baseUrl + api_endpoint.postBillingComplete, data, {
+      reportProgress: true,
+      observe: 'events'
+    })
   }
 
   postPaymentFileAdd(billID, form): Observable<any> {
@@ -137,7 +140,10 @@ export class BillingService {
   }
 
   postPaymentResponse(billId, claim, billable, data): Observable<any> {
-    return this.http.post(environment.baseUrl + api_endpoint.postPayment + claim + '/' + billable + '/' + billId, data)
+    return this.http.post(environment.baseUrl + api_endpoint.postPayment + claim + '/' + billable + '/' + billId, data, {
+      reportProgress: true,
+      observe: 'events'
+    })
   }
 
   closeBill(billId, claim, billable, data): Observable<any> {
@@ -185,7 +191,10 @@ export class BillingService {
   }
 
   uploadCustomDoc(data): Observable<any> {
-    return this.http.post(environment.baseUrl + api_endpoint.uploadCustomDoc, data)
+    return this.http.post(environment.baseUrl + api_endpoint.uploadCustomDoc, data, {
+      reportProgress: true,
+      observe: 'events'
+    })
   }
   getDtmData(data): Observable<any> {
     return this.http.get(environment.baseUrl + api_endpoint.dtmGetdata + data.claim_id + "/" + data.billable_item_id + "/" + data.bill_id)

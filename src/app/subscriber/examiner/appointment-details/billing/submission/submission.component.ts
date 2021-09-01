@@ -16,6 +16,8 @@ import { map, shareReplay } from 'rxjs/operators';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { FileUploadComponent } from 'src/app/shared/components/file-upload/file-upload.component';
 import { CookieService } from 'src/app/shared/services/cookie.service';
+import { HttpEvent } from '@angular/common/http';
+import { OnDemandService } from 'src/app/subscriber/service/on-demand.service';
 @Component({
   selector: 'app-submission',
   templateUrl: './submission.component.html',
@@ -63,7 +65,8 @@ export class SubmissionComponent implements OnInit {
     private intercom: IntercomService,
     public userService: UserService,
     private breakpointObserver: BreakpointObserver,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private onDemandService: OnDemandService
   ) { }
 
   ngOnInit() {
@@ -164,20 +167,23 @@ export class SubmissionComponent implements OnInit {
     }
     // console.log(this.selectedFiles);
     // return
-    this.billingService.uploadCustomDoc(this.formData).subscribe(res => {
-      this.selectedFile = null;
-      this.fileUpload.nativeElement.value = "";
-      this.documentType = null;
-      this.formData = new FormData();
-      this.file = "";
-      if (status) {
-        this.getBillDocument();
-      } else {
-        //this.getDocumentData();
-      }
+    this.billingService.uploadCustomDoc(this.formData).subscribe((event: HttpEvent<any>) => {
+      let progress = this.onDemandService.getProgress(event);
+      if (progress == 0) {
+        this.selectedFile = null;
+        this.fileUpload.nativeElement.value = "";
+        this.documentType = null;
+        this.formData = new FormData();
+        this.file = "";
+        if (status) {
+          this.getBillDocument();
+        } else {
+          //this.getDocumentData();
+        }
 
-      this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
-      this.alertService.openSnackBar("File added successfully", 'success');
+        this.errors = { file: { isError: false, error: "" }, doc_type: { isError: false, error: "" } }
+        this.alertService.openSnackBar("File added successfully", 'success');
+      }
     }, error => {
       this.fileUpload.nativeElement.value = "";
       this.selectedFile = null;
@@ -299,9 +305,12 @@ export class SubmissionComponent implements OnInit {
     this.docFormData.append('form_id', pid.id);
     this.docFormData.append('claim_id', this.paramsId.claim_id.toString());
     this.docFormData.append('bill_item_id', this.paramsId.billId.toString());
-    this.billingService.postBillingCompleteDoc(this.docFormData).subscribe(doc => {
-      this.alertService.openSnackBar("File added successfully", 'success');
-      this.getBillDocument();
+    this.billingService.postBillingCompleteDoc(this.docFormData).subscribe((event: HttpEvent<any>) => {
+      let progress = this.onDemandService.getProgress(event);
+      if (progress == 0) {
+        this.alertService.openSnackBar("File added successfully", 'success');
+        this.getBillDocument();
+      }
     }, error => {
       this.alertService.openSnackBar(error.error.message, "error");
     })
